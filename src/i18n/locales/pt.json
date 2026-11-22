@@ -41,6 +41,10 @@
     "crisis": {
       "title": "Crise de gestão",
       "desc": "Monte um time. A diretoria define uma meta. A cada dois meses, uma carta de crise muda tudo."
+    },
+    "career": {
+      "title": "Carreira",
+      "desc": "Uma franquia, várias temporadas. Idade, contratos, drafts e agência livre, até a diretoria te demitir."
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "Contratar o superastro",
       "superB": "Recusar"
     }
+  },
+  "career": {
+    "title": "Carreira",
+    "desc": "Uma franquia, várias temporadas. Idade, contratos, drafts e agência livre, até a diretoria te demitir.",
+    "start": "Começar uma carreira",
+    "resume": "Continuar carreira",
+    "season": "Temporada {{n}}",
+    "security": "Estabilidade no cargo",
+    "history": "Histórico",
+    "noHistory": "Sua história começa no draft.",
+    "toOffseason": "Ir para a entressafra",
+    "progress": "Evolução dos jogadores",
+    "retired": "Aposentados",
+    "expiring": "Contratos vencendo",
+    "expiringHint": "Toque para renovar pela nota atual. Quem não for mantido sai.",
+    "resign": "Renovar",
+    "release": "Liberar",
+    "confirmContracts": "Confirmar contratos",
+    "draft": "Draft de calouros",
+    "yourPick": "Você escolhe na {{n}}ª",
+    "draftThis": "Draftar {{name}}",
+    "rosterFull": "Seu elenco está cheio: escolha quem cortar pelo calouro.",
+    "skipRookie": "Abrir mão do calouro",
+    "freeAgency": "Agência livre",
+    "openSpots": "{{n}} vagas abertas",
+    "sign": "Contratar",
+    "minException": "Exceção mínima: contratar {{name}}",
+    "startSeason": "Começar {{label}}",
+    "over": "Fim da carreira",
+    "overDesc": "A diretoria já viu o suficiente. {{n}} temporadas, {{titles}} títulos.",
+    "newCareer": "Nova carreira",
+    "r_champion": "Campeões",
+    "r_finals": "Perdeu a final",
+    "r_semis": "Perdeu na semifinal",
+    "r_quarters": "Perdeu nas quartas",
+    "r_first": "Eliminado na primeira rodada",
+    "r_missed": "Fora dos playoffs",
+    "years": "{{n}} ano(s)",
+    "nothingAffordable": "Ninguém cabe no teto."
   }
 }

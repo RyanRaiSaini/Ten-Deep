@@ -41,6 +41,10 @@
     "crisis": {
       "title": "マネジメント・クライシス",
       "desc": "チームをドラフトしよう。フロントが目標を設定。2か月ごとにクライシスカードがすべてを変える。"
+    },
+    "career": {
+      "title": "キャリア",
+      "desc": "一つのフランチャイズで何シーズンも。加齢、契約、ドラフト、FA。フロントに解任されるまで続く。"
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "スーパースターと契約",
       "superB": "断る"
     }
+  },
+  "career": {
+    "title": "キャリア",
+    "desc": "一つのフランチャイズで何シーズンも。加齢、契約、ドラフト、FA。フロントに解任されるまで続く。",
+    "start": "キャリアを始める",
+    "resume": "キャリアを続ける",
+    "season": "シーズン{{n}}",
+    "security": "職の安定度",
+    "history": "履歴",
+    "noHistory": "あなたの物語はドラフトから始まる。",
+    "toOffseason": "オフシーズンへ",
+    "progress": "選手の成長",
+    "retired": "引退",
+    "expiring": "契約満了",
+    "expiringHint": "現在の評価で再契約するにはタップ。残さない選手は退団。",
+    "resign": "再契約",
+    "release": "放出",
+    "confirmContracts": "契約を確定",
+    "draft": "ルーキードラフト",
+    "yourPick": "あなたの指名順は{{n}}位",
+    "draftThis": "{{name}}を指名",
+    "rosterFull": "ロスターが満員：ルーキーのために放出する選手を選んで。",
+    "skipRookie": "ルーキーを見送る",
+    "freeAgency": "FA",
+    "openSpots": "空き枠{{n}}",
+    "sign": "契約",
+    "minException": "ミニマム例外：{{name}}と契約",
+    "startSeason": "{{label}}開幕",
+    "over": "キャリア終了",
+    "overDesc": "フロントはもう十分見た。{{n}}シーズン、優勝{{titles}}回。",
+    "newCareer": "新しいキャリア",
+    "r_champion": "優勝",
+    "r_finals": "ファイナル敗退",
+    "r_semis": "準決勝敗退",
+    "r_quarters": "準々決勝敗退",
+    "r_first": "1回戦敗退",
+    "r_missed": "プレーオフ逃し",
+    "years": "{{n}}年",
+    "nothingAffordable": "キャップ内に収まる選手がいない。"
   }
 }
