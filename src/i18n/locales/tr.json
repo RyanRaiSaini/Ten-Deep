@@ -1,0 +1,112 @@
+{
+  "app": { "tagline": "On kişilik kadro kur. 82 maçı atlat." },
+  "common": { "comingSoon": "Yakında", "back": "Geri", "continue": "Devam", "on": "Açık", "off": "Kapalı" },
+  "home": {
+    "draftsPlayed": "Oynanan draftlar",
+    "titles": "Şampiyonluklar",
+    "best": "En iyi derece",
+    "modes": "Oyun modları",
+    "resume": "Kaldığın yerden devam et",
+    "play": "Oyna"
+  },
+  "mode": {
+    "current": { "title": "Güncel", "desc": "2026-27 kadroları. Bir takım çevir, onlu kadronu seç." },
+    "franchise": { "title": "Tüm Zamanların Kulüpleri", "desc": "Lakers, Celtics, Bulls ve daha fazlası, tarih boyunca." },
+    "era": { "title": "Dönemler", "desc": "Jordan, LeBron, Steph — tek bir dönemden seç." },
+    "daily": { "title": "Günlük görev", "desc": "Herkese aynı çevirmeler. Günde bir hak." },
+    "duels": { "title": "Düellolar", "desc": "Bir arkadaşına karşı kafa kafaya draft yap." }
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "audio": "Ses ve his",
+    "music": "Müzik",
+    "sfx": "Ses efektleri",
+    "haptics": "Titreşim",
+    "notifications": "Bildirimler",
+    "notifDaily": "Günlük görev hazır",
+    "notifStreak": "Serin tehlikede",
+    "notifDuel": "Düello davetleri",
+    "game": "Oyun",
+    "simSpeed": "Simülasyon hızı",
+    "nationality": "Uyruk",
+    "language": "Dil",
+    "about": "Hakkında",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Hizmet Şartları",
+    "contact": "Bize ulaşın",
+    "deleteAccount": "Hesabı sil",
+    "soundDemo": "Ses laboratuvarı"
+  },
+  "draft": {
+    "pick": "Seçim {{n}} / 10",
+    "spin": "Çevir",
+    "spinning": "Dönüyor…",
+    "respin": "Yeniden çevir ({{n}} kaldı)",
+    "capSpace": "Maaş tavanı alanı",
+    "spendable": "Asgari ücretler sonrası {{amount}} harcanabilir",
+    "superstars": "Süperstarlar {{n}}/2",
+    "chooseSlot": "Hangi pozisyonda oynasın?",
+    "nothingFits": "Bu takımdan kimse kadrona veya bütçene uymuyor.",
+    "signFallback": "{{name}} ile {{salary}} karşılığında anlaş",
+    "overCap": "Tavanın üstünde",
+    "superstarLimit": "Süperstar sınırı",
+    "noSlot": "Boş pozisyon yok",
+    "starters": "İlk beş",
+    "bench": "Yedekler",
+    "startSeason": "Sezonu başlat",
+    "landed": "Çıkan takım",
+    "empty": "Boş"
+  },
+  "season": {
+    "title": "Normal sezon",
+    "game": "Maç {{n}} / 82",
+    "skipDeadline": "Takas son gününe geç",
+    "skipPlayoffs": "Playofflara geç",
+    "pause": "Duraklat",
+    "resume": "Oynat",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} {{games}} maç yok — {{label}}",
+    "seasonEnding": "{{name}} sezonu kapattı",
+    "standing": "{{n}}. sıra"
+  },
+  "deadline": {
+    "title": "Takas son günü",
+    "desc": "Tek bir takas. Göndereceğin oyuncuyu seç, bir kez çevir ve tavanın altında yerine birini al.",
+    "chooseOut": "Kimi göndereceğini seç",
+    "spin": "Yedek için çevir",
+    "skip": "Kadroyu koru",
+    "done": "Takas tamam"
+  },
+  "playoffs": {
+    "title": "Playofflar",
+    "round0": "İlk tur",
+    "round1": "Çeyrek final",
+    "round2": "Yarı final",
+    "round3": "Final",
+    "next": "{{n}}. maçı oyna",
+    "simRest": "Sona kadar simüle et",
+    "leads": "{{team}} {{w}}-{{l}} önde",
+    "tied": "Seri {{w}}-{{l}} eşit",
+    "won": "{{team}} {{w}}-{{l}} kazandı",
+    "missed": "Playofflara kalamadın.",
+    "eliminated": "Elendin.",
+    "seeResult": "Sonucu gör"
+  },
+  "result": {
+    "champions": "Şampiyon",
+    "lostIn": "{{round}} turunda elendi",
+    "missed": "Playofflara kalamadı",
+    "record": "Derece",
+    "seed": "Sıra",
+    "topScorer": "En skorer",
+    "playAgain": "Yeniden draft yap",
+    "home": "Ana sayfa"
+  },
+  "injury": {
+    "Day-to-day": "Günlük takip",
+    "Short-term": "Kısa süreli",
+    "Long-term": "Uzun süreli",
+    "Season-ending": "Sezonu kapattı"
+  }
+}

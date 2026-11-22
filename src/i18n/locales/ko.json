@@ -1,0 +1,112 @@
+{
+  "app": { "tagline": "10명을 뽑아라. 82경기를 버텨라." },
+  "common": { "comingSoon": "출시 예정", "back": "뒤로", "continue": "계속", "on": "켜기", "off": "끄기" },
+  "home": {
+    "draftsPlayed": "플레이한 드래프트",
+    "titles": "우승",
+    "best": "최고 기록",
+    "modes": "게임 모드",
+    "resume": "이어서 하기",
+    "play": "플레이"
+  },
+  "mode": {
+    "current": { "title": "현재 시즌", "desc": "2026-27 로스터. 팀을 돌려 10명을 뽑으세요." },
+    "franchise": { "title": "역대 프랜차이즈", "desc": "레이커스, 셀틱스, 불스 등 역사 속 팀들." },
+    "era": { "title": "시대", "desc": "조던, 르브론, 스테판 — 한 시대에서 드래프트." },
+    "daily": { "title": "데일리 챌린지", "desc": "모두에게 같은 스핀. 하루 한 번의 기회." },
+    "duels": { "title": "대결", "desc": "친구와 1대1 드래프트 대결." }
+  },
+  "settings": {
+    "title": "설정",
+    "audio": "사운드 및 느낌",
+    "music": "음악",
+    "sfx": "효과음",
+    "haptics": "진동",
+    "notifications": "알림",
+    "notifDaily": "데일리 챌린지 준비 완료",
+    "notifStreak": "연속 기록이 끊길 위기",
+    "notifDuel": "대결 초대",
+    "game": "게임",
+    "simSpeed": "시뮬레이션 속도",
+    "nationality": "국적",
+    "language": "언어",
+    "about": "정보",
+    "privacy": "개인정보 처리방침",
+    "terms": "서비스 약관",
+    "contact": "문의하기",
+    "deleteAccount": "계정 삭제",
+    "soundDemo": "사운드 랩"
+  },
+  "draft": {
+    "pick": "{{n}}번째 지명 / 10",
+    "spin": "스핀",
+    "spinning": "돌아가는 중…",
+    "respin": "다시 스핀 ({{n}}회 남음)",
+    "capSpace": "샐러리 캡 여유",
+    "spendable": "최저 연봉 제외 {{amount}} 사용 가능",
+    "superstars": "슈퍼스타 {{n}}/2",
+    "chooseSlot": "어느 포지션에서 뛰나요?",
+    "nothingFits": "이 팀에는 로스터나 캡에 맞는 선수가 없습니다.",
+    "signFallback": "{{name}}와 {{salary}}에 계약",
+    "overCap": "캡 초과",
+    "superstarLimit": "슈퍼스타 한도",
+    "noSlot": "빈 포지션 없음",
+    "starters": "주전 5인",
+    "bench": "벤치",
+    "startSeason": "시즌 시작",
+    "landed": "나온 팀",
+    "empty": "비어 있음"
+  },
+  "season": {
+    "title": "정규 시즌",
+    "game": "{{n}}번째 경기 / 82",
+    "skipDeadline": "트레이드 마감으로 건너뛰기",
+    "skipPlayoffs": "플레이오프로 건너뛰기",
+    "pause": "일시정지",
+    "resume": "재생",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} {{games}}경기 결장 — {{label}}",
+    "seasonEnding": "{{name}} 시즌 아웃",
+    "standing": "{{n}}번 시드"
+  },
+  "deadline": {
+    "title": "트레이드 마감",
+    "desc": "교체는 한 번. 내보낼 선수를 고르고 한 번 스핀해 캡 안에서 대체 선수와 계약하세요.",
+    "chooseOut": "내보낼 선수 선택",
+    "spin": "대체 선수 스핀",
+    "skip": "그대로 가기",
+    "done": "트레이드 완료"
+  },
+  "playoffs": {
+    "title": "플레이오프",
+    "round0": "1라운드",
+    "round1": "8강",
+    "round2": "4강",
+    "round3": "파이널",
+    "next": "{{n}}차전 플레이",
+    "simRest": "끝까지 시뮬레이션",
+    "leads": "{{team}} {{w}}-{{l}} 리드",
+    "tied": "시리즈 {{w}}-{{l}} 동률",
+    "won": "{{team}} {{w}}-{{l}} 승리",
+    "missed": "플레이오프 진출 실패.",
+    "eliminated": "탈락.",
+    "seeResult": "결과 보기"
+  },
+  "result": {
+    "champions": "챔피언",
+    "lostIn": "{{round}}에서 탈락",
+    "missed": "플레이오프 진출 실패",
+    "record": "기록",
+    "seed": "시드",
+    "topScorer": "득점 1위",
+    "playAgain": "다시 드래프트",
+    "home": "홈"
+  },
+  "injury": {
+    "Day-to-day": "출전 불투명",
+    "Short-term": "단기 부상",
+    "Long-term": "장기 부상",
+    "Season-ending": "시즌 아웃"
+  }
+}

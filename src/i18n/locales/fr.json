@@ -1,0 +1,112 @@
+{
+  "app": { "tagline": "Draftez dix joueurs. Survivez aux 82." },
+  "common": { "comingSoon": "Bientôt", "back": "Retour", "continue": "Continuer", "on": "Oui", "off": "Non" },
+  "home": {
+    "draftsPlayed": "Drafts joués",
+    "titles": "Titres",
+    "best": "Meilleur bilan",
+    "modes": "Modes de jeu",
+    "resume": "Reprendre ta partie",
+    "play": "Jouer"
+  },
+  "mode": {
+    "current": { "title": "Saison actuelle", "desc": "Effectifs 2026-27. Fais tourner, draft tes dix." },
+    "franchise": { "title": "Franchises de légende", "desc": "Lakers, Celtics, Bulls et plus à travers l'histoire." },
+    "era": { "title": "Époques", "desc": "Jordan, LeBron, Steph — draft dans une époque." },
+    "daily": { "title": "Défi du jour", "desc": "Les mêmes tirages pour tous. Une chance par jour." },
+    "duels": { "title": "Duels", "desc": "Draft en face-à-face contre un ami." }
+  },
+  "settings": {
+    "title": "Réglages",
+    "audio": "Son et sensations",
+    "music": "Musique",
+    "sfx": "Effets sonores",
+    "haptics": "Vibrations",
+    "notifications": "Notifications",
+    "notifDaily": "Le défi du jour est prêt",
+    "notifStreak": "Ta série est en danger",
+    "notifDuel": "Invitations en duel",
+    "game": "Jeu",
+    "simSpeed": "Vitesse de simulation",
+    "nationality": "Nationalité",
+    "language": "Langue",
+    "about": "À propos",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "contact": "Nous contacter",
+    "deleteAccount": "Supprimer le compte",
+    "soundDemo": "Labo sonore"
+  },
+  "draft": {
+    "pick": "Choix {{n}} sur 10",
+    "spin": "Tourner",
+    "spinning": "Ça tourne…",
+    "respin": "Relancer ({{n}} restants)",
+    "capSpace": "Masse salariale",
+    "spendable": "{{amount}} disponibles après minimums",
+    "superstars": "Superstars {{n}}/2",
+    "chooseSlot": "À quel poste ?",
+    "nothingFits": "Personne dans cette équipe ne rentre dans ton effectif ou ton budget.",
+    "signFallback": "Signer {{name}} pour {{salary}}",
+    "overCap": "Budget dépassé",
+    "superstarLimit": "Limite de superstars",
+    "noSlot": "Aucun poste libre",
+    "starters": "Cinq de départ",
+    "bench": "Banc",
+    "startSeason": "Lancer la saison",
+    "landed": "Tu tombes sur",
+    "empty": "Libre"
+  },
+  "season": {
+    "title": "Saison régulière",
+    "game": "Match {{n}} sur 82",
+    "skipDeadline": "Aller à la date limite",
+    "skipPlayoffs": "Aller aux playoffs",
+    "pause": "Pause",
+    "resume": "Lecture",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} absent {{games}} matchs — {{label}}",
+    "seasonEnding": "{{name}} est out pour la saison",
+    "standing": "Tête de série n°{{n}}"
+  },
+  "deadline": {
+    "title": "Date limite des transferts",
+    "desc": "Un seul échange. Choisis un joueur à transférer, tourne une fois et signe un remplaçant sous le plafond.",
+    "chooseOut": "Choisis qui transférer",
+    "spin": "Tourner pour un remplaçant",
+    "skip": "Ne rien changer",
+    "done": "Échange conclu"
+  },
+  "playoffs": {
+    "title": "Playoffs",
+    "round0": "Premier tour",
+    "round1": "Quarts de finale",
+    "round2": "Demi-finales",
+    "round3": "Finales",
+    "next": "Jouer le match {{n}}",
+    "simRest": "Simuler jusqu'à la fin",
+    "leads": "{{team}} mène {{w}}-{{l}}",
+    "tied": "Série à égalité {{w}}-{{l}}",
+    "won": "{{team}} gagne {{w}}-{{l}}",
+    "missed": "Tu as raté les playoffs.",
+    "eliminated": "Éliminé.",
+    "seeResult": "Voir le résultat"
+  },
+  "result": {
+    "champions": "Champions",
+    "lostIn": "Éliminé en {{round}}",
+    "missed": "Pas de playoffs",
+    "record": "Bilan",
+    "seed": "Tête de série",
+    "topScorer": "Meilleur marqueur",
+    "playAgain": "Rejouer un draft",
+    "home": "Accueil"
+  },
+  "injury": {
+    "Day-to-day": "Incertain",
+    "Short-term": "Courte durée",
+    "Long-term": "Longue durée",
+    "Season-ending": "Saison terminée"
+  }
+}

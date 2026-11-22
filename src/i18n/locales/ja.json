@@ -1,0 +1,112 @@
+{
+  "app": { "tagline": "10人を指名せよ。82試合を生き抜け。" },
+  "common": { "comingSoon": "近日公開", "back": "戻る", "continue": "続ける", "on": "オン", "off": "オフ" },
+  "home": {
+    "draftsPlayed": "ドラフト回数",
+    "titles": "優勝",
+    "best": "最高成績",
+    "modes": "ゲームモード",
+    "resume": "続きから再開",
+    "play": "プレイ"
+  },
+  "mode": {
+    "current": { "title": "現在", "desc": "2026-27シーズンのロスター。チームを回して10人を指名。" },
+    "franchise": { "title": "歴代フランチャイズ", "desc": "レイカーズ、セルティックス、ブルズなど歴史を通して。" },
+    "era": { "title": "時代", "desc": "ジョーダン、レブロン、ステフ — 1つの時代から指名。" },
+    "daily": { "title": "デイリーチャレンジ", "desc": "全員同じスピン。1日1回のチャンス。" },
+    "duels": { "title": "対戦", "desc": "友達と直接ドラフト対決。" }
+  },
+  "settings": {
+    "title": "設定",
+    "audio": "サウンドと操作感",
+    "music": "音楽",
+    "sfx": "効果音",
+    "haptics": "振動",
+    "notifications": "通知",
+    "notifDaily": "デイリーチャレンジの準備完了",
+    "notifStreak": "連続記録が途切れそう",
+    "notifDuel": "対戦の招待",
+    "game": "ゲーム",
+    "simSpeed": "シミュレーション速度",
+    "nationality": "国籍",
+    "language": "言語",
+    "about": "このアプリについて",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "contact": "お問い合わせ",
+    "deleteAccount": "アカウントを削除",
+    "soundDemo": "サウンドラボ"
+  },
+  "draft": {
+    "pick": "指名 {{n}} / 10",
+    "spin": "スピン",
+    "spinning": "回転中…",
+    "respin": "再スピン（残り{{n}}回）",
+    "capSpace": "サラリーキャップ枠",
+    "spendable": "最低年俸を除き{{amount}}使用可能",
+    "superstars": "スーパースター {{n}}/2",
+    "chooseSlot": "どのポジションで起用する？",
+    "nothingFits": "このチームにはロスターかキャップに合う選手がいません。",
+    "signFallback": "{{name}}と{{salary}}で契約",
+    "overCap": "キャップ超過",
+    "superstarLimit": "スーパースター上限",
+    "noSlot": "空きポジションなし",
+    "starters": "スターティング5",
+    "bench": "ベンチ",
+    "startSeason": "シーズン開始",
+    "landed": "引いたチーム",
+    "empty": "空き"
+  },
+  "season": {
+    "title": "レギュラーシーズン",
+    "game": "第{{n}}戦 / 82",
+    "skipDeadline": "トレード期限へ進む",
+    "skipPlayoffs": "プレーオフへ進む",
+    "pause": "一時停止",
+    "resume": "再生",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} {{games}}試合欠場 — {{label}}",
+    "seasonEnding": "{{name}}はシーズン絶望",
+    "standing": "第{{n}}シード"
+  },
+  "deadline": {
+    "title": "トレード期限",
+    "desc": "交換は1回。放出する選手を選び、1回スピンして、キャップ内で代わりの選手と契約しよう。",
+    "chooseOut": "放出する選手を選ぶ",
+    "spin": "代わりの選手をスピン",
+    "skip": "現状維持",
+    "done": "トレード成立"
+  },
+  "playoffs": {
+    "title": "プレーオフ",
+    "round0": "1回戦",
+    "round1": "準々決勝",
+    "round2": "準決勝",
+    "round3": "ファイナル",
+    "next": "第{{n}}戦をプレイ",
+    "simRest": "最後までシミュレート",
+    "leads": "{{team}}が{{w}}勝{{l}}敗でリード",
+    "tied": "{{w}}勝{{l}}敗のタイ",
+    "won": "{{team}}が{{w}}勝{{l}}敗で勝利",
+    "missed": "プレーオフ進出ならず。",
+    "eliminated": "敗退。",
+    "seeResult": "結果を見る"
+  },
+  "result": {
+    "champions": "優勝",
+    "lostIn": "{{round}}で敗退",
+    "missed": "プレーオフ進出ならず",
+    "record": "成績",
+    "seed": "シード",
+    "topScorer": "得点王",
+    "playAgain": "もう一度ドラフト",
+    "home": "ホーム"
+  },
+  "injury": {
+    "Day-to-day": "様子見",
+    "Short-term": "短期離脱",
+    "Long-term": "長期離脱",
+    "Season-ending": "シーズン絶望"
+  }
+}
