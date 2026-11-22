@@ -23,11 +23,11 @@ export default function Deadline() {
   if (!g.season || !g.deadline || !pool) return <Redirect href="/season" />;
   const { season, deadline } = g;
   const user = season.teams[0];
-  const taken = new Set(season.teams.flatMap((tm) => ALL_SLOTS.map((k) => tm.slots[k].id)));
+  const taken = new Set(season.teams.flatMap((tm) => ALL_SLOTS.map((k) => tm.slots[k].name)));
 
   const done = (fn: () => void) => { fn(); router.replace('/season'); };
   const candidates = deadline.spin && landed && deadline.outId
-    ? deadline.spin.players.filter((p) => !taken.has(p.id)).map((p) => {
+    ? deadline.spin.players.filter((p) => !taken.has(p.name)).map((p) => {
         let ok = true;
         try { tradeSwap(season, deadline.outId!, p); } catch { ok = false; }
         return { p, ok };

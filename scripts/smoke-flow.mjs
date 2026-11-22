@@ -75,4 +75,13 @@ export async function runFlow({ page, base, step, shot }) {
     const drafts = await page.getByText('🔥 1').count();
     if (!drafts) throw new Error('drafts-played counter did not increment');
   });
+
+  await step('all-time lakers run starts and drafts', async () => {
+    await page.getByText('All-Time Franchises').click();
+    await page.getByTestId('mode-franchise-lal').click();
+    await page.getByTestId('spin').click();
+    await page.locator('[data-testid="option"], [data-testid="respin"]').first().waitFor({ timeout: 15000 });
+    await shot('10-lakers-draft');
+    await page.getByTestId('option').first().click();
+  });
 }

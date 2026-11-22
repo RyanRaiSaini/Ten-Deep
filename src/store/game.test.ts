@@ -17,10 +17,10 @@ const { useProfile } = await import('./profile');
 const { isComplete, options, fallbackPick, affordableSlots } = await import('../engine/draft');
 const { POOLS } = await import('../data');
 
-function draftAll() {
+function draftAll(poolId = 'current-2026') {
   const g = useGame.getState();
-  g.newRun('current-2026');
-  const pool = POOLS['current-2026'];
+  g.newRun(poolId);
+  const pool = POOLS[poolId];
   while (!isComplete(useGame.getState().draft!)) {
     useGame.getState().doSpin();
     const d = useGame.getState().draft!;
@@ -45,6 +45,18 @@ describe('game store', () => {
     useGame.getState().signDeadline(cheap);
     expect(() => useGame.getState().signDeadline(cheap)).not.toThrow();
     expect(useGame.getState().season!.teams[0].slots.B5.id).toBe('cheap-signing');
+  });
+
+  it('franchise mode: AI teams come from All-Time and never duplicate the user\'s players', async () => {
+    const { ALL_SLOTS } = await import('../engine/types');
+    for (const fr of ['franchise-lal', 'franchise-chi', 'franchise-bos']) {
+      draftAll(fr);
+      const teams = useGame.getState().season!.teams;
+      const mine = new Set(ALL_SLOTS.map((k) => teams[0].slots[k].name));
+      for (const t of teams.slice(1)) for (const k of ALL_SLOTS) expect(mine.has(t.slots[k].name), `${fr}: ${t.slots[k].name}`).toBe(false);
+      const names = teams.slice(1).map((t) => t.name);
+      expect(new Set(names).size).toBe(29);
+    }
   });
 
   it('finishing a run records exactly one draft', () => {
