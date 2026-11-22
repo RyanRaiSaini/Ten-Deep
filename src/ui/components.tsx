@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
+import { isRTL } from '../i18n';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { C, F, R, S } from './theme';
@@ -44,6 +46,12 @@ export function Button({
       <Text style={[styles.buttonText, { color: fg }]}>{label}</Text>
     </Pressable>
   );
+}
+
+/** Back arrow that points the right way in right-to-left languages. */
+export function BackButton({ onPress }: { onPress: () => void }) {
+  const { i18n } = useTranslation();
+  return <Button label={isRTL(i18n.language) ? '›' : '‹'} variant="ghost" onPress={onPress} style={{ paddingVertical: 6 }} testID="back" />;
 }
 
 export function Card({ children, style, onPress }: { children: ReactNode; style?: StyleProp<ViewStyle>; onPress?: () => void }) {

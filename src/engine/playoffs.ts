@@ -1,6 +1,6 @@
 import type { GameResult } from './game';
 import { createRng } from './rng';
-import { playGame, standings, type SeasonState } from './season';
+import { injuredIds, playGame, serveGame, standings, type SeasonState } from './season';
 
 export interface Series {
   /** Team indexes into SeasonState.teams; hi = higher seed (home court). */
@@ -17,6 +17,8 @@ export interface PlayoffState {
   season: SeasonState;
   rounds: Series[][];
   injuries: { [playerId: string]: number };
+  /** Playoff-only stat totals (regular season stays in season.totals). */
+  totals: SeasonState['totals'];
   day: number;
 }
 
@@ -31,7 +33,7 @@ export function startPlayoffs(season: SeasonState): PlayoffState {
   const table = standings(season);
   const bySeed = (seed: number) => table[seed - 1].team;
   const rounds = [FIRST_ROUND.map(([a, b]) => mk(bySeed(a), bySeed(b), a, b))];
-  return { season, rounds, injuries: { ...season.injuries }, day: 0 };
+  return { season, rounds, injuries: { ...season.injuries }, totals: {}, day: 0 };
 }
 
 function mk(hi: number, lo: number, seedHi: number, seedLo: number): Series {
@@ -42,8 +44,9 @@ function mk(hi: number, lo: number, seedHi: number, seedLo: number): Series {
 export function playNextGame(ps: PlayoffState): PlayoffState {
   if (champion(ps) !== null) return ps;
   const injuries = { ...ps.injuries };
-  for (const id of Object.keys(injuries)) injuries[id] = Math.max(0, injuries[id] - 1);
-  const totals = { ...ps.season.totals };
+  const sittingOut = injuredIds(injuries);
+  // Playoff stats are kept apart from the regular season; copy inner objects so earlier states stay intact.
+  const totals = Object.fromEntries(Object.entries(ps.totals ?? {}).map(([k, v]) => [k, { ...v }]));
   const rng = createRng(`${ps.season.seed}:playoffs:${ps.day}`);
   const current = ps.rounds[ps.rounds.length - 1].map((s) => {
     if (seriesOver(s)) return s;
@@ -60,6 +63,7 @@ export function playNextGame(ps: PlayoffState): PlayoffState {
       games: [...s.games, { result, homeIsHi }],
     };
   });
+  serveGame(injuries, sittingOut);
   const rounds = [...ps.rounds.slice(0, -1), current];
   if (current.every(seriesOver) && current.length > 1) {
     const next: Series[] = [];
@@ -74,7 +78,7 @@ export function playNextGame(ps: PlayoffState): PlayoffState {
     }
     rounds.push(next);
   }
-  return { ...ps, rounds, injuries, day: ps.day + 1, season: { ...ps.season, totals } };
+  return { ...ps, rounds, injuries, totals, day: ps.day + 1 };
 }
 
 export function champion(ps: PlayoffState): number | null {

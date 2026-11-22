@@ -2,7 +2,7 @@ import { canAfford, superstarBlocked } from './cap';
 import { simGame, type GameResult } from './game';
 import { rollInjury, type InjuryLabel } from './injuries';
 import { lineupMinutes } from './rotation';
-import { createRng } from './rng';
+import { createRng, shuffle } from './rng';
 import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pos, type Rng, type Roster, type RosterSlots } from './types';
 
 export const SEASON_GAMES = 82;
@@ -60,12 +60,12 @@ function roundRobin(n: number): [number, number][][] {
 }
 
 function buildSchedule(n: number, rng: Rng): [number, number][][] {
-  const perm = Array.from({ length: n }, (_, i) => i).sort(() => rng.next() - 0.5);
+  const perm = shuffle(Array.from({ length: n }, (_, i) => i), rng);
   const base = roundRobin(n).map((round) => round.map(([a, b]) => [perm[a], perm[b]] as [number, number]));
   const out: [number, number][][] = [];
   let cycle = 0;
   while (out.length < SEASON_GAMES) {
-    const order = [...base].sort(() => rng.next() - 0.5);
+    const order = shuffle(base, rng);
     for (const round of order) {
       if (out.length >= SEASON_GAMES) break;
       out.push(cycle % 2 === 0 ? round : round.map(([a, b]) => [b, a] as [number, number]));
@@ -122,6 +122,17 @@ export function playGame(
   return result;
 }
 
+/** Players who sit out the next game. */
+export const injuredIds = (injuries: { [id: string]: number }) => Object.keys(injuries).filter((id) => injuries[id] > 0);
+
+/**
+ * After a game day: everyone who sat it out has served one game. Injuries picked up during the day
+ * are untouched, so a player hurt for N games misses exactly the next N.
+ */
+export function serveGame(injuries: { [id: string]: number }, sittingOut: string[]) {
+  for (const id of sittingOut) injuries[id] = Math.max(0, injuries[id] - 1);
+}
+
 /** Advance up to `games` rounds; stops at the trade deadline and at the end of the season. */
 export function advance(state: SeasonState, games: number): SeasonState {
   const s: SeasonState = {
@@ -136,8 +147,7 @@ export function advance(state: SeasonState, games: number): SeasonState {
 
   while (s.round < target) {
     const rng = createRng(`${s.seed}:round:${s.round}`);
-    // heal first: everyone plays once per round
-    for (const id of Object.keys(s.injuries)) s.injuries[id] = Math.max(0, s.injuries[id] - 1);
+    const sittingOut = injuredIds(s.injuries);
     for (const [home, away] of s.schedule[s.round]) {
       const result = playGame(s.teams, s.injuries, s.totals, home, away, rng, (team, p, g, label) => {
         if (team === 0) s.log.push({ kind: 'injury', round: s.round, team, playerId: p.id, name: p.name, games: g, label });
@@ -153,6 +163,7 @@ export function advance(state: SeasonState, games: number): SeasonState {
       s.records[away].pa += result.homeScore;
       if (home === 0 || away === 0) s.log.push({ kind: 'game', round: s.round, home, away, result });
     }
+    serveGame(s.injuries, sittingOut);
     s.round++;
   }
   return s;

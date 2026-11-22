@@ -1,7 +1,7 @@
 import { getLocales } from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { Platform } from 'react-native';
+import { I18nManager, Platform } from 'react-native';
 import { LANGUAGES, RTL_LANGUAGES, type Language } from './languages';
 import { resources } from './resources';
 
@@ -17,12 +17,24 @@ i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
 });
 
-/** Switch language and flip layout direction for right-to-left languages (Arabic). */
+export const isRTL = (lng: string) => RTL_LANGUAGES.includes(lng as Language);
+
+/**
+ * Switch language and flip layout direction for right-to-left languages (Arabic).
+ * Web flips immediately via <html dir>. iOS/Android flip through I18nManager, which React Native
+ * applies on the next app launch.
+ */
 export function applyLanguage(lng: Language) {
   if (i18n.language !== lng) i18n.changeLanguage(lng);
-  if (Platform.OS === 'web' && typeof document !== 'undefined') {
-    document.documentElement.dir = RTL_LANGUAGES.includes(lng) ? 'rtl' : 'ltr';
-    document.documentElement.lang = lng;
+  const rtl = isRTL(lng);
+  if (Platform.OS === 'web') {
+    if (typeof document !== 'undefined') {
+      document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+      document.documentElement.lang = lng;
+    }
+  } else if (I18nManager.isRTL !== rtl) {
+    I18nManager.allowRTL(rtl);
+    I18nManager.forceRTL(rtl);
   }
 }
 

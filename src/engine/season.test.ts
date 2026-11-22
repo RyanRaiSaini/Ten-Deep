@@ -52,8 +52,45 @@ describe('season', () => {
 
   it('injured players miss games and come back', () => {
     const s = advance(advance(fresh(), 100), 100);
-    expect(s.log.some((e) => e.kind === 'injury')).toBe(true);
+    // injuries happen across the league over a season (the log only records the user's own)
+    expect(Object.keys(s.injuries).length).toBeGreaterThan(5);
     for (const [, left] of Object.entries(s.injuries)) expect(left).toBeGreaterThanOrEqual(0);
+  });
+
+  it('a player injured for N games misses exactly N games', () => {
+    const s0 = advance(fresh(), 10);
+    const id = s0.teams[0].slots.PG.id;
+    const played = (s: typeof s0, round: number) =>
+      s.log.some((e) => e.kind === 'game' && e.round === round && e.result.box.some((b) => b.playerId === id));
+    // as if he got hurt in the game just played, for 2 games
+    let s = { ...s0, injuries: { ...s0.injuries, [id]: 2 } };
+    s = advance(s, 1);
+    expect(played(s, 10)).toBe(false);
+    s = advance(s, 1);
+    expect(played(s, 11)).toBe(false);
+    s = advance(s, 1);
+    expect(played(s, 12)).toBe(true);
+  });
+
+  it('the schedule is identical regardless of the JS engine sort algorithm', () => {
+    const v8 = createSeason(teams[0], teams.slice(1), 'engine-check').schedule;
+    const native = Array.prototype.sort;
+    // A different, valid sort (insertion sort) — like JavaScriptCore/Hermes differing from V8.
+    Array.prototype.sort = function <T>(this: T[], cmp?: (a: T, b: T) => number) {
+      const c = cmp ?? ((a: T, b: T) => (String(a) < String(b) ? -1 : String(a) > String(b) ? 1 : 0));
+      for (let i = 1; i < this.length; i++) {
+        const x = this[i];
+        let j = i - 1;
+        while (j >= 0 && c(this[j], x) > 0) { this[j + 1] = this[j]; j--; }
+        this[j + 1] = x;
+      }
+      return this;
+    };
+    try {
+      expect(createSeason(teams[0], teams.slice(1), 'engine-check').schedule).toEqual(v8);
+    } finally {
+      Array.prototype.sort = native;
+    }
   });
 
   it('is deterministic for the same seed', () => {
@@ -102,6 +139,28 @@ describe('playoffs', () => {
       expect(Math.max(s.winsHi, s.winsLo)).toBe(4);
       expect(Math.min(s.winsHi, s.winsLo)).toBeLessThan(4);
     }
+  });
+
+  it('playing a playoff game does not mutate the previous state or the season totals', () => {
+    const ps = startPlayoffs(done);
+    const before = JSON.stringify(ps);
+    const seasonTotals = JSON.stringify(done.totals);
+    const after = playNextGame(ps);
+    expect(JSON.stringify(ps)).toBe(before);
+    expect(JSON.stringify(after.season.totals)).toBe(seasonTotals);
+    expect(Object.keys(after.totals).length).toBeGreaterThan(0);
+  });
+
+  it('playoff injuries also last exactly N games', () => {
+    const ps0 = startPlayoffs(done);
+    const s = ps0.rounds[0][0];
+    const id = ps0.season.teams[s.hi].slots.PG.id;
+    const playedIn = (ps: typeof ps0, g: number) => ps.rounds[0][0].games[g]?.result.box.some((b) => b.playerId === id);
+    let ps = { ...ps0, injuries: { ...ps0.injuries, [id]: 1 } };
+    ps = playNextGame(ps);
+    expect(playedIn(ps, 0)).toBe(false);
+    ps = playNextGame(ps);
+    expect(playedIn(ps, 1)).toBe(true);
   });
 
   it('crowns exactly one champion', () => {
