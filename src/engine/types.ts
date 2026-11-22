@@ -17,6 +17,8 @@ export interface Player {
   dur: number;
   age?: number;
   tag?: string;
+  /** Career mode: salary locked in when signed ($M). Without it, salary follows the current rating. */
+  salary?: number;
   /** Data needs owner verification (e.g. roster move after mid-2026). */
   verify?: boolean;
   stats?: { ppg: number; rpg: number; apg: number };

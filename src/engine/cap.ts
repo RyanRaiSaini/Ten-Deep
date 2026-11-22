@@ -37,12 +37,17 @@ export function salaryFor(ovr: number): number {
 
 const filled = (roster: RosterSlots) => ALL_SLOTS.filter((s) => roster[s]);
 
+/** What a player costs: his signed contract if he has one (career mode), else the market rate for his rating. */
+export function payOf(p: Player): number {
+  return p.salary ?? salaryFor(p.ovr);
+}
+
 export function capRoom(roster: RosterSlots): number {
-  return CAP - filled(roster).reduce((sum, s) => sum + salaryFor(roster[s]!.ovr), 0);
+  return CAP - filled(roster).reduce((sum, s) => sum + payOf(roster[s]!), 0);
 }
 
 /** True if picking `p` still leaves enough room to fill every other open slot at minimum salary. */
 export function canAfford(roster: RosterSlots, p: Player): boolean {
   const openAfter = ALL_SLOTS.length - filled(roster).length - 1;
-  return capRoom(roster) - salaryFor(p.ovr) >= openAfter * MIN_SALARY;
+  return capRoom(roster) - payOf(p) >= openAfter * MIN_SALARY;
 }
