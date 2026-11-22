@@ -43,7 +43,7 @@ export const isDuelComplete = (s: DuelState) => isComplete(s.a) && isComplete(s.
 
 /** The current player's draft, seeing the shared spin and everything either player has taken. */
 function view(s: DuelState): DraftState {
-  return { ...s[s.turn], used: taken(s), spin: s.spin };
+  return { ...s[s.turn], used: taken(s), spin: s.spin, rivals: [s[other(s.turn)].roster], seat: s.turn === 'a' ? 0 : 1 };
 }
 
 export function duelOptions(s: DuelState, pool: Pool): DraftOption[] {
@@ -51,7 +51,7 @@ export function duelOptions(s: DuelState, pool: Pool): DraftOption[] {
 }
 
 function advance(s: DuelState, me: DraftState, pool: Pool): DuelState {
-  const next: DuelState = { ...s, [s.turn]: { ...me, spin: null } };
+  const next: DuelState = { ...s, [s.turn]: { ...me, spin: null, rivals: undefined, seat: undefined } };
   if (s.picksThisRound === 0) return { ...next, turn: other(s.turn), picksThisRound: 1 };
   const round = s.round + 1;
   const done = isComplete(next.a) && isComplete(next.b);
