@@ -37,6 +37,10 @@
     "duels": {
       "title": "Düellolar",
       "desc": "Bir arkadaşına karşı kafa kafaya draft yap."
+    },
+    "crisis": {
+      "title": "Yönetim krizi",
+      "desc": "Takımını kur. Yönetim bir hedef koyar. Her iki ayda bir kriz kartı her şeyi değiştirir."
     }
   },
   "settings": {
@@ -190,5 +194,119 @@
     "dailyBody": "Yeni çevirmeler, sorular ve düellolar seni bekliyor. Her birine tek hak.",
     "streakTitle": "Serin tehlikede 🔥",
     "streakBody": "Bugün draft yapmadın. Gece yarısından önce kadronu kur."
+  },
+  "crisis": {
+    "title": "Yönetim krizi",
+    "desc": "Takımını kur. Yönetim bir hedef koyar. Her iki ayda bir kriz kartı her şeyi değiştirir.",
+    "m0": "Hazırlık dönemi",
+    "m1": "Aralık",
+    "m2": "Şubat",
+    "m3": "Nisan",
+    "good": "İyi haber",
+    "bad": "Kriz",
+    "legendary": "Efsanevi",
+    "objective": "Yönetim hedefi",
+    "obj_title": "Şampiyon ol",
+    "obj_semis": "Yarı finale çık",
+    "obj_playoffs": "Playofflara kal",
+    "obj_wins30": "30 maç kazan",
+    "v_legend": "Efsane — formanı emekliye ayıracaklar",
+    "v_extended": "Sözleşme uzatıldı",
+    "v_survived": "Kurtuldun — ince buzdasın",
+    "v_fired": "Kovuldun",
+    "accept": "Kabul et",
+    "pickIn": "Kim geliyor, seç",
+    "pickOut": "Kim gidiyor, seç",
+    "confirm": "Hamleyi yap",
+    "cardN": "Kart {{n}} / 4",
+    "chooseMode": "Bu oyun için bir mod seç",
+    "cards": {
+      "cap-boost": {
+        "title": "Bütçe artışı",
+        "flavor": "Patron çek defterini açtı.",
+        "effect": "En düşük reytingli oyuncunun yerine 3 kaliteli serbest oyuncudan 1'ini al. Patron öder."
+      },
+      "hot-streak": {
+        "title": "Galibiyet serisi",
+        "flavor": "Salon yıkılıyor.",
+        "effect": "Sonraki 10 maç +3 takım reytingi."
+      },
+      "rookie-gem": {
+        "title": "Çaylak cevher",
+        "flavor": "Gözlemcilerin bir cevher buldu.",
+        "effect": "En düşük reytingli oyuncunun yerine 3 genç yetenekten 1'ini seç."
+      },
+      "veteran-mentor": {
+        "title": "Usta veteran",
+        "flavor": "Tecrübeli bir oyuncu son bir yüzük istiyor.",
+        "effect": "En zayıf yedek yerin için 3 veterandan 1'ini seç. Patron öder."
+      },
+      "locker-room-glue": {
+        "title": "Soyunma odası uyumu",
+        "flavor": "Sonunda herkes anlaşıyor.",
+        "effect": "Sezon sonuna kadar +1 takım reytingi."
+      },
+      "clean-bill": {
+        "title": "Revir boş",
+        "flavor": "Sağlık ekibi mucize yarattı.",
+        "effect": "Tüm sakat oyuncuların iyileşti."
+      },
+      "media-frenzy": {
+        "title": "Medya çılgınlığı",
+        "flavor": "Bilet satışları çöktü. Patron ünlü bir yıldız istiyor.",
+        "effect": "5 ünlü yıldızdan 1'ini al ve oyuncularından birini gönder."
+      },
+      "blow-it-up": {
+        "title": "Her şeyi dağıt",
+        "flavor": "Patron yeniden yapılanma istiyor.",
+        "effect": "En iyi oyuncun ligin en iyi genç yeteneğiyle takas edilir."
+      },
+      "trade-demand": {
+        "title": "Takas talebi",
+        "flavor": "Bir ilk beş oyuncusu hemen gitmek istiyor.",
+        "effect": "Onun pozisyonunda daha düşük reytingli 3 yedekten 1'ini seç."
+      },
+      "injury-bug": {
+        "title": "Sakatlık salgını",
+        "flavor": "Revir doldu.",
+        "effect": "En çok süre alan iki oyuncun 15 ve 8 maç yok."
+      },
+      "coach-fired": {
+        "title": "Koç kovuldu",
+        "flavor": "Yönetim paniğe kapıldı.",
+        "effect": "10 maç −3 reyting, sonra sezon sonuna kadar +1."
+      },
+      "luxury-tax": {
+        "title": "Lüks vergisi paniği",
+        "flavor": "Muhasebe faturayı buldu.",
+        "effect": "En çok kazanan oyuncunu en az 10 milyon $ daha ucuz 3 oyuncudan 1'iyle takas et."
+      },
+      "locker-room-drama": {
+        "title": "Soyunma odası kavgası",
+        "flavor": "En iyi yedeğin sorun çıkarıyor.",
+        "effect": "Seç: 15 maç −2 reyting ya da onu asgari ücretli bir oyuncuyla takas et."
+      },
+      "superteam-rumor": {
+        "title": "Süper takım söylentisi",
+        "flavor": "Bir süperstar sana katılmak istiyor.",
+        "effect": "Seç: 95+ bir yıldızı al ve en çok kazanan iki ilk beş oyuncunu kaybet ya da reddet."
+      },
+      "legend-comeback": {
+        "title": "Efsanenin dönüşü",
+        "flavor": "Bir efsane yeniden ayakkabılarını bağlıyor.",
+        "effect": "En zayıf yedek yerin için 3 efsaneden (90+) 1'ini seç."
+      },
+      "midseason-miracle": {
+        "title": "Sezon ortası mucizesi",
+        "flavor": "Özel bir şey oluyor.",
+        "effect": "Sonraki 15 maç +4 takım reytingi."
+      }
+    },
+    "options": {
+      "dramaA": "Dayan (15 maç −2)",
+      "dramaB": "Takas et",
+      "superA": "Süperstarı al",
+      "superB": "Reddet"
+    }
   }
 }

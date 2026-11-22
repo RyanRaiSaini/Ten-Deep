@@ -118,7 +118,7 @@ export default function Draft() {
       />
 
       {complete && (
-        <Button label={t('draft.startSeason')} variant="gold" onPress={() => { g.startSeason(); router.replace('/season'); }} testID="start-season" />
+        <Button label={t('draft.startSeason')} variant="gold" onPress={() => { g.startSeason(); router.replace(useGame.getState().phase === 'crisis' ? '/crisis' : '/season'); }} testID="start-season" />
       )}
     </Screen>
   );

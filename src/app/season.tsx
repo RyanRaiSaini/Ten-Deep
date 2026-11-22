@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { feel } from '../audio/feel';
 import { DEADLINE_GAME, SEASON_GAMES, advance, outSet, standings, type SeasonState } from '../engine/season';
 import { isRTL } from '../i18n';
+import { CARD_ROUNDS, cardDef } from '../engine/crisis/deck';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { useSettings } from '../store/settings';
@@ -24,18 +25,20 @@ export default function Season() {
   live.current = season;
 
   const atDeadline = !!season && season.round === DEADLINE_GAME && !season.deadlineUsed;
+  const crisis = g.crisis;
+  const atCard = !!season && !!crisis && crisis.resolved > 0 && season.round === CARD_ROUNDS[crisis.resolved];
   const over = !!season && season.round >= SEASON_GAMES;
 
   // Tick one game at a time at the chosen sim speed.
   useEffect(() => {
-    if (!season || !playing || atDeadline || over) return;
+    if (!season || !playing || atDeadline || atCard || over) return;
     const id = setTimeout(() => {
       const next = advance(season, 1);
       setSeason(next);
       if (next.round % 5 === 0) useGame.getState().setSeason(next);
     }, BASE_TICK_MS / speed);
     return () => clearTimeout(id);
-  }, [season, playing, atDeadline, over, speed]);
+  }, [season, playing, atDeadline, atCard, over, speed]);
 
   // Save progress when leaving the screen; open the deadline when we reach it.
   useEffect(() => () => { if (live.current) useGame.getState().setSeason(live.current); }, []);
@@ -45,6 +48,11 @@ export default function Season() {
     useGame.getState().openDeadline(live.current);
     router.replace('/deadline');
   }, [atDeadline]);
+  useEffect(() => {
+    if (!atCard || !live.current) return;
+    useGame.getState().openCrisis(live.current);
+    router.replace('/crisis');
+  }, [atCard]);
   useEffect(() => {
     if (!over || !live.current) return;
     useGame.getState().setSeason(live.current);
@@ -62,8 +70,8 @@ export default function Season() {
   const skipTo = (target: 'deadline' | 'playoffs') => {
     let s = season;
     if (target === 'playoffs' && !s.deadlineUsed) s = { ...s, deadlineUsed: true };
+    // One jump: it stops at the deadline (if still open) and at any crisis card on the way.
     s = advance(s, SEASON_GAMES);
-    if (target === 'playoffs') s = advance(s, SEASON_GAMES);
     setSeason(s);
     g.setSeason(s);
   };
@@ -83,6 +91,14 @@ export default function Season() {
           <View style={[styles.progressFill, { width: `${(season.round / SEASON_GAMES) * 100}%` }]} />
           <View style={[styles.deadlineMark, { [isRTL(i18n.language) ? "right" : "left"]: `${(DEADLINE_GAME / SEASON_GAMES) * 100}%` }]} />
         </View>
+        {crisis?.objective && (
+          <View style={styles.crisisRow}>
+            <Text style={styles.crisisGoal}>🎯 {t(`crisis.obj_${crisis.objective.tier}`)}</Text>
+            <Text style={styles.crisisCards}>
+              {CARD_ROUNDS.map((_, i) => (crisis.drawn[i] ? cardDef(crisis.drawn[i]).icon : '🂠')).join(' ')}
+            </Text>
+          </View>
+        )}
       </Card>
 
       {!over && (
@@ -144,4 +160,7 @@ const styles = StyleSheet.create({
   opp: { color: C.muted, flex: 1 },
   gnum: { color: C.line, fontSize: 12 },
   injury: { color: C.gold, fontSize: 13 },
+  crisisRow: { flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', marginTop: S.sm },
+  crisisGoal: { color: C.text, fontWeight: '800' },
+  crisisCards: { fontSize: 18, letterSpacing: 2 },
 });

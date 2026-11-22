@@ -71,7 +71,7 @@ export interface Strength {
 }
 
 /** Minutes-weighted team ratings. Out-of-position players lose OOP_PENALTY. */
-export function teamStrength(lineup: LineupEntry[]): Strength {
+export function teamStrength(lineup: LineupEntry[], mod = 0): Strength {
   let off = 0;
   let def = 0;
   for (const e of lineup) {
@@ -80,6 +80,8 @@ export function teamStrength(lineup: LineupEntry[]): Strength {
     off += w * (effective(0.5 * e.player.off + 0.5 * e.player.ovr) - pen);
     def += w * (effective(0.5 * e.player.def + 0.5 * e.player.ovr) - pen);
   }
+  off += mod;
+  def += mod;
   return { off, def, net: off + def };
 }
 
