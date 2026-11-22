@@ -14,13 +14,15 @@ vi.mock('@react-native-async-storage/async-storage', () => {
 
 const { useGame } = await import('./game');
 const { useProfile } = await import('./profile');
-const { isComplete, options, fallbackPick, affordableSlots } = await import('../engine/draft');
+const { isComplete, options, fallbackPick, affordableSlots, startDraft } = await import('../engine/draft');
 const { POOLS } = await import('../data');
 
 function draftAll(poolId = 'current-2026') {
   const g = useGame.getState();
   g.newRun(poolId);
   const pool = POOLS[poolId];
+  // Fixed seed: newRun's random seed would make any failure unreproducible.
+  useGame.setState({ draft: startDraft(pool, `test-${poolId}`) });
   while (!isComplete(useGame.getState().draft!)) {
     useGame.getState().doSpin();
     const d = useGame.getState().draft!;
