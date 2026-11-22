@@ -136,5 +136,25 @@
     "pickFranchise": "프랜차이즈 선택",
     "pickEra": "시대 선택",
     "players": "선수 {{n}}명"
+  },
+  "daily": {
+    "title": "데일리 챌린지",
+    "draft": "데일리 드래프트",
+    "draftDesc": "오늘은 모두 같은 스핀과 같은 리그.",
+    "trivia": "퀴즈",
+    "triviaDesc": "Ten Deep 데이터베이스에서 5문제.",
+    "rank": "선수 순위",
+    "rankDesc": "5명의 선수를 레이팅 순으로 정렬하세요.",
+    "done": "완료",
+    "play": "플레이",
+    "next": "다음",
+    "submit": "확정",
+    "correct": "정답!",
+    "wrong": "아쉽네요 — 정답은 {{answer}}",
+    "tomorrow": "내일 새로운 챌린지.",
+    "highest": "Ten Deep 레이팅이 가장 높은 선수는?",
+    "teamQ": "{{season}}년 {{name}}의 소속 팀은?",
+    "rankHint": "레이팅 높은 순으로 위에서부터",
+    "yourScore": "점수: {{n}}/5"
   }
 }

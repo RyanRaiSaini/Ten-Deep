@@ -59,6 +59,26 @@ describe('game store', () => {
     }
   });
 
+  it('daily draft: same spins for everyone, result recorded once for the day', async () => {
+    const { useDaily } = await import('./daily');
+    useGame.getState().newDaily('2026-11-22');
+    useGame.getState().doSpin();
+    const first = useGame.getState().draft!.spin!.id;
+    useGame.getState().quit();
+    useGame.getState().newDaily('2026-11-22');
+    useGame.getState().doSpin();
+    expect(useGame.getState().draft!.spin!.id).toBe(first);
+
+    useGame.getState().quit();
+    draftAll();
+    useGame.setState({ daily: '2026-11-22' });
+    useGame.getState().beginPlayoffs();
+    useGame.getState().simPlayoffs();
+    useGame.getState().finish();
+    const rec = useDaily.getState().days['2026-11-22'].draft!;
+    expect(rec.wins + rec.losses).toBe(82);
+  });
+
   it('finishing a run records exactly one draft', () => {
     draftAll();
     const before = useProfile.getState().draftsPlayed;

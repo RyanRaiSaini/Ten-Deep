@@ -136,5 +136,25 @@
     "pickFranchise": "Bir kulüp seç",
     "pickEra": "Bir dönem seç",
     "players": "{{n}} oyuncu"
+  },
+  "daily": {
+    "title": "Günlük görev",
+    "draft": "Günlük draft",
+    "draftDesc": "Bugün herkese aynı çevirmeler ve lig.",
+    "trivia": "Bilgi yarışması",
+    "triviaDesc": "Ten Deep veritabanından 5 soru.",
+    "rank": "Oyuncu sıralaması",
+    "rankDesc": "5 oyuncuyu reytinge göre sırala.",
+    "done": "Tamam",
+    "play": "Oyna",
+    "next": "Sonraki",
+    "submit": "Onayla",
+    "correct": "Doğru!",
+    "wrong": "Olmadı — cevap {{answer}}",
+    "tomorrow": "Yeni görevler yarın.",
+    "highest": "En yüksek Ten Deep reytingi kimde?",
+    "teamQ": "{{name}} {{season}} yılında hangi takımda oynadı?",
+    "rankHint": "En yüksek reyting en üstte",
+    "yourScore": "Skorun: {{n}}/5"
   }
 }

@@ -10,6 +10,8 @@ import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs, type PlayoffSt
 import { createRng, shuffle } from '../engine/rng';
 import { advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
 import { ALL_SLOTS, type Player, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
+import { dailySeed } from '../engine/daily';
+import { useDaily } from './daily';
 import { useProfile } from './profile';
 
 export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'playoffs' | 'result';
@@ -17,6 +19,8 @@ export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'playoffs' | 'res
 export interface GameStore {
   phase: Phase;
   poolId: string;
+  /** Set when this run is today's Daily Draft (YYYY-MM-DD). */
+  daily: string | null;
   draft: DraftState | null;
   season: SeasonState | null;
   playoffs: PlayoffState | null;
@@ -24,6 +28,8 @@ export interface GameStore {
   deadline: { outId: string | null; spin: TeamSeason | null; spun: boolean } | null;
 
   newRun: (poolId: string) => void;
+  /** Today's Daily Draft: Current Day pool, seed fixed by date, so everyone gets the same spins and league. */
+  newDaily: (key: string) => void;
   doSpin: () => void;
   doRespin: () => void;
   doPick: (playerId: string, slot: SlotId) => void;
@@ -50,12 +56,15 @@ export const useGame = create<GameStore>()(
     (set, get) => ({
       phase: 'idle',
       poolId: 'current-2026',
+      daily: null,
       draft: null,
       season: null,
       playoffs: null,
       deadline: null,
 
-      newRun: (poolId) => set({ phase: 'draft', poolId, draft: startDraft(pool(poolId), newSeed()), season: null, playoffs: null, deadline: null }),
+      newRun: (poolId) => set({ phase: 'draft', poolId, daily: null, draft: startDraft(pool(poolId), newSeed()), season: null, playoffs: null, deadline: null }),
+      newDaily: (key) =>
+        set({ phase: 'draft', poolId: 'current-2026', daily: key, draft: startDraft(pool('current-2026'), dailySeed(key)), season: null, playoffs: null, deadline: null }),
       doSpin: () => set((s) => ({ draft: spin(s.draft!, pool(s.poolId)) })),
       doRespin: () => set((s) => ({ draft: respin(s.draft!, pool(s.poolId)) })),
       doPick: (playerId, slot) => set((s) => ({ draft: pick(s.draft!, playerId, slot, pool(s.poolId)) })),
@@ -114,23 +123,31 @@ export const useGame = create<GameStore>()(
       skipDeadline: () =>
         set((s) => (s.season ? { deadline: null, phase: 'season', season: { ...s.season, deadlineUsed: true } } : {})),
 
-      beginPlayoffs: () => set((s) => ({ phase: 'playoffs', playoffs: startPlayoffs(advance(s.season!, 82)) })),
+      // Finish whatever is left of the season (advance pauses at the deadline, so step past it) and seed the bracket.
+      beginPlayoffs: () =>
+        set((s) => {
+          const done = advance(advance({ ...s.season!, deadlineUsed: true }, 82), 82);
+          return { phase: 'playoffs', season: done, playoffs: startPlayoffs(done) };
+        }),
       playoffGame: () => set((s) => ({ playoffs: playNextGame(s.playoffs!) })),
       simPlayoffs: () => set((s) => ({ playoffs: simPlayoffsToEnd(s.playoffs!) })),
       finish: () => {
         const { playoffs, phase } = get();
         if (!playoffs || phase === 'result') return;
         const rec = playoffs.season.records[0];
-        useProfile.getState().recordDraft({ wins: rec.w, losses: rec.l, champion: champion(playoffs) === 0 });
+        const result = { wins: rec.w, losses: rec.l, champion: champion(playoffs) === 0 };
+        useProfile.getState().recordDraft(result);
+        const { daily } = get();
+        if (daily) useDaily.getState().record(daily, 'draft', result);
         set({ phase: 'result' });
       },
-      quit: () => set({ phase: 'idle', draft: null, season: null, playoffs: null, deadline: null }),
+      quit: () => set({ phase: 'idle', daily: null, draft: null, season: null, playoffs: null, deadline: null }),
     }),
     {
       name: 'tendeep-run',
       version: 1,
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (s) => ({ phase: s.phase, poolId: s.poolId, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
+      partialize: (s) => ({ phase: s.phase, poolId: s.poolId, daily: s.daily, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
     },
   ),
 );

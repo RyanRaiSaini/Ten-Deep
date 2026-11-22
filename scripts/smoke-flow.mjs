@@ -76,7 +76,29 @@ export async function runFlow({ page, base, step, shot }) {
     if (!drafts) throw new Error('drafts-played counter did not increment');
   });
 
+  await step('daily trivia and player rank play through and record', async () => {
+    await page.goto(base);
+    await page.getByText('Daily Challenge').click();
+    await page.getByTestId('daily-trivia').click();
+    for (let q = 0; q < 5; q++) {
+      await page.getByTestId('trivia-choice').first().click();
+      if (q === 0) await shot('11-trivia');
+      await page.getByTestId('trivia-next').click();
+    }
+    await page.getByTestId('trivia-score').waitFor();
+    await page.getByTestId('trivia-done').click();
+    await page.getByTestId('daily-rank').click();
+    await page.getByTestId('up-4').click();
+    await page.getByTestId('rank-submit').click();
+    await page.getByTestId('rank-score').waitFor();
+    await shot('12-rank');
+    await page.getByTestId('back').last().click();
+    if (!(await page.getByText(/\d\/5/).count())) throw new Error('daily hub did not show scores');
+    await shot('13-daily-hub');
+  });
+
   await step('all-time lakers run starts and drafts', async () => {
+    await page.goto(base);
     await page.getByText('All-Time Franchises').click();
     await page.getByTestId('mode-franchise-lal').click();
     await page.getByTestId('spin').click();

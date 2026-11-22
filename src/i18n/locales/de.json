@@ -136,5 +136,25 @@
     "pickFranchise": "Wähle ein Franchise",
     "pickEra": "Wähle eine Ära",
     "players": "{{n}} Spieler"
+  },
+  "daily": {
+    "title": "Tägliche Challenge",
+    "draft": "Tagesdraft",
+    "draftDesc": "Heute gleiche Drehungen und Liga für alle.",
+    "trivia": "Quiz",
+    "triviaDesc": "5 Fragen aus der Ten-Deep-Datenbank.",
+    "rank": "Spieler-Ranking",
+    "rankDesc": "Ordne 5 Spieler nach Rating.",
+    "done": "Fertig",
+    "play": "Spielen",
+    "next": "Weiter",
+    "submit": "Festlegen",
+    "correct": "Richtig!",
+    "wrong": "Knapp — es war {{answer}}",
+    "tomorrow": "Morgen neue Challenges.",
+    "highest": "Wer hat das höchste Ten-Deep-Rating?",
+    "teamQ": "Für welches Team spielte {{name}} {{season}}?",
+    "rankHint": "Höchstes Rating oben",
+    "yourScore": "Dein Ergebnis: {{n}}/5"
   }
 }
