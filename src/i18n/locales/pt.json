@@ -1,0 +1,112 @@
+{
+  "app": { "tagline": "Draft de dez. Sobreviva aos 82." },
+  "common": { "comingSoon": "Em breve", "back": "Voltar", "continue": "Continuar", "on": "Sim", "off": "Não" },
+  "home": {
+    "draftsPlayed": "Drafts jogados",
+    "titles": "Títulos",
+    "best": "Melhor campanha",
+    "modes": "Modos de jogo",
+    "resume": "Retomar sua partida",
+    "play": "Jogar"
+  },
+  "mode": {
+    "current": { "title": "Atualidade", "desc": "Elencos 2026-27. Gire um time e escolha seus dez." },
+    "franchise": { "title": "Franquias históricas", "desc": "Lakers, Celtics, Bulls e mais ao longo da história." },
+    "era": { "title": "Eras", "desc": "Jordan, LeBron, Steph — draft de uma era." },
+    "daily": { "title": "Desafio diário", "desc": "Os mesmos giros para todos. Uma chance por dia." },
+    "duels": { "title": "Duelos", "desc": "Draft cara a cara contra um amigo." }
+  },
+  "settings": {
+    "title": "Configurações",
+    "audio": "Som e sensação",
+    "music": "Música",
+    "sfx": "Efeitos sonoros",
+    "haptics": "Vibração",
+    "notifications": "Notificações",
+    "notifDaily": "O desafio diário está pronto",
+    "notifStreak": "Sua sequência está em risco",
+    "notifDuel": "Convites para duelos",
+    "game": "Jogo",
+    "simSpeed": "Velocidade da simulação",
+    "nationality": "Nacionalidade",
+    "language": "Idioma",
+    "about": "Sobre",
+    "privacy": "Política de privacidade",
+    "terms": "Termos de serviço",
+    "contact": "Fale conosco",
+    "deleteAccount": "Excluir conta",
+    "soundDemo": "Laboratório de som"
+  },
+  "draft": {
+    "pick": "Escolha {{n}} de 10",
+    "spin": "Girar",
+    "spinning": "Girando…",
+    "respin": "Girar de novo ({{n}} restantes)",
+    "capSpace": "Espaço no teto",
+    "spendable": "{{amount}} disponíveis após mínimos",
+    "superstars": "Superestrelas {{n}}/2",
+    "chooseSlot": "Em que posição ele joga?",
+    "nothingFits": "Ninguém deste time cabe no seu elenco ou no teto.",
+    "signFallback": "Contratar {{name}} por {{salary}}",
+    "overCap": "Acima do teto",
+    "superstarLimit": "Limite de superestrelas",
+    "noSlot": "Sem vaga livre",
+    "starters": "Quinteto titular",
+    "bench": "Banco",
+    "startSeason": "Começar a temporada",
+    "landed": "Você tirou",
+    "empty": "Livre"
+  },
+  "season": {
+    "title": "Temporada regular",
+    "game": "Jogo {{n}} de 82",
+    "skipDeadline": "Pular para o prazo de trocas",
+    "skipPlayoffs": "Pular para os playoffs",
+    "pause": "Pausar",
+    "resume": "Jogar",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} fora por {{games}} jogos — {{label}}",
+    "seasonEnding": "{{name}} está fora da temporada",
+    "standing": "Cabeça de chave nº {{n}}"
+  },
+  "deadline": {
+    "title": "Prazo de trocas",
+    "desc": "Uma troca. Escolha um jogador para trocar, gire uma vez e contrate um substituto abaixo do teto.",
+    "chooseOut": "Escolha quem trocar",
+    "spin": "Girar por um substituto",
+    "skip": "Manter o elenco",
+    "done": "Troca feita"
+  },
+  "playoffs": {
+    "title": "Playoffs",
+    "round0": "Primeira rodada",
+    "round1": "Quartas de final",
+    "round2": "Semifinais",
+    "round3": "Finais",
+    "next": "Jogar jogo {{n}}",
+    "simRest": "Simular até o fim",
+    "leads": "{{team}} lidera por {{w}}-{{l}}",
+    "tied": "Série empatada em {{w}}-{{l}}",
+    "won": "{{team}} vence por {{w}}-{{l}}",
+    "missed": "Você ficou fora dos playoffs.",
+    "eliminated": "Eliminado.",
+    "seeResult": "Ver resultado"
+  },
+  "result": {
+    "champions": "Campeões",
+    "lostIn": "Eliminado nas {{round}}",
+    "missed": "Fora dos playoffs",
+    "record": "Campanha",
+    "seed": "Cabeça de chave",
+    "topScorer": "Cestinha",
+    "playAgain": "Novo draft",
+    "home": "Início"
+  },
+  "injury": {
+    "Day-to-day": "Dia a dia",
+    "Short-term": "Curto prazo",
+    "Long-term": "Longo prazo",
+    "Season-ending": "Fim de temporada"
+  }
+}

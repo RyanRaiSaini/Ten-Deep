@@ -1,0 +1,112 @@
+{
+  "app": { "tagline": "Draft zehn tief. Überstehe die 82." },
+  "common": { "comingSoon": "Demnächst", "back": "Zurück", "continue": "Weiter", "on": "An", "off": "Aus" },
+  "home": {
+    "draftsPlayed": "Gespielte Drafts",
+    "titles": "Titel",
+    "best": "Beste Bilanz",
+    "modes": "Spielmodi",
+    "resume": "Deinen Run fortsetzen",
+    "play": "Spielen"
+  },
+  "mode": {
+    "current": { "title": "Aktuelle Saison", "desc": "Kader 2026-27. Dreh ein Team, drafte deine Zehn." },
+    "franchise": { "title": "Legendäre Franchises", "desc": "Lakers, Celtics, Bulls und mehr aus der Geschichte." },
+    "era": { "title": "Ären", "desc": "Jordan, LeBron, Steph — drafte aus einer Ära." },
+    "daily": { "title": "Tägliche Challenge", "desc": "Gleiche Drehungen für alle. Ein Versuch pro Tag." },
+    "duels": { "title": "Duelle", "desc": "Drafte direkt gegen einen Freund." }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "audio": "Sound & Gefühl",
+    "music": "Musik",
+    "sfx": "Soundeffekte",
+    "haptics": "Vibration",
+    "notifications": "Benachrichtigungen",
+    "notifDaily": "Tägliche Challenge ist bereit",
+    "notifStreak": "Deine Serie ist in Gefahr",
+    "notifDuel": "Duell-Einladungen",
+    "game": "Spiel",
+    "simSpeed": "Simulationstempo",
+    "nationality": "Nationalität",
+    "language": "Sprache",
+    "about": "Über",
+    "privacy": "Datenschutzerklärung",
+    "terms": "Nutzungsbedingungen",
+    "contact": "Kontakt",
+    "deleteAccount": "Konto löschen",
+    "soundDemo": "Soundlabor"
+  },
+  "draft": {
+    "pick": "Pick {{n}} von 10",
+    "spin": "Drehen",
+    "spinning": "Dreht…",
+    "respin": "Neu drehen ({{n}} übrig)",
+    "capSpace": "Gehaltsspielraum",
+    "spendable": "{{amount}} verfügbar nach Mindestgehältern",
+    "superstars": "Superstars {{n}}/2",
+    "chooseSlot": "Auf welcher Position spielt er?",
+    "nothingFits": "Niemand aus diesem Team passt in deinen Kader oder dein Budget.",
+    "signFallback": "{{name}} für {{salary}} verpflichten",
+    "overCap": "Über dem Cap",
+    "superstarLimit": "Superstar-Limit",
+    "noSlot": "Keine freie Position",
+    "starters": "Starting Five",
+    "bench": "Bank",
+    "startSeason": "Saison starten",
+    "landed": "Gezogen",
+    "empty": "Frei"
+  },
+  "season": {
+    "title": "Hauptrunde",
+    "game": "Spiel {{n}} von 82",
+    "skipDeadline": "Zur Trade Deadline",
+    "skipPlayoffs": "Zu den Playoffs",
+    "pause": "Pause",
+    "resume": "Abspielen",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} fällt {{games}} Spiele aus — {{label}}",
+    "seasonEnding": "{{name}} fällt für die Saison aus",
+    "standing": "Platz {{n}}"
+  },
+  "deadline": {
+    "title": "Trade Deadline",
+    "desc": "Ein Tausch. Wähle einen Spieler aus, dreh einmal und verpflichte einen Ersatz unter dem Cap.",
+    "chooseOut": "Wähle, wer geht",
+    "spin": "Für einen Ersatz drehen",
+    "skip": "Nichts ändern",
+    "done": "Deal fix"
+  },
+  "playoffs": {
+    "title": "Playoffs",
+    "round0": "Erste Runde",
+    "round1": "Viertelfinale",
+    "round2": "Halbfinale",
+    "round3": "Finale",
+    "next": "Spiel {{n}} spielen",
+    "simRest": "Bis zum Ende simulieren",
+    "leads": "{{team}} führt {{w}}-{{l}}",
+    "tied": "Serie ausgeglichen {{w}}-{{l}}",
+    "won": "{{team}} gewinnt {{w}}-{{l}}",
+    "missed": "Du hast die Playoffs verpasst.",
+    "eliminated": "Ausgeschieden.",
+    "seeResult": "Ergebnis ansehen"
+  },
+  "result": {
+    "champions": "Meister",
+    "lostIn": "Ausgeschieden im {{round}}",
+    "missed": "Playoffs verpasst",
+    "record": "Bilanz",
+    "seed": "Platz",
+    "topScorer": "Topscorer",
+    "playAgain": "Neu draften",
+    "home": "Start"
+  },
+  "injury": {
+    "Day-to-day": "Fraglich",
+    "Short-term": "Kurzfristig",
+    "Long-term": "Langfristig",
+    "Season-ending": "Saisonaus"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "app": { "tagline": "Draft ten deep. Survive 82." },
+  "common": { "comingSoon": "Coming soon", "back": "Back", "continue": "Continue", "on": "On", "off": "Off" },
+  "home": {
+    "draftsPlayed": "Drafts played",
+    "titles": "Titles",
+    "best": "Best record",
+    "modes": "Game modes",
+    "resume": "Resume your run",
+    "play": "Play"
+  },
+  "mode": {
+    "current": { "title": "Current Day", "desc": "2026-27 rosters. Spin a team, draft your ten." },
+    "franchise": { "title": "All-Time Franchises", "desc": "Lakers, Celtics, Bulls and more across history." },
+    "era": { "title": "Eras", "desc": "Jordan, LeBron, Steph — draft from one era." },
+    "daily": { "title": "Daily Challenge", "desc": "Same spins for everyone. One shot a day." },
+    "duels": { "title": "Duels", "desc": "Draft head-to-head against a friend." }
+  },
+  "settings": {
+    "title": "Settings",
+    "audio": "Audio & feel",
+    "music": "Music",
+    "sfx": "Sound effects",
+    "haptics": "Haptics",
+    "notifications": "Notifications",
+    "notifDaily": "Daily challenge is ready",
+    "notifStreak": "Your streak is at risk",
+    "notifDuel": "Duel invites",
+    "game": "Game",
+    "simSpeed": "Sim speed",
+    "nationality": "Nationality",
+    "language": "Language",
+    "about": "About",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact us",
+    "deleteAccount": "Delete account",
+    "soundDemo": "Sound lab"
+  },
+  "draft": {
+    "pick": "Pick {{n}} of 10",
+    "spin": "Spin",
+    "spinning": "Spinning…",
+    "respin": "Respin ({{n}} left)",
+    "capSpace": "Cap space",
+    "spendable": "{{amount}} spendable after minimums",
+    "superstars": "Superstars {{n}}/2",
+    "chooseSlot": "Where does he play?",
+    "nothingFits": "Nobody on this team fits your roster or cap.",
+    "signFallback": "Sign {{name}} for {{salary}}",
+    "overCap": "Over the cap",
+    "superstarLimit": "Superstar limit",
+    "noSlot": "No open slot",
+    "starters": "Starting five",
+    "bench": "Bench",
+    "startSeason": "Start the season",
+    "landed": "You landed",
+    "empty": "Open"
+  },
+  "season": {
+    "title": "Regular season",
+    "game": "Game {{n}} of 82",
+    "skipDeadline": "Skip to deadline",
+    "skipPlayoffs": "Skip to playoffs",
+    "pause": "Pause",
+    "resume": "Play",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} out {{games}} games — {{label}}",
+    "seasonEnding": "{{name}} is out for the season",
+    "standing": "Seed #{{n}}"
+  },
+  "deadline": {
+    "title": "Trade deadline",
+    "desc": "One swap. Pick a player to move, spin once, and sign a replacement under the cap.",
+    "chooseOut": "Choose who to move",
+    "spin": "Spin for a replacement",
+    "skip": "Stand pat",
+    "done": "Deal done"
+  },
+  "playoffs": {
+    "title": "Playoffs",
+    "round0": "First round",
+    "round1": "Quarterfinals",
+    "round2": "Semifinals",
+    "round3": "Finals",
+    "next": "Play game {{n}}",
+    "simRest": "Sim to the end",
+    "leads": "{{team}} lead {{w}}-{{l}}",
+    "tied": "Series tied {{w}}-{{l}}",
+    "won": "{{team}} win {{w}}-{{l}}",
+    "missed": "You missed the playoffs.",
+    "eliminated": "Eliminated.",
+    "seeResult": "See result"
+  },
+  "result": {
+    "champions": "Champions",
+    "lostIn": "Lost in the {{round}}",
+    "missed": "Missed the playoffs",
+    "record": "Record",
+    "seed": "Seed",
+    "topScorer": "Top scorer",
+    "playAgain": "Draft again",
+    "home": "Home"
+  },
+  "injury": {
+    "Day-to-day": "Day-to-day",
+    "Short-term": "Short-term",
+    "Long-term": "Long-term",
+    "Season-ending": "Season-ending"
+  }
+}
