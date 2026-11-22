@@ -33,7 +33,7 @@ export default function Draft() {
   const opts = d.spin && landed ? options(d, pool) : [];
   const usable = opts.filter((o) => o.affordable);
   const chosenOpt = opts.find((o) => o.player.id === chosen);
-  const fallback = d.spin && landed && usable.length === 0 && !complete ? safeFallback() : null;
+  const fallback = d.spin && landed && usable.length === 0 && !complete && d.respinsLeft === 0 ? safeFallback() : null;
 
   function safeFallback() {
     try { return fallbackPick(d, pool); } catch { return null; }

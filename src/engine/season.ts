@@ -170,9 +170,12 @@ export function advance(state: SeasonState, games: number): SeasonState {
 }
 
 export function standings(state: SeasonState): (Record & { team: number })[] {
+  // Exact ties fall to a coin flip seeded by the season (a fixed order would always favor team 0, the user).
+  const coin = shuffle(state.records.map((_, i) => i), createRng(`${state.seed}:tiebreak`));
+  const rank = new Map(coin.map((team, i) => [team, i]));
   return state.records
     .map((r, team) => ({ ...r, team }))
-    .sort((a, b) => b.w - a.w || b.pf - b.pa - (a.pf - a.pa));
+    .sort((a, b) => b.w - a.w || b.pf - b.pa - (a.pf - a.pa) || rank.get(a.team)! - rank.get(b.team)!);
 }
 
 /** Trade deadline: swap one user player for `incoming` in the same slot, under the cap. Once per season. */
@@ -181,6 +184,8 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
   const user = state.teams[0];
   const slot = ALL_SLOTS.find((s) => user.slots[s].id === outId);
   if (!slot) throw new Error('Player not on your roster');
+  if (state.teams.some((t) => ALL_SLOTS.some((k) => t.slots[k].id === incoming.id || t.slots[k].name === incoming.name)))
+    throw new Error(`${incoming.name} is already on a roster`);
   if (STARTER_SLOTS.includes(slot) && incoming.pos !== (slot as Pos) && incoming.pos2 !== (slot as Pos))
     throw new Error(`${incoming.name} can't play ${slot}`);
   const without: RosterSlots = { ...user.slots };

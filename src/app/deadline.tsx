@@ -28,9 +28,13 @@ export default function Deadline() {
   const done = (fn: () => void) => { fn(); router.replace('/season'); };
   const candidates = deadline.spin && landed && deadline.outId
     ? deadline.spin.players.filter((p) => !taken.has(p.name)).map((p) => {
-        let ok = true;
-        try { tradeSwap(season, deadline.outId!, p); } catch { ok = false; }
-        return { p, ok };
+        // Show the real reason a signing is blocked (position, superstar limit, or cap).
+        let why: string | null = null;
+        try { tradeSwap(season, deadline.outId!, p); } catch (e) {
+          const m = (e as Error).message;
+          why = /superstar/i.test(m) ? t('draft.superstarLimit') : /can't play/i.test(m) ? t('draft.noSlot') : t('draft.overCap');
+        }
+        return { p, ok: !why, why };
       })
     : [];
 
@@ -65,8 +69,8 @@ export default function Deadline() {
       {deadline.spun && (
         <Card style={{ gap: S.md }}>
           <Spinner target={deadline.spin?.label ?? ''} decoys={decoys} spinKey={spinKey} onLanded={() => setLanded(true)} />
-          {candidates.map(({ p, ok }) => (
-            <PlayerCard key={p.id} player={p} disabled={!ok} note={!ok ? t('draft.overCap') : undefined}
+          {candidates.map(({ p, ok, why }) => (
+            <PlayerCard key={p.id} player={p} disabled={!ok} note={why ?? undefined}
               onPress={() => done(() => { g.signDeadline(p); feel('pickChime'); })} />
           ))}
         </Card>
