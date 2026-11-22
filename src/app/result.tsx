@@ -8,6 +8,7 @@ import { standings } from '../engine/season';
 import { ALL_SLOTS } from '../engine/types';
 import { cardDef } from '../engine/crisis/deck';
 import { useCareer } from '../store/career';
+import { useCollection } from '../store/collection';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { Button, Card, Screen } from '../ui/components';
@@ -20,6 +21,7 @@ export default function Result() {
   const ps = g.playoffs;
   const won = !!ps && champion(ps) === 0;
   const career = useCareer();
+  const pendingPicks = useCollection((s) => s.pending.length);
   // Career seasons are recorded once, as soon as the result is shown.
   useEffect(() => { if (g.career) useCareer.getState().recordSeason(); }, [g.career]);
   useEffect(() => { if (won) feel('fanfare'); }, [won]);
@@ -62,6 +64,9 @@ export default function Result() {
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
       <RosterBoard roster={user.slots} />
+      {pendingPicks > 0 && (
+        <Button label={`🎁  ${t('collect.claim')}`} variant="gold" onPress={() => router.push('/packs')} testID="claim-pick" />
+      )}
       {g.career ? (
         <Button
           label={career.ended ? t('career.over') : t('career.toOffseason')}

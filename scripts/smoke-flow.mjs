@@ -176,6 +176,26 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('24-career-hub');
   });
 
+  await step('player pick: open a pack, reveal 5, keep 1, see it in the collection', async () => {
+    await page.goto(base);
+    await page.getByTestId('picks-banner').click();
+    await page.getByTestId('pack-open').waitFor();
+    await shot('25-pack-closed');
+    await page.getByTestId('pack-open').click();
+    await page.getByTestId('pack-reveal-all').click();
+    await page.waitForTimeout(400);
+    await shot('26-pack-revealing');
+    await page.getByTestId('pack-keep').waitFor({ timeout: 6000 });
+    await page.waitForFunction(() => document.querySelectorAll('[data-testid="pack-card-face"]').length === 5, null, { timeout: 6000 });
+    await page.getByTestId('pack-card-face').first().click();
+    await shot('27-pack-revealed');
+    await page.getByTestId('pack-keep').click();
+    await page.goto(`${base}/collection`);
+    const txt = await page.getByTestId('collection-count').textContent();
+    if (!/[1-9]/.test(txt ?? '')) throw new Error(`collection count: ${txt}`);
+    await shot('28-collection');
+  });
+
   await step('pass-and-play duel: 20 picks and a best-of-7', async () => {
     await page.goto(base);
     await page.getByText('Duels').click();

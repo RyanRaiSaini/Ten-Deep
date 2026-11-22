@@ -45,6 +45,10 @@
     "career": {
       "title": "Carriera",
       "desc": "Una franchigia, tante stagioni. Età, contratti, draft e free agency, finché la dirigenza non ti licenzia."
+    },
+    "collection": {
+      "title": "Collezione",
+      "desc": "Scelte giocatore"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "Niente playoff",
     "years": "{{n}} anni",
     "nothingAffordable": "Nessuno rientra nel tetto."
+  },
+  "collect": {
+    "title": "Collezione",
+    "picks": "Scelte giocatore",
+    "tapToOpen": "Tocca per aprire",
+    "revealAll": "Rivela tutte",
+    "chooseOne": "Tieni una carta",
+    "keep": "Tieni {{name}}",
+    "noPicks": "Nessuna scelta in attesa. Torna domani per la scelta del giorno.",
+    "streak": "🔥 Serie di {{n}} giorni",
+    "odds": "Probabilità per carta",
+    "cards": "{{n}} carte",
+    "empty": "Apri una scelta giocatore per iniziare la collezione.",
+    "all": "Tutte",
+    "claim": "Riscatta la scelta",
+    "waiting": "{{n}} scelte in attesa",
+    "t_daily": "Scelta del giorno",
+    "t_run": "Scelta partita",
+    "t_playoffs": "Scelta playoff",
+    "t_weekly": "Scelta settimanale",
+    "t_champion": "Scelta campione",
+    "t_mythic": "Scelta mitica",
+    "t_legendary": "Scelta leggendaria",
+    "tier_common": "Comune",
+    "tier_uncommon": "Non comune",
+    "tier_rare": "Rara",
+    "tier_epic": "Epica",
+    "tier_mythic": "Mitica",
+    "tier_ultra": "Ultra",
+    "guarantee_champion": "Tutte le carte 83+",
+    "guarantee_mythic": "Un 90+ garantito",
+    "guarantee_legendary": "Una Ultra garantita",
+    "nextWeekly": "Scelta settimanale tra {{n}} giorni"
   }
 }

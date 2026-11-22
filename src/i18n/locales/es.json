@@ -45,6 +45,10 @@
     "career": {
       "title": "Carrera",
       "desc": "Una franquicia, muchas temporadas. Edad, contratos, drafts y agencia libre, hasta que la directiva te despida."
+    },
+    "collection": {
+      "title": "Colección",
+      "desc": "Elecciones de jugador"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "Sin playoffs",
     "years": "{{n}} año(s)",
     "nothingAffordable": "Nadie cabe bajo el tope."
+  },
+  "collect": {
+    "title": "Colección",
+    "picks": "Elecciones de jugador",
+    "tapToOpen": "Toca para abrir",
+    "revealAll": "Revelar todas",
+    "chooseOne": "Quédate una carta",
+    "keep": "Quedarte a {{name}}",
+    "noPicks": "No hay elecciones pendientes. Vuelve mañana por tu elección diaria.",
+    "streak": "🔥 Racha de {{n}} días",
+    "odds": "Probabilidades por carta",
+    "cards": "{{n}} cartas",
+    "empty": "Abre una elección de jugador para empezar tu colección.",
+    "all": "Todas",
+    "claim": "Reclamar tu elección",
+    "waiting": "{{n}} elecciones pendientes",
+    "t_daily": "Elección diaria",
+    "t_run": "Elección de partida",
+    "t_playoffs": "Elección de playoffs",
+    "t_weekly": "Elección semanal",
+    "t_champion": "Elección de campeón",
+    "t_mythic": "Elección mítica",
+    "t_legendary": "Elección legendaria",
+    "tier_common": "Común",
+    "tier_uncommon": "Poco común",
+    "tier_rare": "Rara",
+    "tier_epic": "Épica",
+    "tier_mythic": "Mítica",
+    "tier_ultra": "Ultra",
+    "guarantee_champion": "Todas las cartas 83+",
+    "guarantee_mythic": "Un 90+ garantizado",
+    "guarantee_legendary": "Una Ultra garantizada",
+    "nextWeekly": "Elección semanal en {{n}} días"
   }
 }
