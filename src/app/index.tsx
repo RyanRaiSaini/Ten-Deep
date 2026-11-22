@@ -10,14 +10,15 @@ import { C, F, R, S } from '../ui/theme';
 
 const MODES = [
   { key: 'current', poolId: 'current-2026', live: true, accent: C.hardwood },
+  { key: 'crisis', picker: 'crisis', live: true, accent: '#FF7A1A', badge: 'NEW' },
   { key: 'franchise', picker: 'franchise', live: true, accent: '#7C5CFF' },
   { key: 'era', picker: 'era', live: true, accent: C.gold },
   { key: 'daily', route: '/daily', live: true, accent: C.neon },
   { key: 'duels', route: '/duel', live: true, accent: C.danger },
 ] as const;
 
-const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/playoffs' | '/result'> = {
-  draft: '/draft', season: '/season', deadline: '/deadline', playoffs: '/playoffs', result: '/result',
+const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
+  draft: '/draft', season: '/season', deadline: '/deadline', crisis: '/crisis', playoffs: '/playoffs', result: '/result',
 };
 
 export default function Home() {
@@ -67,7 +68,10 @@ export default function Home() {
         >
           <View style={[styles.modeBar, { backgroundColor: m.accent }]} />
           <View style={{ flex: 1, gap: 4 }}>
-            <Text style={styles.modeTitle}>{t(`mode.${m.key}.title`)}</Text>
+            <Text style={styles.modeTitle}>
+              {t(`mode.${m.key}.title`)}
+              {'badge' in m && <Text style={[styles.badge, { color: m.accent }]}>  {m.badge}</Text>}
+            </Text>
             <Text style={styles.modeDesc}>{t(`mode.${m.key}.desc`)}</Text>
           </View>
           <Text style={[styles.modeCta, { color: m.live ? m.accent : C.muted }]}>
@@ -103,4 +107,5 @@ const styles = StyleSheet.create({
   modeTitle: { color: C.text, fontSize: 18, ...F.display },
   modeDesc: { color: C.muted, fontSize: 13 },
   modeCta: { fontWeight: '800', fontSize: 13 },
+  badge: { fontSize: 11, fontWeight: '900', letterSpacing: 1 },
 });
