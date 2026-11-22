@@ -160,5 +160,11 @@ ten-deep/
 5. **Duels:** live rooms, friends, notifications
 6. **Polish:** full translations, RTL pass, music, haptics tuning
 
-## 10. Left to the builder
+## 10. Decisions from the review pass (builder's calls, owner can override)
+- **Data scope:** curated, not exhaustive. All-Time covers notable team-seasons from 1960 on (about 250 team-seasons × 8–10 players). Ratings are written from basketball knowledge, then the owner reviews them. **Current Day rosters reflect the most recent known 2026-27 rosters; offseason moves after mid-2026 need the owner's check** (flagged in the review sheet).
+- **Stats:** each player-season carries a few headline stats (PPG, RPG, APG) and accolades (MVP, All-NBA, titles) for trivia and player rank. Trivia also draws from a hand-written question bank.
+- **Franchise-mode league:** the player drafts from the franchise pool. The 29 AI opponents are drafted from the All-Time pool, excluding the player's picks. Once-per-draft still holds.
+- **"Shipped" for v1:** a hosted web build on Vercel. Native builds (push notifications, on-device Apple sign-in, haptics) come with the store-launch step, which needs the owner's Expo and Apple accounts.
+
+## 11. Left to the builder
 Exact cap curve and sim coefficients (to hit §5.5 targets), component styling, trivia question bank, avatar art, the precise AI draft strategy, the database schema.
