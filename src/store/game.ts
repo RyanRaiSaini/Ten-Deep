@@ -10,17 +10,33 @@ import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs, type PlayoffSt
 import { createRng, shuffle } from '../engine/rng';
 import { advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
 import { ALL_SLOTS, type Player, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
+import { applyCard, type Decision } from '../engine/crisis/apply';
+import { boardObjective, verdict, type Objective, type Verdict } from '../engine/crisis/board';
+import { CARD_ROUNDS, drawCard, type CardId } from '../engine/crisis/deck';
+import { prepareCard, type CrisisCard } from '../engine/crisis/offers';
 import { dailySeed } from '../engine/daily';
 import { useDaily } from './daily';
 import { useProfile } from './profile';
 
-export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'playoffs' | 'result';
+export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'crisis' | 'playoffs' | 'result';
+
+/** Management Crisis run state. */
+export interface CrisisRun {
+  objective: Objective | null;
+  drawn: CardId[];
+  /** Card slots resolved so far (0–4). */
+  resolved: number;
+  pending: CrisisCard | null;
+  verdict: Verdict | null;
+}
 
 export interface GameStore {
   phase: Phase;
   poolId: string;
   /** Set when this run is today's Daily Draft (YYYY-MM-DD). */
   daily: string | null;
+  /** Set when this run is a Management Crisis run. */
+  crisis: CrisisRun | null;
   draft: DraftState | null;
   season: SeasonState | null;
   playoffs: PlayoffState | null;
@@ -30,6 +46,11 @@ export interface GameStore {
   newRun: (poolId: string) => void;
   /** Today's Daily Draft: Current Day pool, seed fixed by date, so everyone gets the same spins and league. */
   newDaily: (key: string) => 'started' | 'resumed' | 'locked';
+  /** Management Crisis: a normal draft in any mode, then a season interrupted by crisis cards. */
+  newCrisis: (poolId: string) => void;
+  /** The season reached a card round: deal that card. */
+  openCrisis: (season: SeasonState) => void;
+  resolveCrisis: (d: Decision) => void;
   doSpin: () => void;
   doRespin: () => void;
   doPick: (playerId: string, slot: SlotId) => void;
@@ -57,12 +78,13 @@ export const useGame = create<GameStore>()(
       phase: 'idle',
       poolId: 'current-2026',
       daily: null,
+      crisis: null,
       draft: null,
       season: null,
       playoffs: null,
       deadline: null,
 
-      newRun: (poolId) => set({ phase: 'draft', poolId, daily: null, draft: startDraft(pool(poolId), newSeed()), season: null, playoffs: null, deadline: null }),
+      newRun: (poolId) => set({ phase: 'draft', poolId, daily: null, crisis: null, draft: startDraft(pool(poolId), newSeed()), season: null, playoffs: null, deadline: null }),
       // One shot per day: begin once, resume while that run is alive, locked after it's abandoned or finished.
       newDaily: (key) => {
         const { daily, phase } = get();
@@ -70,7 +92,7 @@ export const useGame = create<GameStore>()(
         const day = useDaily.getState().days[key];
         if (day?.draftStarted || day?.draft) return 'locked';
         useDaily.getState().record(key, 'draftStarted', true);
-        set({ phase: 'draft', poolId: 'current-2026', daily: key, draft: startDraft(pool('current-2026'), dailySeed(key)), season: null, playoffs: null, deadline: null });
+        set({ phase: 'draft', poolId: 'current-2026', daily: key, crisis: null, draft: startDraft(pool('current-2026'), dailySeed(key)), season: null, playoffs: null, deadline: null });
         return 'started';
       },
       doSpin: () => set((s) => ({ draft: spin(s.draft!, pool(s.poolId)) })),
@@ -106,8 +128,35 @@ export const useGame = create<GameStore>()(
           r.name = `${t.city} ${t.name}`;
           r.colors = t.colors;
         });
-        set({ phase: 'season', season: createSeason(user, league, draft.seed) });
+        const season = createSeason(user, league, draft.seed);
+        if (get().crisis) {
+          const withStops = { ...season, stops: CARD_ROUNDS.slice(1) };
+          set({ season: withStops, crisis: { ...get().crisis!, objective: boardObjective(withStops) } });
+          get().openCrisis(withStops);
+        } else set({ phase: 'season', season });
       },
+
+      newCrisis: (poolId) => {
+        get().newRun(poolId);
+        set({ crisis: { objective: null, drawn: [], resolved: 0, pending: null, verdict: null } });
+      },
+      openCrisis: (season) => {
+        const { crisis, poolId, draft } = get();
+        if (!crisis || crisis.resolved >= CARD_ROUNDS.length) return set({ season });
+        const slot = crisis.resolved;
+        const id = drawCard(draft?.seed ?? season.seed, slot, crisis.drawn);
+        const card = prepareCard(season, id, slot, pool(poolId), pool('all-time'));
+        set({ season, phase: 'crisis', crisis: { ...crisis, drawn: [...crisis.drawn, id], pending: card } });
+      },
+      resolveCrisis: (d) =>
+        set((s) => {
+          if (!s.crisis?.pending || !s.season) return {};
+          return {
+            season: applyCard(s.season, s.crisis.pending, d),
+            phase: 'season',
+            crisis: { ...s.crisis, pending: null, resolved: s.crisis.resolved + 1 },
+          };
+        }),
 
       setSeason: (season) => set({ season }),
 
@@ -145,17 +194,18 @@ export const useGame = create<GameStore>()(
         const rec = playoffs.season.records[0];
         const result = { wins: rec.w, losses: rec.l, champion: champion(playoffs) === 0 };
         useProfile.getState().recordDraft(result);
-        const { daily } = get();
+        const { daily, crisis } = get();
         if (daily) useDaily.getState().record(daily, 'draft', result);
+        if (crisis?.objective) set({ crisis: { ...crisis, verdict: verdict(crisis.objective, playoffs.season, playoffs) } });
         set({ phase: 'result' });
       },
-      quit: () => set({ phase: 'idle', daily: null, draft: null, season: null, playoffs: null, deadline: null }),
+      quit: () => set({ phase: 'idle', daily: null, crisis: null, draft: null, season: null, playoffs: null, deadline: null }),
     }),
     {
       name: 'tendeep-run',
       version: 1,
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (s) => ({ phase: s.phase, poolId: s.poolId, daily: s.daily, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
+      partialize: (s) => ({ phase: s.phase, poolId: s.poolId, daily: s.daily, crisis: s.crisis, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
     },
   ),
 );

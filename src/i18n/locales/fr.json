@@ -37,6 +37,10 @@
     "duels": {
       "title": "Duels",
       "desc": "Draft en face-à-face contre un ami."
+    },
+    "crisis": {
+      "title": "Crise de gestion",
+      "desc": "Draft une équipe. La direction fixe un objectif. Tous les deux mois, une carte crise change tout."
     }
   },
   "settings": {
@@ -190,5 +194,119 @@
     "dailyBody": "Nouveaux tirages, quiz et duels t'attendent. Une seule chance.",
     "streakTitle": "Ta série est en jeu 🔥",
     "streakBody": "Tu n'as pas drafté aujourd'hui. Lance un draft avant minuit."
+  },
+  "crisis": {
+    "title": "Crise de gestion",
+    "desc": "Draft une équipe. La direction fixe un objectif. Tous les deux mois, une carte crise change tout.",
+    "m0": "Pré-saison",
+    "m1": "Décembre",
+    "m2": "Février",
+    "m3": "Avril",
+    "good": "Bonne nouvelle",
+    "bad": "Crise",
+    "legendary": "Légendaire",
+    "objective": "Objectif de la direction",
+    "obj_title": "Gagner le titre",
+    "obj_semis": "Atteindre les demi-finales",
+    "obj_playoffs": "Se qualifier pour les playoffs",
+    "obj_wins30": "Gagner 30 matchs",
+    "v_legend": "Légende — ton maillot sera retiré",
+    "v_extended": "Contrat prolongé",
+    "v_survived": "Survivant — sur la sellette",
+    "v_fired": "Viré",
+    "accept": "Accepter",
+    "pickIn": "Choisis qui arrive",
+    "pickOut": "Choisis qui part",
+    "confirm": "Valider",
+    "cardN": "Carte {{n}} sur 4",
+    "chooseMode": "Choisis un mode pour ta partie",
+    "cards": {
+      "cap-boost": {
+        "title": "Budget en hausse",
+        "flavor": "Le propriétaire sort le chéquier.",
+        "effect": "Signe 1 de 3 agents libres de qualité à la place de ton joueur le moins bien noté. Le proprio paie."
+      },
+      "hot-streak": {
+        "title": "Série de victoires",
+        "flavor": "La salle est en feu.",
+        "effect": "+3 de note d'équipe pendant 10 matchs."
+      },
+      "rookie-gem": {
+        "title": "Pépite rookie",
+        "flavor": "Tes recruteurs ont trouvé une pépite.",
+        "effect": "Choisis 1 de 3 jeunes espoirs pour remplacer ton joueur le moins bien noté."
+      },
+      "veteran-mentor": {
+        "title": "Vétéran mentor",
+        "flavor": "Un vieux briscard veut une dernière bague.",
+        "effect": "Choisis 1 de 3 vétérans pour ton banc le plus faible. Le proprio paie."
+      },
+      "locker-room-glue": {
+        "title": "Ciment du vestiaire",
+        "flavor": "Tout le monde s'entend enfin.",
+        "effect": "+1 de note d'équipe jusqu'à la fin de la saison."
+      },
+      "clean-bill": {
+        "title": "Infirmerie vide",
+        "flavor": "Le staff médical fait des miracles.",
+        "effect": "Tous tes blessés sont guéris."
+      },
+      "media-frenzy": {
+        "title": "Folie médiatique",
+        "flavor": "La billetterie s'effondre. Le proprio veut une star.",
+        "effect": "Signe 1 de 5 stars médiatiques et fais partir n'importe lequel de tes joueurs."
+      },
+      "blow-it-up": {
+        "title": "Tout faire sauter",
+        "flavor": "Le proprio exige une reconstruction.",
+        "effect": "Ton meilleur joueur est échangé contre le meilleur jeune espoir de la ligue."
+      },
+      "trade-demand": {
+        "title": "Demande de transfert",
+        "flavor": "Un titulaire veut partir. Tout de suite.",
+        "effect": "Choisis 1 de 3 remplaçants moins bien notés à son poste."
+      },
+      "injury-bug": {
+        "title": "Épidémie de blessures",
+        "flavor": "L'infirmerie est pleine.",
+        "effect": "Tes deux joueurs les plus utilisés sont absents 15 et 8 matchs."
+      },
+      "coach-fired": {
+        "title": "Coach viré",
+        "flavor": "La direction panique.",
+        "effect": "−3 de note pendant 10 matchs, puis +1 jusqu'à la fin."
+      },
+      "luxury-tax": {
+        "title": "Panique fiscale",
+        "flavor": "La compta a trouvé la facture.",
+        "effect": "Échange ton plus gros salaire contre 1 de 3 joueurs au moins 10 M$ moins chers."
+      },
+      "locker-room-drama": {
+        "title": "Drame au vestiaire",
+        "flavor": "Ton meilleur remplaçant pose problème.",
+        "effect": "Au choix : −2 pendant 15 matchs, ou l'échanger contre un joueur au salaire minimum."
+      },
+      "superteam-rumor": {
+        "title": "Rumeur de superteam",
+        "flavor": "Une superstar veut te rejoindre.",
+        "effect": "Au choix : signer une star 95+ et perdre tes deux titulaires les mieux payés, ou refuser."
+      },
+      "legend-comeback": {
+        "title": "Retour de légende",
+        "flavor": "Une légende rechausse les baskets.",
+        "effect": "Choisis 1 de 3 légendes (90+) pour ton banc le plus faible."
+      },
+      "midseason-miracle": {
+        "title": "Miracle de mi-saison",
+        "flavor": "Il se passe quelque chose de spécial.",
+        "effect": "+4 de note d'équipe pendant 15 matchs."
+      }
+    },
+    "options": {
+      "dramaA": "Tenir bon (−2 pendant 15 matchs)",
+      "dramaB": "L'échanger",
+      "superA": "Signer la superstar",
+      "superB": "Refuser"
+    }
   }
 }

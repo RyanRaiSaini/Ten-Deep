@@ -53,6 +53,8 @@ export interface Roster {
   name: string;
   colors: [string, string];
   slots: Required<RosterSlots>;
+  /** Temporary team-wide rating modifier (Management Crisis cards). */
+  mod?: number;
 }
 
 export interface Rng {

@@ -37,6 +37,10 @@
     "duels": {
       "title": "Duels",
       "desc": "Draft rechtstreeks tegen een vriend."
+    },
+    "crisis": {
+      "title": "Managementcrisis",
+      "desc": "Stel een team samen. De directie zet een doel. Elke twee maanden verandert een crisiskaart alles."
     }
   },
   "settings": {
@@ -190,5 +194,119 @@
     "dailyBody": "Nieuwe draaien, quiz en duels wachten. Eén kans per stuk.",
     "streakTitle": "Je reeks staat op het spel 🔥",
     "streakBody": "Je hebt vandaag niet gedraft. Stel je selectie samen voor middernacht."
+  },
+  "crisis": {
+    "title": "Managementcrisis",
+    "desc": "Stel een team samen. De directie zet een doel. Elke twee maanden verandert een crisiskaart alles.",
+    "m0": "Voorbereiding",
+    "m1": "December",
+    "m2": "Februari",
+    "m3": "April",
+    "good": "Goed nieuws",
+    "bad": "Crisis",
+    "legendary": "Legendarisch",
+    "objective": "Doel van de directie",
+    "obj_title": "Win de titel",
+    "obj_semis": "Haal de halve finale",
+    "obj_playoffs": "Haal de play-offs",
+    "obj_wins30": "Win 30 wedstrijden",
+    "v_legend": "Legende — je shirt wordt teruggetrokken",
+    "v_extended": "Contract verlengd",
+    "v_survived": "Overleefd — op glad ijs",
+    "v_fired": "Ontslagen",
+    "accept": "Accepteren",
+    "pickIn": "Kies wie er komt",
+    "pickOut": "Kies wie er gaat",
+    "confirm": "Doe de deal",
+    "cardN": "Kaart {{n}} van 4",
+    "chooseMode": "Kies een modus voor je run",
+    "cards": {
+      "cap-boost": {
+        "title": "Budgetverhoging",
+        "flavor": "De eigenaar trekt de portemonnee.",
+        "effect": "Contracteer 1 van 3 goede vrije spelers voor je laagst gewaardeerde speler. De eigenaar betaalt."
+      },
+      "hot-streak": {
+        "title": "Winstreak",
+        "flavor": "De zaal staat op z'n kop.",
+        "effect": "+3 teamrating voor de volgende 10 wedstrijden."
+      },
+      "rookie-gem": {
+        "title": "Rookie-parel",
+        "flavor": "Je scouts vonden een parel.",
+        "effect": "Kies 1 van 3 jonge talenten voor je laagst gewaardeerde speler."
+      },
+      "veteran-mentor": {
+        "title": "Veteraan-mentor",
+        "flavor": "Een ervaren rot wil nog één ring.",
+        "effect": "Kies 1 van 3 veteranen voor je zwakste bankplek. De eigenaar betaalt."
+      },
+      "locker-room-glue": {
+        "title": "Kleedkamerlijm",
+        "flavor": "Iedereen kan eindelijk met elkaar overweg.",
+        "effect": "+1 teamrating voor de rest van het seizoen."
+      },
+      "clean-bill": {
+        "title": "Lege ziekenboeg",
+        "flavor": "De medische staf doet wonderen.",
+        "effect": "Al je geblesseerden zijn hersteld."
+      },
+      "media-frenzy": {
+        "title": "Mediagekte",
+        "flavor": "De kaartverkoop zakt in. De eigenaar wil een beroemdheid.",
+        "effect": "Contracteer 1 van 5 bekende sterren en laat een van je spelers gaan."
+      },
+      "blow-it-up": {
+        "title": "Alles opblazen",
+        "flavor": "De eigenaar eist een wederopbouw.",
+        "effect": "Je beste speler wordt geruild voor het grootste jonge talent van de competitie."
+      },
+      "trade-demand": {
+        "title": "Transferverzoek",
+        "flavor": "Een basisspeler wil weg. Nu.",
+        "effect": "Kies 1 van 3 lager gewaardeerde vervangers op zijn positie."
+      },
+      "injury-bug": {
+        "title": "Blessuregolf",
+        "flavor": "De ziekenboeg zit vol.",
+        "effect": "Je twee spelers met de meeste minuten missen 15 en 8 wedstrijden."
+      },
+      "coach-fired": {
+        "title": "Coach ontslagen",
+        "flavor": "De directie raakt in paniek.",
+        "effect": "−3 rating voor 10 wedstrijden, daarna +1 voor de rest van het seizoen."
+      },
+      "luxury-tax": {
+        "title": "Luxebelastingpaniek",
+        "flavor": "De boekhouding vond de rekening.",
+        "effect": "Ruil je best betaalde speler voor 1 van 3 spelers die minstens $10M goedkoper zijn."
+      },
+      "locker-room-drama": {
+        "title": "Kleedkamerdrama",
+        "flavor": "Je beste bankspeler zorgt voor problemen.",
+        "effect": "Kies: −2 voor 15 wedstrijden, of ruil hem voor een speler op minimumsalaris."
+      },
+      "superteam-rumor": {
+        "title": "Superteam-gerucht",
+        "flavor": "Een superster wil zich bij je aansluiten.",
+        "effect": "Kies: contracteer een 95+ ster en verlies je twee best betaalde basisspelers, of weiger."
+      },
+      "legend-comeback": {
+        "title": "Comeback van een legende",
+        "flavor": "Een legende strikt de schoenen weer.",
+        "effect": "Kies 1 van 3 legendes (90+) voor je zwakste bankplek."
+      },
+      "midseason-miracle": {
+        "title": "Midseizoen-wonder",
+        "flavor": "Er gebeurt iets bijzonders.",
+        "effect": "+4 teamrating voor de volgende 15 wedstrijden."
+      }
+    },
+    "options": {
+      "dramaA": "Uitzitten (−2 voor 15 wedstrijden)",
+      "dramaB": "Ruil hem",
+      "superA": "Contracteer de superster",
+      "superB": "Weigeren"
+    }
   }
 }

@@ -37,6 +37,10 @@
     "duels": {
       "title": "Duels",
       "desc": "Draft head-to-head against a friend."
+    },
+    "crisis": {
+      "title": "Management Crisis",
+      "desc": "Draft a team. The board sets a goal. Every two months a crisis card changes everything."
     }
   },
   "settings": {
@@ -190,5 +194,119 @@
     "dailyBody": "New spins, trivia and duels are waiting. One shot each.",
     "streakTitle": "Your streak is on the line 🔥",
     "streakBody": "You haven't drafted today. Spin up a ten-deep roster before midnight."
+  },
+  "crisis": {
+    "title": "Management Crisis",
+    "desc": "Draft a team. The board sets a goal. Every two months a crisis card changes everything.",
+    "m0": "Preseason",
+    "m1": "December",
+    "m2": "February",
+    "m3": "April",
+    "good": "Good news",
+    "bad": "Crisis",
+    "legendary": "Legendary",
+    "objective": "Board objective",
+    "obj_title": "Win the title",
+    "obj_semis": "Reach the semifinals",
+    "obj_playoffs": "Make the playoffs",
+    "obj_wins30": "Win 30 games",
+    "v_legend": "Legend — they'll hang your banner",
+    "v_extended": "Contract extended",
+    "v_survived": "Survived — on thin ice",
+    "v_fired": "Fired",
+    "accept": "Accept",
+    "pickIn": "Choose who comes in",
+    "pickOut": "Choose who goes out",
+    "confirm": "Make the move",
+    "cardN": "Card {{n}} of 4",
+    "chooseMode": "Choose a mode for your run",
+    "cards": {
+      "cap-boost": {
+        "title": "Cap Boost",
+        "flavor": "Ownership opens the checkbook.",
+        "effect": "Sign 1 of 3 quality free agents for your lowest-rated player. Owner pays."
+      },
+      "hot-streak": {
+        "title": "Hot Streak",
+        "flavor": "The building is rocking.",
+        "effect": "+3 team rating for the next 10 games."
+      },
+      "rookie-gem": {
+        "title": "Rookie Gem",
+        "flavor": "Your scouts found a gem.",
+        "effect": "Pick 1 of 3 young prospects to replace your lowest-rated player."
+      },
+      "veteran-mentor": {
+        "title": "Veteran Mentor",
+        "flavor": "A grizzled vet wants one more ring.",
+        "effect": "Pick 1 of 3 veterans for your weakest bench spot. Owner pays."
+      },
+      "locker-room-glue": {
+        "title": "Locker Room Glue",
+        "flavor": "Everyone finally gets along.",
+        "effect": "+1 team rating for the rest of the season."
+      },
+      "clean-bill": {
+        "title": "Clean Bill of Health",
+        "flavor": "The medical staff works miracles.",
+        "effect": "All your injured players are healed."
+      },
+      "media-frenzy": {
+        "title": "Media Frenzy",
+        "flavor": "Ticket sales are tanking. The owner wants a celebrity.",
+        "effect": "Sign 1 of 5 high-profile stars and send out any one of your players."
+      },
+      "blow-it-up": {
+        "title": "Blow It Up",
+        "flavor": "The owner demands a rebuild.",
+        "effect": "Your best player is traded for the league's top young prospect."
+      },
+      "trade-demand": {
+        "title": "Trade Demand",
+        "flavor": "A starter wants out. Now.",
+        "effect": "Pick 1 of 3 lower-rated replacements at his position."
+      },
+      "injury-bug": {
+        "title": "Injury Bug",
+        "flavor": "The training room is full.",
+        "effect": "Your two heaviest-minute players are out 15 and 8 games."
+      },
+      "coach-fired": {
+        "title": "Coach Fired",
+        "flavor": "The front office panics.",
+        "effect": "−3 team rating for 10 games, then +1 for the rest of the season."
+      },
+      "luxury-tax": {
+        "title": "Luxury Tax Panic",
+        "flavor": "Accounting found the bill.",
+        "effect": "Swap your highest-paid player for 1 of 3 players at least $10M cheaper."
+      },
+      "locker-room-drama": {
+        "title": "Locker Room Drama",
+        "flavor": "Your best bench player is causing problems.",
+        "effect": "Choose: −2 team rating for 15 games, or trade him for a minimum-salary player."
+      },
+      "superteam-rumor": {
+        "title": "Superteam Rumor",
+        "flavor": "A superstar wants to join you.",
+        "effect": "Choose: sign a 95+ star and lose your two highest-paid starters, or decline."
+      },
+      "legend-comeback": {
+        "title": "Legend Comeback",
+        "flavor": "An all-time great laces them up again.",
+        "effect": "Pick 1 of 3 legends (90+) for your weakest bench spot."
+      },
+      "midseason-miracle": {
+        "title": "Midseason Miracle",
+        "flavor": "Something special is happening.",
+        "effect": "+4 team rating for the next 15 games."
+      }
+    },
+    "options": {
+      "dramaA": "Ride it out (−2 for 15 games)",
+      "dramaB": "Trade him",
+      "superA": "Sign the superstar",
+      "superB": "Decline"
+    }
   }
 }

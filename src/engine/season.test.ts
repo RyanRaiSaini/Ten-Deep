@@ -3,7 +3,7 @@ import { draftLeague } from './aiDraft';
 import { rollInjury } from './injuries';
 import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs } from './playoffs';
 import { createRng } from './rng';
-import { DEADLINE_GAME, LOG_BOX_GAMES, SEASON_GAMES, advance, createSeason, standings, tradeSwap } from './season';
+import { DEADLINE_GAME, LOG_BOX_GAMES, SEASON_GAMES, advance, createSeason, modAt, standings, tradeSwap } from './season';
 import type { Player } from './types';
 import { makePool } from './__fixtures__/pool';
 
@@ -118,6 +118,28 @@ describe('season', () => {
     const withBox = s.log.filter((e) => e.kind === 'game' && e.result.box.length > 0);
     expect(withBox.length).toBeLessThanOrEqual(LOG_BOX_GAMES);
     expect(s.log.filter((e) => e.kind === 'game')).toHaveLength(82);
+  });
+
+  it('advance also pauses at extra stops (crisis cards), then continues', () => {
+    let s: ReturnType<typeof fresh> = { ...fresh(), stops: [20, 45, 70] };
+    s = advance(s, 100);
+    expect(s.round).toBe(20);
+    s = advance(s, 100);
+    expect(s.round).toBe(45);
+    s = advance(s, 100);
+    expect(s.round).toBe(DEADLINE_GAME);
+    s = advance(s, 100);
+    expect(s.round).toBe(70);
+    expect(advance(s, 100).round).toBe(82);
+  });
+
+  it('team modifiers apply only inside their window', () => {
+    expect(modAt([{ amount: 3, fromRound: 10, toRound: 20 }, { amount: 1, fromRound: 15, toRound: 82 }], 9)).toBe(0);
+    expect(modAt([{ amount: 3, fromRound: 10, toRound: 20 }, { amount: 1, fromRound: 15, toRound: 82 }], 15)).toBe(4);
+    expect(modAt([{ amount: 3, fromRound: 10, toRound: 20 }, { amount: 1, fromRound: 15, toRound: 82 }], 20)).toBe(1);
+    // a huge boost for the first 10 games wins nearly all of them
+    const boosted = advance({ ...fresh(), mods: [{ amount: 40, fromRound: 0, toRound: 10 }] }, 10);
+    expect(boosted.records[0].w).toBeGreaterThanOrEqual(9);
   });
 
   it('exact standings ties do not always favor the user', () => {

@@ -6,6 +6,7 @@ import { feel } from '../audio/feel';
 import { champion, seriesFor, seriesWinner } from '../engine/playoffs';
 import { standings } from '../engine/season';
 import { ALL_SLOTS } from '../engine/types';
+import { cardDef } from '../engine/crisis/deck';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { Button, Card, Screen } from '../ui/components';
@@ -41,6 +42,15 @@ export default function Result() {
       <View style={styles.hero}>
         <Text style={styles.trophy}>{won ? '🏆' : mine ? '🏀' : '📉'}</Text>
         <Text style={[styles.outcome, won && { color: C.gold }]}>{outcome}</Text>
+        {g.crisis?.verdict && g.crisis.objective && (
+          <View style={styles.verdict} testID="crisis-verdict">
+            <Text style={styles.verdictBig}>
+              {{ legend: '👑', extended: '✍️', survived: '😐', fired: '🔥' }[g.crisis.verdict]} {t(`crisis.v_${g.crisis.verdict}`)}
+            </Text>
+            <Text style={styles.verdictSub}>🎯 {t('crisis.objective')}: {t(`crisis.obj_${g.crisis.objective.tier}`)}</Text>
+            <Text style={styles.verdictSub}>{g.crisis.drawn.map((id) => `${cardDef(id).icon} ${t(`crisis.cards.${id}.title`)}`).join('  ·  ')}</Text>
+          </View>
+        )}
       </View>
       <Card style={styles.stats}>
         <Stat label={t('result.record')} value={`${rec.w}-${rec.l}`} />
@@ -48,7 +58,7 @@ export default function Result() {
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
       <RosterBoard roster={user.slots} />
-      <Button label={t('result.playAgain')} onPress={() => { g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />
+      <Button label={t('result.playAgain')} onPress={() => { if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />
       <Button label={t('result.home')} variant="ghost" onPress={() => { g.quit(); goHome(); }} testID="go-home" />
     </Screen>
   );
@@ -68,6 +78,9 @@ const styles = StyleSheet.create({
   hero: { alignItems: 'center', paddingTop: S.xxl, gap: S.sm },
   trophy: { fontSize: 72 },
   outcome: { color: C.text, fontSize: 30, textAlign: 'center', ...F.display },
+  verdict: { alignItems: 'center', gap: 4, marginTop: S.sm },
+  verdictBig: { color: C.hardwood, fontSize: 22, textAlign: 'center', ...F.display },
+  verdictSub: { color: C.muted, fontSize: 13, textAlign: 'center' },
   stats: { flexDirection: 'row' },
   value: { color: C.text, fontSize: 26, ...F.display },
   sub: { color: C.muted, fontSize: 12 },
