@@ -7,6 +7,8 @@ import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pos, type Rng, type Roster,
 
 export const SEASON_GAMES = 82;
 export const DEADLINE_GAME = 50;
+/** The season feed shows the latest games; older games keep their score but drop the box score to keep saves small. */
+export const LOG_BOX_GAMES = 14;
 
 export interface Record {
   w: number;
@@ -165,6 +167,13 @@ export function advance(state: SeasonState, games: number): SeasonState {
     }
     serveGame(s.injuries, sittingOut);
     s.round++;
+    // Strip box scores from games that have scrolled out of the feed.
+    let seen = 0;
+    for (let i = s.log.length - 1; i >= 0; i--) {
+      const e = s.log[i];
+      if (e.kind !== 'game') continue;
+      if (++seen > LOG_BOX_GAMES && e.result.box.length) s.log[i] = { ...e, result: { ...e.result, box: [] } };
+    }
   }
   return s;
 }

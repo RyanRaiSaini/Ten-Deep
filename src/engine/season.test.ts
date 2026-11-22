@@ -3,7 +3,7 @@ import { draftLeague } from './aiDraft';
 import { rollInjury } from './injuries';
 import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs } from './playoffs';
 import { createRng } from './rng';
-import { DEADLINE_GAME, SEASON_GAMES, advance, createSeason, standings, tradeSwap } from './season';
+import { DEADLINE_GAME, LOG_BOX_GAMES, SEASON_GAMES, advance, createSeason, standings, tradeSwap } from './season';
 import type { Player } from './types';
 import { makePool } from './__fixtures__/pool';
 
@@ -111,6 +111,13 @@ describe('season', () => {
     const user = { ...s.teams[0], slots: { ...s.teams[0].slots, PG: { ...star('a'), pos: 'PG' as const }, SG: { ...star('b'), pos: 'SG' as const } } };
     const withStars = { ...s, teams: [user, ...s.teams.slice(1)] };
     expect(() => tradeSwap(withStars, user.slots.B5.id, star('c'))).toThrow(/superstar/i);
+  });
+
+  it('keeps saved seasons small: box scores only for the most recent games', () => {
+    const s = advance(advance(fresh(), 100), 100);
+    const withBox = s.log.filter((e) => e.kind === 'game' && e.result.box.length > 0);
+    expect(withBox.length).toBeLessThanOrEqual(LOG_BOX_GAMES);
+    expect(s.log.filter((e) => e.kind === 'game')).toHaveLength(82);
   });
 
   it('exact standings ties do not always favor the user', () => {
