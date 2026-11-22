@@ -17,6 +17,8 @@ export interface Player {
   dur: number;
   age?: number;
   tag?: string;
+  /** Data needs owner verification (e.g. roster move after mid-2026). */
+  verify?: boolean;
   stats?: { ppg: number; rpg: number; apg: number };
   accolades?: string[];
 }
