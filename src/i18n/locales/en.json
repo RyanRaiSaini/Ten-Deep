@@ -181,5 +181,11 @@
     "winsSeries": "{{name}} wins the series {{w}}-{{l}}!",
     "rematch": "Rematch",
     "newDuel": "New duel"
+  },
+  "notif": {
+    "dailyTitle": "Daily Challenge is live 🏀",
+    "dailyBody": "New spins, trivia and duels are waiting. One shot each.",
+    "streakTitle": "Your streak is on the line 🔥",
+    "streakBody": "You haven't drafted today. Spin up a ten-deep roster before midnight."
   }
 }

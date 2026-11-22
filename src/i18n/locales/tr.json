@@ -181,5 +181,11 @@
     "winsSeries": "{{name}} seriyi {{w}}-{{l}} kazandı!",
     "rematch": "Rövanş",
     "newDuel": "Yeni düello"
+  },
+  "notif": {
+    "dailyTitle": "Günlük görev başladı 🏀",
+    "dailyBody": "Yeni çevirmeler, sorular ve düellolar seni bekliyor. Her birine tek hak.",
+    "streakTitle": "Serin tehlikede 🔥",
+    "streakBody": "Bugün draft yapmadın. Gece yarısından önce kadronu kur."
   }
 }

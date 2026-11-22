@@ -3,7 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useMusic } from '../audio/useMusic';
 import { applyLanguage, deviceLanguage } from '../i18n';
+import { useNotificationSync } from '../notifications';
 import { useDaily } from '../store/daily';
 import { useDuel } from '../store/duel';
 import { useGame } from '../store/game';
@@ -29,6 +31,8 @@ function useHydrated() {
 export default function RootLayout() {
   const language = useSettings((s) => s.language);
   const ready = useHydrated();
+  useMusic();
+  useNotificationSync();
   useEffect(() => applyLanguage(language ?? deviceLanguage()), [language]);
 
   if (!ready) return <View style={{ flex: 1, backgroundColor: C.bg }} />;

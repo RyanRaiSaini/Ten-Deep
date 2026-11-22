@@ -181,5 +181,11 @@
     "winsSeries": "¡{{name}} gana la serie {{w}}-{{l}}!",
     "rematch": "Revancha",
     "newDuel": "Nuevo duelo"
+  },
+  "notif": {
+    "dailyTitle": "El reto diario ya está 🏀",
+    "dailyBody": "Nuevos giros, trivia y duelos te esperan. Un intento cada uno.",
+    "streakTitle": "Tu racha está en juego 🔥",
+    "streakBody": "Hoy no has drafteado. Arma tu plantilla antes de medianoche."
   }
 }

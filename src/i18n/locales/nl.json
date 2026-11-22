@@ -181,5 +181,11 @@
     "winsSeries": "{{name}} wint de serie met {{w}}-{{l}}!",
     "rematch": "Revanche",
     "newDuel": "Nieuw duel"
+  },
+  "notif": {
+    "dailyTitle": "De dagelijkse uitdaging staat klaar 🏀",
+    "dailyBody": "Nieuwe draaien, quiz en duels wachten. Eén kans per stuk.",
+    "streakTitle": "Je reeks staat op het spel 🔥",
+    "streakBody": "Je hebt vandaag niet gedraft. Stel je selectie samen voor middernacht."
   }
 }

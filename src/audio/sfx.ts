@@ -7,7 +7,7 @@ import { Platform } from 'react-native';
 type Ctx = AudioContext;
 let ctx: Ctx | null = null;
 
-function audio(): Ctx | null {
+export function audio(): Ctx | null {
   if (Platform.OS !== 'web' || typeof window === 'undefined') return null;
   const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
   if (!AC) return null;
