@@ -1,3 +1,4 @@
+import { effective } from './simConfig';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type SlotId,
 } from './types';
@@ -76,8 +77,8 @@ export function teamStrength(lineup: LineupEntry[]): Strength {
   for (const e of lineup) {
     const w = e.minutes / 240;
     const pen = e.outOfPosition ? OOP_PENALTY : 0;
-    off += w * (0.5 * e.player.off + 0.5 * e.player.ovr - pen);
-    def += w * (0.5 * e.player.def + 0.5 * e.player.ovr - pen);
+    off += w * (effective(0.5 * e.player.off + 0.5 * e.player.ovr) - pen);
+    def += w * (effective(0.5 * e.player.def + 0.5 * e.player.ovr) - pen);
   }
   return { off, def, net: off + def };
 }
