@@ -167,5 +167,19 @@
     "seriesWon": "{{team}} {{w}}-{{l}} kazandı",
     "youGuessed": "Bildin!",
     "strength": "Güç"
+  },
+  "duel": {
+    "title": "Düello",
+    "passPlay": "Telefonu paylaş: aynı çevirmeler, sırayla seçim, sonra 7 maçlık seri.",
+    "online": "Arkadaşlarla çevrim içi düellolar hesaplarla gelecek.",
+    "p1": "1. oyuncunun adı",
+    "p2": "2. oyuncunun adı",
+    "start": "Düelloyu başlat",
+    "turn": "{{name}}, sıra sende",
+    "playSeries": "Seriyi oyna",
+    "nextGame": "{{n}}. maçı oyna",
+    "winsSeries": "{{name}} seriyi {{w}}-{{l}} kazandı!",
+    "rematch": "Rövanş",
+    "newDuel": "Yeni düello"
   }
 }

@@ -116,6 +116,33 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('13-daily-hub');
   });
 
+  await step('pass-and-play duel: 20 picks and a best-of-7', async () => {
+    await page.goto(base);
+    await page.getByText('Duels').click();
+    await page.getByTestId('p1').fill('Ryan');
+    await page.getByTestId('p2').fill('Friend');
+    await page.getByTestId('duel-start').click();
+    for (let i = 0; i < 20; i++) {
+      await page.locator('[data-testid="duel-option"], [data-testid="duel-fallback"]').first().waitFor({ timeout: 5000 });
+      if (i === 1) await shot('16-duel-draft');
+      const before = await page.getByTestId('duel-turn').textContent();
+      const opt = page.getByTestId('duel-option').first();
+      if (await opt.count()) {
+        await opt.click();
+        if ((await page.getByTestId('duel-turn').count()) && (await page.getByTestId('duel-turn').textContent()) === before) {
+          for (const slot of ['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4', 'B5']) {
+            await page.getByTestId(`slot-${slot}`).last().click();
+            if (!(await page.getByTestId('duel-turn').count()) || (await page.getByTestId('duel-turn').textContent()) !== before) break;
+          }
+        }
+      } else await page.getByTestId('duel-fallback').click();
+    }
+    await page.getByTestId('duel-series').click();
+    while (await page.getByTestId('duel-next').count()) await page.getByTestId('duel-next').click();
+    await page.getByTestId('duel-winner').waitFor();
+    await shot('17-duel-result');
+  });
+
   await step('profile: pick an avatar', async () => {
     await page.goto(base);
     await page.getByTestId('avatar').click();

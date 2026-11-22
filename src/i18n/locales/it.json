@@ -167,5 +167,19 @@
     "seriesWon": "{{team}} vince {{w}}-{{l}}",
     "youGuessed": "Indovinato!",
     "strength": "Forza"
+  },
+  "duel": {
+    "title": "Duello",
+    "passPlay": "Passa il telefono: stessi giri, scelte alternate, poi una serie al meglio delle 7.",
+    "online": "I duelli online arriveranno con gli account.",
+    "p1": "Nome giocatore 1",
+    "p2": "Nome giocatore 2",
+    "start": "Inizia il duello",
+    "turn": "{{name}}, tocca a te",
+    "playSeries": "Gioca la serie",
+    "nextGame": "Gioca gara {{n}}",
+    "winsSeries": "{{name}} vince la serie {{w}}-{{l}}!",
+    "rematch": "Rivincita",
+    "newDuel": "Nuovo duello"
   }
 }
