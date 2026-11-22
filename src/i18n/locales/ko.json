@@ -1,6 +1,14 @@
 {
-  "app": { "tagline": "10명을 뽑아라. 82경기를 버텨라." },
-  "common": { "comingSoon": "출시 예정", "back": "뒤로", "continue": "계속", "on": "켜기", "off": "끄기" },
+  "app": {
+    "tagline": "10명을 뽑아라. 82경기를 버텨라."
+  },
+  "common": {
+    "comingSoon": "출시 예정",
+    "back": "뒤로",
+    "continue": "계속",
+    "on": "켜기",
+    "off": "끄기"
+  },
   "home": {
     "draftsPlayed": "플레이한 드래프트",
     "titles": "우승",
@@ -10,11 +18,26 @@
     "play": "플레이"
   },
   "mode": {
-    "current": { "title": "현재 시즌", "desc": "2026-27 로스터. 팀을 돌려 10명을 뽑으세요." },
-    "franchise": { "title": "역대 프랜차이즈", "desc": "레이커스, 셀틱스, 불스 등 역사 속 팀들." },
-    "era": { "title": "시대", "desc": "조던, 르브론, 스테판 — 한 시대에서 드래프트." },
-    "daily": { "title": "데일리 챌린지", "desc": "모두에게 같은 스핀. 하루 한 번의 기회." },
-    "duels": { "title": "대결", "desc": "친구와 1대1 드래프트 대결." }
+    "current": {
+      "title": "현재 시즌",
+      "desc": "2026-27 로스터. 팀을 돌려 10명을 뽑으세요."
+    },
+    "franchise": {
+      "title": "역대 프랜차이즈",
+      "desc": "레이커스, 셀틱스, 불스 등 역사 속 팀들."
+    },
+    "era": {
+      "title": "시대",
+      "desc": "조던, 르브론, 스테판 — 한 시대에서 드래프트."
+    },
+    "daily": {
+      "title": "데일리 챌린지",
+      "desc": "모두에게 같은 스핀. 하루 한 번의 기회."
+    },
+    "duels": {
+      "title": "대결",
+      "desc": "친구와 1대1 드래프트 대결."
+    }
   },
   "settings": {
     "title": "설정",
@@ -108,5 +131,10 @@
     "Short-term": "단기 부상",
     "Long-term": "장기 부상",
     "Season-ending": "시즌 아웃"
+  },
+  "modes": {
+    "pickFranchise": "프랜차이즈 선택",
+    "pickEra": "시대 선택",
+    "players": "선수 {{n}}명"
   }
 }

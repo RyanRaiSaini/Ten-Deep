@@ -1,6 +1,14 @@
 {
-  "app": { "tagline": "Draftez dix joueurs. Survivez aux 82." },
-  "common": { "comingSoon": "Bientôt", "back": "Retour", "continue": "Continuer", "on": "Oui", "off": "Non" },
+  "app": {
+    "tagline": "Draftez dix joueurs. Survivez aux 82."
+  },
+  "common": {
+    "comingSoon": "Bientôt",
+    "back": "Retour",
+    "continue": "Continuer",
+    "on": "Oui",
+    "off": "Non"
+  },
   "home": {
     "draftsPlayed": "Drafts joués",
     "titles": "Titres",
@@ -10,11 +18,26 @@
     "play": "Jouer"
   },
   "mode": {
-    "current": { "title": "Saison actuelle", "desc": "Effectifs 2026-27. Fais tourner, draft tes dix." },
-    "franchise": { "title": "Franchises de légende", "desc": "Lakers, Celtics, Bulls et plus à travers l'histoire." },
-    "era": { "title": "Époques", "desc": "Jordan, LeBron, Steph — draft dans une époque." },
-    "daily": { "title": "Défi du jour", "desc": "Les mêmes tirages pour tous. Une chance par jour." },
-    "duels": { "title": "Duels", "desc": "Draft en face-à-face contre un ami." }
+    "current": {
+      "title": "Saison actuelle",
+      "desc": "Effectifs 2026-27. Fais tourner, draft tes dix."
+    },
+    "franchise": {
+      "title": "Franchises de légende",
+      "desc": "Lakers, Celtics, Bulls et plus à travers l'histoire."
+    },
+    "era": {
+      "title": "Époques",
+      "desc": "Jordan, LeBron, Steph — draft dans une époque."
+    },
+    "daily": {
+      "title": "Défi du jour",
+      "desc": "Les mêmes tirages pour tous. Une chance par jour."
+    },
+    "duels": {
+      "title": "Duels",
+      "desc": "Draft en face-à-face contre un ami."
+    }
   },
   "settings": {
     "title": "Réglages",
@@ -108,5 +131,10 @@
     "Short-term": "Courte durée",
     "Long-term": "Longue durée",
     "Season-ending": "Saison terminée"
+  },
+  "modes": {
+    "pickFranchise": "Choisis une franchise",
+    "pickEra": "Choisis une époque",
+    "players": "{{n}} joueurs"
   }
 }

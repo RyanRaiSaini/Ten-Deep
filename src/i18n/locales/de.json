@@ -1,6 +1,14 @@
 {
-  "app": { "tagline": "Draft zehn tief. Überstehe die 82." },
-  "common": { "comingSoon": "Demnächst", "back": "Zurück", "continue": "Weiter", "on": "An", "off": "Aus" },
+  "app": {
+    "tagline": "Draft zehn tief. Überstehe die 82."
+  },
+  "common": {
+    "comingSoon": "Demnächst",
+    "back": "Zurück",
+    "continue": "Weiter",
+    "on": "An",
+    "off": "Aus"
+  },
   "home": {
     "draftsPlayed": "Gespielte Drafts",
     "titles": "Titel",
@@ -10,11 +18,26 @@
     "play": "Spielen"
   },
   "mode": {
-    "current": { "title": "Aktuelle Saison", "desc": "Kader 2026-27. Dreh ein Team, drafte deine Zehn." },
-    "franchise": { "title": "Legendäre Franchises", "desc": "Lakers, Celtics, Bulls und mehr aus der Geschichte." },
-    "era": { "title": "Ären", "desc": "Jordan, LeBron, Steph — drafte aus einer Ära." },
-    "daily": { "title": "Tägliche Challenge", "desc": "Gleiche Drehungen für alle. Ein Versuch pro Tag." },
-    "duels": { "title": "Duelle", "desc": "Drafte direkt gegen einen Freund." }
+    "current": {
+      "title": "Aktuelle Saison",
+      "desc": "Kader 2026-27. Dreh ein Team, drafte deine Zehn."
+    },
+    "franchise": {
+      "title": "Legendäre Franchises",
+      "desc": "Lakers, Celtics, Bulls und mehr aus der Geschichte."
+    },
+    "era": {
+      "title": "Ären",
+      "desc": "Jordan, LeBron, Steph — drafte aus einer Ära."
+    },
+    "daily": {
+      "title": "Tägliche Challenge",
+      "desc": "Gleiche Drehungen für alle. Ein Versuch pro Tag."
+    },
+    "duels": {
+      "title": "Duelle",
+      "desc": "Drafte direkt gegen einen Freund."
+    }
   },
   "settings": {
     "title": "Einstellungen",
@@ -108,5 +131,10 @@
     "Short-term": "Kurzfristig",
     "Long-term": "Langfristig",
     "Season-ending": "Saisonaus"
+  },
+  "modes": {
+    "pickFranchise": "Wähle ein Franchise",
+    "pickEra": "Wähle eine Ära",
+    "players": "{{n}} Spieler"
   }
 }

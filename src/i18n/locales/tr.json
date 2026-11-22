@@ -1,6 +1,14 @@
 {
-  "app": { "tagline": "On kişilik kadro kur. 82 maçı atlat." },
-  "common": { "comingSoon": "Yakında", "back": "Geri", "continue": "Devam", "on": "Açık", "off": "Kapalı" },
+  "app": {
+    "tagline": "On kişilik kadro kur. 82 maçı atlat."
+  },
+  "common": {
+    "comingSoon": "Yakında",
+    "back": "Geri",
+    "continue": "Devam",
+    "on": "Açık",
+    "off": "Kapalı"
+  },
   "home": {
     "draftsPlayed": "Oynanan draftlar",
     "titles": "Şampiyonluklar",
@@ -10,11 +18,26 @@
     "play": "Oyna"
   },
   "mode": {
-    "current": { "title": "Güncel", "desc": "2026-27 kadroları. Bir takım çevir, onlu kadronu seç." },
-    "franchise": { "title": "Tüm Zamanların Kulüpleri", "desc": "Lakers, Celtics, Bulls ve daha fazlası, tarih boyunca." },
-    "era": { "title": "Dönemler", "desc": "Jordan, LeBron, Steph — tek bir dönemden seç." },
-    "daily": { "title": "Günlük görev", "desc": "Herkese aynı çevirmeler. Günde bir hak." },
-    "duels": { "title": "Düellolar", "desc": "Bir arkadaşına karşı kafa kafaya draft yap." }
+    "current": {
+      "title": "Güncel",
+      "desc": "2026-27 kadroları. Bir takım çevir, onlu kadronu seç."
+    },
+    "franchise": {
+      "title": "Tüm Zamanların Kulüpleri",
+      "desc": "Lakers, Celtics, Bulls ve daha fazlası, tarih boyunca."
+    },
+    "era": {
+      "title": "Dönemler",
+      "desc": "Jordan, LeBron, Steph — tek bir dönemden seç."
+    },
+    "daily": {
+      "title": "Günlük görev",
+      "desc": "Herkese aynı çevirmeler. Günde bir hak."
+    },
+    "duels": {
+      "title": "Düellolar",
+      "desc": "Bir arkadaşına karşı kafa kafaya draft yap."
+    }
   },
   "settings": {
     "title": "Ayarlar",
@@ -108,5 +131,10 @@
     "Short-term": "Kısa süreli",
     "Long-term": "Uzun süreli",
     "Season-ending": "Sezonu kapattı"
+  },
+  "modes": {
+    "pickFranchise": "Bir kulüp seç",
+    "pickEra": "Bir dönem seç",
+    "players": "{{n}} oyuncu"
   }
 }

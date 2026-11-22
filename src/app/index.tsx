@@ -9,8 +9,8 @@ import { C, F, R, S } from '../ui/theme';
 
 const MODES = [
   { key: 'current', poolId: 'current-2026', live: true, accent: C.hardwood },
-  { key: 'franchise', live: false, accent: '#7C5CFF' },
-  { key: 'era', live: false, accent: C.gold },
+  { key: 'franchise', picker: 'franchise', live: true, accent: '#7C5CFF' },
+  { key: 'era', picker: 'era', live: true, accent: C.gold },
   { key: 'daily', live: false, accent: C.neon },
   { key: 'duels', live: false, accent: C.danger },
 ] as const;
@@ -54,7 +54,7 @@ export default function Home() {
         <Card
           key={m.key}
           style={[styles.mode, { borderColor: m.live ? m.accent : C.line, opacity: m.live ? 1 : 0.55 }]}
-          onPress={m.live ? () => { newRun(m.poolId); router.push('/draft'); } : undefined}
+          onPress={!m.live ? undefined : 'picker' in m ? () => router.push(`/modes/${m.picker}`) : () => { newRun(m.poolId); router.push('/draft'); }}
         >
           <View style={[styles.modeBar, { backgroundColor: m.accent }]} />
           <View style={{ flex: 1, gap: 4 }}>

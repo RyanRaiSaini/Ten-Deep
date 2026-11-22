@@ -1,6 +1,14 @@
 {
-  "app": { "tagline": "Draft tien diep. Overleef er 82." },
-  "common": { "comingSoon": "Binnenkort", "back": "Terug", "continue": "Doorgaan", "on": "Aan", "off": "Uit" },
+  "app": {
+    "tagline": "Draft tien diep. Overleef er 82."
+  },
+  "common": {
+    "comingSoon": "Binnenkort",
+    "back": "Terug",
+    "continue": "Doorgaan",
+    "on": "Aan",
+    "off": "Uit"
+  },
   "home": {
     "draftsPlayed": "Gespeelde drafts",
     "titles": "Titels",
@@ -10,11 +18,26 @@
     "play": "Spelen"
   },
   "mode": {
-    "current": { "title": "Huidig seizoen", "desc": "Selecties 2026-27. Draai een team, draft je tien." },
-    "franchise": { "title": "Legendarische franchises", "desc": "Lakers, Celtics, Bulls en meer door de geschiedenis." },
-    "era": { "title": "Tijdperken", "desc": "Jordan, LeBron, Steph — draft uit één tijdperk." },
-    "daily": { "title": "Dagelijkse uitdaging", "desc": "Dezelfde draaien voor iedereen. Eén kans per dag." },
-    "duels": { "title": "Duels", "desc": "Draft rechtstreeks tegen een vriend." }
+    "current": {
+      "title": "Huidig seizoen",
+      "desc": "Selecties 2026-27. Draai een team, draft je tien."
+    },
+    "franchise": {
+      "title": "Legendarische franchises",
+      "desc": "Lakers, Celtics, Bulls en meer door de geschiedenis."
+    },
+    "era": {
+      "title": "Tijdperken",
+      "desc": "Jordan, LeBron, Steph — draft uit één tijdperk."
+    },
+    "daily": {
+      "title": "Dagelijkse uitdaging",
+      "desc": "Dezelfde draaien voor iedereen. Eén kans per dag."
+    },
+    "duels": {
+      "title": "Duels",
+      "desc": "Draft rechtstreeks tegen een vriend."
+    }
   },
   "settings": {
     "title": "Instellingen",
@@ -108,5 +131,10 @@
     "Short-term": "Korte termijn",
     "Long-term": "Lange termijn",
     "Season-ending": "Seizoen voorbij"
+  },
+  "modes": {
+    "pickFranchise": "Kies een franchise",
+    "pickEra": "Kies een tijdperk",
+    "players": "{{n}} spelers"
   }
 }

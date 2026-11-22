@@ -17,6 +17,14 @@ describe('calibration (2026 pool)', () => {
     expect(r.titleRate).toBeLessThanOrEqual(0.55);
   }, 120_000);
 
+  it('All-Time pool: even the best legal roster of legends never goes 82-0 and stays under ~72 wins', async () => {
+    const { MODE_BY_ID } = await import('../data/modes');
+    const allTime = MODE_BY_ID['all-time'].pool;
+    const r = runSeasons(bestRoster(allTime, 40), allTime, 15, 'cal-alltime');
+    expect(r.perfect).toBe(0);
+    expect(r.avg).toBeLessThanOrEqual(72);
+  }, 180_000);
+
   it('a league-average roster wins about 41 games and no titles', () => {
     const r = runSeasons((i) => averageUser(current2026, i), current2026, 20, 'cal-avg');
     expect(r.avg).toBeGreaterThanOrEqual(36);

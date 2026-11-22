@@ -31,6 +31,8 @@ export interface TeamSeason {
   season: string;
   colors: [string, string];
   players: Player[];
+  /** Franchise key for historical seasons (e.g. 'lal'). */
+  franchise?: string;
 }
 
 export interface Pool {

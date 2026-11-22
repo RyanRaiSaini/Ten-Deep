@@ -1,6 +1,14 @@
 {
-  "app": { "tagline": "Scegli i tuoi dieci. Sopravvivi alle 82." },
-  "common": { "comingSoon": "Presto disponibile", "back": "Indietro", "continue": "Continua", "on": "Sì", "off": "No" },
+  "app": {
+    "tagline": "Scegli i tuoi dieci. Sopravvivi alle 82."
+  },
+  "common": {
+    "comingSoon": "Presto disponibile",
+    "back": "Indietro",
+    "continue": "Continua",
+    "on": "Sì",
+    "off": "No"
+  },
   "home": {
     "draftsPlayed": "Draft giocati",
     "titles": "Titoli",
@@ -10,11 +18,26 @@
     "play": "Gioca"
   },
   "mode": {
-    "current": { "title": "Attualità", "desc": "Rose 2026-27. Gira una squadra, scegli i tuoi dieci." },
-    "franchise": { "title": "Franchigie storiche", "desc": "Lakers, Celtics, Bulls e altre nella storia." },
-    "era": { "title": "Epoche", "desc": "Jordan, LeBron, Steph — scegli da un'epoca." },
-    "daily": { "title": "Sfida del giorno", "desc": "Gli stessi giri per tutti. Un tentativo al giorno." },
-    "duels": { "title": "Duelli", "desc": "Draft testa a testa contro un amico." }
+    "current": {
+      "title": "Attualità",
+      "desc": "Rose 2026-27. Gira una squadra, scegli i tuoi dieci."
+    },
+    "franchise": {
+      "title": "Franchigie storiche",
+      "desc": "Lakers, Celtics, Bulls e altre nella storia."
+    },
+    "era": {
+      "title": "Epoche",
+      "desc": "Jordan, LeBron, Steph — scegli da un'epoca."
+    },
+    "daily": {
+      "title": "Sfida del giorno",
+      "desc": "Gli stessi giri per tutti. Un tentativo al giorno."
+    },
+    "duels": {
+      "title": "Duelli",
+      "desc": "Draft testa a testa contro un amico."
+    }
   },
   "settings": {
     "title": "Impostazioni",
@@ -108,5 +131,10 @@
     "Short-term": "Breve termine",
     "Long-term": "Lungo termine",
     "Season-ending": "Stagione finita"
+  },
+  "modes": {
+    "pickFranchise": "Scegli una franchigia",
+    "pickEra": "Scegli un'epoca",
+    "players": "{{n}} giocatori"
   }
 }

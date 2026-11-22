@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { POOLS } from '../data';
+import { MODE_BY_ID, POOLS, leaguePoolFor } from '../data';
 import { draftLeague } from '../engine/aiDraft';
 import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, respin, spin, startDraft, type DraftState,
@@ -68,11 +68,22 @@ export const useGame = create<GameStore>()(
       startSeason: () => {
         const { draft, poolId } = get();
         if (!draft || !isComplete(draft)) return;
-        const p = pool(poolId);
+        const mode = MODE_BY_ID[poolId];
+        const lp = pool(mode ? leaguePoolFor(mode) : poolId);
         const user = { id: 'user', name: 'You', colors: ['#E8833A', '#3DF2C2'] as [string, string], slots: draft.roster as Required<RosterSlots> };
         const rng = createRng(`${draft.seed}:league`);
-        const league = draftLeague(p, new Set(draft.used), 29, rng);
-        const names = shuffle(p.teams.filter((t) => t.id !== 'rookies-2026'), rng);
+        // Exclude by name: the league pool may hold a different season of the same player.
+        const mine = new Set(Object.values(draft.roster).map((x) => x!.name));
+        const exclude = new Set(lp.teams.flatMap((t) => t.players).filter((x) => mine.has(x.name)).map((x) => x.id));
+        const league = draftLeague(lp, exclude, 29, rng);
+        // One name per franchise (e.g. "Chicago Bulls"), never the user's.
+        const seen = new Set<string>();
+        const names = shuffle(lp.teams.filter((t) => t.id !== 'rookies-2026'), rng).filter((t) => {
+          const n = `${t.city} ${t.name}`;
+          if (seen.has(n)) return false;
+          seen.add(n);
+          return true;
+        });
         league.forEach((r, i) => {
           const t = names[i % names.length];
           r.name = `${t.city} ${t.name}`;
@@ -88,8 +99,8 @@ export const useGame = create<GameStore>()(
       spinDeadline: () =>
         set((s) => {
           const season = s.season!;
-          const taken = new Set(season.teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k].id)));
-          const teams = pool(s.poolId).teams.filter((t) => t.players.some((p) => !taken.has(p.id)));
+          const taken = new Set(season.teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k].name)));
+          const teams = pool(s.poolId).teams.filter((t) => t.players.some((p) => !taken.has(p.name)));
           const landed = createRng(`${season.seed}:deadline`).pick(teams);
           return { deadline: { ...s.deadline!, spin: landed, spun: true } };
         }),

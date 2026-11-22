@@ -1,6 +1,14 @@
 {
-  "app": { "tagline": "Draft ten deep. Survive 82." },
-  "common": { "comingSoon": "Coming soon", "back": "Back", "continue": "Continue", "on": "On", "off": "Off" },
+  "app": {
+    "tagline": "Draft ten deep. Survive 82."
+  },
+  "common": {
+    "comingSoon": "Coming soon",
+    "back": "Back",
+    "continue": "Continue",
+    "on": "On",
+    "off": "Off"
+  },
   "home": {
     "draftsPlayed": "Drafts played",
     "titles": "Titles",
@@ -10,11 +18,26 @@
     "play": "Play"
   },
   "mode": {
-    "current": { "title": "Current Day", "desc": "2026-27 rosters. Spin a team, draft your ten." },
-    "franchise": { "title": "All-Time Franchises", "desc": "Lakers, Celtics, Bulls and more across history." },
-    "era": { "title": "Eras", "desc": "Jordan, LeBron, Steph — draft from one era." },
-    "daily": { "title": "Daily Challenge", "desc": "Same spins for everyone. One shot a day." },
-    "duels": { "title": "Duels", "desc": "Draft head-to-head against a friend." }
+    "current": {
+      "title": "Current Day",
+      "desc": "2026-27 rosters. Spin a team, draft your ten."
+    },
+    "franchise": {
+      "title": "All-Time Franchises",
+      "desc": "Lakers, Celtics, Bulls and more across history."
+    },
+    "era": {
+      "title": "Eras",
+      "desc": "Jordan, LeBron, Steph — draft from one era."
+    },
+    "daily": {
+      "title": "Daily Challenge",
+      "desc": "Same spins for everyone. One shot a day."
+    },
+    "duels": {
+      "title": "Duels",
+      "desc": "Draft head-to-head against a friend."
+    }
   },
   "settings": {
     "title": "Settings",
@@ -108,5 +131,10 @@
     "Short-term": "Short-term",
     "Long-term": "Long-term",
     "Season-ending": "Season-ending"
+  },
+  "modes": {
+    "pickFranchise": "Choose a franchise",
+    "pickEra": "Choose an era",
+    "players": "{{n}} players"
   }
 }

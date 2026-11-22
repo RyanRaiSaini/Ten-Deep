@@ -1,6 +1,14 @@
 {
-  "app": { "tagline": "Draft de dez. Sobreviva aos 82." },
-  "common": { "comingSoon": "Em breve", "back": "Voltar", "continue": "Continuar", "on": "Sim", "off": "Não" },
+  "app": {
+    "tagline": "Draft de dez. Sobreviva aos 82."
+  },
+  "common": {
+    "comingSoon": "Em breve",
+    "back": "Voltar",
+    "continue": "Continuar",
+    "on": "Sim",
+    "off": "Não"
+  },
   "home": {
     "draftsPlayed": "Drafts jogados",
     "titles": "Títulos",
@@ -10,11 +18,26 @@
     "play": "Jogar"
   },
   "mode": {
-    "current": { "title": "Atualidade", "desc": "Elencos 2026-27. Gire um time e escolha seus dez." },
-    "franchise": { "title": "Franquias históricas", "desc": "Lakers, Celtics, Bulls e mais ao longo da história." },
-    "era": { "title": "Eras", "desc": "Jordan, LeBron, Steph — draft de uma era." },
-    "daily": { "title": "Desafio diário", "desc": "Os mesmos giros para todos. Uma chance por dia." },
-    "duels": { "title": "Duelos", "desc": "Draft cara a cara contra um amigo." }
+    "current": {
+      "title": "Atualidade",
+      "desc": "Elencos 2026-27. Gire um time e escolha seus dez."
+    },
+    "franchise": {
+      "title": "Franquias históricas",
+      "desc": "Lakers, Celtics, Bulls e mais ao longo da história."
+    },
+    "era": {
+      "title": "Eras",
+      "desc": "Jordan, LeBron, Steph — draft de uma era."
+    },
+    "daily": {
+      "title": "Desafio diário",
+      "desc": "Os mesmos giros para todos. Uma chance por dia."
+    },
+    "duels": {
+      "title": "Duelos",
+      "desc": "Draft cara a cara contra um amigo."
+    }
   },
   "settings": {
     "title": "Configurações",
@@ -108,5 +131,10 @@
     "Short-term": "Curto prazo",
     "Long-term": "Longo prazo",
     "Season-ending": "Fim de temporada"
+  },
+  "modes": {
+    "pickFranchise": "Escolha uma franquia",
+    "pickEra": "Escolha uma era",
+    "players": "{{n}} jogadores"
   }
 }
