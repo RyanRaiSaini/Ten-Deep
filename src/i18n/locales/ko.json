@@ -155,6 +155,17 @@
     "highest": "Ten Deep 레이팅이 가장 높은 선수는?",
     "teamQ": "{{season}}년 {{name}}의 소속 팀은?",
     "rankHint": "레이팅 높은 순으로 위에서부터",
-    "yourScore": "점수: {{n}}/5"
+    "yourScore": "점수: {{n}}/5",
+    "teamRank": "팀 순위",
+    "teamRankDesc": "역대 5팀을 전력 순으로 정렬하세요.",
+    "derby": "1v1 더비",
+    "derbyDesc": "다섯 번의 맞대결: 누가 더 강할까?",
+    "teamDuel": "팀 대결",
+    "teamDuelDesc": "역대 두 팀의 7전 4선승제. 승자를 예측하세요.",
+    "whoWins": "누가 이길까?",
+    "teamRankHint": "가장 강한 팀을 맨 위에",
+    "seriesWon": "{{team}} {{w}}-{{l}} 승리",
+    "youGuessed": "적중!",
+    "strength": "전력"
   }
 }

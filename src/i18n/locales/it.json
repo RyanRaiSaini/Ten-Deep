@@ -155,6 +155,17 @@
     "highest": "Chi ha la valutazione Ten Deep più alta?",
     "teamQ": "In che squadra giocava {{name}} nel {{season}}?",
     "rankHint": "Valutazione più alta in cima",
-    "yourScore": "Punteggio: {{n}}/5"
+    "yourScore": "Punteggio: {{n}}/5",
+    "teamRank": "Classifica squadre",
+    "teamRankDesc": "Ordina 5 squadre storiche per forza.",
+    "derby": "Derby 1v1",
+    "derbyDesc": "Cinque sfide: chi è più forte?",
+    "teamDuel": "Duello di squadre",
+    "teamDuelDesc": "Due squadre storiche, al meglio delle 7. Fai il pronostico.",
+    "whoWins": "Chi vince?",
+    "teamRankHint": "Squadra più forte in cima",
+    "seriesWon": "{{team}} vince {{w}}-{{l}}",
+    "youGuessed": "Indovinato!",
+    "strength": "Forza"
   }
 }

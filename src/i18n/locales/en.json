@@ -155,6 +155,17 @@
     "highest": "Who has the highest Ten Deep rating?",
     "teamQ": "Which team did {{name}} play for in {{season}}?",
     "rankHint": "Highest rating at the top",
-    "yourScore": "You scored {{n}}/5"
+    "yourScore": "You scored {{n}}/5",
+    "teamRank": "Team Rank",
+    "teamRankDesc": "Order 5 historic teams by strength.",
+    "derby": "1v1 Derby",
+    "derbyDesc": "Five head-to-heads: who is better?",
+    "teamDuel": "Team Duel",
+    "teamDuelDesc": "Two historic teams, best-of-7. Call it.",
+    "whoWins": "Who wins?",
+    "teamRankHint": "Strongest team at the top",
+    "seriesWon": "{{team}} win {{w}}-{{l}}",
+    "youGuessed": "You called it!",
+    "strength": "Strength"
   }
 }

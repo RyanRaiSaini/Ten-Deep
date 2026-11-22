@@ -6,6 +6,10 @@ export interface DailyDay {
   draft?: { wins: number; losses: number; champion: boolean };
   trivia?: number;
   rank?: number;
+  teamRank?: number;
+  derby?: number;
+  /** 1 if the Team Duel winner was guessed right, else 0. */
+  teamDuel?: number;
 }
 
 export interface DailyStore {

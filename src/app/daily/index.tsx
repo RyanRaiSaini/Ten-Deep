@@ -27,7 +27,22 @@ export default function DailyHub() {
     {
       id: 'rank', title: t('daily.rank'), desc: t('daily.rankDesc'), accent: C.gold,
       status: day.rank !== undefined ? `${day.rank}/5` : null,
-      open: () => router.push('/daily/rank'),
+      open: () => router.push('/daily/rank?kind=players'),
+    },
+    {
+      id: 'team-rank', title: t('daily.teamRank'), desc: t('daily.teamRankDesc'), accent: '#7C5CFF',
+      status: day.teamRank !== undefined ? `${day.teamRank}/5` : null,
+      open: () => router.push('/daily/rank?kind=teams'),
+    },
+    {
+      id: 'derby', title: t('daily.derby'), desc: t('daily.derbyDesc'), accent: C.danger,
+      status: day.derby !== undefined ? `${day.derby}/5` : null,
+      open: () => router.push('/daily/pick?kind=derby'),
+    },
+    {
+      id: 'team-duel', title: t('daily.teamDuel'), desc: t('daily.teamDuelDesc'), accent: '#3B5BFF',
+      status: day.teamDuel !== undefined ? (day.teamDuel ? '✓' : '✗') : null,
+      open: () => router.push('/daily/pick?kind=duel'),
     },
   ];
 

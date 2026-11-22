@@ -155,6 +155,17 @@
     "highest": "Wie heeft de hoogste Ten Deep-rating?",
     "teamQ": "Voor welk team speelde {{name}} in {{season}}?",
     "rankHint": "Hoogste rating bovenaan",
-    "yourScore": "Je score: {{n}}/5"
+    "yourScore": "Je score: {{n}}/5",
+    "teamRank": "Teamranglijst",
+    "teamRankDesc": "Zet 5 historische teams op volgorde van sterkte.",
+    "derby": "1v1-derby",
+    "derbyDesc": "Vijf duels: wie is beter?",
+    "teamDuel": "Teamduel",
+    "teamDuelDesc": "Twee historische teams, best-of-7. Voorspel het.",
+    "whoWins": "Wie wint?",
+    "teamRankHint": "Sterkste team bovenaan",
+    "seriesWon": "{{team}} wint met {{w}}-{{l}}",
+    "youGuessed": "Goed voorspeld!",
+    "strength": "Sterkte"
   }
 }

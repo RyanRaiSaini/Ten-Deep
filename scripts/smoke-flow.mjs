@@ -94,6 +94,25 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('12-rank');
     await page.getByTestId('back').last().click();
     if (!(await page.getByText(/\d\/5/).count())) throw new Error('daily hub did not show scores');
+
+    await page.getByTestId('daily-team-rank').click();
+    await page.getByTestId('down-0').click();
+    await page.getByTestId('rank-submit').click();
+    await page.getByTestId('rank-score').waitFor();
+    await page.getByTestId('back').last().click();
+
+    await page.getByTestId('daily-derby').click();
+    for (let r = 0; r < 5; r++) {
+      await page.getByTestId('pick-side').first().click();
+      await page.getByTestId('pick-next').click();
+    }
+    await page.getByTestId('pick-done').click();
+
+    await page.getByTestId('daily-team-duel').click();
+    await page.getByTestId('pick-side').last().click();
+    await shot('15-team-duel');
+    await page.getByTestId('pick-next').click();
+    await page.getByTestId('pick-done').click();
     await shot('13-daily-hub');
   });
 

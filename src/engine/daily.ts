@@ -2,7 +2,8 @@
  * Daily challenges: everyone gets the same content on the same calendar day (seeded by date).
  */
 import { createRng, shuffle } from './rng';
-import type { Player, Pool, Rng, TeamSeason } from './types';
+import { simGame } from './game';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Pos, type Rng, type Roster, type RosterSlots, type TeamSeason } from './types';
 
 /** Local calendar day, YYYY-MM-DD. */
 export function dailyKey(d: Date = new Date()): string {
@@ -76,4 +77,104 @@ export function dailyRank(pool: Pool, key: string): RankChallenge {
 /** Number of players placed in exactly the right position. */
 export function scoreRank(guess: string[], answer: string[]): number {
   return guess.filter((id, i) => answer[i] === id).length;
+}
+
+// ---------------------------------------------------------------------------------------------
+// Team rank, 1v1 derby, team duel
+
+/** A team-season's strength: mean overall of its best 8 players. */
+export function teamStrengthScore(t: TeamSeason): number {
+  const top = [...t.players].sort((a, b) => b.ovr - a.ovr).slice(0, 8);
+  return top.reduce((s, p) => s + p.ovr, 0) / top.length;
+}
+
+export interface TeamRankChallenge {
+  teams: TeamSeason[];
+  /** Team ids, strongest first. */
+  answer: string[];
+}
+
+export function dailyTeamRank(seasons: TeamSeason[], key: string): TeamRankChallenge {
+  const rng = createRng(`${dailySeed(key)}:team-rank`);
+  const cands = seasons.filter((t) => t.players.length >= 6);
+  for (;;) {
+    const five = shuffle(cands, rng).slice(0, 5);
+    const scores = five.map(teamStrengthScore);
+    if (new Set(scores.map((s) => s.toFixed(2))).size < 5) continue;
+    return { teams: five, answer: [...five].sort((a, b) => teamStrengthScore(b) - teamStrengthScore(a)).map((t) => t.id) };
+  }
+}
+
+export interface DerbyMatch {
+  a: Player;
+  b: Player;
+  /** Id of the higher-rated player. */
+  winner: string;
+}
+
+/** Five 1v1s: pick who wins (the higher Ten Deep rating). Close matchups make it interesting. */
+export function dailyDerby(pool: Pool, key: string): DerbyMatch[] {
+  const rng = createRng(`${dailySeed(key)}:derby`);
+  const cands = notable(pool).map((x) => x.p);
+  const used = new Set<string>();
+  const out: DerbyMatch[] = [];
+  while (out.length < 5) {
+    const a = rng.pick(cands);
+    const close = cands.filter((p) => p.name !== a.name && Math.abs(p.ovr - a.ovr) <= 4 && p.ovr !== a.ovr);
+    if (!close.length || used.has(a.name)) continue;
+    const b = rng.pick(close);
+    if (used.has(b.name)) continue;
+    used.add(a.name).add(b.name);
+    out.push({ a, b, winner: a.ovr > b.ovr ? a.id : b.id });
+  }
+  return out;
+}
+
+/** Turn a team-season into a full 10-man rotation (starters by position, then bench; call-ups fill gaps). */
+export function rosterFromTeam(t: TeamSeason): Roster {
+  const left = [...t.players].sort((a, b) => b.ovr - a.ovr);
+  const slots: RosterSlots = {};
+  for (const s of STARTER_SLOTS) {
+    const i = left.findIndex((p) => p.pos === s || p.pos2 === s);
+    const idx = i >= 0 ? i : 0;
+    if (left.length) slots[s] = left.splice(idx, 1)[0];
+  }
+  for (const s of BENCH_SLOTS) if (left.length) slots[s] = left.shift();
+  for (const s of ALL_SLOTS)
+    slots[s] ??= { id: `${t.id}-callup-${s}`, name: 'Call-up', pos: (STARTER_SLOTS.includes(s) ? s : 'SF') as Pos, ovr: 64, off: 62, def: 62, reb: 60, ast: 58, three: 58, dur: 90 };
+  return { id: t.id, name: t.label, colors: t.colors, slots: slots as Required<RosterSlots> };
+}
+
+export interface TeamDuel {
+  a: TeamSeason;
+  b: TeamSeason;
+  winsA: number;
+  winsB: number;
+  games: { scoreA: number; scoreB: number }[];
+  winner: string;
+}
+
+/** Two historic team-seasons, one seeded best-of-7. Guess the winner before the reveal. */
+export function dailyTeamDuel(seasons: TeamSeason[], key: string): TeamDuel {
+  const rng = createRng(`${dailySeed(key)}:team-duel`);
+  const cands = seasons.filter((t) => t.players.length >= 7);
+  const a = rng.pick(cands);
+  const close = cands.filter((t) => t.id !== a.id && Math.abs(teamStrengthScore(t) - teamStrengthScore(a)) <= 3);
+  const b = rng.pick(close.length ? close : cands.filter((t) => t.id !== a.id));
+  const ra = rosterFromTeam(a);
+  const rb = rosterFromTeam(b);
+  const games: TeamDuel['games'] = [];
+  let winsA = 0;
+  let winsB = 0;
+  const HOME_A = [true, true, false, false, true, false, true];
+  for (let g = 0; winsA < 4 && winsB < 4; g++) {
+    const ctx = { rng: rng.fork(`g${g}`), outHome: new Set<string>(), outAway: new Set<string>() };
+    const r = HOME_A[g] ? simGame(ra, rb, ctx) : simGame(rb, ra, ctx);
+    const scoreA = HOME_A[g] ? r.homeScore : r.awayScore;
+    const scoreB = HOME_A[g] ? r.awayScore : r.homeScore;
+    games.push({ scoreA, scoreB });
+    if (scoreA > scoreB) winsA++;
+    else winsB++;
+  }
+  return { a, b, winsA, winsB, games, winner: winsA === 4 ? a.id : b.id };
 }

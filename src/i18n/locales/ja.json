@@ -155,6 +155,17 @@
     "highest": "Ten Deepレーティングが最も高いのは？",
     "teamQ": "{{season}}年、{{name}}が所属していたチームは？",
     "rankHint": "レーティングが高い順に上から",
-    "yourScore": "スコア：{{n}}/5"
+    "yourScore": "スコア：{{n}}/5",
+    "teamRank": "チームランキング",
+    "teamRankDesc": "歴代5チームを強さ順に並べよう。",
+    "derby": "1v1ダービー",
+    "derbyDesc": "5つの対決：どちらが上？",
+    "teamDuel": "チーム対決",
+    "teamDuelDesc": "歴代2チームの7戦4勝制。勝者を予想しよう。",
+    "whoWins": "勝つのは？",
+    "teamRankHint": "最強チームを一番上に",
+    "seriesWon": "{{team}}が{{w}}勝{{l}}敗で勝利",
+    "youGuessed": "的中！",
+    "strength": "強さ"
   }
 }

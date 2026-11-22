@@ -1,8 +1,39 @@
 import { describe, expect, it } from 'vitest';
 import { MODE_BY_ID } from '../data/modes';
-import { dailyKey, dailyRank, dailySeed, dailyTrivia, scoreRank } from './daily';
+import { HISTORY } from '../data/modes';
+import { dailyDerby, dailyKey, dailyRank, dailySeed, dailyTeamDuel, dailyTeamRank, dailyTrivia, scoreRank, teamStrengthScore } from './daily';
 
 const allTime = MODE_BY_ID['all-time'].pool;
+
+describe('daily extras', () => {
+  it('team rank: 5 team-seasons with distinct strength, answer strongest first', () => {
+    const r = dailyTeamRank(HISTORY, '2026-11-22');
+    expect(r.teams).toHaveLength(5);
+    const s = r.teams.map(teamStrengthScore);
+    expect(new Set(s).size).toBe(5);
+    expect(r.answer).toEqual([...r.teams].sort((a, b) => teamStrengthScore(b) - teamStrengthScore(a)).map((t) => t.id));
+    expect(dailyTeamRank(HISTORY, '2026-11-22')).toEqual(r);
+  });
+
+  it('1v1 derby: 5 matchups of two different players, winner is the higher rated', () => {
+    const d = dailyDerby(allTime, '2026-11-22');
+    expect(d).toHaveLength(5);
+    for (const m of d) {
+      expect(m.a.name).not.toBe(m.b.name);
+      expect(m.a.ovr).not.toBe(m.b.ovr);
+      expect(m.winner).toBe(m.a.ovr > m.b.ovr ? m.a.id : m.b.id);
+    }
+  });
+
+  it('team duel: two full rosters, a deterministic best-of-7 with a real winner', () => {
+    const d = dailyTeamDuel(HISTORY, '2026-11-22');
+    expect(d.a.id).not.toBe(d.b.id);
+    expect(Math.max(d.winsA, d.winsB)).toBe(4);
+    expect(d.games.length).toBe(d.winsA + d.winsB);
+    expect(d.winner).toBe(d.winsA === 4 ? d.a.id : d.b.id);
+    expect(dailyTeamDuel(HISTORY, '2026-11-22')).toEqual(d);
+  });
+});
 
 describe('daily', () => {
   it('keys by local calendar day', () => {
