@@ -58,8 +58,8 @@ export function simGame(home: Roster, away: Roster, ctx: GameContext): GameResul
   const { rng } = ctx;
   const lh = lineupMinutes(home, ctx.outHome);
   const la = lineupMinutes(away, ctx.outAway);
-  const sh = teamStrength(lh);
-  const sa = teamStrength(la);
+  const sh = teamStrength(lh, home.mod ?? 0);
+  const sa = teamStrength(la, away.mod ?? 0);
   const pace = rng.normal(SIM.pace, SIM.paceSd);
   const exp = (off: number, def: number) => pace * (SIM.basePpp + SIM.k * (off - def));
   let hs = Math.round(exp(sh.off, sa.def) + SIM.homeAdv / 2 + rng.normal(0, SIM.scoreSd));

@@ -42,6 +42,22 @@ export interface SeasonState {
   log: LogEvent[];
   totals: { [playerId: string]: PlayerTotals };
   deadlineUsed: boolean;
+  /** Extra pause points (e.g. Management Crisis cards), as round numbers. */
+  stops?: number[];
+  /** Temporary rating modifiers for the user's team (Management Crisis). */
+  mods?: TeamMod[];
+}
+
+export interface TeamMod {
+  amount: number;
+  /** Applies to rounds in [fromRound, toRound). */
+  fromRound: number;
+  toRound: number;
+}
+
+/** Total modifier for the user's team in a given round. */
+export function modAt(mods: TeamMod[] | undefined, round: number): number {
+  return (mods ?? []).reduce((sum, m) => (round >= m.fromRound && round < m.toRound ? sum + m.amount : sum), 0);
 }
 
 /** Circle-method round robin over n (even) teams → n−1 rounds, each team once per round. */
@@ -145,11 +161,13 @@ export function advance(state: SeasonState, games: number): SeasonState {
     totals: Object.fromEntries(Object.entries(state.totals).map(([k, v]) => [k, { ...v }])),
   };
   let target = Math.min(SEASON_GAMES, s.round + games);
-  if (s.round < DEADLINE_GAME && target > DEADLINE_GAME) target = DEADLINE_GAME;
+  for (const stop of [DEADLINE_GAME, ...(s.stops ?? [])]) if (s.round < stop && target > stop) target = stop;
 
   while (s.round < target) {
     const rng = createRng(`${s.seed}:round:${s.round}`);
     const sittingOut = injuredIds(s.injuries);
+    const mod = modAt(s.mods, s.round);
+    if ((s.teams[0].mod ?? 0) !== mod) s.teams = [{ ...s.teams[0], mod }, ...s.teams.slice(1)];
     for (const [home, away] of s.schedule[s.round]) {
       const result = playGame(s.teams, s.injuries, s.totals, home, away, rng, (team, p, g, label) => {
         if (team === 0) s.log.push({ kind: 'injury', round: s.round, team, playerId: p.id, name: p.name, games: g, label });
