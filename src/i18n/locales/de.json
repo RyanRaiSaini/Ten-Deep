@@ -166,7 +166,10 @@
     "teamRankHint": "Stärkstes Team oben",
     "seriesWon": "{{team}} gewinnt {{w}}-{{l}}",
     "youGuessed": "Richtig getippt!",
-    "strength": "Stärke"
+    "strength": "Stärke",
+    "resume": "Fortsetzen",
+    "missed": "Verpasst",
+    "replaceRun": "Das ersetzt deinen aktuellen Run. Tippe erneut zum Starten."
   },
   "duel": {
     "title": "Duell",

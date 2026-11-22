@@ -166,7 +166,10 @@
     "teamRankHint": "Time mais forte no topo",
     "seriesWon": "{{team}} vence por {{w}}-{{l}}",
     "youGuessed": "Acertou!",
-    "strength": "Força"
+    "strength": "Força",
+    "resume": "Retomar",
+    "missed": "Perdido",
+    "replaceRun": "Isso substitui sua partida atual. Toque de novo para começar."
   },
   "duel": {
     "title": "Duelo",

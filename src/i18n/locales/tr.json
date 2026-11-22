@@ -166,7 +166,10 @@
     "teamRankHint": "En güçlü takım en üstte",
     "seriesWon": "{{team}} {{w}}-{{l}} kazandı",
     "youGuessed": "Bildin!",
-    "strength": "Güç"
+    "strength": "Güç",
+    "resume": "Devam et",
+    "missed": "Kaçırıldı",
+    "replaceRun": "Bu, mevcut oyununun yerini alır. Başlamak için tekrar dokun."
   },
   "duel": {
     "title": "Düello",

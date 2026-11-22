@@ -16,7 +16,8 @@ export default function Rank() {
   const { kind = 'players' } = useLocalSearchParams<{ kind?: 'players' | 'teams' }>();
   const teams = kind === 'teams';
   const { t } = useTranslation();
-  const key = dailyKey();
+  // Freeze the day on open: content must not change if midnight passes mid-challenge.
+  const [key] = useState(() => dailyKey());
   const field = teams ? 'teamRank' : 'rank';
 
   const { items, answer } = useMemo(() => {
@@ -40,7 +41,8 @@ export default function Rank() {
   const already = useDaily((s) => s.days[key]?.[field]);
   const record = useDaily((s) => s.record);
   const [order, setOrder] = useState(() => items.map((i) => i.id));
-  const [submitted, setSubmitted] = useState(already !== undefined);
+  const [revisit] = useState(already !== undefined);
+  const [submitted, setSubmitted] = useState(revisit);
   const byId = Object.fromEntries(items.map((i) => [i.id, i]));
   const shown = submitted ? answer : order;
   const score = scoreRank(order, answer);
@@ -66,9 +68,10 @@ export default function Rank() {
       <View style={{ gap: S.sm }}>
         {shown.map((id, idx) => {
           const it = byId[id];
-          const right = submitted && order[idx] === answer[idx];
+          // Revisits only know the score, not the old guess, so per-row marks show for a fresh submit only.
+          const right = submitted && !revisit && order[idx] === answer[idx];
           return (
-            <View key={id} style={[styles.row, submitted && { borderColor: right ? C.neon : C.line }]}>
+            <View key={id} style={[styles.row, submitted && !revisit && { borderColor: right ? C.neon : C.line }]}>
               <Text style={styles.pos}>{idx + 1}</Text>
               <View style={{ flex: 1 }}>
                 <Text style={styles.name}>{it.title}</Text>

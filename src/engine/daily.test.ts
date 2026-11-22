@@ -5,6 +5,34 @@ import { dailyDerby, dailyKey, dailyRank, dailySeed, dailyTeamDuel, dailyTeamRan
 
 const allTime = MODE_BY_ID['all-time'].pool;
 
+describe('daily robustness (review findings)', () => {
+  const days = Array.from({ length: 400 }, (_, i) => dailyKey(new Date(2026, 0, 1 + i)));
+
+  it('team rank strengths are distinct at the displayed precision (1 decimal)', () => {
+    for (const d of days) {
+      const shown = dailyTeamRank(HISTORY, d).teams.map((t) => teamStrengthScore(t).toFixed(1));
+      expect(new Set(shown).size, d).toBe(5);
+    }
+  });
+
+  it('rank puzzles never start already solved', () => {
+    for (const d of days) {
+      const p = dailyRank(allTime, d);
+      expect(p.players.map((x) => x.id), d).not.toEqual(p.answer);
+      const t = dailyTeamRank(HISTORY, d);
+      expect(t.teams.map((x) => x.id), d).not.toEqual(t.answer);
+    }
+  });
+
+  it('generators terminate even on a degenerate pool (attempt caps)', () => {
+    const p = allTime.teams[0].players[0];
+    const flat = { id: 'flat', label: 'Flat', teams: [{ ...allTime.teams[0], players: Array.from({ length: 12 }, (_, i) => ({ ...p, id: `f${i}`, name: `Flat ${i}`, ovr: 85 })) }] };
+    expect(() => dailyRank(flat, '2026-11-22')).not.toThrow();
+    expect(() => dailyTrivia(flat, '2026-11-22')).not.toThrow();
+    expect(() => dailyDerby(flat, '2026-11-22')).not.toThrow();
+  });
+});
+
 describe('daily extras', () => {
   it('team rank: 5 team-seasons with distinct strength, answer strongest first', () => {
     const r = dailyTeamRank(HISTORY, '2026-11-22');

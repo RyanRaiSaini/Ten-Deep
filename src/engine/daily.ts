@@ -19,6 +19,14 @@ export type TriviaQuestion =
 
 const teamName = (t: TeamSeason) => `${t.city} ${t.name}`;
 
+/** Every retry loop is capped; past the cap we relax the "nice" constraint so odd data can never hang the app. */
+const MAX_TRIES = 500;
+
+/** Rotate a puzzle's display order if it happens to already be the answer. */
+function unsolved<T>(items: T[], answer: string[], id: (x: T) => string): T[] {
+  return items.map(id).join() === answer.join() ? [...items.slice(1), items[0]] : items;
+}
+
 /** Players worth asking about: rated 80+ so names are recognizable. */
 function notable(pool: Pool): { p: Player; t: TeamSeason }[] {
   return pool.teams.flatMap((t) => t.players.filter((p) => p.ovr >= 80).map((p) => ({ p, t })));
@@ -26,9 +34,9 @@ function notable(pool: Pool): { p: Player; t: TeamSeason }[] {
 
 function highestQ(pool: Pool, rng: Rng): TriviaQuestion {
   const cands = notable(pool);
-  for (;;) {
+  for (let tries = 0; ; tries++) {
     const four = shuffle(cands, rng).slice(0, 4).map((x) => x.p);
-    if (new Set(four.map((p) => p.ovr)).size < 4) continue;
+    if (new Set(four.map((p) => p.ovr)).size < 4 && tries < MAX_TRIES) continue;
     const best = [...four].sort((a, b) => b.ovr - a.ovr)[0];
     return { kind: 'highest', prompt: 'Who has the highest Ten Deep rating?', players: four, choices: four.map((p) => p.name), answer: best.name };
   }
@@ -48,9 +56,9 @@ export function dailyTrivia(pool: Pool, key: string): TriviaQuestion[] {
   const rng = createRng(`${dailySeed(key)}:trivia`);
   const out: TriviaQuestion[] = [];
   const asked = new Set<string>();
-  while (out.length < 5) {
+  for (let tries = 0; out.length < 5; tries++) {
     const q = out.length % 2 === 0 ? teamQ(pool, rng) : highestQ(pool, rng);
-    if (q.players.some((p) => asked.has(p.name))) continue;
+    if (q.players.some((p) => asked.has(p.name)) && tries < MAX_TRIES) continue;
     q.players.forEach((p) => asked.add(p.name));
     out.push(q);
   }
@@ -67,10 +75,11 @@ export interface RankChallenge {
 export function dailyRank(pool: Pool, key: string): RankChallenge {
   const rng = createRng(`${dailySeed(key)}:rank`);
   const cands = notable(pool).map((x) => x.p);
-  for (;;) {
+  for (let tries = 0; ; tries++) {
     const five = shuffle(cands, rng).slice(0, 5);
-    if (new Set(five.map((p) => p.ovr)).size < 5) continue;
-    return { players: five, answer: [...five].sort((a, b) => b.ovr - a.ovr).map((p) => p.id) };
+    if (new Set(five.map((p) => p.ovr)).size < 5 && tries < MAX_TRIES) continue;
+    const answer = [...five].sort((a, b) => b.ovr - a.ovr).map((p) => p.id);
+    return { players: unsolved(five, answer, (p) => p.id), answer };
   }
 }
 
@@ -97,11 +106,12 @@ export interface TeamRankChallenge {
 export function dailyTeamRank(seasons: TeamSeason[], key: string): TeamRankChallenge {
   const rng = createRng(`${dailySeed(key)}:team-rank`);
   const cands = seasons.filter((t) => t.players.length >= 6);
-  for (;;) {
+  for (let tries = 0; ; tries++) {
     const five = shuffle(cands, rng).slice(0, 5);
-    const scores = five.map(teamStrengthScore);
-    if (new Set(scores.map((s) => s.toFixed(2))).size < 5) continue;
-    return { teams: five, answer: [...five].sort((a, b) => teamStrengthScore(b) - teamStrengthScore(a)).map((t) => t.id) };
+    // Distinct at the precision the screen shows (1 decimal), so no visible ties.
+    if (new Set(five.map((t) => teamStrengthScore(t).toFixed(1))).size < 5 && tries < MAX_TRIES) continue;
+    const answer = [...five].sort((a, b) => teamStrengthScore(b) - teamStrengthScore(a)).map((t) => t.id);
+    return { teams: unsolved(five, answer, (t) => t.id), answer };
   }
 }
 
@@ -118,12 +128,13 @@ export function dailyDerby(pool: Pool, key: string): DerbyMatch[] {
   const cands = notable(pool).map((x) => x.p);
   const used = new Set<string>();
   const out: DerbyMatch[] = [];
-  while (out.length < 5) {
+  for (let tries = 0; out.length < 5; tries++) {
+    const relaxed = tries >= MAX_TRIES;
     const a = rng.pick(cands);
-    const close = cands.filter((p) => p.name !== a.name && Math.abs(p.ovr - a.ovr) <= 4 && p.ovr !== a.ovr);
-    if (!close.length || used.has(a.name)) continue;
+    const close = cands.filter((p) => p.name !== a.name && (relaxed || (Math.abs(p.ovr - a.ovr) <= 4 && p.ovr !== a.ovr)));
+    if (!close.length || (used.has(a.name) && !relaxed)) continue;
     const b = rng.pick(close);
-    if (used.has(b.name)) continue;
+    if (used.has(b.name) && !relaxed) continue;
     used.add(a.name).add(b.name);
     out.push({ a, b, winner: a.ovr > b.ovr ? a.id : b.id });
   }

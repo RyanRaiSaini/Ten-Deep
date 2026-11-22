@@ -166,7 +166,10 @@
     "teamRankHint": "Sterkste team bovenaan",
     "seriesWon": "{{team}} wint met {{w}}-{{l}}",
     "youGuessed": "Goed voorspeld!",
-    "strength": "Sterkte"
+    "strength": "Sterkte",
+    "resume": "Hervatten",
+    "missed": "Gemist",
+    "replaceRun": "Dit vervangt je huidige run. Tik nogmaals om te starten."
   },
   "duel": {
     "title": "Duel",
