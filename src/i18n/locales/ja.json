@@ -136,5 +136,25 @@
     "pickFranchise": "フランチャイズを選ぶ",
     "pickEra": "時代を選ぶ",
     "players": "{{n}}人の選手"
+  },
+  "daily": {
+    "title": "デイリーチャレンジ",
+    "draft": "デイリードラフト",
+    "draftDesc": "今日は全員同じスピンと同じリーグ。",
+    "trivia": "トリビア",
+    "triviaDesc": "Ten Deepデータベースから5問。",
+    "rank": "選手ランキング",
+    "rankDesc": "5人の選手をレーティング順に並べよう。",
+    "done": "完了",
+    "play": "プレイ",
+    "next": "次へ",
+    "submit": "決定",
+    "correct": "正解！",
+    "wrong": "惜しい — 正解は{{answer}}",
+    "tomorrow": "明日また新しいチャレンジ。",
+    "highest": "Ten Deepレーティングが最も高いのは？",
+    "teamQ": "{{season}}年、{{name}}が所属していたチームは？",
+    "rankHint": "レーティングが高い順に上から",
+    "yourScore": "スコア：{{n}}/5"
   }
 }

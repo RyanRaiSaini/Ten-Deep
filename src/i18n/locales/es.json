@@ -136,5 +136,25 @@
     "pickFranchise": "Elige una franquicia",
     "pickEra": "Elige una era",
     "players": "{{n}} jugadores"
+  },
+  "daily": {
+    "title": "Reto diario",
+    "draft": "Draft diario",
+    "draftDesc": "Mismos giros y misma liga para todos hoy.",
+    "trivia": "Trivia",
+    "triviaDesc": "5 preguntas de la base de datos de Ten Deep.",
+    "rank": "Ranking",
+    "rankDesc": "Ordena a 5 jugadores por valoración.",
+    "done": "Hecho",
+    "play": "Jugar",
+    "next": "Siguiente",
+    "submit": "Confirmar",
+    "correct": "¡Correcto!",
+    "wrong": "Casi — era {{answer}}",
+    "tomorrow": "Nuevos retos mañana.",
+    "highest": "¿Quién tiene la valoración Ten Deep más alta?",
+    "teamQ": "¿En qué equipo jugaba {{name}} en {{season}}?",
+    "rankHint": "Mayor valoración arriba",
+    "yourScore": "Puntuación: {{n}}/5"
   }
 }

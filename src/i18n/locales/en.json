@@ -136,5 +136,25 @@
     "pickFranchise": "Choose a franchise",
     "pickEra": "Choose an era",
     "players": "{{n}} players"
+  },
+  "daily": {
+    "title": "Daily Challenge",
+    "draft": "Daily Draft",
+    "draftDesc": "Same spins and league for everyone today.",
+    "trivia": "Trivia",
+    "triviaDesc": "5 questions from the Ten Deep database.",
+    "rank": "Player Rank",
+    "rankDesc": "Put 5 players in order of rating.",
+    "done": "Done",
+    "play": "Play",
+    "next": "Next",
+    "submit": "Lock it in",
+    "correct": "Correct!",
+    "wrong": "Not quite — it was {{answer}}",
+    "tomorrow": "New challenges tomorrow.",
+    "highest": "Who has the highest Ten Deep rating?",
+    "teamQ": "Which team did {{name}} play for in {{season}}?",
+    "rankHint": "Highest rating at the top",
+    "yourScore": "You scored {{n}}/5"
   }
 }

@@ -136,5 +136,25 @@
     "pickFranchise": "Kies een franchise",
     "pickEra": "Kies een tijdperk",
     "players": "{{n}} spelers"
+  },
+  "daily": {
+    "title": "Dagelijkse uitdaging",
+    "draft": "Dagelijkse draft",
+    "draftDesc": "Vandaag dezelfde draaien en competitie voor iedereen.",
+    "trivia": "Quiz",
+    "triviaDesc": "5 vragen uit de Ten Deep-database.",
+    "rank": "Spelersranglijst",
+    "rankDesc": "Zet 5 spelers op volgorde van rating.",
+    "done": "Klaar",
+    "play": "Spelen",
+    "next": "Volgende",
+    "submit": "Bevestigen",
+    "correct": "Goed!",
+    "wrong": "Bijna — het was {{answer}}",
+    "tomorrow": "Morgen nieuwe uitdagingen.",
+    "highest": "Wie heeft de hoogste Ten Deep-rating?",
+    "teamQ": "Voor welk team speelde {{name}} in {{season}}?",
+    "rankHint": "Hoogste rating bovenaan",
+    "yourScore": "Je score: {{n}}/5"
   }
 }
