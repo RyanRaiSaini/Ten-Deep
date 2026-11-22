@@ -1,0 +1,194 @@
+{
+  "app": {
+    "tagline": "Draftea diez. Sobrevive a los 82."
+  },
+  "common": {
+    "comingSoon": "Próximamente",
+    "back": "Atrás",
+    "continue": "Continuar",
+    "on": "Sí",
+    "off": "No"
+  },
+  "home": {
+    "draftsPlayed": "Drafts jugados",
+    "titles": "Títulos",
+    "best": "Mejor récord",
+    "modes": "Modos de juego",
+    "resume": "Continuar tu partida",
+    "play": "Jugar"
+  },
+  "mode": {
+    "current": {
+      "title": "Actualidad",
+      "desc": "Plantillas 2026-27. Gira un equipo y draftea a tus diez."
+    },
+    "franchise": {
+      "title": "Franquicias históricas",
+      "desc": "Lakers, Celtics, Bulls y más a lo largo de la historia."
+    },
+    "era": {
+      "title": "Eras",
+      "desc": "Jordan, LeBron, Steph — draftea de una era."
+    },
+    "daily": {
+      "title": "Reto diario",
+      "desc": "Los mismos giros para todos. Un intento al día."
+    },
+    "duels": {
+      "title": "Duelos",
+      "desc": "Draftea cara a cara contra un amigo."
+    }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "audio": "Sonido y sensación",
+    "music": "Música",
+    "sfx": "Efectos de sonido",
+    "haptics": "Vibración",
+    "notifications": "Notificaciones",
+    "notifDaily": "El reto diario está listo",
+    "notifStreak": "Tu racha está en peligro",
+    "notifDuel": "Invitaciones a duelos",
+    "game": "Juego",
+    "simSpeed": "Velocidad de simulación",
+    "nationality": "Nacionalidad",
+    "language": "Idioma",
+    "about": "Acerca de",
+    "privacy": "Política de privacidad",
+    "terms": "Términos del servicio",
+    "contact": "Contáctanos",
+    "deleteAccount": "Eliminar cuenta",
+    "soundDemo": "Laboratorio de sonido"
+  },
+  "draft": {
+    "pick": "Elección {{n}} de 10",
+    "spin": "Girar",
+    "spinning": "Girando…",
+    "respin": "Volver a girar ({{n}} restantes)",
+    "capSpace": "Espacio salarial",
+    "spendable": "{{amount}} disponibles tras mínimos",
+    "superstars": "Superestrellas {{n}}/2",
+    "chooseSlot": "¿En qué posición juega?",
+    "nothingFits": "Nadie de este equipo encaja en tu plantilla o tu tope salarial.",
+    "signFallback": "Fichar a {{name}} por {{salary}}",
+    "overCap": "Por encima del tope",
+    "superstarLimit": "Límite de superestrellas",
+    "noSlot": "Sin puesto libre",
+    "starters": "Quinteto titular",
+    "bench": "Banquillo",
+    "startSeason": "Empezar la temporada",
+    "landed": "Te ha tocado",
+    "empty": "Libre"
+  },
+  "season": {
+    "title": "Temporada regular",
+    "game": "Partido {{n}} de 82",
+    "skipDeadline": "Ir al cierre de mercado",
+    "skipPlayoffs": "Ir a los playoffs",
+    "pause": "Pausa",
+    "resume": "Jugar",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} baja {{games}} partidos — {{label}}",
+    "seasonEnding": "{{name}} se pierde la temporada",
+    "standing": "Cabeza de serie n.º {{n}}"
+  },
+  "deadline": {
+    "title": "Cierre de traspasos",
+    "desc": "Un cambio. Elige a un jugador para traspasar, gira una vez y ficha un reemplazo bajo el tope.",
+    "chooseOut": "Elige a quién traspasar",
+    "spin": "Girar por un reemplazo",
+    "skip": "No hacer nada",
+    "done": "Traspaso cerrado"
+  },
+  "playoffs": {
+    "title": "Playoffs",
+    "round0": "Primera ronda",
+    "round1": "Cuartos de final",
+    "round2": "Semifinales",
+    "round3": "Finales",
+    "next": "Jugar partido {{n}}",
+    "simRest": "Simular hasta el final",
+    "leads": "{{team}} gana {{w}}-{{l}}",
+    "tied": "Serie empatada {{w}}-{{l}}",
+    "won": "{{team}} se impone {{w}}-{{l}}",
+    "missed": "Te quedaste fuera de los playoffs.",
+    "eliminated": "Eliminado.",
+    "seeResult": "Ver resultado"
+  },
+  "result": {
+    "champions": "Campeones",
+    "lostIn": "Eliminado en {{round}}",
+    "missed": "Fuera de playoffs",
+    "record": "Récord",
+    "seed": "Cabeza de serie",
+    "topScorer": "Máximo anotador",
+    "playAgain": "Draftear de nuevo",
+    "home": "Inicio"
+  },
+  "injury": {
+    "Day-to-day": "Día a día",
+    "Short-term": "Corto plazo",
+    "Long-term": "Largo plazo",
+    "Season-ending": "Fin de temporada"
+  },
+  "modes": {
+    "pickFranchise": "Elige una franquicia",
+    "pickEra": "Elige una era",
+    "players": "{{n}} jugadores"
+  },
+  "daily": {
+    "title": "Reto diario",
+    "draft": "Draft diario",
+    "draftDesc": "Mismos giros y misma liga para todos hoy.",
+    "trivia": "Trivia",
+    "triviaDesc": "5 preguntas de la base de datos de Ten Deep.",
+    "rank": "Ranking",
+    "rankDesc": "Ordena a 5 jugadores por valoración.",
+    "done": "Hecho",
+    "play": "Jugar",
+    "next": "Siguiente",
+    "submit": "Confirmar",
+    "correct": "¡Correcto!",
+    "wrong": "Casi — era {{answer}}",
+    "tomorrow": "Nuevos retos mañana.",
+    "highest": "¿Quién tiene la valoración Ten Deep más alta?",
+    "teamQ": "¿En qué equipo jugaba {{name}} en {{season}}?",
+    "rankHint": "Mayor valoración arriba",
+    "yourScore": "Puntuación: {{n}}/5",
+    "teamRank": "Ranking de equipos",
+    "teamRankDesc": "Ordena 5 equipos históricos por fuerza.",
+    "derby": "Derbi 1v1",
+    "derbyDesc": "Cinco cara a cara: ¿quién es mejor?",
+    "teamDuel": "Duelo de equipos",
+    "teamDuelDesc": "Dos equipos históricos, al mejor de 7. Pronostica.",
+    "whoWins": "¿Quién gana?",
+    "teamRankHint": "Equipo más fuerte arriba",
+    "seriesWon": "{{team}} gana {{w}}-{{l}}",
+    "youGuessed": "¡Acertaste!",
+    "strength": "Fuerza",
+    "resume": "Continuar",
+    "missed": "Perdido",
+    "replaceRun": "Esto reemplaza tu partida actual. Toca de nuevo para empezar."
+  },
+  "duel": {
+    "title": "Duelo",
+    "passPlay": "Pasa el móvil: mismos giros, elecciones alternas y luego una serie al mejor de 7.",
+    "online": "Los duelos en línea llegarán con las cuentas.",
+    "p1": "Nombre del jugador 1",
+    "p2": "Nombre del jugador 2",
+    "start": "Empezar duelo",
+    "turn": "{{name}}, te toca elegir",
+    "playSeries": "Jugar la serie",
+    "nextGame": "Jugar partido {{n}}",
+    "winsSeries": "¡{{name}} gana la serie {{w}}-{{l}}!",
+    "rematch": "Revancha",
+    "newDuel": "Nuevo duelo"
+  },
+  "notif": {
+    "dailyTitle": "El reto diario ya está 🏀",
+    "dailyBody": "Nuevos giros, trivia y duelos te esperan. Un intento cada uno.",
+    "streakTitle": "Tu racha está en juego 🔥",
+    "streakBody": "Hoy no has drafteado. Arma tu plantilla antes de medianoche."
+  }
+}
