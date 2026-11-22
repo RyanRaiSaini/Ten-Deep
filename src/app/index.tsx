@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useGame } from '../store/game';
 import { useProfile } from '../store/profile';
 import { useSettings } from '../store/settings';
+import { Avatar } from '../ui/Avatar';
 import { Button, Card, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 
@@ -29,7 +30,10 @@ export default function Home() {
   return (
     <Screen>
       <View style={styles.top}>
-        <View style={styles.avatar}><Text style={styles.avatarText}>{flag}</Text></View>
+        <Pressable onPress={() => router.push('/profile')} style={styles.avatar} testID="avatar" accessibilityLabel="Profile">
+          <Avatar id={profile.avatarId} size={52} />
+          <Text style={styles.flag}>{flag}</Text>
+        </Pressable>
         <View style={{ flex: 1 }}>
           <Text style={styles.brand}>TEN DEEP</Text>
           <Text style={styles.tagline}>{t('app.tagline')}</Text>
@@ -86,8 +90,8 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 const styles = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingTop: S.lg },
-  avatar: { width: 52, height: 52, borderRadius: R.pill, backgroundColor: C.surface2, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: C.hardwood },
-  avatarText: { fontSize: 26 },
+  avatar: { width: 56, height: 56, borderRadius: R.pill, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: C.hardwood },
+  flag: { position: 'absolute', bottom: -6, right: -8, fontSize: 18 },
   brand: { color: C.text, fontSize: 30, ...F.display, letterSpacing: 2 },
   tagline: { color: C.muted, fontSize: 13 },
   gear: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },

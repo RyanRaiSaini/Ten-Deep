@@ -97,6 +97,14 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('13-daily-hub');
   });
 
+  await step('profile: pick an avatar', async () => {
+    await page.goto(base);
+    await page.getByTestId('avatar').click();
+    await page.getByTestId('avatar-legend-gold').click();
+    await page.getByText('Legend', { exact: false }).first().waitFor();
+    await shot('14-profile');
+  });
+
   await step('all-time lakers run starts and drafts', async () => {
     await page.goto(base);
     await page.getByText('All-Time Franchises').click();
