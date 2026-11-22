@@ -10,6 +10,7 @@ import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs, type PlayoffSt
 import { createRng } from '../engine/rng';
 import { advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
 import { ALL_SLOTS, type Player, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
+import { useProfile } from './profile';
 
 export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'playoffs' | 'result';
 
@@ -29,6 +30,7 @@ export interface GameStore {
   doFallback: () => void;
   startSeason: () => void;
   setSeason: (s: SeasonState) => void;
+  openDeadline: (season: SeasonState) => void;
   chooseDeadlineOut: (playerId: string) => void;
   spinDeadline: () => void;
   signDeadline: (player: Player) => void;
@@ -79,9 +81,10 @@ export const useGame = create<GameStore>()(
         set({ phase: 'season', season: createSeason(user, league, draft.seed) });
       },
 
-      setSeason: (season) => set({ season, phase: season.round >= 82 ? 'season' : get().phase }),
+      setSeason: (season) => set({ season }),
 
-      chooseDeadlineOut: (outId) => set({ phase: 'deadline', deadline: { outId, spin: null, spun: false } }),
+      openDeadline: (season) => set({ season, phase: 'deadline', deadline: { outId: null, spin: null, spun: false } }),
+      chooseDeadlineOut: (outId) => set((s) => ({ deadline: { ...(s.deadline ?? { spin: null, spun: false }), outId } })),
       spinDeadline: () =>
         set((s) => {
           const season = s.season!;
@@ -97,7 +100,13 @@ export const useGame = create<GameStore>()(
       beginPlayoffs: () => set((s) => ({ phase: 'playoffs', playoffs: startPlayoffs(advance(s.season!, 82)) })),
       playoffGame: () => set((s) => ({ playoffs: playNextGame(s.playoffs!) })),
       simPlayoffs: () => set((s) => ({ playoffs: simPlayoffsToEnd(s.playoffs!) })),
-      finish: () => set({ phase: 'result' }),
+      finish: () => {
+        const { playoffs, phase } = get();
+        if (!playoffs || phase === 'result') return;
+        const rec = playoffs.season.records[0];
+        useProfile.getState().recordDraft({ wins: rec.w, losses: rec.l, champion: champion(playoffs) === 0 });
+        set({ phase: 'result' });
+      },
       quit: () => set({ phase: 'idle', draft: null, season: null, playoffs: null, deadline: null }),
     }),
     {

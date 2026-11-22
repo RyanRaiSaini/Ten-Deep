@@ -8,6 +8,7 @@ import { CAP, MAX_SUPERSTARS, capRoom, salaryFor, superstarCount } from '../engi
 import { fallbackPick, isComplete, options, reserveNeeded } from '../engine/draft';
 import type { SlotId } from '../engine/types';
 import { useGame } from '../store/game';
+import { goHome } from '../ui/nav';
 import { Button, Card, Header, Label, Screen } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
@@ -55,7 +56,7 @@ export default function Draft() {
     <Screen>
       <Header
         title={complete ? t('draft.starters') : t('draft.pick', { n: d.round + 1 })}
-        left={<Button label="‹" variant="ghost" onPress={() => router.replace('/')} style={{ paddingVertical: 6 }} />}
+        left={<Button label="‹" variant="ghost" onPress={() => goHome()} style={{ paddingVertical: 6 }} />}
         right={<Text style={styles.stars}>★ {superstarCount(d.roster)}/{MAX_SUPERSTARS}</Text>}
       />
 

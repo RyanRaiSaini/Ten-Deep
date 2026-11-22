@@ -68,6 +68,14 @@ describe('season', () => {
     for (let i = 1; i < st.length; i++) expect(st[i - 1].w).toBeGreaterThanOrEqual(st[i].w);
   });
 
+  it('tradeSwap cannot add a third superstar', () => {
+    const s = advance(fresh(), 100);
+    const star = (id: string) => ({ ...pool.teams[0].players[0], id, ovr: 96, pos: 'SF' as const });
+    const user = { ...s.teams[0], slots: { ...s.teams[0].slots, PG: { ...star('a'), pos: 'PG' as const }, SG: { ...star('b'), pos: 'SG' as const } } };
+    const withStars = { ...s, teams: [user, ...s.teams.slice(1)] };
+    expect(() => tradeSwap(withStars, user.slots.B5.id, star('c'))).toThrow(/superstar/i);
+  });
+
   it('tradeSwap replaces a user player in the same slot', () => {
     const s = advance(fresh(), 100);
     const outId = s.teams[0].slots.B5.id;

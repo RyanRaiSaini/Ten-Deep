@@ -4,6 +4,13 @@ import { BENCH_SLOTS, STARTER_SLOTS, type Player, type RosterSlots, type SlotId 
 import { Label } from './components';
 import { C, F, R, S, ovrColor } from './theme';
 
+const SUFFIX = /^(jr\.?|sr\.?|ii|iii|iv)$/i;
+/** "Jaime Jaquez Jr." → "Jaquez", "Gary Payton II" → "Payton". */
+export function shortName(name: string): string {
+  const parts = name.split(' ').filter((w) => !SUFFIX.test(w));
+  return parts[parts.length - 1] ?? name;
+}
+
 export function RosterBoard({
   roster, highlight, onSlot, injured,
 }: { roster: RosterSlots; highlight?: SlotId[]; onSlot?: (slot: SlotId, p?: Player) => void; injured?: Set<string> }) {
@@ -24,7 +31,7 @@ export function RosterBoard({
         {p ? (
           <>
             <Text style={[styles.ovr, { color: ovrColor(p.ovr) }]}>{p.ovr}</Text>
-            <Text style={styles.name} numberOfLines={1}>{hurt ? '🩼 ' : ''}{p.name.split(' ').slice(-1)[0]}</Text>
+            <Text style={styles.name} numberOfLines={1}>{hurt ? '🩼 ' : ''}{shortName(p.name)}</Text>
           </>
         ) : (
           <Text style={[styles.empty, lit && { color: C.neon }]}>{t('draft.empty')}</Text>

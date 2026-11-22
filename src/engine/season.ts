@@ -1,4 +1,4 @@
-import { canAfford } from './cap';
+import { canAfford, superstarBlocked } from './cap';
 import { simGame, type GameResult } from './game';
 import { rollInjury, type InjuryLabel } from './injuries';
 import { lineupMinutes } from './rotation';
@@ -174,6 +174,7 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
     throw new Error(`${incoming.name} can't play ${slot}`);
   const without: RosterSlots = { ...user.slots };
   delete without[slot];
+  if (superstarBlocked(without, incoming)) throw new Error('Superstar limit reached (max 2 players rated 95+)');
   if (!canAfford(without, incoming)) throw new Error('Over the cap');
   const teams = [...state.teams];
   teams[0] = { ...user, slots: { ...user.slots, [slot]: incoming } };
