@@ -151,6 +151,14 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('14-profile');
   });
 
+  await step('delete account wipes progress', async () => {
+    await page.goto(`${base}/legal/delete`);
+    await page.getByTestId('confirm-delete').click();
+    await page.getByText('✓ Deleted').waitFor();
+    await page.goto(base);
+    await page.getByText('🔥 0').waitFor({ timeout: 5000 });
+  });
+
   await step('all-time lakers run starts and drafts', async () => {
     await page.goto(base);
     await page.getByText('All-Time Franchises').click();

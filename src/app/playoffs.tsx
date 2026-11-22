@@ -63,7 +63,11 @@ export default function Playoffs() {
             );
           })}
           {alive && champ === null && (
-            <Button label={t('playoffs.next', { n: mine.series.games.length + 1 })} onPress={nextGame} testID="playoff-next" />
+            <Button
+              label={seriesOver(mine.series) ? t('common.continue') : t('playoffs.next', { n: mine.series.games.length + 1 })}
+              onPress={nextGame}
+              testID="playoff-next"
+            />
           )}
           {!alive && champ === null && <Text style={styles.status}>{t('playoffs.eliminated')}</Text>}
         </Card>

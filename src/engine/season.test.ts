@@ -107,10 +107,27 @@ describe('season', () => {
 
   it('tradeSwap cannot add a third superstar', () => {
     const s = advance(fresh(), 100);
-    const star = (id: string) => ({ ...pool.teams[0].players[0], id, ovr: 96, pos: 'SF' as const });
+    const star = (id: string) => ({ ...pool.teams[0].players[0], id, name: `Star ${id}`, ovr: 96, pos: 'SF' as const });
     const user = { ...s.teams[0], slots: { ...s.teams[0].slots, PG: { ...star('a'), pos: 'PG' as const }, SG: { ...star('b'), pos: 'SG' as const } } };
     const withStars = { ...s, teams: [user, ...s.teams.slice(1)] };
     expect(() => tradeSwap(withStars, user.slots.B5.id, star('c'))).toThrow(/superstar/i);
+  });
+
+  it('exact standings ties do not always favor the user', () => {
+    let userFirst = 0;
+    for (let i = 0; i < 20; i++) {
+      const s = createSeason(teams[0], teams.slice(1), `tie-${i}`);
+      // everyone tied: same record and point differential
+      const tied = { ...s, records: s.records.map(() => ({ w: 41, l: 41, pf: 9000, pa: 9000 })) };
+      if (standings(tied)[0].team === 0) userFirst++;
+    }
+    expect(userFirst).toBeLessThan(5);
+  });
+
+  it('tradeSwap rejects a player who is already on a roster', () => {
+    const s = advance(fresh(), 100);
+    const someoneElse = s.teams[5].slots.PG;
+    expect(() => tradeSwap(s, s.teams[0].slots.PG.id, someoneElse)).toThrow(/already/i);
   });
 
   it('tradeSwap replaces a user player in the same slot', () => {
