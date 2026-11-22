@@ -42,3 +42,5 @@ yarn-error.*
 
 # superpowers scratch
 .superpowers/
+
+smoke-shots/
