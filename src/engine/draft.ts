@@ -3,7 +3,7 @@ import { capRoom, salaryFor, superstarBlocked } from './cap';
 export { MAX_SUPERSTARS } from './cap';
 import { createRng } from './rng';
 import {
-  ALL_SLOTS, BENCH_SLOTS, type Player, type Pool, type RosterSlots, type SlotId, type TeamSeason,
+  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type RosterSlots, type SlotId, type TeamSeason,
 } from './types';
 
 export const RESPINS_PER_DRAFT = 2;
@@ -20,6 +20,10 @@ export interface DraftState {
   spin: TeamSeason | null;
   /** Count of spins made so far; feeds the deterministic spin RNG. */
   spins: number;
+  /** Head-to-head: rival rosters whose remaining slots must stay fillable too. */
+  rivals?: RosterSlots[];
+  /** This player's seat among the rosters (fixed order shared by all players; default 0). */
+  seat?: number;
 }
 
 export interface DraftOption {
@@ -77,26 +81,46 @@ function bySalary(pool: Pool): Player[] {
  * Starter slots are reserved first (they're the constrained ones), then the bench.
  */
 export function reserveNeeded(roster: RosterSlots, used: Set<string>, pool: Pool): number {
+  return jointReserve([roster], used, pool)[0];
+}
+
+/**
+ * Joint version for head-to-head drafts: fill every open slot on every roster with distinct players
+ * (all starter slots first, then benches) and return each roster's cost (Infinity if impossible).
+ * A rival can then never strand you by taking the cheap players your reserve was counting on.
+ */
+export function jointReserve(rosters: RosterSlots[], used: Set<string>, pool: Pool): number[] {
   const taken = new Set(used);
-  let total = 0;
-  for (const slot of ALL_SLOTS) {
-    if (roster[slot]) continue;
-    const bench = BENCH_SLOTS.includes(slot);
-    const p = bySalary(pool).find((x) => !taken.has(x.id) && (bench || x.pos === slot || x.pos2 === slot));
-    if (!p) return Infinity;
-    taken.add(p.id);
-    total += salaryFor(p.ovr);
-  }
-  return total;
+  const costs = rosters.map(() => 0);
+  for (const group of [STARTER_SLOTS, BENCH_SLOTS])
+    for (const slot of group)
+      rosters.forEach((roster, i) => {
+        if (roster[slot] || costs[i] === Infinity) return;
+        const bench = BENCH_SLOTS.includes(slot);
+        const p = bySalary(pool).find((x) => !taken.has(x.id) && (bench || x.pos === slot || x.pos2 === slot));
+        if (!p) {
+          costs[i] = Infinity;
+          return;
+        }
+        taken.add(p.id);
+        costs[i] += salaryFor(p.ovr);
+      });
+  return costs;
 }
 
 /** Slots where placing `p` still leaves room to fill the rest of the roster from what's left in the pool. */
 export function affordableSlots(state: DraftState, p: Player, pool: Pool): SlotId[] {
   if (superstarBlocked(state.roster, p)) return [];
   const used = new Set([...state.used, p.id]);
+  const rivals = state.rivals ?? [];
+  const at = state.seat ?? 0;
   return eligibleSlots(state, p).filter((slot) => {
     const roster = { ...state.roster, [slot]: p };
-    return capRoom(roster) >= reserveNeeded(roster, used, pool);
+    // Fixed seating order: every player checks the same joint fill, so no one's check strands another.
+    const seated = [...rivals];
+    seated.splice(at, 0, roster);
+    const costs = jointReserve(seated, used, pool);
+    return seated.every((r, i) => capRoom(r) >= costs[i]);
   });
 }
 

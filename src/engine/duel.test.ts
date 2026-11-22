@@ -35,6 +35,20 @@ describe('duel draft', () => {
     }
   });
 
+  it('never dead-ends when both players hunt stars (300 duels, greedy and random)', () => {
+    for (let i = 0; i < 300; i++) {
+      let s = startDuel(pool, `fuzz-${i}`);
+      const rng = createRng(`fz-${i}`);
+      while (!isDuelComplete(s)) {
+        const opts = duelOptions(s, pool).filter((o) => o.affordable);
+        if (opts.length) {
+          const o = i % 2 ? rng.pick(opts) : opts[0];
+          s = duelPick(s, o.player.id, rng.pick(o.slots), pool);
+        } else s = duelFallback(s, pool);
+      }
+    }
+  });
+
   it('snake order: A picks first in round 1, B first in round 2', () => {
     const { turns } = playOut('snake');
     expect(turns.slice(0, 4)).toEqual(['a', 'b', 'b', 'a']);
