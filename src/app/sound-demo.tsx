@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text } from 'react-native';
 import { SFX, type SfxName } from '../audio/sfx';
-import { Button, Card, Header, Screen } from '../ui/components';
+import { BackButton, Button, Card, Header, Screen } from '../ui/components';
 import { C } from '../ui/theme';
 
 const SOUNDS: { name: SfxName; what: string }[] = [
@@ -19,7 +19,7 @@ export default function SoundDemo() {
   const { t } = useTranslation();
   return (
     <Screen>
-      <Header title={t('settings.soundDemo')} left={<Button label="‹" variant="ghost" onPress={() => router.back()} style={{ paddingVertical: 6 }} />} />
+      <Header title={t('settings.soundDemo')} left={<BackButton onPress={() => router.back()} />} />
       <Text style={styles.note}>All sounds are synthesized in code — tap to preview.</Text>
       {SOUNDS.map((s) => (
         <Card key={s.name} style={{ gap: 10 }}>

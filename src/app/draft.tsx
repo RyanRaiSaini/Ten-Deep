@@ -9,7 +9,7 @@ import { fallbackPick, isComplete, options, reserveNeeded } from '../engine/draf
 import type { SlotId } from '../engine/types';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
-import { Button, Card, Header, Label, Screen } from '../ui/components';
+import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner } from '../ui/Spinner';
@@ -56,7 +56,7 @@ export default function Draft() {
     <Screen>
       <Header
         title={complete ? t('draft.starters') : t('draft.pick', { n: d.round + 1 })}
-        left={<Button label="‹" variant="ghost" onPress={() => goHome()} style={{ paddingVertical: 6 }} />}
+        left={<BackButton onPress={() => goHome()} />}
         right={<Text style={styles.stars}>★ {superstarCount(d.roster)}/{MAX_SUPERSTARS}</Text>}
       />
 

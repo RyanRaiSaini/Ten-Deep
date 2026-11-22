@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LANGUAGE_NAMES, LANGUAGES } from '../i18n/languages';
 import { SIM_SPEEDS, useSettings } from '../store/settings';
-import { Button, Card, Header, Label, Row, Screen, Segmented, ToggleRow } from '../ui/components';
+import { BackButton, Button, Card, Header, Label, Row, Screen, Segmented, ToggleRow } from '../ui/components';
 import { C, R, S } from '../ui/theme';
 
 const FLAGS = ['🇨🇦', '🇺🇸', '🇬🇧', '🇫🇷', '🇪🇸', '🇵🇹', '🇧🇷', '🇹🇷', '🇮🇹', '🇳🇱', '🇩🇪', '🇯🇵', '🇰🇷', '🇸🇦', '🇪🇬', '🇲🇦', '🇳🇬', '🇦🇺', '🇮🇳', '🇵🇭', '🇲🇽', '🇦🇷', '🇸🇷', '🇷🇸', '🇬🇷', '🇱🇹', '🇸🇮', '🇨🇲', '🇨🇳', '🇯🇲'];
@@ -16,7 +16,7 @@ export default function Settings() {
 
   return (
     <Screen>
-      <Header title={t('settings.title')} left={<Button label="‹" variant="ghost" onPress={() => router.back()} style={{ paddingVertical: 6 }} />} />
+      <Header title={t('settings.title')} left={<BackButton onPress={() => router.back()} />} />
 
       <Label>{t('settings.audio')}</Label>
       <Card style={styles.group}>

@@ -38,8 +38,15 @@ export async function runFlow({ page, base, step, shot }) {
 
   if (process.env.SMOKE_FLOW_DRAFT_ONLY) return;
 
-  await step('season runs to the deadline', async () => {
+  await step('refreshing mid-season resumes the season', async () => {
     await page.getByTestId('start-season').click();
+    await page.getByTestId('record').waitFor();
+    await page.waitForTimeout(1500); // let a few games tick and get saved
+    await page.reload();
+    await page.getByTestId('record').waitFor({ timeout: 10000 });
+  });
+
+  await step('season runs to the deadline', async () => {
     await page.getByTestId('skip-deadline').click();
     await page.getByTestId('deadline-skip').waitFor({ timeout: 30000 });
     await shot('05-deadline');

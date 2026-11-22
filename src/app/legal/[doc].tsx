@@ -6,7 +6,7 @@ import { Linking, StyleSheet, Text } from 'react-native';
 import { CONFIG } from '../../config';
 import { useGame } from '../../store/game';
 import { useProfile } from '../../store/profile';
-import { Button, Card, Header, Screen } from '../../ui/components';
+import { BackButton, Button, Card, Header, Screen } from '../../ui/components';
 import { C, S } from '../../ui/theme';
 
 /**
@@ -68,7 +68,7 @@ export default function Legal() {
 
   return (
     <Screen>
-      <Header title={d.title} left={<Button label="‹" variant="ghost" onPress={() => router.back()} style={{ paddingVertical: 6 }} />} />
+      <Header title={d.title} left={<BackButton onPress={() => router.back()} />} />
       <Card style={{ gap: S.md }}>
         {d.body.map((p, i) => <Text key={i} style={styles.p}>{p}</Text>)}
         {doc === 'contact' && CONFIG.supportEmail && (

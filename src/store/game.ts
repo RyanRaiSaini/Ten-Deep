@@ -7,7 +7,7 @@ import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, respin, spin, startDraft, type DraftState,
 } from '../engine/draft';
 import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
-import { createRng } from '../engine/rng';
+import { createRng, shuffle } from '../engine/rng';
 import { advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
 import { ALL_SLOTS, type Player, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
 import { useProfile } from './profile';
@@ -72,7 +72,7 @@ export const useGame = create<GameStore>()(
         const user = { id: 'user', name: 'You', colors: ['#E8833A', '#3DF2C2'] as [string, string], slots: draft.roster as Required<RosterSlots> };
         const rng = createRng(`${draft.seed}:league`);
         const league = draftLeague(p, new Set(draft.used), 29, rng);
-        const names = p.teams.filter((t) => t.id !== 'rookies-2026').sort(() => rng.next() - 0.5);
+        const names = shuffle(p.teams.filter((t) => t.id !== 'rookies-2026'), rng);
         league.forEach((r, i) => {
           const t = names[i % names.length];
           r.name = `${t.city} ${t.name}`;
@@ -93,9 +93,15 @@ export const useGame = create<GameStore>()(
           const landed = createRng(`${season.seed}:deadline`).pick(teams);
           return { deadline: { ...s.deadline!, spin: landed, spun: true } };
         }),
+      // Guards make repeated taps no-ops once the deal is done.
       signDeadline: (player) =>
-        set((s) => ({ season: tradeSwap(s.season!, s.deadline!.outId!, player), deadline: null, phase: 'season' })),
-      skipDeadline: () => set((s) => ({ deadline: null, phase: 'season', season: { ...s.season!, deadlineUsed: true } })),
+        set((s) =>
+          s.deadline?.outId && s.season
+            ? { season: tradeSwap(s.season, s.deadline.outId, player), deadline: null, phase: 'season' }
+            : {},
+        ),
+      skipDeadline: () =>
+        set((s) => (s.season ? { deadline: null, phase: 'season', season: { ...s.season, deadlineUsed: true } } : {})),
 
       beginPlayoffs: () => set((s) => ({ phase: 'playoffs', playoffs: startPlayoffs(advance(s.season!, 82)) })),
       playoffGame: () => set((s) => ({ playoffs: playNextGame(s.playoffs!) })),

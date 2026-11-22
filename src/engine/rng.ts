@@ -39,3 +39,13 @@ export function createRng(seed: string | number): Rng {
     fork: (salt) => createRng(`${key}::${salt}`),
   };
 }
+
+/** Unbiased Fisher–Yates shuffle (returns a copy). Same result on every JS engine, unlike sort(() => r - 0.5). */
+export function shuffle<T>(arr: readonly T[], rng: Rng): T[] {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = rng.int(0, i);
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}

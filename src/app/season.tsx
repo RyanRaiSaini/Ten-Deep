@@ -4,17 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { feel } from '../audio/feel';
 import { DEADLINE_GAME, SEASON_GAMES, advance, outSet, standings, type SeasonState } from '../engine/season';
+import { isRTL } from '../i18n';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { useSettings } from '../store/settings';
-import { Button, Card, Header, Label, Screen } from '../ui/components';
+import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, R, S } from '../ui/theme';
 
 const BASE_TICK_MS = 120;
 
 export default function Season() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const g = useGame();
   const speed = useSettings((s) => s.simSpeed);
   const [season, setSeason] = useState<SeasonState | null>(g.season);
@@ -71,7 +72,7 @@ export default function Season() {
     <Screen>
       <Header
         title={t('season.title')}
-        left={<Button label="‹" variant="ghost" onPress={() => goHome()} style={{ paddingVertical: 6 }} />}
+        left={<BackButton onPress={() => goHome()} />}
         right={!over ? <Button label={playing ? '❚❚' : '▶'} variant="ghost" onPress={() => setPlaying((p) => !p)} style={{ paddingVertical: 6 }} /> : undefined}
       />
 
@@ -80,7 +81,7 @@ export default function Season() {
         <Text style={styles.sub}>{t('season.game', { n: season.round })} · {t('season.standing', { n: seed })}</Text>
         <View style={styles.progress}>
           <View style={[styles.progressFill, { width: `${(season.round / SEASON_GAMES) * 100}%` }]} />
-          <View style={[styles.deadlineMark, { left: `${(DEADLINE_GAME / SEASON_GAMES) * 100}%` }]} />
+          <View style={[styles.deadlineMark, { [isRTL(i18n.language) ? "right" : "left"]: `${(DEADLINE_GAME / SEASON_GAMES) * 100}%` }]} />
         </View>
       </Card>
 
