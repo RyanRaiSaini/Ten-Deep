@@ -104,6 +104,46 @@ describe('game store', () => {
     expect(useDaily.getState().days[key].progress!.trivia!.i).toBe(1);
   });
 
+  it('management crisis: preseason card, cards at Dec/Feb/Apr, then a board verdict', async () => {
+    const { advance } = await import('../engine/season');
+    const { CARD_ROUNDS } = await import('../engine/crisis/deck');
+    useGame.getState().newCrisis('current-2026');
+    const pool = POOLS['current-2026'];
+    useGame.setState({ draft: startDraft(pool, 'test-crisis') });
+    // draft out the roster (same bot as draftAll, without starting a normal season)
+    while (!isComplete(useGame.getState().draft!)) {
+      useGame.getState().doSpin();
+      const d = useGame.getState().draft!;
+      const o = options(d, pool).find((x) => x.affordable);
+      if (o) useGame.getState().doPick(o.player.id, o.slots[0]);
+      else useGame.getState().doFallback();
+    }
+    useGame.getState().startSeason();
+    expect(useGame.getState().phase).toBe('crisis');
+    expect(useGame.getState().crisis!.objective).toBeTruthy();
+    expect(useGame.getState().crisis!.pending!.slot).toBe(0);
+
+    for (let slot = 0; slot < 4; slot++) {
+      const g = useGame.getState();
+      expect(g.phase).toBe('crisis');
+      const c = g.crisis!.pending!;
+      g.resolveCrisis({ incomingId: c.offer?.[0]?.id, outSlot: c.outSlots?.[0], option: 'a' });
+      expect(useGame.getState().phase).toBe('season');
+      // play to the next pause (deadline is skipped)
+      let s = { ...useGame.getState().season!, deadlineUsed: true };
+      s = advance(s, 82);
+      if (slot < 3) {
+        expect(s.round).toBe(CARD_ROUNDS[slot + 1]);
+        useGame.getState().openCrisis(s);
+      } else useGame.getState().setSeason(advance(s, 82));
+    }
+    expect(useGame.getState().crisis!.drawn).toHaveLength(4);
+    useGame.getState().beginPlayoffs();
+    useGame.getState().simPlayoffs();
+    useGame.getState().finish();
+    expect(['legend', 'extended', 'survived', 'fired']).toContain(useGame.getState().crisis!.verdict);
+  });
+
   it('finishing a run records exactly one draft', () => {
     draftAll();
     const before = useProfile.getState().draftsPlayed;

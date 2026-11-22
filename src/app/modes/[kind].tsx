@@ -8,14 +8,20 @@ import { C, F, S } from '../../ui/theme';
 
 /** Pick a franchise or an era, then start a draft in it. */
 export default function ModePicker() {
-  const { kind } = useLocalSearchParams<{ kind: 'franchise' | 'era' }>();
+  const { kind } = useLocalSearchParams<{ kind: 'franchise' | 'era' | 'crisis' }>();
   const { t } = useTranslation();
   const newRun = useGame((s) => s.newRun);
-  const list = MODES.filter((m) => m.kind === kind);
+  const newCrisis = useGame((s) => s.newCrisis);
+  // A Management Crisis run can use any pool.
+  const list = kind === 'crisis' ? MODES : MODES.filter((m) => m.kind === kind);
 
   return (
     <Screen>
-      <Header title={kind === 'era' ? t('modes.pickEra') : t('modes.pickFranchise')} left={<BackButton onPress={() => router.back()} />} />
+      <Header
+        title={kind === 'era' ? t('modes.pickEra') : kind === 'crisis' ? t('crisis.title') : t('modes.pickFranchise')}
+        left={<BackButton onPress={() => router.back()} />}
+      />
+      {kind === 'crisis' && <Text style={styles.sub}>{t('crisis.chooseMode')}</Text>}
       {list.map((m) => {
         const players = m.pool.teams.reduce((n, x) => n + x.players.length, 0);
         const years = m.pool.teams.map((x) => parseInt(x.season, 10));
@@ -23,7 +29,7 @@ export default function ModePicker() {
           <Card
             key={m.id}
             style={[styles.card, { borderColor: m.colors[0] }]}
-            onPress={() => { newRun(m.id); router.replace('/draft'); }}
+            onPress={() => { if (kind === 'crisis') newCrisis(m.id); else newRun(m.id); router.replace('/draft'); }}
           >
             <View style={[styles.swatch, { backgroundColor: m.colors[0], borderColor: m.colors[1] }]} />
             <View style={{ flex: 1, gap: 2 }}>

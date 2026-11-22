@@ -161,7 +161,9 @@ export function advance(state: SeasonState, games: number): SeasonState {
     totals: Object.fromEntries(Object.entries(state.totals).map(([k, v]) => [k, { ...v }])),
   };
   let target = Math.min(SEASON_GAMES, s.round + games);
-  for (const stop of [DEADLINE_GAME, ...(s.stops ?? [])]) if (s.round < stop && target > stop) target = stop;
+  // Pause at the trade deadline (unless it's already been dealt with) and at any extra stops.
+  const pauses = [...(s.deadlineUsed ? [] : [DEADLINE_GAME]), ...(s.stops ?? [])];
+  for (const stop of pauses) if (s.round < stop && target > stop) target = stop;
 
   while (s.round < target) {
     const rng = createRng(`${s.seed}:round:${s.round}`);

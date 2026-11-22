@@ -37,6 +37,10 @@
     "duels": {
       "title": "Duelle",
       "desc": "Drafte direkt gegen einen Freund."
+    },
+    "crisis": {
+      "title": "Management-Krise",
+      "desc": "Stell ein Team zusammen. Die Chefetage setzt ein Ziel. Alle zwei Monate ändert eine Krisenkarte alles."
     }
   },
   "settings": {
@@ -190,5 +194,119 @@
     "dailyBody": "Neue Drehungen, Quiz und Duelle warten. Je ein Versuch.",
     "streakTitle": "Deine Serie steht auf dem Spiel 🔥",
     "streakBody": "Du hast heute nicht gedraftet. Stell dein Team vor Mitternacht zusammen."
+  },
+  "crisis": {
+    "title": "Management-Krise",
+    "desc": "Stell ein Team zusammen. Die Chefetage setzt ein Ziel. Alle zwei Monate ändert eine Krisenkarte alles.",
+    "m0": "Vorbereitung",
+    "m1": "Dezember",
+    "m2": "Februar",
+    "m3": "April",
+    "good": "Gute Nachricht",
+    "bad": "Krise",
+    "legendary": "Legendär",
+    "objective": "Ziel der Chefetage",
+    "obj_title": "Gewinne den Titel",
+    "obj_semis": "Erreiche das Halbfinale",
+    "obj_playoffs": "Erreiche die Playoffs",
+    "obj_wins30": "Gewinne 30 Spiele",
+    "v_legend": "Legende — dein Trikot wird zurückgezogen",
+    "v_extended": "Vertrag verlängert",
+    "v_survived": "Überlebt — auf dünnem Eis",
+    "v_fired": "Gefeuert",
+    "accept": "Annehmen",
+    "pickIn": "Wähle, wer kommt",
+    "pickOut": "Wähle, wer geht",
+    "confirm": "Deal machen",
+    "cardN": "Karte {{n}} von 4",
+    "chooseMode": "Wähle einen Modus für deinen Run",
+    "cards": {
+      "cap-boost": {
+        "title": "Budget-Plus",
+        "flavor": "Der Besitzer öffnet das Scheckbuch.",
+        "effect": "Verpflichte 1 von 3 guten Free Agents für deinen am schwächsten bewerteten Spieler. Der Besitzer zahlt."
+      },
+      "hot-streak": {
+        "title": "Siegesserie",
+        "flavor": "Die Halle bebt.",
+        "effect": "+3 Team-Rating für die nächsten 10 Spiele."
+      },
+      "rookie-gem": {
+        "title": "Rookie-Juwel",
+        "flavor": "Deine Scouts haben ein Juwel gefunden.",
+        "effect": "Wähle 1 von 3 jungen Talenten für deinen am schwächsten bewerteten Spieler."
+      },
+      "veteran-mentor": {
+        "title": "Veteranen-Mentor",
+        "flavor": "Ein alter Hase will noch einen Ring.",
+        "effect": "Wähle 1 von 3 Veteranen für deinen schwächsten Bankplatz. Der Besitzer zahlt."
+      },
+      "locker-room-glue": {
+        "title": "Kabinen-Kitt",
+        "flavor": "Endlich verstehen sich alle.",
+        "effect": "+1 Team-Rating für den Rest der Saison."
+      },
+      "clean-bill": {
+        "title": "Leere Krankenstation",
+        "flavor": "Das Ärzteteam vollbringt Wunder.",
+        "effect": "Alle deine Verletzten sind geheilt."
+      },
+      "media-frenzy": {
+        "title": "Medienrummel",
+        "flavor": "Der Ticketverkauf bricht ein. Der Besitzer will einen Promi.",
+        "effect": "Verpflichte 1 von 5 prominenten Stars und gib einen deiner Spieler ab."
+      },
+      "blow-it-up": {
+        "title": "Alles sprengen",
+        "flavor": "Der Besitzer verlangt einen Neuaufbau.",
+        "effect": "Dein bester Spieler wird gegen das größte junge Talent der Liga getauscht."
+      },
+      "trade-demand": {
+        "title": "Wechselwunsch",
+        "flavor": "Ein Starter will weg. Sofort.",
+        "effect": "Wähle 1 von 3 schwächer bewerteten Ersatzleuten auf seiner Position."
+      },
+      "injury-bug": {
+        "title": "Verletzungspech",
+        "flavor": "Die Krankenstation ist voll.",
+        "effect": "Deine zwei Spieler mit den meisten Minuten fallen 15 und 8 Spiele aus."
+      },
+      "coach-fired": {
+        "title": "Trainer gefeuert",
+        "flavor": "Die Chefetage gerät in Panik.",
+        "effect": "−3 Rating für 10 Spiele, danach +1 bis Saisonende."
+      },
+      "luxury-tax": {
+        "title": "Luxussteuer-Panik",
+        "flavor": "Die Buchhaltung hat die Rechnung gefunden.",
+        "effect": "Tausche deinen Topverdiener gegen 1 von 3 Spielern, die mindestens 10 Mio. $ günstiger sind."
+      },
+      "locker-room-drama": {
+        "title": "Kabinen-Drama",
+        "flavor": "Dein bester Bankspieler macht Ärger.",
+        "effect": "Wähle: −2 für 15 Spiele oder tausche ihn gegen einen Spieler zum Mindestgehalt."
+      },
+      "superteam-rumor": {
+        "title": "Superteam-Gerücht",
+        "flavor": "Ein Superstar will zu dir.",
+        "effect": "Wähle: einen 95+-Star verpflichten und deine zwei bestbezahlten Starter verlieren, oder ablehnen."
+      },
+      "legend-comeback": {
+        "title": "Comeback einer Legende",
+        "flavor": "Eine Legende schnürt noch einmal die Schuhe.",
+        "effect": "Wähle 1 von 3 Legenden (90+) für deinen schwächsten Bankplatz."
+      },
+      "midseason-miracle": {
+        "title": "Wunder zur Saisonmitte",
+        "flavor": "Hier passiert etwas Besonderes.",
+        "effect": "+4 Team-Rating für die nächsten 15 Spiele."
+      }
+    },
+    "options": {
+      "dramaA": "Aussitzen (−2 für 15 Spiele)",
+      "dramaB": "Ihn abgeben",
+      "superA": "Superstar verpflichten",
+      "superB": "Ablehnen"
+    }
   }
 }
