@@ -45,6 +45,10 @@
     "career": {
       "title": "Carrière",
       "desc": "Eén franchise, veel seizoenen. Veroudering, contracten, drafts en vrije spelers, tot de directie je ontslaat."
+    },
+    "collection": {
+      "title": "Collectie",
+      "desc": "Spelerskeuzes"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "Geen play-offs",
     "years": "{{n}} jr",
     "nothingAffordable": "Niemand past onder het plafond."
+  },
+  "collect": {
+    "title": "Collectie",
+    "picks": "Spelerskeuzes",
+    "tapToOpen": "Tik om te openen",
+    "revealAll": "Alles onthullen",
+    "chooseOne": "Houd één kaart",
+    "keep": "{{name}} houden",
+    "noPicks": "Geen keuzes in de wacht. Kom morgen terug voor je dagelijkse keuze.",
+    "streak": "🔥 Reeks van {{n}} dagen",
+    "odds": "Kans per kaart",
+    "cards": "{{n}} kaarten",
+    "empty": "Open een spelerskeuze om je collectie te starten.",
+    "all": "Alle",
+    "claim": "Claim je keuze",
+    "waiting": "{{n}} keuzes in de wacht",
+    "t_daily": "Dagkeuze",
+    "t_run": "Runkeuze",
+    "t_playoffs": "Play-offkeuze",
+    "t_weekly": "Weekkeuze",
+    "t_champion": "Kampioenskeuze",
+    "t_mythic": "Mythische keuze",
+    "t_legendary": "Legendarische keuze",
+    "tier_common": "Gewoon",
+    "tier_uncommon": "Ongewoon",
+    "tier_rare": "Zeldzaam",
+    "tier_epic": "Episch",
+    "tier_mythic": "Mythisch",
+    "tier_ultra": "Ultra",
+    "guarantee_champion": "Alle kaarten 83+",
+    "guarantee_mythic": "Eén 90+ gegarandeerd",
+    "guarantee_legendary": "Eén Ultra gegarandeerd",
+    "nextWeekly": "Weekkeuze over {{n}} dagen"
   }
 }

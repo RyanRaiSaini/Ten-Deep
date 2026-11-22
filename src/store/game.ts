@@ -6,7 +6,7 @@ import { draftLeague } from '../engine/aiDraft';
 import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, respin, spin, startDraft, type DraftState,
 } from '../engine/draft';
-import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
+import { champion, playNextGame, seriesFor, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
 import { createRng, shuffle } from '../engine/rng';
 import { advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
 import { ALL_SLOTS, type Player, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
@@ -17,6 +17,7 @@ import { CARD_ROUNDS, drawCard, type CardId } from '../engine/crisis/deck';
 import { prepareCard, type CrisisCard } from '../engine/crisis/offers';
 import { dailySeed } from '../engine/daily';
 import { useDaily } from './daily';
+import { useCollection } from './collection';
 import { useProfile } from './profile';
 
 export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'crisis' | 'playoffs' | 'result';
@@ -210,6 +211,8 @@ export const useGame = create<GameStore>()(
         const rec = playoffs.season.records[0];
         const result = { wins: rec.w, losses: rec.l, champion: champion(playoffs) === 0 };
         useProfile.getState().recordDraft(result);
+        // Every finished run earns a Player Pick, scaled by how it went.
+        useCollection.getState().awardRun(playoffs.season.seed, { ...result, madePlayoffs: !!seriesFor(playoffs, 0) });
         const { daily, crisis } = get();
         if (daily) useDaily.getState().record(daily, 'draft', result);
         if (crisis?.objective) set({ crisis: { ...crisis, verdict: verdict(crisis.objective, playoffs.season, playoffs) } });
