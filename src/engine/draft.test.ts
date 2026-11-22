@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { canAfford } from './cap';
 import {
-  eligibleSlots, fallbackPick, isComplete, options, pick, pickFallback, respin, spin, startDraft,
+  MAX_SUPERSTARS, affordableSlots, eligibleSlots, fallbackPick, isComplete, options, pick, pickFallback, respin, spin, startDraft,
 } from './draft';
 import { makePool } from './__fixtures__/pool';
 import type { Player } from './types';
@@ -11,11 +11,11 @@ const pool = makePool();
 function autoDraft(seed: string) {
   let s = spin(startDraft(pool, seed), pool);
   while (!isComplete(s)) {
-    const opt = options(s).find((o) => o.affordable && o.slots.length > 0);
-    if (opt) s = pick(s, opt.player.id, opt.slots[0]);
+    const opt = options(s, pool).find((o) => o.affordable && o.slots.length > 0);
+    if (opt) s = pick(s, opt.player.id, opt.slots[0], pool);
     else {
       const p = fallbackPick(s, pool);
-      s = pickFallback(s, p, eligibleSlots(s, p)[0]);
+      s = pickFallback(s, p, affordableSlots(s, p, pool)[0], pool);
     }
     if (!isComplete(s)) s = spin(s, pool);
   }
@@ -55,18 +55,24 @@ describe('draft', () => {
   it('rejects picking a used player, a wrong slot, or no active spin', () => {
     const s = spin(startDraft(pool, 'reject'), pool);
     const p = s.spin!.players.find((x) => x.pos !== 'PG' && x.pos2 !== 'PG')!;
-    expect(() => pick(s, p.id, 'PG')).toThrow();
-    const s2 = pick(s, p.id, 'B1');
-    expect(() => pick(s2, p.id, 'B2')).toThrow();
+    expect(() => pick(s, p.id, 'PG', pool)).toThrow();
+    const s2 = pick(s, p.id, 'B1', pool);
+    expect(() => pick(s2, p.id, 'B2', pool)).toThrow();
   });
 
   it('rejects an unaffordable pick', () => {
     let s = spin(startDraft(pool, 'cap'), pool);
-    const star = { ...pool.teams[0].players[0], ovr: 99, id: 'star' };
-    s = { ...s, roster: { PG: { ...star, id: 's1' }, SG: { ...star, id: 's2' } }, round: 2 };
-    s = { ...s, spin: { ...s.spin!, players: [{ ...star, id: 's3', pos: 'SF' }] } };
-    expect(options(s)[0].affordable).toBe(false);
-    expect(() => pick(s, 's3', 'SF')).toThrow(/cap/i);
+    // 94s are below the superstar line, so only the cap can block the fourth one ($39.5M each).
+    const star = { ...pool.teams[0].players[0], ovr: 94, id: 'star', pos2: undefined };
+    s = {
+      ...s,
+      roster: { PG: { ...star, id: 's1', pos: 'PG' }, SG: { ...star, id: 's2', pos: 'SG' }, SF: { ...star, id: 's3', pos: 'SF' } },
+      used: ['s1', 's2', 's3'],
+      round: 3,
+    };
+    s = { ...s, spin: { ...s.spin!, players: [{ ...star, id: 's4', pos: 'PF' }] } };
+    expect(options(s, pool)[0].affordable).toBe(false);
+    expect(() => pick(s, 's4', 'PF', pool)).toThrow(/cap/i);
   });
 
   it('respins decrement and then throw when exhausted', () => {
@@ -87,7 +93,43 @@ describe('draft', () => {
     const open = { ...s, roster, used, round: 8, spin: null };
     const p = fallbackPick(open, pool);
     expect(used).not.toContain(p.id);
-    expect(eligibleSlots(open, p).length).toBeGreaterThan(0);
+    expect(affordableSlots(open, p, pool).length).toBeGreaterThan(0);
     expect(canAfford(roster, p)).toBe(true);
+  });
+});
+
+describe('draft on the real 2026 pool', async () => {
+  const { current2026 } = await import('../data/current2026');
+  const { createRng } = await import('./rng');
+
+  it('random affordable picks (incl. greedy star-hunting) never dead-end across 300 drafts', () => {
+    for (let d = 0; d < 300; d++) {
+      const rng = createRng(`fuzz-${d}`);
+      let s = spin(startDraft(current2026, `fuzz-${d}`), current2026);
+      while (!isComplete(s)) {
+        const ok = options(s, current2026).filter((o) => o.affordable);
+        if (ok.length) {
+          const o = d % 2 === 0 ? ok[0] : rng.pick(ok); // even drafts: always take the best player offered
+          s = pick(s, o.player.id, rng.pick(o.slots), current2026);
+        } else {
+          const p = fallbackPick(s, current2026);
+          s = pickFallback(s, p, affordableSlots(s, p, current2026)[0], current2026);
+        }
+        if (!isComplete(s)) s = spin(s, current2026);
+      }
+      expect(isComplete(s)).toBe(true);
+    }
+  });
+});
+
+describe('superstar limit', () => {
+  it('blocks a third player rated 95+ even when the cap would allow it', () => {
+    let s = spin(startDraft(pool, 'stars'), pool);
+    const star = (id: string, pos: 'PG' | 'SG' | 'SF') => ({ ...pool.teams[0].players[0], id, pos, pos2: undefined, ovr: 95 });
+    s = { ...s, roster: { PG: star('a', 'PG'), SG: star('b', 'SG') }, used: ['a', 'b'], round: 2 };
+    s = { ...s, spin: { ...s.spin!, players: [star('c', 'SF')] } };
+    expect(MAX_SUPERSTARS).toBe(2);
+    expect(options(s, pool)[0].affordable).toBe(false);
+    expect(() => pick(s, 'c', 'SF', pool)).toThrow(/superstar/i);
   });
 });

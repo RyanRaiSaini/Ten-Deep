@@ -3,6 +3,18 @@ import { ALL_SLOTS, type Player, type RosterSlots } from './types';
 export const CAP = 150;
 export const MIN_SALARY = 1;
 
+/** Anti-superteam rule: at most two players rated 95+ per roster. */
+export const MAX_SUPERSTARS = 2;
+export const SUPERSTAR_OVR = 95;
+
+export function superstarCount(roster: RosterSlots): number {
+  return ALL_SLOTS.filter((s) => (roster[s]?.ovr ?? 0) >= SUPERSTAR_OVR).length;
+}
+
+export function superstarBlocked(roster: RosterSlots, p: Player): boolean {
+  return p.ovr >= SUPERSTAR_OVR && superstarCount(roster) >= MAX_SUPERSTARS;
+}
+
 /** Salary anchors ($M) from the design spec; linear between points. */
 const ANCHORS: [number, number][] = [
   [64, 1], [70, 3], [75, 6], [80, 12], [85, 20], [90, 30], [95, 42], [99, 50],
