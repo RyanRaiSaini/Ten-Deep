@@ -166,7 +166,10 @@
     "teamRankHint": "Equipo más fuerte arriba",
     "seriesWon": "{{team}} gana {{w}}-{{l}}",
     "youGuessed": "¡Acertaste!",
-    "strength": "Fuerza"
+    "strength": "Fuerza",
+    "resume": "Continuar",
+    "missed": "Perdido",
+    "replaceRun": "Esto reemplaza tu partida actual. Toca de nuevo para empezar."
   },
   "duel": {
     "title": "Duelo",

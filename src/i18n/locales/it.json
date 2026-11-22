@@ -166,7 +166,10 @@
     "teamRankHint": "Squadra più forte in cima",
     "seriesWon": "{{team}} vince {{w}}-{{l}}",
     "youGuessed": "Indovinato!",
-    "strength": "Forza"
+    "strength": "Forza",
+    "resume": "Riprendi",
+    "missed": "Perso",
+    "replaceRun": "Questo sostituisce la partita in corso. Tocca di nuovo per iniziare."
   },
   "duel": {
     "title": "Duello",

@@ -64,6 +64,8 @@ function schedule(track: Track) {
   const c = audio();
   if (!c || !master) return;
   const spb = 60 / track.bpm;
+  // If the timer was throttled (background tab, busy thread), skip missed bars instead of cramming them in.
+  if (nextBarTime < c.currentTime) nextBarTime = c.currentTime + 0.05;
   while (nextBarTime < c.currentTime + 0.6) {
     for (const e of barEvents(track, bar)) voice(c, master, e, nextBarTime + e.beat * spb, spb);
     nextBarTime += 4 * spb;

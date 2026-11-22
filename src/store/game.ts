@@ -29,7 +29,7 @@ export interface GameStore {
 
   newRun: (poolId: string) => void;
   /** Today's Daily Draft: Current Day pool, seed fixed by date, so everyone gets the same spins and league. */
-  newDaily: (key: string) => void;
+  newDaily: (key: string) => 'started' | 'resumed' | 'locked';
   doSpin: () => void;
   doRespin: () => void;
   doPick: (playerId: string, slot: SlotId) => void;
@@ -63,8 +63,16 @@ export const useGame = create<GameStore>()(
       deadline: null,
 
       newRun: (poolId) => set({ phase: 'draft', poolId, daily: null, draft: startDraft(pool(poolId), newSeed()), season: null, playoffs: null, deadline: null }),
-      newDaily: (key) =>
-        set({ phase: 'draft', poolId: 'current-2026', daily: key, draft: startDraft(pool('current-2026'), dailySeed(key)), season: null, playoffs: null, deadline: null }),
+      // One shot per day: begin once, resume while that run is alive, locked after it's abandoned or finished.
+      newDaily: (key) => {
+        const { daily, phase } = get();
+        if (daily === key && phase !== 'idle') return 'resumed';
+        const day = useDaily.getState().days[key];
+        if (day?.draftStarted || day?.draft) return 'locked';
+        useDaily.getState().record(key, 'draftStarted', true);
+        set({ phase: 'draft', poolId: 'current-2026', daily: key, draft: startDraft(pool('current-2026'), dailySeed(key)), season: null, playoffs: null, deadline: null });
+        return 'started';
+      },
       doSpin: () => set((s) => ({ draft: spin(s.draft!, pool(s.poolId)) })),
       doRespin: () => set((s) => ({ draft: respin(s.draft!, pool(s.poolId)) })),
       doPick: (playerId, slot) => set((s) => ({ draft: pick(s.draft!, playerId, slot, pool(s.poolId)) })),

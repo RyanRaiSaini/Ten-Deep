@@ -32,7 +32,7 @@ export default function RootLayout() {
   const language = useSettings((s) => s.language);
   const ready = useHydrated();
   useMusic();
-  useNotificationSync();
+  useNotificationSync(ready);
   useEffect(() => applyLanguage(language ?? deviceLanguage()), [language]);
 
   if (!ready) return <View style={{ flex: 1, backgroundColor: C.bg }} />;

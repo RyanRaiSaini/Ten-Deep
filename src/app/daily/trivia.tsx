@@ -11,24 +11,33 @@ import { C, F, R, S } from '../../ui/theme';
 
 export default function Trivia() {
   const { t } = useTranslation();
-  const key = dailyKey();
+  // Freeze the day on open: content must not change if midnight passes mid-challenge.
+  const [key] = useState(() => dailyKey());
   const questions = useMemo(() => dailyTrivia(MODE_BY_ID['all-time'].pool, key), [key]);
   const already = useDaily((s) => s.days[key]?.trivia);
   const record = useDaily((s) => s.record);
-  const [i, setI] = useState(0);
-  const [picked, setPicked] = useState<string | null>(null);
-  const [score, setScore] = useState(0);
-  const finished = already !== undefined || i >= questions.length;
+  const saveProgress = useDaily((s) => s.saveProgress);
+  // Resume saved progress: answers are saved the moment they're made, so backing out can't reset the quiz.
+  const saved = useDaily.getState().days[key]?.progress?.trivia;
+  const [i, setI] = useState(saved?.i ?? 0);
+  const [picked, setPicked] = useState<string | null>(saved?.picked ?? null);
+  const [score, setScore] = useState(saved?.score ?? 0);
+  // "Finished" means finished before this visit; a result recorded on the last answer still shows its reveal.
+  const [doneOnOpen] = useState(already !== undefined);
+  const finished = doneOnOpen || i >= questions.length;
 
   const choose = (c: string) => {
     if (picked) return;
-    setPicked(c);
     const right = c === questions[i].answer;
-    if (right) setScore((n) => n + 1);
+    const nextScore = score + (right ? 1 : 0);
+    setPicked(c);
+    setScore(nextScore);
+    saveProgress(key, 'trivia', { i, score: nextScore, picked: c });
+    if (i === questions.length - 1) record(key, 'trivia', nextScore);
     feel(right ? 'swish' : 'buzzer');
   };
   const next = () => {
-    if (i === questions.length - 1) record(key, 'trivia', score);
+    saveProgress(key, 'trivia', { i: i + 1, score, picked: null });
     setPicked(null);
     setI((n) => n + 1);
   };

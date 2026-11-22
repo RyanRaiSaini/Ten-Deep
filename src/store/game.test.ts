@@ -63,13 +63,13 @@ describe('game store', () => {
 
   it('daily draft: same spins for everyone, result recorded once for the day', async () => {
     const { useDaily } = await import('./daily');
+    const { dailySeed } = await import('../engine/daily');
+    const { spin } = await import('../engine/draft');
     useGame.getState().newDaily('2026-11-22');
     useGame.getState().doSpin();
-    const first = useGame.getState().draft!.spin!.id;
-    useGame.getState().quit();
-    useGame.getState().newDaily('2026-11-22');
-    useGame.getState().doSpin();
-    expect(useGame.getState().draft!.spin!.id).toBe(first);
+    // Anyone else's draft for the same day starts from the same seed, so it lands on the same team.
+    const pool = POOLS['current-2026'];
+    expect(useGame.getState().draft!.spin!.id).toBe(spin(startDraft(pool, dailySeed('2026-11-22')), pool).spin!.id);
 
     useGame.getState().quit();
     draftAll();
@@ -79,6 +79,29 @@ describe('game store', () => {
     useGame.getState().finish();
     const rec = useDaily.getState().days['2026-11-22'].draft!;
     expect(rec.wins + rec.losses).toBe(82);
+  });
+
+  it('daily draft is one shot: resumable while running, locked once abandoned', async () => {
+    const { useDaily } = await import('./daily');
+    const key = '2026-12-05';
+    expect(useGame.getState().newDaily(key)).toBe('started');
+    useGame.getState().doSpin();
+    const spun = useGame.getState().draft!.spin!.id;
+    expect(useGame.getState().newDaily(key)).toBe('resumed');
+    expect(useGame.getState().draft!.spin!.id).toBe(spun);
+    useGame.getState().quit();
+    expect(useGame.getState().newDaily(key)).toBe('locked');
+    expect(useGame.getState().phase).toBe('idle');
+    expect(useDaily.getState().days[key].draftStarted).toBe(true);
+  });
+
+  it('daily quiz progress is saved per answer, so backing out cannot reset it', async () => {
+    const { useDaily } = await import('./daily');
+    const key = '2026-12-06';
+    useDaily.getState().saveProgress(key, 'trivia', { i: 0, score: 0, picked: 'Someone' });
+    expect(useDaily.getState().days[key].progress!.trivia).toEqual({ i: 0, score: 0, picked: 'Someone' });
+    useDaily.getState().saveProgress(key, 'trivia', { i: 1, score: 1, picked: null });
+    expect(useDaily.getState().days[key].progress!.trivia!.i).toBe(1);
   });
 
   it('finishing a run records exactly one draft', () => {

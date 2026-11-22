@@ -166,7 +166,10 @@
     "teamRankHint": "الفريق الأقوى في الأعلى",
     "seriesWon": "{{team}} يفوز {{w}}-{{l}}",
     "youGuessed": "توقعك صحيح!",
-    "strength": "القوة"
+    "strength": "القوة",
+    "resume": "متابعة",
+    "missed": "فاتك",
+    "replaceRun": "سيحل هذا محل جولتك الحالية. اضغط مرة أخرى للبدء."
   },
   "duel": {
     "title": "مواجهة",

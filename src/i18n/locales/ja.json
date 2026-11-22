@@ -166,7 +166,10 @@
     "teamRankHint": "最強チームを一番上に",
     "seriesWon": "{{team}}が{{w}}勝{{l}}敗で勝利",
     "youGuessed": "的中！",
-    "strength": "強さ"
+    "strength": "強さ",
+    "resume": "再開",
+    "missed": "未完了",
+    "replaceRun": "進行中のプレイが置き換わります。もう一度タップで開始。"
   },
   "duel": {
     "title": "対戦",

@@ -166,7 +166,10 @@
     "teamRankHint": "Strongest team at the top",
     "seriesWon": "{{team}} win {{w}}-{{l}}",
     "youGuessed": "You called it!",
-    "strength": "Strength"
+    "strength": "Strength",
+    "resume": "Resume",
+    "missed": "Missed",
+    "replaceRun": "This replaces your current run. Tap again to start."
   },
   "duel": {
     "title": "Duel",

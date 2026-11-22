@@ -111,7 +111,9 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('daily-team-duel').click();
     await page.getByTestId('pick-side').last().click();
     await shot('15-team-duel');
-    await page.getByTestId('pick-next').click();
+    // One shot: backing out after the reveal and returning must not allow a second guess.
+    await page.goto(`${base}/daily/pick?kind=duel`);
+    await page.getByTestId('pick-score').waitFor({ timeout: 5000 });
     await page.getByTestId('pick-done').click();
     await shot('13-daily-hub');
   });

@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { dailyKey } from '../../engine/daily';
@@ -7,17 +8,37 @@ import { useGame } from '../../store/game';
 import { BackButton, Card, Header, Label, Screen } from '../../ui/components';
 import { C, F, S } from '../../ui/theme';
 
+const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/playoffs' | '/result'> = {
+  draft: '/draft', season: '/season', deadline: '/deadline', playoffs: '/playoffs', result: '/result',
+};
+
 export default function DailyHub() {
   const { t } = useTranslation();
-  const key = dailyKey();
+  const [key] = useState(() => dailyKey());
   const day = useDaily((s) => s.days[key]) ?? {};
-  const newDaily = useGame((s) => s.newDaily);
+  const g = useGame();
+  const [confirmReplace, setConfirmReplace] = useState(false);
+  const dailyLive = g.daily === key && g.phase !== 'idle';
+  const otherRunLive = g.phase !== 'idle' && g.daily !== key;
+
+  const openDraft = () => {
+    if (otherRunLive && !day.draftStarted && !confirmReplace) {
+      setConfirmReplace(true);
+      return;
+    }
+    const r = g.newDaily(key);
+    if (r !== 'locked') router.push(ROUTE[useGame.getState().phase] ?? '/draft');
+  };
+  const draftStatus = day.draft
+    ? `${day.draft.wins}-${day.draft.losses}${day.draft.champion ? ' 🏆' : ''}`
+    : dailyLive ? null : day.draftStarted ? t('daily.missed') : null;
 
   const items = [
     {
       id: 'draft', title: t('daily.draft'), desc: t('daily.draftDesc'), accent: C.hardwood,
-      status: day.draft ? `${day.draft.wins}-${day.draft.losses}${day.draft.champion ? ' 🏆' : ''}` : null,
-      open: () => { newDaily(key); router.push('/draft'); },
+      status: draftStatus,
+      cta: dailyLive ? t('daily.resume') : undefined,
+      open: openDraft,
     },
     {
       id: 'trivia', title: t('daily.trivia'), desc: t('daily.triviaDesc'), accent: C.neon,
@@ -56,9 +77,10 @@ export default function DailyHub() {
             <Text style={styles.title} testID={`daily-${it.id}`}>{it.title}</Text>
             <Text style={styles.desc}>{it.desc}</Text>
           </View>
-          <Text style={[styles.status, { color: it.status ? C.text : it.accent }]}>{it.status ?? t('daily.play')}</Text>
+          <Text style={[styles.status, { color: it.status ? C.text : it.accent }]}>{it.status ?? (('cta' in it && it.cta) || t('daily.play'))}</Text>
         </Card>
       ))}
+      {confirmReplace && <Text style={[styles.desc, { color: C.gold, textAlign: 'center' }]} testID="replace-warning">{t('daily.replaceRun')}</Text>}
       <Text style={styles.desc}>{t('daily.tomorrow')}</Text>
     </Screen>
   );

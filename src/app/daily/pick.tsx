@@ -18,7 +18,8 @@ export default function Pick() {
   const duel = kind === 'duel';
   const field = duel ? 'teamDuel' : 'derby';
   const { t } = useTranslation();
-  const key = dailyKey();
+  // Freeze the day on open: content must not change if midnight passes mid-challenge.
+  const [key] = useState(() => dailyKey());
 
   const rounds = useMemo((): Round[] => {
     if (duel) {
@@ -44,21 +45,29 @@ export default function Pick() {
 
   const already = useDaily((s) => s.days[key]?.[field]);
   const record = useDaily((s) => s.record);
-  const [i, setI] = useState(0);
-  const [picked, setPicked] = useState<string | null>(null);
-  const [score, setScore] = useState(0);
-  const finished = already !== undefined || i >= rounds.length;
+  const saveProgress = useDaily((s) => s.saveProgress);
+  // Resume saved progress: a pick is saved (and the last one recorded) the moment it's made.
+  const saved = useDaily.getState().days[key]?.progress?.[field];
+  const [i, setI] = useState(saved?.i ?? 0);
+  const [picked, setPicked] = useState<string | null>(saved?.picked ?? null);
+  const [score, setScore] = useState(saved?.score ?? 0);
+  // "Finished" means finished before this visit; a result recorded on the last answer still shows its reveal.
+  const [doneOnOpen] = useState(already !== undefined);
+  const finished = doneOnOpen || i >= rounds.length;
   const r = rounds[Math.min(i, rounds.length - 1)];
 
   const choose = (id: string) => {
     if (picked) return;
-    setPicked(id);
     const right = id === r.winner;
-    if (right) setScore((n) => n + 1);
+    const nextScore = score + (right ? 1 : 0);
+    setPicked(id);
+    setScore(nextScore);
+    saveProgress(key, field, { i, score: nextScore, picked: id });
+    if (i === rounds.length - 1) record(key, field, nextScore);
     feel(right ? (duel ? 'fanfare' : 'swish') : 'buzzer');
   };
   const next = () => {
-    if (i === rounds.length - 1) record(key, field, score);
+    saveProgress(key, field, { i: i + 1, score, picked: null });
     setPicked(null);
     setI((n) => n + 1);
   };
