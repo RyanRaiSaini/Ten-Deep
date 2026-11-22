@@ -41,6 +41,10 @@
     "crisis": {
       "title": "Crise de gestion",
       "desc": "Draft une équipe. La direction fixe un objectif. Tous les deux mois, une carte crise change tout."
+    },
+    "career": {
+      "title": "Carrière",
+      "desc": "Une franchise, plusieurs saisons. Vieillissement, contrats, drafts et agents libres, jusqu'à ce que la direction te vire."
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "Signer la superstar",
       "superB": "Refuser"
     }
+  },
+  "career": {
+    "title": "Carrière",
+    "desc": "Une franchise, plusieurs saisons. Vieillissement, contrats, drafts et agents libres, jusqu'à ce que la direction te vire.",
+    "start": "Commencer une carrière",
+    "resume": "Continuer la carrière",
+    "season": "Saison {{n}}",
+    "security": "Sécurité de l'emploi",
+    "history": "Historique",
+    "noHistory": "Ton histoire commence avec la draft.",
+    "toOffseason": "Passer à l'intersaison",
+    "progress": "Progression des joueurs",
+    "retired": "Retraités",
+    "expiring": "Contrats arrivant à terme",
+    "expiringHint": "Touche pour prolonger au niveau actuel. Ceux non retenus partent.",
+    "resign": "Prolonger",
+    "release": "Laisser partir",
+    "confirmContracts": "Valider les contrats",
+    "draft": "Draft des rookies",
+    "yourPick": "Tu choisis en n°{{n}}",
+    "draftThis": "Drafter {{name}}",
+    "rosterFull": "Ton effectif est complet : choisis qui couper pour le rookie.",
+    "skipRookie": "Passer le rookie",
+    "freeAgency": "Agents libres",
+    "openSpots": "{{n}} places libres",
+    "sign": "Signer",
+    "minException": "Exception minimum : signer {{name}}",
+    "startSeason": "Lancer {{label}}",
+    "over": "Fin de carrière",
+    "overDesc": "La direction en a assez vu. {{n}} saisons, {{titles}} titres.",
+    "newCareer": "Nouvelle carrière",
+    "r_champion": "Champions",
+    "r_finals": "Perdu en finale",
+    "r_semis": "Perdu en demi-finale",
+    "r_quarters": "Perdu en quart de finale",
+    "r_first": "Éliminé au premier tour",
+    "r_missed": "Pas de playoffs",
+    "years": "{{n}} an(s)",
+    "nothingAffordable": "Personne ne rentre sous le plafond."
   }
 }

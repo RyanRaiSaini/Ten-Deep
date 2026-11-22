@@ -41,6 +41,10 @@
     "crisis": {
       "title": "매니지먼트 크라이시스",
       "desc": "팀을 드래프트하세요. 구단이 목표를 정합니다. 두 달마다 크라이시스 카드가 모든 것을 바꿉니다."
+    },
+    "career": {
+      "title": "커리어",
+      "desc": "하나의 프랜차이즈로 여러 시즌. 노화, 계약, 드래프트, FA. 구단이 당신을 경질할 때까지."
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "슈퍼스타 영입",
       "superB": "거절"
     }
+  },
+  "career": {
+    "title": "커리어",
+    "desc": "하나의 프랜차이즈로 여러 시즌. 노화, 계약, 드래프트, FA. 구단이 당신을 경질할 때까지.",
+    "start": "커리어 시작",
+    "resume": "커리어 계속",
+    "season": "시즌 {{n}}",
+    "security": "고용 안정성",
+    "history": "기록",
+    "noHistory": "당신의 이야기는 드래프트에서 시작됩니다.",
+    "toOffseason": "오프시즌으로",
+    "progress": "선수 성장",
+    "retired": "은퇴",
+    "expiring": "계약 만료",
+    "expiringHint": "현재 레이팅으로 재계약하려면 탭하세요. 잡지 않은 선수는 떠납니다.",
+    "resign": "재계약",
+    "release": "내보내기",
+    "confirmContracts": "계약 확정",
+    "draft": "루키 드래프트",
+    "yourPick": "당신의 지명 순서: {{n}}번",
+    "draftThis": "{{name}} 지명",
+    "rosterFull": "로스터가 가득 찼습니다: 루키를 위해 방출할 선수를 고르세요.",
+    "skipRookie": "루키 포기",
+    "freeAgency": "FA",
+    "openSpots": "빈자리 {{n}}",
+    "sign": "계약",
+    "minException": "최저 예외: {{name}} 계약",
+    "startSeason": "{{label}} 시작",
+    "over": "커리어 종료",
+    "overDesc": "구단은 충분히 봤습니다. {{n}}시즌, 우승 {{titles}}회.",
+    "newCareer": "새 커리어",
+    "r_champion": "우승",
+    "r_finals": "파이널 패배",
+    "r_semis": "4강 탈락",
+    "r_quarters": "8강 탈락",
+    "r_first": "1라운드 탈락",
+    "r_missed": "플레이오프 실패",
+    "years": "{{n}}년",
+    "nothingAffordable": "캡 안에 들어오는 선수가 없습니다."
   }
 }

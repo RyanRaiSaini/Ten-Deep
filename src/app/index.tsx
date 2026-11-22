@@ -10,7 +10,8 @@ import { C, F, R, S } from '../ui/theme';
 
 const MODES = [
   { key: 'current', poolId: 'current-2026', live: true, accent: C.hardwood },
-  { key: 'crisis', picker: 'crisis', live: true, accent: '#FF7A1A', badge: 'NEW' },
+  { key: 'career', route: '/career', live: true, accent: '#E84393', badge: 'NEW' },
+  { key: 'crisis', picker: 'crisis', live: true, accent: '#FF7A1A' },
   { key: 'franchise', picker: 'franchise', live: true, accent: '#7C5CFF' },
   { key: 'era', picker: 'era', live: true, accent: C.gold },
   { key: 'daily', route: '/daily', live: true, accent: C.neon },

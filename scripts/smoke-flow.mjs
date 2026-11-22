@@ -122,47 +122,9 @@ export async function runFlow({ page, base, step, shot }) {
     await page.goto(base);
     await page.getByText('Management Crisis').first().click();
     await page.getByTestId('mode-current-2026').click();
-    await page.getByTestId('spin').waitFor();
-    await page.waitForTimeout(500); // let the screen transition finish before tapping
-    // draft ten (same bot as the main flow)
-    for (let pick = 0; pick < 10; pick++) {
-      if (await page.getByTestId('spin').count()) await page.getByTestId('spin').click();
-      await page.locator('[data-testid="option"], [data-testid="respin"], [data-testid="fallback"]').first().waitFor({ timeout: 15000 });
-      const option = page.getByTestId('option').first();
-      if (await option.count()) {
-        await option.click();
-        if (!(await page.getByTestId('spin').count()) && !(await page.getByTestId('start-season').count()))
-          for (const slot of ['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4', 'B5']) {
-            await page.getByTestId(`slot-${slot}`).click();
-            if ((await page.getByTestId('spin').count()) || (await page.getByTestId('start-season').count())) break;
-          }
-      } else if (await page.getByTestId('respin').count()) { await page.getByTestId('respin').click(); await page.waitForTimeout(300); pick--; continue; }
-      else await page.getByTestId('fallback').click();
-      await page.locator('[data-testid="spin"], [data-testid="start-season"]').first().waitFor({ timeout: 5000 });
-    }
+    await draftTen(page);
     await page.getByTestId('start-season').click();
-
-    let cards = 0;
-    for (let guard = 0; guard < 40; guard++) {
-      await page.locator('[data-testid="crisis-card"], [data-testid="skip-deadline"], [data-testid="skip-playoffs"], [data-testid="deadline-skip"], [data-testid="to-playoffs"]').first().waitFor({ timeout: 15000 });
-      if (await page.getByTestId('crisis-card').count()) {
-        cards++;
-        if (cards === 1) { await page.waitForTimeout(600); await shot('18-crisis-card'); }
-        if (await page.getByTestId('crisis-option-a').count()) { await page.getByTestId('crisis-option-a').click(); continue; }
-        const offers = page.getByTestId('crisis-offer');
-        if (await offers.count()) await offers.first().click();
-        const accept = page.getByTestId('crisis-accept');
-        for (const slot of ['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4', 'B5']) {
-          if (await accept.isEnabled()) break;
-          await page.getByTestId(`slot-${slot}`).last().click();
-        }
-        await accept.click();
-      } else if (await page.getByTestId('deadline-skip').count()) await page.getByTestId('deadline-skip').click();
-      else if (await page.getByTestId('to-playoffs').count()) break;
-      else if (await page.getByTestId('skip-deadline').count()) await page.getByTestId('skip-deadline').click();
-      else await page.getByTestId('skip-playoffs').click();
-      await page.waitForTimeout(200);
-    }
+    const cards = await playCrisisSeason(page, shot);
     if (cards !== 4) throw new Error(`expected 4 crisis cards, saw ${cards}`);
     await shot('19-crisis-season');
     await page.getByTestId('to-playoffs').click();
@@ -170,6 +132,48 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('see-result').click();
     await page.getByTestId('crisis-verdict').waitFor({ timeout: 10000 });
     await shot('20-crisis-verdict');
+  });
+
+  await step('career: season 1, full offseason, season 2 begins', async () => {
+    await page.goto(base);
+    await page.getByText('Career').first().click();
+    await page.getByTestId('career-start').click();
+    await draftTen(page);
+    await page.getByTestId('start-season').click();
+    await playCrisisSeason(page);
+    await page.getByTestId('to-playoffs').click();
+    await page.getByTestId('playoff-sim').click();
+    await page.getByTestId('see-result').click();
+    await page.getByTestId('career-continue').click();
+    if (await page.getByTestId('career-over').count()) return; // fired in year one is a legit ending
+    await page.getByTestId('off-contracts').waitFor();
+    await shot('21-offseason-contracts');
+    await page.getByTestId('off-contracts').click();
+    await page.getByTestId('pick-no').waitFor();
+    if (await page.getByTestId('off-skip-rookie').count()) {
+      await page.getByTestId('slot-B5').last().click();
+    }
+    await shot('22-offseason-draft');
+    await page.getByTestId('off-draft').click();
+    for (let i = 0; i < 12 && !(await page.getByTestId('off-start').count()); i++) {
+      if (await page.getByTestId('fa-option').count()) {
+        await page.getByTestId('fa-option').first().click();
+        for (const slot of ['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4', 'B5']) {
+          if (!(await page.getByTestId('fa-option').first().isVisible().catch(() => false))) break;
+          const before = await page.getByTestId('fa-option').count();
+          await page.getByTestId(`slot-${slot}`).last().click();
+          if ((await page.getByTestId('fa-option').count()) !== before || (await page.getByTestId('off-start').count())) break;
+        }
+      } else if (await page.getByTestId('fa-min').count()) await page.getByTestId('fa-min').click();
+      await page.waitForTimeout(150);
+    }
+    await shot('23-offseason-fa');
+    await page.getByTestId('off-start').click();
+    await page.getByTestId('crisis-card').waitFor({ timeout: 10000 });
+    await page.goto(`${base}/career`);
+    await page.getByText('Season 2').waitFor({ timeout: 5000 });
+    await page.getByText('2026-27').waitFor();
+    await shot('24-career-hub');
   });
 
   await step('pass-and-play duel: 20 picks and a best-of-7', async () => {
@@ -224,4 +228,53 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('10-lakers-draft');
     await page.getByTestId('option').first().click();
   });
+}
+
+const SLOTS = ['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4', 'B5'];
+
+/** Draft a full ten on the draft screen (best affordable option each spin). */
+async function draftTen(page) {
+  await page.getByTestId('spin').waitFor();
+  await page.waitForTimeout(500); // let the screen transition finish before tapping
+  for (let pick = 0; pick < 10; pick++) {
+    if (await page.getByTestId('spin').count()) await page.getByTestId('spin').click();
+    await page.locator('[data-testid="option"], [data-testid="respin"], [data-testid="fallback"]').first().waitFor({ timeout: 15000 });
+    const option = page.getByTestId('option').first();
+    if (await option.count()) {
+      await option.click();
+      if (!(await page.getByTestId('spin').count()) && !(await page.getByTestId('start-season').count()))
+        for (const slot of SLOTS) {
+          await page.getByTestId(`slot-${slot}`).click();
+          if ((await page.getByTestId('spin').count()) || (await page.getByTestId('start-season').count())) break;
+        }
+    } else if (await page.getByTestId('respin').count()) { await page.getByTestId('respin').click(); await page.waitForTimeout(300); pick--; continue; }
+    else await page.getByTestId('fallback').click();
+    await page.locator('[data-testid="spin"], [data-testid="start-season"]').first().waitFor({ timeout: 5000 });
+  }
+}
+
+/** From the first crisis card to the end of the regular season; returns how many cards were played. */
+async function playCrisisSeason(page, shot) {
+  let cards = 0;
+  for (let guard = 0; guard < 40; guard++) {
+    await page.locator('[data-testid="crisis-card"], [data-testid="skip-deadline"], [data-testid="skip-playoffs"], [data-testid="deadline-skip"], [data-testid="to-playoffs"]').first().waitFor({ timeout: 15000 });
+    if (await page.getByTestId('crisis-card').count()) {
+      cards++;
+      if (cards === 1 && shot) { await page.waitForTimeout(600); await shot('18-crisis-card'); }
+      if (await page.getByTestId('crisis-option-a').count()) { await page.getByTestId('crisis-option-a').click(); continue; }
+      const offers = page.getByTestId('crisis-offer');
+      if (await offers.count()) await offers.first().click();
+      const accept = page.getByTestId('crisis-accept');
+      for (const slot of SLOTS) {
+        if (await accept.isEnabled()) break;
+        await page.getByTestId(`slot-${slot}`).last().click();
+      }
+      await accept.click();
+    } else if (await page.getByTestId('deadline-skip').count()) await page.getByTestId('deadline-skip').click();
+    else if (await page.getByTestId('to-playoffs').count()) break;
+    else if (await page.getByTestId('skip-deadline').count()) await page.getByTestId('skip-deadline').click();
+    else await page.getByTestId('skip-playoffs').click();
+    await page.waitForTimeout(200);
+  }
+  return cards;
 }

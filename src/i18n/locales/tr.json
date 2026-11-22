@@ -41,6 +41,10 @@
     "crisis": {
       "title": "Yönetim krizi",
       "desc": "Takımını kur. Yönetim bir hedef koyar. Her iki ayda bir kriz kartı her şeyi değiştirir."
+    },
+    "career": {
+      "title": "Kariyer",
+      "desc": "Tek kulüp, birçok sezon. Yaşlanma, sözleşmeler, draftlar ve serbest oyuncular; yönetim seni kovana kadar."
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "Süperstarı al",
       "superB": "Reddet"
     }
+  },
+  "career": {
+    "title": "Kariyer",
+    "desc": "Tek kulüp, birçok sezon. Yaşlanma, sözleşmeler, draftlar ve serbest oyuncular; yönetim seni kovana kadar.",
+    "start": "Kariyere başla",
+    "resume": "Kariyere devam et",
+    "season": "Sezon {{n}}",
+    "security": "İş güvencesi",
+    "history": "Geçmiş",
+    "noHistory": "Hikâyen draftla başlıyor.",
+    "toOffseason": "Sezon arasına geç",
+    "progress": "Oyuncu gelişimi",
+    "retired": "Emekli olanlar",
+    "expiring": "Biten sözleşmeler",
+    "expiringHint": "Güncel reytingle yenilemek için dokun. Tutulmayanlar gider.",
+    "resign": "Yenile",
+    "release": "Bırak",
+    "confirmContracts": "Sözleşmeleri onayla",
+    "draft": "Çaylak draftı",
+    "yourPick": "{{n}}. sıradan seçiyorsun",
+    "draftThis": "{{name}} seç",
+    "rosterFull": "Kadron dolu: çaylak için kimi keseceğini seç.",
+    "skipRookie": "Çaylağı geç",
+    "freeAgency": "Serbest oyuncular",
+    "openSpots": "{{n}} boş yer",
+    "sign": "İmzala",
+    "minException": "Asgari istisna: {{name}} imzala",
+    "startSeason": "{{label}} başlat",
+    "over": "Kariyer bitti",
+    "overDesc": "Yönetim yeterince gördü. {{n}} sezon, {{titles}} şampiyonluk.",
+    "newCareer": "Yeni kariyer",
+    "r_champion": "Şampiyon",
+    "r_finals": "Finalde kaybetti",
+    "r_semis": "Yarı finalde kaybetti",
+    "r_quarters": "Çeyrek finalde kaybetti",
+    "r_first": "İlk turda elendi",
+    "r_missed": "Playofflara kalamadı",
+    "years": "{{n}} yıl",
+    "nothingAffordable": "Tavana sığan kimse yok."
   }
 }

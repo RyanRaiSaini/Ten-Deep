@@ -41,6 +41,10 @@
     "crisis": {
       "title": "Crisis de gestión",
       "desc": "Draftea un equipo. La directiva fija un objetivo. Cada dos meses, una carta de crisis lo cambia todo."
+    },
+    "career": {
+      "title": "Carrera",
+      "desc": "Una franquicia, muchas temporadas. Edad, contratos, drafts y agencia libre, hasta que la directiva te despida."
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "Fichar a la superestrella",
       "superB": "Rechazar"
     }
+  },
+  "career": {
+    "title": "Carrera",
+    "desc": "Una franquicia, muchas temporadas. Edad, contratos, drafts y agencia libre, hasta que la directiva te despida.",
+    "start": "Empezar una carrera",
+    "resume": "Continuar carrera",
+    "season": "Temporada {{n}}",
+    "security": "Estabilidad laboral",
+    "history": "Historial",
+    "noHistory": "Tu historia empieza con el draft.",
+    "toOffseason": "Ir a la pretemporada",
+    "progress": "Desarrollo de jugadores",
+    "retired": "Retirados",
+    "expiring": "Contratos que vencen",
+    "expiringHint": "Toca para renovar a su nivel actual. Los que no renueves se van.",
+    "resign": "Renovar",
+    "release": "Dejar ir",
+    "confirmContracts": "Confirmar contratos",
+    "draft": "Draft de novatos",
+    "yourPick": "Eliges en el n.º {{n}}",
+    "draftThis": "Draftear a {{name}}",
+    "rosterFull": "Tu plantilla está completa: elige a quién cortar por el novato.",
+    "skipRookie": "Pasar del novato",
+    "freeAgency": "Agencia libre",
+    "openSpots": "{{n}} plazas libres",
+    "sign": "Fichar",
+    "minException": "Excepción mínima: fichar a {{name}}",
+    "startSeason": "Empezar {{label}}",
+    "over": "Fin de la carrera",
+    "overDesc": "La directiva ya vio suficiente. {{n}} temporadas, {{titles}} títulos.",
+    "newCareer": "Nueva carrera",
+    "r_champion": "Campeones",
+    "r_finals": "Perdió la final",
+    "r_semis": "Perdió en semifinales",
+    "r_quarters": "Perdió en cuartos",
+    "r_first": "Eliminado en primera ronda",
+    "r_missed": "Sin playoffs",
+    "years": "{{n}} año(s)",
+    "nothingAffordable": "Nadie cabe bajo el tope."
   }
 }
