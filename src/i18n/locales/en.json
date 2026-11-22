@@ -167,5 +167,19 @@
     "seriesWon": "{{team}} win {{w}}-{{l}}",
     "youGuessed": "You called it!",
     "strength": "Strength"
+  },
+  "duel": {
+    "title": "Duel",
+    "passPlay": "Pass the phone: same spins, alternate picks, then a best-of-7.",
+    "online": "Online duels with friends arrive with accounts.",
+    "p1": "Player 1 name",
+    "p2": "Player 2 name",
+    "start": "Start duel",
+    "turn": "{{name}}, your pick",
+    "playSeries": "Play the series",
+    "nextGame": "Play game {{n}}",
+    "winsSeries": "{{name}} wins the series {{w}}-{{l}}!",
+    "rematch": "Rematch",
+    "newDuel": "New duel"
   }
 }

@@ -2,7 +2,7 @@
  * Daily challenges: everyone gets the same content on the same calendar day (seeded by date).
  */
 import { createRng, shuffle } from './rng';
-import { simGame } from './game';
+import { bestOf7 } from './series';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Pos, type Rng, type Roster, type RosterSlots, type TeamSeason } from './types';
 
 /** Local calendar day, YYYY-MM-DD. */
@@ -161,20 +161,6 @@ export function dailyTeamDuel(seasons: TeamSeason[], key: string): TeamDuel {
   const a = rng.pick(cands);
   const close = cands.filter((t) => t.id !== a.id && Math.abs(teamStrengthScore(t) - teamStrengthScore(a)) <= 3);
   const b = rng.pick(close.length ? close : cands.filter((t) => t.id !== a.id));
-  const ra = rosterFromTeam(a);
-  const rb = rosterFromTeam(b);
-  const games: TeamDuel['games'] = [];
-  let winsA = 0;
-  let winsB = 0;
-  const HOME_A = [true, true, false, false, true, false, true];
-  for (let g = 0; winsA < 4 && winsB < 4; g++) {
-    const ctx = { rng: rng.fork(`g${g}`), outHome: new Set<string>(), outAway: new Set<string>() };
-    const r = HOME_A[g] ? simGame(ra, rb, ctx) : simGame(rb, ra, ctx);
-    const scoreA = HOME_A[g] ? r.homeScore : r.awayScore;
-    const scoreB = HOME_A[g] ? r.awayScore : r.homeScore;
-    games.push({ scoreA, scoreB });
-    if (scoreA > scoreB) winsA++;
-    else winsB++;
-  }
-  return { a, b, winsA, winsB, games, winner: winsA === 4 ? a.id : b.id };
+  const s = bestOf7(rosterFromTeam(a), rosterFromTeam(b), rng);
+  return { a, b, winsA: s.winsA, winsB: s.winsB, games: s.games, winner: s.winner === 'a' ? a.id : b.id };
 }

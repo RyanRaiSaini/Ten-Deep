@@ -167,5 +167,19 @@
     "seriesWon": "{{team}} wint met {{w}}-{{l}}",
     "youGuessed": "Goed voorspeld!",
     "strength": "Sterkte"
+  },
+  "duel": {
+    "title": "Duel",
+    "passPlay": "Geef de telefoon door: dezelfde draaien, om de beurt kiezen, dan een best-of-7.",
+    "online": "Online duels met vrienden komen met accounts.",
+    "p1": "Naam speler 1",
+    "p2": "Naam speler 2",
+    "start": "Start duel",
+    "turn": "{{name}}, jouw keuze",
+    "playSeries": "Speel de serie",
+    "nextGame": "Speel wedstrijd {{n}}",
+    "winsSeries": "{{name}} wint de serie met {{w}}-{{l}}!",
+    "rematch": "Revanche",
+    "newDuel": "Nieuw duel"
   }
 }

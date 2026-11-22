@@ -167,5 +167,19 @@
     "seriesWon": "{{team}} gagne {{w}}-{{l}}",
     "youGuessed": "Bien vu !",
     "strength": "Force"
+  },
+  "duel": {
+    "title": "Duel",
+    "passPlay": "Passe le téléphone : mêmes tirages, choix alternés, puis une série au meilleur des 7.",
+    "online": "Les duels en ligne arrivent avec les comptes.",
+    "p1": "Nom du joueur 1",
+    "p2": "Nom du joueur 2",
+    "start": "Lancer le duel",
+    "turn": "{{name}}, à toi de choisir",
+    "playSeries": "Jouer la série",
+    "nextGame": "Jouer le match {{n}}",
+    "winsSeries": "{{name}} gagne la série {{w}}-{{l}} !",
+    "rematch": "Revanche",
+    "newDuel": "Nouveau duel"
   }
 }

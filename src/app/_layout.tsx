@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { applyLanguage, deviceLanguage } from '../i18n';
+import { useDaily } from '../store/daily';
+import { useDuel } from '../store/duel';
 import { useGame } from '../store/game';
 import { useProfile } from '../store/profile';
 import { useSettings } from '../store/settings';
 import { C } from '../ui/theme';
 
-const STORES = [useGame, useProfile, useSettings];
+const STORES = [useGame, useProfile, useSettings, useDaily, useDuel];
 const allHydrated = () => STORES.every((s) => s.persist.hasHydrated());
 
 /** Wait for saved runs/settings to load so a fast tap can't be overwritten by late-arriving saved state. */

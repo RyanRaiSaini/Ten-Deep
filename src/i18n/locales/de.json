@@ -167,5 +167,19 @@
     "seriesWon": "{{team}} gewinnt {{w}}-{{l}}",
     "youGuessed": "Richtig getippt!",
     "strength": "Stärke"
+  },
+  "duel": {
+    "title": "Duell",
+    "passPlay": "Handy weitergeben: gleiche Drehungen, abwechselnd wählen, dann Best-of-7.",
+    "online": "Online-Duelle mit Freunden kommen mit den Konten.",
+    "p1": "Name Spieler 1",
+    "p2": "Name Spieler 2",
+    "start": "Duell starten",
+    "turn": "{{name}}, du bist dran",
+    "playSeries": "Serie spielen",
+    "nextGame": "Spiel {{n}} spielen",
+    "winsSeries": "{{name}} gewinnt die Serie {{w}}-{{l}}!",
+    "rematch": "Revanche",
+    "newDuel": "Neues Duell"
   }
 }

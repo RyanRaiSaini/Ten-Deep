@@ -13,7 +13,7 @@ const MODES = [
   { key: 'franchise', picker: 'franchise', live: true, accent: '#7C5CFF' },
   { key: 'era', picker: 'era', live: true, accent: C.gold },
   { key: 'daily', route: '/daily', live: true, accent: C.neon },
-  { key: 'duels', live: false, accent: C.danger },
+  { key: 'duels', route: '/duel', live: true, accent: C.danger },
 ] as const;
 
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/playoffs' | '/result'> = {
