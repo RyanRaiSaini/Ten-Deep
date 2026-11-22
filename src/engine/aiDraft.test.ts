@@ -46,3 +46,13 @@ describe('draftLeague', () => {
     expect(again.map((r) => r.slots.PG.id)).toEqual(league.map((r) => r.slots.PG.id));
   });
 });
+
+describe('AI respects the superstar limit', () => {
+  it('no AI team has more than two players rated 95+', async () => {
+    const { current2026 } = await import('../data/current2026');
+    for (let i = 0; i < 5; i++) {
+      for (const r of draftLeague(current2026, new Set(), 30, createRng(`ss-${i}`)))
+        expect(ALL_SLOTS.filter((s) => r.slots[s].ovr >= 95).length).toBeLessThanOrEqual(2);
+    }
+  });
+});

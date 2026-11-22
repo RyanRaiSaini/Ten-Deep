@@ -1,4 +1,4 @@
-import { canAfford, capRoom, salaryFor } from './cap';
+import { canAfford, capRoom, salaryFor, superstarBlocked } from './cap';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Rng, type Roster, type RosterSlots, type SlotId,
 } from './types';
@@ -66,7 +66,7 @@ export function draftLeague(pool: Pool, exclude: Set<string>, count: number, rng
       const startersOpen = STARTER_SLOTS.some((s) => !team.slots[s]);
       let best: { p: Player; slot: SlotId; v: number } | null = null;
       for (const p of available) {
-        if (used.has(p.id) || !aiCanAfford(team.slots, p)) continue;
+        if (used.has(p.id) || superstarBlocked(team.slots, p) || !aiCanAfford(team.slots, p)) continue;
         const slot = openSlotFor(team.slots, p, startersOpen);
         if (!slot) continue;
         const v = value(team, p, rng);
