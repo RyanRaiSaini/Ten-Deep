@@ -1,4 +1,5 @@
 import { lineupMinutes, teamStrength, type LineupEntry } from './rotation';
+import { SIM } from './simConfig';
 import type { Rng, Roster } from './types';
 
 export interface BoxLine {
@@ -23,16 +24,7 @@ export interface GameContext {
   outAway: Set<string>;
 }
 
-/** Tunable sim coefficients (calibrated in calibration.test.ts). */
-export const SIM = {
-  basePpp: 1.13,
-  /** Points-per-possession gained per rating point of (offense − opposing defense). */
-  k: 0.0115,
-  homeAdv: 1.6,
-  pace: 99,
-  paceSd: 3,
-  scoreSd: 9.5,
-};
+export { SIM };
 
 /** Split an integer total across weights so the parts sum exactly to the total (largest remainder). */
 function allocate(total: number, weights: number[]): number[] {
