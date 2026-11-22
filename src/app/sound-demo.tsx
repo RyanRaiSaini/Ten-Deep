@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text } from 'react-native';
+import { startMusic, stopMusic } from '../audio/music';
 import { SFX, type SfxName } from '../audio/sfx';
 import { BackButton, Button, Card, Header, Screen } from '../ui/components';
 import { C } from '../ui/theme';
@@ -27,6 +28,12 @@ export default function SoundDemo() {
           <Button label={`▶  ${s.name}`} variant="secondary" onPress={() => SFX[s.name]()} />
         </Card>
       ))}
+      <Card style={{ gap: 10 }}>
+        <Text style={styles.what}>Music — original loops, synthesized live</Text>
+        <Button label="▶  Menu: Shootaround" variant="secondary" onPress={() => startMusic('menu')} />
+        <Button label="▶  Playoffs: Win or Go Home" variant="secondary" onPress={() => startMusic('playoffs')} />
+        <Button label="■  Stop music" variant="ghost" onPress={stopMusic} />
+      </Card>
       <Button
         label="▶  Play a whole draft pick"
         onPress={() => {

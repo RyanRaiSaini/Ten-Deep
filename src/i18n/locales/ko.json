@@ -181,5 +181,11 @@
     "winsSeries": "{{name}} 시리즈 {{w}}-{{l}} 승리!",
     "rematch": "재대결",
     "newDuel": "새 대결"
+  },
+  "notif": {
+    "dailyTitle": "데일리 챌린지 오픈 🏀",
+    "dailyBody": "새로운 스핀, 퀴즈, 대결이 기다립니다. 각 한 번씩.",
+    "streakTitle": "연속 기록이 위험해요 🔥",
+    "streakBody": "오늘 아직 드래프트하지 않았어요. 자정 전에 로스터를 꾸리세요."
   }
 }

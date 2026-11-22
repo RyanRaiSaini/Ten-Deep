@@ -181,5 +181,11 @@
     "winsSeries": "{{name}} gewinnt die Serie {{w}}-{{l}}!",
     "rematch": "Revanche",
     "newDuel": "Neues Duell"
+  },
+  "notif": {
+    "dailyTitle": "Die tägliche Challenge ist da 🏀",
+    "dailyBody": "Neue Drehungen, Quiz und Duelle warten. Je ein Versuch.",
+    "streakTitle": "Deine Serie steht auf dem Spiel 🔥",
+    "streakBody": "Du hast heute nicht gedraftet. Stell dein Team vor Mitternacht zusammen."
   }
 }
