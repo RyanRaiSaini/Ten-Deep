@@ -155,6 +155,17 @@
     "highest": "En yüksek Ten Deep reytingi kimde?",
     "teamQ": "{{name}} {{season}} yılında hangi takımda oynadı?",
     "rankHint": "En yüksek reyting en üstte",
-    "yourScore": "Skorun: {{n}}/5"
+    "yourScore": "Skorun: {{n}}/5",
+    "teamRank": "Takım sıralaması",
+    "teamRankDesc": "5 tarihi takımı güce göre sırala.",
+    "derby": "1v1 derbi",
+    "derbyDesc": "Beş karşılaşma: kim daha iyi?",
+    "teamDuel": "Takım düellosu",
+    "teamDuelDesc": "İki tarihi takım, 7 maç üzerinden. Tahmin et.",
+    "whoWins": "Kim kazanır?",
+    "teamRankHint": "En güçlü takım en üstte",
+    "seriesWon": "{{team}} {{w}}-{{l}} kazandı",
+    "youGuessed": "Bildin!",
+    "strength": "Güç"
   }
 }

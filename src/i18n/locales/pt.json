@@ -155,6 +155,17 @@
     "highest": "Quem tem a maior nota Ten Deep?",
     "teamQ": "Em que time {{name}} jogava em {{season}}?",
     "rankHint": "Maior nota no topo",
-    "yourScore": "Você fez {{n}}/5"
+    "yourScore": "Você fez {{n}}/5",
+    "teamRank": "Ranking de times",
+    "teamRankDesc": "Ordene 5 times históricos pela força.",
+    "derby": "Clássico 1v1",
+    "derbyDesc": "Cinco confrontos: quem é melhor?",
+    "teamDuel": "Duelo de times",
+    "teamDuelDesc": "Dois times históricos, melhor de 7. Faça seu palpite.",
+    "whoWins": "Quem vence?",
+    "teamRankHint": "Time mais forte no topo",
+    "seriesWon": "{{team}} vence por {{w}}-{{l}}",
+    "youGuessed": "Acertou!",
+    "strength": "Força"
   }
 }

@@ -155,6 +155,17 @@
     "highest": "Wer hat das höchste Ten-Deep-Rating?",
     "teamQ": "Für welches Team spielte {{name}} {{season}}?",
     "rankHint": "Höchstes Rating oben",
-    "yourScore": "Dein Ergebnis: {{n}}/5"
+    "yourScore": "Dein Ergebnis: {{n}}/5",
+    "teamRank": "Team-Ranking",
+    "teamRankDesc": "Ordne 5 historische Teams nach Stärke.",
+    "derby": "1v1-Derby",
+    "derbyDesc": "Fünf Duelle: Wer ist besser?",
+    "teamDuel": "Team-Duell",
+    "teamDuelDesc": "Zwei historische Teams, Best-of-7. Tippe den Sieger.",
+    "whoWins": "Wer gewinnt?",
+    "teamRankHint": "Stärkstes Team oben",
+    "seriesWon": "{{team}} gewinnt {{w}}-{{l}}",
+    "youGuessed": "Richtig getippt!",
+    "strength": "Stärke"
   }
 }

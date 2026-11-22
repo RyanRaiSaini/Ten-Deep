@@ -1,25 +1,49 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { feel } from '../../audio/feel';
-import { MODE_BY_ID } from '../../data';
-import { dailyKey, dailyRank, scoreRank } from '../../engine/daily';
+import { HISTORY, MODE_BY_ID } from '../../data/modes';
+import { dailyKey, dailyRank, dailyTeamRank, scoreRank, teamStrengthScore } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { BackButton, Button, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S, ovrColor } from '../../ui/theme';
 
+interface Item { id: string; title: string; sub: string; value: number }
+
+/** Put five things in order: players by rating (`?kind=players`) or historic teams by strength (`?kind=teams`). */
 export default function Rank() {
+  const { kind = 'players' } = useLocalSearchParams<{ kind?: 'players' | 'teams' }>();
+  const teams = kind === 'teams';
   const { t } = useTranslation();
   const key = dailyKey();
-  const challenge = useMemo(() => dailyRank(MODE_BY_ID['all-time'].pool, key), [key]);
-  const already = useDaily((s) => s.days[key]?.rank);
+  const field = teams ? 'teamRank' : 'rank';
+
+  const { items, answer } = useMemo(() => {
+    if (teams) {
+      const c = dailyTeamRank(HISTORY, key);
+      return {
+        answer: c.answer,
+        items: c.teams.map((x): Item => ({ id: x.id, title: x.label, sub: x.city, value: Math.round(teamStrengthScore(x) * 10) / 10 })),
+      };
+    }
+    const pool = MODE_BY_ID['all-time'].pool;
+    const c = dailyRank(pool, key);
+    return {
+      answer: c.answer,
+      items: c.players.map((p): Item => ({
+        id: p.id, title: p.name, sub: `${p.pos} · ${pool.teams.find((tm) => tm.players.includes(p))?.label ?? ''}`, value: p.ovr,
+      })),
+    };
+  }, [teams, key]);
+
+  const already = useDaily((s) => s.days[key]?.[field]);
   const record = useDaily((s) => s.record);
-  const [order, setOrder] = useState(() => challenge.players.map((p) => p.id));
+  const [order, setOrder] = useState(() => items.map((i) => i.id));
   const [submitted, setSubmitted] = useState(already !== undefined);
-  const byId = Object.fromEntries(challenge.players.map((p) => [p.id, p]));
-  const shown = submitted ? challenge.answer : order;
-  const score = scoreRank(order, challenge.answer);
+  const byId = Object.fromEntries(items.map((i) => [i.id, i]));
+  const shown = submitted ? answer : order;
+  const score = scoreRank(order, answer);
 
   const move = (idx: number, dir: -1 | 1) => {
     const j = idx + dir;
@@ -30,28 +54,28 @@ export default function Rank() {
     feel('tick');
   };
   const submit = () => {
-    record(key, 'rank', score);
+    record(key, field, score);
     setSubmitted(true);
     feel(score >= 4 ? 'fanfare' : score >= 2 ? 'swish' : 'buzzer');
   };
 
   return (
     <Screen>
-      <Header title={t('daily.rank')} left={<BackButton onPress={() => router.back()} />} />
-      <Label>{t('daily.rankHint')}</Label>
+      <Header title={teams ? t('daily.teamRank') : t('daily.rank')} left={<BackButton onPress={() => router.back()} />} />
+      <Label>{teams ? t('daily.teamRankHint') : t('daily.rankHint')}</Label>
       <View style={{ gap: S.sm }}>
         {shown.map((id, idx) => {
-          const p = byId[id];
-          const right = submitted && order[idx] === challenge.answer[idx];
+          const it = byId[id];
+          const right = submitted && order[idx] === answer[idx];
           return (
             <View key={id} style={[styles.row, submitted && { borderColor: right ? C.neon : C.line }]}>
               <Text style={styles.pos}>{idx + 1}</Text>
               <View style={{ flex: 1 }}>
-                <Text style={styles.name}>{p.name}</Text>
-                <Text style={styles.meta}>{p.pos} · {byId[id] && MODE_BY_ID['all-time'].pool.teams.find((tm) => tm.players.includes(p))?.label}</Text>
+                <Text style={styles.name}>{it.title}</Text>
+                <Text style={styles.meta}>{it.sub}</Text>
               </View>
               {submitted ? (
-                <Text style={[styles.ovr, { color: ovrColor(p.ovr) }]}>{p.ovr}</Text>
+                <Text style={[styles.ovr, { color: ovrColor(Math.round(it.value)) }]}>{it.value}</Text>
               ) : (
                 <View style={styles.arrows}>
                   <Pressable onPress={() => move(idx, -1)} style={styles.arrow} testID={`up-${idx}`}><Text style={styles.arrowText}>▲</Text></Pressable>
