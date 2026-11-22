@@ -1,0 +1,73 @@
+/**
+ * Browser smoke test against the static web build.
+ *   npm run build:web && node scripts/smoke.mjs [outDir]
+ * Serves dist/ with SPA fallback, drives the app with Playwright, saves screenshots.
+ */
+import { createServer } from 'node:http';
+import { existsSync, mkdirSync, readFileSync } from 'node:fs';
+import { extname, join } from 'node:path';
+import { createRequire } from 'node:module';
+
+const { chromium } = createRequire(import.meta.url)('playwright');
+
+const out = process.argv[2] ?? 'smoke-shots';
+mkdirSync(out, { recursive: true });
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.ico': 'image/x-icon', '.json': 'application/json', '.ttf': 'font/ttf' };
+
+const server = createServer((req, res) => {
+  const path = decodeURIComponent(req.url.split('?')[0]);
+  let file = join('dist', path);
+  if (!existsSync(file) || path.endsWith('/')) file = join('dist', 'index.html');
+  res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' });
+  res.end(readFileSync(file));
+}).listen(0);
+const base = `http://localhost:${server.address().port}`;
+
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 420, height: 900 }, deviceScaleFactor: 1 });
+const errors = [];
+page.on('pageerror', (e) => errors.push(e.message));
+page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+
+const shot = (name) => page.screenshot({ path: `${out}/${name}.png`, fullPage: true });
+const step = async (name, fn) => {
+  try {
+    await fn();
+    console.log(`ok   ${name}`);
+  } catch (e) {
+    console.log(`FAIL ${name}: ${e.message.split('\n')[0]}`);
+    await shot(`fail-${name}`);
+    process.exitCode = 1;
+  }
+};
+
+await step('home renders', async () => {
+  await page.goto(base);
+  await page.getByText('TEN DEEP', { exact: true }).waitFor();
+  await page.getByText('Current Day').waitFor();
+  await shot('01-home');
+});
+
+const flow = process.env.SMOKE_FLOW ?? 'full';
+if (flow === 'full') {
+  const { runFlow } = await import('./smoke-flow.mjs');
+  await runFlow({ page, base, step, shot });
+}
+
+await step('arabic is right-to-left', async () => {
+  await page.goto(`${base}/settings`);
+  await page.getByText('Language').click();
+  await page.getByTestId('lang-ar').click();
+  await page.goto(base);
+  await page.getByText('أنماط اللعب').waitFor();
+  const dir = await page.evaluate(() => document.documentElement.dir);
+  if (dir !== 'rtl') throw new Error(`dir=${dir}`);
+  await shot('09-home-ar');
+});
+
+if (errors.length) {
+  console.log('page errors:\n  ' + [...new Set(errors)].slice(0, 10).join('\n  '));
+  process.exitCode = 1;
+}
+await browser.close();
+server.close();

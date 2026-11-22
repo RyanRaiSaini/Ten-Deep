@@ -1,0 +1,194 @@
+{
+  "app": {
+    "tagline": "Draft tien diep. Overleef er 82."
+  },
+  "common": {
+    "comingSoon": "Binnenkort",
+    "back": "Terug",
+    "continue": "Doorgaan",
+    "on": "Aan",
+    "off": "Uit"
+  },
+  "home": {
+    "draftsPlayed": "Gespeelde drafts",
+    "titles": "Titels",
+    "best": "Beste record",
+    "modes": "Spelmodi",
+    "resume": "Ga verder met je run",
+    "play": "Spelen"
+  },
+  "mode": {
+    "current": {
+      "title": "Huidig seizoen",
+      "desc": "Selecties 2026-27. Draai een team, draft je tien."
+    },
+    "franchise": {
+      "title": "Legendarische franchises",
+      "desc": "Lakers, Celtics, Bulls en meer door de geschiedenis."
+    },
+    "era": {
+      "title": "Tijdperken",
+      "desc": "Jordan, LeBron, Steph — draft uit één tijdperk."
+    },
+    "daily": {
+      "title": "Dagelijkse uitdaging",
+      "desc": "Dezelfde draaien voor iedereen. Eén kans per dag."
+    },
+    "duels": {
+      "title": "Duels",
+      "desc": "Draft rechtstreeks tegen een vriend."
+    }
+  },
+  "settings": {
+    "title": "Instellingen",
+    "audio": "Geluid en gevoel",
+    "music": "Muziek",
+    "sfx": "Geluidseffecten",
+    "haptics": "Trillingen",
+    "notifications": "Meldingen",
+    "notifDaily": "Dagelijkse uitdaging staat klaar",
+    "notifStreak": "Je reeks loopt gevaar",
+    "notifDuel": "Duel-uitnodigingen",
+    "game": "Spel",
+    "simSpeed": "Simulatiesnelheid",
+    "nationality": "Nationaliteit",
+    "language": "Taal",
+    "about": "Over",
+    "privacy": "Privacybeleid",
+    "terms": "Servicevoorwaarden",
+    "contact": "Contact",
+    "deleteAccount": "Account verwijderen",
+    "soundDemo": "Geluidslab"
+  },
+  "draft": {
+    "pick": "Keuze {{n}} van 10",
+    "spin": "Draaien",
+    "spinning": "Draait…",
+    "respin": "Opnieuw draaien ({{n}} over)",
+    "capSpace": "Salarisruimte",
+    "spendable": "{{amount}} besteedbaar na minimums",
+    "superstars": "Supersterren {{n}}/2",
+    "chooseSlot": "Op welke positie speelt hij?",
+    "nothingFits": "Niemand van dit team past in je selectie of salarisplafond.",
+    "signFallback": "Contracteer {{name}} voor {{salary}}",
+    "overCap": "Boven het plafond",
+    "superstarLimit": "Superster-limiet",
+    "noSlot": "Geen vrije plek",
+    "starters": "Basisvijf",
+    "bench": "Bank",
+    "startSeason": "Start het seizoen",
+    "landed": "Je kreeg",
+    "empty": "Vrij"
+  },
+  "season": {
+    "title": "Reguliere competitie",
+    "game": "Wedstrijd {{n}} van 82",
+    "skipDeadline": "Naar de deadline",
+    "skipPlayoffs": "Naar de play-offs",
+    "pause": "Pauze",
+    "resume": "Afspelen",
+    "vs": "vs",
+    "at": "@",
+    "injury": "{{name}} mist {{games}} wedstrijden — {{label}}",
+    "seasonEnding": "{{name}} is uit voor het seizoen",
+    "standing": "Plaatsing #{{n}}"
+  },
+  "deadline": {
+    "title": "Transferdeadline",
+    "desc": "Eén ruil. Kies wie vertrekt, draai één keer en contracteer een vervanger onder het plafond.",
+    "chooseOut": "Kies wie vertrekt",
+    "spin": "Draai voor een vervanger",
+    "skip": "Niets veranderen",
+    "done": "Ruil rond"
+  },
+  "playoffs": {
+    "title": "Play-offs",
+    "round0": "Eerste ronde",
+    "round1": "Kwartfinales",
+    "round2": "Halve finales",
+    "round3": "Finale",
+    "next": "Speel wedstrijd {{n}}",
+    "simRest": "Simuleer tot het einde",
+    "leads": "{{team}} leidt met {{w}}-{{l}}",
+    "tied": "Serie gelijk {{w}}-{{l}}",
+    "won": "{{team}} wint met {{w}}-{{l}}",
+    "missed": "Je hebt de play-offs gemist.",
+    "eliminated": "Uitgeschakeld.",
+    "seeResult": "Bekijk resultaat"
+  },
+  "result": {
+    "champions": "Kampioen",
+    "lostIn": "Uitgeschakeld in de {{round}}",
+    "missed": "Geen play-offs",
+    "record": "Record",
+    "seed": "Plaatsing",
+    "topScorer": "Topscorer",
+    "playAgain": "Opnieuw drafen",
+    "home": "Home"
+  },
+  "injury": {
+    "Day-to-day": "Twijfelachtig",
+    "Short-term": "Korte termijn",
+    "Long-term": "Lange termijn",
+    "Season-ending": "Seizoen voorbij"
+  },
+  "modes": {
+    "pickFranchise": "Kies een franchise",
+    "pickEra": "Kies een tijdperk",
+    "players": "{{n}} spelers"
+  },
+  "daily": {
+    "title": "Dagelijkse uitdaging",
+    "draft": "Dagelijkse draft",
+    "draftDesc": "Vandaag dezelfde draaien en competitie voor iedereen.",
+    "trivia": "Quiz",
+    "triviaDesc": "5 vragen uit de Ten Deep-database.",
+    "rank": "Spelersranglijst",
+    "rankDesc": "Zet 5 spelers op volgorde van rating.",
+    "done": "Klaar",
+    "play": "Spelen",
+    "next": "Volgende",
+    "submit": "Bevestigen",
+    "correct": "Goed!",
+    "wrong": "Bijna — het was {{answer}}",
+    "tomorrow": "Morgen nieuwe uitdagingen.",
+    "highest": "Wie heeft de hoogste Ten Deep-rating?",
+    "teamQ": "Voor welk team speelde {{name}} in {{season}}?",
+    "rankHint": "Hoogste rating bovenaan",
+    "yourScore": "Je score: {{n}}/5",
+    "teamRank": "Teamranglijst",
+    "teamRankDesc": "Zet 5 historische teams op volgorde van sterkte.",
+    "derby": "1v1-derby",
+    "derbyDesc": "Vijf duels: wie is beter?",
+    "teamDuel": "Teamduel",
+    "teamDuelDesc": "Twee historische teams, best-of-7. Voorspel het.",
+    "whoWins": "Wie wint?",
+    "teamRankHint": "Sterkste team bovenaan",
+    "seriesWon": "{{team}} wint met {{w}}-{{l}}",
+    "youGuessed": "Goed voorspeld!",
+    "strength": "Sterkte",
+    "resume": "Hervatten",
+    "missed": "Gemist",
+    "replaceRun": "Dit vervangt je huidige run. Tik nogmaals om te starten."
+  },
+  "duel": {
+    "title": "Duel",
+    "passPlay": "Geef de telefoon door: dezelfde draaien, om de beurt kiezen, dan een best-of-7.",
+    "online": "Online duels met vrienden komen met accounts.",
+    "p1": "Naam speler 1",
+    "p2": "Naam speler 2",
+    "start": "Start duel",
+    "turn": "{{name}}, jouw keuze",
+    "playSeries": "Speel de serie",
+    "nextGame": "Speel wedstrijd {{n}}",
+    "winsSeries": "{{name}} wint de serie met {{w}}-{{l}}!",
+    "rematch": "Revanche",
+    "newDuel": "Nieuw duel"
+  },
+  "notif": {
+    "dailyTitle": "De dagelijkse uitdaging staat klaar 🏀",
+    "dailyBody": "Nieuwe draaien, quiz en duels wachten. Eén kans per stuk.",
+    "streakTitle": "Je reeks staat op het spel 🔥",
+    "streakBody": "Je hebt vandaag niet gedraft. Stel je selectie samen voor middernacht."
+  }
+}
