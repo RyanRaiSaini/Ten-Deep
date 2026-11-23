@@ -16,7 +16,7 @@ export const TIER_STYLE: Record<Tier, { frame: [string, string, ...string[]]; ac
 const initials = (name: string) => name.split(' ').filter((w) => !/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(w)).map((w) => w[0]).slice(0, 2).join('');
 
 /** A collectible card: tier frame, rating, monogram (no faces), name and season. */
-export function CollectCard({ card, width = 150, tierLabel }: { card: Card; width?: number; tierLabel?: string }) {
+export function CollectCard({ card, width = 150, tierLabel, level = 0 }: { card: Card; width?: number; tierLabel?: string; level?: number }) {
   const s = TIER_STYLE[card.tier];
   const h = width * 1.4;
   const big = width / 150;
@@ -30,7 +30,7 @@ export function CollectCard({ card, width = 150, tierLabel }: { card: Card; widt
           style={[styles.inner, { borderRadius: R.md - 3 }]}
         >
           <View style={styles.top}>
-            <Text style={[styles.ovr, { fontSize: 30 * big, color: s.accent }]}>{card.ovr}</Text>
+            <Text style={[styles.ovr, { fontSize: 30 * big, color: s.accent }]}>{Math.min(99, card.ovr + level)}</Text>
             <Text style={[styles.pos, { fontSize: 11 * big }]}>{card.pos}{card.pos2 ? `/${card.pos2}` : ''}</Text>
           </View>
           <View style={[styles.mono, { width: 64 * big, height: 64 * big, borderColor: s.accent }]}>
@@ -41,6 +41,11 @@ export function CollectCard({ card, width = 150, tierLabel }: { card: Card; widt
             <Text style={[styles.name, { fontSize: 13 * big }]} numberOfLines={1} ellipsizeMode="tail">{card.name}</Text>
             <Text style={[styles.team, { fontSize: 10 * big }]} numberOfLines={1} ellipsizeMode="tail">{card.team}</Text>
           </View>
+          {level > 0 && (
+            <View style={[styles.level, { borderColor: s.accent }]}>
+              <Text style={[styles.levelText, { fontSize: 9 * big, color: s.accent }]}>{'★'.repeat(level)}</Text>
+            </View>
+          )}
           {tierLabel && (
             <View style={[styles.ribbon, { backgroundColor: s.accent }]}>
               <Text style={[styles.ribbonText, { fontSize: 9 * big }]}>{tierLabel}</Text>
@@ -80,6 +85,8 @@ const styles = StyleSheet.create({
   sparkle: { color: '#FFF6D5', letterSpacing: 4 },
   name: { color: C.text, fontWeight: '900', width: '100%', textAlign: 'center' },
   team: { color: C.muted, fontWeight: '700', width: '100%', textAlign: 'center' },
+  level: { position: 'absolute', bottom: 6, left: 6, borderWidth: 1, borderRadius: 6, paddingHorizontal: 4, backgroundColor: 'rgba(11,16,32,0.7)' },
+  levelText: { fontWeight: '900' },
   ribbon: { position: 'absolute', top: 8, right: -26, transform: [{ rotate: '35deg' }], paddingHorizontal: 26, paddingVertical: 2 },
   ribbonText: { color: C.bg, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
   back: { padding: 6, alignItems: 'stretch', justifyContent: 'center' },

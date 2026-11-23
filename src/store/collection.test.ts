@@ -68,6 +68,21 @@ describe('collection store', () => {
     expect(g().gauntlet.cleared).toBe(3);
   });
 
+  it('completing a set by keeping its last card awards the set pick', async () => {
+    const { SETS, setReward } = await import('../engine/collect/sets');
+    const set = SETS.find((s) => s.id === 'chi-1996')!;
+    const last = set.cards[set.cards.length - 1];
+    useCollection.setState({
+      owned: Object.fromEntries(set.cards.slice(0, -1).map((id) => [id, { count: 1, firstDay: '' }])),
+      pending: [{ id: 'test-pick', type: 'daily', source: 'test', cards: [last, 'a', 'b', 'c', 'd'] }],
+    });
+    useCollection.getState().keep('test-pick', last);
+    const p = useCollection.getState().pending;
+    expect(p).toHaveLength(1);
+    expect(p[0].type).toBe(setReward(set));
+    expect(p[0].source).toContain('set:chi-1996');
+  });
+
   it('keeping a card adds it to the collection and consumes the pick', () => {
     useCollection.getState().checkIn('2026-11-22');
     const pick = useCollection.getState().pending[0];

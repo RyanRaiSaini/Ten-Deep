@@ -6,7 +6,7 @@ import { feel } from '../audio/feel';
 import { CARD_BY_ID } from '../data/cards';
 import { canPlace, chemistry, lineupRoster } from '../engine/collect/lineup';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type SlotId } from '../engine/types';
-import { useCollection } from '../store/collection';
+import { levelsOf, useCollection } from '../store/collection';
 import { CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
@@ -18,7 +18,7 @@ export default function LineupScreen() {
   const [slot, setSlot] = useState<SlotId | null>(null);
   const cards = ALL_SLOTS.map((k) => col.lineup[k]).filter((id): id is string => !!id).map((id) => CARD_BY_ID[id]);
   const chem = chemistry(cards);
-  const roster = lineupRoster(col.lineup);
+  const roster = lineupRoster(col.lineup, levelsOf(col.owned));
   const rating = Math.round(ALL_SLOTS.reduce((s, k) => s + roster.slots[k].ovr, 0) / 10 + chem.bonus);
   const options = slot
     ? Object.keys(col.owned).filter((id) => CARD_BY_ID[id] && canPlace(col.lineup, id, slot)).map((id) => CARD_BY_ID[id]).sort((a, b) => b.ovr - a.ovr)
