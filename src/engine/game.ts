@@ -43,7 +43,7 @@ function allocate(total: number, weights: number[]): number[] {
 
 function boxFor(lineup: LineupEntry[], pts: number, rng: Rng): BoxLine[] {
   const noise = () => Math.exp(rng.normal(0, 0.35));
-  const ptsW = lineup.map((e) => e.minutes * (e.player.off / 80) ** 4 * noise());
+  const ptsW = lineup.map((e) => e.minutes * (e.player.off / 80) ** SIM.ptsExp * noise());
   const rebW = lineup.map((e) => e.minutes * (e.player.reb / 80) ** 3 * noise());
   const astW = lineup.map((e) => e.minutes * (e.player.ast / 80) ** 4 * noise());
   const p = allocate(pts, ptsW);
