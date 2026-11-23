@@ -55,9 +55,23 @@ function callup(slot: SlotId): Player {
   return { id: `callup-${slot}`, name: 'Call-up', pos, ovr: 64, off: 62, def: 62, reb: 60, ast: 58, three: 58, dur: 90 };
 }
 
-/** A playable roster from a lineup: empty slots get call-ups; chemistry becomes a team modifier. */
-export function lineupRoster(lineup: Lineup): Roster {
-  const slots = Object.fromEntries(ALL_SLOTS.map((k) => [k, lineup[k] ? cardPlayer(lineup[k]!) : callup(k)])) as Required<RosterSlots>;
+/** Each duplicate of a card is a level, up to 3. */
+export function cardLevel(count: number): number {
+  return Math.max(0, Math.min(3, count - 1));
+}
+
+/** A card's player with its level applied: +1 rating per level, capped at 99. */
+function leveled(p: Player, level: number): Player {
+  if (!level) return p;
+  const up = (v: number) => Math.min(99, v + level);
+  return { ...p, ovr: up(p.ovr), off: up(p.off), def: up(p.def), reb: up(p.reb), ast: up(p.ast), three: up(p.three) };
+}
+
+/** A playable roster from a lineup: empty slots get call-ups; card levels apply; chemistry becomes a team modifier. */
+export function lineupRoster(lineup: Lineup, levels: Record<string, number> = {}): Roster {
+  const slots = Object.fromEntries(
+    ALL_SLOTS.map((k) => [k, lineup[k] ? leveled(cardPlayer(lineup[k]!), levels[lineup[k]!] ?? 0) : callup(k)]),
+  ) as Required<RosterSlots>;
   const cards = ALL_SLOTS.map((k) => lineup[k]).filter((id): id is string => !!id).map((id) => CARD_BY_ID[id]);
   return { id: 'collection', name: 'Your Lineup', colors: ['#B26BFF', '#3DF2C2'], slots, mod: chemistry(cards).bonus };
 }

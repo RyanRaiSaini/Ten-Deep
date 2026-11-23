@@ -413,5 +413,21 @@
     "locked": "Locked",
     "complete": "Gauntlet complete!",
     "editLineup": "Edit lineup"
+  },
+  "card": {
+    "level": "Lv {{n}}",
+    "dupes": "Copies: {{n}}",
+    "inSets": "Part of these sets",
+    "notOwned": "Not in your collection yet",
+    "sets": "Sets",
+    "closest": "Closest to complete",
+    "setReward": "Complete for a {{pick}}",
+    "completed": "Sets completed: {{n}}",
+    "off": "Offense",
+    "def": "Defense",
+    "reb": "Rebounding",
+    "ast": "Playmaking",
+    "three": "Shooting",
+    "levelHint": "Each duplicate adds a level (+1 rating, up to +3)."
   }
 }

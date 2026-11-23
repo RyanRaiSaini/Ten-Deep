@@ -413,5 +413,21 @@
     "locked": "잠김",
     "complete": "건틀릿 완료!",
     "editLineup": "라인업 편집"
+  },
+  "card": {
+    "level": "Lv {{n}}",
+    "dupes": "보유: {{n}}장",
+    "inSets": "포함된 세트",
+    "notOwned": "아직 컬렉션에 없습니다",
+    "sets": "세트",
+    "closest": "완성 임박",
+    "setReward": "완성하면 {{pick}}",
+    "completed": "완성한 세트: {{n}}",
+    "off": "공격",
+    "def": "수비",
+    "reb": "리바운드",
+    "ast": "플레이메이킹",
+    "three": "슈팅",
+    "levelHint": "중복 카드마다 레벨업 (레이팅 +1, 최대 +3)."
   }
 }

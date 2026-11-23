@@ -413,5 +413,21 @@
     "locked": "Gesperrt",
     "complete": "Spießrutenlauf geschafft!",
     "editLineup": "Aufstellung bearbeiten"
+  },
+  "card": {
+    "level": "Lv {{n}}",
+    "dupes": "Exemplare: {{n}}",
+    "inSets": "Teil dieser Sets",
+    "notOwned": "Noch nicht in deiner Sammlung",
+    "sets": "Sets",
+    "closest": "Fast komplett",
+    "setReward": "Komplettiere es für einen {{pick}}",
+    "completed": "Fertige Sets: {{n}}",
+    "off": "Angriff",
+    "def": "Verteidigung",
+    "reb": "Rebounds",
+    "ast": "Spielaufbau",
+    "three": "Wurf",
+    "levelHint": "Jedes Duplikat bringt ein Level (+1 Rating, bis +3)."
   }
 }

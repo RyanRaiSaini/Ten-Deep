@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { feel } from '../audio/feel';
 import { GAUNTLET, lineupRoster, playStage, stageReward } from '../engine/collect/lineup';
 import type { SeriesResult } from '../engine/series';
-import { useCollection } from '../store/collection';
+import { levelsOf, useCollection } from '../store/collection';
 import { BackButton, Button, Card, Header, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 
@@ -19,7 +19,7 @@ export default function Gauntlet() {
   const done = stage >= GAUNTLET.length;
 
   const play = () => {
-    const result = playStage(lineupRoster(col.lineup), stage, `${col.lastDay ?? ''}:${Date.now()}`);
+    const result = playStage(lineupRoster(col.lineup, levelsOf(col.owned)), stage, `${col.lastDay ?? ''}:${Date.now()}`);
     setSeries({ stage, result });
     setShown(0);
     feel('crowd');

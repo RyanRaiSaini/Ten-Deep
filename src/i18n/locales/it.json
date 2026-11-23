@@ -413,5 +413,21 @@
     "locked": "Bloccata",
     "complete": "Sfida completata!",
     "editLineup": "Modifica formazione"
+  },
+  "card": {
+    "level": "Liv. {{n}}",
+    "dupes": "Copie: {{n}}",
+    "inSets": "Fa parte di questi set",
+    "notOwned": "Non ancora nella tua collezione",
+    "sets": "Set",
+    "closest": "Più vicini al completamento",
+    "setReward": "Completalo per una {{pick}}",
+    "completed": "Set completati: {{n}}",
+    "off": "Attacco",
+    "def": "Difesa",
+    "reb": "Rimbalzi",
+    "ast": "Regia",
+    "three": "Tiro",
+    "levelHint": "Ogni doppione aggiunge un livello (+1 di valutazione, fino a +3)."
   }
 }
