@@ -10,6 +10,7 @@ import { snapshot, useProgress } from '../store/progress';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, R, S } from '../ui/theme';
 import { Icon } from '../ui/icons';
+import { goBack } from '../ui/nav';
 
 const MEDAL: Record<Medal, string> = { bronze: '#D08A4E', silver: '#C9D3E8', gold: C.gold };
 
@@ -17,7 +18,7 @@ export default function Missions() {
   const { t } = useTranslation();
   const p = useProgress();
   useCollection((s) => s.owned); // re-render as the collection grows
-  if (!p.day || !p.week) return <Screen><Header title={t('missions.title')} left={<BackButton onPress={() => router.back()} />} /></Screen>;
+  if (!p.day || !p.week) return <Screen><Header title={t('missions.title')} left={<BackButton onPress={() => goBack()} />} /></Screen>;
   const snap = snapshot(p.stats);
   const done = ACHIEVEMENTS.filter((a) => p.unlocked[a.id]).length;
 
@@ -42,7 +43,7 @@ export default function Missions() {
 
   return (
     <Screen tint={C.neon}>
-      <Header title={t('missions.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('missions.title')} left={<BackButton onPress={() => goBack()} />} />
       {useCollection.getState().pending.length > 0 && (
         <Button label={t('collect.claim')} icon={<Icon name="gift" size={22} />} variant="gold" onPress={() => router.push('/packs')} />
       )}

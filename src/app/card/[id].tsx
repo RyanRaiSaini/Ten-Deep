@@ -9,6 +9,7 @@ import { useCollection } from '../../store/collection';
 import { CollectCard, TIER_STYLE } from '../../ui/CollectCard';
 import { BackButton, Card, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S } from '../../ui/theme';
+import { goBack } from '../../ui/nav';
 
 /** One card up close: level, copies, rating bars, and the sets it belongs to. */
 export default function CardDetail() {
@@ -27,7 +28,7 @@ export default function CardDetail() {
 
   return (
     <Screen>
-      <Header title={card.name} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={card.name} left={<BackButton onPress={() => goBack()} />} />
       <View style={styles.hero}>
         <CollectCard card={card} width={200} level={level} tierLabel={t(`collect.tier_${card.tier}`)} />
       </View>

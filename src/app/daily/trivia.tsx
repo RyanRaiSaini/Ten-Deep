@@ -9,6 +9,7 @@ import { dailyKey, dailyTrivia } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { BackButton, Button, Card, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S } from '../../ui/theme';
+import { goBack } from '../../ui/nav';
 
 export default function Trivia() {
   const { t } = useTranslation();
@@ -48,12 +49,12 @@ export default function Trivia() {
 
   return (
     <Screen>
-      <Header title={t('daily.trivia')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('daily.trivia')} left={<BackButton onPress={() => goBack()} />} />
       {finished ? (
         <Card style={{ alignItems: 'center', gap: S.md, paddingVertical: S.xxl }}>
           <Text style={styles.big} testID="trivia-score">{t('daily.yourScore', { n: already ?? score })}</Text>
           <Text style={styles.muted}>{t('daily.tomorrow')}</Text>
-          <Button label={t('daily.done')} onPress={() => router.back()} testID="trivia-done" />
+          <Button label={t('daily.done')} onPress={() => goBack()} testID="trivia-done" />
         </Card>
       ) : (
         <>

@@ -13,6 +13,7 @@ import { CardBack, CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Header, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 import { track } from '../store/progress';
+import { goBack } from '../ui/nav';
 
 const native = Platform.OS !== 'web';
 const PACK_COLOR: Record<PickType, [string, string]> = {
@@ -103,7 +104,7 @@ export default function Packs() {
   if (!pick) {
     return (
       <Screen>
-        <Header title={t('collect.picks')} left={<BackButton onPress={() => router.back()} />} />
+        <Header title={t('collect.picks')} left={<BackButton onPress={() => goBack()} />} />
         <Text style={styles.empty}>{t('collect.noPicks')}</Text>
         <Text style={styles.streak}>{t('collect.streak', { n: col.streak })} · {t('collect.nextWeekly', { count: 7 - (col.streak % 7) })}</Text>
         <Button label={t('collect.title')} variant="secondary" onPress={() => router.replace('/collection')} />
@@ -153,7 +154,7 @@ export default function Packs() {
 
   return (
     <Screen>
-      <Header title={t('collect.picks')} left={<BackButton onPress={() => router.back()} />} right={<Text style={styles.count}>{col.pending.length}</Text>} />
+      <Header title={t('collect.picks')} left={<BackButton onPress={() => goBack()} />} right={<Text style={styles.count}>{col.pending.length}</Text>} />
       <View style={styles.titleRow}>
         <Text style={[styles.packName, { color: c1 }]} testID="pack-type">{t(`collect.t_${pick.type}`)}</Text>
         {guarantee && <Text style={styles.guarantee}>★ {t(`collect.${guarantee}`)}</Text>}

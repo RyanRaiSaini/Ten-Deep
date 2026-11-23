@@ -8,6 +8,7 @@ import { Avatar } from '../ui/Avatar';
 import { AVATARS, avatarById } from '../ui/avatars';
 import { BackButton, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, FONT, R, S } from '../ui/theme';
+import { goBack } from '../ui/nav';
 
 export default function Profile() {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ export default function Profile() {
 
   return (
     <Screen>
-      <Header title={t('profile.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('profile.title')} left={<BackButton onPress={() => goBack()} />} />
       <View style={styles.hero}>
         <Avatar id={current.id} size={132} />
         <View style={styles.nameRow}>

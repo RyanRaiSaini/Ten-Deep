@@ -7,6 +7,7 @@ import { CONFIG } from '../../config';
 import { wipeAll } from '../../store/all';
 import { BackButton, Button, Card, Header, Screen } from '../../ui/components';
 import { C, S } from '../../ui/theme';
+import { goBack } from '../../ui/nav';
 
 /**
  * DRAFT legal copy (English). Not legal advice — the owner should have these reviewed before public launch.
@@ -65,7 +66,7 @@ export default function Legal() {
 
   return (
     <Screen>
-      <Header title={d.title} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={d.title} left={<BackButton onPress={() => goBack()} />} />
       <Card style={{ gap: S.md }}>
         {d.body.map((p, i) => <Text key={i} style={styles.p}>{p}</Text>)}
         {doc === 'contact' && CONFIG.supportEmail && (

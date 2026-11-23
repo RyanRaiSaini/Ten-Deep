@@ -16,6 +16,7 @@ import { TabBar } from '../ui/TabBar';
 import { Icon } from '../ui/icons';
 import { AVATARS } from '../ui/avatars';
 import { Avatar } from '../ui/Avatar';
+import { goBack } from '../ui/nav';
 
 export default function Duel() {
   const { t } = useTranslation();
@@ -66,7 +67,7 @@ export default function Duel() {
     const winner = series && (series.winner === 'a' ? names.a : names.b);
     return (
       <Screen>
-        <Header title={t('duel.title')} left={<BackButton onPress={() => router.back()} />} />
+        <Header title={t('duel.title')} left={<BackButton onPress={() => goBack()} />} />
         <Card style={styles.board}>
           <Side name={names.a} wins={wa} color={DUEL_COLORS.a[0]} />
           <Text style={styles.vs}>vs</Text>
@@ -116,7 +117,7 @@ export default function Duel() {
 
   return (
     <Screen>
-      <Header title={t('duel.title')} left={<BackButton onPress={() => router.back()} />} right={<Text style={{ color: C.gold, fontWeight: '800' }}>★ {superstarCount(me.roster)}/{MAX_SUPERSTARS}</Text>} />
+      <Header title={t('duel.title')} left={<BackButton onPress={() => goBack()} />} right={<Text style={{ color: C.gold, fontWeight: '800' }}>★ {superstarCount(me.roster)}/{MAX_SUPERSTARS}</Text>} />
       <View style={[styles.turn, { backgroundColor: color }]}>
         <Text style={styles.turnText} testID="duel-turn">{t('duel.turn', { name: names[s.turn] })}</Text>
         <Text style={styles.turnSub}>{t('draft.pick', { n: me.round + 1 })} · {money(capRoom(me.roster))}</Text>
