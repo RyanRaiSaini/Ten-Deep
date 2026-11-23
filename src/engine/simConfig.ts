@@ -6,7 +6,7 @@ export const SIM = {
   /** League-average points per possession. */
   basePpp: 1.13,
   /** Points per possession gained per rating point of (offense − opposing defense). */
-  k: 0.0075,
+  k: 0.0063,
   /** Star premium: effective rating += star × (rating − starFrom)² above starFrom. */
   star: 0.012,
   starFrom: 80,
@@ -19,6 +19,19 @@ export const SIM = {
    * 3.8 keeps scoring leaders around 30–34 PPG, like the modern league.
    */
   ptsExp: 3.8,
+  /**
+   * Season-to-season swing: every team draws a rating offset ~ N(0, formSd) once per season. Roster quality
+   * sets the average; this gives the long tail (a great draft that also has a great year can run the table).
+   */
+  formSd: 3.45,
+  /** A rare "historic season" (think 73-9): this chance per team-season of an extra +hotBoost rating. */
+  hotChance: 0.012,
+  hotBoost: 18,
+  /** Playoffs: team quality decides more (tighter rotations, stars play more), so better teams win series more. */
+  playoffK: 2,
+  /** Each season the strongest AI rosters play like real contenders (+contenderBoost), so the league has heavyweights. */
+  contenders: 2,
+  contenderBoost: 4,
 };
 
 /** Effective rating used by the sim: stars bend games more than linearly. */

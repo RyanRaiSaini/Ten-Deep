@@ -3,6 +3,7 @@ import { simGame, type GameResult } from './game';
 import { rollInjury, type InjuryLabel } from './injuries';
 import { lineupMinutes } from './rotation';
 import { addNews, leading, roundNews, type Headline } from './story/news';
+import { SIM } from './simConfig';
 import { createRng, shuffle } from './rng';
 import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pos, type Rng, type Roster, type RosterSlots } from './types';
 
@@ -101,7 +102,19 @@ function buildSchedule(n: number, rng: Rng): [number, number][][] {
 }
 
 export function createSeason(user: Roster, league: Roster[], seed: string): SeasonState {
-  const teams = [user, ...league];
+  // Each team's form for this season, seeded (same season seed → same form on every device).
+  const formRng = createRng(`${seed}:season-form`);
+  const teams = [user, ...league].map((t) => {
+    const swing = SIM.formSd ? Math.max(-3 * SIM.formSd, Math.min(3 * SIM.formSd, formRng.normal(0, SIM.formSd))) : 0;
+    const f = swing + (formRng.next() < SIM.hotChance ? SIM.hotBoost : 0);
+    return f ? { ...t, seasonForm: Math.round(f * 10) / 10 } : t;
+  });
+  // The league's real contenders: the strongest AI rosters (never the user's, team 0) get a boost.
+  if (SIM.contenders && SIM.contenderBoost) {
+    const quality = (r: Roster) => STARTER_SLOTS.reduce((n, k) => n + r.slots[k].ovr, 0);
+    const best = teams.map((t, i) => ({ i, q: quality(t) })).slice(1).sort((a, b) => b.q - a.q || a.i - b.i).slice(0, SIM.contenders);
+    for (const { i } of best) teams[i] = { ...teams[i], seasonForm: Math.round(((teams[i].seasonForm ?? 0) + SIM.contenderBoost) * 10) / 10 };
+  }
   if (teams.length % 2 !== 0) throw new Error('League needs an even number of teams');
   return {
     seed,
@@ -124,10 +137,11 @@ export function outSet(injuries: { [id: string]: number }, roster: Roster): Set<
 export function playGame(
   teams: Roster[], injuries: { [id: string]: number }, totals: SeasonState['totals'],
   home: number, away: number, rng: Rng, onInjury: (team: number, p: Player, games: number, label: InjuryLabel) => void,
+  playoff = false,
 ): GameResult {
   const outHome = outSet(injuries, teams[home]);
   const outAway = outSet(injuries, teams[away]);
-  const result = simGame(teams[home], teams[away], { rng, outHome, outAway });
+  const result = simGame(teams[home], teams[away], { rng, outHome, outAway, playoff });
   for (const b of result.box) {
     const t = (totals[b.playerId] ??= { gp: 0, pts: 0, reb: 0, ast: 0 });
     t.gp++;

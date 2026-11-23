@@ -22,7 +22,7 @@ export function bestOf(a: Roster, b: Roster, rng: Rng, need: number): SeriesResu
   let winsA = 0;
   let winsB = 0;
   for (let g = 0; winsA < need && winsB < need; g++) {
-    const ctx = { rng: rng.fork(`g${g}`), outHome: new Set<string>(), outAway: new Set<string>() };
+    const ctx = { rng: rng.fork(`g${g}`), outHome: new Set<string>(), outAway: new Set<string>(), playoff: true };
     const r = HOME_A[g] ? simGame(a, b, ctx) : simGame(b, a, ctx);
     const scoreA = HOME_A[g] ? r.homeScore : r.awayScore;
     const scoreB = HOME_A[g] ? r.awayScore : r.homeScore;
