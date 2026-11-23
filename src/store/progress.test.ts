@@ -65,4 +65,18 @@ describe('progress store', () => {
     useProgress.getState().check();
     expect(useProgress.getState().unlocked.loyal).toBeDefined();
   });
+
+  it('the first rollover backfills seasons and titles from the profile, once', async () => {
+    const { useProfile } = await import('./profile');
+    useProfile.setState({ draftsPlayed: 12, titles: 2 });
+    useProgress.getState().rollover('2026-11-23');
+    expect(useProgress.getState().stats).toMatchObject({ runs: 12, titles: 2 });
+    expect(useProgress.getState().unlocked.ring).toBeDefined();
+    // Missions don't count the backfill as today's progress
+    expect(useProgress.getState().dayBase.runs).toBe(12);
+    useProgress.getState().rollover('2026-11-24');
+    expect(useProgress.getState().stats.runs).toBe(12);
+    useProfile.setState(useProfile.getInitialState(), true);
+  });
 });
+

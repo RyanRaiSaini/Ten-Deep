@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { dailyKey } from '../engine/daily';
 import { useCareer } from './career';
 import { useCollection } from './collection';
 import { useDaily } from './daily';
@@ -15,4 +16,11 @@ export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useC
 export async function wipeAll() {
   for (const s of STORES) (s.setState as (v: unknown, replace: true) => void)(s.getInitialState(), true);
   await AsyncStorage.clear();
+  startDay();
+}
+
+/** A new day (or a fresh account): daily check-in picks, streak, and mission rollover. Safe to call often. */
+export function startDay() {
+  useCollection.getState().checkIn(dailyKey());
+  useProgress.getState().rollover(dailyKey());
 }
