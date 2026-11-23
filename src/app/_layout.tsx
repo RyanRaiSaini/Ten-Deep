@@ -10,7 +10,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { Loading } from '../ui/Loading';
 import { useEffect, useState } from 'react';
-import { AppState, View } from 'react-native';
+import { AppState } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useMusic } from '../audio/useMusic';
 import { applyLanguage, deviceLanguage } from '../i18n';

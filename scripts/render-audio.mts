@@ -1,0 +1,111 @@
+/**
+ * Renders the game's synthesized sounds and music to files for iOS/Android:
+ *   npx tsx scripts/render-audio.mts
+ * Runs the exact Web Audio code the web app plays live (src/audio/synth.ts) in headless Chromium through an
+ * OfflineAudioContext, then:
+ *   - sound effects → assets/audio/<name>.m4a (AAC, small)
+ *   - music loops   → assets/audio/music_<track>.wav (PCM, so the loop point is gapless; AAC adds padding)
+ * and writes src/audio/assets.native.ts mapping names to the files. Re-run whenever synth.ts or score.ts change.
+ */
+import { execFileSync } from 'node:child_process';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { build } from 'esbuild';
+
+const root = process.cwd();
+const outDir = join(root, 'assets/audio');
+mkdirSync(outDir, { recursive: true });
+const tmp = mkdtempSync(join(tmpdir(), 'render-audio-'));
+
+// 1. Bundle the synth + score for the browser.
+const entry = join(tmp, 'entry.ts');
+writeFileSync(entry, `export { SOUNDS, voice, musicBus } from '${join(root, 'src/audio/synth')}';\nexport { TRACKS, barEvents } from '${join(root, 'src/audio/score')}';\n`);
+const bundle = await build({ entryPoints: [entry], bundle: true, format: 'iife', globalName: 'Synth', write: false, platform: 'browser', logLevel: 'error' });
+const code = bundle.outputFiles[0].text;
+
+// 2. Render everything in Chromium.
+const { chromium } = createRequire(join(root, 'package.json'))('playwright');
+const browser = await chromium.launch();
+const page = await browser.newPage();
+await page.setContent('<!doctype html><html><body></body></html>');
+// tsx/esbuild wrap functions passed to evaluate() in a __name() helper that the page doesn't have.
+await page.addScriptTag({ content: 'window.__name = (f) => f;' });
+await page.addScriptTag({ content: code });
+
+type Rendered = { name: string; rate: number; b64: string };
+const rendered: Rendered[] = await page.evaluate(async () => {
+  const S = (window as unknown as { Synth: any }).Synth;
+  const wav = (data: Float32Array, rate: number) => {
+    const buf = new ArrayBuffer(44 + data.length * 2);
+    const v = new DataView(buf);
+    const str = (o: number, s: string) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+    str(0, 'RIFF'); v.setUint32(4, 36 + data.length * 2, true); str(8, 'WAVE'); str(12, 'fmt ');
+    v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, rate, true);
+    v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); str(36, 'data'); v.setUint32(40, data.length * 2, true);
+    for (let i = 0; i < data.length; i++) v.setInt16(44 + i * 2, Math.max(-1, Math.min(1, data[i])) * 0x7fff, true);
+    let bin = '';
+    const bytes = new Uint8Array(buf);
+    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  };
+  const out: { name: string; rate: number; b64: string }[] = [];
+  const SR = 44100;
+  for (const [name, s] of Object.entries(S.SOUNDS) as [string, { dur: number; play: (c: BaseAudioContext, t: number) => void }][]) {
+    const c = new OfflineAudioContext(1, Math.ceil((s.dur + 0.05) * SR), SR);
+    s.play(c, 0.005);
+    out.push({ name, rate: SR, b64: wav((await c.startRendering()).getChannelData(0), SR) });
+  }
+  // Music: one loop of the progression, plus a pre-roll bar whose tails wrap into bar 0 (so the loop is seamless).
+  const MR = 32000;
+  for (const key of ['menu', 'playoffs']) {
+    const track = S.TRACKS[key];
+    const bars = track.progression.length;
+    const spb = 60 / track.bpm;
+    const barLen = 4 * spb;
+    const c = new OfflineAudioContext(1, Math.ceil((bars + 1) * barLen * MR), MR);
+    const bus = S.musicBus(c, key);
+    for (let b = -1; b < bars; b++) {
+      const t0 = (b + 1) * barLen;
+      for (const e of S.barEvents(track, (b + bars) % bars)) S.voice(c, bus, e, t0 + e.beat * spb, spb);
+    }
+    const all = (await c.startRendering()).getChannelData(0);
+    const start = Math.round(barLen * MR);
+    out.push({ name: `music_${key}`, rate: MR, b64: wav(all.slice(start, start + Math.round(bars * barLen * MR)), MR) });
+  }
+  return out;
+});
+await browser.close();
+
+// 3. Encode and write the asset map.
+const sfx: string[] = [];
+const music: string[] = [];
+for (const r of rendered) {
+  const wavPath = join(tmp, `${r.name}.wav`);
+  writeFileSync(wavPath, Buffer.from(r.b64, 'base64'));
+  if (r.name.startsWith('music_')) {
+    writeFileSync(join(outDir, `${r.name}.wav`), Buffer.from(r.b64, 'base64'));
+    music.push(r.name);
+  } else {
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', wavPath, '-c:a', 'aac', '-b:a', '96k', join(outDir, `${r.name}.m4a`)]);
+    sfx.push(r.name);
+  }
+}
+rmSync(tmp, { recursive: true, force: true });
+
+const lines = [
+  '/** Generated by scripts/render-audio.mts: pre-rendered sounds for iOS/Android. Do not edit by hand. */',
+  "import type { SoundName } from './synth';",
+  '',
+  'export const SFX_ASSETS: Partial<Record<SoundName, number>> = {',
+  ...sfx.map((n) => `  ${n}: require('../../assets/audio/${n}.m4a'),`),
+  '};',
+  '',
+  "export const MUSIC_ASSETS: Partial<Record<'menu' | 'playoffs', number>> = {",
+  ...music.map((n) => `  ${n.replace('music_', '')}: require('../../assets/audio/${n}.wav'),`),
+  '};',
+  '',
+];
+writeFileSync(join(root, 'src/audio/assets.native.ts'), lines.join('\n'));
+console.log(`rendered ${sfx.length} sounds and ${music.length} music loops → assets/audio`);

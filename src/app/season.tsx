@@ -6,13 +6,13 @@ import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { DEADLINE_GAME, SEASON_GAMES, advance, outSet, standings, type SeasonState } from '../engine/season';
 import { isRTL } from '../i18n';
-import { CARD_ROUNDS, cardDef } from '../engine/crisis/deck';
+import { CARD_ROUNDS } from '../engine/crisis/deck';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { useSettings } from '../store/settings';
 import { BackButton, Button, Card, Header, IconButton, Label, Screen } from '../ui/components';
 import { RosterBoard } from '../ui/RosterBoard';
-import { C, F, FONT, R, S } from '../ui/theme';
+import { C, FONT, R, S } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
 import { BoxScore, Expandable, NewsItem } from '../ui/story';
 import { Icon } from '../ui/icons';
@@ -29,7 +29,7 @@ export default function Season() {
   const [season, setSeason] = useState<SeasonState | null>(g.season);
   const [playing, setPlaying] = useState(true);
   const live = useRef(season);
-  live.current = season;
+  useEffect(() => { live.current = season; }, [season]);
 
   const atDeadline = !!season && season.round === DEADLINE_GAME && !season.deadlineUsed;
   const crisis = g.crisis;

@@ -893,7 +893,8 @@
       "taken": "Biri senden önce kaptı!",
       "round-closed": "Çok geç: o tur kapandı.",
       "already-picked": "Bu turda zaten seçim yaptın.",
-      "not-allowed": "Tavanına veya kadrona uymuyor."
+      "not-allowed": "Tavanına veya kadrona uymuyor.",
+      "grabbedBy": "{{who}}, {{name}} oyuncusunu önce aldı. Tekrar seç!"
     },
     "table": "Puan durumu"
   },

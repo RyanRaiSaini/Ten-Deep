@@ -11,7 +11,8 @@ import { startMusic, stopMusic } from './music';
 export function useMusic() {
   const enabled = useSettings((s) => s.music);
   const path = usePathname();
-  const [unlocked, setUnlocked] = useState(false);
+  // Browsers need a first tap before audio can play; phones don't.
+  const [unlocked, setUnlocked] = useState(Platform.OS !== 'web');
 
   useEffect(() => {
     if (Platform.OS !== 'web' || typeof document === 'undefined' || unlocked) return;

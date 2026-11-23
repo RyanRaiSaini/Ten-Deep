@@ -75,7 +75,8 @@ describe('season', () => {
   it('the schedule is identical regardless of the JS engine sort algorithm', () => {
     const v8 = createSeason(teams[0], teams.slice(1), 'engine-check').schedule;
     const native = Array.prototype.sort;
-    // A different, valid sort (insertion sort) — like JavaScriptCore/Hermes differing from V8.
+    // A different, valid sort (insertion sort) — like JavaScriptCore/Hermes differing from V8. Restored in `finally`.
+    // eslint-disable-next-line no-extend-native
     Array.prototype.sort = function <T>(this: T[], cmp?: (a: T, b: T) => number) {
       const c = cmp ?? ((a: T, b: T) => (String(a) < String(b) ? -1 : String(a) > String(b) ? 1 : 0));
       for (let i = 1; i < this.length; i++) {
@@ -89,6 +90,7 @@ describe('season', () => {
     try {
       expect(createSeason(teams[0], teams.slice(1), 'engine-check').schedule).toEqual(v8);
     } finally {
+      // eslint-disable-next-line no-extend-native
       Array.prototype.sort = native;
     }
   });

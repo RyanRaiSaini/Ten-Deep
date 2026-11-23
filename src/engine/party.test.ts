@@ -42,6 +42,25 @@ describe('party', () => {
     expect(r.picked).toEqual([true, false]);
   });
 
+  it('losing a dead heat: the re-pick counts (not the lost first try)', () => {
+    const a = member('AAAAAA', 1);
+    const b = member('BBBBBB', 2);
+    const r0 = resolve(meta, [a, b], pool, T0 + 10);
+    const st = seatState(pool, 1, r0.rosters, r0.taken, r0.spin, meta.seed);
+    const { player, slot } = autoPick(st, pool);
+    a.picks.push({ r: 0, pid: player.id, slot, t: T0 + 1000 });
+    b.picks.push({ r: 0, pid: player.id, slot, t: T0 + 1001 }); // lost by a millisecond
+    const mid = resolve(meta, [a, b], pool, T0 + 1500);
+    expect(mid.picked).toEqual([true, false]);
+    const other = autoPick(seatState(pool, 1, mid.rosters, mid.taken, mid.spin, meta.seed), pool);
+    b.picks.push({ r: 0, pid: other.player.id, slot: other.slot, t: T0 + 3000 }); // picks again
+    const r = resolve(meta, [a, b], pool, T0 + 3000);
+    expect(r.rosters[1][other.slot]?.id).toBe(other.player.id);
+    expect(r.autos).toEqual([]);
+    // Everyone's in, so round 2 opens after the re-pick (not at the deadline).
+    expect(resolve(meta, [a, b], pool, T0 + 3000 + SPIN_MS + 1).round).toBe(1);
+  });
+
   it('the next round opens the moment everyone has picked', () => {
     const a = member('AAAAAA', 1);
     const r0 = resolve(meta, [a], pool, T0 + 10);

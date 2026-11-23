@@ -1,10 +1,10 @@
 import { capRoom, salaryFor, superstarBlocked } from './cap';
-
-export { MAX_SUPERSTARS } from './cap';
 import { createRng } from './rng';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type RosterSlots, type SlotId, type TeamSeason,
 } from './types';
+
+export { MAX_SUPERSTARS } from './cap';
 
 export const RESPINS_PER_DRAFT = 2;
 export const ROUNDS = 10;

@@ -1,11 +1,13 @@
 // Plural forms need Intl.PluralRules; load a small polyfill only on engines that lack it.
-if (typeof Intl === 'undefined' || typeof Intl.PluralRules === 'undefined') require('intl-pluralrules');
 import { getLocales } from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { I18nManager, Platform } from 'react-native';
 import { LANGUAGES, RTL_LANGUAGES, type Language } from './languages';
 import { resources } from './resources';
+// A conditional require keeps the polyfill out of engines that don't need it (an import would always load it).
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+if (typeof Intl === 'undefined' || typeof Intl.PluralRules === 'undefined') require('intl-pluralrules');
 
 export function deviceLanguage(): Language {
   const code = getLocales()[0]?.languageCode ?? 'en';

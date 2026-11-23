@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
@@ -21,7 +21,7 @@ export default function Welcome() {
   const { t } = useTranslation();
   const [i, setI] = useState(0);
   const reduce = useReducedMotion();
-  const fade = useRef(new Animated.Value(1)).current;
+  const [fade] = useState(() => new Animated.Value(1));
   const slide = SLIDES[i];
   const last = i === SLIDES.length - 1;
 

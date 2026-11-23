@@ -126,15 +126,15 @@ export function resolve(meta: PartyMeta, membersIn: PartyMember[], pool: Pool, n
   for (let r = 0; r < PARTY_ROUNDS; r++) {
     const deadline = start + PICK_MS;
     const spin = partySpin(pool, meta.seed, r, taken);
-    // Real picks that arrived in time, applied in time order (first come, first served).
+    // Real picks that arrived in time, applied in time order (first come, first served). A seat can have several
+    // for a round: if someone beat them to a player they pick again, and their first valid pick is the one that counts.
     const real = members
-      .map((m, seat) => ({ seat, p: m.picks.find((x) => x.r === r && x.t <= deadline) }))
-      .filter((x): x is { seat: number; p: PartyPick } => !!x.p)
+      .flatMap((m, seat) => m.picks.filter((x) => x.r === r && x.t <= deadline).map((p) => ({ seat, p })))
       .sort((a, b) => a.p.t - b.p.t || a.seat - b.seat);
     const done = new Set<number>();
     for (const { seat, p } of real) {
       const player = byId.get(p.pid);
-      if (!player || taken.has(player.id) || rosters[seat][p.slot]) continue;
+      if (done.has(seat) || !player || taken.has(player.id) || rosters[seat][p.slot]) continue;
       rosters[seat] = { ...rosters[seat], [p.slot]: player };
       taken.add(player.id);
       done.add(seat);
@@ -151,7 +151,7 @@ export function resolve(meta: PartyMeta, membersIn: PartyMember[], pool: Pool, n
       taken.add(player.id);
       autos.push(`${r}:${m.pin}`);
     });
-    const end = allIn ? Math.max(...real.map((x) => x.p.t)) : deadline;
+    const end = allIn ? Math.max(...real.filter((x) => done.has(x.seat)).map((x) => x.p.t)) : deadline;
     start = end + SPIN_MS;
   }
   return { phase: 'season', round: PARTY_ROUNDS, roundStart: start, deadline: start, spin: null, rosters, picked: members.map(() => true), autos, taken, draftEnd: start - SPIN_MS };
