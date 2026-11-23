@@ -881,5 +881,26 @@
       "not-allowed": "Er passt nicht in dein Cap oder deinen Kader."
     },
     "table": "Tabelle"
+  },
+  "save": {
+    "title": "Cloud-Speicher",
+    "body": "Dein Fortschritt wird automatisch gesichert. Bewahre deinen Wiederherstellungscode sicher auf, um ihn auf einem neuen Handy zurückzuholen.",
+    "never": "nie",
+    "last": "Letzte Sicherung: {{when}}",
+    "now": "Jetzt sichern",
+    "saved": "Gesichert!",
+    "offline": "Server nicht erreichbar. Wir versuchen es später erneut.",
+    "copy": "Wiederherstellungscode kopieren",
+    "copied": "Code kopiert. Halte ihn geheim!",
+    "paste": "Wiederherstellungscode einfügen",
+    "restore": "Fortschritt wiederherstellen",
+    "restoreSure": "Nochmal tippen: ersetzt den Fortschritt auf diesem Gerät",
+    "r": {
+      "ok": "Fortschritt wiederhergestellt!",
+      "bad-code": "Das ist kein Wiederherstellungscode.",
+      "not-found": "Für diesen Code gibt es noch keine Sicherung.",
+      "wrong-code": "Dieser Code passt nicht zur Sicherung.",
+      "offline": "Server nicht erreichbar. Versuch es nochmal."
+    }
   }
 }
