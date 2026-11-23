@@ -686,5 +686,9 @@
     "snap": "A por todas",
     "safe": "Ir sobre seguro",
     "on": "A POR TODAS"
+  },
+  "notFound": {
+    "title": "¡Air ball!",
+    "body": "Esa página está fuera de banda."
   }
 }

@@ -87,7 +87,7 @@ export default function Draft() {
         <Pulse>
           <Pressable onPress={() => doSpin()} testID="spin" accessibilityRole="button" style={({ pressed }) => [styles.spinBtn, pressed && styles.spinBtnPressed]}>
             <Icon name="ball" size={44} />
-            <Display size={34}>{t('draft.spin').replace(/^\W+/, '')}</Display>
+            <Display size={34}>{t('draft.spin').replace(/^[^\p{L}\p{N}]+/u, '')}</Display>
           </Pressable>
         </Pulse>
       )}

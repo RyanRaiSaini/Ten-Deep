@@ -681,5 +681,9 @@
     "snap": "Ya hep ya hiç",
     "safe": "Garantici ol",
     "on": "YA HEP YA HİÇ"
+  },
+  "notFound": {
+    "title": "Hava topu!",
+    "body": "Bu sayfa saha dışında."
   }
 }

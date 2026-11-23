@@ -686,5 +686,9 @@
     "snap": "Tapis",
     "safe": "Rester prudent",
     "on": "TAPIS"
+  },
+  "notFound": {
+    "title": "Airball !",
+    "body": "Cette page est hors des limites."
   }
 }

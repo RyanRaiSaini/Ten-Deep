@@ -223,9 +223,9 @@ const styles = StyleSheet.create({
     height: 190, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, marginTop: S.sm,
     justifyContent: 'center',
   },
-  heroBody: { paddingHorizontal: S.xl, gap: 2 },
+  heroBody: { paddingHorizontal: S.xl, gap: 2, paddingBottom: 40, maxWidth: '100%' },
   heroKicker: { color: '#FFFFFF', fontWeight: '900', letterSpacing: 2, fontSize: 13 },
-  heroDesc: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, maxWidth: 230, textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
+  heroDesc: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, maxWidth: '58%', textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
   heroPlay: {
     position: 'absolute', right: 16, bottom: 16, backgroundColor: '#FFFFFF', borderRadius: R.pill, paddingHorizontal: 22, paddingVertical: 10,
     borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6,

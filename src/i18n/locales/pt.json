@@ -686,5 +686,9 @@
     "snap": "Tudo ou nada",
     "safe": "Jogar seguro",
     "on": "TUDO OU NADA"
+  },
+  "notFound": {
+    "title": "Air ball!",
+    "body": "Essa página saiu pela linha de fundo."
   }
 }

@@ -681,5 +681,9 @@
     "snap": "Alles inzetten",
     "safe": "Op zeker spelen",
     "on": "ALLES IN"
+  },
+  "notFound": {
+    "title": "Airball!",
+    "body": "Die pagina ligt buiten de lijnen."
   }
 }

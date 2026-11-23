@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   selected: { borderColor: C.ink, borderBottomColor: C.ink },
   row: { flexDirection: 'row', alignItems: 'center', gap: S.md },
-  stripe: { position: 'absolute', left: -S.md - 4, top: -S.md, bottom: -S.md, width: 7 },
+  stripe: { position: 'absolute', start: -S.md - 4, top: -S.md, bottom: -S.md, width: 7 },
   ovr: { width: 50, height: 50, borderRadius: 14, alignItems: 'center', justifyContent: 'center', borderWidth: 2.5, borderColor: C.ink },
   ovrText: { fontSize: 24, fontFamily: FONT.display, color: '#FFFFFF' },
   name: { color: C.ink, fontSize: 17, fontWeight: '900' },

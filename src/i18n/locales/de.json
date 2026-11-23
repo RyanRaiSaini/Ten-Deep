@@ -141,7 +141,7 @@
   },
   "result": {
     "champions": "Meister",
-    "lostIn": "Ausgeschieden im {{round}}",
+    "lostIn": "Ausgeschieden: {{round}}",
     "missed": "Playoffs verpasst",
     "record": "Bilanz",
     "seed": "Platz",
@@ -681,5 +681,9 @@
     "snap": "All in",
     "safe": "Auf Nummer sicher",
     "on": "ALL IN"
+  },
+  "notFound": {
+    "title": "Airball!",
+    "body": "Diese Seite ist im Aus."
   }
 }
