@@ -122,7 +122,7 @@ export default function FriendPage() {
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: S.sm, paddingVertical: 4 }}>
             {s.showcase.map((id) => (
               <Pressable key={id} onPress={() => router.push({ pathname: '/card/[id]', params: { id } })}>
-                <CollectCard card={CARD_BY_ID[id]} width={112} />
+                <CollectCard card={CARD_BY_ID[id]} width={112} finish={s.finishes?.[id] ?? 'base'} />
               </Pressable>
             ))}
           </ScrollView>

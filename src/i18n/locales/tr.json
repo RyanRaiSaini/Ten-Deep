@@ -941,6 +941,9 @@
     "odds": "Kaplama şansı (her kart, her paket)",
     "rarest": "En nadir çekilişler",
     "yours": "Kaplamaların",
-    "keepHint": "Sadece sakladığın kart koleksiyonuna girer, kaplamasıyla birlikte."
+    "keepHint": "Sadece sakladığın kart koleksiyonuna girer, kaplamasıyla birlikte.",
+    "share": "Paylaş",
+    "shareText": "Ten Deep'te {{finish}} {{name}} çıkardım! {{odds}}",
+    "shareTextBase": "Ten Deep'te {{name}} ({{tier}}) çıkardım!"
   }
 }

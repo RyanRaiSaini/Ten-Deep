@@ -941,6 +941,9 @@
     "odds": "Kans op afwerking (elke kaart, elk pakket)",
     "rarest": "Zeldzaamste trekkingen",
     "yours": "Jouw afwerkingen",
-    "keepHint": "Alleen de kaart die je houdt komt in je collectie, afwerking inbegrepen."
+    "keepHint": "Alleen de kaart die je houdt komt in je collectie, afwerking inbegrepen.",
+    "share": "Delen",
+    "shareText": "Net een {{finish}} {{name}} getrokken in Ten Deep! {{odds}}",
+    "shareTextBase": "Net {{name}} ({{tier}}) getrokken in Ten Deep!"
   }
 }

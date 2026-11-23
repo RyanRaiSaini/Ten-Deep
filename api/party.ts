@@ -18,7 +18,7 @@ import { autoPick } from '../src/engine/party';
 import { MODE_BY_ID } from '../src/data/modes';
 import { affordableSlots, fallbackPick, options } from '../src/engine/draft';
 import { formPool } from '../src/engine/form';
-import { PARTY_MAX, newRoomCode, parseRoomCode, resolve, seatOf, seatState, type PartyMember, type PartyMeta } from '../src/engine/party';
+import { PARTY_MAX, newRoomCode, parseFlex, parseRoomCode, resolve, seatOf, seatState, type PartyMember, type PartyMeta } from '../src/engine/party';
 import type { SlotId } from '../src/engine/types';
 
 const TTL = 3 * 3600;
@@ -56,7 +56,7 @@ async function load(code: string): Promise<{ meta: PartyMeta; members: StoredMem
   const members = pins.length ? (await redis.mget<StoredMember[]>(...pins.map((p) => K.m(code, p)))).filter(Boolean) : [];
   return { meta, members };
 }
-const strip = (m: StoredMember): PartyMember => ({ pin: m.pin, name: m.name, avatar: m.avatar, joined: m.joined, picks: m.picks });
+const strip = (m: StoredMember): PartyMember => ({ pin: m.pin, name: m.name, avatar: m.avatar, joined: m.joined, picks: m.picks, ...(m.flex ? { flex: m.flex } : {}) });
 const touch = (code: string, pins: string[]) => Promise.all([K.meta(code), K.set(code), ...pins.map((p) => K.m(code, p))].map((k) => redis.expire(k, TTL)));
 
 /** Today's form, frozen into the room so every device rates players the same way. */
@@ -98,6 +98,9 @@ export async function POST(req: Request) {
   const keyHash = await sha256(key);
   const name = String(b.name ?? 'Coach').slice(0, 18).trim() || 'Coach';
   const avatar = String(b.avatar ?? 'captain').slice(0, 40);
+  // Their rarest pull for the seat; anything that isn't a real card + finish is dropped.
+  const flexed = parseFlex(b.flex);
+  const flex = flexed ? `${flexed.id}:${flexed.finish}` : undefined;
   const now = Date.now();
 
   if (b.op === 'create') {
@@ -107,7 +110,7 @@ export async function POST(req: Request) {
       if (await redis.set(K.meta(c), { code: c, host: pin, seed: `party-${c}-${now.toString(36)}`, poolId: 'current-2026', created: now, form: await todaysForm() }, { nx: true, ex: TTL })) code = c;
     }
     if (!code) return json({ error: 'busy' }, 503);
-    await redis.set(K.m(code, pin), { pin, name, avatar, joined: now, picks: [], keyHash } satisfies StoredMember, { ex: TTL });
+    await redis.set(K.m(code, pin), { pin, name, avatar, joined: now, picks: [], keyHash, ...(flex ? { flex } : {}) } satisfies StoredMember, { ex: TTL });
     await redis.sadd(K.set(code), pin);
     await redis.expire(K.set(code), TTL);
     return json({ code });
@@ -126,7 +129,7 @@ export async function POST(req: Request) {
       if (me) return json({ ok: true });
       if (meta.started) return json({ error: 'started' }, 409);
       if (members.length >= PARTY_MAX) return json({ error: 'full' }, 409);
-      await redis.set(K.m(code, pin), { pin, name, avatar, joined: now, picks: [], keyHash } satisfies StoredMember, { ex: TTL });
+      await redis.set(K.m(code, pin), { pin, name, avatar, joined: now, picks: [], keyHash, ...(flex ? { flex } : {}) } satisfies StoredMember, { ex: TTL });
       await redis.sadd(K.set(code), pin);
       await touch(code, members.map((m) => m.pin).concat(pin));
       return json({ ok: true });

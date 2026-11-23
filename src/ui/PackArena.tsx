@@ -8,7 +8,10 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Animated, Easing, PanResponder, Platform, StyleSheet, View } from 'react-native';
 import Svg, { Circle, Defs, Ellipse, G, Line, Path, Polygon, RadialGradient, Rect, Stop, LinearGradient as SvgLinear } from 'react-native-svg';
 import { Text } from './Text';
-import { feel } from '../audio/feel';
+import { feelTear } from '../audio/feel';
+import type { PickType } from '../engine/collect/picks';
+import { Icon } from './icons';
+import { PACK_STYLE, PackAura, PackFoilFX, PackPattern, Pips } from './packStyle';
 import { C, F, S } from './theme';
 
 const native = Platform.OS !== 'web';
@@ -263,7 +266,8 @@ export function Beams({ fire, color }: { fire: number; color: string }) {
 const PW = 210, PH = 300, STRIP = 44;
 
 /** The pack art (foil body, crimps, frame, logo). Drawn twice: once for the body, once for the tear-off strip. */
-function PackArt({ c1, c2, label }: { c1: string; c2: string; label: string }) {
+function PackArt({ c1, c2, label, type }: { c1: string; c2: string; label: string; type: PickType }) {
+  const st = PACK_STYLE[type];
   const crimp = (y: number, flip: boolean) => {
     let d = `M0 ${y}`;
     for (let x = 0; x <= PW; x += 10) d += ` L${x} ${y + (flip ? -1 : 1) * (x % 20 ? 8 : 0)}`;
@@ -272,6 +276,8 @@ function PackArt({ c1, c2, label }: { c1: string; c2: string; label: string }) {
   return (
     <LinearGradient colors={[c2, c1, '#FFFFFF', c1, c2]} locations={[0, 0.3, 0.5, 0.7, 1]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={{ width: PW, height: PH }}>
       <LinearGradient colors={[c1, c2]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[StyleSheet.absoluteFill, { opacity: 0.82 }]} />
+      <PackPattern pattern={st.pattern} w={PW} h={PH} />
+      <PackFoilFX fx={st.fx} />
       <Svg width={PW} height={PH} style={StyleSheet.absoluteFill}>
         <Path d={crimp(14, false)} fill="#FFFFFF" opacity={0.35} />
         <Path d={crimp(PH - 14, true)} fill="#FFFFFF" opacity={0.35} />
@@ -281,9 +287,10 @@ function PackArt({ c1, c2, label }: { c1: string; c2: string; label: string }) {
       </Svg>
       <LinearGradient colors={['#8FE9FF', '#F7A6E8', '#FFE58A', '#A98BFF', '#8FE9FF']} style={styles.foilEdge} />
       <View style={styles.packFace}>
-        <Text style={styles.ball}>🏀</Text>
+        <View style={styles.emblem}><Icon name={st.emblem} size={34} /></View>
         <Text style={styles.packLogo}>TEN{'\n'}DEEP</Text>
         <View style={styles.packType}><Text style={styles.packTypeText}>{label}</Text></View>
+        <Pips n={st.pips} color={c2} />
       </View>
     </LinearGradient>
   );
@@ -306,8 +313,8 @@ function Seam({ color }: { color: string }) {
  * A plain tap rips it automatically. Calls `onRip` the moment it tears (fire the big effects there) and
  * `onGone` once the empty wrapper has dropped away.
  */
-export function RipPack({ c1, c2, label, hint, glow, onRip, onGone, testID, dropDelay = 450 }: {
-  c1: string; c2: string; label: string; hint: string; glow: string; onRip: () => void; onGone: () => void; testID?: string;
+export function RipPack({ c1, c2, label, type, hint, glow, onRip, onGone, testID, dropDelay = 450 }: {
+  c1: string; c2: string; label: string; type: PickType; hint: string; glow: string; onRip: () => void; onGone: () => void; testID?: string;
   /** How long the open wrapper stays put after the rip (so cards can rise out of it) before it falls away. */
   dropDelay?: number;
 }) {
@@ -338,7 +345,7 @@ export function RipPack({ c1, c2, label, hint, glow, onRip, onGone, testID, drop
   };
   const autoRip = () => {
     if (done.current) return;
-    feel('tick');
+    [0.2, 0.5, 0.8].forEach((lv, i) => setTimeout(() => feelTear(lv), i * 80));
     Animated.timing(tear, { toValue: 0.85, duration: 260, easing: Easing.in(Easing.quad), useNativeDriver: false }).start(() => finish());
   };
 
@@ -350,8 +357,9 @@ export function RipPack({ c1, c2, label, hint, glow, onRip, onGone, testID, drop
       if (done.current) return;
       const p = Math.min(1, Math.abs(g.dx) / (PW * 0.8));
       tear.setValue(p);
-      const b = Math.floor(p * 5);
-      if (b > bucket.current) { bucket.current = b; feel('tick'); }
+      // Crinkle + a tap every 10% of the tear, heavier as it goes.
+      const b = Math.floor(p * 10);
+      if (b > bucket.current) { bucket.current = b; feelTear(p); }
       if (p >= 0.92) finish();
     },
     onPanResponderRelease: (_, g) => {
@@ -384,7 +392,7 @@ export function RipPack({ c1, c2, label, hint, glow, onRip, onGone, testID, drop
           <View style={{ width: PW, height: PH }}>
             {/* Body: clipped at the tear line, so once the strip is gone the wrapper is open. */}
             <View style={{ position: 'absolute', top: STRIP, left: 0, width: PW, height: PH - STRIP, overflow: 'hidden', borderBottomLeftRadius: 6, borderBottomRightRadius: 6 }}>
-              <View style={{ position: 'absolute', top: -STRIP, left: 0, width: PW, height: PH }}><PackArt c1={c1} c2={c2} label={label} /></View>
+              <View style={{ position: 'absolute', top: -STRIP, left: 0, width: PW, height: PH }}><PackArt c1={c1} c2={c2} label={label} type={type} /></View>
             </View>
             {/* Light leaking out of the opening. */}
             <Animated.View style={[styles.leak, { opacity: tear }]}>
@@ -407,11 +415,12 @@ export function RipPack({ c1, c2, label, hint, glow, onRip, onGone, testID, drop
               ],
             }]}
           >
-            <View style={{ width: PW, height: STRIP, overflow: 'hidden', borderTopLeftRadius: 6, borderTopRightRadius: 6 }}><PackArt c1={c1} c2={c2} label={label} /></View>
+            <View style={{ width: PW, height: STRIP, overflow: 'hidden', borderTopLeftRadius: 6, borderTopRightRadius: 6 }}><PackArt c1={c1} c2={c2} label={label} type={type} /></View>
           </Animated.View>
           <Animated.View pointerEvents="none" style={[styles.seam, { width: seamW, opacity: fly.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }) }]}>
             <Seam color={glow} />
           </Animated.View>
+          {!ripped && <PackAura fx={PACK_STYLE[type].fx} w={PW} h={PH} />}
         </View>
         {!ripped && (
           <Animated.Text
@@ -437,7 +446,7 @@ const styles = StyleSheet.create({
   beams: { position: 'absolute', left: -60, right: -60, top: -40, height: 400 },
   packShadow: { shadowOpacity: 0.95, shadowRadius: 34, shadowOffset: { width: 0, height: 0 }, elevation: 16, borderRadius: 6 },
   packFace: { position: 'absolute', top: STRIP - 10, left: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'center', gap: S.sm },
-  ball: { fontSize: 34 },
+  emblem: { width: 54, height: 54, borderRadius: 27, backgroundColor: 'rgba(255,255,255,0.92)', borderWidth: 2.5, borderColor: C.ink, alignItems: 'center', justifyContent: 'center' },
   packLogo: { ...F.display, color: '#FFFFFF', fontSize: 44, textAlign: 'center', letterSpacing: 4, textShadowColor: 'rgba(0,0,0,0.45)', textShadowOffset: { width: 0, height: 3 }, textShadowRadius: 0 },
   packType: { backgroundColor: 'rgba(255,255,255,0.92)', paddingHorizontal: 14, paddingVertical: 5, borderRadius: 999, borderWidth: 2, borderColor: C.ink },
   packTypeText: { color: C.ink, fontWeight: '900', fontSize: 15 },

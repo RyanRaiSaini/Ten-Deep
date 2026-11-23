@@ -12,6 +12,7 @@ import { C, F, R, S } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
 import { FINISHES, bestFinish } from '../../engine/collect/finishes';
 import { FinishChip } from '../../ui/CardFinish';
+import { SharePull } from '../../ui/SharePull';
 
 /** One card up close: level, copies, rating bars, and the sets it belongs to. */
 export default function CardDetail() {
@@ -61,6 +62,7 @@ export default function CardDetail() {
           </View>
         </View>
       )}
+      {count > 0 && <SharePull card={card} finish={finish} />}
 
       <Card style={{ gap: S.sm }}>
         {bars.map(([label, v]) => (

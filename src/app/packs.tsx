@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { Animated, Easing, Platform, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../ui/Text';
-import { feel } from '../audio/feel';
+import { feel, feelFinish, feelSuspense } from '../audio/feel';
 import { CARD_BY_ID } from '../data/cards';
 import { PICK_ODDS, type PickType } from '../engine/collect/picks';
 import { TIERS, type Card } from '../engine/collect/tiers';
@@ -21,6 +21,8 @@ import { useCollection } from '../store/collection';
 import { CardBack, CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { FINISH_STYLE } from '../ui/CardFinish';
 import { ArenaBackdrop, Beams, Flash, Halo, RipPack } from '../ui/PackArena';
+import { PACK_STYLE } from '../ui/packStyle';
+import { SharePull } from '../ui/SharePull';
 import { ONE_IN, finishFor, finishRank, type Finish } from '../engine/collect/finishes';
 import { BackButton, Button, Header, Screen } from '../ui/components';
 import { C, F, FONT, R, S } from '../ui/theme';
@@ -30,10 +32,6 @@ import { Icon } from '../ui/icons';
 import { POWER_TAPS, UPGRADE_CHANCE, nextType } from '../engine/collect/powerup';
 
 const native = Platform.OS !== 'web';
-const PACK_COLOR: Record<PickType, [string, string]> = {
-  daily: ['#4F8BFF', '#123A8A'], run: ['#C9D0DE', '#3A4256'], playoffs: ['#3DDC84', '#0F6B3E'], weekly: ['#B26BFF', '#4B1A7A'],
-  champion: ['#F5C451', '#8A5A00'], mythic: ['#FF5A36', '#7A1405'], legendary: ['#FF5AC8', '#4F8BFF'],
-};
 const GUARANTEE_KEY: Partial<Record<PickType, string>> = { champion: 'guarantee_champion', mythic: 'guarantee_mythic', legendary: 'guarantee_legendary' };
 const RANK = Object.fromEntries(TIERS.map((t, i) => [t, i]));
 /** How long the stack takes to slide up out of the wrapper before the wrapper falls. */
@@ -81,6 +79,8 @@ function Sparkles({ fire, color }: { fire: number; color: string }) {
 /** A pulsing aura behind a face-down card: the rarity tease. */
 function Aura({ color, strong, size }: { color: string; strong: boolean; size: number }) {
   const v = useRef(new Animated.Value(0)).current;
+  // While it waits face down: a rising hum, and a heartbeat on the phone if something big is under it.
+  useEffect(() => feelSuspense(strong), [strong]);
   useEffect(() => {
     const loop = Animated.loop(Animated.sequence([
       Animated.timing(v, { toValue: 1, duration: strong ? 450 : 900, useNativeDriver: native }),
@@ -168,7 +168,7 @@ export default function Packs() {
     );
   }
 
-  const [c1, c2] = PACK_COLOR[pick.type];
+  const [c1, c2] = PACK_STYLE[pick.type].colors;
   // Finishes are seeded by pick + card, the same roll useCollection.keep() records.
   const finishOf = (c: Card) => finishFor(pick.id, c.id);
   // Reveal order: worst first, rarest finish / best card last.
@@ -194,17 +194,18 @@ export default function Packs() {
     setFlipped((f) => (f.includes(card.id) ? f : [...f, card.id]));
     const f = finishOf(card);
     if (finishRank(f) >= finishRank('gold')) setBanner((b) => (b && finishRank(b) >= finishRank(f) ? b : f));
-    if (isBig(card, f)) { feel('fanfare'); celebrate(glowOf(card, f), true); }
-    else {
-      feel(RANK[card.tier] >= RANK.epic || f !== 'base' ? 'crowd' : 'swish');
-      celebrate(glowOf(card, f), false);
-    }
+    feel('flip');
+    // A finish gets its own sting (rarer = bigger); otherwise a Mythic+ card gets the fanfare.
+    if (f !== 'base') feelFinish(f);
+    else if (RANK[card.tier] >= RANK.mythic) feel('fanfare');
+    else if (RANK[card.tier] >= RANK.epic) feel('crowd');
+    celebrate(glowOf(card, f), isBig(card, f));
   };
 
   // Sealed → burst: the strip tears off and the stack starts sliding up out of the wrapper.
   const onRip = () => {
     setPhase('burst');
-    feel('thunk');
+    feel('rip');
     setFlash((f) => f + 1);
     setBeams((b) => b + 1);
     setHalo((h) => h + 1);
@@ -241,7 +242,8 @@ export default function Packs() {
     setFlipped(order.map((c) => c.id));
     const rarest = order.map(finishOf).reduce<Finish>((b, f) => (finishRank(f) > finishRank(b) ? f : b), 'base');
     if (finishRank(rarest) >= finishRank('gold')) setBanner(rarest);
-    if (best && isBig(best, finishOf(best))) { feel('fanfare'); celebrate(teaser, true); } else { feel('crowd'); celebrate(teaser, false); }
+    if (rarest !== 'base') feelFinish(rarest); else if (best && RANK[best.tier] >= RANK.mythic) feel('fanfare'); else feel('crowd');
+    celebrate(teaser, !!best && isBig(best, finishOf(best)));
     setPhase('pick');
   };
   const keep = () => {
@@ -288,7 +290,7 @@ export default function Packs() {
                 >
                   <Text style={[styles.counter, { opacity: phase === 'stack' ? 0.9 : 0 }]} testID="stack-counter">{t('collect.cardOf', { n: index + 1, total: order.length })}</Text>
                   <View style={{ width: bigW, height: bigW * 1.4, alignItems: 'center', justifyContent: 'center' }}>
-                    {!topFace && phase === 'stack' && <Aura color={glowOf(top, finishOf(top))} strong={isBig(top, finishOf(top))} size={bigW} />}
+                    {!topFace && phase === 'stack' && <Aura key={top.id} color={glowOf(top, finishOf(top))} strong={isBig(top, finishOf(top))} size={bigW} />}
                     {order.slice(index + 1, index + 4).reverse().map((c, k, arr) => {
                       const depth = arr.length - k;
                       return (
@@ -322,7 +324,7 @@ export default function Packs() {
             {(phase === 'sealed' || phase === 'burst') && (
               <View style={styles.center} pointerEvents="box-none">
                 <RipPack
-                  c1={c1} c2={c2} glow={teaser}
+                  c1={c1} c2={c2} glow={teaser} type={pick.type}
                   label={t(`collect.t_${pick.type}`)}
                   hint={t('collect.swipeToRip').toUpperCase()}
                   onRip={onRip} onGone={onGone} dropDelay={LIFT_MS}
@@ -369,6 +371,7 @@ export default function Packs() {
               </View>
             )}
             {phase === 'sealed' && upgraded && <Text style={styles.upgraded} testID="pack-upgraded">{t('collect.upgraded')}</Text>}
+            {phase === 'stack' && top && topFace && isBig(top, finishOf(top)) && <SharePull card={top} finish={finishOf(top)} />}
             {(phase === 'burst' || phase === 'stack') && <Button label={t('collect.revealAll')} variant="dark" onPress={revealAll} testID="pack-reveal-all" />}
             {phase === 'pick' && (
               <>
@@ -381,6 +384,7 @@ export default function Packs() {
                   onPress={keep}
                   testID="pack-keep"
                 />
+                {best && isBig(best, finishOf(best)) && <SharePull card={best} finish={finishOf(best)} />}
               </>
             )}
             {(phase === 'sealed' || phase === 'pick') && (

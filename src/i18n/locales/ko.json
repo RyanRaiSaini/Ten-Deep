@@ -936,6 +936,9 @@
     "odds": "마감 확률 (모든 카드, 모든 팩)",
     "rarest": "가장 희귀한 뽑기",
     "yours": "내 마감",
-    "keepHint": "보관한 카드만 마감 그대로 컬렉션에 들어갑니다."
+    "keepHint": "보관한 카드만 마감 그대로 컬렉션에 들어갑니다.",
+    "share": "공유",
+    "shareText": "Ten Deep에서 {{finish}} {{name}} 뽑았다! {{odds}}",
+    "shareTextBase": "Ten Deep에서 {{name}}({{tier}}) 뽑았다!"
   }
 }
