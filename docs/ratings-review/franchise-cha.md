@@ -74,16 +74,16 @@
 
 | Player | Pos | OVR | Age | Type | Salary | Dur |
 |---|---|---|---|---|---|---|
-| LaMelo Ball | PG | **86** | 25 | playmaker | $22M | 50 |
 | Brandon Miller | SF/SG | **86** | 24 | scorer | $22M | 80 |
-| Miles Bridges | PF/SF | **81** | 28 | slasher | $13.5M | 80 |
+| Coby White | PG/SG | **82** | 26 | scorer | $15M | 80 |
+| Naz Reid | C/PF | **80** | 27 | stretch | $12M | 80 |
 | Kon Knueppel | SG/SF | **80** | 21 | shooter | $12M | 80 |
-| Collin Sexton | PG/SG | **78** | 27 | scorer | $9.5M | 80 |
+| Grayson Allen | SG | **76** | 30 | shooter | $7M | 80 |
+| Dennis Schröder | PG | **76** | 33 | scorer | $7M | 80 |
+| Royce O'Neale | SF/PF | **74** | 33 | wing3d | $5.5M | 80 |
 | Moussa Diabaté | C | **74** | 24 | rim | $5.5M | 80 |
-| Tre Mann | PG | **73** | 25 | scorer | $5M | 80 |
 | Grant Williams | PF | **72** | 27 | stretch | $4M | 80 |
-| Josh Green | SG | **72** | 25 | wing3d | $4M | 80 |
 | Ryan Kalkbrenner | C | **72** | 24 | rim | $4M | 80 |
 | Liam McNeeley | SF | **70** | 20 | shooter | $3M | 80 |
+| Hannes Steinbach | PF/C | **70** | 20 | big | $3M | 80 |
 | Sion James | SG | **69** | 23 | defender | $2.5M | 80 |
-| Tidjane Salaün | PF | **68** | 21 | stretch | $2.5M | 80 |

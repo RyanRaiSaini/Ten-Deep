@@ -94,7 +94,10 @@ describe('card effects', () => {
     const outSlot = card.outSlots![0];
     const outgoing = user.slots[outSlot];
     const s = applyCard(s0, card, { incomingId: star.id, outSlot });
-    expect(s.teams[0].slots[outSlot].name).toBe(star.name);
+    // He joins your roster (re-seated at a position he plays) and your player is gone.
+    const mine = ALL_SLOTS.map((k) => s.teams[0].slots[k].name);
+    expect(mine).toContain(star.name);
+    expect(mine).not.toContain(outgoing.name);
     const formerTeam = s0.teams.findIndex((t, i) => i > 0 && ALL_SLOTS.some((k) => t.slots[k].name === star.name));
     if (formerTeam > 0) expect(ALL_SLOTS.some((k) => s.teams[formerTeam].slots[k].name === outgoing.name)).toBe(true);
   });

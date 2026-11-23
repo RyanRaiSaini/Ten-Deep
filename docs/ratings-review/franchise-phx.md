@@ -97,14 +97,14 @@
 |---|---|---|---|---|---|---|
 | Devin Booker | SG | **89** | 29 | scorer | $28M | 80 |
 | Jalen Green | SG | **82** | 24 | scorer | $15M | 80 |
+| Miles Bridges | PF/SF | **81** | 28 | slasher | $13.5M | 80 |
 | Mark Williams | C | **79** | 24 | rim | $11M | 35 |
 | Dillon Brooks | SF | **78** | 30 | defender | $9.5M | 80 |
-| Grayson Allen | SG | **76** | 30 | shooter | $7M | 80 |
 | Collin Gillespie | PG | **76** | 27 | shooter | $7M | 80 |
-| Royce O'Neale | SF/PF | **74** | 33 | wing3d | $5.5M | 80 |
+| Luke Kennard | SG | **75** | 30 | shooter | $6M | 80 |
 | Ryan Dunn | SF | **74** | 23 | defender | $5.5M | 80 |
+| Koa Peat | PF | **74** | 19 | slasher | $5.5M | 80 |
 | Khaman Maluach | C | **72** | 19 | rim | $4M | 80 |
 | Oso Ighodaro | PF/C | **72** | 24 | point | $4M | 80 |
-| Nick Richards | C | **72** | 28 | rim | $4M | 80 |
 | Jordan Goodwin | SG/PG | **72** | 27 | defender | $4M | 80 |
 | Rasheer Fleming | PF | **69** | 22 | stretch | $2.5M | 80 |
