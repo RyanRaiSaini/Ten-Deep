@@ -46,10 +46,11 @@ export default function PartyRoom() {
   const mySeat = members.findIndex((m) => m.pin === myPin);
 
   // Join automatically when opening a lobby link.
-  const joined = useRef(false);
+  // Retried every few seconds while we're missing from the list (two joins at the same instant can collide).
+  const joinedAt = useRef(0);
   useEffect(() => {
-    if (!room || !code || joined.current || room.meta.started || mySeat >= 0) return;
-    joined.current = true;
+    if (!room || !code || room.meta.started || mySeat >= 0 || Date.now() - joinedAt.current < 4000) return;
+    joinedAt.current = Date.now();
     void joinRoom(code).then(refresh);
   }, [room, code, mySeat, refresh]);
 
