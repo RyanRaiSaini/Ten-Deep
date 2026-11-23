@@ -112,7 +112,7 @@ export default function Draft() {
           ))}
           {usable.length === 0 && <Text style={styles.warn}>{t('draft.nothingFits')}</Text>}
           {d.respinsLeft > 0 && (
-            <Button label={t('draft.respin', { n: d.respinsLeft })} variant="secondary" icon={<Icon name="swap" size={22} />} onPress={() => doSpin(true)} testID="respin" />
+            <Button label={t('draft.respin', { n: d.respinsLeft })} variant="secondary" icon={<Die size={26} color="purple" faces={[3, 5, 1]} />} onPress={() => doSpin(true)} testID="respin" />
           )}
           {d.respinsLeft === 0 && !complete && !g.daily && !g.challenge && (
             rerolls > 0 ? (

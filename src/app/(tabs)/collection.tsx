@@ -14,7 +14,13 @@ import { C, F, R, S } from '../../ui/theme';
 import { Icon } from '../../ui/icons';
 
 /** Your collection: tier-framed cards, best first, with tier filters. */
+const GAP = 10;
+
 export default function Collection() {
+  // Fill the row edge to edge: 3 columns on phones, more on wide screens.
+  const [gridW, setGridW] = useState(358);
+  const cols = Math.max(3, Math.floor((gridW + GAP) / (120 + GAP)));
+  const cardW = Math.floor((gridW - GAP * (cols - 1)) / cols);
   const { t } = useTranslation();
   const col = useCollection();
   const [filter, setFilter] = useState<Tier | null>(null);
@@ -63,10 +69,10 @@ export default function Collection() {
           ))}
         </View>
       )}
-      <View style={styles.grid}>
+      <View style={styles.grid} onLayout={(e) => setGridW(e.nativeEvent.layout.width)}>
         {shown.map(({ card, count }) => (
           <Pressable key={card.id} onPress={() => router.push(`/card/${card.id}`)} testID="collection-card">
-            <CollectCard card={card} width={104} level={cardLevel(count)} />
+            <CollectCard card={card} width={cardW} level={cardLevel(count)} />
             {count > 1 && <Text style={styles.dupes}>×{count}</Text>}
           </Pressable>
         ))}
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
   chip: { borderWidth: 2, borderRadius: R.pill, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: '#FFFFFF' },
   chipText: { fontWeight: '800', fontSize: 12 },
   empty: { color: C.muted, textAlign: 'center', marginTop: S.xl },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center' },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: GAP },
   section: { color: C.text, fontWeight: '900', fontSize: 15 },
   setRow: { flexDirection: 'row', alignItems: 'center', gap: S.md, backgroundColor: C.surface, borderRadius: R.md, padding: S.md },
   swatch: { width: 22, height: 22, borderRadius: 11, borderWidth: 3 },
