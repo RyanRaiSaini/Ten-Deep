@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { feel } from '../audio/feel';
@@ -17,12 +17,15 @@ export default function Gauntlet() {
   const col = useCollection();
   const [series, setSeries] = useState<{ stage: number; result: SeriesResult } | null>(null);
   const [shown, setShown] = useState(0);
+  const counted = useRef(false);
   const stage = col.gauntlet.cleared;
   const done = stage >= GAUNTLET.length;
 
-  const play = () => {
-    const result = playStage(lineupRoster(col.lineup, levelsOf(col.owned)), stage, `${col.lastDay ?? ''}:${Date.now()}`);
-    setSeries({ stage, result });
+  // After the last stage, the final boss stays open for replays (no extra reward).
+  const play = (at = Math.min(stage, GAUNTLET.length - 1)) => {
+    counted.current = false;
+    const result = playStage(lineupRoster(col.lineup, levelsOf(col.owned)), at, `${col.lastDay ?? ''}:${Date.now()}`);
+    setSeries({ stage: at, result });
     setShown(0);
     feel('crowd');
   };
@@ -31,6 +34,8 @@ export default function Gauntlet() {
     const next = shown + 1;
     setShown(next);
     if (next >= series.result.games.length) {
+      if (counted.current) return; // a fast double tap
+      counted.current = true;
       const won = series.result.winner === 'a';
       col.recordStage(series.stage, won);
       track({ type: 'gauntlet' });
@@ -66,8 +71,9 @@ export default function Gauntlet() {
         </Card>
       )}
 
-      {!series && !done && <Button label={`⚔️  ${t('gauntlet.play', { n: stage + 1 })}`} variant="gold" onPress={play} testID="gauntlet-play" />}
+      {!series && !done && <Button label={`⚔️  ${t('gauntlet.play', { n: stage + 1 })}`} variant="gold" onPress={() => play()} testID="gauntlet-play" />}
       {done && <Text style={[styles.verdict, { color: C.gold }]}>👑 {t('gauntlet.complete')}</Text>}
+      {!series && done && <Button label={`⚔️  ${t('gauntlet.replay')}`} variant="secondary" onPress={() => play()} testID="gauntlet-replay" />}
       <Button label={t('gauntlet.editLineup')} variant="ghost" onPress={() => router.push('/lineup')} />
 
       {GAUNTLET.map((g, i) => {

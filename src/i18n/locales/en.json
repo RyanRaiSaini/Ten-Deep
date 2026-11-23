@@ -413,7 +413,8 @@
     "cleared": "Cleared",
     "locked": "Locked",
     "complete": "Gauntlet complete!",
-    "editLineup": "Edit lineup"
+    "editLineup": "Edit lineup",
+    "replay": "Replay the final stage"
   },
   "card": {
     "level": "Lv {{n}}",
