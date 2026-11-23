@@ -112,11 +112,11 @@
 | Chet Holmgren | C/PF | **87** | 24 | unicorn | $24M | 55 |
 | Isaiah Hartenstein | C | **81** | 28 | big | $13.5M | 80 |
 | Cason Wallace | PG/SG | **79** | 22 | defender | $11M | 80 |
-| Luguentz Dort | SG/SF | **79** | 27 | defender | $11M | 80 |
 | Alex Caruso | PG/SG | **78** | 32 | defender | $9.5M | 80 |
-| Aaron Wiggins | SG/SF | **76** | 27 | twoway | $7M | 80 |
-| Isaiah Joe | SG | **76** | 27 | shooter | $7M | 80 |
+| Jared McCain | PG/SG | **77** | 22 | shooter | $8.5M | 55 |
 | Ajay Mitchell | PG | **76** | 24 | scorer | $7M | 80 |
 | Jaylin Williams | PF/C | **74** | 24 | stretch | $5.5M | 80 |
 | Kenrich Williams | PF | **71** | 31 | defender | $3.5M | 80 |
+| Aday Mara | C | **71** | 21 | rim | $3.5M | 80 |
 | Thomas Sorber | C | **70** | 20 | rim | $3M | 80 |
+| Bennett Stirtz | PG | **70** | 23 | playmaker | $3M | 80 |

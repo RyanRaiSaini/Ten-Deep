@@ -1,0 +1,176 @@
+# 2026-27 roster sources (researched 2026-11-23)
+
+Rosters in src/data/current2026.ts were rebuilt from these, each move cross-checked across outlets where possible. Ratings are Ten Deep's own.
+
+- https://www.basketball-reference.com/teams/{ATL,BOS,BRK,CHO,CHI,CLE,DAL,DEN,GSW}/2027.html
+- https://basketball.realgm.com/nba/teams/*/Rosters/Current/2027  (+ RealGM offseason recaps)
+- https://www.hoopsrumors.com/2026/09/nba-2026-offseason-check-in-{charlotte-hornets,chicago-bulls,cleveland-cavaliers,dallas-mavericks,denver-nuggets,golden-state-warriors}.html
+- https://www.nba.com/warriors/news/warriors-announce-2026-27-opening-night-roster-20261019
+- https://nesn.com/boston-celtics/news/what-celtics-final-roster-looks-opening-night/f92ca08b01eb5790ee26ecfc
+- https://www.nba.com/sixers/news/76ers-acquire-5x-all-star-and-2x-all-nba-selection-jaylen-brown
+- https://www.aljazeera.com/news/2026/7/2/jaylen-brown-traded-to-philadelphia-76ers-from-boston-celtics
+- https://www.nba.com/celtics/news/press-release-20260707-celtics-sign-mitchell-robinson
+- https://www.si.com/nba/hawks/onsi/2026-27-atlanta-hawks-season-guide-roster-schedule-storylines-and-key-dates-01m2qsjkyy4b
+- https://africa.espn.com/nba/story/_/id/49400155/thunder-send-dort-hawks-three-team-trade-sources-say
+- https://www.ajc.com/sports/2026/09/hawks-acquire-finney-smith-from-hornets-for-hield-nembhard-cash/
+- https://www.foxsports.com/articles/nba/center-jock-landale-agrees-to-14-million-1year-deal-to-resign-with-hawks-ap-source-says
+- https://www.nba.com/news/jonathan-kuminga-wolves-free-agency
+- https://africa.espn.com/nba/story/_/id/49149223/sources-wolves-trade-randle-nets-claxton-bulls
+- https://www.nba.com/news/moritz-wagner-nets-free-agency-2026 ; https://www.nba.com/news/reports-keon-ellis-nets-deal
+- https://africa.espn.com/nba/story/_/id/49175343/hornets-trade-ball-timberwolves-reid-picks
+- https://africa.espn.com/nba/story/_/id/49208142/sources-hornets-trade-veteran-miles-bridges-suns
+- https://www.thescore.com/nba/news/3555772/report-white-returns-to-hornets-on-3-year-74-m-deal
+- https://www.espn.com/nba/story/_/id/49611835/sources-cavaliers-trading-schroder-cash-hornets-mann
+- https://www.espn.com/nba/story/_/id/49664656/peyton-watson-cavaliers-max-strus-clippers-part-multi-team-trade-nuggets
+- https://www.espn.com/nba/story/_/id/49783307/charlotte-hornets-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://nba.com/news/hornets-trade-buddy-hield-bulls-rob-dillingham
+- https://abc7chicago.com/post/sources-norman-powell-agrees-2-year-45m-deal-bulls/19428439/
+- https://sports.yahoo.com/articles/chicago-bulls-season-preview-lineup-094236438.html
+- https://www.nbcchicago.com/chicago-sports-bears-sox-cubs-bulls-blackhawks/chicago-bulls-trade-deadline-roundup-ayo-dosunmu-nikola-vucevic-dealt/3887265/
+- https://sports.yahoo.com/articles/cavaliers-projected-starting-lineup-rotation-160507924.html
+- https://www.nbcsports.com/fantasy/basketball/player-news/2026-06-24/meleek-thomas-heading-to-cleveland-with-34th-pick
+- https://www.espn.com/nba/story/_/id/49546534/dallas-mavericks-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://www.nba.com/mavs/news/mavericks-select-morez-johnson-jr-with-the-ninth-pick-in-the-2026-nba-draft
+- https://africa.espn.com/nba/story/_/id/47828122/mavericks-trade-anthony-davis-wizards-sources-say
+- https://www.espn.com/nba/story/_/id/49684447 (DeRozan to DEN) ; https://www.forbes.com/sites/joelrush/2026/09/29/the-denver-nuggets-2026-offseason-a-total-bench-overhaul-portends-big-changes/
+- https://www.si.com/nba/nuggets/onsi/nuggets-big-roster-concern-grows-as-jalen-pickett-signs-with-clippers
+- https://sports.yahoo.com/nba/article/detroit-pistons-season-preview-opening-schedule-win-projection-and-everything-to-know-for-2026-27-140656846.html
+- https://www.nba.com/thunder/news/thunder-trade-detroit-260706 ; https://www.nba.com/news/john-collins-free-agency-2026
+- https://detroitjockcity.com/pistons-projected-starting-lineup-rotation-jalen-duren-contract-01m3ym488djs
+- https://www.nbcsports.com/fantasy/basketball/player-news/2026-06-23/golden-state-drafts-yaxel-lendeborg-with-11th-pick
+- https://www.espn.com/nba/story/_/id/49481941/houston-rockets-2026-27-season-preview-stats-roster-kevin-durant-vanvleet-thompson
+- https://www.nba.com/rockets/news/rockets-sign-free-agent-marcus-smart ; https://www.nba.com/rockets/news/rockets-sign-free-agent-bogdan-bogdanovic
+- https://www.foxsports.com/articles/nba/hornets-acquire-dorian-finneysmith-more-draft-picks-from-rockets-ap-source-says
+- https://www.nba.com/news/blazers-grizzlies-ja-morant-trade
+- https://www.espn.com/nba/story/_/id/49218970/sources-grizzlies-trading-star-ja-morant-trail-blazers
+- https://www.nba.com/news/jaren-jackson-jr-trade-jazz-2026
+- https://www.nba.com/news/ivica-zubac-trade-clippers-pacers-2026
+- https://www.foxsports.com/articles/nba/pacers-trade-mathurin-and-jackson-to-clippers-for-ivica-zubac-and-3-draft-picks
+- https://www.fieldhousefiles.com/p/pacers-waive-james-johnson-opening-night-roster-2026
+- https://247sports.com/team/indiana-pacers-basketball-698/Roster/
+- https://www.tsn.ca/nba/article/report-pacers-oubre-jr-agree-to-two-year-deal-n1-49239804/
+- https://www.nba.com/news/raptors-clippers-kawhi-leonard-trade
+- https://www.nba.com/news/brandon-ingrams-clippers-debut-on-hold-after-heel-surgery-partial-achilles-tear
+- https://africa.espn.com/nba/story/_/id/49286926/rui-hachimura-clippers-agree-2-year-28m-deal
+- https://www.nba.com/clippers/news/clippers-acquire-strus-from-cleveland-in-five-team-trade
+- https://m.thescore.com/nba/news/3579464/clippers-re-sign-beal-to-2-year-13-2-m-deal
+- https://www.si.com/nba/clippers/onsi/clippers-roster-contracts-salaries-options-depth-chart-01kzrm2fahe9
+- https://abc7.com/post/sources-pistons-land-potential-starting-pf-john-collins/19428305/
+- https://www.espn.com/nba/story/_/id/49226472/lebron-james-informs-lakers-plans-play-elsewhere-2026-27
+- https://www.nba.com/lakers/news/lakers-acquire-center-walker-kessler
+- https://www.thescore.com/nba/news/3561117
+- https://www.nba.com/lakers/news/lakers-sign-guard-forward-matisse-thybulle
+- https://www.nba.com/lakers/news/lakers-sign-forward-ziaire-williams
+- https://lakersnation.com/lakers-waive-dalton-knecht-to-get-roster-down-to-15-players/
+- https://www.espn.com/nba/story/_/id/49149967/bucks-trading-giannis-antetokounmpo-bobby-portis-heat-tyler-herro-kelel-ware-jaime-jaquez-jr-kasparas-jakucionis-picks
+- https://www.nbcsports.com/nba/news/milwaukee-trading-giannis-antetokounmpo-to-miami-for-package-including-tyler-herro-three-first-round-picks
+- https://www.nba.com/gamenotes/heat.pdf
+- https://hothothoops.com/2026/10/17/miami-heat-release-4-players-finalize-roster-ahead-opening-night/
+- https://www.espn.com/nba/story/_/id/49706703 (Klay Thompson to MIA)
+- https://www.cbssports.com/nba/gametracker/NBA_20261110_MIA@UTA/
+- https://sports.yahoo.com/articles/heres-milwaukee-bucks-roster-2026-215205695.html
+- https://basketball.realgm.com/nba/teams/Milwaukee-Bucks/16/Rosters/Current/2027
+- https://www.tsn.ca/nba/article/bucks-waive-assist-leader-porter-jr-ahead-of-season-opener-n1-50222332/
+- https://www.thescore.com/nba/news/3564027/report-pistons-trading-le-vert-to-bucks
+- https://www.nba.com/bucks/news/milwaukee-bucks-acquire-ousmane-dieng-in-three-team-trade
+- https://www.nba.com/news/lamelo-ball-trade-timberwolves-2026
+- https://africa.espn.com/nba/story/_/id/49175343/hornets-trade-ball-timberwolves-reid-picks
+- https://www.nba.com/news/reports-julius-randle-traded-to-nets-on-eve-of-draft
+- https://www.cbssports.com/nba/news/jonathan-kuminga-signs-with-timberwolves-lakers-offer/
+- https://www.espn.com/nba/story/_/id/49759209 (Josh Green to UTA, Cody Williams to MIN)
+- https://www.fantasypros.com/nba/news/569066/rob-dillingham-traded-to-bulls.php
+- https://www.nbcsports.com/fantasy/basketball/player-news/2026-09-28/divincenzo-achilles-expects-to-play-this-season
+- https://www.timberwolvestoday.com/timberwolves-roster-2026-27-depth-chart
+- https://www.hoopsrumors.com/2026/09/nba-2026-offseason-check-in-new-orleans-pelicans.html
+- https://basketball.realgm.com/nba/teams/New-Orleans-Pelicans/19/offseason
+- https://nba.com/news/dejounte-murray-requests-trade-pelicans-confirm
+- https://roundtable.io/sports/nba/pelicans/news/new-orleans-pelicans-should-keep-this-starting-lineup-together
+- https://sports.yahoo.com/articles/mitchell-robinson-leaves-knicks-celtics-153124113.html
+- https://abc7ny.com/post/sources-andre-drummond-reaches-1-year-39m-deal-knicks/19444051/
+- https://www.eurohoops.net/en/nba-news/2022718/knicks-waived-bruce-brown-retained-james-wiseman/
+- https://www.nba.com/bulls/news/chicago-bulls-acquire-guerschon-yabusele
+- https://statz.ai/nba/teams/new-york-knicks/depth-chart
+- https://www.espn.com/nba/story/_/id/49649244/oklahoma-city-thunder-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://www.news9.com/oklahoma-city-thunder/thunder-make-isaiah-joe-aaron-wiggins-trades-official-after-nba-moratorium-ends
+- https://sports.yahoo.com/articles/okc-thunder-reveal-2026-27-010006441.html
+- https://www.nba.com/thunder/news/release-mccain-260204
+- https://www.nbcsports.com/fantasy/basketball/player-news/2026-06-23/mem-selects-bennett-stirtz-trade-pick-to-thunder
+- https://www.nbcsports.com/nba/news/2026-nba-draft-complete-list-of-every-pick-from-round-1-and-round-2
+- https://www.espn.com/nba/story/_/id/49159094/grizzlies-nab-duke-cameron-boozer-no-3-nba-draft
+- https://x.com/GrizzliesPR/status/2112297564330754119
+- https://dailymemphian.com/article/64551/memphis-grizzlies-complete-aldama-stewart-trades-add-picks
+- https://dailymemphian.com/article/64333/memphis-grizzlies-reach-buyout-agreement-kentavious-caldwell-pope
+- https://www.nba.com/news/dangelo-russell-waived-grizzlies
+- https://www.espn.com/nba/story/_/id/49583228/memphis-grizzlies-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://en.wikipedia.org/wiki/Brandon_Clarke
+- https://www.espn.com/nba/story/_/id/49590770/nba-offseason-recap-2026-27-season-previews-stats-roster-depth-chart-schedules-30-teams
+- https://www.espn.com/nba/story/_/id/49218970/sources-grizzlies-trading-star-ja-morant-trail-blazers
+- https://www.nbcsports.com/nba/news/memphis-agrees-to-trade-jaren-jackson-jr-to-utah-for-three-first-rounders-in-blockbuster-move
+- https://www.espn.com/nba/story/_/id/49591964/utah-jazz-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://www.si.com/nba/jazz/onsi/utah-jazz-opening-night-roster-takes-shape-after-final-cuts-what-to-know
+- https://www.nba.com/news/walker-kessler-trade-los-angeles-lakers
+- https://www.espn.com/nba/story/_/id/49591469/portland-trai-blazers-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://www.basketball-reference.com/teams/POR/2027.html
+- https://www.hoopsrumors.com/2026/02/hawks-trading-vit-krejci-to-trail-blazers.html
+- https://www.eurohoops.net/en/nba-news/2022357/trail-blazers-waive-jeremy-sochan/
+- https://www.espn.com/nba/story/_/id/49793920/orlando-magic-2026-27-season-preview-stats-roster-banchero-bane-wagner
+- https://www.nba.com/news/2026-27-season-preview-orl
+- https://www.si.com/nba/magic/onsi/magic-complete-tyus-jones-salary-dump-dip-tax-hornets-01kgnvjv7qcv
+- https://www.espn.com/nba/story/_/id/49884867/philadelphia-76ers-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://www.nba.com/news/reports-sixers-to-acquire-jaylen-brown-from-celtics
+- https://abc7news.com/19569047/  (LeBron James to 76ers, 2yr/$8M)
+- https://northeasttimes.com/2026/08/06/sixers-sign-caldwell-pope-lock-in-14-player-roster-for-2026-27/
+- https://www.nba.com/news/thunder-sixers-jared-mccain-trade
+- https://www.espn.com/nba/story/_/id/49661800/phoenix-suns-2026-27-season-preview-stats-roster-devin-booker
+- https://arizonasports.com/nba/phoenix-suns/suns-trade-grayson-allen-royce-oneale-miles-bridges-future-draft-picks
+- https://www.nba.com/news/luke-kennard-suns-deal
+- https://www.nba.com/news/cole-anthony-nick-richards-bucks-suns-trade-2026
+- https://www.espn.com/nba/story/_/id/49733549/sacramento-kings-2026-27-season-preview-stats-roster-sabonis-lavine-acuff
+- https://www.si.com/nba/kings/onsi/kings-waive-3-players-to-finalize-roster-for-2026-27-season
+- https://www.nba.com/kings/news/kings-acquire-draft-rights-to-alex-karaban
+- https://www.espn.com/nba/story/_/id/49516685/san-antonio-spurs-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://www.nba.com/news/harrison-barnes-will-re-sign-with-san-antonio
+- https://www.si.com/nba/spurs/onsi/news/spurs-officially-waive-jeremy-sochan
+- https://www.espn.com/nba/story/_/id/49951883/toronto-raptors-2026-27-season-preview-stats-roster-kawhi-leonard-scottie-barnes
+- https://www.espn.com/nba/story/_/id/49228663/sources-raptors-nearing-deal-acquire-leonard-clippers
+- https://www.nba.com/news/chris-paul-traded-raptors-2026
+- https://www.espn.com/nba/story/_/id/49783369/washington-wizards-offseason-recap-2026-27-season-preview-stats-roster-depth-chart
+- https://www.nba.com/wizards/news/wizards-acquire-deandre-ayton
+- https://www.espn.com/story/_/id/49301627  (Middleton 6-team sign-and-trade)
+- https://www.nba.com/wizards/news/wizardsacquiretre-mann
+- https://en.wikipedia.org/wiki/2026_NBA_draft
+- https://www.olympics.com/en/news/2026-nba-draft-all-picks-full-list
+- https://www.nba.com/news/grizzlies-swap-first-round-picks-thunder-pistons
+
+## 2026 draft, first round (team that ended up with the player)
+
+- 1|AJ Dybantsa|was
+- 2|Darryn Peterson|uta
+- 3|Cameron Boozer|mem
+- 4|Caleb Wilson|chi
+- 5|Keaton Wagler|lac
+- 6|Mikel Brown Jr.|bkn
+- 7|Darius Acuff Jr.|sac
+- 8|Kingston Flemings|atl
+- 9|Morez Johnson Jr.|dal
+- 10|Brayden Burries|mil
+- 11|Yaxel Lendeborg|gsw
+- 12|Aday Mara|okc
+- 13|Nate Ament|mil
+- 14|Hannes Steinbach|cha
+- 15|Dailyn Swain|chi
+- 16|Bennett Stirtz|okc
+- 17|Ebuka Okorie|det
+- 18|Christian Anderson|cha
+- 19|Allen Graves|tor
+- 20|Jayden Quaintance|sas
+- 21|Karim López|mem
+- 22|Labaron Philon Jr.|phi
+- 23|Zuby Ejiofor|atl
+- 24|Cameron Carr|lal?
+- 25|Sergio de Larrea|nyk?
+- 26|Tarris Reed Jr.|sas
+- 27|Chris Cenac Jr.|bos
+- 28|Joshua Jefferson|bkn?
+- 29|Alex Karaban|sac
+- 30|Koa Peat|phx

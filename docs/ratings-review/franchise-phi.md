@@ -104,14 +104,14 @@
 | Player | Pos | OVR | Age | Type | Salary | Dur |
 |---|---|---|---|---|---|---|
 | Tyrese Maxey | PG | **90** | 25 | scorer | $30M | 80 |
-| Paul George | SF/PF | **80** | 36 | twoway | $12M | 45 |
+| Jaylen Brown | SG/SF | **89** | 30 | slasher | $28M | 80 |
+| LeBron James | SF/PF | **88** | 41 | point | $26M | 60 |
 | VJ Edgecombe | SG | **80** | 21 | slasher | $12M | 80 |
-| Quentin Grimes | SG | **78** | 26 | twoway | $9.5M | 80 |
-| Kelly Oubre Jr. | SF | **77** | 30 | slasher | $8.5M | 80 |
-| Jared McCain | PG/SG | **77** | 22 | shooter | $8.5M | 55 |
-| Andre Drummond | C | **72** | 33 | big | $4M | 80 |
+| Anfernee Simons | SG/PG | **80** | 27 | scorer | $12M | 80 |
+| Kentavious Caldwell-Pope | SG | **75** | 33 | wing3d | $6M | 80 |
+| Dean Wade | PF | **72** | 29 | defender | $4M | 80 |
 | Dominick Barlow | PF | **72** | 23 | rim | $4M | 80 |
 | Adem Bona | C | **72** | 23 | rim | $4M | 80 |
-| Trendon Watford | PF | **71** | 25 | point | $3.5M | 80 |
 | Justin Edwards | SF | **70** | 22 | wing3d | $3M | 80 |
-| Kyle Lowry | PG | **66** | 40 | playmaker | $1.5M | 68 |
+| Labaron Philon Jr. | PG | **69** | 21 | scorer | $2.5M | 80 |
+| Jabari Walker | PF | **68** | 24 | defender | $2.5M | 80 |

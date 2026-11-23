@@ -32,7 +32,7 @@ describe('Current Day 2026 pool', () => {
   });
 
   it('has 30 NBA teams plus the rookie class, each covering all five positions', () => {
-    expect(current2026.teams.filter((t) => t.id !== 'rookies-2026')).toHaveLength(30);
+    expect(current2026.teams).toHaveLength(30);
     for (const t of current2026.teams) {
       const covered = new Set(t.players.flatMap((p) => [p.pos, p.pos2]));
       for (const pos of POSITIONS) expect(covered.has(pos), `${t.label} missing ${pos}`).toBe(true);

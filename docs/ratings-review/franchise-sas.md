@@ -120,10 +120,10 @@
 | Dylan Harper | SG/PG | **82** | 20 | scorer | $15M | 80 |
 | Devin Vassell | SG | **79** | 26 | wing3d | $11M | 80 |
 | Keldon Johnson | SF | **78** | 26 | slasher | $9.5M | 80 |
+| Tobias Harris | PF | **78** | 34 | twoway | $9.5M | 80 |
 | Harrison Barnes | PF/SF | **75** | 34 | wing3d | $6M | 80 |
-| Jeremy Sochan | PF | **75** | 23 | defender | $6M | 80 |
 | Julian Champagnie | SF | **75** | 25 | shooter | $6M | 80 |
 | Luke Kornet | C | **74** | 31 | rim | $5.5M | 80 |
-| Kelly Olynyk | C/PF | **71** | 35 | stretch | $3.5M | 68 |
+| Jayden Quaintance | C | **72** | 19 | rim | $4M | 50 |
 | Carter Bryant | SF | **70** | 20 | defender | $3M | 80 |
 | Jordan McLaughlin | PG | **68** | 30 | playmaker | $2.5M | 80 |
