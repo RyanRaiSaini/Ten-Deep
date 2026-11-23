@@ -603,6 +603,11 @@
     "value": "Reddedildi: onlar için yeterli değer yok",
     "cap": "Reddedildi: maaş tavanını aşıyor",
     "position": "Reddedildi: ilk beş oyuncusu pozisyona uymalı",
-    "missing": "Önce iki oyuncuyu da seç"
+    "missing": "Önce iki oyuncuyu da seç",
+    "stars": "Reddedildi: bir takımda en fazla iki 95+ süperstar olabilir"
+  },
+  "profile": {
+    "title": "Profil",
+    "pick": "Avatarını seç"
   }
 }

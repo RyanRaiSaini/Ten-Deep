@@ -607,6 +607,11 @@
     "value": "Refusé : pas assez de valeur pour eux",
     "cap": "Refusé : ça dépasse le plafond",
     "position": "Refusé : un titulaire doit correspondre au poste",
-    "missing": "Choisis d'abord les deux joueurs"
+    "missing": "Choisis d'abord les deux joueurs",
+    "stars": "Refusé : deux superstars 95+ maximum par équipe"
+  },
+  "profile": {
+    "title": "Profil",
+    "pick": "Choisis ton avatar"
   }
 }

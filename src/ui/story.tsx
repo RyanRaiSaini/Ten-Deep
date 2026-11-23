@@ -24,10 +24,12 @@ export function NewsItem({ h }: { h: Headline }) {
 }
 
 /** Two short box-score tables (yours first). */
-export function BoxScore({ result, mine, theirs, names }: { result: GameResult; mine: Roster; theirs: Roster; names: [string, string] }) {
+export function BoxScore({ result, mine, theirs, names, userHome }: { result: GameResult; mine: Roster; theirs: Roster; names: [string, string]; userHome: boolean }) {
   const { t } = useTranslation();
   const ids = new Set(Object.values(mine.slots).map((p) => p.id));
   const theirIds = new Set(Object.values(theirs.slots).map((p) => p.id));
+  // New saves record each line's side; older ones fall back to today's rosters.
+  const isMine = (b: BoxLine) => (b.home !== undefined ? b.home === userHome : ids.has(b.playerId));
   const side = (keep: (b: BoxLine) => boolean, n: number) => result.box.filter(keep).sort((a, b) => b.pts - a.pts).slice(0, n);
   const table = (rows: BoxLine[], title: string) => (
     <View style={{ gap: 2 }}>
@@ -36,7 +38,7 @@ export function BoxScore({ result, mine, theirs, names }: { result: GameResult; 
         {(['min', 'pts', 'reb', 'ast'] as const).map((k) => <Text key={k} style={[styles.boxNum, styles.boxHead]}>{t(`box.${k}`)}</Text>)}
       </View>
       {rows.map((b) => (
-        <View key={b.playerId} style={styles.boxRow}>
+        <View key={`${b.home}-${b.playerId}`} style={styles.boxRow}>
           <Text style={styles.boxName} numberOfLines={1}>{b.name}</Text>
           <Text style={styles.boxNum}>{Math.round(b.min)}</Text>
           <Text style={[styles.boxNum, { color: C.text, fontWeight: '800' }]}>{b.pts}</Text>
@@ -48,8 +50,8 @@ export function BoxScore({ result, mine, theirs, names }: { result: GameResult; 
   );
   return (
     <View style={styles.box} testID="box-score">
-      {table(side((b) => ids.has(b.playerId), 10), names[0])}
-      {table(side((b) => theirIds.has(b.playerId) || (!ids.has(b.playerId) && !theirIds.has(b.playerId)), 5), names[1])}
+      {table(side(isMine, 10), names[0])}
+      {table(side((b) => !isMine(b) && (b.home !== undefined || theirIds.has(b.playerId) || !ids.has(b.playerId)), 5), names[1])}
     </View>
   );
 }

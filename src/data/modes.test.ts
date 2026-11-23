@@ -6,10 +6,10 @@ import { POSITIONS } from '../engine/types';
 import { MODES, MODE_BY_ID, leaguePoolFor } from './modes';
 
 describe('modes', () => {
-  it('registers current day, 6 eras and 10 franchises', () => {
+  it('registers current day, 8 eras and 30 franchises', () => {
     expect(MODES.filter((m) => m.kind === 'current')).toHaveLength(1);
-    expect(MODES.filter((m) => m.kind === 'era')).toHaveLength(6);
-    expect(MODES.filter((m) => m.kind === 'franchise')).toHaveLength(10);
+    expect(MODES.filter((m) => m.kind === 'era')).toHaveLength(8);
+    expect(MODES.filter((m) => m.kind === 'franchise')).toHaveLength(30);
   });
 
   it.each(MODES.map((m) => [m.id, m] as const))('%s: valid ratings, unique ids and names, all positions', (_, m) => {
@@ -42,7 +42,7 @@ describe('modes', () => {
       const league = MODE_BY_ID[leaguePoolFor(m)].pool;
       expect(() => draftLeague(league, new Set(), 29, createRng(`lg-${m.id}`)), m.id).not.toThrow();
     }
-  });
+  }, 60_000);
 
   it.each(MODES.filter((m) => m.kind !== 'current').map((m) => [m.id, m] as const))(
     '%s: 50 random drafts never dead-end',

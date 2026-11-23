@@ -83,6 +83,14 @@ describe('news', () => {
     expect(kinds).toContain('wins');
   });
 
+  it('taking first place is news once, not every few games while you hold it', async () => {
+    const { POOLS } = await import('../../data');
+    const lg = draftLeague(POOLS['current-2026'], new Set(), 30, createRng('n35'));
+    const s = advance(advance({ ...createSeason(lg[0], lg.slice(1), 'n35'), deadlineUsed: true }, SEASON_GAMES), SEASON_GAMES);
+    const firsts = (s.news ?? []).filter((h) => h.kind === 'first').map((h) => h.round);
+    for (let i = 1; i < firsts.length; i++) expect(firsts[i] - firsts[i - 1], firsts.join()).not.toBe(11);
+  });
+
   it('a full season produces a handful of headlines, stored on the season', () => {
     expect(full.news?.length ?? 0).toBeGreaterThan(3);
     expect(full.news!.length).toBeLessThanOrEqual(40);

@@ -607,6 +607,11 @@
     "value": "Rechazado: no les compensa",
     "cap": "Rechazado: rompe el tope salarial",
     "position": "Rechazado: un titular debe encajar en la posición",
-    "missing": "Elige primero a los dos jugadores"
+    "missing": "Elige primero a los dos jugadores",
+    "stars": "Rechazado: máximo dos superestrellas 95+ por equipo"
+  },
+  "profile": {
+    "title": "Perfil",
+    "pick": "Elige tu avatar"
   }
 }
