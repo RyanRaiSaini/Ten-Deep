@@ -355,7 +355,14 @@
     "r_first": "Eliminado na primeira rodada",
     "r_missed": "Fora dos playoffs",
     "years": "{{n}} ano(s)",
-    "nothingAffordable": "Ninguém cabe no teto."
+    "nothingAffordable": "Ninguém cabe no teto.",
+    "morale": "Moral",
+    "moraleEffect": "nota do time",
+    "records": "Maiores pontuadores da franquia",
+    "hof": "Hall da Fama",
+    "hofEmpty": "Quatro temporadas com você e uma grande carreira garantem a vaga.",
+    "lottery": "Loteria do draft",
+    "lotterySkip": "Pular"
   },
   "collect": {
     "title": "Coleção",
@@ -579,5 +586,18 @@
     "reb": "REB",
     "ast": "AST",
     "tap": "Toque num jogo recente para ver as estatísticas"
+  },
+  "trade": {
+    "title": "Troca",
+    "hint": "O GM deles só aceita se sair ganhando. ✓ marca os jogadores que trocariam pelo seu.",
+    "yours": "Seu jogador",
+    "team": "Parceiro de troca",
+    "theirs": "Jogadores do {{team}}",
+    "propose": "Propor troca",
+    "accepted": "Negócio fechado!",
+    "value": "Recusada: não vale para eles",
+    "cap": "Recusada: estoura o teto",
+    "position": "Recusada: um titular precisa servir na posição",
+    "missing": "Escolha os dois jogadores primeiro"
   }
 }

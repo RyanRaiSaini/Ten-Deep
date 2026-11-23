@@ -355,7 +355,14 @@
     "r_first": "İlk turda elendi",
     "r_missed": "Playofflara kalamadı",
     "years": "{{n}} yıl",
-    "nothingAffordable": "Tavana sığan kimse yok."
+    "nothingAffordable": "Tavana sığan kimse yok.",
+    "morale": "Moral",
+    "moraleEffect": "takım reytingi",
+    "records": "Franchise'ın en skorerleri",
+    "hof": "Şöhretler Müzesi",
+    "hofEmpty": "Seninle dört sezon ve harika bir kariyer yer kazandırır.",
+    "lottery": "Draft lotaryası",
+    "lotterySkip": "Atla"
   },
   "collect": {
     "title": "Koleksiyon",
@@ -579,5 +586,18 @@
     "reb": "RB",
     "ast": "AS",
     "tap": "İstatistikler için yakın tarihli bir maça dokun"
+  },
+  "trade": {
+    "title": "Takas",
+    "hint": "Karşı GM ancak kazançlı çıkarsa kabul eder. ✓ seninkiyle takas edeceği oyuncuları gösterir.",
+    "yours": "Senin oyuncun",
+    "team": "Takas ortağı",
+    "theirs": "{{team}} oyuncuları",
+    "propose": "Takas teklif et",
+    "accepted": "Anlaşma tamam!",
+    "value": "Reddedildi: onlar için yeterli değer yok",
+    "cap": "Reddedildi: maaş tavanını aşıyor",
+    "position": "Reddedildi: ilk beş oyuncusu pozisyona uymalı",
+    "missing": "Önce iki oyuncuyu da seç"
   }
 }

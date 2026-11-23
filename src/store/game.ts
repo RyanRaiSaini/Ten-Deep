@@ -8,7 +8,7 @@ import {
 } from '../engine/draft';
 import { champion, playNextGame, seriesFor, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
 import { createRng, shuffle } from '../engine/rng';
-import { advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
+import { SEASON_GAMES, advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
 import { ALL_SLOTS, type Player, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
 import { withSignedSalaries } from '../engine/career/simulate';
 import { applyCard, type Decision } from '../engine/crisis/apply';
@@ -54,7 +54,8 @@ export interface GameStore {
   /** Management Crisis: a normal draft in any mode, then a season interrupted by crisis cards. */
   newCrisis: (poolId: string, career?: boolean) => void;
   /** Career seasons 2+: start a Crisis season from the evolved league (no draft). */
-  startCareerSeason: (teams: Roster[], seed: string) => void;
+  /** `mod`: season-long team rating nudge (career morale). */
+  startCareerSeason: (teams: Roster[], seed: string, mod?: number) => void;
   /** The season reached a card round: deal that card. */
   openCrisis: (season: SeasonState) => void;
   resolveCrisis: (d: Decision) => void;
@@ -150,8 +151,11 @@ export const useGame = create<GameStore>()(
         get().newRun(poolId);
         set({ career, crisis: { objective: null, drawn: [], resolved: 0, pending: null, verdict: null } });
       },
-      startCareerSeason: (teams, seed) => {
-        const season = { ...createSeason(teams[0], teams.slice(1), seed), stops: CARD_ROUNDS.slice(1) };
+      startCareerSeason: (teams, seed, mod = 0) => {
+        const season = {
+          ...createSeason(teams[0], teams.slice(1), seed), stops: CARD_ROUNDS.slice(1),
+          ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
+        };
         set({
           phase: 'season', poolId: 'current-2026', daily: null, career: true, draft: null, playoffs: null, deadline: null,
           season, crisis: { objective: boardObjective(season), drawn: [], resolved: 0, pending: null, verdict: null },

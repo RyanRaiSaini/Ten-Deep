@@ -12,6 +12,8 @@ const { isComplete, options, startDraft } = await import('../engine/draft');
 const { advance } = await import('../engine/season');
 const { ALL_SLOTS } = await import('../engine/types');
 const { openSlotCount } = await import('../engine/career/offseason');
+const { evaluateTrade } = await import('../engine/career/trades');
+type SlotId = import('../engine/types').SlotId;
 
 /** Play the current career season through: resolve every card with defaults, finish the season and playoffs. */
 function playSeason() {
@@ -54,6 +56,10 @@ describe('career store', () => {
     const c1 = useCareer.getState();
     expect(c1.history).toHaveLength(1);
     expect(c1.history[0].label).toBe('2026-27');
+    // Franchise records and morale move with the season.
+    expect(Object.keys(c1.stats).length).toBeGreaterThanOrEqual(8);
+    expect(Object.values(c1.stats).every((x) => x.seasons === 1 && x.gp > 0)).toBe(true);
+    expect(c1.morale).not.toBe(60);
 
     if (c1.ended) return; // fired out of a job in year one is possible
     c1.beginOffseason();
@@ -63,6 +69,19 @@ describe('career store', () => {
     expect(useCareer.getState().step).toBe('draft');
     useCareer.getState().draftRookie();
     expect(useCareer.getState().step).toBe('freeAgency');
+    // A trade the other GM likes goes through and costs a little morale.
+    const st = useCareer.getState().offseason!;
+    const deal = (() => {
+      for (const [k, mine] of Object.entries(st.teams[0].slots)) for (let ti = 1; ti < st.teams.length; ti++)
+        for (const theirs of Object.values(st.teams[ti].slots)) if (mine && theirs && evaluateTrade(st, mine.id, ti, theirs.id).ok) return { k, give: mine.id, ti, want: theirs.id };
+      return null;
+    })();
+    if (deal) {
+      const m = useCareer.getState().morale;
+      expect(useCareer.getState().trade(deal.give, deal.ti, deal.want)).toBe(true);
+      expect(useCareer.getState().offseason!.teams[0].slots[deal.k as SlotId]!.id).toBe(deal.want);
+      expect(useCareer.getState().morale).toBe(Math.max(0, m - 4));
+    }
     // sign until full (affordable best, else minimum exception)
     for (let i = 0; i < 12 && openSlotCount(useCareer.getState().offseason!, 0) > 0; i++) useCareer.getState().autoSign();
     expect(openSlotCount(useCareer.getState().offseason!, 0)).toBe(0);

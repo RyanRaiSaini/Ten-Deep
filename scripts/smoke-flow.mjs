@@ -169,11 +169,22 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('21-offseason-contracts');
     await page.getByTestId('off-contracts').click();
     await page.getByTestId('pick-no').waitFor();
+    await page.getByTestId('lottery').waitFor();
+    if (await page.getByTestId('lottery-skip').count()) await page.getByTestId('lottery-skip').click();
     if (await page.getByTestId('off-skip-rookie').count()) {
       await page.getByTestId('slot-B5').last().click();
     }
     await shot('22-offseason-draft');
     await page.getByTestId('off-draft').click();
+    // Offseason trade: propose one deal and get an answer from their GM.
+    await page.getByTestId('to-trade').click();
+    await page.getByTestId('trade-give').first().click();
+    await page.getByTestId('trade-team').first().click();
+    await page.getByTestId('trade-want').first().click();
+    await page.getByTestId('trade-propose').click();
+    await page.getByTestId('trade-msg').waitFor();
+    await shot('35-trade');
+    await page.locator('[data-testid="back"]:visible').click();
     for (let i = 0; i < 12 && !(await page.getByTestId('off-start').count()); i++) {
       if (await page.getByTestId('fa-option').count()) {
         await page.getByTestId('fa-option').first().click();
