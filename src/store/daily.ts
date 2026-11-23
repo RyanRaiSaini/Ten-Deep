@@ -41,7 +41,8 @@ export const useDaily = create<DailyStore>()(
       record: (key, kind, value) => {
         if (get().days[key]?.[kind] !== undefined) return;
         set((s) => ({ days: { ...s.days, [key]: { ...s.days[key], [kind]: value } } }));
-        track({ type: 'daily', perfect: kind === 'trivia' && value === TRIVIA_QUESTIONS });
+        // Starting the Daily Draft only locks it; the finished run is what counts as a daily game.
+        if (kind !== 'draftStarted') track({ type: 'daily', perfect: kind === 'trivia' && value === TRIVIA_QUESTIONS });
       },
       saveProgress: (key, kind, p) =>
         set((s) => ({ days: { ...s.days, [key]: { ...s.days[key], progress: { ...s.days[key]?.progress, [kind]: p } } } })),

@@ -66,6 +66,12 @@ export function respin(state: DraftState, pool: Pool): DraftState {
   return landSpin({ ...state, respinsLeft: state.respinsLeft - 1 }, pool);
 }
 
+/** A shop reroll: spin this round again without using a free respin. */
+export function reroll(state: DraftState, pool: Pool): DraftState {
+  if (isComplete(state) || !state.spin) throw new Error('Nothing to reroll');
+  return landSpin(state, pool);
+}
+
 const sortedCache = new WeakMap<Pool, Player[]>();
 function bySalary(pool: Pool): Player[] {
   let list = sortedCache.get(pool);

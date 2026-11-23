@@ -1,9 +1,9 @@
-// Import only the weights the game uses, so the other 14 Nunito styles stay out of the app.
+// Import only the weights the game uses, so the other font styles stay out of the app.
+import { LeagueSpartan_500Medium } from '@expo-google-fonts/league-spartan/500Medium';
+import { LeagueSpartan_600SemiBold } from '@expo-google-fonts/league-spartan/600SemiBold';
+import { LeagueSpartan_700Bold } from '@expo-google-fonts/league-spartan/700Bold';
+import { LeagueSpartan_800ExtraBold } from '@expo-google-fonts/league-spartan/800ExtraBold';
 import { LilitaOne_400Regular } from '@expo-google-fonts/lilita-one/400Regular';
-import { Nunito_600SemiBold } from '@expo-google-fonts/nunito/600SemiBold';
-import { Nunito_700Bold } from '@expo-google-fonts/nunito/700Bold';
-import { Nunito_800ExtraBold } from '@expo-google-fonts/nunito/800ExtraBold';
-import { Nunito_900Black } from '@expo-google-fonts/nunito/900Black';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -42,7 +42,7 @@ function useHydrated() {
 export default function RootLayout() {
   const language = useSettings((s) => s.language);
   const hydrated = useHydrated();
-  const [fontsLoaded, fontError] = useFonts({ LilitaOne_400Regular, Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold, Nunito_900Black });
+  const [fontsLoaded, fontError] = useFonts({ LilitaOne_400Regular, LeagueSpartan_500Medium, LeagueSpartan_600SemiBold, LeagueSpartan_700Bold, LeagueSpartan_800ExtraBold });
   // Fonts that fail to load fall back to system fonts rather than blocking the game.
   const ready = hydrated && (fontsLoaded || !!fontError);
   useMusic();

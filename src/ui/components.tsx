@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, Switch, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, View, useWindowDimensions, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import { isRTL } from '../i18n';
@@ -36,7 +36,8 @@ export function Screen({
   /** Inside the tab navigator: leave room for the tab bar, which handles the bottom safe area. */
   tabbed?: boolean;
 }) {
-  const body = <View style={[styles.inner, wide && styles.innerWide, (!!footer || tabbed) && { paddingBottom: 120 }]}>{children}</View>;
+  const laptop = useWindowDimensions().width >= 1024;
+  const body = <View style={[styles.inner, laptop && styles.innerLaptop, wide && styles.innerWide, (!!footer || tabbed) && { paddingBottom: 120 }]}>{children}</View>;
   return (
     <SafeAreaView style={styles.screen} edges={footer || tabbed ? ['top'] : ['top', 'bottom']}>
       {tint && <LinearGradient colors={[alpha(tint, 0.28), alpha(tint, 0.06), alpha(C.bg, 0)]} locations={[0, 0.5, 1]} style={styles.tint} />}
@@ -56,7 +57,9 @@ export function Display({
   /** Color of a chunky 3D extrusion under the letters (logo style). */
   extrude?: string;
 }) {
-  const w = Math.max(2, Math.round(size / 11));
+  const w = size < 28 ? 1.5 : Math.max(2, Math.round(size / 11));
+  // The outline copies fill thin spaces at small sizes; an en space keeps words apart.
+  if (typeof children === 'string') children = children.replace(/ /g, '\u2002');
   const base: TextStyle = { fontFamily: FONT.display, fontSize: size, lineHeight: Math.round(size * 1.18), textAlign: align, letterSpacing: 0.3 };
   const ghost = { accessibilityElementsHidden: true, importantForAccessibility: 'no-hide-descendants' as const, 'aria-hidden': true, selectable: false };
   const offsets = [[-w, 0], [w, 0], [0, -w], [0, w], [-w, -w], [w, w], [-w, w], [w, -w]];
@@ -79,8 +82,8 @@ export function Display({
 export function TabTitle({ icon, title }: { icon: ReactNode; title: string }) {
   return (
     <View style={styles.tabTitle}>
-      {icon}
-      <Display size={40}>{title}</Display>
+      <View style={{ flexShrink: 0 }}>{icon}</View>
+      <Display size={title.length > 14 ? 28 : title.length > 10 ? 34 : 40} style={{ flexShrink: 1 }}>{title}</Display>
     </View>
   );
 }
@@ -89,7 +92,7 @@ export function Header({ title, left, right }: { title: string; left?: ReactNode
   return (
     <View style={styles.header}>
       <View style={styles.headerSide}>{left}</View>
-      <Text style={styles.headerTitle} numberOfLines={1}>{title}</Text>
+      <Text style={styles.headerTitle} numberOfLines={2}>{title}</Text>
       <View style={[styles.headerSide, { alignItems: 'flex-end' }]}>{right}</View>
     </View>
   );
@@ -230,16 +233,17 @@ const styles = StyleSheet.create({
   tint: { position: 'absolute', top: 0, left: 0, right: 0, height: 420, pointerEvents: 'none' },
   inner: { flex: 1, width: '100%', maxWidth: 560, alignSelf: 'center', paddingHorizontal: S.lg, paddingBottom: S.xl, gap: S.md },
   innerWide: { maxWidth: 1120 },
+  innerLaptop: { maxWidth: 760 },
   ghost: { position: 'absolute' },
   tabTitle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: S.sm, paddingTop: S.lg, paddingBottom: S.sm },
   header: { flexDirection: 'row', alignItems: 'center', paddingVertical: S.md, gap: S.sm },
-  headerSide: { width: 64 },
-  headerTitle: { flex: 1, textAlign: 'center', color: C.ink, fontSize: 24, fontFamily: FONT.display },
+  headerSide: { width: 56 },
+  headerTitle: { flex: 1, textAlign: 'center', color: C.ink, fontSize: 21, lineHeight: 25, fontFamily: FONT.display, fontWeight: '900' },
   button: {
     flexDirection: 'row', gap: S.sm, paddingVertical: 14, paddingHorizontal: S.lg, borderRadius: R.pill, borderWidth: 2,
     alignItems: 'center', justifyContent: 'center', minHeight: 54,
   },
-  buttonText: { fontSize: 17, fontWeight: '900', letterSpacing: 0.2 },
+  buttonText: { fontSize: 17, fontWeight: '900', letterSpacing: 0.2, textAlign: 'center', flexShrink: 1 },
   square: {
     width: 50, height: 50, borderRadius: 16, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center',
     borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge,

@@ -16,6 +16,7 @@ const weekly = (stat: StatKey, target: number): Mission => ({ id: `w-${stat}`, s
 export const DAILY_POOL: Mission[] = [
   daily('runs', 1), daily('win40', 1), daily('playoffRuns', 1), daily('dailyGames', 2), daily('packs', 1),
   daily('gauntletSeries', 1), daily('duels', 1), daily('seasonWins', 100), daily('franchiseRuns', 1), daily('eraRuns', 1),
+  daily('rerolls', 1),
 ];
 
 export const WEEKLY_POOL: Mission[] = [

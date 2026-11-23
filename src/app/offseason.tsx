@@ -34,7 +34,7 @@ export default function Offseason() {
     const expiring = st.expiring.map((id) => ALL_SLOTS.map((k) => user.slots[k]).find((p) => p?.id === id)!).filter(Boolean);
     const kept = keep ?? expiring.filter((p) => p.ovr >= RESIGN_THRESHOLD).map((p) => p.id);
     return (
-      <Screen>
+      <Screen key="step-1">
         <Header title={`${t('career.title')} · ${seasonLabel(st.season)}`} left={<BackButton onPress={() => router.navigate('/career')} />} />
         <Label>{t('career.progress')}</Label>
         <Card style={{ gap: 4 }}>
@@ -83,9 +83,9 @@ export default function Offseason() {
     const pickId = rookie ?? available[0]?.id;
     const pick = available.find((r) => r.id === pickId);
     return (
-      <Screen>
+      <Screen key="step-2">
         <Header title={t('career.draft')} left={<BackButton onPress={() => router.navigate('/career')} />} />
-        <LotteryReveal order={st.order} names={(i) => (i === 0 ? t('league.you') : st.teams[i].name)} />
+        <LotteryReveal order={st.order} names={(i) => (i === 0 ? t('league.you') : st.teams[i].name)} colors={(i) => st.teams[i].colors} />
         <Text style={styles.big} testID="pick-no">{t('career.yourPick', { n: pickNo })}</Text>
         {available.map((r) => (
           <PlayerCard key={r.id} player={r} testID="rookie" selected={pickId === r.id} onPress={() => setRookie(r.id)} />
@@ -117,7 +117,7 @@ export default function Offseason() {
     feel('pickChime');
   };
   return (
-    <Screen>
+    <Screen key="step-3">
       <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.navigate('/career')} />} />
       <Text style={styles.big}>{t('career.openSpots', { count: open })}</Text>
       <Button label={t('trade.title')} icon={<Icon name="swap" size={22} />} variant="secondary" onPress={() => router.push('/trade')} testID="to-trade" />

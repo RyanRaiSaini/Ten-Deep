@@ -10,6 +10,7 @@ import { useDaily } from '../../store/daily';
 import { BackButton, Button, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S, ovrColor } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
+import { ScoreCard } from '../../ui/dailyKit';
 
 interface Item { id: string; title: string; sub: string; value: number }
 
@@ -93,8 +94,7 @@ export default function Rank() {
       </View>
       {submitted ? (
         <>
-          <Text style={styles.big} testID="rank-score">{t('daily.yourScore', { n: already ?? score })}</Text>
-          <Button label={t('daily.done')} onPress={() => goBack()} />
+          <ScoreCard score={already ?? score} total={5} onDone={() => goBack()} testID="rank-score" />
         </>
       ) : (
         <Button label={t('daily.submit')} onPress={submit} testID="rank-submit" />

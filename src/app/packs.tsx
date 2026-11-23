@@ -86,6 +86,7 @@ export default function Packs() {
   const cards = useMemo(() => (pick ? pick.cards.map((id) => CARD_BY_ID[id]).filter(Boolean) : []), [pick]);
   const [open, setOpen] = useState(false);
   const [flipped, setFlipped] = useState<string[]>([]);
+  const revealing = useRef(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [burst, setBurst] = useState(0);
   const [showOdds, setShowOdds] = useState(false);
@@ -116,7 +117,7 @@ export default function Packs() {
   }
 
   const [c1, c2] = PACK_COLOR[pick.type];
-  const allRevealed = flipped.length === cards.length;
+  const allRevealed = cards.every((c) => flipped.includes(c.id));
   const best = [...cards].sort((a, b) => b.ovr - a.ovr)[0];
 
   const flip = (card: Card) => {
@@ -124,11 +125,15 @@ export default function Packs() {
       if (allRevealed) setSelected(card.id);
       return;
     }
-    setFlipped((f) => [...f, card.id]);
+    // Reveal-all timers call this with an old `flipped`, so de-duplicate inside the updater.
+    setFlipped((f) => (f.includes(card.id) ? f : [...f, card.id]));
     if (RANK[card.tier] >= RANK.mythic) { setBurst((b) => b + 1); feel('fanfare'); }
     else feel(RANK[card.tier] >= RANK.epic ? 'crowd' : 'swish');
   };
   const revealAll = () => {
+    if (revealing.current) return;
+    revealing.current = true;
+    setTimeout(() => { revealing.current = false; }, cards.length * 420 + 100);
     const order = cards.filter((c) => !flipped.includes(c.id)).sort((a, b) => a.ovr - b.ovr); // best last
     order.forEach((c, i) => setTimeout(() => flip(c), i * 420));
   };
@@ -257,7 +262,7 @@ const styles = StyleSheet.create({
   titleRow: { alignItems: 'center', gap: 4 },
   packName: { fontSize: 26, ...F.display },
   guarantee: { color: C.gold, fontWeight: '800' },
-  stage: { minHeight: 420, alignItems: 'center', justifyContent: 'center' },
+  stage: { minHeight: 420, alignItems: 'center', justifyContent: 'center', paddingVertical: S.md },
   pack: {
     width: 220, height: 300, borderRadius: R.lg, alignItems: 'center', justifyContent: 'center', gap: S.md,
     shadowOpacity: 0.9, shadowRadius: 30, shadowOffset: { width: 0, height: 0 }, elevation: 14,

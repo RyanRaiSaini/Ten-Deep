@@ -76,7 +76,7 @@ describe('missions', () => {
 
 describe('achievements', () => {
   const snap = (p: Partial<Snapshot> = {}): Snapshot => ({
-    stats: EMPTY_STATS, owned: 0, hasEpic: 0, hasMythic: 0, hasUltra: 0, sets: 0, maxLevel: 0, gauntlet: 0, streak: 0, ...p,
+    stats: EMPTY_STATS, owned: 0, hasEpic: 0, hasMythic: 0, hasUltra: 0, sets: 0, maxLevel: 0, gauntlet: 0, streak: 0, friends: 0, leagueBest: 0, ...p,
   });
 
   it('there are 40+ with unique ids, and gold ones pay the best reward', () => {

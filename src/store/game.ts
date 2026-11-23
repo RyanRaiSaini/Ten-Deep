@@ -4,7 +4,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { MODE_BY_ID, POOLS, leaguePoolFor } from '../data';
 import { draftLeague } from '../engine/aiDraft';
 import {
-  affordableSlots, fallbackPick, isComplete, pick, pickFallback, respin, spin, startDraft, type DraftState,
+  affordableSlots, fallbackPick, isComplete, pick, pickFallback, reroll, respin, spin, startDraft, type DraftState,
 } from '../engine/draft';
 import { champion, playNextGame, seriesFor, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
 import { createRng, shuffle } from '../engine/rng';
@@ -22,6 +22,9 @@ import { pointsFor, stakeGain } from '../engine/league/ladder';
 import { useLeague } from './league';
 import { track } from './progress';
 import { useProfile } from './profile';
+import { useFriends } from './friends';
+import { useShop } from './shop';
+import { raceOutcome } from '../engine/friends/match';
 
 export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'crisis' | 'playoffs' | 'result';
 
@@ -50,15 +53,19 @@ export interface GameStore {
   /** Trade deadline: the replacement spin and the player being moved. */
   deadline: { outId: string | null; spin: TeamSeason | null; spun: boolean } | null;
 
-  newRun: (poolId: string) => void;
+  /** A fresh draft; pass a seed for a race (friends replay the same spins). */
+  newRun: (poolId: string, seed?: string) => void;
+  /** A career season set aside because another run started; "Continue career" brings it back. */
+  parked: Pick<GameStore, 'phase' | 'poolId' | 'draft' | 'season' | 'playoffs' | 'deadline' | 'crisis' | 'stake'> | null;
+  resumeCareer: () => boolean;
   /** A friend's challenge: same pool and seed (same spins), their record to beat. */
-  challenge: { name: string; w: number; l: number } | null;
+  challenge: { name: string; w: number; l: number; pin?: string; depth?: number } | null;
   /** Double or nothing on the playoffs (chosen when they start). */
   stake: 'snap' | 'safe' | null;
   /** League points this run earned (after the stake), for the result screen. */
   leagueGain: number;
   setStake: (s: 'snap' | 'safe') => void;
-  newChallenge: (poolId: string, seed: string, from: { name: string; w: number; l: number }) => void;
+  newChallenge: (poolId: string, seed: string, from: NonNullable<GameStore['challenge']>) => void;
   /** Today's Daily Draft: Current Day pool, seed fixed by date, so everyone gets the same spins and league. */
   newDaily: (key: string) => 'started' | 'resumed' | 'locked';
   /** Management Crisis: a normal draft in any mode, then a season interrupted by crisis cards. */
@@ -71,6 +78,8 @@ export interface GameStore {
   resolveCrisis: (d: Decision) => void;
   doSpin: () => void;
   doRespin: () => void;
+  /** Spend a shop reroll on this spin (not in the Daily Draft or a friend's race, where everyone gets the same spins). */
+  doReroll: () => boolean;
   doPick: (playerId: string, slot: SlotId) => void;
   doFallback: () => void;
   startSeason: () => void;
@@ -92,7 +101,16 @@ const newSeed = () => `${Date.now().toString(36)}-${Math.floor(Math.random() * 1
 
 export const useGame = create<GameStore>()(
   persist(
-    (set, get) => ({
+    (set, get) => {
+      /** Starting any other run sets a live career season aside instead of destroying it. Returns false (so `park() || set(...)` always sets). */
+      const park = (): false => {
+        const s = get();
+        if (s.career && s.phase !== 'idle' && s.phase !== 'result') {
+          set({ parked: { phase: s.phase, poolId: s.poolId, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline, crisis: s.crisis, stake: s.stake } });
+        }
+        return false;
+      };
+      return ({
       phase: 'idle',
       poolId: 'current-2026',
       challenge: null,
@@ -106,9 +124,16 @@ export const useGame = create<GameStore>()(
       playoffs: null,
       deadline: null,
 
+      parked: null,
+      resumeCareer: () => {
+        const p = get().parked;
+        if (!p) return false;
+        set({ ...p, career: true, challenge: null, daily: null, parked: null, leagueGain: 0 });
+        return true;
+      },
       newChallenge: (poolId, seed, from) =>
-        set({ phase: 'draft', poolId, challenge: from, daily: null, crisis: null, career: false, draft: startDraft(pool(poolId), seed), season: null, playoffs: null, deadline: null }),
-      newRun: (poolId) => set({ phase: 'draft', poolId, challenge: null, daily: null, crisis: null, career: false, draft: startDraft(pool(poolId), newSeed()), season: null, playoffs: null, deadline: null }),
+        park() || set({ phase: 'draft', poolId, challenge: from, daily: null, crisis: null, career: false, draft: startDraft(pool(poolId), seed), season: null, playoffs: null, deadline: null }),
+      newRun: (poolId, seed) => park() || set({ phase: 'draft', poolId, challenge: null, daily: null, crisis: null, career: false, draft: startDraft(pool(poolId), seed ?? newSeed()), season: null, playoffs: null, deadline: null }),
       // One shot per day: begin once, resume while that run is alive, locked after it's abandoned or finished.
       newDaily: (key) => {
         const { daily, phase } = get();
@@ -116,11 +141,19 @@ export const useGame = create<GameStore>()(
         const day = useDaily.getState().days[key];
         if (day?.draftStarted || day?.draft) return 'locked';
         useDaily.getState().record(key, 'draftStarted', true);
+        park();
         set({ phase: 'draft', poolId: 'current-2026', challenge: null, daily: key, crisis: null, career: false, draft: startDraft(pool('current-2026'), dailySeed(key)), season: null, playoffs: null, deadline: null });
         return 'started';
       },
       doSpin: () => set((s) => ({ draft: spin(s.draft!, pool(s.poolId)) })),
       doRespin: () => set((s) => ({ draft: respin(s.draft!, pool(s.poolId)) })),
+      doReroll: () => {
+        const s = get();
+        if (!s.draft?.spin || s.daily || s.challenge || !useShop.getState().spend()) return false;
+        set({ draft: reroll(s.draft, pool(s.poolId)) });
+        track({ type: 'reroll' });
+        return true;
+      },
       doPick: (playerId, slot) => set((s) => ({ draft: pick(s.draft!, playerId, slot, pool(s.poolId)) })),
       doFallback: () =>
         set((s) => {
@@ -164,7 +197,7 @@ export const useGame = create<GameStore>()(
 
       newCrisis: (poolId, career = false) => {
         get().newRun(poolId);
-        set({ career, crisis: { objective: null, drawn: [], resolved: 0, pending: null, verdict: null } });
+        set({ career, ...(career ? { parked: null } : {}), crisis: { objective: null, drawn: [], resolved: 0, pending: null, verdict: null } });
       },
       startCareerSeason: (teams, seed, mod = 0) => {
         // Morale's rating nudge is set on the team up front so the board's objective accounts for it.
@@ -253,15 +286,32 @@ export const useGame = create<GameStore>()(
         // track() added the base points; the stake adds or takes the difference.
         if (gain !== base) useLeague.getState().adjust(gain - base);
         set({ leagueGain: gain });
+        if (result.champion && get().stake === 'snap') track({ type: 'allInTitle' });
+        // Friends play this team in a Finals showdown (career and crisis teams count too: they're yours).
+        const user = playoffs.season.teams[0];
+        useFriends.getState().setLastTeam({
+          mode: poolId, w: rec.w, l: rec.l, result: result.champion ? 'champion' : mine.length ? `r${mine.length}` : 'missed',
+          players: { ...user.slots },
+        });
+        // A friend's draft race: more wins wins, then the deeper playoff run.
+        const ch = get().challenge;
+        const seed = playoffs.season.seed;
+        if (ch || seed.startsWith('race-')) useFriends.getState().saveRace(seed, { w: rec.w, l: rec.l, depth: mine.length });
+        if (ch?.pin) {
+          // Depth = playoff series played (0–4); old links without it compare on wins alone.
+          const outcome = raceOutcome({ w: rec.w, depth: ch.depth === undefined ? 0 : mine.length }, { w: ch.w, depth: ch.depth ?? 0 });
+          useFriends.getState().settle(seed, ch.pin, outcome, `${rec.w}-${ch.w}`);
+        }
       },
       setStake: (stake) => set({ stake }),
       quit: () => set({ phase: 'idle', challenge: null, daily: null, crisis: null, career: false, draft: null, season: null, playoffs: null, deadline: null }),
-    }),
+    });
+    },
     {
       name: 'tendeep-run',
       version: 1,
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (s) => ({ phase: s.phase, poolId: s.poolId, challenge: s.challenge, stake: s.stake, leagueGain: s.leagueGain, daily: s.daily, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
+      partialize: (s) => ({ parked: s.parked, phase: s.phase, poolId: s.poolId, challenge: s.challenge, stake: s.stake, leagueGain: s.leagueGain, daily: s.daily, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
     },
   ),
 );

@@ -18,6 +18,8 @@ import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner, teamGradient } from '../ui/Spinner';
 import { C, FONT, R, S, money } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
+import { Die } from '../ui/Dice';
+import { useShop } from '../store/shop';
 
 export default function Draft() {
   const { t } = useTranslation();
@@ -29,6 +31,7 @@ export default function Draft() {
   const [landed, setLanded] = useState(true);
   const [chosen, setChosen] = useState<string | null>(null);
   const [burst, setBurst] = useState(0);
+  const rerolls = useShop((s) => s.rerolls);
 
   const pool = POOLS[g.poolId];
   if (!g.draft || !pool) return <Redirect href="/" />;
@@ -87,7 +90,7 @@ export default function Draft() {
         <Pulse>
           <Pressable onPress={() => doSpin()} testID="spin" accessibilityRole="button" style={({ pressed }) => [styles.spinBtn, pressed && styles.spinBtnPressed]}>
             <Icon name="ball" size={44} />
-            <Display size={34}>{t('draft.spin').replace(/^\W+/, '')}</Display>
+            <Display size={34}>{t('draft.spin').replace(/^[^\p{L}\p{N}]+/u, '')}</Display>
           </Pressable>
         </Pulse>
       )}
@@ -109,7 +112,15 @@ export default function Draft() {
           ))}
           {usable.length === 0 && <Text style={styles.warn}>{t('draft.nothingFits')}</Text>}
           {d.respinsLeft > 0 && (
-            <Button label={t('draft.respin', { n: d.respinsLeft })} variant="secondary" icon={<Icon name="swap" size={22} />} onPress={() => doSpin(true)} testID="respin" />
+            <Button label={t('draft.respin', { n: d.respinsLeft })} variant="secondary" icon={<Die size={26} color="purple" faces={[3, 5, 1]} />} onPress={() => doSpin(true)} testID="respin" />
+          )}
+          {d.respinsLeft === 0 && !complete && !g.daily && !g.challenge && (
+            rerolls > 0 ? (
+              <Button label={t('shop.use', { n: rerolls })} variant="blue" icon={<Die size={26} color="white" />} testID="reroll"
+                onPress={() => { setChosen(null); setLanded(false); if (g.doReroll()) setSpinKey((k) => k + 1); else setLanded(true); }} />
+            ) : (
+              <Button label={t('shop.none')} variant="ghost" icon={<Icon name="shop" size={22} />} onPress={() => router.push('/shop')} testID="reroll-shop" />
+            )
           )}
           {fallback && d.respinsLeft === 0 && (
             <Button

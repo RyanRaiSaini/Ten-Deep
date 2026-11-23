@@ -17,6 +17,7 @@ import { useRunColors } from '../ui/runColors';
 import { BoxScore, Expandable, NewsItem } from '../ui/story';
 import { Icon } from '../ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { CRISIS_ICON } from '../ui/gameIcons';
 
 const BASE_TICK_MS = 120;
 
@@ -111,9 +112,13 @@ export default function Season() {
         {crisis?.objective && (
           <View style={styles.crisisRow}>
             <Text style={styles.crisisGoal}>{t(`crisis.obj_${crisis.objective.tier}`)}</Text>
-            <Text style={styles.crisisCards}>
-              {CARD_ROUNDS.map((_, i) => (crisis.drawn[i] ? cardDef(crisis.drawn[i]).icon : '🂠')).join(' ')}
-            </Text>
+            <View style={styles.crisisIcons}>
+              {CARD_ROUNDS.map((_, i) => (
+                <View key={i} style={[styles.crisisSlot, !crisis.drawn[i] && { opacity: 0.35 }]}>
+                  <Icon name={crisis.drawn[i] ? CRISIS_ICON[crisis.drawn[i]] ?? 'siren' : 'lock'} size={22} />
+                </View>
+              ))}
+            </View>
           </View>
         )}
       </View>
@@ -209,5 +214,6 @@ const styles = StyleSheet.create({
   hint: { color: C.muted, fontSize: 11 },
   crisisRow: { flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', marginTop: S.sm },
   crisisGoal: { color: '#FFFFFF', fontWeight: '900' },
-  crisisCards: { fontSize: 18, letterSpacing: 2 },
+  crisisIcons: { flexDirection: 'row', gap: 4 },
+  crisisSlot: { backgroundColor: '#FFFFFF', borderRadius: 8, padding: 2 },
 });

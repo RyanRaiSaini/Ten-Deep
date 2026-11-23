@@ -11,6 +11,8 @@ import { Button, Card, Label, Screen } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, R, S } from '../ui/theme';
+import { CRISIS_ICON } from '../ui/gameIcons';
+import { Icon } from '../ui/icons';
 
 const RARITY_COLOR: Record<Rarity, string> = { good: C.neon, bad: C.danger, legendary: C.gold };
 const native = Platform.OS !== 'web';
@@ -52,6 +54,34 @@ export default function Crisis() {
   const scale = flip.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1] });
   const objective = g.crisis.objective;
 
+  // Choices sit right under the card; only cards that need you to pick a player keep them under the board.
+  const actions = (
+    card.choice ? (
+        <View style={{ gap: S.sm }}>
+          <Button
+            label={card.id === 'superteam-rumor' ? t('crisis.options.superA') : t('crisis.options.dramaA')}
+            variant={card.id === 'superteam-rumor' ? 'gold' : 'secondary'}
+            onPress={() => resolve('a')}
+            testID="crisis-option-a"
+          />
+          <Button
+            label={card.id === 'superteam-rumor' ? t('crisis.options.superB') : t('crisis.options.dramaB')}
+            variant="ghost"
+            onPress={() => resolve('b')}
+            testID="crisis-option-b"
+          />
+        </View>
+      ) : (
+        <Button
+          label={offer.length || card.outSlots ? t('crisis.confirm') : t('crisis.accept')}
+          disabled={!ready}
+          onPress={() => resolve()}
+          testID="crisis-accept"
+          style={{ backgroundColor: color }}
+        />
+    )
+  );
+
   return (
     <Screen>
       <View style={styles.top}>
@@ -69,7 +99,7 @@ export default function Crisis() {
         <View style={[styles.rarity, { backgroundColor: color }]}>
           <Text style={styles.rarityText}>{t(`crisis.${def.rarity}`)}</Text>
         </View>
-        <Text style={styles.icon}>{def.icon}</Text>
+        <Icon name={CRISIS_ICON[card.id] ?? 'siren'} size={92} />
         <Text style={[styles.title, { color }]}>{t(`crisis.cards.${card.id}.title`)}</Text>
         <Text style={styles.flavor}>“{t(`crisis.cards.${card.id}.flavor`)}”</Text>
         <Text style={styles.effect}>{t(`crisis.cards.${card.id}.effect`)}</Text>
@@ -97,6 +127,7 @@ export default function Crisis() {
         </Card>
       )}
 
+      {!pickOut && actions}
       {pickOut && <Text style={[styles.hint, { color }]}>{t('crisis.pickOut')}</Text>}
       <RosterBoard
         roster={user.slots}
@@ -104,30 +135,7 @@ export default function Crisis() {
         onSlot={pickOut ? (slot) => setOutSlot(slot) : undefined}
       />
 
-      {card.choice ? (
-        <View style={{ gap: S.sm }}>
-          <Button
-            label={card.id === 'superteam-rumor' ? t('crisis.options.superA') : t('crisis.options.dramaA')}
-            variant={card.id === 'superteam-rumor' ? 'gold' : 'secondary'}
-            onPress={() => resolve('a')}
-            testID="crisis-option-a"
-          />
-          <Button
-            label={card.id === 'superteam-rumor' ? t('crisis.options.superB') : t('crisis.options.dramaB')}
-            variant="ghost"
-            onPress={() => resolve('b')}
-            testID="crisis-option-b"
-          />
-        </View>
-      ) : (
-        <Button
-          label={offer.length || card.outSlots ? t('crisis.confirm') : t('crisis.accept')}
-          disabled={!ready}
-          onPress={() => resolve()}
-          testID="crisis-accept"
-          style={{ backgroundColor: color }}
-        />
-      )}
+      {pickOut && actions}
     </Screen>
   );
 }

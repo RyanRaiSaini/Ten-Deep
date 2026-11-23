@@ -4,6 +4,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { settle, type Settlement } from '../engine/league/ladder';
 import { weekKey } from '../engine/progress/missions';
 import { useCollection } from './collection';
+import { track } from './progress';
 
 export interface LeagueStore {
   /** Monday (YYYY-MM-DD) of the week you're playing in. */
@@ -38,6 +39,7 @@ export const useLeague = create<LeagueStore>()(
         const r = settle(s.week, s.tier, s.points);
         if (r.reward) useCollection.getState().grant(r.reward, `league:${s.week}`);
         set({ week, tier: r.tier, points: 0, result: r, best: Math.max(s.best, r.tier) });
+        if (r.tier > s.tier) track({ type: 'promotion' });
       },
 
       add: (points) => set((s) => ({ points: s.points + Math.max(0, points) })),

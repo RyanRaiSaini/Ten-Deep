@@ -22,6 +22,7 @@ export default function Career() {
   const [bannerW, setBannerW] = useState(320);
   const { t } = useTranslation();
   const c = useCareer();
+  const [ending, setEnding] = useState(false);
   const g = useGame();
   const morale = c.morale ?? MORALE_START;
   const leaders = franchiseLeaders(c.stats ?? {}, 5);
@@ -33,6 +34,8 @@ export default function Career() {
     if (!c.active || c.ended) return null;
     if (c.step) return { label: t('career.toOffseason'), go: () => router.push('/offseason') };
     if (g.career && g.phase !== 'idle' && g.phase !== 'result') return { label: t('career.resume'), go: () => router.push(ROUTE[g.phase]) };
+    // Another run replaced the live season: bring it back (that run is left behind, like any abandoned run).
+    if (g.parked && g.parked.phase !== 'idle') { const ph = g.parked.phase; return { label: t('career.resume'), go: () => { g.resumeCareer(); router.push(ROUTE[ph]); } }; }
     if (c.history.length >= c.season) return { label: t('career.toOffseason'), go: () => { c.beginOffseason(); router.push('/offseason'); } };
     return { label: t('career.resume'), go: () => router.push(g.career && g.phase !== 'idle' ? ROUTE[g.phase] : '/draft') };
   })();
@@ -85,6 +88,8 @@ export default function Career() {
             {morale}/100 · {moraleMod(morale) > 0 ? `+${moraleMod(morale)}` : moraleMod(morale)} {t('career.moraleEffect')}
           </Text>
           {next && <Button label={next.label} variant="gold" onPress={next.go} testID="career-next" />}
+          <Button label={ending ? t('career.endSure') : t('career.end')} variant="ghost" testID="career-end"
+            onPress={() => { if (!ending) return setEnding(true); c.quit(); setEnding(false); }} />
         </Card>
       )}
 
