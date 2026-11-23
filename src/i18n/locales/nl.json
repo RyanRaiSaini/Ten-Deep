@@ -414,7 +414,10 @@
     "waiting_one": "{{count}} keuze wacht",
     "waiting_other": "{{count}} keuzes wachten",
     "nextWeekly_one": "Weekkeuze over {{count}} dag",
-    "nextWeekly_other": "Weekkeuze over {{count}} dagen"
+    "nextWeekly_other": "Weekkeuze over {{count}} dagen",
+    "powerUp": "Opladen (nog {{n}})",
+    "powerOdds": "{{pct}}% kans om de hele keuze te upgraden",
+    "upgraded": "GEÜPGRADED!"
   },
   "lineup": {
     "title": "Opstelling",

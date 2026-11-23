@@ -108,3 +108,22 @@ describe('streak freezes', () => {
     expect(useCollection.getState().streak).toBe(1);
   });
 });
+
+describe('power-up taps', () => {
+  it('three taps at most; an upgrade changes the pick type and its cards, the same way every time', () => {
+    useCollection.setState(useCollection.getInitialState(), true);
+    useCollection.getState().checkIn('2026-11-22');
+    const id = useCollection.getState().pending[0].id;
+    const results = [useCollection.getState().powerUp(id), useCollection.getState().powerUp(id), useCollection.getState().powerUp(id)];
+    expect(useCollection.getState().powerUp(id)).toBeNull();
+    const p = useCollection.getState().pending[0];
+    expect(p.taps).toBe(3);
+    const ups = results.filter((r) => r === 'up').length;
+    expect(p.type).toBe((['daily', 'run', 'playoffs', 'weekly'] as const)[ups]);
+    // Replaying the same pick gives the same outcome.
+    useCollection.setState(useCollection.getInitialState(), true);
+    useCollection.getState().checkIn('2026-11-22');
+    const again = [0, 1, 2].map(() => useCollection.getState().powerUp(id));
+    expect(again).toEqual(results);
+  });
+});

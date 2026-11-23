@@ -414,7 +414,10 @@
     "waiting_one": "{{count}} seçim bekliyor",
     "waiting_other": "{{count}} seçim bekliyor",
     "nextWeekly_one": "Haftalık Seçim {{count}} gün sonra",
-    "nextWeekly_other": "Haftalık Seçim {{count}} gün sonra"
+    "nextWeekly_other": "Haftalık Seçim {{count}} gün sonra",
+    "powerUp": "Güçlendir ({{n}} kaldı)",
+    "powerOdds": "Tüm seçimi yükseltme şansı: %{{pct}}",
+    "upgraded": "YÜKSELDİ!"
   },
   "lineup": {
     "title": "Kadro",

@@ -409,7 +409,10 @@
     "guarantee_mythic": "90以上1枚確定",
     "guarantee_legendary": "ウルトラ1枚確定",
     "waiting_other": "未開封のピック {{count}}",
-    "nextWeekly_other": "ウィークリーピックまであと{{count}}日"
+    "nextWeekly_other": "ウィークリーピックまであと{{count}}日",
+    "powerUp": "パワーアップ（残り{{n}}回）",
+    "powerOdds": "ピック全体が昇格する確率{{pct}}%",
+    "upgraded": "アップグレード！"
   },
   "lineup": {
     "title": "ラインナップ",

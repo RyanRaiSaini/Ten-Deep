@@ -409,7 +409,10 @@
     "guarantee_mythic": "90+ 1장 확정",
     "guarantee_legendary": "울트라 1장 확정",
     "waiting_other": "대기 중인 픽 {{count}}개",
-    "nextWeekly_other": "주간 픽까지 {{count}}일"
+    "nextWeekly_other": "주간 픽까지 {{count}}일",
+    "powerUp": "파워업 (남은 횟수 {{n}})",
+    "powerOdds": "픽 전체가 업그레이드될 확률 {{pct}}%",
+    "upgraded": "업그레이드!"
   },
   "lineup": {
     "title": "라인업",

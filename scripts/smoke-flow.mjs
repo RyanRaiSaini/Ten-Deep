@@ -226,6 +226,8 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('picks-banner').click();
     await page.getByTestId('pack-open').waitFor();
     await shot('25-pack-closed');
+    // Power-up taps (up to three) before opening.
+    for (let i = 0; i < 3 && (await page.getByTestId('pack-power').count()); i++) await page.getByTestId('pack-power').click();
     await page.getByTestId('pack-open').click();
     await page.getByTestId('pack-reveal-all').click();
     await page.waitForTimeout(400);

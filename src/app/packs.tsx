@@ -11,9 +11,11 @@ import { TIERS, type Card } from '../engine/collect/tiers';
 import { useCollection } from '../store/collection';
 import { CardBack, CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Header, Label, Screen } from '../ui/components';
-import { C, F, R, S } from '../ui/theme';
+import { C, F, FONT, R, S } from '../ui/theme';
 import { track } from '../store/progress';
 import { goBack } from '../ui/nav';
+import { Icon } from '../ui/icons';
+import { POWER_TAPS, UPGRADE_CHANCE, nextType } from '../engine/collect/powerup';
 
 const native = Platform.OS !== 'web';
 const PACK_COLOR: Record<PickType, [string, string]> = {
@@ -87,12 +89,13 @@ export default function Packs() {
   const [selected, setSelected] = useState<string | null>(null);
   const [burst, setBurst] = useState(0);
   const [showOdds, setShowOdds] = useState(false);
+  const [upgraded, setUpgraded] = useState(false);
   const pulse = useRef(new Animated.Value(0)).current;
   const shake = useRef(new Animated.Value(0)).current;
   const deal = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    setOpen(false); setFlipped([]); setSelected(null);
+    setOpen(false); setFlipped([]); setSelected(null); setUpgraded(false);
     const loop = Animated.loop(Animated.sequence([
       Animated.timing(pulse, { toValue: 1, duration: 900, useNativeDriver: native }),
       Animated.timing(pulse, { toValue: 0, duration: 900, useNativeDriver: native }),
@@ -197,6 +200,23 @@ export default function Packs() {
         <Sparkles fire={burst} color={allRevealed && best ? TIER_STYLE[best.tier].accent : c1} />
       </View>
 
+      {!open && nextType(pick.type) && (pick.taps ?? 0) < POWER_TAPS && (
+        <View style={styles.power}>
+          <Button
+            label={t('collect.powerUp', { n: POWER_TAPS - (pick.taps ?? 0) })}
+            variant="blue"
+            icon={<Icon name="bolt" size={24} />}
+            testID="pack-power"
+            onPress={() => {
+              const r = useCollection.getState().powerUp(pick.id);
+              if (r === 'up') { feel('fanfare'); setBurst((b) => b + 1); setUpgraded(true); }
+              else if (r === 'miss') { feel('buzzer'); Animated.sequence([1, -1, 0].map((x) => Animated.timing(shake, { toValue: x * 0.5, duration: 60, useNativeDriver: native }))).start(); }
+            }}
+          />
+          <Text style={styles.powerOdds}>{t('collect.powerOdds', { pct: Math.round(UPGRADE_CHANCE[pick.taps ?? 0] * 100) })}</Text>
+        </View>
+      )}
+      {!open && upgraded && <Text style={styles.upgraded} testID="pack-upgraded">{t('collect.upgraded')}</Text>}
       {open && !allRevealed && <Button label={t('collect.revealAll')} variant="secondary" onPress={revealAll} testID="pack-reveal-all" />}
       {open && allRevealed && (
         <>
@@ -230,6 +250,9 @@ export default function Packs() {
 }
 
 const styles = StyleSheet.create({
+  power: { gap: 4 },
+  powerOdds: { color: C.muted, fontWeight: '800', fontSize: 12, textAlign: 'center' },
+  upgraded: { fontFamily: FONT.display, fontSize: 26, color: C.blue, textAlign: 'center' },
   count: { color: C.gold, fontWeight: '900', fontSize: 16 },
   titleRow: { alignItems: 'center', gap: 4 },
   packName: { fontSize: 26, ...F.display },

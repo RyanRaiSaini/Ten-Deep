@@ -419,7 +419,10 @@
     "waiting_other": "{{count}} escolhas esperando",
     "nextWeekly_many": "Escolha semanal em {{count}} dias",
     "nextWeekly_one": "Escolha semanal em {{count}} dia",
-    "nextWeekly_other": "Escolha semanal em {{count}} dias"
+    "nextWeekly_other": "Escolha semanal em {{count}} dias",
+    "powerUp": "Turbinar ({{n}} restantes)",
+    "powerOdds": "{{pct}}% de chance de melhorar a escolha inteira",
+    "upgraded": "MELHORADO!"
   },
   "lineup": {
     "title": "Escalação",
