@@ -12,6 +12,8 @@ import { STORES } from '../store/all';
 import { useCollection } from '../store/collection';
 import { useSettings } from '../store/settings';
 import { C } from '../ui/theme';
+import { useProgress } from '../store/progress';
+import { AchievementToast } from '../ui/AchievementToast';
 
 // Keep the splash up until saved progress has loaded.
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -36,7 +38,13 @@ export default function RootLayout() {
   useMusic();
   useNotificationSync(ready);
   // Daily check-in (login streak + Daily/Weekly/Mythic picks) once saved progress has loaded.
-  useEffect(() => { if (ready) useCollection.getState().checkIn(dailyKey()); }, [ready]);
+  useEffect(() => {
+    if (!ready) return;
+    useCollection.getState().checkIn(dailyKey());
+    useProgress.getState().rollover(dailyKey());
+    // Collection milestones (cards, sets, Gauntlet, streak) unlock achievements as they happen.
+    return useCollection.subscribe((s, prev) => { if (s.owned !== prev.owned || s.gauntlet !== prev.gauntlet || s.streak !== prev.streak) useProgress.getState().check(); });
+  }, [ready]);
   useEffect(() => applyLanguage(language ?? deviceLanguage()), [language]);
   useEffect(() => { if (ready) SplashScreen.hideAsync().catch(() => {}); }, [ready]);
 
@@ -45,6 +53,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <StatusBar style="light" />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: C.bg }, animation: 'fade' }} />
+      <AchievementToast />
     </SafeAreaProvider>
   );
 }
