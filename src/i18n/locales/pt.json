@@ -196,7 +196,8 @@
     "resume": "Retomar",
     "missed": "Perdido",
     "replaceRun": "Isso substitui sua partida atual. Toque de novo para começar.",
-    "share": "Compartilhar os resultados de hoje"
+    "share": "Compartilhar os resultados de hoje",
+    "endsIn": "Termina em"
   },
   "duel": {
     "title": "Duelo",

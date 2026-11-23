@@ -194,7 +194,8 @@
     "resume": "Resume",
     "missed": "Missed",
     "replaceRun": "This replaces your current run. Tap again to start.",
-    "share": "Share today's results"
+    "share": "Share today's results",
+    "endsIn": "Ends in"
   },
   "duel": {
     "title": "Duel",

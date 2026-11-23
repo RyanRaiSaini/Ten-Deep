@@ -196,7 +196,8 @@
     "resume": "Riprendi",
     "missed": "Perso",
     "replaceRun": "Questo sostituisce la partita in corso. Tocca di nuovo per iniziare.",
-    "share": "Condividi i risultati di oggi"
+    "share": "Condividi i risultati di oggi",
+    "endsIn": "Termina tra"
   },
   "duel": {
     "title": "Duello",

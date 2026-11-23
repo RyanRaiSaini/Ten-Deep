@@ -194,7 +194,8 @@
     "resume": "Fortsetzen",
     "missed": "Verpasst",
     "replaceRun": "Das ersetzt deinen aktuellen Run. Tippe erneut zum Starten.",
-    "share": "Heutige Ergebnisse teilen"
+    "share": "Heutige Ergebnisse teilen",
+    "endsIn": "Endet in"
   },
   "duel": {
     "title": "Duell",

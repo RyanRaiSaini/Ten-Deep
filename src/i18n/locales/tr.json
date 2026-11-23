@@ -194,7 +194,8 @@
     "resume": "Devam et",
     "missed": "Kaçırıldı",
     "replaceRun": "Bu, mevcut oyununun yerini alır. Başlamak için tekrar dokun.",
-    "share": "Bugünkü sonuçları paylaş"
+    "share": "Bugünkü sonuçları paylaş",
+    "endsIn": "Bitişe"
   },
   "duel": {
     "title": "Düello",
