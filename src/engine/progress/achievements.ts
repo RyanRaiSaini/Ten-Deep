@@ -1,9 +1,9 @@
-/** 42 achievements: each one is a stat reaching a target. Silver pays a Weekly pick, gold a Mythic pick. */
+/** 55 achievements: each one is a stat reaching a target. Silver pays a Weekly pick, gold a Mythic pick. */
 import type { PickType } from '../collect/picks';
 import type { StatKey, Stats } from './stats';
 
 /** Collection-derived values, read live from the collection rather than counted. */
-export type CollectionKey = 'owned' | 'hasEpic' | 'hasMythic' | 'hasUltra' | 'sets' | 'maxLevel' | 'gauntlet' | 'streak';
+export type CollectionKey = 'owned' | 'hasEpic' | 'hasMythic' | 'hasUltra' | 'sets' | 'maxLevel' | 'gauntlet' | 'streak' | 'friends' | 'leagueBest';
 export type ProgressKey = StatKey | CollectionKey;
 
 export type Snapshot = { stats: Stats } & Record<CollectionKey, number>;
@@ -66,6 +66,19 @@ export const ACHIEVEMENTS: Achievement[] = [
   a('loyal', '📆', 'streak', 7, 'bronze'),
   a('devoted', '💫', 'streak', 31, 'gold'),
   a('pack-rat', '🎁', 'packs', 50, 'silver'),
+  a('centurion', '💯', 'streak', 100, 'gold'),
+  a('squad-up', '🤝', 'friendsAdded', 1, 'bronze'),
+  a('crew', '👥', 'friends', 5, 'silver'),
+  a('friendly-fire', '🎯', 'friendGames', 1, 'bronze'),
+  a('bragging-rights', '🗣️', 'friendWins', 10, 'silver'),
+  a('nemesis', '😈', 'friendWins', 50, 'gold'),
+  a('clean-sweep', '🧹', 'friendSweeps', 1, 'silver'),
+  a('all-in', '🎲', 'allInTitles', 1, 'silver'),
+  a('high-roller', '💰', 'allInTitles', 5, 'gold'),
+  a('climber', '🧗', 'promotions', 1, 'bronze'),
+  a('legend-tier', '🏆', 'leagueBest', 9, 'gold'),
+  a('lucky-tap', '🍀', 'pickUpgrades', 1, 'bronze'),
+  a('fresh-spin', '🔄', 'rerolls', 1, 'bronze'),
 ];
 
 export function valueOf(s: Snapshot, k: ProgressKey): number {

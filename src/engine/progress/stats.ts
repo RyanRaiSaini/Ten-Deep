@@ -7,6 +7,7 @@ export const STAT_KEYS = [
   'perfectTitles', 'cinderella', 'underdog',
   'dailyGames', 'triviaPerfect', 'duels', 'gauntletSeries', 'packs',
   'crisisRuns', 'crisisLegend', 'crisisFired', 'careerSeasons', 'careerTitles', 'franchiseRuns', 'eraRuns',
+  'friendsAdded', 'friendGames', 'friendWins', 'friendSweeps', 'allInTitles', 'promotions', 'pickUpgrades', 'rerolls',
 ] as const;
 export type StatKey = (typeof STAT_KEYS)[number];
 export type Stats = Record<StatKey, number>;
@@ -33,7 +34,13 @@ export type GameEvent =
   | { type: 'daily'; perfect: boolean }
   | { type: 'duel' }
   | { type: 'gauntlet' }
-  | { type: 'pack' };
+  | { type: 'pack' }
+  | { type: 'friend'; added: boolean }
+  | { type: 'friendGame'; outcome: 'w' | 'l' | 'd'; sweep: boolean }
+  | { type: 'allInTitle' }
+  | { type: 'promotion' }
+  | { type: 'pickUpgrade' }
+  | { type: 'reroll' };
 
 export function applyEvent(stats: Stats, e: GameEvent): Stats {
   const s = { ...EMPTY_STATS, ...stats };
@@ -70,6 +77,16 @@ export function applyEvent(stats: Stats, e: GameEvent): Stats {
     case 'duel': add('duels'); break;
     case 'gauntlet': add('gauntletSeries'); break;
     case 'pack': add('packs'); break;
+    case 'friend': if (e.added) add('friendsAdded'); break;
+    case 'friendGame':
+      add('friendGames');
+      if (e.outcome === 'w') add('friendWins');
+      if (e.sweep) add('friendSweeps');
+      break;
+    case 'allInTitle': add('allInTitles'); break;
+    case 'promotion': add('promotions'); break;
+    case 'pickUpgrade': add('pickUpgrades'); break;
+    case 'reroll': add('rerolls'); break;
   }
   return s;
 }

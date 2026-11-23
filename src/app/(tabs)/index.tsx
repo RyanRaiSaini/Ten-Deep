@@ -10,6 +10,7 @@ import { useGame } from '../../store/game';
 import { useProfile } from '../../store/profile';
 import { claimableCount, useProgress } from '../../store/progress';
 import { useSettings } from '../../store/settings';
+import { useShop } from '../../store/shop';
 import { Avatar } from '../../ui/Avatar';
 import { AVATARS } from '../../ui/avatars';
 import { Button, Chip, Display, IconButton, Label } from '../../ui/components';
@@ -66,6 +67,8 @@ export default function Home() {
   const checked = (d: string) => !!lastDay && d <= lastDay && d > shiftDay(lastDay, -streak);
   const weekday = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString(i18n.language, { weekday: 'short', timeZone: 'UTC' });
 
+  const rerolls = useShop((s) => s.rerolls);
+  const freeReady = useShop((s) => s.freeDay !== dailyKey());
   const startCurrent = () => { useGame.getState().newRun('current-2026'); router.push('/draft'); };
 
   return (
@@ -74,6 +77,10 @@ export default function Home() {
         <Chip label={t('home.streak')} testID="streak-chip">
           <Icon name="flame" size={26} /><Text style={styles.chipNum}>{streak}</Text>
           {freezes > 0 && <><Icon name="freeze" size={20} /><Text style={styles.freezeNum}>{freezes}</Text></>}
+        </Chip>
+        <Chip onPress={() => router.push('/shop')} testID="shop-chip" label={t('shop.title')}>
+          <Icon name="reroll" size={24} /><Text style={styles.chipNum}>{rerolls}</Text>
+          {freeReady && <View style={styles.freeDot} />}
         </Chip>
         <Chip onPress={() => router.push('/profile')} testID="avatar" label={t('profile.title')}>
           <Avatar id={profile.avatarId} size={30} />
@@ -192,6 +199,7 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+  freeDot: { position: 'absolute', top: -3, right: -3, width: 14, height: 14, borderRadius: 7, backgroundColor: C.danger, borderWidth: 2, borderColor: '#FFFFFF' },
   top: { flexDirection: 'row', alignItems: 'center', gap: S.sm, paddingTop: S.md, justifyContent: 'space-between' },
   chipNum: { fontFamily: FONT.display, fontSize: 22, color: C.ink },
   chipFlag: { fontSize: 20 },

@@ -6,12 +6,71 @@ import { C, FONT } from './theme';
 export type IconName =
   | 'flame' | 'trophy' | 'gear' | 'ball' | 'cards' | 'calendar' | 'crown' | 'clipboard' | 'gift' | 'chart'
   | 'vs' | 'siren' | 'briefcase' | 'back' | 'star' | 'lock' | 'check' | 'bolt' | 'hoop' | 'history' | 'clock'
-  | 'medal' | 'brain' | 'swap' | 'play' | 'sound' | 'globe' | 'shield' | 'news' | 'sparkle' | 'freeze';
+  | 'medal' | 'brain' | 'swap' | 'play' | 'sound' | 'globe' | 'shield' | 'news' | 'sparkle' | 'freeze'
+  | 'friends' | 'shop' | 'reroll' | 'coin' | 'share' | 'plus' | 'tv' | 'handshake';
 
 const K = C.ink;
 const SW = 3;
 
 const PATHS: Record<IconName, ReactElement> = {
+  friends: (
+    <G>
+      <Circle cx={33} cy={15} r={7} fill="#3B6CF0" stroke={K} strokeWidth={SW} />
+      <Path d="M21 40 C21 30 26 25 33 25 C40 25 45 30 45 40 Z" fill="#3B6CF0" stroke={K} strokeWidth={SW} strokeLinejoin="round" />
+      <Circle cx={17} cy={17} r={8} fill="#FF7A1A" stroke={K} strokeWidth={SW} />
+      <Path d="M3 43 C3 32 9 27 17 27 C25 27 31 32 31 43 Z" fill="#FF7A1A" stroke={K} strokeWidth={SW} strokeLinejoin="round" />
+      <Path d="M13 13 C14 11 16 10 18 10" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" opacity={0.6} fill="none" />
+    </G>
+  ),
+  shop: (
+    <G>
+      <Path d="M8 16 H40 L37 43 H11 Z" fill="#18C08A" stroke={K} strokeWidth={SW} strokeLinejoin="round" />
+      <Path d="M16 20 V13 C16 8 19 5 24 5 C29 5 32 8 32 13 V20" fill="none" stroke={K} strokeWidth={SW} strokeLinecap="round" />
+      <Circle cx={24} cy={30} r={7} fill="#FFC53D" stroke={K} strokeWidth={2.5} />
+      <Path d="M12 20 L13 38" stroke="#fff" strokeWidth={3} strokeLinecap="round" opacity={0.5} />
+    </G>
+  ),
+  reroll: (
+    <G>
+      <Path d="M38 20 A15 15 0 0 0 10 18 M10 28 A15 15 0 0 0 38 30" fill="none" stroke={K} strokeWidth={8} strokeLinecap="round" />
+      <Path d="M38 20 A15 15 0 0 0 10 18 M10 28 A15 15 0 0 0 38 30" fill="none" stroke="#7A4DFF" strokeWidth={4} strokeLinecap="round" />
+      <Path d="M40 9 L39 21 L28 18 Z M8 39 L9 27 L20 30 Z" fill="#7A4DFF" stroke={K} strokeWidth={2.5} strokeLinejoin="round" />
+    </G>
+  ),
+  coin: (
+    <G>
+      <Circle cx={24} cy={26} r={18} fill="#E09A00" stroke={K} strokeWidth={SW} />
+      <Circle cx={24} cy={22} r={18} fill="#FFC53D" stroke={K} strokeWidth={SW} />
+      <Circle cx={24} cy={22} r={11} fill="none" stroke="#E09A00" strokeWidth={3} />
+      <SvgText x={24} y={28} fontSize={16} fontFamily={FONT.display} fill="#fff" stroke={K} strokeWidth={1.2} textAnchor="middle">10</SvgText>
+    </G>
+  ),
+  share: (
+    <G>
+      <Path d="M24 30 V6 M15 14 L24 5 L33 14" fill="none" stroke={K} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M24 30 V6 M15 14 L24 5 L33 14" fill="none" stroke="#3B6CF0" strokeWidth={3.5} strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M14 21 H10 V43 H38 V21 H34" fill="none" stroke={K} strokeWidth={SW} strokeLinejoin="round" strokeLinecap="round" />
+    </G>
+  ),
+  plus: (
+    <G>
+      <Circle cx={24} cy={24} r={19} fill="#18C08A" stroke={K} strokeWidth={SW} />
+      <Path d="M24 14 V34 M14 24 H34" stroke="#fff" strokeWidth={5} strokeLinecap="round" />
+    </G>
+  ),
+  tv: (
+    <G>
+      <Rect x={4} y={11} width={40} height={28} rx={6} fill="#3B6CF0" stroke={K} strokeWidth={SW} />
+      <Path d="M20 18 L31 25 L20 32 Z" fill="#fff" stroke={K} strokeWidth={2.2} strokeLinejoin="round" />
+      <Path d="M17 4 L24 11 L31 4 M16 44 H32" fill="none" stroke={K} strokeWidth={SW} strokeLinecap="round" strokeLinejoin="round" />
+    </G>
+  ),
+  handshake: (
+    <G>
+      <Path d="M3 18 L13 12 L24 18 L35 12 L45 18 V28 L35 34 L24 40 L13 34 L3 28 Z" fill="#FFC53D" stroke={K} strokeWidth={SW} strokeLinejoin="round" />
+      <Path d="M14 22 L22 30 M20 20 L28 28 M26 18 L33 25" stroke={K} strokeWidth={2.5} strokeLinecap="round" />
+    </G>
+  ),
   flame: (
     <G>
       <Path d="M24 4 C30 14 38 18 38 30 C38 39 32 45 24 45 C16 45 10 39 10 30 C10 22 16 18 17 10 C20 14 21 17 21 20 C23 16 24 10 24 4 Z" fill="#FF7A1A" stroke={K} strokeWidth={SW} strokeLinejoin="round" />
