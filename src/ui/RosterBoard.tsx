@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Svg, { Circle, G, Path, Rect } from 'react-native-svg';
@@ -20,7 +20,8 @@ const SPOTS: Record<string, [number, number]> = {
   PG: [0.5, 0.16], SG: [0.84, 0.36], SF: [0.16, 0.36], PF: [0.72, 0.68], C: [0.3, 0.7],
 };
 
-function Court({ w, h, paint }: { w: number; h: number; paint: string }) {
+/** The court only redraws when its size or paint color changes (not on every simulated game). */
+const Court = memo(function Court({ w, h, paint }: { w: number; h: number; paint: string }) {
   const planks = Math.ceil(w / 26);
   const kw = w * 0.34;
   return (
@@ -37,15 +38,20 @@ function Court({ w, h, paint }: { w: number; h: number; paint: string }) {
       </G>
     </Svg>
   );
-}
+});
 
 /**
  * Your ten: the starting five on a half-court (paint in your team color), the bench underneath.
  * Tapping a lit spot places the chosen player there.
  */
-export function RosterBoard({
-  roster, highlight, onSlot, injured, color = C.hardwood,
-}: { roster: RosterSlots; highlight?: SlotId[]; onSlot?: (slot: SlotId, p?: Player) => void; injured?: Set<string>; color?: string }) {
+type BoardProps = { roster: RosterSlots; highlight?: SlotId[]; onSlot?: (slot: SlotId, p?: Player) => void; injured?: Set<string>; color?: string };
+
+/** Skip re-rendering while a season simulates if nothing on the board changed. */
+const same = (a: BoardProps, b: BoardProps) =>
+  a.roster === b.roster && a.color === b.color && a.onSlot === b.onSlot && (a.highlight ?? []).join() === (b.highlight ?? []).join()
+  && [...(a.injured ?? [])].sort().join() === [...(b.injured ?? [])].sort().join();
+
+export const RosterBoard = memo(function RosterBoard({ roster, highlight, onSlot, injured, color = C.hardwood }: BoardProps) {
   const { t } = useTranslation();
   const [w, setW] = useState(340);
   const h = Math.min(320, Math.round(w * 0.78));
@@ -95,7 +101,7 @@ export function RosterBoard({
       <View style={styles.bench}>{BENCH_SLOTS.map((s) => token(s, true))}</View>
     </View>
   );
-}
+}, same);
 
 const styles = StyleSheet.create({
   court: { borderRadius: R.lg, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7 },

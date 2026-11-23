@@ -6,25 +6,11 @@ import type { TeamSeason } from '../engine/types';
 import { useSettings } from '../store/settings';
 import { Display } from './components';
 import { Text } from './Text';
+import { teamGradient } from './teamColors';
 import { C, R, S } from './theme';
 
 const native = Platform.OS !== 'web';
-/** Darken a hex color (for the bottom of a team gradient). */
-const deepen = (hex: string, f = 0.62) => {
-  const n = parseInt(hex.slice(1, 7), 16);
-  const c = (s: number) => Math.round(((n >> s) & 255) * f).toString(16).padStart(2, '0');
-  return `#${c(16)}${c(8)}${c(0)}`;
-};
-/** Very light colors (white, silver) need a dark backdrop instead. */
-const luminance = (hex: string) => {
-  const n = parseInt(hex.slice(1, 7), 16);
-  return (0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
-};
-export function teamGradient(colors: [string, string]): [string, string] {
-  const [a, b] = colors;
-  const main = luminance(a) > 0.82 ? b : a;
-  return [main, deepen(main)];
-}
+export { teamGradient } from './teamColors';
 
 /**
  * Slot-machine reel in team colors: flashes through decoy teams, decelerating, and lands on `target`

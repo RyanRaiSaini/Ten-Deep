@@ -12,9 +12,13 @@ export interface CardSet {
   strength: number;
 }
 
-export const SETS: CardSet[] = HISTORY.map((t) => ({
-  id: t.id, label: t.label, colors: t.colors, cards: t.players.map((p) => p.id), strength: teamStrengthScore(t),
-}));
+export const SETS: CardSet[] = HISTORY.map((t) => {
+  let strength: number | undefined;
+  // Strength is only needed for rewards and sorting, so it's computed on first use.
+  return Object.defineProperty({ id: t.id, label: t.label, colors: t.colors, cards: t.players.map((p) => p.id) }, 'strength', {
+    get: () => (strength ??= teamStrengthScore(t)), enumerable: true,
+  }) as CardSet;
+});
 
 const BY_CARD = new Map<string, CardSet[]>();
 for (const s of SETS) for (const c of s.cards) BY_CARD.set(c, [...(BY_CARD.get(c) ?? []), s]);
