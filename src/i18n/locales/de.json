@@ -388,5 +388,30 @@
     "guarantee_mythic": "Ein 90+ garantiert",
     "guarantee_legendary": "Eine Ultra garantiert",
     "nextWeekly": "Wochen-Pick in {{n}} Tagen"
+  },
+  "lineup": {
+    "title": "Aufstellung",
+    "chemistry": "Chemie +{{n}}",
+    "teamRating": "Team-Rating {{n}}",
+    "autoFill": "Beste Aufstellung einsetzen",
+    "pickCard": "Wähle eine Karte für {{slot}}",
+    "clear": "Entfernen",
+    "noCards": "Keine deiner Karten passt auf diese Position.",
+    "callupNote": "Leere Plätze spielen mit Aushilfen (64).",
+    "empty": "Leer"
+  },
+  "gauntlet": {
+    "title": "Der Spießrutenlauf",
+    "desc": "Schlage 10 große Teams in Folge mit deiner Kartenaufstellung. Best-of-3.",
+    "stage": "Stufe {{n}}",
+    "play": "Stufe {{n}} spielen",
+    "next": "Spiel {{n}} spielen",
+    "won": "Du gewinnst die Serie {{w}}-{{l}}!",
+    "lost": "Ausgeschieden {{w}}-{{l}}. Passe deine Aufstellung an und versuch es erneut.",
+    "reward": "Belohnung: {{pick}}",
+    "cleared": "Geschafft",
+    "locked": "Gesperrt",
+    "complete": "Spießrutenlauf geschafft!",
+    "editLineup": "Aufstellung bearbeiten"
   }
 }

@@ -388,5 +388,30 @@
     "guarantee_mythic": "Un 90+ garanti",
     "guarantee_legendary": "Une Ultra garantie",
     "nextWeekly": "Choix de la semaine dans {{n}} jours"
+  },
+  "lineup": {
+    "title": "Alignement",
+    "chemistry": "Chimie +{{n}}",
+    "teamRating": "Note d'équipe {{n}}",
+    "autoFill": "Remplir avec le meilleur alignement",
+    "pickCard": "Choisis une carte pour {{slot}}",
+    "clear": "Retirer",
+    "noCards": "Aucune de tes cartes ne convient à ce poste.",
+    "callupNote": "Les postes vides jouent avec des remplaçants (64).",
+    "empty": "Vide"
+  },
+  "gauntlet": {
+    "title": "Le Défi",
+    "desc": "Bats 10 grandes équipes d'affilée avec ton alignement. Au meilleur des 3.",
+    "stage": "Étape {{n}}",
+    "play": "Jouer l'étape {{n}}",
+    "next": "Jouer le match {{n}}",
+    "won": "Tu gagnes la série {{w}}-{{l}} !",
+    "lost": "Éliminé {{w}}-{{l}}. Ajuste ton alignement et réessaie.",
+    "reward": "Récompense : {{pick}}",
+    "cleared": "Réussie",
+    "locked": "Verrouillée",
+    "complete": "Défi terminé !",
+    "editLineup": "Modifier l'alignement"
   }
 }

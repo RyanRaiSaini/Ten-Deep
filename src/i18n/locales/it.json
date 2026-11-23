@@ -388,5 +388,30 @@
     "guarantee_mythic": "Un 90+ garantito",
     "guarantee_legendary": "Una Ultra garantita",
     "nextWeekly": "Scelta settimanale tra {{n}} giorni"
+  },
+  "lineup": {
+    "title": "Formazione",
+    "chemistry": "Intesa +{{n}}",
+    "teamRating": "Valutazione squadra {{n}}",
+    "autoFill": "Riempi con la formazione migliore",
+    "pickCard": "Scegli una carta per {{slot}}",
+    "clear": "Rimuovi",
+    "noCards": "Nessuna tua carta va bene per questo ruolo.",
+    "callupNote": "I posti vuoti giocano con riserve (64).",
+    "empty": "Vuoto"
+  },
+  "gauntlet": {
+    "title": "La Sfida",
+    "desc": "Batti 10 grandi squadre di fila con la tua formazione. Al meglio delle 3.",
+    "stage": "Tappa {{n}}",
+    "play": "Gioca la tappa {{n}}",
+    "next": "Gioca gara {{n}}",
+    "won": "Vinci la serie {{w}}-{{l}}!",
+    "lost": "Eliminato {{w}}-{{l}}. Sistema la formazione e riprova.",
+    "reward": "Premio: {{pick}}",
+    "cleared": "Superata",
+    "locked": "Bloccata",
+    "complete": "Sfida completata!",
+    "editLineup": "Modifica formazione"
   }
 }

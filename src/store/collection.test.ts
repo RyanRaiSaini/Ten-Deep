@@ -17,6 +17,14 @@ describe('collection store', () => {
     expect(p[0].cards).toHaveLength(5);
   });
 
+  it('first check-in grants a 10-card starter squad and a full lineup, once', () => {
+    useCollection.getState().checkIn('2026-11-22');
+    expect(Object.keys(useCollection.getState().owned)).toHaveLength(10);
+    expect(Object.keys(useCollection.getState().lineup)).toHaveLength(10);
+    useCollection.getState().checkIn('2026-11-23');
+    expect(Object.keys(useCollection.getState().owned)).toHaveLength(10);
+  });
+
   it('7 straight days earns a Weekly pick; a gap resets the streak', () => {
     for (let d = 1; d <= 7; d++) useCollection.getState().checkIn(`2026-12-0${d}`);
     expect(useCollection.getState().streak).toBe(7);
@@ -31,6 +39,33 @@ describe('collection store', () => {
     const p = useCollection.getState().pending;
     expect(p).toHaveLength(1);
     expect(p[0].type).toBe('champion');
+  });
+
+  it('lineup only accepts owned cards in legal slots; autoFill uses the collection', () => {
+    useCollection.setState({ owned: { 'stephen-curry-2016': { count: 1, firstDay: '' } } });
+    useCollection.getState().setSlot('PG', 'stephen-curry-2016');
+    expect(useCollection.getState().lineup.PG).toBe('stephen-curry-2016');
+    useCollection.getState().setSlot('C', 'stephen-curry-2016'); // wrong position
+    expect(useCollection.getState().lineup.C).toBeUndefined();
+    useCollection.getState().setSlot('SG', 'shaquille-o-neal-2000'); // not owned
+    expect(useCollection.getState().lineup.SG).toBeUndefined();
+    useCollection.getState().setSlot('PG', null);
+    expect(useCollection.getState().lineup.PG).toBeUndefined();
+    useCollection.getState().autoFillLineup();
+    expect(useCollection.getState().lineup.PG).toBe('stephen-curry-2016');
+  });
+
+  it('gauntlet: clearing advances one stage at a time; rewards at 3/6/10 are paid once', () => {
+    const g = () => useCollection.getState();
+    g().recordStage(1, true); // can't skip ahead
+    expect(g().gauntlet.cleared).toBe(0);
+    for (let s = 0; s < 3; s++) g().recordStage(s, true);
+    expect(g().gauntlet.cleared).toBe(3);
+    expect(g().pending.filter((p) => p.type === 'playoffs')).toHaveLength(1);
+    g().recordStage(2, true); // replaying a cleared stage pays nothing more
+    expect(g().pending.filter((p) => p.type === 'playoffs')).toHaveLength(1);
+    g().recordStage(3, false);
+    expect(g().gauntlet.cleared).toBe(3);
   });
 
   it('keeping a card adds it to the collection and consumes the pick', () => {
