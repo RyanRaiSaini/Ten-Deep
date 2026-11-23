@@ -191,7 +191,8 @@
     "strength": "Stärke",
     "resume": "Fortsetzen",
     "missed": "Verpasst",
-    "replaceRun": "Das ersetzt deinen aktuellen Run. Tippe erneut zum Starten."
+    "replaceRun": "Das ersetzt deinen aktuellen Run. Tippe erneut zum Starten.",
+    "share": "Heutige Ergebnisse teilen"
   },
   "duel": {
     "title": "Duell",
@@ -653,7 +654,9 @@
     "silver": "Silber",
     "gold": "Gold",
     "platinum": "Platin",
-    "legend": "Legende"
+    "legend": "Legende",
+    "inPromotion": "In der Aufstiegszone!",
+    "toPromotion": "Noch {{n}} Pkt. bis zum Aufstieg"
   },
   "challenge": {
     "invalid": "Dieser Challenge-Link ist kaputt.",

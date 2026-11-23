@@ -6,10 +6,12 @@ import { Text } from '../../ui/Text';
 import { dailyKey } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { useGame } from '../../store/game';
-import { BackButton, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
+import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
 import { C, F, FONT, R, S, alpha } from '../../ui/theme';
 import { TabBar } from '../../ui/TabBar';
 import { Icon, type IconName } from '../../ui/icons';
+import { CONFIG } from '../../config';
+import { shareText } from '../../ui/share';
 
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/playoffs' | '/result'> = {
   draft: '/draft', season: '/season', deadline: '/deadline', playoffs: '/playoffs', result: '/result',
@@ -21,6 +23,7 @@ export default function DailyHub() {
   const day = useDaily((s) => s.days[key]) ?? {};
   const g = useGame();
   const [confirmReplace, setConfirmReplace] = useState(false);
+  const [shared, setShared] = useState<'shared' | 'copied' | null>(null);
   const dailyLive = g.daily === key && g.phase !== 'idle';
   const otherRunLive = g.phase !== 'idle' && g.daily !== key;
 
@@ -91,6 +94,20 @@ export default function DailyHub() {
             : <View style={styles.playPill}><Text style={styles.playText}>{(('cta' in it && it.cta) || t('daily.play')).toUpperCase()}</Text></View>}
         </Card>
       ))}
+      {items.some((it) => it.status) && (
+        <Button
+          label={shared ? t(`challenge.${shared}`) : t('daily.share')}
+          variant="dark"
+          icon={<Icon name="swap" size={22} />}
+          testID="daily-share"
+          onPress={async () => {
+            const EMOJI: Record<string, string> = { draft: '🏀', trivia: '🧠', rank: '📊', 'team-rank': '🏆', derby: '⚔️', 'team-duel': '🔮' };
+            const lines = items.map((it) => `${EMOJI[it.id]} ${it.status ?? '—'}`);
+            const r = await shareText([`TEN DEEP ${t('daily.title')} ${key}`, ...lines, CONFIG.webUrl].join('\n'));
+            if (r !== 'failed') setShared(r);
+          }}
+        />
+      )}
       {confirmReplace && <Text style={[styles.desc, { color: C.gold, textAlign: 'center' }]} testID="replace-warning">{t('daily.replaceRun')}</Text>}
       <Text style={styles.desc}>{t('daily.tomorrow')}</Text>
     </Screen>

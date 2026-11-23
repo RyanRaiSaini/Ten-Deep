@@ -193,7 +193,8 @@
     "strength": "Fuerza",
     "resume": "Continuar",
     "missed": "Perdido",
-    "replaceRun": "Esto reemplaza tu partida actual. Toca de nuevo para empezar."
+    "replaceRun": "Esto reemplaza tu partida actual. Toca de nuevo para empezar.",
+    "share": "Compartir los resultados de hoy"
   },
   "duel": {
     "title": "Duelo",
@@ -658,7 +659,9 @@
     "silver": "Plata",
     "gold": "Oro",
     "platinum": "Platino",
-    "legend": "Leyenda"
+    "legend": "Leyenda",
+    "inPromotion": "¡En zona de ascenso!",
+    "toPromotion": "Faltan {{n}} pts para ascender"
   },
   "challenge": {
     "invalid": "Este enlace de desafío no funciona.",

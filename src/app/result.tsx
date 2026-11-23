@@ -24,6 +24,8 @@ import { useProfile } from '../store/profile';
 import { runShareText } from '../engine/share';
 import { MODE_BY_ID } from '../data/modes';
 import { CONFIG } from '../config';
+import { pointsFor } from '../engine/league/ladder';
+import { LeagueGain } from '../ui/LeagueGain';
 
 const VERDICT_ICON = { legend: 'crown', extended: 'medal', survived: 'clock', fired: 'flame' } as const;
 
@@ -95,6 +97,7 @@ export default function Result() {
         <Stat label={t('result.seed')} value={`#${seed}`} />
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
+      <LeagueGain gained={pointsFor({ type: 'run', wins: rec.w, champion: won, madePlayoffs: !!mine })} />
       <Card style={{ gap: S.sm }} testID="awards">
         <View style={styles.awardsHead}><Icon name="medal" size={26} /><Text style={styles.awardsTitle}>{t('result.awards')}</Text></View>
         {AWARDS.map((a) => {

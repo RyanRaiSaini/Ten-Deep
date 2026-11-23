@@ -191,7 +191,8 @@
     "strength": "Sterkte",
     "resume": "Hervatten",
     "missed": "Gemist",
-    "replaceRun": "Dit vervangt je huidige run. Tik nogmaals om te starten."
+    "replaceRun": "Dit vervangt je huidige run. Tik nogmaals om te starten.",
+    "share": "Deel de resultaten van vandaag"
   },
   "duel": {
     "title": "Duel",
@@ -653,7 +654,9 @@
     "silver": "Zilver",
     "gold": "Goud",
     "platinum": "Platina",
-    "legend": "Legende"
+    "legend": "Legende",
+    "inPromotion": "In de promotiezone!",
+    "toPromotion": "Nog {{n}} ptn tot promotie"
   },
   "challenge": {
     "invalid": "Deze uitdaginglink werkt niet.",
