@@ -46,15 +46,23 @@ export function Screen({
 
 /** Big outlined display type, like a sticker: white fill, ink outline, a little 3D drop. */
 export function Display({
-  children, size = 34, color = '#FFFFFF', stroke = C.ink, align = 'center', style, testID,
-}: { children: ReactNode; size?: number; color?: string; stroke?: string; align?: TextStyle['textAlign']; style?: StyleProp<ViewStyle>; testID?: string }) {
+  children, size = 34, color = '#FFFFFF', stroke = C.ink, align = 'center', style, testID, extrude,
+}: {
+  children: ReactNode; size?: number; color?: string; stroke?: string; align?: TextStyle['textAlign']; style?: StyleProp<ViewStyle>; testID?: string;
+  /** Color of a chunky 3D extrusion under the letters (logo style). */
+  extrude?: string;
+}) {
   const w = Math.max(2, Math.round(size / 11));
   const base: TextStyle = { fontFamily: FONT.display, fontSize: size, lineHeight: Math.round(size * 1.18), textAlign: align, letterSpacing: 0.3 };
   const ghost = { accessibilityElementsHidden: true, importantForAccessibility: 'no-hide-descendants' as const, 'aria-hidden': true, selectable: false };
   const offsets = [[-w, 0], [w, 0], [0, -w], [0, w], [-w, -w], [w, w], [-w, w], [w, -w]];
   return (
-    <View style={[{ alignSelf: align === 'center' ? 'center' : 'flex-start', paddingHorizontal: w, paddingTop: w }, style]} testID={testID}>
-      <Text {...ghost} style={[base, styles.ghost, { color: stroke, left: w, right: w, top: w + w + 2 }]}>{children}</Text>
+    <View style={[{ alignSelf: align === 'center' ? 'center' : 'flex-start', paddingHorizontal: w, paddingTop: w, paddingBottom: extrude ? w * 4.4 : 0 }, style]} testID={testID}>
+      {extrude && <Text {...ghost} style={[base, styles.ghost, { color: stroke, left: w, right: w, top: w + w * 4.4 }]}>{children}</Text>}
+      {extrude && [3.4, 2.8, 2.2, 1.6].map((k) => (
+        <Text key={k} {...ghost} style={[base, styles.ghost, { color: extrude, left: w, right: w, top: w + w * k }]}>{children}</Text>
+      ))}
+      {!extrude && <Text {...ghost} style={[base, styles.ghost, { color: stroke, left: w, right: w, top: w + w + 2 }]}>{children}</Text>}
       {offsets.map(([x, y], i) => (
         <Text key={i} {...ghost} style={[base, styles.ghost, { color: stroke, left: w + x, right: w - x, top: w + y }]}>{children}</Text>
       ))}
