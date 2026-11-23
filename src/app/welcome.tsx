@@ -6,7 +6,7 @@ import { Text } from '../ui/Text';
 import { useSettings } from '../store/settings';
 import { Button, Screen } from '../ui/components';
 import { useReducedMotion } from '../ui/fx';
-import { Logo } from '../ui/Logo';
+import { BrandLogo } from '../ui/BrandLogo';
 import { C, F, R, S } from '../ui/theme';
 import { Icon } from '../ui/icons';
 
@@ -42,8 +42,7 @@ export default function Welcome() {
         {!last && <Text style={styles.skip} onPress={done} testID="welcome-skip" accessibilityRole="button">{t('welcome.skip')}</Text>}
       </View>
       <Animated.View style={[styles.body, { opacity: fade, transform: [{ translateY: fade.interpolate({ inputRange: [0, 1], outputRange: [16, 0] }) }] }]}>
-        {slide.icon ? <Icon name={slide.icon} size={150} /> : <Logo size={180} />}
-        {i === 0 && <Text style={styles.brand}>TEN DEEP</Text>}
+        {slide.icon ? <Icon name={slide.icon} size={150} /> : <View style={{ paddingVertical: 24 }}><BrandLogo scale={1.25} /></View>}
         <Text style={styles.title}>{t(`welcome.t${slide.n}`)}</Text>
         <Text style={styles.text}>{t(`welcome.b${slide.n}`)}</Text>
       </Animated.View>

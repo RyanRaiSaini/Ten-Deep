@@ -14,7 +14,7 @@ import { Avatar } from '../ui/Avatar';
 import { Button, Chip, Display, IconButton, Label } from '../ui/components';
 import { CourtArt, Icon, type IconName } from '../ui/icons';
 import { Screen } from '../ui/components';
-import { Bounce } from '../ui/fx';
+import { BrandLogo } from '../ui/BrandLogo';
 import { TabBar } from '../ui/TabBar';
 import { Text } from '../ui/Text';
 import { alpha, C, FONT, R, S } from '../ui/theme';
@@ -82,8 +82,7 @@ export default function Home() {
           {claimable > 0 && <View style={styles.dot}><Text style={styles.dotText}>{claimable}</Text></View>}
         </Pressable>
         <View style={styles.logo}>
-          <View style={styles.logoBall}><Bounce height={10}><Icon name="ball" size={40} /></Bounce></View>
-          <Display size={46}>TEN DEEP</Display>
+          <BrandLogo scale={0.82} testID="brand-logo" />
           <Text style={styles.tagline}>{t('app.tagline')}</Text>
         </View>
         <Pressable onPress={() => router.push('/packs')} style={styles.tile} testID="picks-banner" accessibilityRole="button" accessibilityLabel={t('collect.waiting', { count: pendingPicks })}>
