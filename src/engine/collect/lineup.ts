@@ -104,14 +104,16 @@ export interface GauntletStage {
   strength: number;
 }
 
-/** 10 real team-seasons spread from good to all-time great (the last is the strongest in the database). */
-export const GAUNTLET: GauntletStage[] = (() => {
-  const teams = HISTORY.filter((t) => t.players.length >= 8 && !t.season.includes("-")) // historic seasons only
-    .map((team) => ({ team, strength: teamStrengthScore(team) }))
-    .sort((a, b) => a.strength - b.strength);
-  const at = [0, 0.04, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 0.92, 1];
-  return at.map((q) => teams[Math.min(teams.length - 1, Math.round(q * (teams.length - 1)))]);
-})();
+/**
+ * 10 real team-seasons from good to all-time great. Pinned by id (originally chosen by strength percentile)
+ * so adding history never reshuffles a player's Gauntlet progress.
+ */
+export const GAUNTLET_IDS = ['lal-2006', 'min-2014', 'cle-2009', 'hou-1994', 'mia-2020', 'dal-2024', 'hou-2018', 'lal-2000', 'det-1989', 'bos-2024'];
+export const GAUNTLET: GauntletStage[] = GAUNTLET_IDS.map((id) => {
+  const team = HISTORY.find((t) => t.id === id);
+  if (!team) throw new Error(`Gauntlet team ${id} is missing from HISTORY`);
+  return { team, strength: teamStrengthScore(team) };
+});
 
 /** Play a Gauntlet stage: your lineup ('a') vs that stage's team, best-of-3. */
 export function playStage(lineup: Roster, stage: number, seed: string): SeriesResult {
