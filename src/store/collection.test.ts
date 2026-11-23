@@ -96,3 +96,15 @@ describe('collection store', () => {
     expect(useCollection.getState().pending).toHaveLength(1);
   });
 });
+
+describe('streak freezes', () => {
+  it('a 7-day streak earns a freeze, and a missed day spends it instead of breaking the streak', () => {
+    useCollection.setState(useCollection.getInitialState(), true);
+    for (let d = 1; d <= 7; d++) useCollection.getState().checkIn(`2026-12-0${d}`);
+    expect(useCollection.getState()).toMatchObject({ streak: 7, freezes: 1 });
+    useCollection.getState().checkIn('2026-12-09'); // missed the 8th
+    expect(useCollection.getState()).toMatchObject({ streak: 8, freezes: 0, freezesUsed: 1 });
+    useCollection.getState().checkIn('2026-12-11'); // missed again, no freeze left
+    expect(useCollection.getState().streak).toBe(1);
+  });
+});

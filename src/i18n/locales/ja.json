@@ -18,7 +18,9 @@
     "play": "プレイ",
     "streak": "連続ログイン",
     "player": "プレイヤー",
-    "picks": "ピック"
+    "picks": "ピック",
+    "streakSaved": "連続記録を守った！",
+    "streakSavedBody_other": "ストリークフリーズが休んだ{{count}}日分をカバーしました。"
   },
   "mode": {
     "current": {

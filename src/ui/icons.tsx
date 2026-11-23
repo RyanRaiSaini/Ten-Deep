@@ -6,7 +6,7 @@ import { C, FONT } from './theme';
 export type IconName =
   | 'flame' | 'trophy' | 'gear' | 'ball' | 'cards' | 'calendar' | 'crown' | 'clipboard' | 'gift' | 'chart'
   | 'vs' | 'siren' | 'briefcase' | 'back' | 'star' | 'lock' | 'check' | 'bolt' | 'hoop' | 'history' | 'clock'
-  | 'medal' | 'brain' | 'swap' | 'play' | 'sound' | 'globe' | 'shield' | 'news' | 'sparkle';
+  | 'medal' | 'brain' | 'swap' | 'play' | 'sound' | 'globe' | 'shield' | 'news' | 'sparkle' | 'freeze';
 
 const K = C.ink;
 const SW = 3;
@@ -184,6 +184,12 @@ const PATHS: Record<IconName, ReactElement> = {
       <Path d="M39 16 H43 V37 C43 39 41 41 39 41" fill="#E8DECF" stroke={K} strokeWidth={SW} strokeLinejoin="round" />
       <Rect x={10} y={14} width={24} height={8} rx={1} fill="#EE3B4F" />
       <Path d="M10 28 H34 M10 34 H26" stroke={K} strokeWidth={2.6} strokeLinecap="round" />
+    </G>
+  ),
+  freeze: (
+    <G>
+      <Circle cx={24} cy={24} r={20} fill="#BFE6FF" stroke={K} strokeWidth={SW} />
+      <Path d="M24 9 V39 M11 16.5 L37 31.5 M11 31.5 L37 16.5 M20 11 L24 15 L28 11 M20 37 L24 33 L28 37" fill="none" stroke="#2F6BFF" strokeWidth={3.2} strokeLinecap="round" strokeLinejoin="round" />
     </G>
   ),
   sparkle: <Path d="M24 4 C26 16 32 22 44 24 C32 26 26 32 24 44 C22 32 16 26 4 24 C16 22 22 16 24 4 Z" fill="#FFD23F" stroke={K} strokeWidth={SW} strokeLinejoin="round" />,

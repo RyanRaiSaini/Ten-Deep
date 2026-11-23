@@ -18,7 +18,10 @@
     "play": "Oyna",
     "streak": "Giriş serisi",
     "player": "Oyuncu",
-    "picks": "Seçimler"
+    "picks": "Seçimler",
+    "streakSaved": "Seri kurtarıldı!",
+    "streakSavedBody_one": "Seri dondurucu kaçırdığın günü kapattı.",
+    "streakSavedBody_other": "Seri dondurucular kaçırdığın {{count}} günü kapattı."
   },
   "mode": {
     "current": {
