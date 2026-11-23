@@ -16,6 +16,7 @@ import { Confetti, CountUp } from '../ui/fx';
 import { useRunColors } from '../ui/runColors';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, S } from '../ui/theme';
+import { AWARDS, awardRace } from '../engine/story/leaders';
 
 export default function Result() {
   const { t } = useTranslation();
@@ -69,6 +70,21 @@ export default function Result() {
         <Stat label={t('result.seed')} value={`#${seed}`} />
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
+      <Card style={{ gap: S.sm }} testID="awards">
+        <Text style={styles.awardsTitle}>🏅 {t('result.awards')}</Text>
+        {AWARDS.map((a) => {
+          const w = awardRace(season, a, 1)[0];
+          if (!w) return null;
+          return (
+            <View key={a} style={styles.awardRow}>
+              <Text style={styles.awardName}>{t(`league.${a}`)}</Text>
+              <Text style={[styles.awardWinner, w.team === 0 && { color: C.gold }]} numberOfLines={1}>
+                {w.team === 0 ? '⭐ ' : ''}{w.player.name}
+              </Text>
+            </View>
+          );
+        })}
+      </Card>
       <RosterBoard roster={user.slots} />
       {pendingPicks > 0 && (
         <Button label={`🎁  ${t('collect.claim')}`} variant="gold" onPress={() => router.push('/packs')} testID="claim-pick" />
@@ -107,4 +123,8 @@ const styles = StyleSheet.create({
   stats: { flexDirection: 'row' },
   value: { color: C.text, fontSize: 26, ...F.display },
   sub: { color: C.muted, fontSize: 12 },
+  awardsTitle: { color: C.text, fontWeight: '900', fontSize: 15 },
+  awardRow: { flexDirection: 'row', alignItems: 'center', gap: S.md },
+  awardName: { color: C.muted, fontSize: 12, flex: 1 },
+  awardWinner: { color: C.text, fontWeight: '800', flex: 1, textAlign: 'right' },
 });

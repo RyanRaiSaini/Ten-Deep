@@ -136,7 +136,8 @@
     "seed": "Cabeza de serie",
     "topScorer": "Máximo anotador",
     "playAgain": "Draftear de nuevo",
-    "home": "Inicio"
+    "home": "Inicio",
+    "awards": "Premios de la temporada"
   },
   "injury": {
     "Day-to-day": "Día a día",
@@ -533,5 +534,49 @@
     "loyal": "Leal",
     "devoted": "Devoto",
     "pack-rat": "Adicto a los sobres"
+  },
+  "league": {
+    "title": "Liga",
+    "leaders": "Líderes",
+    "awards": "Carrera de premios",
+    "pts": "Puntos por partido",
+    "reb": "Rebotes por partido",
+    "ast": "Asistencias por partido",
+    "mvp": "MVP",
+    "dpoy": "Defensor del año",
+    "roy": "Novato del año",
+    "smoy": "Sexto hombre del año",
+    "none": "Aún no hay jugadores clasificados",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "Tú"
+  },
+  "news": {
+    "title": "Noticias",
+    "streakW": "Racha de victorias: {{n}}",
+    "streakL": "Racha de derrotas: {{n}}",
+    "big": "{{name}} explota: {{n}} PTS",
+    "triple": "{{name}} firma un triple-doble",
+    "wins": "Victoria n.º {{n}} en el bolsillo",
+    "injury": "{{name}} baja: {{n}} partidos",
+    "first": "Líder en solitario",
+    "upset": "Victoria de autoridad ante {{name}}"
+  },
+  "recap": {
+    "title": "Resumen del partido",
+    "q": "C{{n}}",
+    "ot": "Prór.",
+    "run": "{{team}} se lleva el cuarto, +{{n}}",
+    "double": "{{name}} llena la planilla: {{line}}",
+    "clutch": "{{name}} lo cierra al final",
+    "otGame": "¡Prórroga! {{name}} toma el mando",
+    "blowout": "{{team}} se escapa, +{{n}}",
+    "top": "Máximo anotador: {{name}} ({{n}})"
+  },
+  "box": {
+    "min": "MIN",
+    "pts": "PTS",
+    "reb": "REB",
+    "ast": "AST",
+    "tap": "Toca un partido reciente para ver sus estadísticas"
   }
 }

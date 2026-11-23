@@ -7,6 +7,8 @@ import { useGame } from '../store/game';
 import { Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, S } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
+import { recap } from '../engine/story/recap';
+import { RecapCard } from '../ui/story';
 
 export default function Playoffs() {
   const { t } = useTranslation();
@@ -20,6 +22,17 @@ export default function Playoffs() {
   const champ = champion(ps);
   const alive = !!mine && (!seriesOver(mine.series) || seriesWinner(mine.series) === 0) && mine.round === ps.rounds.length - 1;
   const finished = champ !== null || !alive;
+  // The story of your latest playoff game.
+  const lastGame = mine?.series.games[mine.series.games.length - 1];
+  const last = mine && lastGame ? (() => {
+    const home = lastGame.homeIsHi ? mine.series.hi : mine.series.lo;
+    const away = lastGame.homeIsHi ? mine.series.lo : mine.series.hi;
+    const label = (i: number) => (i === 0 ? t('league.you') : ps.season.teams[i].name);
+    return {
+      names: [label(home), label(away)] as [string, string],
+      recap: recap(lastGame.result, ps.season.teams[home], ps.season.teams[away], `${ps.season.seed}:${mine.round}:${mine.series.games.length}`),
+    };
+  })() : null;
 
   const nextGame = () => {
     g.playoffGame();
@@ -64,6 +77,12 @@ export default function Playoffs() {
               </Text>
             );
           })}
+          {last && (
+            <View style={styles.recap}>
+              <Label>{t('recap.title')} · G{mine.series.games.length}</Label>
+              <RecapCard recap={last.recap} names={last.names} />
+            </View>
+          )}
           {alive && champ === null && (
             <Button
               label={seriesOver(mine.series) ? t('common.continue') : t('playoffs.next', { n: mine.series.games.length + 1 })}
@@ -75,6 +94,7 @@ export default function Playoffs() {
         </Card>
       )}
 
+      <Button label={`📊  ${t('league.title')}`} variant="ghost" onPress={() => router.push('/league')} />
       {champ === null && (
         <Button label={t('playoffs.simRest')} variant="secondary" onPress={() => { g.simPlayoffs(); if (champion(useGame.getState().playoffs!) === 0) feel('fanfare'); }} testID="playoff-sim" />
       )}
@@ -116,4 +136,5 @@ const styles = StyleSheet.create({
   status: { color: C.text, textAlign: 'center', fontWeight: '700' },
   gameLine: { fontWeight: '700' },
   bracket: { color: C.muted, fontSize: 13 },
+  recap: { gap: S.sm, borderTopWidth: 1, borderTopColor: C.line, paddingTop: S.md },
 });

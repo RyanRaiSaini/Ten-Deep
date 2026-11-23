@@ -136,7 +136,8 @@
     "seed": "Cabeça de chave",
     "topScorer": "Cestinha",
     "playAgain": "Novo draft",
-    "home": "Início"
+    "home": "Início",
+    "awards": "Prêmios da temporada"
   },
   "injury": {
     "Day-to-day": "Dia a dia",
@@ -533,5 +534,49 @@
     "loyal": "Leal",
     "devoted": "Devoto",
     "pack-rat": "Viciado em pacotes"
+  },
+  "league": {
+    "title": "Liga",
+    "leaders": "Líderes",
+    "awards": "Corrida pelos prêmios",
+    "pts": "Pontos por jogo",
+    "reb": "Rebotes por jogo",
+    "ast": "Assistências por jogo",
+    "mvp": "MVP",
+    "dpoy": "Defensor do ano",
+    "roy": "Novato do ano",
+    "smoy": "Sexto homem do ano",
+    "none": "Ainda não há jogadores qualificados",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "Você"
+  },
+  "news": {
+    "title": "Notícias",
+    "streakW": "Sequência de vitórias: {{n}}",
+    "streakL": "Sequência de derrotas: {{n}}",
+    "big": "{{name}} explode: {{n}} PTS",
+    "triple": "{{name}} faz um triplo-duplo",
+    "wins": "Vitória nº {{n}} garantida",
+    "injury": "{{name}} fora: {{n}} jogos",
+    "first": "Líder isolado",
+    "upset": "Vitória de respeito sobre {{name}}"
+  },
+  "recap": {
+    "title": "Resumo do jogo",
+    "q": "Q{{n}}",
+    "ot": "Prorr.",
+    "run": "{{team}} vence o quarto, +{{n}}",
+    "double": "{{name}} enche a súmula: {{line}}",
+    "clutch": "{{name}} decide no fim",
+    "otGame": "Prorrogação! {{name}} assume",
+    "blowout": "{{team}} dispara, +{{n}}",
+    "top": "Cestinha: {{name}} ({{n}})"
+  },
+  "box": {
+    "min": "MIN",
+    "pts": "PTS",
+    "reb": "REB",
+    "ast": "AST",
+    "tap": "Toque num jogo recente para ver as estatísticas"
   }
 }

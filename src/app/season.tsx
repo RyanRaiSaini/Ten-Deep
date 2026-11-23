@@ -13,6 +13,7 @@ import { BackButton, Button, Card, Header, Label, Screen } from '../ui/component
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, R, S } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
+import { BoxScore, Expandable, NewsItem } from '../ui/story';
 
 const BASE_TICK_MS = 120;
 
@@ -115,11 +116,27 @@ export default function Season() {
         <Button label={`🏆  ${t('playoffs.title')}`} variant="gold" onPress={() => { g.beginPlayoffs(); router.replace('/playoffs'); }} testID="to-playoffs" />
       )}
 
+      {(season.news?.length ?? 0) > 0 && (
+        <Card style={{ gap: 8 }} testID="news">
+          <Label color={C.hardwood}>{t('news.title')}</Label>
+          {season.news!.slice(-3).reverse().map((h, i) => <NewsItem key={`${h.round}-${h.kind}-${i}`} h={h} />)}
+        </Card>
+      )}
+      <Button label={`📊  ${t('league.title')}`} variant="secondary" onPress={() => router.push('/league')} testID="to-league" />
+
       <Card style={{ gap: 6 }}>
         {feed.length === 0 && <Text style={styles.sub}>Tip-off…</Text>}
+        {feed.some((e) => e.kind === 'game' && e.result.box.length > 0) && <Text style={styles.hint}>{t('box.tap')}</Text>}
         {feed.map((e, i) =>
           e.kind === 'game' ? (
-            <GameLine key={i} e={e} name={name} t={t} />
+            <Expandable key={i} enabled={e.result.box.length > 0} head={<GameLine e={e} name={name} t={t} />}>
+              <BoxScore
+                result={e.result}
+                mine={season.teams[0]}
+                theirs={season.teams[e.home === 0 ? e.away : e.home]}
+                names={[t('league.you'), name(e.home === 0 ? e.away : e.home)]}
+              />
+            </Expandable>
           ) : (
             <Text key={i} style={styles.injury}>
               🩼 {e.label === 'Season-ending' ? t('season.seasonEnding', { name: e.name }) : t('season.injury', { name: e.name, games: e.games, label: t(`injury.${e.label}`) })}
@@ -162,6 +179,7 @@ const styles = StyleSheet.create({
   opp: { color: C.muted, flex: 1 },
   gnum: { color: C.line, fontSize: 12 },
   injury: { color: C.gold, fontSize: 13 },
+  hint: { color: C.muted, fontSize: 11 },
   crisisRow: { flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', marginTop: S.sm },
   crisisGoal: { color: C.text, fontWeight: '800' },
   crisisCards: { fontSize: 18, letterSpacing: 2 },
