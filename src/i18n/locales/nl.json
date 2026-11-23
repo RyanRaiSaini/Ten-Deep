@@ -355,7 +355,14 @@
     "r_first": "Eerste ronde uitgeschakeld",
     "r_missed": "Geen play-offs",
     "years": "{{n}} jr",
-    "nothingAffordable": "Niemand past onder het plafond."
+    "nothingAffordable": "Niemand past onder het plafond.",
+    "morale": "Moraal",
+    "moraleEffect": "teamrating",
+    "records": "Topscorers van de franchise",
+    "hof": "Hall of Fame",
+    "hofEmpty": "Vier seizoenen bij jou en een geweldige carrière geven een plek.",
+    "lottery": "Draftloterij",
+    "lotterySkip": "Overslaan"
   },
   "collect": {
     "title": "Collectie",
@@ -579,5 +586,18 @@
     "reb": "REB",
     "ast": "AST",
     "tap": "Tik op een recente wedstrijd voor de boxscore"
+  },
+  "trade": {
+    "title": "Ruil",
+    "hint": "Hun GM zegt alleen ja als het hen helpt. ✓ markeert spelers die ze voor de jouwe zouden ruilen.",
+    "yours": "Jouw speler",
+    "team": "Ruilpartner",
+    "theirs": "Spelers van {{team}}",
+    "propose": "Ruil voorstellen",
+    "accepted": "Deal rond!",
+    "value": "Afgewezen: niet genoeg waarde voor hen",
+    "cap": "Afgewezen: past niet onder het plafond",
+    "position": "Afgewezen: een basisspeler moet op de positie passen",
+    "missing": "Kies eerst beide spelers"
   }
 }

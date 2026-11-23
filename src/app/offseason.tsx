@@ -10,6 +10,7 @@ import { BackButton, Button, Card, Header, Label, Screen } from '../ui/component
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, S } from '../ui/theme';
+import { LotteryReveal } from '../ui/Lottery';
 
 /** The offseason, one step at a time: development and contracts → rookie draft → free agency → next season. */
 export default function Offseason() {
@@ -82,6 +83,7 @@ export default function Offseason() {
     return (
       <Screen>
         <Header title={t('career.draft')} left={<BackButton onPress={() => router.replace('/career')} />} />
+        <LotteryReveal order={st.order} names={(i) => (i === 0 ? t('league.you') : st.teams[i].name)} />
         <Text style={styles.big} testID="pick-no">{t('career.yourPick', { n: pickNo })}</Text>
         {available.map((r) => (
           <PlayerCard key={r.id} player={r} testID="rookie" selected={pickId === r.id} onPress={() => setRookie(r.id)} />
@@ -116,6 +118,7 @@ export default function Offseason() {
     <Screen>
       <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.replace('/career')} />} />
       <Text style={styles.big}>{t('career.openSpots', { n: open })}</Text>
+      <Button label={`🔁  ${t('trade.title')}`} variant="secondary" onPress={() => router.push('/trade')} testID="to-trade" />
       <RosterBoard
         roster={user.slots}
         highlight={chosen?.slots}
