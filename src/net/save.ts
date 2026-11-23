@@ -9,6 +9,8 @@ export const SAVE_KEYS = [
   'tendeep-run', 'tendeep-profile', 'tendeep-settings', 'tendeep-daily', 'tendeep-duel', 'tendeep-career', 'tendeep-collection',
   'tendeep-progress', 'tendeep-league', 'tendeep-friends', 'tendeep-shop', 'tendeep-form',
 ];
+/** Stores that describe this device, not the player: never backed up or restored (e.g. which sign-in it uses). */
+export const DEVICE_ONLY_KEYS = ['tendeep-account'];
 const LAST = 'tendeep-backup-at';
 const EVERY_MS = 30 * 60_000;
 
