@@ -65,7 +65,7 @@ export default function Home() {
       </Card>
 
       {pendingPicks > 0 && (
-        <Button label={`🎁  ${t('collect.waiting', { n: pendingPicks })}`} variant="gold" onPress={() => router.push('/packs')} testID="picks-banner" />
+        <Button label={`🎁  ${t('collect.waiting', { count: pendingPicks })}`} variant="gold" onPress={() => router.push('/packs')} testID="picks-banner" />
       )}
       <Card style={[styles.missions, claimable > 0 && { borderColor: C.gold }]} onPress={() => router.push('/missions')} testID="to-missions">
         <Text style={styles.missionsIcon}>🎯</Text>

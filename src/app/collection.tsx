@@ -33,7 +33,7 @@ export default function Collection() {
         {t('collect.cards', { n: owned.length })} · {t('collect.streak', { n: col.streak })}
       </Text>
       {col.pending.length > 0 && (
-        <Button label={`🎁  ${t('collect.waiting', { n: col.pending.length })}`} variant="gold" onPress={() => router.push('/packs')} />
+        <Button label={`🎁  ${t('collect.waiting', { count: col.pending.length })}`} variant="gold" onPress={() => router.push('/packs')} />
       )}
       <View style={{ flexDirection: 'row', gap: S.sm }}>
         <Button label={`🧩  ${t('lineup.title')}`} variant="secondary" onPress={() => router.push('/lineup')} style={{ flex: 1 }} testID="to-lineup" />

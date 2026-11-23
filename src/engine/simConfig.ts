@@ -14,6 +14,11 @@ export const SIM = {
   pace: 99,
   paceSd: 3,
   scoreSd: 9.5,
+  /**
+   * Box scores only (never changes results): a player's share of team points grows with offense^ptsExp.
+   * 3.3 keeps scoring leaders around 30–34 PPG, like the modern league.
+   */
+  ptsExp: 3.3,
 };
 
 /** Effective rating used by the sim: stars bend games more than linearly. */

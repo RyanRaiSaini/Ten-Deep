@@ -35,14 +35,16 @@ export function Header({ title, left, right }: { title: string; left?: ReactNode
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'gold';
 export function Button({
-  label, onPress, variant = 'primary', disabled, style, testID,
-}: { label: string; onPress: () => void; variant?: Variant; disabled?: boolean; style?: StyleProp<ViewStyle>; testID?: string }) {
+  label, onPress, variant = 'primary', disabled, style, testID, accessibilityLabel,
+}: { label: string; onPress: () => void; variant?: Variant; disabled?: boolean; style?: StyleProp<ViewStyle>; testID?: string; accessibilityLabel?: string }) {
   const bg = { primary: C.hardwood, secondary: C.surface2, ghost: 'transparent', gold: C.gold }[variant];
   const fg = variant === 'primary' || variant === 'gold' ? C.bg : C.text;
   return (
     <Pressable
       testID={testID}
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled: !!disabled }}
       onPress={onPress}
       disabled={disabled}
       style={({ pressed }) => [
@@ -59,8 +61,8 @@ export function Button({
 
 /** Back arrow that points the right way in right-to-left languages. */
 export function BackButton({ onPress }: { onPress: () => void }) {
-  const { i18n } = useTranslation();
-  return <Button label={isRTL(i18n.language) ? '›' : '‹'} variant="ghost" onPress={onPress} style={{ paddingVertical: 6 }} testID="back" />;
+  const { t, i18n } = useTranslation();
+  return <Button label={isRTL(i18n.language) ? '›' : '‹'} accessibilityLabel={t('common.back')} variant="ghost" onPress={onPress} style={{ paddingVertical: 6 }} testID="back" />;
 }
 
 export function Card({ children, style, onPress, testID }: { children: ReactNode; style?: StyleProp<ViewStyle>; onPress?: () => void; testID?: string }) {

@@ -101,9 +101,10 @@
     "resume": "再生",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} {{games}}試合欠場 — {{label}}",
     "seasonEnding": "{{name}}はシーズン絶望",
-    "standing": "第{{n}}シード"
+    "standing": "第{{n}}シード",
+    "injury_other": "{{name}}が{{count}}試合欠場 — {{label}}",
+    "play": "再開"
   },
   "deadline": {
     "title": "トレード期限",
@@ -341,12 +342,11 @@
     "rosterFull": "ロスターが満員：ルーキーのために放出する選手を選んで。",
     "skipRookie": "ルーキーを見送る",
     "freeAgency": "FA",
-    "openSpots": "空き枠{{n}}",
     "sign": "契約",
     "minException": "ミニマム例外：{{name}}と契約",
     "startSeason": "{{label}}開幕",
     "over": "キャリア終了",
-    "overDesc": "フロントはもう十分見た。{{n}}シーズン、優勝{{titles}}回。",
+    "overDesc": "経営陣の我慢も限界です。シーズン：{{n}} · 優勝：{{titles}}",
     "newCareer": "新しいキャリア",
     "r_champion": "優勝",
     "r_finals": "ファイナル敗退",
@@ -362,7 +362,8 @@
     "hof": "殿堂",
     "hofEmpty": "あなたのもとで4シーズン、そして偉大なキャリアで殿堂入り。",
     "lottery": "ドラフト抽選",
-    "lotterySkip": "スキップ"
+    "lotterySkip": "スキップ",
+    "openSpots_other": "空き枠 {{count}}"
   },
   "collect": {
     "title": "コレクション",
@@ -378,7 +379,6 @@
     "empty": "プレイヤーピックを開封してコレクションを始めよう。",
     "all": "すべて",
     "claim": "ピックを受け取る",
-    "waiting": "未開封ピック{{n}}個",
     "t_daily": "デイリーピック",
     "t_run": "ランピック",
     "t_playoffs": "プレーオフピック",
@@ -395,7 +395,8 @@
     "guarantee_champion": "全カード83以上",
     "guarantee_mythic": "90以上1枚確定",
     "guarantee_legendary": "ウルトラ1枚確定",
-    "nextWeekly": "ウィークリーピックまであと{{n}}日"
+    "waiting_other": "未開封のピック {{count}}",
+    "nextWeekly_other": "ウィークリーピックまであと{{count}}日"
   },
   "lineup": {
     "title": "ラインナップ",
