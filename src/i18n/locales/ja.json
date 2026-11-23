@@ -189,7 +189,8 @@
     "strength": "強さ",
     "resume": "再開",
     "missed": "未完了",
-    "replaceRun": "進行中のプレイが置き換わります。もう一度タップで開始。"
+    "replaceRun": "進行中のプレイが置き換わります。もう一度タップで開始。",
+    "share": "今日の結果をシェア"
   },
   "duel": {
     "title": "対戦",
@@ -648,7 +649,9 @@
     "silver": "シルバー",
     "gold": "ゴールド",
     "platinum": "プラチナ",
-    "legend": "レジェンド"
+    "legend": "レジェンド",
+    "inPromotion": "昇格圏内！",
+    "toPromotion": "昇格ラインまであと{{n}}pt"
   },
   "challenge": {
     "invalid": "このチャレンジリンクは無効です。",

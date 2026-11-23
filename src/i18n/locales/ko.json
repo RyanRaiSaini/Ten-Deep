@@ -189,7 +189,8 @@
     "strength": "전력",
     "resume": "이어하기",
     "missed": "놓침",
-    "replaceRun": "진행 중인 게임이 대체됩니다. 다시 탭하여 시작하세요."
+    "replaceRun": "진행 중인 게임이 대체됩니다. 다시 탭하여 시작하세요.",
+    "share": "오늘 결과 공유"
   },
   "duel": {
     "title": "대결",
@@ -648,7 +649,9 @@
     "silver": "실버",
     "gold": "골드",
     "platinum": "플래티넘",
-    "legend": "레전드"
+    "legend": "레전드",
+    "inPromotion": "승격권 진입!",
+    "toPromotion": "승격까지 {{n}}점"
   },
   "challenge": {
     "invalid": "이 도전 링크는 사용할 수 없습니다.",

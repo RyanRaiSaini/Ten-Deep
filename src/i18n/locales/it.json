@@ -193,7 +193,8 @@
     "strength": "Forza",
     "resume": "Riprendi",
     "missed": "Perso",
-    "replaceRun": "Questo sostituisce la partita in corso. Tocca di nuovo per iniziare."
+    "replaceRun": "Questo sostituisce la partita in corso. Tocca di nuovo per iniziare.",
+    "share": "Condividi i risultati di oggi"
   },
   "duel": {
     "title": "Duello",
@@ -658,7 +659,9 @@
     "silver": "Argento",
     "gold": "Oro",
     "platinum": "Platino",
-    "legend": "Leggenda"
+    "legend": "Leggenda",
+    "inPromotion": "In zona promozione!",
+    "toPromotion": "Mancano {{n}} pt alla promozione"
   },
   "challenge": {
     "invalid": "Questo link di sfida non funziona.",

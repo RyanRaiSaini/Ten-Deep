@@ -193,7 +193,8 @@
     "strength": "Force",
     "resume": "Reprendre",
     "missed": "Manqué",
-    "replaceRun": "Ceci remplace ta partie en cours. Touche encore pour commencer."
+    "replaceRun": "Ceci remplace ta partie en cours. Touche encore pour commencer.",
+    "share": "Partager mes résultats du jour"
   },
   "duel": {
     "title": "Duel",
@@ -658,7 +659,9 @@
     "silver": "Argent",
     "gold": "Or",
     "platinum": "Platine",
-    "legend": "Légende"
+    "legend": "Légende",
+    "inPromotion": "En zone de montée !",
+    "toPromotion": "Encore {{n}} pts jusqu'à la montée"
   },
   "challenge": {
     "invalid": "Ce lien de défi est cassé.",

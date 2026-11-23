@@ -191,7 +191,8 @@
     "strength": "Güç",
     "resume": "Devam et",
     "missed": "Kaçırıldı",
-    "replaceRun": "Bu, mevcut oyununun yerini alır. Başlamak için tekrar dokun."
+    "replaceRun": "Bu, mevcut oyununun yerini alır. Başlamak için tekrar dokun.",
+    "share": "Bugünkü sonuçları paylaş"
   },
   "duel": {
     "title": "Düello",
@@ -653,7 +654,9 @@
     "silver": "Gümüş",
     "gold": "Altın",
     "platinum": "Platin",
-    "legend": "Efsane"
+    "legend": "Efsane",
+    "inPromotion": "Yükselme bölgesindesin!",
+    "toPromotion": "Yükselmeye {{n}} puan kaldı"
   },
   "challenge": {
     "invalid": "Bu meydan okuma bağlantısı bozuk.",
