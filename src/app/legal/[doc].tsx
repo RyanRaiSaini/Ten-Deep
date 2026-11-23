@@ -1,14 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Linking, StyleSheet, Text } from 'react-native';
 import { CONFIG } from '../../config';
-import { useGame } from '../../store/game';
-import { useDaily } from '../../store/daily';
-import { useDuel } from '../../store/duel';
-import { useProfile } from '../../store/profile';
-import { useSettings } from '../../store/settings';
+import { wipeAll } from '../../store/all';
 import { BackButton, Button, Card, Header, Screen } from '../../ui/components';
 import { C, S } from '../../ui/theme';
 
@@ -63,13 +58,7 @@ export default function Legal() {
   const d = DOCS[doc ?? ''] ?? DOCS.terms;
 
   const wipe = async () => {
-    // Reset every store in memory too, so nothing gets re-saved after the wipe.
-    useGame.setState(useGame.getInitialState(), true);
-    useProfile.setState(useProfile.getInitialState(), true);
-    useSettings.setState(useSettings.getInitialState(), true);
-    useDaily.setState(useDaily.getInitialState(), true);
-    useDuel.setState(useDuel.getInitialState(), true);
-    await AsyncStorage.clear();
+    await wipeAll();
     setDeleted(true);
   };
 

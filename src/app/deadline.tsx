@@ -11,9 +11,11 @@ import { Button, Card, Header, Label, Screen } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
 import { Spinner } from '../ui/Spinner';
 import { C, S } from '../ui/theme';
+import { useRunColors } from '../ui/runColors';
 
 export default function Deadline() {
   const { t } = useTranslation();
+  const runColors = useRunColors();
   const g = useGame();
   const [spinKey, setSpinKey] = useState(0);
   const [landed, setLanded] = useState(true);
@@ -39,7 +41,7 @@ export default function Deadline() {
     : [];
 
   return (
-    <Screen>
+    <Screen tint={runColors[0]}>
       <Header title={t('deadline.title')} />
       <Text style={styles.desc}>{t('deadline.desc')}</Text>
 
