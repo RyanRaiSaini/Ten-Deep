@@ -10,7 +10,10 @@
     "backgroundColor": "#0B1020",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "app.tendeep"
+      "bundleIdentifier": "app.tendeep",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "app.tendeep",
@@ -49,6 +52,7 @@
     ],
     "experiments": {
       "typedRoutes": false
-    }
+    },
+    "description": "Draft ten deep. Survive 82. An NBA draft-and-sim game: build a 10-man rotation under a $150M cap, then survive the season, the trade deadline and the playoffs."
   }
 }
