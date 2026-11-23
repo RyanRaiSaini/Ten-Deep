@@ -543,7 +543,12 @@
     "promotions": "Monte de ligue",
     "leagueBest": "Meilleur niveau de ligue",
     "pickUpgrades": "Améliore des choix",
-    "rerolls": "Utilise des relances"
+    "rerolls": "Utilise des relances",
+    "foils": "Obtenir des cartes à finition spéciale",
+    "hasGold": "Avoir une carte Or ou plus rare",
+    "hasViolet": "Avoir une carte Violet ou plus rare",
+    "hasRainbow": "Avoir une carte Arc-en-ciel ou plus rare",
+    "hasCosmic": "Avoir une carte Cosmique"
   },
   "ach": {
     "rookie": "Recrue",
@@ -600,7 +605,13 @@
     "climber": "Grimpeur",
     "legend-tier": "Statut de légende",
     "lucky-tap": "Coup de chance",
-    "fresh-spin": "Nouveau tirage"
+    "fresh-spin": "Nouveau tirage",
+    "shiny": "Brillant",
+    "foil-hoarder": "Collectionneur de foils",
+    "golden-touch": "Touche dorée",
+    "violet-hour": "Heure violette",
+    "over-the-rainbow": "Au-delà de l'arc-en-ciel",
+    "cosmic": "Cosmique"
   },
   "league": {
     "title": "Ligue",
@@ -907,5 +918,30 @@
       "wrong-code": "Ce code ne correspond pas à la sauvegarde.",
       "offline": "Serveur injoignable. Réessaie."
     }
+  },
+  "rarity": {
+    "perfect": "SAISON PARFAITE",
+    "perfectOdds": "82-0. Environ 1 draft sur 450 y arrive.",
+    "c75": "Club des 75 victoires",
+    "c75Odds": "Seulement 3 % des drafts y arrivent.",
+    "c70": "Club des 70 victoires",
+    "c70Odds": "Environ 1 draft sur 10 atteint 70 victoires.",
+    "c65": "Saison à 65 victoires",
+    "c65Odds": "Une draft du top 25 %.",
+    "near": "À {{n}} victoires du {{club}}"
+  },
+  "finish": {
+    "holo": "Holo",
+    "chrome": "Chrome",
+    "gold": "Or",
+    "violet": "Violet",
+    "rainbow": "Arc-en-ciel",
+    "cosmic": "Cosmique",
+    "pull": "TIRAGE {{name}} !",
+    "oneIn": "1 sur {{n}}",
+    "odds": "Chances de finition (toute carte, tout tirage)",
+    "rarest": "Tirages les plus rares",
+    "yours": "Tes finitions",
+    "keepHint": "Seule la carte gardée rejoint ta collection, finition comprise."
   }
 }

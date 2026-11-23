@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,8 @@ import { CollectCard, TIER_STYLE } from '../../ui/CollectCard';
 import { BackButton, Button, Header, Screen, TabTitle } from '../../ui/components';
 import { C, F, R, S } from '../../ui/theme';
 import { Icon } from '../../ui/icons';
+import { FINISHES, bestFinish, finishRank, type Finish } from '../../engine/collect/finishes';
+import { FINISH_STYLE } from '../../ui/CardFinish';
 
 /** Your collection: tier-framed cards, best first, with tier filters. */
 const GAP = 10;
@@ -24,11 +27,19 @@ export default function Collection() {
   const { t } = useTranslation();
   const col = useCollection();
   const [filter, setFilter] = useState<Tier | null>(null);
+  const [finishFilter, setFinishFilter] = useState<Finish | null>(null);
   const owned = Object.entries(col.owned)
-    .map(([id, o]) => ({ card: CARD_BY_ID[id], count: o.count }))
+    .map(([id, o]) => ({ card: CARD_BY_ID[id], count: o.count, finishes: o.finishes ?? {}, finish: bestFinish(o.finishes) }))
     .filter((x) => x.card)
     .sort((a, b) => b.card.ovr - a.card.ovr);
-  const shown = filter ? owned.filter((x) => x.card.tier === filter) : owned;
+  const shown = owned
+    .filter((x) => !filter || x.card.tier === filter)
+    .filter((x) => !finishFilter || (x.finishes[finishFilter] ?? 0) > 0);
+  // Copies pulled in each special finish (a card can hold several).
+  const finishCounts = Object.fromEntries(FINISHES.map((f) => [f, owned.reduce((n, x) => n + (x.finishes[f] ?? 0), 0)])) as Record<Finish, number>;
+  const showcase = owned.filter((x) => finishRank(x.finish) >= finishRank('chrome'))
+    .sort((a, b) => finishRank(b.finish) - finishRank(a.finish) || b.card.ovr - a.card.ovr)
+    .slice(0, 3);
   const ownedIds = new Set(Object.keys(col.owned));
   const closest = closestSets(ownedIds, 3);
   const done = completedSets(ownedIds).length;
@@ -53,7 +64,32 @@ export default function Collection() {
           <Chip key={tier} label={`${t(`collect.tier_${tier}`)} ${counts[tier]}`} on={filter === tier} color={TIER_STYLE[tier].frame[0]} onPress={() => setFilter(tier)} />
         ))}
       </View>
+      <View style={styles.chips} testID="finish-chips">
+        {FINISHES.filter((f) => f !== 'base').map((f) => {
+          const n = finishCounts[f];
+          const on = finishFilter === f;
+          return (
+            <Pressable key={f} onPress={() => n && setFinishFilter(on ? null : f)} style={{ opacity: n ? 1 : 0.4 }} testID={`finish-chip-${f}`}>
+              <LinearGradient colors={on ? FINISH_STYLE[f].chip : ['#FFFFFF', '#FFFFFF']} style={[styles.chip, { borderColor: FINISH_STYLE[f].chip[0] }]}>
+                <Text style={[styles.chipText, { color: on ? '#FFFFFF' : FINISH_STYLE[f].chip[0] }]}>{t(`finish.${f}`)} {n}</Text>
+              </LinearGradient>
+            </Pressable>
+          );
+        })}
+      </View>
       {owned.length === 0 && <Text style={styles.empty}>{t('collect.empty')}</Text>}
+      {showcase.length > 0 && (
+        <View style={{ gap: S.sm }}>
+          <Text style={styles.section}>{t('finish.rarest')}</Text>
+          <View style={styles.showcase}>
+            {showcase.map(({ card, finish }) => (
+              <Pressable key={card.id} onPress={() => router.push(`/card/${card.id}`)} testID="showcase-card">
+                <CollectCard card={card} width={Math.min(150, Math.floor((gridW - GAP * 2) / 3))} finish={finish} animate />
+              </Pressable>
+            ))}
+          </View>
+        </View>
+      )}
       {closest.length > 0 && (
         <View style={{ gap: S.sm }}>
           <Text style={styles.section}>{t('card.closest')} · {t('card.completed', { n: done })}</Text>
@@ -69,10 +105,14 @@ export default function Collection() {
           ))}
         </View>
       )}
-      <View style={styles.grid} onLayout={(e) => setGridW(e.nativeEvent.layout.width)}>
-        {shown.map(({ card, count }) => (
+      <View style={styles.grid} onLayout={(e) => {
+        // A hidden tab reports 0 width on the web; keep the last real width so cards never get a negative size.
+        const w = e.nativeEvent.layout.width;
+        if (w > 0) setGridW(w);
+      }}>
+        {shown.map(({ card, count, finish }) => (
           <Pressable key={card.id} onPress={() => router.push(`/card/${card.id}`)} testID="collection-card">
-            <CollectCard card={card} width={cardW} level={cardLevel(count)} />
+            <CollectCard card={card} width={cardW} level={cardLevel(count)} finish={finish} />
             {count > 1 && <Text style={styles.dupes}>×{count}</Text>}
           </Pressable>
         ))}
@@ -96,6 +136,7 @@ const styles = StyleSheet.create({
   chipText: { fontWeight: '800', fontSize: 12 },
   empty: { color: C.muted, textAlign: 'center', marginTop: S.xl },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: GAP },
+  showcase: { flexDirection: 'row', gap: GAP, justifyContent: 'center' },
   section: { color: C.text, fontWeight: '900', fontSize: 15 },
   setRow: { flexDirection: 'row', alignItems: 'center', gap: S.md, backgroundColor: C.surface, borderRadius: R.md, padding: S.md },
   swatch: { width: 22, height: 22, borderRadius: 11, borderWidth: 3 },

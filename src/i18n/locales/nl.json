@@ -538,7 +538,12 @@
     "promotions": "Promoveer in de league",
     "leagueBest": "Hoogste league-niveau",
     "pickUpgrades": "Waardeer keuzes op",
-    "rerolls": "Gebruik rerolls"
+    "rerolls": "Gebruik rerolls",
+    "foils": "Trek kaarten met een speciale afwerking",
+    "hasGold": "Bezit een Goud-kaart of zeldzamer",
+    "hasViolet": "Bezit een Violet-kaart of zeldzamer",
+    "hasRainbow": "Bezit een Regenboog-kaart of zeldzamer",
+    "hasCosmic": "Bezit een Kosmische kaart"
   },
   "ach": {
     "rookie": "Rookie",
@@ -595,7 +600,13 @@
     "climber": "Klimmer",
     "legend-tier": "Legendestatus",
     "lucky-tap": "Gelukstik",
-    "fresh-spin": "Nieuwe draai"
+    "fresh-spin": "Nieuwe draai",
+    "shiny": "Glimmend",
+    "foil-hoarder": "Foil-verzamelaar",
+    "golden-touch": "Gouden aanraking",
+    "violet-hour": "Violet uur",
+    "over-the-rainbow": "Voorbij de regenboog",
+    "cosmic": "Kosmisch"
   },
   "league": {
     "title": "Competitie",
@@ -902,5 +913,30 @@
       "wrong-code": "Die code past niet bij de back-up.",
       "offline": "Server niet bereikbaar. Probeer opnieuw."
     }
+  },
+  "rarity": {
+    "perfect": "PERFECT SEIZOEN",
+    "perfectOdds": "82-0. Ongeveer 1 op 450 drafts lukt dit.",
+    "c75": "75-winstenclub",
+    "c75Odds": "Maar zo’n 3% van de drafts komt hier.",
+    "c70": "70-winstenclub",
+    "c70Odds": "Ongeveer 1 op 10 drafts haalt 70 zeges.",
+    "c65": "Seizoen met 65 zeges",
+    "c65Odds": "Een draft uit de beste 25%.",
+    "near": "{{n}} zeges van de {{club}}"
+  },
+  "finish": {
+    "holo": "Holo",
+    "chrome": "Chroom",
+    "gold": "Goud",
+    "violet": "Violet",
+    "rainbow": "Regenboog",
+    "cosmic": "Kosmisch",
+    "pull": "{{name}} GETROKKEN!",
+    "oneIn": "1 op {{n}}",
+    "odds": "Kans op afwerking (elke kaart, elk pakket)",
+    "rarest": "Zeldzaamste trekkingen",
+    "yours": "Jouw afwerkingen",
+    "keepHint": "Alleen de kaart die je houdt komt in je collectie, afwerking inbegrepen."
   }
 }

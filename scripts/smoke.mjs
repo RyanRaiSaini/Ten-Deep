@@ -26,13 +26,15 @@ const base = `http://localhost:${server.address().port}`;
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 420, height: 900 }, deviceScaleFactor: 1 });
 const errors = [];
-page.on('pageerror', (e) => errors.push(e.message));
-page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+let current = 'boot'; // tag each error with the step it happened in
+page.on('pageerror', (e) => errors.push(`[${current}] ${e.message}`));
+page.on('console', (m) => m.type() === 'error' && errors.push(`[${current}] ${m.text()}`));
 const warnings = [];
 page.on('console', (m) => m.type() === 'warning' && warnings.push(m.text().slice(0, 160)));
 
 const shot = (name) => page.screenshot({ path: `${out}/${name}.png`, fullPage: true });
 const step = async (name, fn) => {
+  current = name;
   try {
     await fn();
     console.log(`ok   ${name}`);

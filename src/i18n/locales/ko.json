@@ -533,7 +533,12 @@
     "promotions": "리그 승격",
     "leagueBest": "최고 리그 등급",
     "pickUpgrades": "픽 업그레이드",
-    "rerolls": "리롤 사용"
+    "rerolls": "리롤 사용",
+    "foils": "특수 마감 카드 뽑기",
+    "hasGold": "골드 이상 카드 보유",
+    "hasViolet": "바이올렛 이상 카드 보유",
+    "hasRainbow": "레인보우 이상 카드 보유",
+    "hasCosmic": "코스믹 카드 보유"
   },
   "ach": {
     "rookie": "루키",
@@ -590,7 +595,13 @@
     "climber": "등반가",
     "legend-tier": "레전드 등극",
     "lucky-tap": "행운의 터치",
-    "fresh-spin": "새로운 스핀"
+    "fresh-spin": "새로운 스핀",
+    "shiny": "반짝반짝",
+    "foil-hoarder": "포일 수집가",
+    "golden-touch": "황금 손",
+    "violet-hour": "바이올렛 아워",
+    "over-the-rainbow": "무지개 너머",
+    "cosmic": "코스믹"
   },
   "league": {
     "title": "리그",
@@ -897,5 +908,30 @@
       "wrong-code": "코드가 백업과 일치하지 않아요.",
       "offline": "서버에 연결할 수 없어요. 다시 시도하세요."
     }
+  },
+  "rarity": {
+    "perfect": "퍼펙트 시즌",
+    "perfectOdds": "82승 0패. 약 450번에 1번 나오는 기록.",
+    "c75": "75승 클럽",
+    "c75Odds": "여기까지 오는 드래프트는 약 3%뿐.",
+    "c70": "70승 클럽",
+    "c70Odds": "드래프트 10번 중 1번꼴로 70승 도달.",
+    "c65": "65승 시즌",
+    "c65Odds": "상위 25% 드래프트.",
+    "near": "{{club}}까지 {{n}}승 남음"
+  },
+  "finish": {
+    "holo": "홀로",
+    "chrome": "크롬",
+    "gold": "골드",
+    "violet": "바이올렛",
+    "rainbow": "레인보우",
+    "cosmic": "코스믹",
+    "pull": "{{name}} 등장!",
+    "oneIn": "{{n}}분의 1",
+    "odds": "마감 확률 (모든 카드, 모든 팩)",
+    "rarest": "가장 희귀한 뽑기",
+    "yours": "내 마감",
+    "keepHint": "보관한 카드만 마감 그대로 컬렉션에 들어갑니다."
   }
 }

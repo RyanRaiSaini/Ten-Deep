@@ -1,11 +1,11 @@
 /** The online PIN directory (api/pin.ts): publish your friend code under your PIN, look up a friend's by theirs. */
-import { Platform } from 'react-native';
 import { CONFIG } from '../config';
 import { decodeFriend, encodeFriend, newPin, type FriendSnapshot } from '../engine/friends/code';
 import { mySnapshot, useFriends } from '../store/friends';
 
 // Same origin on the web (so local builds never touch the live directory); the live site from the apps.
-const URL_ = Platform.OS === 'web' ? '/api/pin' : `${CONFIG.webUrl}/api/pin`;
+// `typeof document` instead of Platform keeps react-native out of node-run tests.
+const URL_ = typeof document !== 'undefined' ? '/api/pin' : `${CONFIG.webUrl}/api/pin`;
 const okJson = async (r: Response) => r.ok && (r.headers.get('content-type') ?? '').includes('json') && (await r.json().catch(() => null))?.ok === true;
 const DAY = 24 * 3600 * 1000;
 
