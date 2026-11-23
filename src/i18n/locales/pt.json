@@ -413,5 +413,21 @@
     "locked": "Bloqueada",
     "complete": "Desafio completo!",
     "editLineup": "Editar escalação"
+  },
+  "card": {
+    "level": "Nv. {{n}}",
+    "dupes": "Cópias: {{n}}",
+    "inSets": "Faz parte destes sets",
+    "notOwned": "Ainda não está na sua coleção",
+    "sets": "Sets",
+    "closest": "Mais perto de completar",
+    "setReward": "Complete para uma {{pick}}",
+    "completed": "Sets completos: {{n}}",
+    "off": "Ataque",
+    "def": "Defesa",
+    "reb": "Rebote",
+    "ast": "Criação",
+    "three": "Arremesso",
+    "levelHint": "Cada cópia extra adiciona um nível (+1 de nota, até +3)."
   }
 }

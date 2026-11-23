@@ -413,5 +413,21 @@
     "locked": "Verrouillée",
     "complete": "Défi terminé !",
     "editLineup": "Modifier l'alignement"
+  },
+  "card": {
+    "level": "Niv. {{n}}",
+    "dupes": "Exemplaires : {{n}}",
+    "inSets": "Fait partie de ces sets",
+    "notOwned": "Pas encore dans ta collection",
+    "sets": "Sets",
+    "closest": "Les plus proches d'être complétés",
+    "setReward": "Complète-le pour un {{pick}}",
+    "completed": "Sets complétés : {{n}}",
+    "off": "Attaque",
+    "def": "Défense",
+    "reb": "Rebond",
+    "ast": "Création",
+    "three": "Tir",
+    "levelHint": "Chaque doublon ajoute un niveau (+1 de note, jusqu'à +3)."
   }
 }

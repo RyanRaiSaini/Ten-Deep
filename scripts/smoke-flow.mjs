@@ -209,6 +209,14 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('30-gauntlet');
   });
 
+  await step('card detail: tap a collection card, see level and sets', async () => {
+    await page.goto(`${base}/collection`);
+    await page.getByTestId('collection-card').first().click();
+    const meta = await page.getByTestId('card-meta').textContent();
+    if (!/\d/.test(meta ?? '')) throw new Error(`card meta: ${meta}`);
+    await shot('31-card-detail');
+  });
+
   await step('pass-and-play duel: 20 picks and a best-of-7', async () => {
     await page.goto(base);
     await page.getByText('Duels').click();

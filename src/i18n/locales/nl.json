@@ -413,5 +413,21 @@
     "locked": "Op slot",
     "complete": "Uitdaging voltooid!",
     "editLineup": "Opstelling bewerken"
+  },
+  "card": {
+    "level": "Lv {{n}}",
+    "dupes": "Exemplaren: {{n}}",
+    "inSets": "Onderdeel van deze sets",
+    "notOwned": "Nog niet in je collectie",
+    "sets": "Sets",
+    "closest": "Bijna compleet",
+    "setReward": "Maak compleet voor een {{pick}}",
+    "completed": "Voltooide sets: {{n}}",
+    "off": "Aanval",
+    "def": "Verdediging",
+    "reb": "Rebounds",
+    "ast": "Spelverdeling",
+    "three": "Schieten",
+    "levelHint": "Elk duplicaat geeft een level (+1 rating, tot +3)."
   }
 }
