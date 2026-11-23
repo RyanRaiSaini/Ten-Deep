@@ -82,7 +82,10 @@ export async function GET(req: Request) {
   if (!code) return json({ error: 'bad-code' }, 400);
   const room = await load(code);
   if (!room) return json({ error: 'not-found' }, 404);
-  return json({ now: Date.now(), meta: room.meta, members: room.members.map(strip) });
+  // After the first load the phone already has the room's frozen form table: skip it (it's most of the payload).
+  const { form, ...rest } = room.meta;
+  const meta = new URL(req.url).searchParams.get('lite') === '1' ? rest : { ...rest, form };
+  return json({ now: Date.now(), meta, members: room.members.map(strip) });
 }
 
 export async function POST(req: Request) {
