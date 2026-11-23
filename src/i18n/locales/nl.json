@@ -194,7 +194,8 @@
     "resume": "Hervatten",
     "missed": "Gemist",
     "replaceRun": "Dit vervangt je huidige run. Tik nogmaals om te starten.",
-    "share": "Deel de resultaten van vandaag"
+    "share": "Deel de resultaten van vandaag",
+    "endsIn": "Eindigt over"
   },
   "duel": {
     "title": "Duel",

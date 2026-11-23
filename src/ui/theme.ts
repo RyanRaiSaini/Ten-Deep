@@ -27,10 +27,10 @@ export const C = {
 export const R = { sm: 10, md: 16, lg: 24, pill: 999 } as const;
 export const S = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 36 } as const;
 
-/** Font families (loaded in the root layout). The Text wrapper maps fontWeight onto the Nunito family. */
+/** Font families (loaded in the root layout). The Text wrapper maps fontWeight onto the League Spartan family. */
 export const FONT = {
   display: 'LilitaOne_400Regular',
-  body: 'Nunito_700Bold',
+  body: 'LeagueSpartan_600SemiBold',
 } as const;
 
 export const F = {

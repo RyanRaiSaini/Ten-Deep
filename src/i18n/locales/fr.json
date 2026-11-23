@@ -196,7 +196,8 @@
     "resume": "Reprendre",
     "missed": "Manqué",
     "replaceRun": "Ceci remplace ta partie en cours. Touche encore pour commencer.",
-    "share": "Partager mes résultats du jour"
+    "share": "Partager mes résultats du jour",
+    "endsIn": "Fin dans"
   },
   "duel": {
     "title": "Duel",

@@ -1,11 +1,14 @@
 import { createContext, useContext, type ComponentProps } from 'react';
 import { StyleSheet, Text as RNText } from 'react-native';
 
-/** Nunito ships one family per weight, so a fontWeight picks the matching family. */
+/**
+ * Body text is League Spartan (The League of Moveable Type, SIL OFL): a bold, athletic geometric face.
+ * It ships one family per weight, so a fontWeight picks the matching family (one step lighter reads best).
+ */
 const BY_WEIGHT: Record<string, string> = {
-  '100': 'Nunito_600SemiBold', '200': 'Nunito_600SemiBold', '300': 'Nunito_600SemiBold', '400': 'Nunito_600SemiBold',
-  normal: 'Nunito_600SemiBold', '500': 'Nunito_600SemiBold', '600': 'Nunito_600SemiBold',
-  '700': 'Nunito_700Bold', bold: 'Nunito_700Bold', '800': 'Nunito_800ExtraBold', '900': 'Nunito_900Black',
+  '100': 'LeagueSpartan_500Medium', '200': 'LeagueSpartan_500Medium', '300': 'LeagueSpartan_500Medium', '400': 'LeagueSpartan_500Medium',
+  normal: 'LeagueSpartan_500Medium', '500': 'LeagueSpartan_500Medium', '600': 'LeagueSpartan_600SemiBold',
+  '700': 'LeagueSpartan_600SemiBold', bold: 'LeagueSpartan_700Bold', '800': 'LeagueSpartan_700Bold', '900': 'LeagueSpartan_800ExtraBold',
 };
 
 /** Drop-in for React Native's Text with the game's fonts applied. */

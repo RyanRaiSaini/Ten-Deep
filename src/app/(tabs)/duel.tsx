@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   vsBadge: { marginHorizontal: -6, zIndex: 2 },
   lead: { color: C.text, fontSize: 15, lineHeight: 22 },
   note: { color: C.muted, fontSize: 12, textAlign: 'center' },
-  input: { color: C.text, fontSize: 18, fontWeight: '800', borderWidth: 2, borderRadius: R.md, padding: S.md, backgroundColor: C.bg, fontFamily: 'Nunito_800ExtraBold' },
+  input: { color: C.text, fontSize: 18, fontWeight: '800', borderWidth: 2, borderRadius: R.md, padding: S.md, backgroundColor: C.bg, fontFamily: 'LeagueSpartan_700Bold' },
   turn: { borderRadius: R.lg, padding: S.lg, alignItems: 'center', gap: 2 },
   turnText: { color: C.ink, fontSize: 22, ...F.display },
   turnSub: { color: C.ink, fontWeight: '800' },
