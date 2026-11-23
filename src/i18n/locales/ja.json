@@ -22,7 +22,9 @@
     "streakSaved": "連続記録を守った！",
     "streakSavedBody_other": "ストリークフリーズが休んだ{{count}}日分をカバーしました。",
     "duelTitle": "友だちとデュエル",
-    "duelCta": "誰が一番？"
+    "duelCta": "誰が一番？",
+    "hot": "絶好調",
+    "hotSub": "実際の調子を毎日反映"
   },
   "mode": {
     "current": {

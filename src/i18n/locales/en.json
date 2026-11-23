@@ -23,7 +23,9 @@
     "streakSavedBody_one": "A streak freeze covered the day you missed.",
     "streakSavedBody_other": "Streak freezes covered the {{count}} days you missed.",
     "duelTitle": "Duel your friends",
-    "duelCta": "Who's the best?"
+    "duelCta": "Who's the best?",
+    "hot": "Heating up",
+    "hotSub": "Real-life form, updated daily"
   },
   "mode": {
     "current": {

@@ -24,7 +24,9 @@
     "streakSavedBody_one": "Un congelador de racha cubrió el día que faltaste.",
     "streakSavedBody_other": "Los congeladores cubrieron los {{count}} días que faltaste.",
     "duelTitle": "Reta a tus amigos",
-    "duelCta": "¿Quién es el mejor?"
+    "duelCta": "¿Quién es el mejor?",
+    "hot": "En racha",
+    "hotSub": "Forma real, actualizada a diario"
   },
   "mode": {
     "current": {

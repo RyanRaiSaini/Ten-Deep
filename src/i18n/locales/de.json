@@ -23,7 +23,9 @@
     "streakSavedBody_one": "Ein Serien-Freeze hat den verpassten Tag abgedeckt.",
     "streakSavedBody_other": "Serien-Freezes haben die {{count}} verpassten Tage abgedeckt.",
     "duelTitle": "Fordere deine Freunde heraus",
-    "duelCta": "Wer ist der Beste?"
+    "duelCta": "Wer ist der Beste?",
+    "hot": "Heiß gelaufen",
+    "hotSub": "Echte Form, täglich aktualisiert"
   },
   "mode": {
     "current": {
