@@ -1,8 +1,8 @@
 // Import only the weights the game uses, so the other font styles stay out of the app.
-import { LeagueSpartan_500Medium } from '@expo-google-fonts/league-spartan/500Medium';
-import { LeagueSpartan_600SemiBold } from '@expo-google-fonts/league-spartan/600SemiBold';
-import { LeagueSpartan_700Bold } from '@expo-google-fonts/league-spartan/700Bold';
-import { LeagueSpartan_800ExtraBold } from '@expo-google-fonts/league-spartan/800ExtraBold';
+import { Montserrat_500Medium } from '@expo-google-fonts/montserrat/500Medium';
+import { Montserrat_600SemiBold } from '@expo-google-fonts/montserrat/600SemiBold';
+import { Montserrat_700Bold } from '@expo-google-fonts/montserrat/700Bold';
+import { Montserrat_800ExtraBold } from '@expo-google-fonts/montserrat/800ExtraBold';
 import { LilitaOne_400Regular } from '@expo-google-fonts/lilita-one/400Regular';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -42,7 +42,7 @@ function useHydrated() {
 export default function RootLayout() {
   const language = useSettings((s) => s.language);
   const hydrated = useHydrated();
-  const [fontsLoaded, fontError] = useFonts({ LilitaOne_400Regular, LeagueSpartan_500Medium, LeagueSpartan_600SemiBold, LeagueSpartan_700Bold, LeagueSpartan_800ExtraBold });
+  const [fontsLoaded, fontError] = useFonts({ LilitaOne_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold, Montserrat_800ExtraBold });
   // Fonts that fail to load fall back to system fonts rather than blocking the game.
   const ready = hydrated && (fontsLoaded || !!fontError);
   useMusic();

@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   addBtn: { minHeight: 44, paddingVertical: 8, paddingHorizontal: 14 },
   empty: { color: C.muted, fontWeight: '700', textAlign: 'center', paddingVertical: S.md },
   note: { color: C.muted, fontSize: 12, textAlign: 'center' },
-  input: { color: C.text, fontSize: 18, fontWeight: '800', borderWidth: 2, borderRadius: R.md, padding: S.md, backgroundColor: C.bg, fontFamily: 'LeagueSpartan_700Bold' },
+  input: { color: C.text, fontSize: 18, fontWeight: '800', borderWidth: 2, borderRadius: R.md, padding: S.md, backgroundColor: C.bg, fontFamily: 'Montserrat_700Bold' },
   turn: { borderRadius: R.lg, padding: S.lg, alignItems: 'center', gap: 2 },
   turnText: { color: C.ink, fontSize: 22, ...F.display },
   turnSub: { color: C.ink, fontWeight: '800' },

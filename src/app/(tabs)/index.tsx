@@ -102,7 +102,7 @@ export default function Home() {
         </Pressable>
         <View style={styles.logo}>
           <BrandLogo scale={0.82} testID="brand-logo" />
-          <Text style={styles.tagline}>{t('app.tagline')}</Text>
+          <Text style={styles.tagline} numberOfLines={1} adjustsFontSizeToFit>{t('app.tagline')}</Text>
         </View>
         <Pressable onPress={() => router.push('/packs')} style={styles.tile} testID="picks-banner" accessibilityRole="button" accessibilityLabel={t('collect.waiting', { count: pendingPicks })}>
           <Icon name="gift" size={40} />
@@ -194,7 +194,7 @@ export default function Home() {
           <View style={[styles.badge, { backgroundColor: alpha(m.accent, 0.15), borderColor: C.ink }]}><Icon name={m.icon} size={40} /></View>
           <View style={{ flex: 1, gap: 2 }}>
             <Display size={22} align="left">{t(`mode.${m.key}.title`)}</Display>
-            <Text style={styles.modeDesc} numberOfLines={2}>{t(`mode.${m.key}.desc`)}</Text>
+            <Text style={styles.modeDesc} numberOfLines={3}>{t(`mode.${m.key}.desc`)}</Text>
             {m.key === 'daily' && <DailyTimer small testID="home-daily-timer" />}
           </View>
           {m.badge && <View style={[styles.ribbon, { backgroundColor: m.accent }]}><Text style={styles.ribbonText}>{m.badge}</Text></View>}
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   dotText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12 },
   logo: { flex: 1, alignItems: 'center' },
   logoBall: { position: 'absolute', top: -22, right: 4, transform: [{ rotate: '-18deg' }] },
-  tagline: { fontWeight: '900', color: C.ink, fontSize: 14, marginTop: 2 },
+  tagline: { fontWeight: '800', color: C.ink, fontSize: 12.5, marginTop: 2, textAlign: 'center' },
   week: { flexDirection: 'row', justifyContent: 'space-between', marginTop: S.sm },
   day: { alignItems: 'center', gap: 4, paddingVertical: 6, paddingHorizontal: 2, borderRadius: 18 },
   dayToday: { backgroundColor: '#FFFFFF', borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge, paddingHorizontal: 6 },
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF', overflow: 'visible',
   },
   badge: { width: 62, height: 62, borderRadius: 16, borderWidth: 2.5, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' },
-  modeDesc: { color: C.muted, fontSize: 13, fontWeight: '700' },
+  modeDesc: { color: C.muted, fontSize: 12.5, lineHeight: 16, fontWeight: '600' },
   result: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: '#FFF1D6', borderWidth: 2.5, borderColor: C.gold, borderBottomWidth: 6 },
   resultTitle: { fontFamily: FONT.display, fontSize: 19, color: C.ink },
   resultSub: { color: C.muted, fontWeight: '800', fontSize: 13 },
