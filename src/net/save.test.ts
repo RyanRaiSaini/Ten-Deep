@@ -4,7 +4,7 @@ vi.mock('@react-native-async-storage/async-storage', () => ({
   default: { getItem: async () => null, setItem: async () => undefined, removeItem: async () => undefined },
 }));
 
-const { parseRecovery, recoveryCode, SAVE_KEYS } = await import('./save');
+const { DEVICE_ONLY_KEYS, parseRecovery, recoveryCode, SAVE_KEYS } = await import('./save');
 
 describe('cloud save', () => {
   it('a recovery code round-trips and tolerates spaces and case', () => {
@@ -15,10 +15,11 @@ describe('cloud save', () => {
     expect(parseRecovery('K7Q2XM-short')).toBeNull();
   });
 
-  it('backs up every persisted store', async () => {
+  it('backs up every persisted store (except the device-only ones, listed on purpose)', async () => {
     const { readdirSync, readFileSync } = await import('node:fs');
     const names = readdirSync('src/store').filter((f) => f.endsWith('.ts') && !f.endsWith('.test.ts'))
       .flatMap((f) => [...readFileSync(`src/store/${f}`, 'utf8').matchAll(/name: '(tendeep-[a-z]+)'/g)].map((m) => m[1]));
-    expect([...names].sort()).toEqual([...SAVE_KEYS].sort());
+    expect([...names].sort()).toEqual([...SAVE_KEYS, ...DEVICE_ONLY_KEYS].sort());
+    expect(SAVE_KEYS.some((k) => DEVICE_ONLY_KEYS.includes(k))).toBe(false);
   });
 });

@@ -946,5 +946,24 @@
     "share": "Teilen",
     "shareText": "Gerade {{name}} in {{finish}} in Ten Deep gezogen! {{odds}}",
     "shareTextBase": "Gerade {{name}} ({{tier}}) in Ten Deep gezogen!"
+  },
+  "account": {
+    "title": "Konto",
+    "body": "Melde dich an, um Fortschritt, Karten und Freunde auf jedem Gerät zu behalten.",
+    "signedIn": "Angemeldet mit {{provider}}",
+    "synced": "Dein Fortschritt wird automatisch in deinem Konto gesichert. Melde dich auf einem neuen Handy an, um alles zurückzubekommen.",
+    "signOut": "Auf diesem Gerät abmelden",
+    "foundTitle": "Dieses Konto hat bereits Fortschritt",
+    "foundBody": "Auf diesem Gerät laden? Der aktuelle Fortschritt auf diesem Gerät wird ersetzt.",
+    "load": "Meinen Fortschritt laden",
+    "keepHere": "Nicht jetzt",
+    "restored": "Willkommen zurück! Dein Fortschritt ist geladen.",
+    "linked": "Angemeldet. Dein Fortschritt ist in deinem Konto gespeichert.",
+    "offline": "Server nicht erreichbar. Versuch es erneut.",
+    "failed": "Anmeldung hat nicht geklappt. Versuch es erneut.",
+    "working": "Einen Moment…",
+    "google": "Weiter mit Google",
+    "eraseOffline": "Server nicht erreichbar, deine Online-Sicherung wurde nicht gelöscht. Versuch es erneut, wenn du online bist.",
+    "eraseLocal": "Nur auf diesem Gerät löschen"
   }
 }

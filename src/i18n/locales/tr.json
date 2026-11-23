@@ -946,5 +946,24 @@
     "share": "Paylaş",
     "shareText": "Ten Deep'te {{finish}} {{name}} çıkardım! {{odds}}",
     "shareTextBase": "Ten Deep'te {{name}} ({{tier}}) çıkardım!"
+  },
+  "account": {
+    "title": "Hesap",
+    "body": "İlerlemeni, kartlarını ve arkadaşlarını her cihazda tutmak için giriş yap.",
+    "signedIn": "{{provider}} ile giriş yapıldı",
+    "synced": "İlerlemen hesabına otomatik yedeklenir. Yeni bir telefonda giriş yaparak hepsini geri al.",
+    "signOut": "Bu cihazda çıkış yap",
+    "foundTitle": "Bu hesapta zaten ilerleme var",
+    "foundBody": "Bu cihaza yüklensin mi? Bu cihazdaki mevcut ilerleme değiştirilecek.",
+    "load": "İlerlememi yükle",
+    "keepHere": "Şimdi değil",
+    "restored": "Tekrar hoş geldin! İlerlemen yüklendi.",
+    "linked": "Giriş yapıldı. İlerlemen hesabına kaydedildi.",
+    "offline": "Sunucuya ulaşılamadı. Tekrar dene.",
+    "failed": "Giriş yapılamadı. Tekrar dene.",
+    "working": "Bir saniye…",
+    "google": "Google ile devam et",
+    "eraseOffline": "Sunucuya ulaşılamadı, çevrimiçi yedeğin silinmedi. İnternete bağlıyken tekrar dene.",
+    "eraseLocal": "Sadece bu cihazdan sil"
   }
 }
