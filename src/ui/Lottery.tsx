@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, StyleSheet, Text, View } from 'react-native';
 import { feel } from '../audio/feel';
@@ -12,8 +12,10 @@ const SHOWN = 14;
 export function LotteryReveal({ order, names }: { order: number[]; names: (team: number) => string }) {
   const { t } = useTranslation();
   const reduce = useReducedMotion();
-  const top = order.slice(0, SHOWN);
-  const [revealed, setRevealed] = useState(reduce ? SHOWN : 0);
+  const top = useMemo(() => order.slice(0, SHOWN), [order]);
+  const [revealed, setRevealed] = useState(0);
+  // Reduce-motion resolves after the first render: skip straight to the full order.
+  useEffect(() => { if (reduce) setRevealed(SHOWN); }, [reduce]);
   const pop = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
