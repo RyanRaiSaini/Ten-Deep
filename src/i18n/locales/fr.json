@@ -136,7 +136,8 @@
     "seed": "Tête de série",
     "topScorer": "Meilleur marqueur",
     "playAgain": "Rejouer un draft",
-    "home": "Accueil"
+    "home": "Accueil",
+    "awards": "Trophées de la saison"
   },
   "injury": {
     "Day-to-day": "Incertain",
@@ -533,5 +534,49 @@
     "loyal": "Fidèle",
     "devoted": "Dévoué",
     "pack-rat": "Accro aux packs"
+  },
+  "league": {
+    "title": "Ligue",
+    "leaders": "Leaders",
+    "awards": "Course aux trophées",
+    "pts": "Points par match",
+    "reb": "Rebonds par match",
+    "ast": "Passes par match",
+    "mvp": "MVP",
+    "dpoy": "Défenseur de l'année",
+    "roy": "Rookie de l'année",
+    "smoy": "Sixième homme de l'année",
+    "none": "Aucun joueur qualifié pour l'instant",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "Toi"
+  },
+  "news": {
+    "title": "Actus",
+    "streakW": "Série de victoires : {{n}}",
+    "streakL": "Série de défaites : {{n}}",
+    "big": "{{name}} explose : {{n}} PTS",
+    "triple": "{{name}} réussit un triple-double",
+    "wins": "Victoire n° {{n}} au compteur",
+    "injury": "{{name}} absent : {{n}} matchs",
+    "first": "Seul en tête",
+    "upset": "Victoire de prestige contre {{name}}"
+  },
+  "recap": {
+    "title": "Résumé du match",
+    "q": "QT{{n}}",
+    "ot": "Prol.",
+    "run": "{{team}} remporte le quart-temps, +{{n}}",
+    "double": "{{name}} remplit la feuille : {{line}}",
+    "clutch": "{{name}} plie le match en fin de rencontre",
+    "otGame": "Prolongation ! {{name}} prend les commandes",
+    "blowout": "{{team}} s'envole, +{{n}}",
+    "top": "Meilleur marqueur : {{name}} ({{n}})"
+  },
+  "box": {
+    "min": "MIN",
+    "pts": "PTS",
+    "reb": "REB",
+    "ast": "PD",
+    "tap": "Touche un match récent pour sa feuille de stats"
   }
 }

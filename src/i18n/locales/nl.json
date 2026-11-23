@@ -136,7 +136,8 @@
     "seed": "Plaatsing",
     "topScorer": "Topscorer",
     "playAgain": "Opnieuw drafen",
-    "home": "Home"
+    "home": "Home",
+    "awards": "Seizoensprijzen"
   },
   "injury": {
     "Day-to-day": "Twijfelachtig",
@@ -533,5 +534,49 @@
     "loyal": "Trouw",
     "devoted": "Toegewijd",
     "pack-rat": "Pakjesverzamelaar"
+  },
+  "league": {
+    "title": "Competitie",
+    "leaders": "Leiders",
+    "awards": "Race om de prijzen",
+    "pts": "Punten per wedstrijd",
+    "reb": "Rebounds per wedstrijd",
+    "ast": "Assists per wedstrijd",
+    "mvp": "MVP",
+    "dpoy": "Verdediger van het jaar",
+    "roy": "Rookie van het jaar",
+    "smoy": "Zesde man van het jaar",
+    "none": "Nog geen gekwalificeerde spelers",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "Jij"
+  },
+  "news": {
+    "title": "Nieuws",
+    "streakW": "Winstreeks: {{n}}",
+    "streakL": "Verliesreeks: {{n}}",
+    "big": "{{name}} ontploft: {{n}} PTS",
+    "triple": "{{name}} noteert een triple-double",
+    "wins": "Zege nr. {{n}} binnen",
+    "injury": "{{name}} afwezig: {{n}} wedstrijden",
+    "first": "Alleen aan kop",
+    "upset": "Statement tegen {{name}}"
+  },
+  "recap": {
+    "title": "Wedstrijdverslag",
+    "q": "K{{n}}",
+    "ot": "VL",
+    "run": "{{team}} pakt het kwart, +{{n}}",
+    "double": "{{name}} vult het scoreformulier: {{line}}",
+    "clutch": "{{name}} maakt het af in de slotfase",
+    "otGame": "Verlenging! {{name}} neemt het over",
+    "blowout": "{{team}} loopt weg, +{{n}}",
+    "top": "Topscorer: {{name}} ({{n}})"
+  },
+  "box": {
+    "min": "MIN",
+    "pts": "PTS",
+    "reb": "REB",
+    "ast": "AST",
+    "tap": "Tik op een recente wedstrijd voor de boxscore"
   }
 }

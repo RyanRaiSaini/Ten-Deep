@@ -136,7 +136,8 @@
     "seed": "Sıra",
     "topScorer": "En skorer",
     "playAgain": "Yeniden draft yap",
-    "home": "Ana sayfa"
+    "home": "Ana sayfa",
+    "awards": "Sezon ödülleri"
   },
   "injury": {
     "Day-to-day": "Günlük takip",
@@ -533,5 +534,49 @@
     "loyal": "Sadık",
     "devoted": "Bağlı",
     "pack-rat": "Paket Avcısı"
+  },
+  "league": {
+    "title": "Lig",
+    "leaders": "Liderler",
+    "awards": "Ödül yarışı",
+    "pts": "Maç başı sayı",
+    "reb": "Maç başı ribaund",
+    "ast": "Maç başı asist",
+    "mvp": "MVP",
+    "dpoy": "Yılın Savunmacısı",
+    "roy": "Yılın Çaylağı",
+    "smoy": "Yılın Altıncı Adamı",
+    "none": "Henüz uygun oyuncu yok",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "Sen"
+  },
+  "news": {
+    "title": "Haberler",
+    "streakW": "Galibiyet serisi: {{n}}",
+    "streakL": "Mağlubiyet serisi: {{n}}",
+    "big": "{{name}} coştu: {{n}} SAYI",
+    "triple": "{{name}} triple-double yaptı",
+    "wins": "{{n}}. galibiyet geldi",
+    "injury": "{{name}} yok: {{n}} maç",
+    "first": "Tek başına zirvede",
+    "upset": "{{name}} karşısında net galibiyet"
+  },
+  "recap": {
+    "title": "Maç özeti",
+    "q": "{{n}}. Ç",
+    "ot": "UZ",
+    "run": "{{team}} çeyreği aldı, +{{n}}",
+    "double": "{{name}} istatistik doldurdu: {{line}}",
+    "clutch": "{{name}} maçı sonda bitirdi",
+    "otGame": "Uzatma! {{name}} sahneye çıktı",
+    "blowout": "{{team}} farkı açtı, +{{n}}",
+    "top": "En skorer: {{name}} ({{n}})"
+  },
+  "box": {
+    "min": "DK",
+    "pts": "SY",
+    "reb": "RB",
+    "ast": "AS",
+    "tap": "İstatistikler için yakın tarihli bir maça dokun"
   }
 }
