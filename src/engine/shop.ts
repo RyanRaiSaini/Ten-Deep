@@ -9,9 +9,9 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
   { id: 'rerolls_1', rerolls: 1, price: '$0.99' },
-  { id: 'rerolls_5', rerolls: 5, price: '$3.99' },
+  { id: 'rerolls_5', rerolls: 5, price: '$4.49' },
   { id: 'rerolls_10', rerolls: 10, price: '$7.99', badge: 'popular' },
-  { id: 'rerolls_25', rerolls: 25, price: '$14.99', badge: 'best' },
+  { id: 'rerolls_25', rerolls: 25, price: '$17.99', badge: 'best' },
 ];
 
 /** One free reroll a day, and up to this many ad breaks a day for one reroll each. */

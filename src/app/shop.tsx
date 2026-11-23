@@ -14,6 +14,8 @@ import { Text } from '../ui/Text';
 import { C, FONT, R, S } from '../ui/theme';
 
 const AD_SECONDS = 5;
+/** Bigger bundles show a fan of 1–3 reroll icons, as offsets from the middle. */
+const fan = (n: number) => (n >= 25 ? [-1, 0, 1] : n >= 5 ? [-0.5, 0.5] : [0]);
 
 /** Rerolls: a free one a day, ad breaks, and bundles (purchases open with the store release). */
 export default function Shop() {
@@ -74,8 +76,10 @@ export default function Shop() {
               </View>
             )}
             <View style={styles.stack}>
-              {Array.from({ length: Math.min(3, Math.ceil(p.rerolls / 5)) }, (_, i) => (
-                <View key={i} style={{ position: i ? 'absolute' : 'relative', left: i * 10, top: -i * 6 }}><Icon name="reroll" size={44} /></View>
+              {fan(p.rerolls).map((off, i) => (
+                <View key={i} style={{ marginLeft: i ? -22 : 0, transform: [{ rotate: `${off * 14}deg` }, { translateY: Math.abs(off) * 4 }] }}>
+                  <Icon name="reroll" size={46} />
+                </View>
               ))}
             </View>
             <Text style={styles.bundleN}>×{p.rerolls}</Text>
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
   popular: { borderColor: C.danger, backgroundColor: '#FFF1EC' },
   badge: { position: 'absolute', top: -12, paddingHorizontal: 12, paddingVertical: 3, borderRadius: R.pill, borderWidth: 2, borderColor: '#FFFFFF' },
   badgeText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1.5 },
-  stack: { height: 56, width: 70, alignItems: 'flex-start', justifyContent: 'flex-end' },
+  stack: { height: 56, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
   bundleN: { fontFamily: FONT.display, fontSize: 34, color: C.ink },
   bundleLabel: { color: C.muted, fontWeight: '800', fontSize: 13 },
   save: { color: '#14A86B', fontWeight: '900', fontSize: 13 },
