@@ -40,7 +40,7 @@ export interface FriendsStore {
   settled: string[];
   saveRace: (seed: string, r: { w: number; l: number; depth: number }) => void;
   /** Count a race once; false if it was already counted. */
-  settle: (seed: string, pin: string, outcome: Outcome, score: string) => boolean;
+  settle: (seed: string, pin: string, outcome: Outcome, score: string, mode?: FriendMode) => boolean;
   /** Add or refresh a friend from their code. */
   add: (snap: FriendSnapshot) => 'added' | 'updated' | 'self';
   remove: (pin: string) => void;
@@ -70,11 +70,11 @@ export const useFriends = create<FriendsStore>()(
       races: {},
       settled: [],
       saveRace: (seed, r) => set((s) => ({ races: Object.fromEntries([...Object.entries(s.races), [seed, r]].slice(-50)) })),
-      settle: (seed, pin, outcome, score) => {
+      settle: (seed, pin, outcome, score, mode = 'race') => {
         const key = `${seed}:${pin}`;
         if (get().settled.includes(key) || !get().friends.some((f) => f.pin === pin)) return false;
         set((s) => ({ settled: [...s.settled, key].slice(-200) }));
-        get().result(pin, 'race', outcome, score);
+        get().result(pin, mode, outcome, score);
         return true;
       },
       add: (snap) => {
