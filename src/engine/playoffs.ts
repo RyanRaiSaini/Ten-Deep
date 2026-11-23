@@ -53,7 +53,7 @@ export function playNextGame(ps: PlayoffState): PlayoffState {
     const g = s.games.length;
     const homeIsHi = HI_HOME[g];
     const [home, away] = homeIsHi ? [s.hi, s.lo] : [s.lo, s.hi];
-    const result = playGame(ps.season.teams, injuries, totals, home, away, rng, () => {});
+    const result = playGame(ps.season.teams, injuries, totals, home, away, rng, () => {}, true);
     const homeWon = result.homeScore > result.awayScore;
     const hiWon = homeWon === homeIsHi;
     return {

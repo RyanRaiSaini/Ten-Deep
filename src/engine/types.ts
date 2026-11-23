@@ -59,6 +59,8 @@ export interface Roster {
   slots: Required<RosterSlots>;
   /** Temporary team-wide rating modifier (Management Crisis cards). */
   mod?: number;
+  /** This season's form (health, chemistry, career years): a rating swing drawn once per season. */
+  seasonForm?: number;
 }
 
 export interface Rng {
