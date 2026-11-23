@@ -382,7 +382,9 @@
     "f2Title": "Behalte deinen Job",
     "f2Body": "Der Vorstand setzt jedes Jahr ein Ziel. Verfehlst du es zu oft, fliegst du.",
     "f3Title": "Schreib Geschichte",
-    "f3Body": "Titel, eine Hall of Fame und bleibende Franchise-Rekorde."
+    "f3Body": "Titel, eine Hall of Fame und bleibende Franchise-Rekorde.",
+    "end": "Karriere beenden",
+    "endSure": "Nochmal tippen: Diese Karriere endet endgültig"
   },
   "collect": {
     "title": "Sammlung",

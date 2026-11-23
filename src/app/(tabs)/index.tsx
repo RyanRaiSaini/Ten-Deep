@@ -10,7 +10,9 @@ import { useGame } from '../../store/game';
 import { useProfile } from '../../store/profile';
 import { claimableCount, useProgress } from '../../store/progress';
 import { useSettings } from '../../store/settings';
+import { Die } from '../../ui/Dice';
 import { useShop } from '../../store/shop';
+import { DailyTimer } from '../../ui/DailyTimer';
 import { Avatar } from '../../ui/Avatar';
 import { AVATARS } from '../../ui/avatars';
 import { Button, Chip, Display, IconButton, Label } from '../../ui/components';
@@ -79,7 +81,7 @@ export default function Home() {
           {freezes > 0 && <><Icon name="freeze" size={20} /><Text style={styles.freezeNum}>{freezes}</Text></>}
         </Chip>
         <Chip onPress={() => router.push('/shop')} testID="shop-chip" label={t('shop.title')}>
-          <Icon name="reroll" size={24} /><Text style={styles.chipNum}>{rerolls}</Text>
+          <Die size={26} color="white" /><Text style={styles.chipNum}>{rerolls}</Text>
           {freeReady && <View style={styles.freeDot} />}
         </Chip>
         <Chip onPress={() => router.push('/profile')} testID="avatar" label={t('profile.title')}>
@@ -190,6 +192,7 @@ export default function Home() {
           <View style={{ flex: 1, gap: 2 }}>
             <Display size={22} align="left">{t(`mode.${m.key}.title`)}</Display>
             <Text style={styles.modeDesc} numberOfLines={2}>{t(`mode.${m.key}.desc`)}</Text>
+            {m.key === 'daily' && <DailyTimer small testID="home-daily-timer" />}
           </View>
           {m.badge && <View style={[styles.ribbon, { backgroundColor: m.accent }]}><Text style={styles.ribbonText}>{m.badge}</Text></View>}
         </Pressable>

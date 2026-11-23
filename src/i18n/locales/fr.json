@@ -385,7 +385,9 @@
     "f2Title": "Garde ton poste",
     "f2Body": "Le conseil fixe un objectif chaque année. Rate trop souvent et tu es viré.",
     "f3Title": "Entre dans l'histoire",
-    "f3Body": "Des titres, un Hall of Fame et des records de franchise."
+    "f3Body": "Des titres, un Hall of Fame et des records de franchise.",
+    "end": "Terminer la carrière",
+    "endSure": "Touche encore : cette carrière sera définitivement terminée"
   },
   "collect": {
     "title": "Collection",

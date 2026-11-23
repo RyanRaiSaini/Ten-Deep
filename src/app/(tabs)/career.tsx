@@ -22,6 +22,7 @@ export default function Career() {
   const [bannerW, setBannerW] = useState(320);
   const { t } = useTranslation();
   const c = useCareer();
+  const [ending, setEnding] = useState(false);
   const g = useGame();
   const morale = c.morale ?? MORALE_START;
   const leaders = franchiseLeaders(c.stats ?? {}, 5);
@@ -87,6 +88,8 @@ export default function Career() {
             {morale}/100 · {moraleMod(morale) > 0 ? `+${moraleMod(morale)}` : moraleMod(morale)} {t('career.moraleEffect')}
           </Text>
           {next && <Button label={next.label} variant="gold" onPress={next.go} testID="career-next" />}
+          <Button label={ending ? t('career.endSure') : t('career.end')} variant="ghost" testID="career-end"
+            onPress={() => { if (!ending) return setEnding(true); c.quit(); setEnding(false); }} />
         </Card>
       )}
 

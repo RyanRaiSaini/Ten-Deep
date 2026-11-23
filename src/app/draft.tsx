@@ -18,6 +18,7 @@ import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner, teamGradient } from '../ui/Spinner';
 import { C, FONT, R, S, money } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
+import { Die } from '../ui/Dice';
 import { useShop } from '../store/shop';
 
 export default function Draft() {
@@ -115,7 +116,7 @@ export default function Draft() {
           )}
           {d.respinsLeft === 0 && !complete && !g.daily && !g.challenge && (
             rerolls > 0 ? (
-              <Button label={t('shop.use', { n: rerolls })} variant="blue" icon={<Icon name="reroll" size={22} />} testID="reroll"
+              <Button label={t('shop.use', { n: rerolls })} variant="blue" icon={<Die size={26} color="white" />} testID="reroll"
                 onPress={() => { setChosen(null); setLanded(false); if (g.doReroll()) setSpinKey((k) => k + 1); else setLanded(true); }} />
             ) : (
               <Button label={t('shop.none')} variant="ghost" icon={<Icon name="shop" size={22} />} onPress={() => router.push('/shop')} testID="reroll-shop" />

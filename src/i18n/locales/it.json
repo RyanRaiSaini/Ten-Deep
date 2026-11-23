@@ -385,7 +385,9 @@
     "f2Title": "Tieniti il posto",
     "f2Body": "La dirigenza fissa un obiettivo ogni anno. Mancalo troppo spesso e sei fuori.",
     "f3Title": "Entra nella storia",
-    "f3Body": "Titoli, una Hall of Fame e record di franchigia."
+    "f3Body": "Titoli, una Hall of Fame e record di franchigia.",
+    "end": "Chiudi carriera",
+    "endSure": "Tocca di nuovo: questa carriera finirà per sempre"
   },
   "collect": {
     "title": "Collezione",

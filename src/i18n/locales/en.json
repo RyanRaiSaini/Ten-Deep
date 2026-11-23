@@ -382,7 +382,9 @@
     "f2Title": "Keep your job",
     "f2Body": "The board sets a goal every year. Miss too often and you are fired.",
     "f3Title": "Make history",
-    "f3Body": "Titles, a Hall of Fame and franchise records that last."
+    "f3Body": "Titles, a Hall of Fame and franchise records that last.",
+    "end": "End career",
+    "endSure": "Tap again: this career ends for good"
   },
   "collect": {
     "title": "Collection",
