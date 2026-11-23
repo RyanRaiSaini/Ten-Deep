@@ -4,7 +4,7 @@
  * so a Legendary looks like a Legendary before it's opened.
  */
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Animated, Easing, Platform, StyleSheet, View } from 'react-native';
 import Svg, { Circle, G, Line, Path } from 'react-native-svg';
 import type { PickType } from '../engine/collect/picks';
@@ -95,7 +95,7 @@ export function Pips({ n, color }: { n: number; color: string }) {
 }
 
 function useLoop(duration: number, delay = 0) {
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     const loop = Animated.loop(Animated.sequence([
       Animated.delay(delay),

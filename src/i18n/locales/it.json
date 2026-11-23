@@ -898,7 +898,8 @@
       "taken": "Qualcuno l'ha preso prima!",
       "round-closed": "Troppo tardi: quel giro è chiuso.",
       "already-picked": "Hai già scelto in questo giro.",
-      "not-allowed": "Non entra nel tuo tetto o nella tua rosa."
+      "not-allowed": "Non entra nel tuo tetto o nella tua rosa.",
+      "grabbedBy": "{{who}} ha preso {{name}} per primo. Scegli ancora!"
     },
     "table": "Classifica"
   },

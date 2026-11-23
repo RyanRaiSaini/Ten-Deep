@@ -90,7 +90,7 @@ export function Confetti({ colors = [C.gold, C.hardwood, C.neon, '#FFFFFF'], cou
  */
 export function Pulse({ children, color = '#FF7417', period = 1500, radius = 28 }: { children: ReactNode; color?: string; period?: number; radius?: number }) {
   const reduce = useReducedMotion();
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     if (reduce) return;
     const loop = Animated.loop(Animated.timing(v, { toValue: 1, duration: period, easing: Easing.out(Easing.quad), useNativeDriver: native }));
@@ -116,7 +116,7 @@ export function Pulse({ children, color = '#FF7417', period = 1500, radius = 28 
 /** A ball-bounce loop for decorative icons. */
 export function Bounce({ children, height = 8 }: { children: ReactNode; height?: number }) {
   const reduce = useReducedMotion();
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     if (reduce) return;
     const loop = Animated.loop(Animated.sequence([

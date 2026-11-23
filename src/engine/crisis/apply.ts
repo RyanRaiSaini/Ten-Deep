@@ -1,12 +1,10 @@
 /** Apply a resolved Crisis Card to the season. Pure: returns a new SeasonState. */
-import { salaryFor } from '../cap';
+import { salaryFor, superstarBlocked } from '../cap';
 import { lineupMinutes } from '../rotation';
-import { SEASON_GAMES, outSet, type SeasonState } from '../season';
-import { recordStint } from '../season';
-import { ALL_SLOTS, STARTER_SLOTS, type Player, type SlotId } from '../types';
+import { SEASON_GAMES, outSet, recordStint, type SeasonState } from '../season';
+import { ALL_SLOTS, type Player, type SlotId } from '../types';
 import type { CrisisCard } from './offers';
 import { reseat } from '../reseat';
-import { superstarBlocked } from '../cap';
 
 export interface Decision {
   /** Chosen incoming player (pick cards). */

@@ -7,7 +7,7 @@ import { ALL_CARDS } from '../data/cards';
 import { generatePick, runPickType, type PickType } from '../engine/collect/picks';
 import { autoFill, canPlace, cardLevel, stageReward, starterSquad, type Lineup } from '../engine/collect/lineup';
 import { newlyCompleted, setReward } from '../engine/collect/sets';
-import { MAX_FREEZES, advanceStreak, advanceWithFreezes, freezeEarned, streakRewards } from '../engine/collect/streak';
+import { MAX_FREEZES, advanceWithFreezes, freezeEarned, streakRewards } from '../engine/collect/streak';
 import type { SlotId } from '../engine/types';
 import { track } from './progress';
 

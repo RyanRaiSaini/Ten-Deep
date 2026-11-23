@@ -1,5 +1,5 @@
 import { Redirect, router } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
@@ -24,7 +24,7 @@ export default function Crisis() {
   const card = g.crisis?.pending;
   const [incoming, setIncoming] = useState<string | null>(null);
   const [outSlot, setOutSlot] = useState<SlotId | null>(null);
-  const flip = useRef(new Animated.Value(0)).current;
+  const [flip] = useState(() => new Animated.Value(0));
 
   useEffect(() => {
     if (!card) return;

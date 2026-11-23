@@ -23,10 +23,10 @@ export function Spinner({
   const [rolling, setRolling] = useState(false);
   const speed = useSettings((s) => s.simSpeed);
   const landed = useRef(onLanded);
-  landed.current = onLanded;
-  const pop = useRef(new Animated.Value(1)).current;
+  useEffect(() => { landed.current = onLanded; }, [onLanded]);
+  const [pop] = useState(() => new Animated.Value(1));
   const latest = useRef(target);
-  latest.current = target;
+  useEffect(() => { latest.current = target; }, [target]);
 
   useEffect(() => {
     if (spinKey === 0) return;

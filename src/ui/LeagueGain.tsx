@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Easing, Pressable, StyleSheet, View } from 'react-native';
 import { LADDER, PROMOTE, standings, weekFraction } from '../engine/league/ladder';
@@ -12,7 +12,7 @@ import { C, FONT, R, S } from './theme';
 export function LeagueGain({ gained, stake }: { gained: number; stake?: 'snap' | 'safe' | null }) {
   const { t } = useTranslation();
   const league = useLeague();
-  const fill = useRef(new Animated.Value(0)).current;
+  const [fill] = useState(() => new Animated.Value(0));
   const rows = league.week ? standings(league.week, league.tier, league.points, weekFraction(new Date())) : [];
   const me = rows.find((r) => r.you);
   const top = league.tier >= LADDER.length - 1;

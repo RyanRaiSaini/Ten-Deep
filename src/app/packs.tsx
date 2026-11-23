@@ -47,7 +47,7 @@ const glowOf = (c: Card, f: Finish) => (finishRank(f) >= finishRank('gold') ? FI
 /** Burst of sparkles radiating from the center. Re-fires whenever `fire` changes. */
 function Sparkles({ fire, color }: { fire: number; color: string }) {
   const parts = useMemo(() => Array.from({ length: 40 }, (_, i) => ({ a: (i / 40) * Math.PI * 2 + Math.random() * 0.3, d: 110 + Math.random() * 160, s: 4 + Math.random() * 8 })), []);
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     if (!fire) return;
     v.setValue(0);
@@ -78,7 +78,7 @@ function Sparkles({ fire, color }: { fire: number; color: string }) {
 
 /** A pulsing aura behind a face-down card: the rarity tease. */
 function Aura({ color, strong, size }: { color: string; strong: boolean; size: number }) {
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   // While it waits face down: a rising hum, and a heartbeat on the phone if something big is under it.
   useEffect(() => feelSuspense(strong), [strong]);
   useEffect(() => {
@@ -106,7 +106,7 @@ function Aura({ color, strong, size }: { color: string; strong: boolean; size: n
 function FlipCard({ card, revealed, onPress, selected, width, packColor, tierLabel, finish, testID }: {
   card: Card; revealed: boolean; onPress: () => void; selected: boolean; width: number; packColor: string; tierLabel: string; finish: Finish; testID?: string;
 }) {
-  const sx = useRef(new Animated.Value(1)).current;
+  const [sx] = useState(() => new Animated.Value(1));
   const [face, setFace] = useState(revealed);
   useEffect(() => {
     if (!revealed || face) return;
@@ -146,10 +146,10 @@ export default function Packs() {
   const [showOdds, setShowOdds] = useState(false);
   const [upgraded, setUpgraded] = useState(false);
   const [gridW, setGridW] = useState(Math.min(winW, 560) - 32);
-  const shake = useRef(new Animated.Value(0)).current;
-  const lift = useRef(new Animated.Value(0)).current; // stack sliding up out of the open wrapper
-  const settle = useRef(new Animated.Value(0)).current; // stack settling to centre once the wrapper is gone
-  const fling = useRef(new Animated.Value(0)).current; // top card flying away
+  const [shake] = useState(() => new Animated.Value(0));
+  const [lift] = useState(() => new Animated.Value(0)); // stack sliding up out of the open wrapper
+  const [settle] = useState(() => new Animated.Value(0)); // stack settling to centre once the wrapper is gone
+  const [fling] = useState(() => new Animated.Value(0)); // top card flying away
   const busy = useRef(false);
 
   useEffect(() => {
@@ -422,7 +422,7 @@ export default function Packs() {
 /** "RAINBOW PULL! 1 in 1,000": pops in when a gold-or-better finish flips. */
 function PullBanner({ finish }: { finish: Finish }) {
   const { t } = useTranslation();
-  const pop = useRef(new Animated.Value(0)).current;
+  const [pop] = useState(() => new Animated.Value(0));
   useEffect(() => {
     pop.setValue(0);
     Animated.spring(pop, { toValue: 1, friction: 4, tension: 90, useNativeDriver: native }).start();

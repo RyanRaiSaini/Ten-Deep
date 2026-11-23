@@ -3,23 +3,23 @@
  * Static in grids (cheap); `animate` adds a moving shine sweep for reveals and the card detail page.
  */
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Easing, Platform, StyleSheet, View } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { ONE_IN, type Finish } from '../engine/collect/finishes';
 import { Text } from './Text';
 import { C, FONT } from './theme';
+import { FINISH_STYLE } from './finishStyle';
 
 export { FINISH_STYLE } from './finishStyle';
-import { FINISH_STYLE } from './finishStyle';
 
 const STARS = Array.from({ length: 26 }, (_, i) => ({ x: (i * 37) % 100, y: (i * 61) % 140, r: 0.6 + ((i * 13) % 5) * 0.25 }));
 
 /** The sheen over the card art (placed inside the card's inner area). */
 export function FinishOverlay({ finish, animate = false }: { finish: Finish; animate?: boolean }) {
   const s = FINISH_STYLE[finish];
-  const sweep = useRef(new Animated.Value(0)).current;
+  const [sweep] = useState(() => new Animated.Value(0));
   useEffect(() => {
     if (!animate || finish === 'base') return;
     const loop = Animated.loop(Animated.sequence([
