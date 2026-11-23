@@ -11,8 +11,11 @@ import pt from './locales/pt.json';
 import tr from './locales/tr.json';
 import type { Language } from './languages';
 
+/** Nested string table. Languages differ only in plural forms (`key_one`, `key_few`, …), which the i18n test checks. */
+export interface Strings { [key: string]: string | Strings }
+
 /** Non-English strings are first-pass translations, flagged for native-speaker review. */
-export const resources: Record<Language, { translation: typeof en }> = {
+export const resources: Record<Language, { translation: Strings }> = {
   en: { translation: en },
   fr: { translation: fr },
   es: { translation: es },

@@ -117,7 +117,7 @@ export default function Offseason() {
   return (
     <Screen>
       <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.replace('/career')} />} />
-      <Text style={styles.big}>{t('career.openSpots', { n: open })}</Text>
+      <Text style={styles.big}>{t('career.openSpots', { count: open })}</Text>
       <Button label={`🔁  ${t('trade.title')}`} variant="secondary" onPress={() => router.push('/trade')} testID="to-trade" />
       <RosterBoard
         roster={user.slots}

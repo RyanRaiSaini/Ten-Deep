@@ -101,9 +101,12 @@
     "resume": "Gioca",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} fuori {{games}} partite — {{label}}",
     "seasonEnding": "{{name}} ha chiuso la stagione",
-    "standing": "Testa di serie n. {{n}}"
+    "standing": "Testa di serie n. {{n}}",
+    "injury_many": "{{name}} fuori {{count}} partite — {{label}}",
+    "injury_one": "{{name}} fuori {{count}} partita — {{label}}",
+    "injury_other": "{{name}} fuori {{count}} partite — {{label}}",
+    "play": "Riprendi"
   },
   "deadline": {
     "title": "Trade deadline",
@@ -341,12 +344,11 @@
     "rosterFull": "La rosa è piena: scegli chi tagliare per il rookie.",
     "skipRookie": "Rinuncia al rookie",
     "freeAgency": "Free agency",
-    "openSpots": "{{n}} posti liberi",
     "sign": "Firma",
     "minException": "Eccezione minima: firma {{name}}",
     "startSeason": "Inizia {{label}}",
     "over": "Carriera finita",
-    "overDesc": "La dirigenza ne ha viste abbastanza. {{n}} stagioni, {{titles}} titoli.",
+    "overDesc": "La dirigenza ne ha viste abbastanza. Stagioni: {{n}} · Titoli: {{titles}}",
     "newCareer": "Nuova carriera",
     "r_champion": "Campioni",
     "r_finals": "Persa la finale",
@@ -362,7 +364,10 @@
     "hof": "Hall of Fame",
     "hofEmpty": "Quattro stagioni con te e una grande carriera valgono un posto.",
     "lottery": "Lotteria del draft",
-    "lotterySkip": "Salta"
+    "lotterySkip": "Salta",
+    "openSpots_many": "{{count}} posti liberi",
+    "openSpots_one": "{{count}} posto libero",
+    "openSpots_other": "{{count}} posti liberi"
   },
   "collect": {
     "title": "Collezione",
@@ -378,7 +383,6 @@
     "empty": "Apri una scelta giocatore per iniziare la collezione.",
     "all": "Tutte",
     "claim": "Riscatta la scelta",
-    "waiting": "{{n}} scelte in attesa",
     "t_daily": "Scelta del giorno",
     "t_run": "Scelta partita",
     "t_playoffs": "Scelta playoff",
@@ -395,7 +399,12 @@
     "guarantee_champion": "Tutte le carte 83+",
     "guarantee_mythic": "Un 90+ garantito",
     "guarantee_legendary": "Una Ultra garantita",
-    "nextWeekly": "Scelta settimanale tra {{n}} giorni"
+    "waiting_many": "{{count}} scelte in attesa",
+    "waiting_one": "{{count}} scelta in attesa",
+    "waiting_other": "{{count}} scelte in attesa",
+    "nextWeekly_many": "Scelta settimanale tra {{count}} giorni",
+    "nextWeekly_one": "Scelta settimanale tra {{count}} giorno",
+    "nextWeekly_other": "Scelta settimanale tra {{count}} giorni"
   },
   "lineup": {
     "title": "Formazione",

@@ -101,9 +101,12 @@
     "resume": "Lecture",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} absent {{games}} matchs — {{label}}",
     "seasonEnding": "{{name}} est out pour la saison",
-    "standing": "Tête de série n°{{n}}"
+    "standing": "Tête de série n°{{n}}",
+    "injury_many": "{{name}} absent {{count}} matchs — {{label}}",
+    "injury_one": "{{name}} absent {{count}} match — {{label}}",
+    "injury_other": "{{name}} absent {{count}} matchs — {{label}}",
+    "play": "Lecture"
   },
   "deadline": {
     "title": "Date limite des transferts",
@@ -341,12 +344,11 @@
     "rosterFull": "Ton effectif est complet : choisis qui couper pour le rookie.",
     "skipRookie": "Passer le rookie",
     "freeAgency": "Agents libres",
-    "openSpots": "{{n}} places libres",
     "sign": "Signer",
     "minException": "Exception minimum : signer {{name}}",
     "startSeason": "Lancer {{label}}",
     "over": "Fin de carrière",
-    "overDesc": "La direction en a assez vu. {{n}} saisons, {{titles}} titres.",
+    "overDesc": "Le conseil en a assez vu. Saisons : {{n}} · Titres : {{titles}}",
     "newCareer": "Nouvelle carrière",
     "r_champion": "Champions",
     "r_finals": "Perdu en finale",
@@ -362,7 +364,10 @@
     "hof": "Hall of Fame",
     "hofEmpty": "Quatre saisons chez toi et une grande carrière ouvrent les portes.",
     "lottery": "Loterie de la draft",
-    "lotterySkip": "Passer"
+    "lotterySkip": "Passer",
+    "openSpots_many": "{{count}} places libres",
+    "openSpots_one": "{{count}} place libre",
+    "openSpots_other": "{{count}} places libres"
   },
   "collect": {
     "title": "Collection",
@@ -378,7 +383,6 @@
     "empty": "Ouvre un choix de joueurs pour lancer ta collection.",
     "all": "Toutes",
     "claim": "Récupérer ton choix",
-    "waiting": "{{n}} choix en attente",
     "t_daily": "Choix du jour",
     "t_run": "Choix de partie",
     "t_playoffs": "Choix playoffs",
@@ -395,7 +399,12 @@
     "guarantee_champion": "Toutes les cartes 83+",
     "guarantee_mythic": "Un 90+ garanti",
     "guarantee_legendary": "Une Ultra garantie",
-    "nextWeekly": "Choix de la semaine dans {{n}} jours"
+    "waiting_many": "{{count}} choix en attente",
+    "waiting_one": "{{count}} choix en attente",
+    "waiting_other": "{{count}} choix en attente",
+    "nextWeekly_many": "Choix hebdo dans {{count}} jours",
+    "nextWeekly_one": "Choix hebdo dans {{count}} jour",
+    "nextWeekly_other": "Choix hebdo dans {{count}} jours"
   },
   "lineup": {
     "title": "Alignement",
