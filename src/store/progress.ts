@@ -8,6 +8,7 @@ import { newlyUnlocked, type Snapshot } from '../engine/progress/achievements';
 import { dailyMissions, missionProgress, weekKey, weeklyMissions } from '../engine/progress/missions';
 import { EMPTY_STATS, applyEvent, type GameEvent, type Stats } from '../engine/progress/stats';
 import { useCollection } from './collection';
+import { useProfile } from './profile';
 
 export interface ProgressStore {
   stats: Stats;
@@ -66,8 +67,14 @@ export const useProgress = create<ProgressStore>()(
       },
 
       rollover: (today) => {
-        const s = get();
+        let s = get();
         if (s.day === today) return;
+        if (s.day === null) {
+          // Players from before missions existed keep credit for the seasons and titles they already have.
+          const { draftsPlayed, titles } = useProfile.getState();
+          set({ stats: { ...s.stats, runs: Math.max(s.stats.runs, draftsPlayed), titles: Math.max(s.stats.titles, titles) } });
+          s = get();
+        }
         const week = weekKey(today);
         const newWeek = s.week !== week;
         set({

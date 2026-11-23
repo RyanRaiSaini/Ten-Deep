@@ -15,7 +15,7 @@ export default function Missions() {
   const { t } = useTranslation();
   const p = useProgress();
   useCollection((s) => s.owned); // re-render as the collection grows
-  if (!p.day || !p.week) return null;
+  if (!p.day || !p.week) return <Screen><Header title={t('missions.title')} left={<BackButton onPress={() => router.back()} />} /></Screen>;
   const snap = snapshot(p.stats);
   const done = ACHIEVEMENTS.filter((a) => p.unlocked[a.id]).length;
 

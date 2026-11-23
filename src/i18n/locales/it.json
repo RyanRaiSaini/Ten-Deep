@@ -413,7 +413,8 @@
     "cleared": "Superata",
     "locked": "Bloccata",
     "complete": "Sfida completata!",
-    "editLineup": "Modifica formazione"
+    "editLineup": "Modifica formazione",
+    "replay": "Rigioca l'ultima tappa"
   },
   "card": {
     "level": "Liv. {{n}}",

@@ -24,7 +24,7 @@ export function AchievementToast() {
     const native = Platform.OS !== 'web';
     Animated.spring(y, { toValue: 0, friction: 8, useNativeDriver: native }).start();
     const timer = setTimeout(() => {
-      Animated.timing(y, { toValue: -140, duration: 220, useNativeDriver: native }).start(() => useProgress.getState().dismissToast());
+      Animated.timing(y, { toValue: -140, duration: 220, useNativeDriver: native }).start(({ finished }) => { if (finished) useProgress.getState().dismissToast(); });
     }, 3200);
     return () => clearTimeout(timer);
   }, [a, y]);
