@@ -27,7 +27,9 @@
     "streakSavedBody_zero": "لم تُستخدم أي حماية.",
     "streakSavedBody_other": "غطّت الحماية {{count}} يوم فاتك.",
     "duelTitle": "تحدَّ أصدقاءك",
-    "duelCta": "من الأفضل؟"
+    "duelCta": "من الأفضل؟",
+    "hot": "في أوج تألقه",
+    "hotSub": "المستوى الحقيقي، يُحدَّث يوميًا"
   },
   "mode": {
     "current": {

@@ -24,7 +24,9 @@
     "streakSavedBody_one": "Um congelamento cobriu o dia que você perdeu.",
     "streakSavedBody_other": "Congelamentos cobriram os {{count}} dias que você perdeu.",
     "duelTitle": "Desafie seus amigos",
-    "duelCta": "Quem é o melhor?"
+    "duelCta": "Quem é o melhor?",
+    "hot": "Em alta",
+    "hotSub": "Fase real, atualizada todo dia"
   },
   "mode": {
     "current": {
