@@ -181,6 +181,7 @@ export default function Duel() {
         highlight={chosenOpt?.slots}
         onSlot={chosenOpt ? (slot) => chosenOpt.slots.includes(slot) && place(chosenOpt.player.id, slot) : undefined}
       />
+      <Button label={t('duel.newDuel')} variant="ghost" onPress={d.reset} testID="duel-cancel" />
     </Screen>
   );
 }
