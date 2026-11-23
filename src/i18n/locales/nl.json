@@ -651,5 +651,17 @@
     "gold": "Goud",
     "platinum": "Platina",
     "legend": "Legende"
+  },
+  "challenge": {
+    "invalid": "Deze uitdaginglink werkt niet.",
+    "title": "{{name}} daagt je uit",
+    "body": "Zelfde spins, zelfde competitie. Verbeter de score.",
+    "accept": "Uitdaging aannemen",
+    "share": "Delen en uitdagen",
+    "shared": "Gedeeld!",
+    "copied": "Link gekopieerd!",
+    "won": "Je hebt {{name}} verslagen!",
+    "lost": "{{name}} wint deze",
+    "tied": "Gelijkspel met {{name}}"
   }
 }

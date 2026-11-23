@@ -655,5 +655,17 @@
     "gold": "Ouro",
     "platinum": "Platina",
     "legend": "Lenda"
+  },
+  "challenge": {
+    "invalid": "Este link de desafio está quebrado.",
+    "title": "{{name}} desafia você",
+    "body": "Mesmos giros, mesma liga. Supere a campanha.",
+    "accept": "Aceitar desafio",
+    "share": "Compartilhar e desafiar",
+    "shared": "Compartilhado!",
+    "copied": "Link copiado!",
+    "won": "Você venceu {{name}}!",
+    "lost": "{{name}} vence desta vez",
+    "tied": "Empate com {{name}}"
   }
 }

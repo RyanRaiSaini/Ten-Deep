@@ -655,5 +655,17 @@
     "gold": "Or",
     "platinum": "Platine",
     "legend": "Légende"
+  },
+  "challenge": {
+    "invalid": "Ce lien de défi est cassé.",
+    "title": "{{name}} te défie",
+    "body": "Mêmes tirages, même ligue. Bats son bilan.",
+    "accept": "Relever le défi",
+    "share": "Partager et défier",
+    "shared": "Partagé !",
+    "copied": "Lien copié !",
+    "won": "Tu as battu {{name}} !",
+    "lost": "{{name}} gagne cette fois",
+    "tied": "Égalité avec {{name}}"
   }
 }

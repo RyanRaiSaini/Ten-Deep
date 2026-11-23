@@ -1,5 +1,5 @@
 import { Redirect, router } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
@@ -19,6 +19,11 @@ import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, S } from '../ui/theme';
 import { AWARDS, awardRace } from '../engine/story/leaders';
 import { Icon } from '../ui/icons';
+import { shareText } from '../ui/share';
+import { useProfile } from '../store/profile';
+import { runShareText } from '../engine/share';
+import { MODE_BY_ID } from '../data/modes';
+import { CONFIG } from '../config';
 
 const VERDICT_ICON = { legend: 'crown', extended: 'medal', survived: 'clock', fired: 'flame' } as const;
 
@@ -30,6 +35,8 @@ export default function Result() {
   const career = useCareer();
   const pendingPicks = useCollection((s) => s.pending.length);
   const colors = useRunColors();
+  const [shared, setShared] = useState<'shared' | 'copied' | null>(null);
+  const profileName = useProfile((s) => s.name);
   // Career seasons are recorded once, as soon as the result is shown.
   useEffect(() => { if (g.career) useCareer.getState().recordSeason(); }, [g.career]);
   useEffect(() => { if (won) feel('fanfare'); }, [won]);
@@ -53,6 +60,17 @@ export default function Result() {
 
   return (
     <Screen tint={won ? C.gold : colors[0]} overlay={won ? <Confetti colors={[C.gold, colors[0], colors[1], '#FFFFFF']} /> : null}>
+      {g.challenge && (
+        <View style={[styles.challenge, { borderColor: rec.w > g.challenge.w ? '#14A86B' : C.danger }]} testID="challenge-result">
+          <Icon name={rec.w > g.challenge.w ? 'crown' : 'vs'} size={40} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.challengeTitle}>
+              {rec.w > g.challenge.w ? t('challenge.won', { name: g.challenge.name }) : rec.w === g.challenge.w ? t('challenge.tied', { name: g.challenge.name }) : t('challenge.lost', { name: g.challenge.name })}
+            </Text>
+            <Text style={styles.challengeSub}>{rec.w}-{rec.l} vs {g.challenge.w}-{g.challenge.l}</Text>
+          </View>
+        </View>
+      )}
       <View style={styles.hero}>
         <View style={[styles.trophyRing, { backgroundColor: won ? '#FFE9A8' : '#FFFFFF' }]}>
           <Icon name={won ? 'trophy' : mine ? 'ball' : 'chart'} size={96} />
@@ -104,6 +122,18 @@ export default function Result() {
           testID="career-continue"
         />
       ) : null}
+      {!g.career && (
+        <Button label={shared ? t(`challenge.${shared}`) : t('challenge.share')} variant="dark" icon={<Icon name="swap" size={22} />} testID="share"
+          onPress={async () => {
+            const text = runShareText({
+              wins: rec.w, losses: rec.l, result: won ? 'champion' : mine ? `round${mine.round}` : 'missed', resultLabel: outcome,
+              mode: MODE_BY_ID[g.poolId]?.title ?? 'Ten Deep', ovrs: ALL_SLOTS.map((k) => user.slots[k].ovr), seed: season.seed,
+              poolId: g.poolId, name: profileName || t('home.player'), url: CONFIG.webUrl,
+            });
+            const r = await shareText(text);
+            if (r !== 'failed') setShared(r);
+          }} />
+      )}
       {!g.career && <Button label={t('result.playAgain')} onPress={() => { if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />}
       <Button label={t('result.home')} variant="ghost" onPress={() => { g.quit(); goHome(); }} testID="go-home" />
     </Screen>
@@ -131,6 +161,9 @@ const styles = StyleSheet.create({
   stats: { flexDirection: 'row' },
   value: { color: C.text, fontSize: 26, ...F.display },
   sub: { color: C.muted, fontSize: 12 },
+  challenge: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, borderWidth: 3, backgroundColor: '#FFFFFF', marginTop: S.md },
+  challengeTitle: { fontWeight: '900', fontSize: 17, color: C.ink },
+  challengeSub: { color: C.muted, fontWeight: '800' },
   awardsTitle: { color: C.text, fontWeight: '900', fontSize: 15 },
   awardRow: { flexDirection: 'row', alignItems: 'center', gap: S.md },
   awardName: { color: C.muted, fontSize: 12, flex: 1 },
