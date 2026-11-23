@@ -15,7 +15,15 @@
     "best": "En iyi derece",
     "modes": "Oyun modları",
     "resume": "Kaldığın yerden devam et",
-    "play": "Oyna"
+    "play": "Oyna",
+    "streak": "Giriş serisi",
+    "player": "Oyuncu",
+    "picks": "Seçimler",
+    "streakSaved": "Seri kurtarıldı!",
+    "streakSavedBody_one": "Seri dondurucu kaçırdığın günü kapattı.",
+    "streakSavedBody_other": "Seri dondurucular kaçırdığın {{count}} günü kapattı.",
+    "duelTitle": "Arkadaşlarınla düello",
+    "duelCta": "En iyisi kim?"
   },
   "mode": {
     "current": {
@@ -90,7 +98,8 @@
     "bench": "Yedekler",
     "startSeason": "Sezonu başlat",
     "landed": "Çıkan takım",
-    "empty": "Boş"
+    "empty": "Boş",
+    "benchSlot": "Yedek {{n}}"
   },
   "season": {
     "title": "Normal sezon",
@@ -184,7 +193,8 @@
     "strength": "Güç",
     "resume": "Devam et",
     "missed": "Kaçırıldı",
-    "replaceRun": "Bu, mevcut oyununun yerini alır. Başlamak için tekrar dokun."
+    "replaceRun": "Bu, mevcut oyununun yerini alır. Başlamak için tekrar dokun.",
+    "share": "Bugünkü sonuçları paylaş"
   },
   "duel": {
     "title": "Düello",
@@ -365,7 +375,13 @@
     "lottery": "Draft lotaryası",
     "lotterySkip": "Atla",
     "openSpots_one": "{{count}} boş yer",
-    "openSpots_other": "{{count}} boş yer"
+    "openSpots_other": "{{count}} boş yer",
+    "f1Title": "Bir takım kur",
+    "f1Body": "Sezon sezon draft yap, sözleşme uzat, takas yap ve takımını geliştir.",
+    "f2Title": "İşini koru",
+    "f2Body": "Yönetim her yıl bir hedef koyar. Çok sık kaçırırsan kovulursun.",
+    "f3Title": "Tarih yaz",
+    "f3Body": "Şampiyonluklar, Şöhretler Müzesi ve kalıcı rekorlar."
   },
   "collect": {
     "title": "Koleksiyon",
@@ -375,7 +391,7 @@
     "chooseOne": "Bir kart seç",
     "keep": "{{name}} al",
     "noPicks": "Bekleyen seçim yok. Günlük seçimin için yarın gel.",
-    "streak": "🔥 {{n}} günlük seri",
+    "streak": "{{n}} günlük seri",
     "odds": "Kart başına olasılık",
     "cards": "{{n}} kart",
     "empty": "Koleksiyonuna başlamak için bir oyuncu seçimi aç.",
@@ -400,7 +416,10 @@
     "waiting_one": "{{count}} seçim bekliyor",
     "waiting_other": "{{count}} seçim bekliyor",
     "nextWeekly_one": "Haftalık Seçim {{count}} gün sonra",
-    "nextWeekly_other": "Haftalık Seçim {{count}} gün sonra"
+    "nextWeekly_other": "Haftalık Seçim {{count}} gün sonra",
+    "powerUp": "Güçlendir ({{n}} kaldı)",
+    "powerOdds": "Tüm seçimi yükseltme şansı: %{{pct}}",
+    "upgraded": "YÜKSELDİ!"
   },
   "lineup": {
     "title": "Kadro",
@@ -608,6 +627,59 @@
   },
   "profile": {
     "title": "Profil",
-    "pick": "Avatarını seç"
+    "pick": "Avatarını seç",
+    "namePlaceholder": "Adın"
+  },
+  "tabs": {
+    "daily": "Günlük",
+    "cards": "Kartlar",
+    "play": "Oyna",
+    "career": "Kariyer",
+    "duels": "Düello"
+  },
+  "ladder": {
+    "title": "Haftalık Lig",
+    "promote": "YÜKSELME",
+    "relegate": "DÜŞME",
+    "safe": "GÜVENDE",
+    "endsIn": "{{time}} sonra biter",
+    "pts": "puan",
+    "how": "Nasıl puan alınır",
+    "howRun": "Bitirdiğin her sezon: galibiyetlerinin yarısı puan",
+    "howBonus": "Playoff +10, şampiyonluk +25",
+    "howDaily": "Her günlük meydan okuma +5",
+    "howMove": "İlk {{up}} pazartesi yükselir, son {{down}} düşer",
+    "standings": "Bu hafta",
+    "botsNote": "Çevrimiçi ligler gelene kadar rakipler yapay zekâ GM'lerdir.",
+    "promoted": "{{tier}} ligine yükseldin!",
+    "relegated": "{{tier}} ligine düştün",
+    "stayed": "{{tier}} liginde kalıyorsun",
+    "finished": "Geçen hafta {{rank}}. oldun",
+    "bronze": "Bronz",
+    "silver": "Gümüş",
+    "gold": "Altın",
+    "platinum": "Platin",
+    "legend": "Efsane",
+    "inPromotion": "Yükselme bölgesindesin!",
+    "toPromotion": "Yükselmeye {{n}} puan kaldı"
+  },
+  "challenge": {
+    "invalid": "Bu meydan okuma bağlantısı bozuk.",
+    "title": "{{name}} sana meydan okuyor",
+    "body": "Aynı çark, aynı lig. Derecesini geç.",
+    "accept": "Kabul et",
+    "share": "Paylaş ve meydan oku",
+    "shared": "Paylaşıldı!",
+    "copied": "Bağlantı kopyalandı!",
+    "won": "{{name}} karşısında kazandın!",
+    "lost": "Bu sefer {{name}} kazandı",
+    "tied": "{{name}} ile berabere"
+  },
+  "stake": {
+    "title": "Ya hep ya hiç?",
+    "body": "Her şeyi koy: finale çıkarsan lig puanı ×2, ilk turda elenirsen yarısını kaybedersin.",
+    "snap": "Ya hep ya hiç",
+    "safe": "Garantici ol",
+    "on": "YA HEP YA HİÇ"
   }
 }

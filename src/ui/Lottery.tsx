@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Animated, Platform, StyleSheet, Text, View } from 'react-native';
+import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { Text } from './Text';
 import { feel } from '../audio/feel';
 import { useReducedMotion } from './fx';
 import { Button } from './components';
 import { C, R, S } from './theme';
+import { Icon } from './icons';
 
 const SHOWN = 14;
 
@@ -32,7 +34,7 @@ export function LotteryReveal({ order, names }: { order: number[]; names: (team:
 
   return (
     <View style={styles.box} testID="lottery">
-      <Text style={styles.title}>🎱 {t('career.lottery')}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}><Icon name="ball" size={26} /><Text style={styles.title}>{t('career.lottery')}</Text></View>
       <View style={{ gap: 4 }}>
         {top.map((team, i) => {
           const shown = SHOWN - i <= revealed;
@@ -56,6 +58,6 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingVertical: 2, paddingHorizontal: 4, borderRadius: R.sm },
   mine: { backgroundColor: 'rgba(245,196,81,0.12)' },
   ball: { width: 26, height: 26, borderRadius: 13, backgroundColor: C.surface2, alignItems: 'center', justifyContent: 'center' },
-  ballText: { color: C.bg, fontWeight: '900', fontSize: 12 },
+  ballText: { color: C.ink, fontWeight: '900', fontSize: 12 },
   team: { color: C.text, fontWeight: '700', flex: 1 },
 });

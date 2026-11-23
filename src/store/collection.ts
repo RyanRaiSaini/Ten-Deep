@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import { POWER_TAPS, nextType, tapUpgrades } from '../engine/collect/powerup';
 import { ALL_CARDS } from '../data/cards';
 import { generatePick, runPickType, type PickType } from '../engine/collect/picks';
 import { autoFill, canPlace, cardLevel, stageReward, starterSquad, type Lineup } from '../engine/collect/lineup';
 import { newlyCompleted, setReward } from '../engine/collect/sets';
-import { advanceStreak, streakRewards } from '../engine/collect/streak';
+import { MAX_FREEZES, advanceStreak, advanceWithFreezes, freezeEarned, streakRewards } from '../engine/collect/streak';
 import type { SlotId } from '../engine/types';
 
 export interface PendingPick {
@@ -15,6 +16,8 @@ export interface PendingPick {
   cards: string[];
   /** What earned it, e.g. "day-7" or a run seed. */
   source: string;
+  /** Power-up taps used (0–3). */
+  taps?: number;
 }
 
 export interface CollectionStore {
@@ -28,12 +31,18 @@ export interface CollectionStore {
   lineup: Lineup;
   /** Gauntlet progress: stages cleared (0–10) and which reward stages have paid out. */
   gauntlet: { cleared: number; rewarded: number[] };
+  /** Streak freezes held (earned every 7 days, max 2); a missed day spends one. */
+  freezes: number;
+  /** Freezes spent at the last check-in (to tell the player). */
+  freezesUsed: number;
   checkIn: (today: string) => void;
   awardRun: (runKey: string, result: { wins: number; champion: boolean; madePlayoffs: boolean }) => void;
   keep: (pickId: string, cardId: string) => void;
   setSlot: (slot: SlotId, cardId: string | null) => void;
   autoFillLineup: () => void;
   recordStage: (stage: number, won: boolean) => void;
+  /** One power-up tap on an unopened pick: 'up' if it upgraded, 'miss' if not, null if no taps are left. */
+  powerUp: (pickId: string) => 'up' | 'miss' | null;
   /** Add a pick from elsewhere (missions, achievements). Idempotent per source. */
   grant: (type: PickType, source: string) => void;
 }
@@ -52,19 +61,23 @@ export const useCollection = create<CollectionStore>()(
       awardedRuns: [],
       lineup: {},
       gauntlet: { cleared: 0, rewarded: [] },
+      freezes: 0,
+      freezesUsed: 0,
 
       /** Opening the app on a new day: advance the streak and grant that day's picks. */
       checkIn: (today) => {
         const s = get();
         if (s.lastDay === today) return;
-        const streak = advanceStreak(s.lastDay, today, s.streak);
+        const adv = advanceWithFreezes(s.lastDay, today, s.streak, s.freezes ?? 0);
+        const streak = adv.streak;
+        const freezes = Math.min(MAX_FREEZES, adv.freezes + (freezeEarned(streak) ? 1 : 0));
         const earned = streakRewards(streak).map((type) => pick(type, `${today}:day-${streak}`));
         // First visit ever: a 10-card starter squad so the lineup and Gauntlet are playable from day one.
         const welcome = s.lastDay === null && Object.keys(s.owned).length === 0 ? starterSquad(today) : [];
         const owned = { ...s.owned };
         for (const id of welcome) owned[id] = { count: 1, firstDay: today };
         set({
-          streak, lastDay: today, pending: [...s.pending, ...earned], owned,
+          streak, freezes, freezesUsed: adv.used, lastDay: today, pending: [...s.pending, ...earned], owned,
           lineup: welcome.length ? autoFill(welcome) : s.lineup,
         });
       },
@@ -94,6 +107,19 @@ export const useCollection = create<CollectionStore>()(
             pending: pay ? [...s.pending, pick(reward, `gauntlet-${stage}-${s.lastDay ?? ''}`)] : s.pending,
           };
         }),
+
+      powerUp: (pickId) => {
+        const p = get().pending.find((x) => x.id === pickId);
+        const taps = p?.taps ?? 0;
+        if (!p || taps >= POWER_TAPS) return null;
+        const next = nextType(p.type);
+        const hit = !!next && tapUpgrades(p.id, taps);
+        const upgraded: PendingPick = hit && next
+          ? { ...p, type: next, taps: taps + 1, cards: generatePick(ALL_CARDS, next, `${p.source}:up${taps}`).map((c) => c.id) }
+          : { ...p, taps: taps + 1 };
+        set((s) => ({ pending: s.pending.map((x) => (x.id === pickId ? upgraded : x)) }));
+        return hit ? 'up' : 'miss';
+      },
 
       grant: (type, source) =>
         set((s) => {

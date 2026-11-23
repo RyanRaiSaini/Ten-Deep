@@ -1,6 +1,7 @@
 /** Motion: count-up numbers, confetti, and a reduced-motion switch that turns both off. */
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { AccessibilityInfo, Animated, Easing, Platform, StyleSheet, Text, useWindowDimensions, View, type StyleProp, type TextStyle } from 'react-native';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { AccessibilityInfo, Animated, Easing, Platform, StyleSheet, useWindowDimensions, View, type StyleProp, type TextStyle } from 'react-native';
+import { Text } from './Text';
 import { C } from './theme';
 
 const native = Platform.OS !== 'web';
@@ -81,4 +82,50 @@ export function Confetti({ colors = [C.gold, C.hardwood, C.neon, '#FFFFFF'], cou
       ))}
     </View>
   );
+}
+
+/**
+ * A glowing ring that breathes behind its child to invite a tap. The child itself never moves,
+ * so it stays easy (and testable) to press. Off with reduced motion.
+ */
+export function Pulse({ children, color = '#FF7417', period = 1500, radius = 28 }: { children: ReactNode; color?: string; period?: number; radius?: number }) {
+  const reduce = useReducedMotion();
+  const v = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (reduce) return;
+    const loop = Animated.loop(Animated.timing(v, { toValue: 1, duration: period, easing: Easing.out(Easing.quad), useNativeDriver: native }));
+    loop.start();
+    return () => loop.stop();
+  }, [reduce, v, period]);
+  return (
+    <View>
+      {!reduce && (
+        <Animated.View
+          style={[StyleSheet.absoluteFill, {
+            borderRadius: radius, backgroundColor: color, pointerEvents: 'none',
+            opacity: v.interpolate({ inputRange: [0, 1], outputRange: [0.45, 0] }),
+            transform: [{ scaleX: v.interpolate({ inputRange: [0, 1], outputRange: [1, 1.08] }) }, { scaleY: v.interpolate({ inputRange: [0, 1], outputRange: [1, 1.25] }) }],
+          }]}
+        />
+      )}
+      {children}
+    </View>
+  );
+}
+
+/** A ball-bounce loop for decorative icons. */
+export function Bounce({ children, height = 8 }: { children: ReactNode; height?: number }) {
+  const reduce = useReducedMotion();
+  const v = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (reduce) return;
+    const loop = Animated.loop(Animated.sequence([
+      Animated.timing(v, { toValue: 1, duration: 420, easing: Easing.out(Easing.quad), useNativeDriver: native }),
+      Animated.timing(v, { toValue: 0, duration: 420, easing: Easing.in(Easing.quad), useNativeDriver: native }),
+      Animated.delay(900),
+    ]));
+    loop.start();
+    return () => loop.stop();
+  }, [reduce, v]);
+  return <Animated.View style={{ transform: [{ translateY: v.interpolate({ inputRange: [0, 1], outputRange: [0, -height] }) }] }}>{children}</Animated.View>;
 }

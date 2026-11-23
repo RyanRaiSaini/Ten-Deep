@@ -15,7 +15,16 @@
     "best": "Melhor campanha",
     "modes": "Modos de jogo",
     "resume": "Retomar sua partida",
-    "play": "Jogar"
+    "play": "Jogar",
+    "streak": "Sequência de dias",
+    "player": "Jogador",
+    "picks": "Escolhas",
+    "streakSaved": "Sequência salva!",
+    "streakSavedBody_many": "Congelamentos cobriram os {{count}} dias que você perdeu.",
+    "streakSavedBody_one": "Um congelamento cobriu o dia que você perdeu.",
+    "streakSavedBody_other": "Congelamentos cobriram os {{count}} dias que você perdeu.",
+    "duelTitle": "Desafie seus amigos",
+    "duelCta": "Quem é o melhor?"
   },
   "mode": {
     "current": {
@@ -90,7 +99,8 @@
     "bench": "Banco",
     "startSeason": "Começar a temporada",
     "landed": "Você tirou",
-    "empty": "Livre"
+    "empty": "Livre",
+    "benchSlot": "Banco {{n}}"
   },
   "season": {
     "title": "Temporada regular",
@@ -185,7 +195,8 @@
     "strength": "Força",
     "resume": "Retomar",
     "missed": "Perdido",
-    "replaceRun": "Isso substitui sua partida atual. Toque de novo para começar."
+    "replaceRun": "Isso substitui sua partida atual. Toque de novo para começar.",
+    "share": "Compartilhar os resultados de hoje"
   },
   "duel": {
     "title": "Duelo",
@@ -367,7 +378,13 @@
     "lotterySkip": "Pular",
     "openSpots_many": "{{count}} vagas abertas",
     "openSpots_one": "{{count}} vaga aberta",
-    "openSpots_other": "{{count}} vagas abertas"
+    "openSpots_other": "{{count}} vagas abertas",
+    "f1Title": "Construa uma franquia",
+    "f1Body": "Drafte, renove, troque e desenvolva um time, temporada após temporada.",
+    "f2Title": "Mantenha o emprego",
+    "f2Body": "A diretoria define uma meta todo ano. Falhe demais e você é demitido.",
+    "f3Title": "Faça história",
+    "f3Body": "Títulos, um Hall da Fama e recordes da franquia."
   },
   "collect": {
     "title": "Coleção",
@@ -377,7 +394,7 @@
     "chooseOne": "Fique com uma carta",
     "keep": "Ficar com {{name}}",
     "noPicks": "Nenhuma escolha esperando. Volte amanhã para sua escolha diária.",
-    "streak": "🔥 Sequência de {{n}} dias",
+    "streak": "Sequência de {{n}} dias",
     "odds": "Chances por carta",
     "cards": "{{n}} cartas",
     "empty": "Abra uma escolha de jogador para começar sua coleção.",
@@ -404,7 +421,10 @@
     "waiting_other": "{{count}} escolhas esperando",
     "nextWeekly_many": "Escolha semanal em {{count}} dias",
     "nextWeekly_one": "Escolha semanal em {{count}} dia",
-    "nextWeekly_other": "Escolha semanal em {{count}} dias"
+    "nextWeekly_other": "Escolha semanal em {{count}} dias",
+    "powerUp": "Turbinar ({{n}} restantes)",
+    "powerOdds": "{{pct}}% de chance de melhorar a escolha inteira",
+    "upgraded": "MELHORADO!"
   },
   "lineup": {
     "title": "Escalação",
@@ -612,6 +632,59 @@
   },
   "profile": {
     "title": "Perfil",
-    "pick": "Escolha seu avatar"
+    "pick": "Escolha seu avatar",
+    "namePlaceholder": "Seu nome"
+  },
+  "tabs": {
+    "daily": "Diário",
+    "cards": "Cartas",
+    "play": "Jogar",
+    "career": "Carreira",
+    "duels": "Duelos"
+  },
+  "ladder": {
+    "title": "Liga semanal",
+    "promote": "ACESSO",
+    "relegate": "REBAIXAMENTO",
+    "safe": "SEGURO",
+    "endsIn": "Termina em {{time}}",
+    "pts": "pts",
+    "how": "Como pontuar",
+    "howRun": "Cada temporada concluída: metade das suas vitórias em pontos",
+    "howBonus": "+10 pelos playoffs, +25 por um título",
+    "howDaily": "+5 por desafio diário",
+    "howMove": "Os {{up}} primeiros sobem na segunda e os {{down}} últimos caem",
+    "standings": "Esta semana",
+    "botsNote": "Os rivais são GMs de IA até as ligas online chegarem.",
+    "promoted": "Promovido para {{tier}}!",
+    "relegated": "Rebaixado para {{tier}}",
+    "stayed": "Você fica em {{tier}}",
+    "finished": "Na semana passada você terminou em {{rank}}º",
+    "bronze": "Bronze",
+    "silver": "Prata",
+    "gold": "Ouro",
+    "platinum": "Platina",
+    "legend": "Lenda",
+    "inPromotion": "Na zona de acesso!",
+    "toPromotion": "Faltam {{n}} pts para subir"
+  },
+  "challenge": {
+    "invalid": "Este link de desafio está quebrado.",
+    "title": "{{name}} desafia você",
+    "body": "Mesmos giros, mesma liga. Supere a campanha.",
+    "accept": "Aceitar desafio",
+    "share": "Compartilhar e desafiar",
+    "shared": "Compartilhado!",
+    "copied": "Link copiado!",
+    "won": "Você venceu {{name}}!",
+    "lost": "{{name}} vence desta vez",
+    "tied": "Empate com {{name}}"
+  },
+  "stake": {
+    "title": "Dobro ou nada?",
+    "body": "Tudo ou nada: chegue às Finais para ×2 pontos de liga, mas cair na 1ª rodada custa metade.",
+    "snap": "Tudo ou nada",
+    "safe": "Jogar seguro",
+    "on": "TUDO OU NADA"
   }
 }

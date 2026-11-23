@@ -1,12 +1,14 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { AWARDS, awardRace, leaders, type LeaderStat, type Ranked } from '../engine/story/leaders';
 import { useGame } from '../store/game';
 import { BackButton, Card, Header, Label, Screen, Segmented } from '../ui/components';
 import { useRunColors } from '../ui/runColors';
 import { C, F, S } from '../ui/theme';
+import { goBack } from '../ui/nav';
 
 const STATS: LeaderStat[] = ['pts', 'reb', 'ast'];
 
@@ -35,7 +37,7 @@ export default function League() {
 
   return (
     <Screen tint={runColors[0]}>
-      <Header title={t('league.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('league.title')} left={<BackButton onPress={() => goBack()} />} />
       <Segmented options={['leaders', 'awards'] as const} value={tab} onChange={setTab} format={(o) => t(`league.${o}`)} />
       {tab === 'leaders' && STATS.map((st) => (
         <Card key={st} style={{ gap: S.sm }} testID={`leaders-${st}`}>

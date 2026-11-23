@@ -1,13 +1,15 @@
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
 import { feel } from '../../audio/feel';
 import { MODE_BY_ID } from '../../data';
 import { dailyKey, dailyTrivia } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { BackButton, Button, Card, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S } from '../../ui/theme';
+import { goBack } from '../../ui/nav';
 
 export default function Trivia() {
   const { t } = useTranslation();
@@ -47,12 +49,12 @@ export default function Trivia() {
 
   return (
     <Screen>
-      <Header title={t('daily.trivia')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('daily.trivia')} left={<BackButton onPress={() => goBack()} />} />
       {finished ? (
         <Card style={{ alignItems: 'center', gap: S.md, paddingVertical: S.xxl }}>
           <Text style={styles.big} testID="trivia-score">{t('daily.yourScore', { n: already ?? score })}</Text>
           <Text style={styles.muted}>{t('daily.tomorrow')}</Text>
-          <Button label={t('daily.done')} onPress={() => router.back()} testID="trivia-done" />
+          <Button label={t('daily.done')} onPress={() => goBack()} testID="trivia-done" />
         </Card>
       ) : (
         <>
@@ -64,7 +66,7 @@ export default function Trivia() {
               const bg = !picked ? C.surface2 : isAnswer ? C.neon : c === picked ? C.danger : C.surface2;
               return (
                 <Pressable key={c} testID="trivia-choice" onPress={() => choose(c)} style={[styles.choice, { backgroundColor: bg }]}>
-                  <Text style={[styles.choiceText, picked && (isAnswer || c === picked) && { color: C.bg }]}>{c}</Text>
+                  <Text style={[styles.choiceText, picked && (isAnswer || c === picked) && { color: C.ink }]}>{c}</Text>
                 </Pressable>
               );
             })}

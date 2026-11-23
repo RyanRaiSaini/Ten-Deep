@@ -15,7 +15,15 @@
     "best": "Beste Bilanz",
     "modes": "Spielmodi",
     "resume": "Deinen Run fortsetzen",
-    "play": "Spielen"
+    "play": "Spielen",
+    "streak": "Login-Serie",
+    "player": "Spieler",
+    "picks": "Picks",
+    "streakSaved": "Serie gerettet!",
+    "streakSavedBody_one": "Ein Serien-Freeze hat den verpassten Tag abgedeckt.",
+    "streakSavedBody_other": "Serien-Freezes haben die {{count}} verpassten Tage abgedeckt.",
+    "duelTitle": "Fordere deine Freunde heraus",
+    "duelCta": "Wer ist der Beste?"
   },
   "mode": {
     "current": {
@@ -90,7 +98,8 @@
     "bench": "Bank",
     "startSeason": "Saison starten",
     "landed": "Gezogen",
-    "empty": "Frei"
+    "empty": "Frei",
+    "benchSlot": "Bank {{n}}"
   },
   "season": {
     "title": "Hauptrunde",
@@ -184,7 +193,8 @@
     "strength": "Stärke",
     "resume": "Fortsetzen",
     "missed": "Verpasst",
-    "replaceRun": "Das ersetzt deinen aktuellen Run. Tippe erneut zum Starten."
+    "replaceRun": "Das ersetzt deinen aktuellen Run. Tippe erneut zum Starten.",
+    "share": "Heutige Ergebnisse teilen"
   },
   "duel": {
     "title": "Duell",
@@ -365,7 +375,13 @@
     "lottery": "Draft-Lotterie",
     "lotterySkip": "Überspringen",
     "openSpots_one": "{{count}} freier Platz",
-    "openSpots_other": "{{count}} freie Plätze"
+    "openSpots_other": "{{count}} freie Plätze",
+    "f1Title": "Bau ein Franchise auf",
+    "f1Body": "Drafte, verlängere, trade und entwickle ein Team, Saison für Saison.",
+    "f2Title": "Behalte deinen Job",
+    "f2Body": "Der Vorstand setzt jedes Jahr ein Ziel. Verfehlst du es zu oft, fliegst du.",
+    "f3Title": "Schreib Geschichte",
+    "f3Body": "Titel, eine Hall of Fame und bleibende Franchise-Rekorde."
   },
   "collect": {
     "title": "Sammlung",
@@ -375,7 +391,7 @@
     "chooseOne": "Behalte eine Karte",
     "keep": "{{name}} behalten",
     "noPicks": "Keine Picks offen. Komm morgen für deinen Tages-Pick wieder.",
-    "streak": "🔥 {{n}}-Tage-Serie",
+    "streak": "{{n}}-Tage-Serie",
     "odds": "Chancen pro Karte",
     "cards": "{{n}} Karten",
     "empty": "Öffne einen Spieler-Pick, um deine Sammlung zu starten.",
@@ -400,7 +416,10 @@
     "waiting_one": "{{count}} Pick wartet",
     "waiting_other": "{{count}} Picks warten",
     "nextWeekly_one": "Wochen-Pick in {{count}} Tag",
-    "nextWeekly_other": "Wochen-Pick in {{count}} Tagen"
+    "nextWeekly_other": "Wochen-Pick in {{count}} Tagen",
+    "powerUp": "Aufladen (noch {{n}})",
+    "powerOdds": "{{pct}} % Chance, den ganzen Pick aufzuwerten",
+    "upgraded": "AUFGEWERTET!"
   },
   "lineup": {
     "title": "Aufstellung",
@@ -608,6 +627,59 @@
   },
   "profile": {
     "title": "Profil",
-    "pick": "Wähle deinen Avatar"
+    "pick": "Wähle deinen Avatar",
+    "namePlaceholder": "Dein Name"
+  },
+  "tabs": {
+    "daily": "Täglich",
+    "cards": "Karten",
+    "play": "Spielen",
+    "career": "Karriere",
+    "duels": "Duelle"
+  },
+  "ladder": {
+    "title": "Wochenliga",
+    "promote": "AUFSTIEG",
+    "relegate": "ABSTIEG",
+    "safe": "SICHER",
+    "endsIn": "Endet in {{time}}",
+    "pts": "Pkt.",
+    "how": "So punktest du",
+    "howRun": "Jede beendete Saison: die Hälfte deiner Siege als Punkte",
+    "howBonus": "+10 für die Playoffs, +25 für einen Titel",
+    "howDaily": "+5 pro täglicher Challenge",
+    "howMove": "Die Top {{up}} steigen montags auf, die letzten {{down}} ab",
+    "standings": "Diese Woche",
+    "botsNote": "Gegner sind KI-GMs, bis die Online-Ligen starten.",
+    "promoted": "Aufstieg in {{tier}}!",
+    "relegated": "Abstieg in {{tier}}",
+    "stayed": "Du bleibst in {{tier}}",
+    "finished": "Letzte Woche wurdest du {{rank}}.",
+    "bronze": "Bronze",
+    "silver": "Silber",
+    "gold": "Gold",
+    "platinum": "Platin",
+    "legend": "Legende",
+    "inPromotion": "In der Aufstiegszone!",
+    "toPromotion": "Noch {{n}} Pkt. bis zum Aufstieg"
+  },
+  "challenge": {
+    "invalid": "Dieser Challenge-Link ist kaputt.",
+    "title": "{{name}} fordert dich heraus",
+    "body": "Gleiche Spins, gleiche Liga. Schlag die Bilanz.",
+    "accept": "Herausforderung annehmen",
+    "share": "Teilen und herausfordern",
+    "shared": "Geteilt!",
+    "copied": "Link kopiert!",
+    "won": "Du hast {{name}} geschlagen!",
+    "lost": "{{name}} gewinnt diesmal",
+    "tied": "Gleichstand mit {{name}}"
+  },
+  "stake": {
+    "title": "Doppelt oder nichts?",
+    "body": "All in: Erreiche das Finale für ×2 Ligapunkte, aber ein Aus in Runde 1 kostet die Hälfte.",
+    "snap": "All in",
+    "safe": "Auf Nummer sicher",
+    "on": "ALL IN"
   }
 }

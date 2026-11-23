@@ -99,3 +99,50 @@ describe('legacy', () => {
     expect(hof).not.toContain('b');
   });
 });
+
+describe('stints with your team', () => {
+  it('a mid-season swap credits each player only with the games he played for you', async () => {
+    const { draftLeague } = await import('../aiDraft');
+    const { createRng } = await import('../rng');
+    const { advance, createSeason, tradeSwap, userStints, SEASON_GAMES } = await import('../season');
+    const { makePool } = await import('../__fixtures__/pool');
+    const lg = draftLeague(makePool(), new Set(), 30, createRng('stint'));
+    let s = advance(createSeason(lg[0], lg.slice(1), 'stint'), 50);
+    const out = s.teams[0].slots.B5;
+    // A bench player from an AI team (same position rules don't apply to the bench).
+    const incoming = s.teams[3].slots.B5;
+    const before = { ...s.totals[incoming.id] };
+    s = { ...s, teams: s.teams.map((t, i) => (i === 3 ? { ...t, slots: { ...t.slots, B5: { ...t.slots.B5, id: `${t.slots.B5.id}-x`, name: `${t.slots.B5.name} X` } } } : t)) };
+    s = tradeSwap(s, out.id, incoming);
+    const outAtSwap = { ...s.totals[out.id] };
+    s = advance(advance({ ...s, deadlineUsed: true }, SEASON_GAMES), SEASON_GAMES);
+    const lines = userStints(s);
+    const inc = lines.find((l) => l.player.id === incoming.id)!;
+    const gone = lines.find((l) => l.player.id === out.id)!;
+    expect(inc.totals.gp).toBe(s.totals[incoming.id].gp - before.gp);
+    expect(gone.totals.gp).toBe(outAtSwap.gp);
+    expect(lines.length).toBe(11);
+  });
+});
+
+describe('stint edge cases', () => {
+  it('a player who leaves and comes back keeps his first stint', async () => {
+    const { recordStint, userStints } = await import('../season');
+    const A: Player = P('a', 80, 25, 'SF');
+    const B: Player = P('b', 78, 25, 'SF');
+    const base = { teams: [{ id: 'u', name: 'U', colors: ['#000', '#fff'], slots: { B5: A } }], totals: { a: { gp: 20, pts: 200, reb: 50, ast: 30 } } } as never;
+    let s = recordStint(base, A, B); // A leaves after 20 games
+    s = { ...s, totals: { ...s.totals, a: { gp: 40, pts: 400, reb: 100, ast: 60 } } }; // 20 more games elsewhere
+    s = recordStint(s, B, A); // A comes back
+    s = { ...s, teams: [{ ...s.teams[0], slots: { B5: A } }] as never, totals: { ...s.totals, a: { gp: 60, pts: 600, reb: 150, ast: 90 } } };
+    const line = (userStints({ ...s, teams: [{ ...s.teams[0], slots: Object.fromEntries(['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4'].map((k) => [k, { ...A, id: `x-${k}` }]).concat([['B5', A]])) }] } as never)).find((l) => l.player.id === 'a')!;
+    expect(line.totals.gp).toBe(40); // 20 before leaving + 20 after returning
+  });
+
+  it('only players still with you at the end are credited with the title', () => {
+    const totals = { a: { gp: 80, pts: 100, reb: 1, ast: 1 }, b: { gp: 30, pts: 50, reb: 1, ast: 1 } };
+    const s = addSeason({}, [P('a', 80, 25), P('b', 80, 25)], totals, true, '2026-27', new Set(['a']));
+    expect(s.a.titles).toBe(1);
+    expect(s.b.titles).toBe(0);
+  });
+});

@@ -1,13 +1,15 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
 import { feel } from '../../audio/feel';
 import { HISTORY, MODE_BY_ID } from '../../data/modes';
 import { dailyKey, dailyRank, dailyTeamRank, scoreRank, teamStrengthScore } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { BackButton, Button, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S, ovrColor } from '../../ui/theme';
+import { goBack } from '../../ui/nav';
 
 interface Item { id: string; title: string; sub: string; value: number }
 
@@ -63,7 +65,7 @@ export default function Rank() {
 
   return (
     <Screen>
-      <Header title={teams ? t('daily.teamRank') : t('daily.rank')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={teams ? t('daily.teamRank') : t('daily.rank')} left={<BackButton onPress={() => goBack()} />} />
       <Label>{teams ? t('daily.teamRankHint') : t('daily.rankHint')}</Label>
       <View style={{ gap: S.sm }}>
         {shown.map((id, idx) => {
@@ -92,7 +94,7 @@ export default function Rank() {
       {submitted ? (
         <>
           <Text style={styles.big} testID="rank-score">{t('daily.yourScore', { n: already ?? score })}</Text>
-          <Button label={t('daily.done')} onPress={() => router.back()} />
+          <Button label={t('daily.done')} onPress={() => goBack()} />
         </>
       ) : (
         <Button label={t('daily.submit')} onPress={submit} testID="rank-submit" />

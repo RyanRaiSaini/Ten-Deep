@@ -1,7 +1,8 @@
 import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { affordableFor, minimumException, openSlotCount, RESIGN_THRESHOLD, seasonLabel } from '../engine/career/offseason';
 import { ALL_SLOTS, type Player, type SlotId } from '../engine/types';
@@ -11,6 +12,7 @@ import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, S } from '../ui/theme';
 import { LotteryReveal } from '../ui/Lottery';
+import { Icon } from '../ui/icons';
 
 /** The offseason, one step at a time: development and contracts → rookie draft → free agency → next season. */
 export default function Offseason() {
@@ -33,7 +35,7 @@ export default function Offseason() {
     const kept = keep ?? expiring.filter((p) => p.ovr >= RESIGN_THRESHOLD).map((p) => p.id);
     return (
       <Screen>
-        <Header title={`${t('career.title')} · ${seasonLabel(st.season)}`} left={<BackButton onPress={() => router.replace('/career')} />} />
+        <Header title={`${t('career.title')} · ${seasonLabel(st.season)}`} left={<BackButton onPress={() => router.navigate('/career')} />} />
         <Label>{t('career.progress')}</Label>
         <Card style={{ gap: 4 }}>
           {st.changes.map((x) => {
@@ -50,7 +52,7 @@ export default function Offseason() {
           })}
         </Card>
         {retiredMine.length > 0 && (
-          <Text style={styles.retired}>👋 {t('career.retired')}: {retiredMine.map((p) => p.name).join(', ')}</Text>
+          <Text style={styles.retired}>{t('career.retired')}: {retiredMine.map((p) => p.name).join(', ')}</Text>
         )}
         {expiring.length > 0 && (
           <>
@@ -82,7 +84,7 @@ export default function Offseason() {
     const pick = available.find((r) => r.id === pickId);
     return (
       <Screen>
-        <Header title={t('career.draft')} left={<BackButton onPress={() => router.replace('/career')} />} />
+        <Header title={t('career.draft')} left={<BackButton onPress={() => router.navigate('/career')} />} />
         <LotteryReveal order={st.order} names={(i) => (i === 0 ? t('league.you') : st.teams[i].name)} />
         <Text style={styles.big} testID="pick-no">{t('career.yourPick', { n: pickNo })}</Text>
         {available.map((r) => (
@@ -116,9 +118,9 @@ export default function Offseason() {
   };
   return (
     <Screen>
-      <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.replace('/career')} />} />
+      <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.navigate('/career')} />} />
       <Text style={styles.big}>{t('career.openSpots', { count: open })}</Text>
-      <Button label={`🔁  ${t('trade.title')}`} variant="secondary" onPress={() => router.push('/trade')} testID="to-trade" />
+      <Button label={t('trade.title')} icon={<Icon name="swap" size={22} />} variant="secondary" onPress={() => router.push('/trade')} testID="to-trade" />
       <RosterBoard
         roster={user.slots}
         highlight={chosen?.slots}

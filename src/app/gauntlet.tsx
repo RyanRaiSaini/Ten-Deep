@@ -1,7 +1,8 @@
 import { router } from 'expo-router';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { GAUNTLET, lineupRoster, playStage, stageReward } from '../engine/collect/lineup';
 import type { SeriesResult } from '../engine/series';
@@ -10,6 +11,8 @@ import { Confetti } from '../ui/fx';
 import { BackButton, Button, Card, Header, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 import { track } from '../store/progress';
+import { Icon } from '../ui/icons';
+import { goBack } from '../ui/nav';
 
 /** The Gauntlet: 10 great teams in a row, best-of-3 each, with your card lineup. */
 export default function Gauntlet() {
@@ -50,7 +53,7 @@ export default function Gauntlet() {
   const wonSeries = finished && series.result.winner === 'a';
   return (
     <Screen tint={C.gold} overlay={wonSeries ? <Confetti key={series.stage} /> : null}>
-      <Header title={t('gauntlet.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('gauntlet.title')} left={<BackButton onPress={() => goBack()} />} />
       <Text style={styles.desc}>{t('gauntlet.desc')}</Text>
 
       {series && (
@@ -63,7 +66,7 @@ export default function Gauntlet() {
           {finished && (
             <Text style={[styles.verdict, { color: series.result.winner === 'a' ? C.gold : C.danger }]} testID="gauntlet-result">
               {series.result.winner === 'a'
-                ? `🏆 ${t('gauntlet.won', { w: series.result.winsA, l: series.result.winsB })}`
+                ? `${t('gauntlet.won', { w: series.result.winsA, l: series.result.winsB })}`
                 : t('gauntlet.lost', { w: series.result.winsA, l: series.result.winsB })}
             </Text>
           )}
@@ -71,9 +74,9 @@ export default function Gauntlet() {
         </Card>
       )}
 
-      {!series && !done && <Button label={`⚔️  ${t('gauntlet.play', { n: stage + 1 })}`} variant="gold" onPress={() => play()} testID="gauntlet-play" />}
-      {done && <Text style={[styles.verdict, { color: C.gold }]}>👑 {t('gauntlet.complete')}</Text>}
-      {!series && done && <Button label={`⚔️  ${t('gauntlet.replay')}`} variant="secondary" onPress={() => play()} testID="gauntlet-replay" />}
+      {!series && !done && <Button label={t('gauntlet.play', { n: stage + 1 })} icon={<Icon name="shield" size={22} />} variant="gold" onPress={() => play()} testID="gauntlet-play" />}
+      {done && <View style={{ alignItems: 'center', gap: 4 }}><Icon name="crown" size={56} /><Text style={[styles.verdict, { color: C.gold }]}>{t('gauntlet.complete')}</Text></View>}
+      {!series && done && <Button label={t('gauntlet.replay')} icon={<Icon name="shield" size={22} />} variant="secondary" onPress={() => play()} testID="gauntlet-replay" />}
       <Button label={t('gauntlet.editLineup')} variant="ghost" onPress={() => router.push('/lineup')} />
 
       {GAUNTLET.map((g, i) => {
@@ -87,11 +90,11 @@ export default function Gauntlet() {
             <View style={{ flex: 1 }}>
               <Text style={styles.team}>{g.team.label}</Text>
               <Text style={styles.sub}>
-                {g.strength.toFixed(1)}{reward ? `  ·  🎁 ${t('gauntlet.reward', { pick: t(`collect.t_${reward}`) })}` : ''}
+                {g.strength.toFixed(1)}{reward ? `  ·  ${t('gauntlet.reward', { pick: t(`collect.t_${reward}`) })}` : ''}
               </Text>
             </View>
             <Text style={[styles.status, { color: cleared ? C.neon : current ? C.gold : C.muted }]}>
-              {cleared ? `✓ ${t('gauntlet.cleared')}` : current ? '▶' : '🔒'}
+              {cleared ? `✓ ${t('gauntlet.cleared')}` : current ? '▶' : ''}
             </Text>
           </View>
         );

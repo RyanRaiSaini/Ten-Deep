@@ -15,7 +15,15 @@
     "best": "Beste record",
     "modes": "Spelmodi",
     "resume": "Ga verder met je run",
-    "play": "Spelen"
+    "play": "Spelen",
+    "streak": "Inlogreeks",
+    "player": "Speler",
+    "picks": "Keuzes",
+    "streakSaved": "Reeks gered!",
+    "streakSavedBody_one": "Een reeksbevriezing dekte de dag die je miste.",
+    "streakSavedBody_other": "Reeksbevriezingen dekten de {{count}} dagen die je miste.",
+    "duelTitle": "Daag je vrienden uit",
+    "duelCta": "Wie is de beste?"
   },
   "mode": {
     "current": {
@@ -90,7 +98,8 @@
     "bench": "Bank",
     "startSeason": "Start het seizoen",
     "landed": "Je kreeg",
-    "empty": "Vrij"
+    "empty": "Vrij",
+    "benchSlot": "Bank {{n}}"
   },
   "season": {
     "title": "Reguliere competitie",
@@ -184,7 +193,8 @@
     "strength": "Sterkte",
     "resume": "Hervatten",
     "missed": "Gemist",
-    "replaceRun": "Dit vervangt je huidige run. Tik nogmaals om te starten."
+    "replaceRun": "Dit vervangt je huidige run. Tik nogmaals om te starten.",
+    "share": "Deel de resultaten van vandaag"
   },
   "duel": {
     "title": "Duel",
@@ -365,7 +375,13 @@
     "lottery": "Draftloterij",
     "lotterySkip": "Overslaan",
     "openSpots_one": "{{count}} open plek",
-    "openSpots_other": "{{count}} open plekken"
+    "openSpots_other": "{{count}} open plekken",
+    "f1Title": "Bouw een franchise",
+    "f1Body": "Draft, verleng, ruil en ontwikkel één team, seizoen na seizoen.",
+    "f2Title": "Houd je baan",
+    "f2Body": "Het bestuur stelt elk jaar een doel. Mis het te vaak en je ligt eruit.",
+    "f3Title": "Schrijf geschiedenis",
+    "f3Body": "Titels, een Hall of Fame en clubrecords die blijven."
   },
   "collect": {
     "title": "Collectie",
@@ -375,7 +391,7 @@
     "chooseOne": "Houd één kaart",
     "keep": "{{name}} houden",
     "noPicks": "Geen keuzes in de wacht. Kom morgen terug voor je dagelijkse keuze.",
-    "streak": "🔥 Reeks van {{n}} dagen",
+    "streak": "Reeks van {{n}} dagen",
     "odds": "Kans per kaart",
     "cards": "{{n}} kaarten",
     "empty": "Open een spelerskeuze om je collectie te starten.",
@@ -400,7 +416,10 @@
     "waiting_one": "{{count}} keuze wacht",
     "waiting_other": "{{count}} keuzes wachten",
     "nextWeekly_one": "Weekkeuze over {{count}} dag",
-    "nextWeekly_other": "Weekkeuze over {{count}} dagen"
+    "nextWeekly_other": "Weekkeuze over {{count}} dagen",
+    "powerUp": "Opladen (nog {{n}})",
+    "powerOdds": "{{pct}}% kans om de hele keuze te upgraden",
+    "upgraded": "GEÜPGRADED!"
   },
   "lineup": {
     "title": "Opstelling",
@@ -608,6 +627,59 @@
   },
   "profile": {
     "title": "Profiel",
-    "pick": "Kies je avatar"
+    "pick": "Kies je avatar",
+    "namePlaceholder": "Jouw naam"
+  },
+  "tabs": {
+    "daily": "Dagelijks",
+    "cards": "Kaarten",
+    "play": "Spelen",
+    "career": "Carrière",
+    "duels": "Duels"
+  },
+  "ladder": {
+    "title": "Weekcompetitie",
+    "promote": "PROMOTIE",
+    "relegate": "DEGRADATIE",
+    "safe": "VEILIG",
+    "endsIn": "Eindigt over {{time}}",
+    "pts": "ptn",
+    "how": "Zo scoor je",
+    "howRun": "Elk afgerond seizoen: de helft van je zeges in punten",
+    "howBonus": "+10 voor de play-offs, +25 voor een titel",
+    "howDaily": "+5 per dagelijkse uitdaging",
+    "howMove": "De top {{up}} stijgt maandag, de laatste {{down}} zakken",
+    "standings": "Deze week",
+    "botsNote": "Rivalen zijn AI-GM's tot de online competities live gaan.",
+    "promoted": "Gepromoveerd naar {{tier}}!",
+    "relegated": "Gedegradeerd naar {{tier}}",
+    "stayed": "Je blijft in {{tier}}",
+    "finished": "Vorige week eindigde je als {{rank}}e",
+    "bronze": "Brons",
+    "silver": "Zilver",
+    "gold": "Goud",
+    "platinum": "Platina",
+    "legend": "Legende",
+    "inPromotion": "In de promotiezone!",
+    "toPromotion": "Nog {{n}} ptn tot promotie"
+  },
+  "challenge": {
+    "invalid": "Deze uitdaginglink werkt niet.",
+    "title": "{{name}} daagt je uit",
+    "body": "Zelfde spins, zelfde competitie. Verbeter de score.",
+    "accept": "Uitdaging aannemen",
+    "share": "Delen en uitdagen",
+    "shared": "Gedeeld!",
+    "copied": "Link gekopieerd!",
+    "won": "Je hebt {{name}} verslagen!",
+    "lost": "{{name}} wint deze",
+    "tied": "Gelijkspel met {{name}}"
+  },
+  "stake": {
+    "title": "Dubbel of niks?",
+    "body": "Alles inzetten: haal de finale voor ×2 competitiepunten, maar uitschakeling in ronde 1 kost de helft.",
+    "snap": "Alles inzetten",
+    "safe": "Op zeker spelen",
+    "on": "ALLES IN"
   }
 }

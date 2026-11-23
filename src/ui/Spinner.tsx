@@ -1,21 +1,32 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Animated, Platform, StyleSheet, View } from 'react-native';
 import { feel } from '../audio/feel';
+import type { TeamSeason } from '../engine/types';
 import { useSettings } from '../store/settings';
-import { C, F, R, S } from './theme';
+import { Display } from './components';
+import { Text } from './Text';
+import { teamGradient } from './teamColors';
+import { C, R, S } from './theme';
+
+const native = Platform.OS !== 'web';
+export { teamGradient } from './teamColors';
 
 /**
- * Slot-machine reel: rolls through decoy team labels, decelerating, and lands on `target`.
- * Ticks (sound + haptic) on every label; thunk when it lands.
+ * Slot-machine reel in team colors: flashes through decoy teams, decelerating, and lands on `target`
+ * with a pop. Ticks (sound + haptic) on every team; thunk when it lands.
  */
 export function Spinner({
   target, decoys, spinKey, onLanded,
-}: { target: string; decoys: string[]; spinKey: number; onLanded: () => void }) {
-  const [label, setLabel] = useState(target);
+}: { target: TeamSeason | null; decoys: TeamSeason[]; spinKey: number; onLanded: () => void }) {
+  const [shown, setShown] = useState<TeamSeason | null>(target);
   const [rolling, setRolling] = useState(false);
   const speed = useSettings((s) => s.simSpeed);
   const landed = useRef(onLanded);
   landed.current = onLanded;
+  const pop = useRef(new Animated.Value(1)).current;
+  const latest = useRef(target);
+  latest.current = target;
 
   useEffect(() => {
     if (spinKey === 0) return;
@@ -27,32 +38,48 @@ export function Spinner({
     const next = () => {
       i++;
       if (i >= steps) {
-        setLabel(target);
+        setShown(latest.current);
         setRolling(false);
         feel('thunk');
+        pop.setValue(0.86);
+        Animated.spring(pop, { toValue: 1, friction: 4, tension: 120, useNativeDriver: native }).start();
         landed.current();
         return;
       }
-      setLabel(decoys[Math.floor(Math.random() * decoys.length)]);
+      setShown(decoys[Math.floor(Math.random() * decoys.length)] ?? null);
       feel('tick');
       timer = setTimeout(next, (40 + i * i * 2.2) * factor);
     };
     next();
     return () => clearTimeout(timer);
-    // spinKey drives a new roll; target is read at landing time.
+    // spinKey drives a new roll; the target is read when it lands.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [spinKey]);
 
+  const team = shown;
+  const [top, bottom] = team ? teamGradient(team.colors) : [C.ink, '#000000'];
   return (
-    <View style={[styles.reel, !rolling && { borderColor: C.hardwood }]}>
-      <Text style={[styles.label, rolling && { color: C.muted }]} numberOfLines={1} adjustsFontSizeToFit>
-        {label}
-      </Text>
-    </View>
+    <Animated.View style={[styles.reel, { transform: [{ scale: pop }] }]} testID="reel">
+      <LinearGradient colors={[top, bottom]} style={StyleSheet.absoluteFill} />
+      <View style={[styles.stripe, { backgroundColor: team?.colors[1] ?? C.hardwood }]} />
+      {team && (
+        <View style={styles.body}>
+          <Text style={styles.season}>{team.season.includes('-') ? team.season : team.season}</Text>
+          <Display size={rolling ? 26 : 32}>{rolling ? team.name : team.label.replace(/^\d{4}(-\d\d)?\s/, '')}</Display>
+          {!rolling && <Text style={styles.city}>{team.city}</Text>}
+        </View>
+      )}
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  reel: { height: 76, borderRadius: R.lg, borderWidth: 2, borderColor: C.line, backgroundColor: C.bg, alignItems: 'center', justifyContent: 'center', paddingHorizontal: S.lg },
-  label: { color: C.text, fontSize: 26, ...F.display },
+  reel: {
+    height: 120, borderRadius: R.lg, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  stripe: { position: 'absolute', left: 0, right: 0, bottom: 0, height: 8, opacity: 0.9 },
+  body: { alignItems: 'center', paddingHorizontal: S.md },
+  season: { color: '#FFFFFF', fontWeight: '900', letterSpacing: 2, fontSize: 13, opacity: 0.9 },
+  city: { color: '#FFFFFF', fontWeight: '800', fontSize: 13, opacity: 0.85 },
 });

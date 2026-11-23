@@ -2,7 +2,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Animated, Easing, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Easing, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { CARD_BY_ID } from '../data/cards';
 import { PICK_ODDS, type PickType } from '../engine/collect/picks';
@@ -10,8 +11,11 @@ import { TIERS, type Card } from '../engine/collect/tiers';
 import { useCollection } from '../store/collection';
 import { CardBack, CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Header, Label, Screen } from '../ui/components';
-import { C, F, R, S } from '../ui/theme';
+import { C, F, FONT, R, S } from '../ui/theme';
 import { track } from '../store/progress';
+import { goBack } from '../ui/nav';
+import { Icon } from '../ui/icons';
+import { POWER_TAPS, UPGRADE_CHANCE, nextType } from '../engine/collect/powerup';
 
 const native = Platform.OS !== 'web';
 const PACK_COLOR: Record<PickType, [string, string]> = {
@@ -85,12 +89,13 @@ export default function Packs() {
   const [selected, setSelected] = useState<string | null>(null);
   const [burst, setBurst] = useState(0);
   const [showOdds, setShowOdds] = useState(false);
+  const [upgraded, setUpgraded] = useState(false);
   const pulse = useRef(new Animated.Value(0)).current;
   const shake = useRef(new Animated.Value(0)).current;
   const deal = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    setOpen(false); setFlipped([]); setSelected(null);
+    setOpen(false); setFlipped([]); setSelected(null); setUpgraded(false);
     const loop = Animated.loop(Animated.sequence([
       Animated.timing(pulse, { toValue: 1, duration: 900, useNativeDriver: native }),
       Animated.timing(pulse, { toValue: 0, duration: 900, useNativeDriver: native }),
@@ -102,10 +107,10 @@ export default function Packs() {
   if (!pick) {
     return (
       <Screen>
-        <Header title={t('collect.picks')} left={<BackButton onPress={() => router.back()} />} />
+        <Header title={t('collect.picks')} left={<BackButton onPress={() => goBack()} />} />
         <Text style={styles.empty}>{t('collect.noPicks')}</Text>
         <Text style={styles.streak}>{t('collect.streak', { n: col.streak })} · {t('collect.nextWeekly', { count: 7 - (col.streak % 7) })}</Text>
-        <Button label={t('collect.title')} variant="secondary" onPress={() => router.replace('/collection')} />
+        <Button label={t('collect.title')} variant="secondary" onPress={() => router.navigate('/collection')} />
       </Screen>
     );
   }
@@ -152,7 +157,7 @@ export default function Packs() {
 
   return (
     <Screen>
-      <Header title={t('collect.picks')} left={<BackButton onPress={() => router.back()} />} right={<Text style={styles.count}>{col.pending.length}</Text>} />
+      <Header title={t('collect.picks')} left={<BackButton onPress={() => goBack()} />} right={<Text style={styles.count}>{col.pending.length}</Text>} />
       <View style={styles.titleRow}>
         <Text style={[styles.packName, { color: c1 }]} testID="pack-type">{t(`collect.t_${pick.type}`)}</Text>
         {guarantee && <Text style={styles.guarantee}>★ {t(`collect.${guarantee}`)}</Text>}
@@ -195,6 +200,23 @@ export default function Packs() {
         <Sparkles fire={burst} color={allRevealed && best ? TIER_STYLE[best.tier].accent : c1} />
       </View>
 
+      {!open && nextType(pick.type) && (pick.taps ?? 0) < POWER_TAPS && (
+        <View style={styles.power}>
+          <Button
+            label={t('collect.powerUp', { n: POWER_TAPS - (pick.taps ?? 0) })}
+            variant="blue"
+            icon={<Icon name="bolt" size={24} />}
+            testID="pack-power"
+            onPress={() => {
+              const r = useCollection.getState().powerUp(pick.id);
+              if (r === 'up') { feel('fanfare'); setBurst((b) => b + 1); setUpgraded(true); }
+              else if (r === 'miss') { feel('buzzer'); Animated.sequence([1, -1, 0].map((x) => Animated.timing(shake, { toValue: x * 0.5, duration: 60, useNativeDriver: native }))).start(); }
+            }}
+          />
+          <Text style={styles.powerOdds}>{t('collect.powerOdds', { pct: Math.round(UPGRADE_CHANCE[pick.taps ?? 0] * 100) })}</Text>
+        </View>
+      )}
+      {!open && upgraded && <Text style={styles.upgraded} testID="pack-upgraded">{t('collect.upgraded')}</Text>}
       {open && !allRevealed && <Button label={t('collect.revealAll')} variant="secondary" onPress={revealAll} testID="pack-reveal-all" />}
       {open && allRevealed && (
         <>
@@ -228,6 +250,9 @@ export default function Packs() {
 }
 
 const styles = StyleSheet.create({
+  power: { gap: 4 },
+  powerOdds: { color: C.muted, fontWeight: '800', fontSize: 12, textAlign: 'center' },
+  upgraded: { fontFamily: FONT.display, fontSize: 26, color: C.blue, textAlign: 'center' },
   count: { color: C.gold, fontWeight: '900', fontSize: 16 },
   titleRow: { alignItems: 'center', gap: 4 },
   packName: { fontSize: 26, ...F.display },
@@ -237,9 +262,9 @@ const styles = StyleSheet.create({
     width: 220, height: 300, borderRadius: R.lg, alignItems: 'center', justifyContent: 'center', gap: S.md,
     shadowOpacity: 0.9, shadowRadius: 30, shadowOffset: { width: 0, height: 0 }, elevation: 14,
   },
-  packLogo: { ...F.display, color: C.text, fontSize: 40, textAlign: 'center', letterSpacing: 4 },
-  packType: { color: C.bg, fontWeight: '900', fontSize: 16, backgroundColor: 'rgba(244,246,251,0.85)', paddingHorizontal: 12, paddingVertical: 4, borderRadius: R.pill },
-  tap: { color: C.text, fontWeight: '800', opacity: 0.9 },
+  packLogo: { ...F.display, color: '#FFFFFF', fontSize: 40, textAlign: 'center', letterSpacing: 4 },
+  packType: { color: C.ink, fontWeight: '900', fontSize: 16, backgroundColor: 'rgba(244,246,251,0.85)', paddingHorizontal: 12, paddingVertical: 4, borderRadius: R.pill },
+  tap: { color: '#FFFFFF', fontWeight: '900', opacity: 0.95 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 10 },
   selected: { shadowColor: '#FFFFFF', shadowOpacity: 1, shadowRadius: 16, borderRadius: R.md },
   empty: { color: C.text, fontSize: 18, textAlign: 'center', marginTop: S.xxl },
