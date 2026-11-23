@@ -604,5 +604,9 @@
     "cap": "Afgewezen: past niet onder het plafond",
     "position": "Afgewezen: een basisspeler moet op de positie passen",
     "missing": "Kies eerst beide spelers"
+  },
+  "profile": {
+    "title": "Profiel",
+    "pick": "Kies je avatar"
   }
 }

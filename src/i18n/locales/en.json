@@ -604,5 +604,9 @@
     "cap": "Rejected: it breaks the cap",
     "position": "Rejected: a starter must fit the position",
     "missing": "Pick both players first"
+  },
+  "profile": {
+    "title": "Profile",
+    "pick": "Pick your avatar"
   }
 }
