@@ -112,3 +112,14 @@ describe('recap', () => {
     expect(r.moments.map((m) => m.kind)).toContain('ot');
   });
 });
+
+describe('box-score realism', () => {
+  it('the scoring leader of a current-day season averages a modern 28–36 points', async () => {
+    const { POOLS } = await import('../../data');
+    const lg = draftLeague(POOLS['current-2026'], new Set(), 30, createRng('realism'));
+    const s = advance(advance({ ...createSeason(lg[0], lg.slice(1), 'realism'), deadlineUsed: true }, SEASON_GAMES), SEASON_GAMES);
+    const [top] = leaders(s, 'pts', 1);
+    expect(top.ppg).toBeGreaterThan(28);
+    expect(top.ppg).toBeLessThan(36);
+  });
+});

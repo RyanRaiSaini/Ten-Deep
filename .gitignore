@@ -44,3 +44,6 @@ yarn-error.*
 .superpowers/
 
 smoke-shots/
+
+# Agent worktrees
+.claude/worktrees/
