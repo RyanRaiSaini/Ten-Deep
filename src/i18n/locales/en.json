@@ -627,5 +627,29 @@
     "play": "Play",
     "career": "Career",
     "duels": "Duels"
+  },
+  "ladder": {
+    "title": "Weekly League",
+    "promote": "PROMOTION",
+    "relegate": "RELEGATION",
+    "safe": "SAFE",
+    "endsIn": "Ends in {{time}}",
+    "pts": "pts",
+    "how": "How to score",
+    "howRun": "Every season you finish: half your wins in points",
+    "howBonus": "+10 for the playoffs, +25 for a title",
+    "howDaily": "+5 for every daily challenge",
+    "howMove": "Top {{up}} move up on Monday, bottom {{down}} move down",
+    "standings": "This week",
+    "botsNote": "Rivals are AI GMs until online leagues launch.",
+    "promoted": "Promoted to {{tier}}!",
+    "relegated": "Relegated to {{tier}}",
+    "stayed": "You stay in {{tier}}",
+    "finished": "Last week you finished #{{rank}}",
+    "bronze": "Bronze",
+    "silver": "Silver",
+    "gold": "Gold",
+    "platinum": "Platinum",
+    "legend": "Legend"
   }
 }

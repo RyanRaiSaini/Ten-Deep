@@ -631,5 +631,29 @@
     "play": "Jugar",
     "career": "Carrera",
     "duels": "Duelos"
+  },
+  "ladder": {
+    "title": "Liga semanal",
+    "promote": "ASCENSO",
+    "relegate": "DESCENSO",
+    "safe": "A SALVO",
+    "endsIn": "Termina en {{time}}",
+    "pts": "pts",
+    "how": "Cómo puntuar",
+    "howRun": "Cada temporada terminada: la mitad de tus victorias en puntos",
+    "howBonus": "+10 por playoffs, +25 por un título",
+    "howDaily": "+5 por cada desafío diario",
+    "howMove": "Los {{up}} primeros suben el lunes y los {{down}} últimos bajan",
+    "standings": "Esta semana",
+    "botsNote": "Los rivales son GM de IA hasta que lleguen las ligas en línea.",
+    "promoted": "¡Asciendes a {{tier}}!",
+    "relegated": "Desciendes a {{tier}}",
+    "stayed": "Sigues en {{tier}}",
+    "finished": "La semana pasada terminaste n.º {{rank}}",
+    "bronze": "Bronce",
+    "silver": "Plata",
+    "gold": "Oro",
+    "platinum": "Platino",
+    "legend": "Leyenda"
   }
 }

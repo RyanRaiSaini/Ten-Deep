@@ -627,5 +627,29 @@
     "play": "Oyna",
     "career": "Kariyer",
     "duels": "Düello"
+  },
+  "ladder": {
+    "title": "Haftalık Lig",
+    "promote": "YÜKSELME",
+    "relegate": "DÜŞME",
+    "safe": "GÜVENDE",
+    "endsIn": "{{time}} sonra biter",
+    "pts": "puan",
+    "how": "Nasıl puan alınır",
+    "howRun": "Bitirdiğin her sezon: galibiyetlerinin yarısı puan",
+    "howBonus": "Playoff +10, şampiyonluk +25",
+    "howDaily": "Her günlük meydan okuma +5",
+    "howMove": "İlk {{up}} pazartesi yükselir, son {{down}} düşer",
+    "standings": "Bu hafta",
+    "botsNote": "Çevrimiçi ligler gelene kadar rakipler yapay zekâ GM'lerdir.",
+    "promoted": "{{tier}} ligine yükseldin!",
+    "relegated": "{{tier}} ligine düştün",
+    "stayed": "{{tier}} liginde kalıyorsun",
+    "finished": "Geçen hafta {{rank}}. oldun",
+    "bronze": "Bronz",
+    "silver": "Gümüş",
+    "gold": "Altın",
+    "platinum": "Platin",
+    "legend": "Efsane"
   }
 }

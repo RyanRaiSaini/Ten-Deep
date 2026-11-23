@@ -15,7 +15,10 @@ import { Button, Chip, Display, IconButton, Label } from '../ui/components';
 import { CourtArt, Icon, type IconName } from '../ui/icons';
 import { Screen } from '../ui/components';
 import { BrandLogo } from '../ui/BrandLogo';
+import { useLeague } from '../store/league';
+import { LeagueCard } from '../ui/LeagueCard';
 import { TabBar } from '../ui/TabBar';
+import { TierBadge, tierName } from '../ui/TierBadge';
 import { Text } from '../ui/Text';
 import { alpha, C, FONT, R, S } from '../ui/theme';
 
@@ -49,6 +52,7 @@ export default function Home() {
   const claimable = useProgress(claimableCount);
   const progress = useProgress();
   const [heroW, setHeroW] = useState(360);
+  const leagueResult = useLeague((s) => s.result);
   if (!onboarded) return <Redirect href="/welcome" />;
 
   const today = dailyKey();
@@ -105,6 +109,22 @@ export default function Home() {
           );
         })}
       </View>
+
+      {leagueResult && (
+        <View style={styles.result} testID="league-result">
+          <TierBadge tier={leagueResult.tier} size={54} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.resultTitle}>
+              {leagueResult.tier > leagueResult.from ? t('ladder.promoted', { tier: tierName(leagueResult.tier, (g) => t(`ladder.${g}`)) })
+                : leagueResult.tier < leagueResult.from ? t('ladder.relegated', { tier: tierName(leagueResult.tier, (g) => t(`ladder.${g}`)) })
+                : t('ladder.stayed', { tier: tierName(leagueResult.tier, (g) => t(`ladder.${g}`)) })}
+            </Text>
+            <Text style={styles.resultSub}>{t('ladder.finished', { rank: leagueResult.rank })}{leagueResult.reward ? ` · ${t(`collect.t_${leagueResult.reward}`)}` : ''}</Text>
+          </View>
+          <Button label="OK" variant="dark" onPress={() => useLeague.getState().dismiss()} style={{ paddingHorizontal: 18, minHeight: 44, paddingVertical: 8 }} />
+        </View>
+      )}
+      <LeagueCard />
 
       {phase !== 'idle' && (
         <Button label={t('home.resume')} variant="dark" icon={<Icon name="play" size={20} />} onPress={() => router.push(ROUTE[phase])} testID="resume" />
@@ -184,6 +204,9 @@ const styles = StyleSheet.create({
   },
   badge: { width: 62, height: 62, borderRadius: 16, borderWidth: 2.5, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' },
   modeDesc: { color: C.muted, fontSize: 13, fontWeight: '700' },
+  result: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: '#FFF1D6', borderWidth: 2.5, borderColor: C.gold, borderBottomWidth: 6 },
+  resultTitle: { fontFamily: FONT.display, fontSize: 19, color: C.ink },
+  resultSub: { color: C.muted, fontWeight: '800', fontSize: 13 },
   ribbon: { position: 'absolute', top: -12, right: 18, paddingHorizontal: 12, paddingVertical: 3, borderRadius: R.pill, borderWidth: 2, borderColor: '#FFFFFF' },
   ribbonText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1.5 },
 });

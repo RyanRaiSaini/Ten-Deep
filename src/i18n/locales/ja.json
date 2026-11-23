@@ -623,5 +623,29 @@
     "play": "プレー",
     "career": "キャリア",
     "duels": "デュエル"
+  },
+  "ladder": {
+    "title": "ウィークリーリーグ",
+    "promote": "昇格",
+    "relegate": "降格",
+    "safe": "残留",
+    "endsIn": "残り{{time}}",
+    "pts": "pt",
+    "how": "ポイントの稼ぎ方",
+    "howRun": "シーズンを終えるごとに勝利数の半分",
+    "howBonus": "プレーオフ +10、優勝 +25",
+    "howDaily": "デイリーチャレンジ1つにつき +5",
+    "howMove": "月曜に上位{{up}}人が昇格、下位{{down}}人が降格",
+    "standings": "今週",
+    "botsNote": "オンラインリーグ開始まではライバルはAI GMです。",
+    "promoted": "{{tier}}に昇格！",
+    "relegated": "{{tier}}に降格",
+    "stayed": "{{tier}}に残留",
+    "finished": "先週の順位：{{rank}}位",
+    "bronze": "ブロンズ",
+    "silver": "シルバー",
+    "gold": "ゴールド",
+    "platinum": "プラチナ",
+    "legend": "レジェンド"
   }
 }

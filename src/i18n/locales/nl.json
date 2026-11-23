@@ -627,5 +627,29 @@
     "play": "Spelen",
     "career": "Carrière",
     "duels": "Duels"
+  },
+  "ladder": {
+    "title": "Weekcompetitie",
+    "promote": "PROMOTIE",
+    "relegate": "DEGRADATIE",
+    "safe": "VEILIG",
+    "endsIn": "Eindigt over {{time}}",
+    "pts": "ptn",
+    "how": "Zo scoor je",
+    "howRun": "Elk afgerond seizoen: de helft van je zeges in punten",
+    "howBonus": "+10 voor de play-offs, +25 voor een titel",
+    "howDaily": "+5 per dagelijkse uitdaging",
+    "howMove": "De top {{up}} stijgt maandag, de laatste {{down}} zakken",
+    "standings": "Deze week",
+    "botsNote": "Rivalen zijn AI-GM's tot de online competities live gaan.",
+    "promoted": "Gepromoveerd naar {{tier}}!",
+    "relegated": "Gedegradeerd naar {{tier}}",
+    "stayed": "Je blijft in {{tier}}",
+    "finished": "Vorige week eindigde je als {{rank}}e",
+    "bronze": "Brons",
+    "silver": "Zilver",
+    "gold": "Goud",
+    "platinum": "Platina",
+    "legend": "Legende"
   }
 }
