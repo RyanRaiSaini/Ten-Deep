@@ -426,7 +426,11 @@
     "nextWeekly_other": "Weekkeuze over {{count}} dagen",
     "powerUp": "Opladen (nog {{n}})",
     "powerOdds": "{{pct}}% kans om de hele keuze te upgraden",
-    "upgraded": "GEÜPGRADED!"
+    "upgraded": "GEÜPGRADED!",
+    "swipeToRip": "Veeg om open te scheuren",
+    "tapFlip": "Tik om om te draaien",
+    "tapNext": "Tik voor de volgende kaart",
+    "cardOf": "Kaart {{n}} van {{total}}"
   },
   "lineup": {
     "title": "Opstelling",
