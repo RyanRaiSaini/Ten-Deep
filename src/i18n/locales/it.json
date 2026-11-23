@@ -951,5 +951,24 @@
     "share": "Condividi",
     "shareText": "Ho appena trovato {{name}} {{finish}} in Ten Deep! {{odds}}",
     "shareTextBase": "Ho appena trovato {{name}} ({{tier}}) in Ten Deep!"
+  },
+  "account": {
+    "title": "Account",
+    "body": "Accedi per tenere progressi, carte e amici su tutti i dispositivi.",
+    "signedIn": "Accesso con {{provider}}",
+    "synced": "I tuoi progressi vengono salvati sull'account automaticamente. Accedi su un nuovo telefono per recuperare tutto.",
+    "signOut": "Esci su questo dispositivo",
+    "foundTitle": "Questo account ha già dei progressi",
+    "foundBody": "Caricarli su questo dispositivo? I progressi attuali di questo dispositivo verranno sostituiti.",
+    "load": "Carica i miei progressi",
+    "keepHere": "Non ora",
+    "restored": "Bentornato! I tuoi progressi sono caricati.",
+    "linked": "Accesso effettuato. I tuoi progressi sono salvati sull'account.",
+    "offline": "Impossibile raggiungere il server. Riprova.",
+    "failed": "L'accesso non è riuscito. Riprova.",
+    "working": "Un attimo…",
+    "google": "Continua con Google",
+    "eraseOffline": "Server non raggiungibile: il backup online non è stato eliminato. Riprova quando sei online.",
+    "eraseLocal": "Elimina solo da questo dispositivo"
   }
 }

@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAccount } from './account';
 import { dailyKey } from '../engine/daily';
 import { useCareer } from './career';
 import { useCollection } from './collection';
@@ -14,7 +15,7 @@ import { useProgress } from './progress';
 import { useSettings } from './settings';
 
 /** Every persisted store. The root layout waits on all of them; delete-account resets all of them. */
-export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useCareer, useCollection, useProgress, useLeague, useFriends, useShop, useForm] as const;
+export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useCareer, useCollection, useProgress, useLeague, useFriends, useShop, useForm, useAccount] as const;
 
 /** Delete account: reset every store in memory (so nothing is re-saved) and clear storage. */
 export async function wipeAll() {

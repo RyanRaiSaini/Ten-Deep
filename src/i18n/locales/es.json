@@ -951,5 +951,24 @@
     "share": "Compartir",
     "shareText": "¡Acabo de sacar a {{name}} {{finish}} en Ten Deep! {{odds}}",
     "shareTextBase": "¡Acabo de sacar a {{name}} ({{tier}}) en Ten Deep!"
+  },
+  "account": {
+    "title": "Cuenta",
+    "body": "Inicia sesión para conservar tu progreso, tus cartas y tus amigos en todos tus dispositivos.",
+    "signedIn": "Sesión iniciada con {{provider}}",
+    "synced": "Tu progreso se guarda en tu cuenta automáticamente. Inicia sesión en un teléfono nuevo para recuperarlo todo.",
+    "signOut": "Cerrar sesión en este dispositivo",
+    "foundTitle": "Esta cuenta ya tiene progreso",
+    "foundBody": "¿Cargarlo en este dispositivo? Se reemplazará el progreso actual de este dispositivo.",
+    "load": "Cargar mi progreso",
+    "keepHere": "Ahora no",
+    "restored": "¡Bienvenido de nuevo! Tu progreso está cargado.",
+    "linked": "Sesión iniciada. Tu progreso está guardado en tu cuenta.",
+    "offline": "No se pudo conectar con el servidor. Inténtalo de nuevo.",
+    "failed": "No se pudo iniciar sesión. Inténtalo de nuevo.",
+    "working": "Un momento…",
+    "google": "Continuar con Google",
+    "eraseOffline": "No se pudo conectar con el servidor, así que tu copia en línea no se borró. Inténtalo con conexión.",
+    "eraseLocal": "Borrar solo en este dispositivo"
   }
 }

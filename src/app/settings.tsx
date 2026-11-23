@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { AccountSection } from '../ui/AccountSection';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
@@ -67,6 +68,7 @@ export default function Settings() {
         )}
       </Card>
 
+      <AccountSection />
       <CloudSave />
 
       <Label>{t('settings.about')}</Label>

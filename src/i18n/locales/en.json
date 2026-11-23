@@ -946,5 +946,24 @@
     "share": "Share pull",
     "shareText": "Just pulled a {{finish}} {{name}} in Ten Deep! {{odds}}",
     "shareTextBase": "Just pulled {{name}} ({{tier}}) in Ten Deep!"
+  },
+  "account": {
+    "title": "Account",
+    "body": "Sign in to keep your progress, cards and friends on every device.",
+    "signedIn": "Signed in with {{provider}}",
+    "synced": "Your progress backs up to your account automatically. Sign in on a new phone to get it all back.",
+    "signOut": "Sign out on this device",
+    "foundTitle": "This account already has progress",
+    "foundBody": "Load it on this device? This device's current progress will be replaced.",
+    "load": "Load my progress",
+    "keepHere": "Not now",
+    "restored": "Welcome back! Your progress is loaded.",
+    "linked": "Signed in. Your progress is saved to your account.",
+    "offline": "Couldn't reach the server. Try again.",
+    "failed": "Sign-in didn't work. Try again.",
+    "working": "One moment…",
+    "google": "Continue with Google",
+    "eraseOffline": "Couldn't reach the server, so your online backup wasn't deleted. Try again when you're online.",
+    "eraseLocal": "Delete from this device only"
   }
 }
