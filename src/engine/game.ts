@@ -24,6 +24,8 @@ export interface GameContext {
   rng: Rng;
   outHome: Set<string>;
   outAway: Set<string>;
+  /** A playoff game: team quality counts for more (SIM.playoffK). */
+  playoff?: boolean;
 }
 
 export { SIM };
@@ -60,10 +62,11 @@ export function simGame(home: Roster, away: Roster, ctx: GameContext): GameResul
   const { rng } = ctx;
   const lh = lineupMinutes(home, ctx.outHome);
   const la = lineupMinutes(away, ctx.outAway);
-  const sh = teamStrength(lh, home.mod ?? 0);
-  const sa = teamStrength(la, away.mod ?? 0);
+  const sh = teamStrength(lh, (home.mod ?? 0) + (home.seasonForm ?? 0));
+  const sa = teamStrength(la, (away.mod ?? 0) + (away.seasonForm ?? 0));
   const pace = rng.normal(SIM.pace, SIM.paceSd);
-  const exp = (off: number, def: number) => pace * (SIM.basePpp + SIM.k * (off - def));
+  const k = SIM.k * (ctx.playoff ? SIM.playoffK : 1);
+  const exp = (off: number, def: number) => pace * (SIM.basePpp + k * (off - def));
   let hs = Math.round(exp(sh.off, sa.def) + SIM.homeAdv / 2 + rng.normal(0, SIM.scoreSd));
   let as = Math.round(exp(sa.off, sh.def) - SIM.homeAdv / 2 + rng.normal(0, SIM.scoreSd));
   hs = Math.max(80, Math.min(155, hs));
@@ -71,8 +74,8 @@ export function simGame(home: Roster, away: Roster, ctx: GameContext): GameResul
   let ot = 0;
   while (hs === as) {
     ot++;
-    hs += Math.max(2, Math.round(rng.normal(11, 3) + SIM.k * 10 * (sh.off - sa.def)));
-    as += Math.max(2, Math.round(rng.normal(11, 3) + SIM.k * 10 * (sa.off - sh.def)));
+    hs += Math.max(2, Math.round(rng.normal(11, 3) + k * 10 * (sh.off - sa.def)));
+    as += Math.max(2, Math.round(rng.normal(11, 3) + k * 10 * (sa.off - sh.def)));
   }
   return { homeScore: hs, awayScore: as, ot, box: [...boxFor(lh, hs, rng, true), ...boxFor(la, as, rng, false)] };
 }
