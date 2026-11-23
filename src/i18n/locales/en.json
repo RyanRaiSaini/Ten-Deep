@@ -355,7 +355,14 @@
     "r_first": "First-round exit",
     "r_missed": "Missed the playoffs",
     "years": "{{n}}y",
-    "nothingAffordable": "Nobody fits under the cap."
+    "nothingAffordable": "Nobody fits under the cap.",
+    "morale": "Morale",
+    "moraleEffect": "team rating",
+    "records": "Franchise scoring leaders",
+    "hof": "Hall of Fame",
+    "hofEmpty": "Four seasons with you and a great career earns a place.",
+    "lottery": "Draft lottery",
+    "lotterySkip": "Skip"
   },
   "collect": {
     "title": "Collection",
@@ -579,5 +586,18 @@
     "reb": "REB",
     "ast": "AST",
     "tap": "Tap a recent game for its box score"
+  },
+  "trade": {
+    "title": "Trade",
+    "hint": "Their GM only says yes to a deal that helps them. ✓ marks players they would swap for yours.",
+    "yours": "Your player",
+    "team": "Trade partner",
+    "theirs": "{{team}} players",
+    "propose": "Propose trade",
+    "accepted": "Deal done!",
+    "value": "Rejected: not enough value for them",
+    "cap": "Rejected: it breaks the cap",
+    "position": "Rejected: a starter must fit the position",
+    "missing": "Pick both players first"
   }
 }

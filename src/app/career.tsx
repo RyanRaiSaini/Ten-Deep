@@ -6,6 +6,8 @@ import { useCareer } from '../store/career';
 import { useGame } from '../store/game';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
+import { franchiseLeaders, hallOfFame } from '../engine/career/legacy';
+import { MORALE_START, moraleMod } from '../engine/career/morale';
 
 const VERDICT_ICON = { legend: '👑', extended: '✍️', survived: '😐', fired: '🔥' } as const;
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
@@ -17,6 +19,9 @@ export default function Career() {
   const { t } = useTranslation();
   const c = useCareer();
   const g = useGame();
+  const morale = c.morale ?? MORALE_START;
+  const leaders = franchiseLeaders(c.stats ?? {}, 5);
+  const hof = hallOfFame(c.stats ?? {});
   const titles = c.history.filter((h) => h.result === 'champion').length;
   const secColor = c.security >= 60 ? C.neon : c.security >= 30 ? C.gold : C.danger;
 
@@ -55,7 +60,31 @@ export default function Career() {
           <Label>{t('career.security')}</Label>
           <View style={styles.bar}><View style={[styles.fill, { width: `${c.security}%`, backgroundColor: secColor }]} /></View>
           <Text style={[styles.secNum, { color: secColor }]} testID="career-security">{c.security}/100</Text>
+          <Label>{t('career.morale')}</Label>
+          <View style={styles.bar}><View style={[styles.fill, { width: `${morale}%`, backgroundColor: C.neon }]} /></View>
+          <Text style={[styles.secNum, { color: C.neon }]} testID="career-morale">
+            {morale}/100 · {moraleMod(morale) > 0 ? `+${moraleMod(morale)}` : moraleMod(morale)} {t('career.moraleEffect')}
+          </Text>
           {next && <Button label={next.label} variant="gold" onPress={next.go} testID="career-next" />}
+        </Card>
+      )}
+
+      {leaders.length > 0 && (
+        <Card style={{ gap: 6 }} testID="career-records">
+          <Label color={C.gold}>🏛️ {t('career.hof')}</Label>
+          {hof.length === 0 && <Text style={styles.muted}>{t('career.hofEmpty')}</Text>}
+          {hof.map((p) => (
+            <Text key={p.id} style={styles.hofName}>⭐ {p.name}  <Text style={styles.muted}>{p.seasons} · {(p.pts / p.gp).toFixed(1)} PPG{p.titles ? ` · 🏆×${p.titles}` : ''}</Text></Text>
+          ))}
+          <Label>{t('career.records')}</Label>
+          {leaders.map((p, i) => (
+            <View key={p.id} style={styles.recRow}>
+              <Text style={styles.recRank}>{i + 1}</Text>
+              <Text style={styles.recName} numberOfLines={1}>{p.name}</Text>
+              <Text style={styles.recPts}>{p.pts.toLocaleString()}</Text>
+              <Text style={styles.recPpg}>{(p.pts / p.gp).toFixed(1)}</Text>
+            </View>
+          ))}
         </Card>
       )}
 
@@ -88,4 +117,10 @@ const styles = StyleSheet.create({
   histRecord: { color: C.text, width: 56, fontWeight: '900' },
   histResult: { color: C.text, flex: 1 },
   histVerdict: { fontSize: 20 },
+  hofName: { color: C.gold, fontWeight: '900' },
+  recRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
+  recRank: { color: C.muted, width: 18, fontWeight: '800' },
+  recName: { color: C.text, flex: 1, fontWeight: '700' },
+  recPts: { color: C.text, fontWeight: '900', width: 64, textAlign: 'right' },
+  recPpg: { color: C.muted, width: 40, textAlign: 'right' },
 });

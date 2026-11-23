@@ -355,7 +355,14 @@
     "r_first": "Éliminé au premier tour",
     "r_missed": "Pas de playoffs",
     "years": "{{n}} an(s)",
-    "nothingAffordable": "Personne ne rentre sous le plafond."
+    "nothingAffordable": "Personne ne rentre sous le plafond.",
+    "morale": "Moral",
+    "moraleEffect": "note d'équipe",
+    "records": "Meilleurs marqueurs de la franchise",
+    "hof": "Hall of Fame",
+    "hofEmpty": "Quatre saisons chez toi et une grande carrière ouvrent les portes.",
+    "lottery": "Loterie de la draft",
+    "lotterySkip": "Passer"
   },
   "collect": {
     "title": "Collection",
@@ -579,5 +586,18 @@
     "reb": "REB",
     "ast": "PD",
     "tap": "Touche un match récent pour sa feuille de stats"
+  },
+  "trade": {
+    "title": "Échange",
+    "hint": "Leur GM n'accepte que s'il y gagne. ✓ indique les joueurs qu'il échangerait contre le tien.",
+    "yours": "Ton joueur",
+    "team": "Partenaire",
+    "theirs": "Joueurs de {{team}}",
+    "propose": "Proposer l'échange",
+    "accepted": "Échange conclu !",
+    "value": "Refusé : pas assez de valeur pour eux",
+    "cap": "Refusé : ça dépasse le plafond",
+    "position": "Refusé : un titulaire doit correspondre au poste",
+    "missing": "Choisis d'abord les deux joueurs"
   }
 }

@@ -13,13 +13,16 @@ import {
   signFreeAgent, startOffseason, type OffseasonState,
 } from '../engine/career/offseason';
 import { START_SECURITY, securityAfter } from '../engine/career/security';
+import { addSeason, type CareerStats, type PlayoffResult } from '../engine/career/legacy';
+import { MORALE_START, moraleAfter, moraleMod } from '../engine/career/morale';
+import { executeTrade } from '../engine/career/trades';
 import type { Verdict } from '../engine/crisis/board';
 import type { CardId } from '../engine/crisis/deck';
 import { champion, seriesFor } from '../engine/playoffs';
 import { ALL_SLOTS, type Player, type Roster, type SlotId } from '../engine/types';
 import { useGame } from './game';
 
-export type PlayoffResult = 'champion' | 'finals' | 'semis' | 'quarters' | 'first' | 'missed';
+export type { PlayoffResult };
 
 export interface SeasonRecord {
   label: string;
@@ -51,6 +54,10 @@ export interface CareerStore {
   lastPlayoff: number[];
   offseason: OffseasonState | null;
   step: OffseasonStep | null;
+  /** Locker-room morale 0–100; nudges team ratings each season. */
+  morale: number;
+  /** Franchise records: every player's totals while with you. */
+  stats: CareerStats;
 
   start: () => void;
   recordSeason: () => void;
@@ -59,12 +66,14 @@ export interface CareerStore {
   keep: (ids: string[]) => void;
   draftRookie: (rookieId?: string, cut?: SlotId) => void;
   sign: (player: Player, slot: SlotId) => void;
+  /** One of yours for one of theirs; returns whether their GM said yes. */
+  trade: (give: string, team: number, want: string) => boolean;
   autoSign: () => void;
   startNextSeason: () => void;
   quit: () => void;
 }
 
-const fresh = { active: false, ended: false, seed: '', season: 1, security: START_SECURITY, history: [], contracts: {}, freeAgents: [], teams: null, lastWins: [], lastPlayoff: [], offseason: null, step: null };
+const fresh = { active: false, ended: false, seed: '', season: 1, security: START_SECURITY, history: [], contracts: {}, freeAgents: [], teams: null, lastWins: [], lastPlayoff: [], offseason: null, step: null, morale: MORALE_START, stats: {} };
 const stripMod = (t: Roster): Roster => ({ id: t.id, name: t.name, colors: t.colors, slots: t.slots });
 
 export const useCareer = create<CareerStore>()(
@@ -99,6 +108,8 @@ export const useCareer = create<CareerStore>()(
           teams,
           contracts: c.season === 1 ? initialContracts(teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k])), c.seed) : c.contracts,
           freeAgents: (c.season === 1 ? pool : c.freeAgents).filter((p) => !rostered.has(p.name)),
+          stats: addSeason(c.stats ?? {}, ALL_SLOTS.map((k) => season.teams[0].slots[k]), season.totals, result === 'champion', seasonLabel(c.season)),
+          morale: moraleAfter(c.morale ?? MORALE_START, { wins: season.records[0].w, result, trades: 0 }),
           lastWins: season.records.map((r) => r.w),
           lastPlayoff: ps.rounds[0].flatMap((s) => [s.hi, s.lo]),
         });
@@ -127,6 +138,16 @@ export const useCareer = create<CareerStore>()(
 
       sign: (player, slot) => set((c) => (c.offseason ? { offseason: signFreeAgent(c.offseason, 0, player, slot) } : {})),
 
+      trade: (give, team, want) => {
+        const st = get().offseason;
+        if (!st) return false;
+        const after = executeTrade(st, give, team, want);
+        if (after === st) return false;
+        // Shipping out a teammate stings the locker room a little.
+        set((c) => ({ offseason: after, morale: Math.max(0, (c.morale ?? MORALE_START) - 4) }));
+        return true;
+      },
+
       autoSign: () => {
         const st = get().offseason;
         if (!st) return;
@@ -142,7 +163,7 @@ export const useCareer = create<CareerStore>()(
         const teams = finalizeOffseason(st);
         const season = c.season + 1;
         set({ season, teams, contracts: st.contracts, freeAgents: st.freeAgents, offseason: null, step: null });
-        useGame.getState().startCareerSeason(teams, `${c.seed}:s${season}`);
+        useGame.getState().startCareerSeason(teams, `${c.seed}:s${season}`, moraleMod(c.morale ?? MORALE_START));
       },
 
       quit: () => {

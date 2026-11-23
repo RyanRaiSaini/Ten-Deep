@@ -355,7 +355,14 @@
     "r_first": "Eliminado en primera ronda",
     "r_missed": "Sin playoffs",
     "years": "{{n}} año(s)",
-    "nothingAffordable": "Nadie cabe bajo el tope."
+    "nothingAffordable": "Nadie cabe bajo el tope.",
+    "morale": "Moral",
+    "moraleEffect": "valoración del equipo",
+    "records": "Máximos anotadores de la franquicia",
+    "hof": "Salón de la Fama",
+    "hofEmpty": "Cuatro temporadas contigo y una gran carrera dan acceso.",
+    "lottery": "Lotería del draft",
+    "lotterySkip": "Saltar"
   },
   "collect": {
     "title": "Colección",
@@ -579,5 +586,18 @@
     "reb": "REB",
     "ast": "AST",
     "tap": "Toca un partido reciente para ver sus estadísticas"
+  },
+  "trade": {
+    "title": "Traspaso",
+    "hint": "Su GM solo acepta si sale ganando. ✓ marca los jugadores que cambiaría por el tuyo.",
+    "yours": "Tu jugador",
+    "team": "Socio de traspaso",
+    "theirs": "Jugadores de {{team}}",
+    "propose": "Proponer traspaso",
+    "accepted": "¡Trato hecho!",
+    "value": "Rechazado: no les compensa",
+    "cap": "Rechazado: rompe el tope salarial",
+    "position": "Rechazado: un titular debe encajar en la posición",
+    "missing": "Elige primero a los dos jugadores"
   }
 }
