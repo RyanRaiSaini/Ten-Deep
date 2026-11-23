@@ -881,5 +881,26 @@
       "not-allowed": "Tavanına veya kadrona uymuyor."
     },
     "table": "Puan durumu"
+  },
+  "save": {
+    "title": "Bulut kaydı",
+    "body": "İlerlemen otomatik yedeklenir. Yeni telefonda geri yüklemek için kurtarma kodunu güvenli bir yerde sakla.",
+    "never": "hiç",
+    "last": "Son yedek: {{when}}",
+    "now": "Şimdi yedekle",
+    "saved": "Yedeklendi!",
+    "offline": "Sunucuya ulaşılamadı. Daha sonra tekrar denenecek.",
+    "copy": "Kurtarma kodumu kopyala",
+    "copied": "Kod kopyalandı. Kimseyle paylaşma!",
+    "paste": "Kurtarma kodu yapıştır",
+    "restore": "İlerlemeyi geri yükle",
+    "restoreSure": "Tekrar dokun: bu cihazdaki ilerlemenin yerine geçer",
+    "r": {
+      "ok": "İlerleme geri yüklendi!",
+      "bad-code": "Bu bir kurtarma kodu değil.",
+      "not-found": "Bu kod için henüz yedek yok.",
+      "wrong-code": "Bu kod yedekle eşleşmiyor.",
+      "offline": "Sunucuya ulaşılamadı. Tekrar dene."
+    }
   }
 }

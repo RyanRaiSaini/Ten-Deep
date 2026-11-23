@@ -886,5 +886,26 @@
       "not-allowed": "No encaja en tu tope salarial ni en tu plantilla."
     },
     "table": "Clasificación"
+  },
+  "save": {
+    "title": "Guardado en la nube",
+    "body": "Tu progreso se guarda solo. Guarda tu código de recuperación en un lugar seguro para recuperarlo en un móvil nuevo.",
+    "never": "nunca",
+    "last": "Última copia: {{when}}",
+    "now": "Guardar ahora",
+    "saved": "¡Guardado!",
+    "offline": "No se pudo conectar. Lo intentaremos más tarde.",
+    "copy": "Copiar mi código de recuperación",
+    "copied": "Código copiado. ¡No lo compartas!",
+    "paste": "Pega un código de recuperación",
+    "restore": "Recuperar progreso",
+    "restoreSure": "Toca otra vez: reemplaza el progreso de este dispositivo",
+    "r": {
+      "ok": "¡Progreso recuperado!",
+      "bad-code": "Eso no es un código de recuperación.",
+      "not-found": "Aún no hay copia para ese código.",
+      "wrong-code": "Ese código no coincide con la copia.",
+      "offline": "No se pudo conectar. Inténtalo de nuevo."
+    }
   }
 }
