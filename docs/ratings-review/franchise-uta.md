@@ -90,16 +90,16 @@
 
 | Player | Pos | OVR | Age | Type | Salary | Dur |
 |---|---|---|---|---|---|---|
+| Jaren Jackson Jr. | PF/C | **86** | 27 | unicorn | $22M | 80 |
 | Lauri Markkanen | PF/SF | **86** | 29 | shooter | $22M | 80 |
 | Keyonte George | PG | **82** | 23 | scorer | $15M | 80 |
-| Walker Kessler | C | **81** | 25 | rim | $13.5M | 50 |
+| Darryn Peterson | SG/PG | **80** | 19 | scorer | $12M | 80 |
 | Ace Bailey | SF | **77** | 20 | scorer | $8.5M | 80 |
 | Isaiah Collier | PG | **75** | 22 | playmaker | $6M | 80 |
 | Jusuf Nurkić | C | **74** | 32 | big | $5.5M | 80 |
 | Brice Sensabaugh | SF | **74** | 23 | scorer | $5.5M | 80 |
-| Kyle Anderson | PF | **72** | 33 | point | $4M | 80 |
+| Kyle Filipowski | C/PF | **73** | 23 | big | $5M | 80 |
+| Jaxson Hayes | C | **73** | 26 | rim | $5M | 80 |
 | Svi Mykhailiuk | SG | **72** | 29 | shooter | $4M | 80 |
-| Taylor Hendricks | PF | **72** | 23 | defender | $4M | 80 |
-| Cody Williams | SF | **72** | 21 | wing3d | $4M | 80 |
-| Walter Clayton Jr. | PG | **72** | 23 | shooter | $4M | 80 |
-| Kevin Love | PF | **68** | 38 | stretch | $2.5M | 68 |
+| Josh Green | SG | **72** | 25 | wing3d | $4M | 80 |
+| Josh Okogie | SG | **71** | 28 | defender | $3.5M | 80 |
