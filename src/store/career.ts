@@ -19,6 +19,7 @@ import { executeTrade } from '../engine/career/trades';
 import type { Verdict } from '../engine/crisis/board';
 import type { CardId } from '../engine/crisis/deck';
 import { champion, seriesFor } from '../engine/playoffs';
+import { userStints } from '../engine/season';
 import { ALL_SLOTS, type Player, type Roster, type SlotId } from '../engine/types';
 import { useGame } from './game';
 
@@ -108,7 +109,11 @@ export const useCareer = create<CareerStore>()(
           teams,
           contracts: c.season === 1 ? initialContracts(teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k])), c.seed) : c.contracts,
           freeAgents: (c.season === 1 ? pool : c.freeAgents).filter((p) => !rostered.has(p.name)),
-          stats: addSeason(c.stats ?? {}, ALL_SLOTS.map((k) => season.teams[0].slots[k]), season.totals, result === 'champion', seasonLabel(c.season)),
+          // Only the games each player played for you (mid-season swaps split a season between teams).
+          stats: (() => {
+            const lines = userStints(season);
+            return addSeason(c.stats ?? {}, lines.map((l) => l.player), Object.fromEntries(lines.map((l) => [l.player.id, l.totals])), result === 'champion', seasonLabel(c.season));
+          })(),
           morale: moraleAfter(c.morale ?? MORALE_START, { wins: season.records[0].w, result, trades: 0 }),
           lastWins: season.records.map((r) => r.w),
           lastPlayoff: ps.rounds[0].flatMap((s) => [s.hi, s.lo]),

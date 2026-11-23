@@ -99,3 +99,28 @@ describe('legacy', () => {
     expect(hof).not.toContain('b');
   });
 });
+
+describe('stints with your team', () => {
+  it('a mid-season swap credits each player only with the games he played for you', async () => {
+    const { draftLeague } = await import('../aiDraft');
+    const { createRng } = await import('../rng');
+    const { advance, createSeason, tradeSwap, userStints, SEASON_GAMES } = await import('../season');
+    const { makePool } = await import('../__fixtures__/pool');
+    const lg = draftLeague(makePool(), new Set(), 30, createRng('stint'));
+    let s = advance(createSeason(lg[0], lg.slice(1), 'stint'), 50);
+    const out = s.teams[0].slots.B5;
+    // A bench player from an AI team (same position rules don't apply to the bench).
+    const incoming = s.teams[3].slots.B5;
+    const before = { ...s.totals[incoming.id] };
+    s = { ...s, teams: s.teams.map((t, i) => (i === 3 ? { ...t, slots: { ...t.slots, B5: { ...t.slots.B5, id: `${t.slots.B5.id}-x`, name: `${t.slots.B5.name} X` } } } : t)) };
+    s = tradeSwap(s, out.id, incoming);
+    const outAtSwap = { ...s.totals[out.id] };
+    s = advance(advance({ ...s, deadlineUsed: true }, SEASON_GAMES), SEASON_GAMES);
+    const lines = userStints(s);
+    const inc = lines.find((l) => l.player.id === incoming.id)!;
+    const gone = lines.find((l) => l.player.id === out.id)!;
+    expect(inc.totals.gp).toBe(s.totals[incoming.id].gp - before.gp);
+    expect(gone.totals.gp).toBe(outAtSwap.gp);
+    expect(lines.length).toBe(11);
+  });
+});
