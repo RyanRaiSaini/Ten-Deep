@@ -945,8 +945,9 @@ function ballSvg(c: Ctx, side: 'left' | 'right'): string {
     `<ellipse cx="${cx - 9}" cy="${cy - 12}" rx="8" ry="4.5" fill="#FFFFFF" opacity="0.45" transform="rotate(-30 ${cx - 9} ${cy - 12})"/>`;
 }
 
-export function portraitSvg(s: PortraitSpec, uid: string): string {
-  const id = (k: string) => `${k}-${uid}`;
+/** `uid` seeds the art (same avatar, same face everywhere); `instance` keeps SVG ids unique on the page. */
+export function portraitSvg(s: PortraitSpec, uid: string, instance = ''): string {
+  const id = (k: string) => `${k}-${uid}${instance}`;
   const hc = s.hairColor;
   const dark = lum(hc) < 0.12;
   const c: Ctx = {
