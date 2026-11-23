@@ -946,6 +946,9 @@
     "odds": "Chance de acabamento (qualquer carta e pacote)",
     "rarest": "Tiradas mais raras",
     "yours": "Seus acabamentos",
-    "keepHint": "Só a carta que você guarda entra na coleção, com acabamento e tudo."
+    "keepHint": "Só a carta que você guarda entra na coleção, com acabamento e tudo.",
+    "share": "Compartilhar",
+    "shareText": "Acabei de tirar {{name}} {{finish}} no Ten Deep! {{odds}}",
+    "shareTextBase": "Acabei de tirar {{name}} ({{tier}}) no Ten Deep!"
   }
 }

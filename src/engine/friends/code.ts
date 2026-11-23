@@ -4,6 +4,7 @@
  * Pure so it's testable.
  */
 import { CARD_BY_ID } from '../../data/cards';
+import { FINISHES, finishRank, type Finish } from '../collect/finishes';
 import { HISTORY } from '../../data/modes';
 import { ALL_SLOTS, type Player, type Pos, type SlotId } from '../types';
 
@@ -16,6 +17,8 @@ export interface FriendSnapshot {
   lineup: Partial<Record<SlotId, { id: string; lv: number }>>;
   /** Their best cards, best first (capped). */
   showcase: string[];
+  /** Best finish owned for each showcase card (missing = base). Older codes have none. */
+  finishes?: Record<string, Finish>;
   /** Their last drafted team, for a Finals showdown. */
   team: { mode: string; w: number; l: number; result: string; players: Partial<Record<SlotId, Player>> } | null;
 }
@@ -122,7 +125,10 @@ export function encodeFriend(s: FriendSnapshot): string {
     ALL_SLOTS.map((k) => { const p = s.team!.players[k]; if (!p) return 0; const h = idHash(p.id); return known.get(h)?.id === p.id ? h : tuple(p); }),
   ];
   const st = s.stats;
-  const payload = [1, s.pin, s.name.slice(0, 18), s.avatar, [st.drafts, st.titles, st.streak, st.cards, st.tier], lineup, s.showcase.slice(0, SHOWCASE_MAX).map(idHash).join(''), team ?? 0];
+  const shown = s.showcase.slice(0, SHOWCASE_MAX);
+  // One digit per showcase card: its finish rank (0 = base). Appended last so older apps ignore it.
+  const fin = shown.map((id) => finishRank(s.finishes?.[id] ?? 'base')).join('');
+  const payload = [1, s.pin, s.name.slice(0, 18), s.avatar, [st.drafts, st.titles, st.streak, st.cards, st.tier], lineup, shown.map(idHash).join(''), team ?? 0, fin];
   return `${PREFIX}${toB64(JSON.stringify(payload))}`;
 }
 
@@ -152,8 +158,16 @@ export function decodeFriend(text: string): FriendSnapshot | null {
     if (id) lineup[k] = { id, lv: num(Number(chunk[5]), 3) };
   });
   const sc = str(a[6], SHOWCASE_MAX * 5);
+  const fin = str(a[8], SHOWCASE_MAX);
   const showcase: string[] = [];
-  for (let i = 0; i + 5 <= sc.length; i += 5) { const id = cardsByHash.get(sc.slice(i, i + 5)); if (id) showcase.push(id); }
+  const finishes: Record<string, Finish> = {};
+  for (let i = 0; i + 5 <= sc.length; i += 5) {
+    const id = cardsByHash.get(sc.slice(i, i + 5));
+    if (!id) continue;
+    showcase.push(id);
+    const f = FINISHES[Number(fin[i / 5])];
+    if (f && f !== 'base') finishes[id] = f;
+  }
   let team: FriendSnapshot['team'] = null;
   if (Array.isArray(a[7]) && Array.isArray(a[7][4])) {
     const [mode, w, l, result, list] = a[7] as [unknown, unknown, unknown, unknown, unknown[]];
@@ -174,6 +188,6 @@ export function decodeFriend(text: string): FriendSnapshot | null {
     name: str(a[2], 18).trim() || 'Friend',
     avatar: str(a[3], 40),
     stats: { drafts: num(stats[0], 1e6), titles: num(stats[1], 1e6), streak: num(stats[2], 1e5), cards: num(stats[3], 1e5), tier: num(stats[4], 9) },
-    lineup, showcase, team,
+    lineup, showcase, team, finishes,
   };
 }

@@ -946,6 +946,9 @@
     "odds": "Probabilità finitura (ogni carta, ogni pacchetto)",
     "rarest": "Estrazioni più rare",
     "yours": "Le tue finiture",
-    "keepHint": "Solo la carta che tieni entra nella collezione, finitura compresa."
+    "keepHint": "Solo la carta che tieni entra nella collezione, finitura compresa.",
+    "share": "Condividi",
+    "shareText": "Ho appena trovato {{name}} {{finish}} in Ten Deep! {{odds}}",
+    "shareTextBase": "Ho appena trovato {{name}} ({{tier}}) in Ten Deep!"
   }
 }

@@ -37,6 +37,20 @@ describe('friend codes', () => {
     if (rookie) expect(back.team!.players.B5!.ovr).toBe(rookie.ovr);
   });
 
+  it('carries each showcase card\'s finish, and older codes without finishes still decode', () => {
+    const withFin = { ...snap, finishes: { [snap.showcase[0]]: 'rainbow' as const, [snap.showcase[5]]: 'violet' as const } };
+    const back = decodeFriend(encodeFriend(withFin))!;
+    expect(back.finishes).toEqual(withFin.finishes);
+    // An old code: same payload without the trailing finishes field.
+    const code = encodeFriend(snap);
+    const payload = JSON.parse(Buffer.from(code.slice(3).replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8'));
+    payload.pop();
+    const old = 'TD1' + Buffer.from(JSON.stringify(payload), 'utf8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    const fromOld = decodeFriend(old)!;
+    expect(fromOld.showcase).toEqual(snap.showcase);
+    expect(fromOld.finishes).toEqual({});
+  });
+
   it('rejects junk', () => {
     expect(decodeFriend('hello')).toBeNull();
     expect(decodeFriend('TD1abcdefghijk')).toBeNull();

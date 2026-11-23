@@ -8,6 +8,7 @@ import { CONFIG } from '../../config';
 import { affordableSlots, fallbackPick, options } from '../../engine/draft';
 import { salaryFor } from '../../engine/cap';
 import {
+  parseFlex,
   PARTY_COLORS, PARTY_ROUNDS, PICK_MS, PLAYOFF_REVEAL_MS, SEASON_REVEAL_MS, partySeason, placings, resolve, seatState, seats,
   type PartyMember, type PartySeason, type Resolved,
 } from '../../engine/party';
@@ -16,6 +17,8 @@ import type { Pool, SlotId } from '../../engine/types';
 import { joinRoom, leaveRoom, startRoom, submitPick, useRoom, useRoomPool, useServerNow, type Room } from '../../net/party';
 import { useFriends } from '../../store/friends';
 import { Avatar } from '../../ui/Avatar';
+import { FinishChip } from '../../ui/CardFinish';
+import { CARD_BY_ID } from '../../data/cards';
 import { BackButton, Button, Card, Display, Header, Screen } from '../../ui/components';
 import { Confetti } from '../../ui/fx';
 import { Icon } from '../../ui/icons';
@@ -98,7 +101,10 @@ function Lobby({ room, members, myPin, code, refresh }: { room: Room; members: P
         {members.map((m, i) => (
           <View key={m.pin} style={[styles.member, { borderColor: PARTY_COLORS[i][0] }]}>
             <Avatar id={m.avatar} size={44} />
-            <Text style={styles.memberName} numberOfLines={1}>{m.name}{m.pin === myPin ? ` · ${t('party.you')}` : ''}</Text>
+            <View style={{ flex: 1, gap: 2 }}>
+              <Text style={styles.memberName} numberOfLines={1}>{m.name}{m.pin === myPin ? ` · ${t('party.you')}` : ''}</Text>
+              <Flex flex={m.flex} />
+            </View>
             {m.pin === room.meta.host && <View style={styles.hostTag}><Icon name="crown" size={18} /><Text style={styles.hostText}>{t('party.host')}</Text></View>}
           </View>
         ))}
@@ -358,3 +364,15 @@ const styles = StyleSheet.create({
   tW: { fontFamily: FONT.display, fontSize: 15, color: C.ink },
   place: { fontFamily: FONT.display, fontSize: 24, color: C.ink, width: 40 },
 });
+
+/** A seat's rarest pull: finish chip + card name. */
+function Flex({ flex }: { flex?: string }) {
+  const f = parseFlex(flex);
+  if (!f) return null;
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }} testID="seat-flex">
+      <FinishChip finish={f.finish} />
+      <Text style={{ color: C.muted, fontWeight: '800', fontSize: 12, flexShrink: 1 }} numberOfLines={1}>{CARD_BY_ID[f.id].name}</Text>
+    </View>
+  );
+}

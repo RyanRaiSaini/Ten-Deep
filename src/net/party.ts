@@ -1,4 +1,6 @@
 /** Live Party client: talks to api/party.ts and keeps a room in sync (polling, with a server-clock offset). */
+import { bestFinish, finishRank } from '../engine/collect/finishes';
+import { useCollection } from '../store/collection';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CONFIG } from '../config';
 import { MODE_BY_ID } from '../data/modes';
@@ -17,10 +19,17 @@ export type Result<T> = { ok: true; data: T } | { ok: false; error: PartyError }
 async function call<T>(body: Record<string, unknown>): Promise<Result<T>> {
   const { pin, key } = useFriends.getState();
   const { name, avatarId } = useProfile.getState();
+  // Your rarest pull (gold or better) rides along on your seat.
+  let flex: string | undefined;
+  let rank = finishRank('gold') - 1;
+  for (const [id, o] of Object.entries(useCollection.getState().owned)) {
+    const f = bestFinish(o.finishes);
+    if (finishRank(f) > rank) { rank = finishRank(f); flex = `${id}:${f}`; }
+  }
   try {
     const r = await fetch(URL_, {
       method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ pin, key, name: name || 'Coach', avatar: avatarId, ...body }),
+      body: JSON.stringify({ pin, key, name: name || 'Coach', avatar: avatarId, flex, ...body }),
     });
     if (!(r.headers.get('content-type') ?? '').includes('json')) return { ok: false, error: 'unavailable' };
     const j = await r.json();

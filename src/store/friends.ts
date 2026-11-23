@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { bestFinish, finishRank, type Finish } from '../engine/collect/finishes';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { CARD_BY_ID } from '../data/cards';
 import { cardLevel } from '../engine/collect/lineup';
-import { newPin, type FriendSnapshot } from '../engine/friends/code';
+import { SHOWCASE_MAX, newPin, type FriendSnapshot } from '../engine/friends/code';
 import type { FriendMode, Outcome } from '../engine/friends/match';
 import { ALL_SLOTS } from '../engine/types';
 import { dailyKey } from '../engine/daily';
@@ -119,7 +120,11 @@ export function mySnapshot(): FriendSnapshot {
     const id = col.lineup[k];
     if (id && CARD_BY_ID[id]) lineup[k] = { id, lv: cardLevel(col.owned[id]?.count ?? 1) };
   }
-  const showcase = Object.keys(col.owned).filter((id) => CARD_BY_ID[id]).sort((a, b) => CARD_BY_ID[b].ovr - CARD_BY_ID[a].ovr);
+  // Rarest finishes first, then best rating, so a Rainbow pull is the first thing friends see.
+  const finishes: Record<string, Finish> = {};
+  for (const [id, o] of Object.entries(col.owned)) { const f = bestFinish(o.finishes); if (f !== 'base') finishes[id] = f; }
+  const fr = (id: string) => finishRank(finishes[id] ?? 'base');
+  const showcase = Object.keys(col.owned).filter((id) => CARD_BY_ID[id]).sort((a, b) => fr(b) - fr(a) || CARD_BY_ID[b].ovr - CARD_BY_ID[a].ovr);
   return {
     pin,
     name: profile.name || 'Coach',
@@ -127,6 +132,7 @@ export function mySnapshot(): FriendSnapshot {
     stats: { drafts: profile.draftsPlayed, titles: profile.titles, streak: col.streak, cards: showcase.length, tier: useLeague.getState().tier },
     lineup,
     showcase,
+    finishes: Object.fromEntries(showcase.slice(0, SHOWCASE_MAX).filter((id) => finishes[id]).map((id) => [id, finishes[id]])),
     team: lastTeam,
   };
 }
