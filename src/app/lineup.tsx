@@ -11,6 +11,7 @@ import { levelsOf, useCollection } from '../store/collection';
 import { CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
+import { Icon } from '../ui/icons';
 
 /** Build a 10-card lineup from your collection. */
 export default function LineupScreen() {
@@ -41,7 +42,7 @@ export default function LineupScreen() {
       <Card style={styles.summary}>
         <Text style={styles.rating} testID="lineup-rating">{t('lineup.teamRating', { n: rating })}</Text>
         <Text style={[styles.chem, { color: chem.bonus ? C.neon : C.muted }]}>
-          ⚡ {t('lineup.chemistry', { n: chem.bonus })}
+          + {t('lineup.chemistry', { n: chem.bonus })}
           {chem.franchise && chem.franchise.count >= 3 ? `  ·  ${chem.franchise.name} ×${chem.franchise.count}` : ''}
           {chem.decade && chem.decade.count >= 5 ? `  ·  ${chem.decade.name} ×${chem.decade.count}` : ''}
         </Text>
@@ -78,7 +79,7 @@ export default function LineupScreen() {
       )}
 
       <Button label={t('lineup.autoFill')} variant="secondary" onPress={() => { col.autoFillLineup(); feel('thunk'); }} testID="lineup-autofill" />
-      <Button label={`⚔️  ${t('gauntlet.title')}`} variant="gold" onPress={() => router.push('/gauntlet')} testID="to-gauntlet" />
+      <Button label={t('gauntlet.title')} icon={<Icon name="shield" size={22} />} variant="gold" onPress={() => router.push('/gauntlet')} testID="to-gauntlet" />
     </Screen>
   );
 }

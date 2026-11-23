@@ -8,6 +8,7 @@ import { feel } from '../audio/feel';
 import { ACHIEVEMENTS } from '../engine/progress/achievements';
 import { useProgress } from '../store/progress';
 import { C, R, S } from './theme';
+import { Icon } from './icons';
 
 const MEDAL = { bronze: '#D08A4E', silver: '#C9D3E8', gold: C.gold } as const;
 
@@ -44,7 +45,7 @@ export function AchievementToast() {
           <Text style={[styles.kicker, { color: MEDAL[a.tier] }]}>{t('missions.unlocked')}</Text>
           <Text style={styles.name}>{t(`ach.${a.id}`)}</Text>
         </View>
-        {a.reward && <Text style={styles.reward}>🎁</Text>}
+        {a.reward && <Icon name="gift" size={30} />}
       </Pressable>
     </Animated.View>
   );

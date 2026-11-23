@@ -12,7 +12,7 @@ import { MORALE_START, moraleMod } from '../engine/career/morale';
 import { TabBar } from '../ui/TabBar';
 import { Icon } from '../ui/icons';
 
-const VERDICT_ICON = { legend: '👑', extended: '✍️', survived: '😐', fired: '🔥' } as const;
+const VERDICT_ICON = { legend: 'crown', extended: 'medal', survived: 'clock', fired: 'flame' } as const;
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
   draft: '/draft', season: '/season', deadline: '/deadline', crisis: '/crisis', playoffs: '/playoffs', result: '/result',
 };
@@ -44,7 +44,7 @@ export default function Career() {
         <Card style={{ gap: S.md }}>
           {c.ended ? (
             <>
-              <Text style={styles.big} testID="career-over">🔥 {t('career.over')}</Text>
+              <Text style={styles.big} testID="career-over">{t('career.over')}</Text>
               <Text style={styles.body}>{t('career.overDesc', { n: c.history.length, titles })}</Text>
             </>
           ) : (
@@ -74,10 +74,10 @@ export default function Career() {
 
       {leaders.length > 0 && (
         <Card style={{ gap: 6 }} testID="career-records">
-          <Label color={C.gold}>🏛️ {t('career.hof')}</Label>
+          <Label color={C.gold}>{t('career.hof')}</Label>
           {hof.length === 0 && <Text style={styles.muted}>{t('career.hofEmpty')}</Text>}
           {hof.map((p) => (
-            <Text key={p.id} style={styles.hofName}>⭐ {p.name}  <Text style={styles.muted}>{p.seasons} · {(p.pts / p.gp).toFixed(1)} PPG{p.titles ? ` · 🏆×${p.titles}` : ''}</Text></Text>
+            <View key={p.id} style={styles.hofRow}><Icon name="star" size={22} /><Text style={styles.hofName}>{p.name}  <Text style={styles.muted}>{p.seasons} · {(p.pts / p.gp).toFixed(1)} PPG{p.titles ? ` · ${p.titles}×` : ''}</Text></Text>{p.titles ? <Icon name="trophy" size={20} /> : null}</View>
           ))}
           <Label>{t('career.records')}</Label>
           {leaders.map((p, i) => (
@@ -97,8 +97,8 @@ export default function Career() {
         <Card key={h.label} style={styles.histRow}>
           <Text style={styles.histLabel}>{h.label}</Text>
           <Text style={styles.histRecord}>{h.wins}-{h.losses}</Text>
-          <Text style={styles.histResult} numberOfLines={1}>{h.result === 'champion' ? '🏆 ' : ''}{t(`career.r_${h.result}`)}</Text>
-          <Text style={styles.histVerdict}>{VERDICT_ICON[h.verdict]}</Text>
+          <Text style={styles.histResult} numberOfLines={1}>{t(`career.r_${h.result}`)}</Text>
+          {h.result === 'champion' && <Icon name="trophy" size={24} />}<Icon name={VERDICT_ICON[h.verdict]} size={26} />
         </Card>
       ))}
     </Screen>
@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
   histRecord: { color: C.text, width: 56, fontWeight: '900' },
   histResult: { color: C.text, flex: 1 },
   histVerdict: { fontSize: 20 },
-  hofName: { color: C.gold, fontWeight: '900' },
+  hofName: { color: C.ink, fontWeight: '900', flex: 1 },
+  hofRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   recRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   recRank: { color: C.muted, width: 18, fontWeight: '800' },
   recName: { color: C.text, flex: 1, fontWeight: '700' },

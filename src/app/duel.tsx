@@ -8,12 +8,14 @@ import { MAX_SUPERSTARS, capRoom, superstarCount } from '../engine/cap';
 import { duelOptions, isDuelComplete } from '../engine/duel';
 import type { SlotId } from '../engine/types';
 import { DUEL_COLORS, DUEL_POOL, useDuel } from '../store/duel';
-import { BackButton, Button, Card, Header, Label, Screen, TabTitle } from '../ui/components';
+import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, R, S, money } from '../ui/theme';
 import { TabBar } from '../ui/TabBar';
 import { Icon } from '../ui/icons';
+import { AVATARS } from '../ui/avatars';
+import { Avatar } from '../ui/Avatar';
 
 export default function Duel() {
   const { t } = useTranslation();
@@ -26,7 +28,18 @@ export default function Duel() {
   if (!d.state) {
     return (
       <Screen tint={C.danger} footer={<TabBar active="duels" />}>
-        <TabTitle icon={<Icon name="vs" size={46} />} title={t('duel.title')} />
+        <View style={styles.banner}>
+          <View style={[styles.half, { backgroundColor: '#E5484D' }]} />
+          <View style={[styles.half, { backgroundColor: '#3B6CF0', left: '50%' }]} />
+          <View style={styles.courtLine} />
+          <View style={styles.centerCircle} />
+          <View style={styles.faceoff}>
+            <View style={styles.faceRing}><Avatar id={AVATARS[11].id} size={78} /></View>
+            <View style={styles.vsBadge}><Icon name="vs" size={64} /></View>
+            <View style={styles.faceRing}><Avatar id={AVATARS[20].id} size={78} /></View>
+          </View>
+          <Display size={38}>{t('duel.title')}</Display>
+        </View>
         <Text style={styles.lead}>{t('duel.passPlay')}</Text>
         <Card style={{ gap: S.md }}>
           <Label color={DUEL_COLORS.a[0]}>{t('duel.p1')}</Label>
@@ -34,7 +47,7 @@ export default function Duel() {
           <Label color={DUEL_COLORS.b[0]}>{t('duel.p2')}</Label>
           <TextInput value={p2} onChangeText={setP2} style={[styles.input, { borderColor: DUEL_COLORS.b[0] }]} maxLength={16} testID="p2" />
         </Card>
-        <Button label={`⚔️  ${t('duel.start')}`} onPress={() => d.start(p1, p2)} testID="duel-start" />
+        <Button label={t('duel.start')} icon={<Icon name="shield" size={22} />} onPress={() => d.start(p1, p2)} testID="duel-start" />
         <Text style={styles.note}>{t('duel.online')}</Text>
       </Screen>
     );
@@ -75,7 +88,7 @@ export default function Duel() {
         {over && (
           <>
             <Text style={styles.winner} testID="duel-winner">
-              🏆 {t('duel.winsSeries', { name: winner, w: 4, l: Math.min(series!.winsA, series!.winsB) })}
+              {t('duel.winsSeries', { name: winner, w: 4, l: Math.min(series!.winsA, series!.winsB) })}
             </Text>
             <Button label={t('duel.rematch')} onPress={() => d.start(names.a, names.b)} testID="duel-rematch" />
             <Button label={t('duel.newDuel')} variant="ghost" onPress={d.reset} />
@@ -146,6 +159,13 @@ function Side({ name, wins, color }: { name: string; wins: number; color: string
 }
 
 const styles = StyleSheet.create({
+  banner: { height: 210, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, alignItems: 'center', justifyContent: 'center', gap: 4, marginTop: S.md },
+  half: { position: 'absolute', top: 0, bottom: 0, left: 0, width: '50%' },
+  courtLine: { position: 'absolute', top: 0, bottom: 0, left: '50%', width: 4, marginLeft: -2, backgroundColor: 'rgba(255,255,255,0.55)' },
+  centerCircle: { position: 'absolute', width: 150, height: 150, borderRadius: 75, borderWidth: 3, borderColor: 'rgba(255,255,255,0.4)' },
+  faceoff: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  faceRing: { borderRadius: 50, borderWidth: 4, borderColor: '#FFC53D', backgroundColor: '#FFFFFF' },
+  vsBadge: { marginHorizontal: -6, zIndex: 2 },
   lead: { color: C.text, fontSize: 15, lineHeight: 22 },
   note: { color: C.muted, fontSize: 12, textAlign: 'center' },
   input: { color: C.text, fontSize: 18, fontWeight: '800', borderWidth: 2, borderRadius: R.md, padding: S.md, backgroundColor: C.bg },

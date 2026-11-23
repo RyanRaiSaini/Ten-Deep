@@ -6,6 +6,7 @@ import { feel } from '../audio/feel';
 import { useReducedMotion } from './fx';
 import { Button } from './components';
 import { C, R, S } from './theme';
+import { Icon } from './icons';
 
 const SHOWN = 14;
 
@@ -33,7 +34,7 @@ export function LotteryReveal({ order, names }: { order: number[]; names: (team:
 
   return (
     <View style={styles.box} testID="lottery">
-      <Text style={styles.title}>🎱 {t('career.lottery')}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}><Icon name="ball" size={26} /><Text style={styles.title}>{t('career.lottery')}</Text></View>
       <View style={{ gap: 4 }}>
         {top.map((team, i) => {
           const shown = SHOWN - i <= revealed;

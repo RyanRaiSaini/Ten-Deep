@@ -378,7 +378,7 @@
     "chooseOne": "Houd één kaart",
     "keep": "{{name}} houden",
     "noPicks": "Geen keuzes in de wacht. Kom morgen terug voor je dagelijkse keuze.",
-    "streak": "🔥 Reeks van {{n}} dagen",
+    "streak": "Reeks van {{n}} dagen",
     "odds": "Kans per kaart",
     "cards": "{{n}} kaarten",
     "empty": "Open een spelerskeuze om je collectie te starten.",
@@ -611,7 +611,8 @@
   },
   "profile": {
     "title": "Profiel",
-    "pick": "Kies je avatar"
+    "pick": "Kies je avatar",
+    "namePlaceholder": "Jouw naam"
   },
   "tabs": {
     "daily": "Dagelijks",

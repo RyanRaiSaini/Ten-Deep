@@ -380,7 +380,7 @@
     "chooseOne": "Garde une carte",
     "keep": "Garder {{name}}",
     "noPicks": "Aucun choix en attente. Reviens demain pour ton choix du jour.",
-    "streak": "🔥 Série de {{n}} jours",
+    "streak": "Série de {{n}} jours",
     "odds": "Probabilités par carte",
     "cards": "{{n}} cartes",
     "empty": "Ouvre un choix de joueurs pour lancer ta collection.",
@@ -615,7 +615,8 @@
   },
   "profile": {
     "title": "Profil",
-    "pick": "Choisis ton avatar"
+    "pick": "Choisis ton avatar",
+    "namePlaceholder": "Ton nom"
   },
   "tabs": {
     "daily": "Défis",

@@ -380,7 +380,7 @@
     "chooseOne": "Tieni una carta",
     "keep": "Tieni {{name}}",
     "noPicks": "Nessuna scelta in attesa. Torna domani per la scelta del giorno.",
-    "streak": "🔥 Serie di {{n}} giorni",
+    "streak": "Serie di {{n}} giorni",
     "odds": "Probabilità per carta",
     "cards": "{{n}} carte",
     "empty": "Apri una scelta giocatore per iniziare la collezione.",
@@ -615,7 +615,8 @@
   },
   "profile": {
     "title": "Profilo",
-    "pick": "Scegli il tuo avatar"
+    "pick": "Scegli il tuo avatar",
+    "namePlaceholder": "Il tuo nome"
   },
   "tabs": {
     "daily": "Sfide",

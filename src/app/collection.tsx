@@ -36,11 +36,11 @@ export default function Collection() {
         {t('collect.cards', { n: owned.length })} · {t('collect.streak', { n: col.streak })}
       </Text>
       {col.pending.length > 0 && (
-        <Button label={`🎁  ${t('collect.waiting', { count: col.pending.length })}`} variant="gold" onPress={() => router.push('/packs')} />
+        <Button label={t('collect.waiting', { count: col.pending.length })} icon={<Icon name="gift" size={22} />} variant="gold" onPress={() => router.push('/packs')} />
       )}
       <View style={{ flexDirection: 'row', gap: S.sm }}>
-        <Button label={`🧩  ${t('lineup.title')}`} variant="secondary" onPress={() => router.push('/lineup')} style={{ flex: 1 }} testID="to-lineup" />
-        <Button label={`⚔️  ${t('gauntlet.title')}`} variant="secondary" onPress={() => router.push('/gauntlet')} style={{ flex: 1 }} />
+        <Button label={t('lineup.title')} icon={<Icon name="cards" size={22} />} variant="secondary" onPress={() => router.push('/lineup')} style={{ flex: 1 }} testID="to-lineup" />
+        <Button label={t('gauntlet.title')} icon={<Icon name="shield" size={22} />} variant="secondary" onPress={() => router.push('/gauntlet')} style={{ flex: 1 }} />
       </View>
       <View style={styles.chips}>
         <Chip label={t('collect.all')} on={!filter} color={C.text} onPress={() => setFilter(null)} />
@@ -59,7 +59,7 @@ export default function Collection() {
                 <Text style={styles.setName}>{set.label}  <Text style={styles.setCount}>{have}/{set.cards.length}</Text></Text>
                 <View style={styles.bar}><View style={[styles.fill, { width: `${(have / set.cards.length) * 100}%`, backgroundColor: set.colors[0] }]} /></View>
               </View>
-              <Text style={styles.reward}>🎁 {t(`collect.t_${setReward(set)}`)}</Text>
+              <View style={{ alignItems: 'center' }}><Icon name="gift" size={22} /><Text style={styles.reward}>{t(`collect.t_${setReward(set)}`)}</Text></View>
             </View>
           ))}
         </View>

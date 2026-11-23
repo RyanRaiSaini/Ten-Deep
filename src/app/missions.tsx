@@ -9,6 +9,7 @@ import { useCollection } from '../store/collection';
 import { snapshot, useProgress } from '../store/progress';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, R, S } from '../ui/theme';
+import { Icon } from '../ui/icons';
 
 const MEDAL: Record<Medal, string> = { bronze: '#D08A4E', silver: '#C9D3E8', gold: C.gold };
 
@@ -29,7 +30,7 @@ export default function Missions() {
         <View style={{ flex: 1, gap: 6 }}>
           <Text style={styles.mTitle}>{t(`stat.${m.stat}`)}</Text>
           <View style={styles.bar}><View style={[styles.fill, { width: `${(n / m.target) * 100}%`, backgroundColor: claimed ? C.muted : C.neon }]} /></View>
-          <Text style={styles.mSub}>{n}/{m.target} · 🎁 {t(`collect.t_${m.reward}`)}</Text>
+          <View style={styles.subRow}><Text style={styles.mSub}>{n}/{m.target} ·</Text><Icon name="gift" size={16} /><Text style={styles.mSub}>{t(`collect.t_${m.reward}`)}</Text></View>
         </View>
         {claimed
           ? <Text style={styles.claimed}>✓ {t('missions.claimed')}</Text>
@@ -43,7 +44,7 @@ export default function Missions() {
     <Screen tint={C.neon}>
       <Header title={t('missions.title')} left={<BackButton onPress={() => router.back()} />} />
       {useCollection.getState().pending.length > 0 && (
-        <Button label={`🎁  ${t('collect.claim')}`} variant="gold" onPress={() => router.push('/packs')} />
+        <Button label={t('collect.claim')} icon={<Icon name="gift" size={22} />} variant="gold" onPress={() => router.push('/packs')} />
       )}
 
       <Label>{t('missions.daily')}</Label>
@@ -66,7 +67,7 @@ export default function Missions() {
               <Text style={styles.achName} numberOfLines={1}>{t(`ach.${a.id}`)}</Text>
               <Text style={styles.achDesc} numberOfLines={2}>{t(`stat.${a.stat}`)}</Text>
               <Text style={[styles.achProg, { color: got ? MEDAL[a.tier] : C.muted }]}>
-                {got ? `✓ ${t(`missions.${a.tier}`)}` : `${v}/${a.target}`}{a.reward && !got ? ` · 🎁` : ''}
+                {got ? `✓ ${t(`missions.${a.tier}`)}` : `${v}/${a.target}`}{a.reward && !got ? ' +' : ''}
               </Text>
             </View>
           );
@@ -79,6 +80,7 @@ export default function Missions() {
 const styles = StyleSheet.create({
   mission: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingVertical: S.md },
   mTitle: { color: C.text, fontWeight: '800', fontSize: 15 },
+  subRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   mSub: { color: C.muted, fontSize: 12 },
   bar: { height: 6, borderRadius: R.pill, backgroundColor: C.surface2, overflow: 'hidden' },
   fill: { height: 6 },

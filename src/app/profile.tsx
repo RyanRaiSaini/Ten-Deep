@@ -1,13 +1,13 @@
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { useProfile } from '../store/profile';
 import { useSettings } from '../store/settings';
 import { Avatar } from '../ui/Avatar';
 import { AVATARS, avatarById } from '../ui/avatars';
 import { BackButton, Card, Header, Label, Screen } from '../ui/components';
-import { C, F, R, S } from '../ui/theme';
+import { C, F, FONT, R, S } from '../ui/theme';
 
 export default function Profile() {
   const { t } = useTranslation();
@@ -20,10 +20,23 @@ export default function Profile() {
       <Header title={t('profile.title')} left={<BackButton onPress={() => router.back()} />} />
       <View style={styles.hero}>
         <Avatar id={current.id} size={132} />
-        <Text style={styles.name}>{flag}</Text>
+        <View style={styles.nameRow}>
+          <Text style={styles.flagBig}>{flag}</Text>
+          <TextInput
+            value={p.name}
+            onChangeText={(name) => p.set({ name: name.slice(0, 18) })}
+            placeholder={t('profile.namePlaceholder')}
+            placeholderTextColor={C.muted}
+            style={styles.nameInput}
+            maxLength={18}
+            autoCorrect={false}
+            testID="profile-name"
+            accessibilityLabel={t('profile.namePlaceholder')}
+          />
+        </View>
       </View>
       <Card style={styles.stats}>
-        <Stat label={t('home.draftsPlayed')} value={String(p.draftsPlayed)} />
+        <Stat label={t('home.draftsPlayed')} value={String(p.draftsPlayed)} testID="stat-drafts" />
         <Stat label={t('home.titles')} value={String(p.titles)} />
         <Stat label={t('home.best')} value={p.draftsPlayed ? `${p.bestWins}-${p.bestLosses}` : '—'} />
       </Card>
@@ -47,10 +60,10 @@ export default function Profile() {
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, testID }: { label: string; value: string; testID?: string }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', gap: 2 }}>
-      <Text style={styles.value}>{value}</Text>
+      <Text style={styles.value} testID={testID}>{value}</Text>
       <Text style={styles.label}>{label}</Text>
     </View>
   );
@@ -58,6 +71,9 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 const styles = StyleSheet.create({
   hero: { alignItems: 'center', gap: S.sm, paddingVertical: S.md },
+  nameRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
+  flagBig: { fontSize: 28 },
+  nameInput: { fontFamily: FONT.display, fontSize: 26, color: C.ink, minWidth: 160, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: '#FFFFFF', borderRadius: 14, borderWidth: 2, borderColor: C.line, borderBottomWidth: 4, borderBottomColor: C.edge },
   name: { color: C.text, fontSize: 20, ...F.display },
   stats: { flexDirection: 'row' },
   value: { color: C.text, fontSize: 22, ...F.display },

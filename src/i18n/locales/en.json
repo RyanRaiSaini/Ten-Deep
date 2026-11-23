@@ -378,7 +378,7 @@
     "chooseOne": "Keep one card",
     "keep": "Keep {{name}}",
     "noPicks": "No picks waiting. Come back tomorrow for your Daily Pick.",
-    "streak": "🔥 {{n}}-day streak",
+    "streak": "{{n}}-day streak",
     "odds": "Odds per card",
     "cards": "Cards: {{n}}",
     "empty": "Open a Player Pick to start your collection.",
@@ -611,7 +611,8 @@
   },
   "profile": {
     "title": "Profile",
-    "pick": "Pick your avatar"
+    "pick": "Pick your avatar",
+    "namePlaceholder": "Your name"
   },
   "tabs": {
     "daily": "Daily",

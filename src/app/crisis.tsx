@@ -59,7 +59,7 @@ export default function Crisis() {
         <Text style={styles.count}>{t('crisis.cardN', { n: card.slot + 1 })}</Text>
       </View>
       {objective && (
-        <Text style={styles.objective} testID="crisis-objective">🎯 {t('crisis.objective')}: {t(`crisis.obj_${objective.tier}`)}</Text>
+        <Text style={styles.objective} testID="crisis-objective">{t('crisis.objective')}: {t(`crisis.obj_${objective.tier}`)}</Text>
       )}
 
       <Animated.View

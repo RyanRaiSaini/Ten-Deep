@@ -75,7 +75,7 @@ export function RosterBoard({
         </View>
         {p && (
           <View style={styles.namePill}>
-            <Text style={styles.name} numberOfLines={1}>{hurt ? '🩼 ' : ''}{shortName(p.name)}</Text>
+            <Text style={styles.name} numberOfLines={1}>{hurt ? '✚ ' : ''}{shortName(p.name)}</Text>
           </View>
         )}
       </Pressable>

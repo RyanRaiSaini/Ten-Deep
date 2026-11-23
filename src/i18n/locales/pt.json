@@ -380,7 +380,7 @@
     "chooseOne": "Fique com uma carta",
     "keep": "Ficar com {{name}}",
     "noPicks": "Nenhuma escolha esperando. Volte amanhã para sua escolha diária.",
-    "streak": "🔥 Sequência de {{n}} dias",
+    "streak": "Sequência de {{n}} dias",
     "odds": "Chances por carta",
     "cards": "{{n}} cartas",
     "empty": "Abra uma escolha de jogador para começar sua coleção.",
@@ -615,7 +615,8 @@
   },
   "profile": {
     "title": "Perfil",
-    "pick": "Escolha seu avatar"
+    "pick": "Escolha seu avatar",
+    "namePlaceholder": "Seu nome"
   },
   "tabs": {
     "daily": "Diário",

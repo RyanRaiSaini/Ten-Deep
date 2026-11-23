@@ -378,7 +378,7 @@
     "chooseOne": "Behalte eine Karte",
     "keep": "{{name}} behalten",
     "noPicks": "Keine Picks offen. Komm morgen für deinen Tages-Pick wieder.",
-    "streak": "🔥 {{n}}-Tage-Serie",
+    "streak": "{{n}}-Tage-Serie",
     "odds": "Chancen pro Karte",
     "cards": "{{n}} Karten",
     "empty": "Öffne einen Spieler-Pick, um deine Sammlung zu starten.",
@@ -611,7 +611,8 @@
   },
   "profile": {
     "title": "Profil",
-    "pick": "Wähle deinen Avatar"
+    "pick": "Wähle deinen Avatar",
+    "namePlaceholder": "Dein Name"
   },
   "tabs": {
     "daily": "Täglich",
