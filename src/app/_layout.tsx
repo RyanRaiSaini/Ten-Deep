@@ -1,3 +1,6 @@
+import { LilitaOne_400Regular } from '@expo-google-fonts/lilita-one';
+import { Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold, Nunito_900Black } from '@expo-google-fonts/nunito';
+import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -33,7 +36,10 @@ function useHydrated() {
 
 export default function RootLayout() {
   const language = useSettings((s) => s.language);
-  const ready = useHydrated();
+  const hydrated = useHydrated();
+  const [fontsLoaded, fontError] = useFonts({ LilitaOne_400Regular, Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold, Nunito_900Black });
+  // Fonts that fail to load fall back to system fonts rather than blocking the game.
+  const ready = hydrated && (fontsLoaded || !!fontError);
   useMusic();
   useNotificationSync(ready);
   // Daily check-in (login streak + Daily/Weekly/Mythic picks) once saved progress has loaded.

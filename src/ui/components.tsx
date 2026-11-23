@@ -1,25 +1,75 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isRTL } from '../i18n';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import { alpha, C, F, R, S } from './theme';
+import Svg, { Path } from 'react-native-svg';
+import { isRTL } from '../i18n';
+import { Icon } from './icons';
+import { Text } from './Text';
+import { alpha, C, F, FONT, R, S } from './theme';
+
+/** Soft sunburst behind the top of every screen (Golazo-style). */
+function Rays({ color }: { color: string }) {
+  const n = 14;
+  const d = Array.from({ length: n }, (_, i) => {
+    const a = (i / n) * Math.PI - Math.PI;
+    const b = a + Math.PI / n / 1.6;
+    const R0 = 900;
+    return `M300 0 L${300 + R0 * Math.cos(a)} ${-R0 * Math.sin(a) * -1} L${300 + R0 * Math.cos(b)} ${-R0 * Math.sin(b) * -1} Z`;
+  }).join(' ');
+  return (
+    <Svg width="100%" height={360} viewBox="0 0 600 360" preserveAspectRatio="xMidYMin slice" style={styles.rays}>
+      <Path d={d} fill={color} opacity={0.09} />
+    </Svg>
+  );
+}
 
 /**
- * A full screen. `tint` washes a team color down from the top; `overlay` (e.g. confetti)
- * sits above the scrolling content across the whole screen.
+ * A full screen. `tint` colors the sunburst and a wash at the top; `overlay` (e.g. confetti) sits above the
+ * scrolling content; `footer` (the tab bar) is pinned to the bottom.
  */
-export function Screen({ children, scroll = true, tint, overlay }: { children: ReactNode; scroll?: boolean; tint?: string; overlay?: ReactNode }) {
-  const body = <View style={styles.inner}>{children}</View>;
+export function Screen({
+  children, scroll = true, tint, overlay, footer, wide = false,
+}: { children: ReactNode; scroll?: boolean; tint?: string; overlay?: ReactNode; footer?: ReactNode; wide?: boolean }) {
+  const body = <View style={[styles.inner, wide && styles.innerWide, !!footer && { paddingBottom: 120 }]}>{children}</View>;
   return (
-    <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
-      {tint && (
-        <LinearGradient colors={[alpha(tint, 0.42), alpha(tint, 0.12), alpha(C.bg, 0)]} locations={[0, 0.45, 1]} style={styles.tint} />
-      )}
-      {scroll ? <ScrollView contentContainerStyle={styles.scroll}>{body}</ScrollView> : body}
+    <SafeAreaView style={styles.screen} edges={footer ? ['top'] : ['top', 'bottom']}>
+      {tint && <LinearGradient colors={[alpha(tint, 0.28), alpha(tint, 0.06), alpha(C.bg, 0)]} locations={[0, 0.5, 1]} style={styles.tint} />}
+      <Rays color={tint ?? C.ink} />
+      {scroll ? <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>{body}</ScrollView> : body}
+      {footer}
       {overlay}
     </SafeAreaView>
+  );
+}
+
+/** Big outlined display type, like a sticker: white fill, ink outline, a little 3D drop. */
+export function Display({
+  children, size = 34, color = '#FFFFFF', stroke = C.ink, align = 'center', style, testID,
+}: { children: ReactNode; size?: number; color?: string; stroke?: string; align?: TextStyle['textAlign']; style?: StyleProp<ViewStyle>; testID?: string }) {
+  const w = Math.max(2, Math.round(size / 11));
+  const base: TextStyle = { fontFamily: FONT.display, fontSize: size, lineHeight: Math.round(size * 1.18), textAlign: align, letterSpacing: 0.3 };
+  const ghost = { accessibilityElementsHidden: true, importantForAccessibility: 'no-hide-descendants' as const, 'aria-hidden': true, selectable: false };
+  const offsets = [[-w, 0], [w, 0], [0, -w], [0, w], [-w, -w], [w, w], [-w, w], [w, -w]];
+  return (
+    <View style={[{ alignSelf: align === 'center' ? 'center' : 'flex-start', paddingHorizontal: w, paddingTop: w }, style]} testID={testID}>
+      <Text {...ghost} style={[base, styles.ghost, { color: stroke, left: w, right: w, top: w + w + 2 }]}>{children}</Text>
+      {offsets.map(([x, y], i) => (
+        <Text key={i} {...ghost} style={[base, styles.ghost, { color: stroke, left: w + x, right: w - x, top: w + y }]}>{children}</Text>
+      ))}
+      <Text style={[base, { color }]}>{children}</Text>
+    </View>
+  );
+}
+
+/** Big centered tab title with its icon, like Golazo's "Friends" header. */
+export function TabTitle({ icon, title }: { icon: ReactNode; title: string }) {
+  return (
+    <View style={styles.tabTitle}>
+      {icon}
+      <Display size={40}>{title}</Display>
+    </View>
   );
 }
 
@@ -33,12 +83,26 @@ export function Header({ title, left, right }: { title: string; left?: ReactNode
   );
 }
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'gold';
+type Variant = 'primary' | 'secondary' | 'ghost' | 'gold' | 'dark' | 'blue' | 'green';
+const VARIANTS: Record<Variant, { bg: string; fg: string; edge: string; border?: string }> = {
+  primary: { bg: C.hardwood, fg: '#FFFFFF', edge: '#C2500A' },
+  gold: { bg: '#FFC53D', fg: C.ink, edge: '#D69500' },
+  dark: { bg: C.ink, fg: '#FFFFFF', edge: '#000000' },
+  blue: { bg: C.blue, fg: '#FFFFFF', edge: '#1C46B8' },
+  green: { bg: '#18C08A', fg: '#FFFFFF', edge: '#0B8A61' },
+  secondary: { bg: '#FFFFFF', fg: C.ink, edge: C.edge, border: C.line },
+  ghost: { bg: 'transparent', fg: C.ink, edge: 'transparent', border: C.line },
+};
+
+/** Chunky 3D button: a thick bottom edge that squashes when pressed. */
 export function Button({
-  label, onPress, variant = 'primary', disabled, style, testID, accessibilityLabel,
-}: { label: string; onPress: () => void; variant?: Variant; disabled?: boolean; style?: StyleProp<ViewStyle>; testID?: string; accessibilityLabel?: string }) {
-  const bg = { primary: C.hardwood, secondary: C.surface2, ghost: 'transparent', gold: C.gold }[variant];
-  const fg = variant === 'primary' || variant === 'gold' ? C.bg : C.text;
+  label, onPress, variant = 'primary', disabled, style, testID, accessibilityLabel, icon,
+}: {
+  label: string; onPress: () => void; variant?: Variant; disabled?: boolean; style?: StyleProp<ViewStyle>; testID?: string;
+  accessibilityLabel?: string; icon?: ReactNode;
+}) {
+  const v = VARIANTS[variant];
+  const raised = variant !== 'ghost';
   return (
     <Pressable
       testID={testID}
@@ -49,41 +113,77 @@ export function Button({
       disabled={disabled}
       style={({ pressed }) => [
         styles.button,
-        { backgroundColor: bg, opacity: disabled ? 0.4 : pressed ? 0.8 : 1 },
-        variant === 'ghost' && { borderWidth: 1, borderColor: C.line },
+        { backgroundColor: v.bg, borderColor: v.border ?? v.edge, opacity: disabled ? 0.45 : 1 },
+        raised && { borderBottomWidth: pressed ? 2 : 5, borderBottomColor: v.edge, transform: [{ translateY: pressed ? 3 : 0 }] },
         style,
       ]}
     >
-      <Text style={[styles.buttonText, { color: fg }]}>{label}</Text>
+      {icon}
+      <Text style={[styles.buttonText, { color: v.fg }]}>{label}</Text>
     </Pressable>
   );
 }
 
-/** Back arrow that points the right way in right-to-left languages. */
+/** Square back button that points the right way in right-to-left languages. */
 export function BackButton({ onPress }: { onPress: () => void }) {
   const { t, i18n } = useTranslation();
-  return <Button label={isRTL(i18n.language) ? '›' : '‹'} accessibilityLabel={t('common.back')} variant="ghost" onPress={onPress} style={{ paddingVertical: 6 }} testID="back" />;
+  return (
+    <Pressable
+      onPress={onPress}
+      testID="back"
+      accessibilityRole="button"
+      accessibilityLabel={t('common.back')}
+      style={({ pressed }) => [styles.square, pressed && styles.squarePressed]}
+    >
+      <View style={isRTL(i18n.language) ? { transform: [{ scaleX: -1 }] } : undefined}><Icon name="back" size={22} /></View>
+    </Pressable>
+  );
+}
+
+/** Small square icon button (settings, etc.). */
+export function IconButton({ children, onPress, label, testID }: { children: ReactNode; onPress: () => void; label: string; testID?: string }) {
+  return (
+    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} testID={testID} style={({ pressed }) => [styles.square, pressed && styles.squarePressed]}>
+      {children}
+    </Pressable>
+  );
 }
 
 export function Card({ children, style, onPress, testID }: { children: ReactNode; style?: StyleProp<ViewStyle>; onPress?: () => void; testID?: string }) {
   if (onPress)
     return (
-      <Pressable onPress={onPress} testID={testID} accessibilityRole="button" style={({ pressed }) => [styles.card, style, pressed && { opacity: 0.85 }]}>
+      <Pressable onPress={onPress} testID={testID} accessibilityRole="button" style={({ pressed }) => [styles.card, style, pressed && styles.cardPressed]}>
         {children}
       </Pressable>
     );
   return <View style={[styles.card, style]} testID={testID}>{children}</View>;
 }
 
+/** Section label with a hairline running to the edge ("GAME MODES ———"). */
 export function Label({ children, color = C.muted }: { children: ReactNode; color?: string }) {
-  return <Text style={[F.label, { color }]}>{children}</Text>;
+  return (
+    <View style={styles.labelRow}>
+      <Text style={[F.label, { color }]}>{children}</Text>
+      <View style={styles.labelLine} />
+    </View>
+  );
+}
+
+/** Pill chip for the top bar (streak, picks, profile). */
+export function Chip({ children, onPress, testID, label }: { children: ReactNode; onPress?: () => void; testID?: string; label?: string }) {
+  return (
+    <Pressable onPress={onPress} disabled={!onPress} testID={testID} accessibilityRole={onPress ? 'button' : undefined} accessibilityLabel={label}
+      style={({ pressed }) => [styles.chip, pressed && styles.squarePressed]}>
+      {children}
+    </Pressable>
+  );
 }
 
 export function ToggleRow({ label, value, onChange }: { label: string; value: boolean; onChange: (v: boolean) => void }) {
   return (
     <View style={styles.row}>
       <Text style={styles.rowLabel}>{label}</Text>
-      <Switch value={value} onValueChange={onChange} trackColor={{ true: C.neon, false: C.line }} thumbColor={C.text} />
+      <Switch value={value} onValueChange={onChange} trackColor={{ true: '#18C08A', false: C.line }} thumbColor="#FFFFFF" />
     </View>
   );
 }
@@ -103,8 +203,8 @@ export function Segmented<T extends string | number>({
   return (
     <View style={styles.segmented}>
       {options.map((o) => (
-        <Pressable key={String(o)} onPress={() => onChange(o)} style={[styles.segment, o === value && styles.segmentOn]}>
-          <Text style={[styles.segmentText, o === value && { color: C.bg }]}>{format(o)}</Text>
+        <Pressable key={String(o)} onPress={() => onChange(o)} style={[styles.segment, o === value && styles.segmentOn]} accessibilityRole="button" accessibilityState={{ selected: o === value }}>
+          <Text style={[styles.segmentText, o === value && { color: '#FFFFFF' }]}>{format(o)}</Text>
         </Pressable>
       ))}
     </View>
@@ -114,19 +214,41 @@ export function Segmented<T extends string | number>({
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: C.bg },
   scroll: { flexGrow: 1 },
-  tint: { position: 'absolute', top: 0, left: 0, right: 0, height: 380, pointerEvents: 'none' },
+  rays: { position: 'absolute', top: 0, left: 0, right: 0, pointerEvents: 'none' },
+  tint: { position: 'absolute', top: 0, left: 0, right: 0, height: 420, pointerEvents: 'none' },
   inner: { flex: 1, width: '100%', maxWidth: 560, alignSelf: 'center', paddingHorizontal: S.lg, paddingBottom: S.xl, gap: S.md },
+  innerWide: { maxWidth: 1120 },
+  ghost: { position: 'absolute' },
+  tabTitle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: S.sm, paddingTop: S.lg, paddingBottom: S.sm },
   header: { flexDirection: 'row', alignItems: 'center', paddingVertical: S.md, gap: S.sm },
-  headerSide: { width: 72 },
-  headerTitle: { flex: 1, textAlign: 'center', color: C.text, fontSize: 18, ...F.display },
-  button: { paddingVertical: 15, paddingHorizontal: S.lg, borderRadius: R.md, alignItems: 'center', justifyContent: 'center' },
-  buttonText: { fontSize: 16, fontWeight: '800' },
-  card: { backgroundColor: C.surface, borderRadius: R.lg, padding: S.lg, borderWidth: 1, borderColor: C.line },
+  headerSide: { width: 64 },
+  headerTitle: { flex: 1, textAlign: 'center', color: C.ink, fontSize: 24, fontFamily: FONT.display },
+  button: {
+    flexDirection: 'row', gap: S.sm, paddingVertical: 14, paddingHorizontal: S.lg, borderRadius: R.pill, borderWidth: 2,
+    alignItems: 'center', justifyContent: 'center', minHeight: 54,
+  },
+  buttonText: { fontSize: 17, fontWeight: '900', letterSpacing: 0.2 },
+  square: {
+    width: 50, height: 50, borderRadius: 16, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center',
+    borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge,
+  },
+  squarePressed: { transform: [{ translateY: 2 }], borderBottomWidth: 3 },
+  card: {
+    backgroundColor: C.surface, borderRadius: R.lg, padding: S.lg, borderWidth: 2, borderColor: C.line,
+    borderBottomWidth: 6, borderBottomColor: C.edge,
+  },
+  cardPressed: { transform: [{ translateY: 3 }], borderBottomWidth: 3 },
+  labelRow: { flexDirection: 'row', alignItems: 'center', gap: S.md, marginTop: S.sm },
+  labelLine: { flex: 1, height: 2, backgroundColor: C.line, borderRadius: 1 },
+  chip: {
+    flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#FFFFFF', paddingHorizontal: 14, height: 50, borderRadius: 16,
+    borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge,
+  },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: S.md, gap: S.md },
-  rowLabel: { color: C.text, fontSize: 15, flex: 1 },
-  rowValue: { color: C.muted, fontSize: 15 },
-  segmented: { flexDirection: 'row', backgroundColor: C.surface2, borderRadius: R.md, padding: 3, gap: 3 },
-  segment: { flex: 1, paddingVertical: 9, alignItems: 'center', borderRadius: R.sm },
-  segmentOn: { backgroundColor: C.neon },
-  segmentText: { color: C.text, fontWeight: '800' },
+  rowLabel: { color: C.text, fontSize: 16, fontWeight: '700', flex: 1 },
+  rowValue: { color: C.muted, fontSize: 15, fontWeight: '700' },
+  segmented: { flexDirection: 'row', backgroundColor: C.surface2, borderRadius: R.pill, padding: 4, gap: 4, borderWidth: 2, borderColor: C.line },
+  segment: { flex: 1, paddingVertical: 10, alignItems: 'center', borderRadius: R.pill },
+  segmentOn: { backgroundColor: C.ink },
+  segmentText: { color: C.ink, fontWeight: '900' },
 });
