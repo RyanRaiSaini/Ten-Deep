@@ -73,6 +73,18 @@ export function autoFill(owned: string[]): Lineup {
   return lineup;
 }
 
+/** Welcome gift: 10 solid role players (74–80), one per lineup spot, so a new collector can play right away. */
+export function starterSquad(seed: string): string[] {
+  const rng = createRng(`starter-squad:${seed}`);
+  const pool = ALL_CARDS.filter((c) => c.ovr >= 74 && c.ovr <= 80);
+  const lineup: Lineup = {};
+  for (const slot of ALL_SLOTS) {
+    const fitsHere = pool.filter((c) => canPlace(lineup, c.id, slot));
+    lineup[slot] = rng.pick(fitsHere).id;
+  }
+  return ALL_SLOTS.map((k) => lineup[k]!);
+}
+
 export interface GauntletStage {
   team: TeamSeason;
   strength: number;
@@ -80,10 +92,10 @@ export interface GauntletStage {
 
 /** 10 real team-seasons spread from good to all-time great (the last is the strongest in the database). */
 export const GAUNTLET: GauntletStage[] = (() => {
-  const teams = HISTORY.filter((t) => t.players.length >= 8)
+  const teams = HISTORY.filter((t) => t.players.length >= 8 && !t.season.includes("-")) // historic seasons only
     .map((team) => ({ team, strength: teamStrengthScore(team) }))
     .sort((a, b) => a.strength - b.strength);
-  const at = [0.05, 0.2, 0.35, 0.5, 0.62, 0.72, 0.82, 0.9, 0.96, 1];
+  const at = [0, 0.04, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 0.92, 1];
   return at.map((q) => teams[Math.min(teams.length - 1, Math.round(q * (teams.length - 1)))]);
 })();
 

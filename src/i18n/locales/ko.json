@@ -388,5 +388,30 @@
     "guarantee_mythic": "90+ 1장 확정",
     "guarantee_legendary": "울트라 1장 확정",
     "nextWeekly": "{{n}}일 후 위클리 픽"
+  },
+  "lineup": {
+    "title": "라인업",
+    "chemistry": "케미 +{{n}}",
+    "teamRating": "팀 레이팅 {{n}}",
+    "autoFill": "최고의 라인업 자동 구성",
+    "pickCard": "{{slot}} 카드 선택",
+    "clear": "제거",
+    "noCards": "이 자리에 맞는 보유 카드가 없습니다.",
+    "callupNote": "빈자리는 콜업 선수(64)가 뜁니다.",
+    "empty": "비어 있음"
+  },
+  "gauntlet": {
+    "title": "건틀릿",
+    "desc": "카드 라인업으로 강팀 10개를 연속으로 꺾으세요. 각 3전 2선승제.",
+    "stage": "스테이지 {{n}}",
+    "play": "스테이지 {{n}} 도전",
+    "next": "{{n}}차전 플레이",
+    "won": "시리즈 {{w}}-{{l}} 승리!",
+    "lost": "{{w}}-{{l}}로 탈락. 라인업을 조정해 다시 도전하세요.",
+    "reward": "보상: {{pick}}",
+    "cleared": "클리어",
+    "locked": "잠김",
+    "complete": "건틀릿 완료!",
+    "editLineup": "라인업 편집"
   }
 }

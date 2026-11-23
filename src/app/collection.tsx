@@ -30,6 +30,10 @@ export default function Collection() {
       {col.pending.length > 0 && (
         <Button label={`🎁  ${t('collect.waiting', { n: col.pending.length })}`} variant="gold" onPress={() => router.push('/packs')} />
       )}
+      <View style={{ flexDirection: 'row', gap: S.sm }}>
+        <Button label={`🧩  ${t('lineup.title')}`} variant="secondary" onPress={() => router.push('/lineup')} style={{ flex: 1 }} testID="to-lineup" />
+        <Button label={`⚔️  ${t('gauntlet.title')}`} variant="secondary" onPress={() => router.push('/gauntlet')} style={{ flex: 1 }} />
+      </View>
       <View style={styles.chips}>
         <Chip label={t('collect.all')} on={!filter} color={C.text} onPress={() => setFilter(null)} />
         {TIERS.map((tier) => (
