@@ -12,6 +12,7 @@ import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { BackButton, Button, Card, Display, Header, Screen } from '../ui/components';
 import { Icon } from '../ui/icons';
+import { Confetti, Pulse } from '../ui/fx';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner, teamGradient } from '../ui/Spinner';
@@ -27,6 +28,7 @@ export default function Draft() {
   const [spinKey, setSpinKey] = useState(0);
   const [landed, setLanded] = useState(true);
   const [chosen, setChosen] = useState<string | null>(null);
+  const [burst, setBurst] = useState(0);
 
   const pool = POOLS[g.poolId];
   if (!g.draft || !pool) return <Redirect href="/" />;
@@ -52,9 +54,11 @@ export default function Draft() {
   };
 
   const place = (playerId: string, slot: SlotId) => {
+    const star = (d.spin?.players.find((p) => p.id === playerId)?.ovr ?? 0) >= 95;
     g.doPick(playerId, slot);
     setChosen(null);
-    feel('pickChime');
+    feel(star ? 'fanfare' : 'pickChime');
+    if (star) setBurst((b) => b + 1);
   };
 
   const capCard = (
@@ -80,10 +84,12 @@ export default function Draft() {
       {d.spin || !landed ? (
         <Spinner target={d.spin} decoys={pool.teams} spinKey={spinKey} onLanded={() => setLanded(true)} />
       ) : (
-        <Pressable onPress={() => doSpin()} testID="spin" accessibilityRole="button" style={({ pressed }) => [styles.spinBtn, pressed && styles.spinBtnPressed]}>
-          <Icon name="ball" size={44} />
-          <Display size={34}>{t('draft.spin').replace(/^\W+/, '')}</Display>
-        </Pressable>
+        <Pulse>
+          <Pressable onPress={() => doSpin()} testID="spin" accessibilityRole="button" style={({ pressed }) => [styles.spinBtn, pressed && styles.spinBtnPressed]}>
+            <Icon name="ball" size={44} />
+            <Display size={34}>{t('draft.spin').replace(/^\W+/, '')}</Display>
+          </Pressable>
+        </Pulse>
       )}
       {landed && d.spin && (
         <View style={{ gap: S.sm }}>
@@ -135,7 +141,7 @@ export default function Draft() {
   );
 
   return (
-    <Screen tint={runColors[0]} wide={wide}>
+    <Screen tint={runColors[0]} wide={wide} overlay={burst ? <Confetti key={burst} count={36} colors={['#FFC53D', runColors[0], '#FFFFFF']} /> : null}>
       <Header
         title={complete ? t('draft.starters') : t('draft.pick', { n: d.round + 1 })}
         left={<BackButton onPress={() => goHome()} />}
