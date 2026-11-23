@@ -21,6 +21,7 @@ import { Icon } from '../ui/icons';
 import { shareText } from '../ui/share';
 import { useProfile } from '../store/profile';
 import { runShareText } from '../engine/share';
+import { useFriends } from '../store/friends';
 import { MODE_BY_ID } from '../data/modes';
 import { CONFIG } from '../config';
 import { LeagueGain } from '../ui/LeagueGain';
@@ -130,6 +131,7 @@ export default function Result() {
               wins: rec.w, losses: rec.l, result: won ? 'champion' : mine ? `round${mine.round}` : 'missed', resultLabel: outcome,
               mode: MODE_BY_ID[g.poolId]?.title ?? 'Ten Deep', ovrs: ALL_SLOTS.map((k) => user.slots[k].ovr), seed: season.seed,
               poolId: g.poolId, name: profileName || t('home.player'), url: CONFIG.webUrl,
+              pin: useFriends.getState().pin, depth: won ? 4 : mine ? mine.round + 1 : 0,
             });
             const r = await shareText(text);
             if (r !== 'failed') setShared(r);

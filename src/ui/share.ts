@@ -15,3 +15,24 @@ export async function shareText(message: string): Promise<'shared' | 'copied' | 
     return 'failed';
   }
 }
+
+/** Copy to the clipboard (true on success). */
+export async function copyText(text: string): Promise<boolean> {
+  try {
+    const Clipboard = await import('expo-clipboard');
+    await Clipboard.setStringAsync(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Read the clipboard ('' if empty or not allowed). */
+export async function pasteText(): Promise<string> {
+  try {
+    const Clipboard = await import('expo-clipboard');
+    return (await Clipboard.getStringAsync()) ?? '';
+  } catch {
+    return '';
+  }
+}

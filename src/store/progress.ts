@@ -9,6 +9,7 @@ import { dailyMissions, missionProgress, weekKey, weeklyMissions } from '../engi
 import { EMPTY_STATS, applyEvent, type GameEvent, type Stats } from '../engine/progress/stats';
 import { pointsFor } from '../engine/league/ladder';
 import { useCollection } from './collection';
+import { useFriends } from './friends';
 import { useLeague } from './league';
 import { useProfile } from './profile';
 
@@ -48,6 +49,8 @@ export function snapshot(stats: Stats): Snapshot {
     maxLevel: Math.max(0, ...Object.values(col.owned).map((o) => cardLevel(o.count))),
     gauntlet: col.gauntlet.cleared,
     streak: col.streak,
+    friends: useFriends.getState().friends.length,
+    leagueBest: useLeague.getState().best,
   };
 }
 

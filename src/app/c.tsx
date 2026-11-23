@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { MODE_BY_ID } from '../data/modes';
 import { parseChallenge } from '../engine/share';
 import { useGame } from '../store/game';
+import { useFriends } from '../store/friends';
+import { raceOutcome } from '../engine/friends/match';
 import { BrandLogo } from '../ui/BrandLogo';
 import { Button, Card, Display, Screen } from '../ui/components';
 import { Icon } from '../ui/icons';
@@ -17,6 +20,12 @@ export default function Challenge() {
   const params = useLocalSearchParams();
   const c = parseChallenge(params);
   const mode = c ? MODE_BY_ID[c.poolId] : undefined;
+  // Their reply to a race you already ran: settle it (once) instead of replaying the same spins.
+  const mine = c ? useFriends.getState().races[c.seed] : undefined;
+  const outcome = c && mine ? raceOutcome({ w: mine.w, depth: c.depth === undefined ? 0 : mine.depth }, { w: c.w, depth: c.depth ?? 0 }) : null;
+  useEffect(() => {
+    if (c?.pin && mine && outcome) useFriends.getState().settle(c.seed, c.pin, outcome, `${mine.w}-${c.w}`);
+  }, [c?.seed, c?.pin, mine, outcome]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!c || !mode) {
     return (
@@ -30,8 +39,28 @@ export default function Challenge() {
     );
   }
 
+  if (mine && outcome) {
+    const color = outcome === 'w' ? '#14A86B' : outcome === 'l' ? C.danger : C.muted;
+    return (
+      <Screen tint={color}>
+        <View style={styles.wrap}>
+          <Card style={styles.card}>
+            <Icon name={outcome === 'w' ? 'crown' : 'vs'} size={72} />
+            <Display size={30} testID="race-outcome">{t(outcome === 'w' ? 'challenge.won' : outcome === 'l' ? 'challenge.lost' : 'challenge.tied', { name: c.name })}</Display>
+            <Text style={[styles.record, { color }]}>{mine.w}-{mine.l}</Text>
+            <Text style={styles.mode}>vs {c.w}-{c.l}</Text>
+            {c.pin && useFriends.getState().friends.some((f) => f.pin === c.pin) && (
+              <Button label={t('friends.back', { name: c.name })} variant="dark" onPress={() => router.replace({ pathname: '/friends/[pin]', params: { pin: c.pin! } })} />
+            )}
+          </Card>
+          <Button label={t('result.home')} variant="ghost" onPress={goHome} />
+        </View>
+      </Screen>
+    );
+  }
+
   const accept = () => {
-    useGame.getState().newChallenge(c.poolId, c.seed, { name: c.name, w: c.w, l: c.l });
+    useGame.getState().newChallenge(c.poolId, c.seed, { name: c.name, w: c.w, l: c.l, pin: c.pin, depth: c.depth });
     router.replace('/draft');
   };
 

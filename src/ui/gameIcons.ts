@@ -15,6 +15,8 @@ const BY_STAT: Record<string, IconName> = {
   duels: 'vs', gauntletSeries: 'shield', packs: 'gift', crisisRuns: 'siren', crisisLegend: 'crown', crisisFired: 'news',
   careerSeasons: 'briefcase', careerTitles: 'trophy', franchiseRuns: 'history', eraRuns: 'clock', owned: 'cards', hasEpic: 'star',
   hasMythic: 'sparkle', hasUltra: 'crown', sets: 'cards', maxLevel: 'star', gauntlet: 'shield', streak: 'flame',
+  friendsAdded: 'friends', friends: 'friends', friendGames: 'handshake', friendWins: 'vs', friendSweeps: 'crown', allInTitles: 'coin',
+  promotions: 'chart', leagueBest: 'medal', pickUpgrades: 'sparkle', rerolls: 'reroll',
 };
 
 export const achievementIcon = (a: Pick<Achievement, 'stat'>): IconName => BY_STAT[a.stat] ?? 'star';

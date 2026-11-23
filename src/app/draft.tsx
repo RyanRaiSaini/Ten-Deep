@@ -18,6 +18,7 @@ import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner, teamGradient } from '../ui/Spinner';
 import { C, FONT, R, S, money } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
+import { useShop } from '../store/shop';
 
 export default function Draft() {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ export default function Draft() {
   const [landed, setLanded] = useState(true);
   const [chosen, setChosen] = useState<string | null>(null);
   const [burst, setBurst] = useState(0);
+  const rerolls = useShop((s) => s.rerolls);
 
   const pool = POOLS[g.poolId];
   if (!g.draft || !pool) return <Redirect href="/" />;
@@ -110,6 +112,14 @@ export default function Draft() {
           {usable.length === 0 && <Text style={styles.warn}>{t('draft.nothingFits')}</Text>}
           {d.respinsLeft > 0 && (
             <Button label={t('draft.respin', { n: d.respinsLeft })} variant="secondary" icon={<Icon name="swap" size={22} />} onPress={() => doSpin(true)} testID="respin" />
+          )}
+          {d.respinsLeft === 0 && !complete && !g.daily && !g.challenge && (
+            rerolls > 0 ? (
+              <Button label={t('shop.use', { n: rerolls })} variant="blue" icon={<Icon name="reroll" size={22} />} testID="reroll"
+                onPress={() => { setChosen(null); setLanded(false); if (g.doReroll()) setSpinKey((k) => k + 1); else setLanded(true); }} />
+            ) : (
+              <Button label={t('shop.none')} variant="ghost" icon={<Icon name="shop" size={22} />} onPress={() => router.push('/shop')} testID="reroll-shop" />
+            )
           )}
           {fallback && d.respinsLeft === 0 && (
             <Button

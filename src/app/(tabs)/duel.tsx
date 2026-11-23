@@ -11,11 +11,16 @@ import { DUEL_COLORS, DUEL_POOL, useDuel } from '../../store/duel';
 import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
 import { PlayerCard } from '../../ui/PlayerCard';
 import { RosterBoard } from '../../ui/RosterBoard';
-import { C, F, R, S, money } from '../../ui/theme';
+import { C, F, FONT, R, S, money } from '../../ui/theme';
 import { Icon } from '../../ui/icons';
 import { AVATARS } from '../../ui/avatars';
 import { Avatar } from '../../ui/Avatar';
 import { goBack } from '../../ui/nav';
+import { CONFIG } from '../../config';
+import { encodeFriend, formatPin } from '../../engine/friends/code';
+import { mySnapshot, useFriends } from '../../store/friends';
+import { FriendRow } from '../../ui/FriendRow';
+import { shareText } from '../../ui/share';
 
 export default function Duel() {
   const { t } = useTranslation();
@@ -23,6 +28,14 @@ export default function Duel() {
   const [p1, setP1] = useState(d.names.a);
   const [p2, setP2] = useState(d.names.b);
   const [chosen, setChosen] = useState<string | null>(null);
+  const friends = useFriends((s) => s.friends);
+  const myPin = useFriends((s) => s.pin);
+  const [shareState, setShareState] = useState<'shared' | 'copied' | null>(null);
+  const shareCode = async () => {
+    const link = `${CONFIG.webUrl}/f?c=${encodeFriend(mySnapshot())}`;
+    const r = await shareText(t('friends.shareText', { pin: formatPin(myPin), link }));
+    if (r !== 'failed') setShareState(r);
+  };
 
   // --- Setup -------------------------------------------------------------------------------
   if (!d.state) {
@@ -40,6 +53,30 @@ export default function Duel() {
           </View>
           <Display size={38}>{t('duel.title')}</Display>
         </View>
+
+        <View style={styles.pinCard} testID="my-pin">
+          <View style={{ flex: 1 }}>
+            <Text style={styles.pinLabel}>{t('friends.yourPin')}</Text>
+            <Text style={styles.pin} selectable>{formatPin(myPin)}</Text>
+          </View>
+          <Button label={shareState ? t(`friends.${shareState}`) : t('friends.shareCode')} variant="dark" icon={<Icon name="share" size={20} />} onPress={shareCode} testID="share-code" style={{ flexShrink: 1 }} />
+        </View>
+
+        <View style={styles.sectionHead}>
+          <Icon name="friends" size={30} />
+          <Text style={styles.section}>{t('friends.title')}{friends.length ? ` · ${friends.length}` : ''}</Text>
+          <Button label={t('friends.add')} variant="green" icon={<Icon name="plus" size={20} />} onPress={() => router.push('/friends/add')} testID="add-friend" style={styles.addBtn} />
+        </View>
+        {friends.length === 0 ? (
+          <Text style={styles.empty}>{t('friends.empty')}</Text>
+        ) : (
+          <View style={{ gap: S.sm }}>{friends.map((f) => <FriendRow key={f.pin} f={f} />)}</View>
+        )}
+
+        <View style={styles.sectionHead}>
+          <Icon name="vs" size={30} />
+          <Text style={styles.section}>{t('friends.couch')}</Text>
+        </View>
         <Text style={styles.lead}>{t('duel.passPlay')}</Text>
         <Card style={{ gap: S.md }}>
           <Label color={DUEL_COLORS.a[0]}>{t('duel.p1')}</Label>
@@ -48,7 +85,6 @@ export default function Duel() {
           <TextInput value={p2} onChangeText={setP2} style={[styles.input, { borderColor: DUEL_COLORS.b[0] }]} maxLength={16} testID="p2" />
         </Card>
         <Button label={t('duel.start')} icon={<Icon name="shield" size={22} />} onPress={() => d.start(p1, p2)} testID="duel-start" />
-        <Text style={styles.note}>{t('duel.online')}</Text>
       </Screen>
     );
   }
@@ -167,6 +203,16 @@ const styles = StyleSheet.create({
   faceRing: { borderRadius: 50, borderWidth: 4, borderColor: '#FFC53D', backgroundColor: '#FFFFFF' },
   vsBadge: { marginHorizontal: -6, zIndex: 2 },
   lead: { color: C.text, fontSize: 15, lineHeight: 22 },
+  pinCard: {
+    flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: R.lg, backgroundColor: '#FFFFFF',
+    borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 6,
+  },
+  pinLabel: { fontSize: 12, fontWeight: '900', letterSpacing: 1.5, color: C.muted, textTransform: 'uppercase' },
+  pin: { fontFamily: FONT.display, fontSize: 32, color: C.ink, letterSpacing: 2 },
+  sectionHead: { flexDirection: 'row', alignItems: 'center', gap: S.sm, marginTop: S.md },
+  section: { flex: 1, fontFamily: FONT.display, fontSize: 24, color: C.ink },
+  addBtn: { minHeight: 44, paddingVertical: 8, paddingHorizontal: 14 },
+  empty: { color: C.muted, fontWeight: '700', textAlign: 'center', paddingVertical: S.md },
   note: { color: C.muted, fontSize: 12, textAlign: 'center' },
   input: { color: C.text, fontSize: 18, fontWeight: '800', borderWidth: 2, borderRadius: R.md, padding: S.md, backgroundColor: C.bg, fontFamily: 'LeagueSpartan_700Bold' },
   turn: { borderRadius: R.lg, padding: S.lg, alignItems: 'center', gap: 2 },

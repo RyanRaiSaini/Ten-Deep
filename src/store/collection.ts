@@ -8,6 +8,7 @@ import { autoFill, canPlace, cardLevel, stageReward, starterSquad, type Lineup }
 import { newlyCompleted, setReward } from '../engine/collect/sets';
 import { MAX_FREEZES, advanceStreak, advanceWithFreezes, freezeEarned, streakRewards } from '../engine/collect/streak';
 import type { SlotId } from '../engine/types';
+import { track } from './progress';
 
 export interface PendingPick {
   id: string;
@@ -118,6 +119,7 @@ export const useCollection = create<CollectionStore>()(
           ? { ...p, type: next, taps: taps + 1, cards: generatePick(ALL_CARDS, next, `${p.source}:up${taps}`).map((c) => c.id) }
           : { ...p, taps: taps + 1 };
         set((s) => ({ pending: s.pending.map((x) => (x.id === pickId ? upgraded : x)) }));
+        if (hit) track({ type: 'pickUpgrade' });
         return hit ? 'up' : 'miss';
       },
 
