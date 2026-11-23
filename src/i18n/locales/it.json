@@ -136,7 +136,8 @@
     "seed": "Testa di serie",
     "topScorer": "Miglior marcatore",
     "playAgain": "Nuovo draft",
-    "home": "Home"
+    "home": "Home",
+    "awards": "Premi della stagione"
   },
   "injury": {
     "Day-to-day": "In dubbio",
@@ -533,5 +534,49 @@
     "loyal": "Fedele",
     "devoted": "Devoto",
     "pack-rat": "Divoratore di pacchetti"
+  },
+  "league": {
+    "title": "Lega",
+    "leaders": "Leader",
+    "awards": "Corsa ai premi",
+    "pts": "Punti a partita",
+    "reb": "Rimbalzi a partita",
+    "ast": "Assist a partita",
+    "mvp": "MVP",
+    "dpoy": "Difensore dell'anno",
+    "roy": "Rookie dell'anno",
+    "smoy": "Sesto uomo dell'anno",
+    "none": "Ancora nessun giocatore qualificato",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "Tu"
+  },
+  "news": {
+    "title": "Notizie",
+    "streakW": "Serie di vittorie: {{n}}",
+    "streakL": "Serie di sconfitte: {{n}}",
+    "big": "{{name}} esplode: {{n}} PTS",
+    "triple": "{{name}} firma una tripla doppia",
+    "wins": "Vittoria n. {{n}} in cassaforte",
+    "injury": "{{name}} fuori: {{n}} partite",
+    "first": "Primi da soli",
+    "upset": "Vittoria di peso contro {{name}}"
+  },
+  "recap": {
+    "title": "Riepilogo",
+    "q": "Q{{n}}",
+    "ot": "Suppl.",
+    "run": "{{team}} vince il quarto, +{{n}}",
+    "double": "{{name}} riempie il tabellino: {{line}}",
+    "clutch": "{{name}} chiude i conti nel finale",
+    "otGame": "Supplementare! {{name}} prende in mano la partita",
+    "blowout": "{{team}} scappa via, +{{n}}",
+    "top": "Miglior marcatore: {{name}} ({{n}})"
+  },
+  "box": {
+    "min": "MIN",
+    "pts": "PTS",
+    "reb": "RIM",
+    "ast": "AST",
+    "tap": "Tocca una partita recente per il tabellino"
   }
 }

@@ -52,8 +52,25 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('05-deadline');
   });
 
-  await step('stand pat, skip to playoffs', async () => {
+  await step('stand pat at the deadline', async () => {
     await page.getByTestId('deadline-skip').click();
+    await page.getByTestId('skip-playoffs').waitFor();
+  });
+
+  await step('news, a box score, league leaders and award races mid-season', async () => {
+    await page.getByTestId('news').waitFor();
+    await page.getByTestId('game-line').first().click();
+    await page.getByTestId('box-score').first().waitFor();
+    await shot('33-season-news-box');
+    await page.getByTestId('to-league').click();
+    await page.getByTestId('leaders-pts').waitFor();
+    await page.getByText('Award race').click();
+    await page.getByTestId('award-mvp').waitFor();
+    await shot('34-league');
+    await page.locator('[data-testid="back"]:visible').click();
+  });
+
+  await step('skip to playoffs', async () => {
     await page.getByTestId('skip-playoffs').click();
     await page.getByTestId('to-playoffs').waitFor({ timeout: 30000 });
     await shot('06-season-done');
@@ -64,11 +81,13 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('playoff-next').or(page.getByTestId('playoff-sim')).first().waitFor({ timeout: 15000 });
     if (await page.getByTestId('playoff-next').count()) {
       await page.getByTestId('playoff-next').click();
+      await page.getByTestId('recap').waitFor();
       await shot('07-playoffs');
     }
     await page.getByTestId('playoff-sim').click();
     await page.getByTestId('see-result').click();
     await page.getByTestId('play-again').waitFor({ timeout: 15000 });
+    await page.getByTestId('awards').waitFor();
     await shot('08-result');
     await page.getByTestId('go-home').click();
     await page.getByText('TEN DEEP', { exact: true }).waitFor();

@@ -136,7 +136,8 @@
     "seed": "シード",
     "topScorer": "得点王",
     "playAgain": "もう一度ドラフト",
-    "home": "ホーム"
+    "home": "ホーム",
+    "awards": "シーズンアウォード"
   },
   "injury": {
     "Day-to-day": "様子見",
@@ -533,5 +534,49 @@
     "loyal": "皆勤",
     "devoted": "献身",
     "pack-rat": "パック収集家"
+  },
+  "league": {
+    "title": "リーグ",
+    "leaders": "リーダー",
+    "awards": "アウォード争い",
+    "pts": "1試合平均得点",
+    "reb": "1試合平均リバウンド",
+    "ast": "1試合平均アシスト",
+    "mvp": "MVP",
+    "dpoy": "最優秀守備選手",
+    "roy": "新人王",
+    "smoy": "最優秀シックスマン",
+    "none": "規定到達者はまだいません",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "あなた"
+  },
+  "news": {
+    "title": "ニュース",
+    "streakW": "連勝：{{n}}",
+    "streakL": "連敗：{{n}}",
+    "big": "{{name}}が爆発：{{n}}得点",
+    "triple": "{{name}}がトリプルダブル",
+    "wins": "{{n}}勝目を達成",
+    "injury": "{{name}}が離脱：{{n}}試合",
+    "first": "単独首位",
+    "upset": "{{name}}に会心の勝利"
+  },
+  "recap": {
+    "title": "試合レポート",
+    "q": "第{{n}}Q",
+    "ot": "OT",
+    "run": "{{team}}がこのQを制す、+{{n}}",
+    "double": "{{name}}が大活躍：{{line}}",
+    "clutch": "{{name}}が終盤に勝負を決める",
+    "otGame": "延長戦！{{name}}が主役に",
+    "blowout": "{{team}}が突き放す、+{{n}}",
+    "top": "最多得点：{{name}}（{{n}}）"
+  },
+  "box": {
+    "min": "分",
+    "pts": "得点",
+    "reb": "REB",
+    "ast": "AST",
+    "tap": "最近の試合をタップしてボックススコアを表示"
   }
 }
