@@ -9,6 +9,7 @@ import { levelsOf, useCollection } from '../store/collection';
 import { Confetti } from '../ui/fx';
 import { BackButton, Button, Card, Header, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
+import { track } from '../store/progress';
 
 /** The Gauntlet: 10 great teams in a row, best-of-3 each, with your card lineup. */
 export default function Gauntlet() {
@@ -32,6 +33,7 @@ export default function Gauntlet() {
     if (next >= series.result.games.length) {
       const won = series.result.winner === 'a';
       col.recordStage(series.stage, won);
+      track({ type: 'gauntlet' });
       feel(won ? 'fanfare' : 'buzzer');
     } else feel('swish');
   };

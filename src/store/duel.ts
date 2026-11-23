@@ -6,6 +6,7 @@ import { duelFallback, duelPick, rosterOf, startDuel, type DuelState } from '../
 import { createRng } from '../engine/rng';
 import { bestOf7, type SeriesResult } from '../engine/series';
 import type { SlotId } from '../engine/types';
+import { track } from './progress';
 
 const POOL = current2026;
 export const DUEL_COLORS: Record<'a' | 'b', [string, string]> = { a: ['#E8833A', '#0B1020'], b: ['#3DF2C2', '#0B1020'] };
@@ -45,6 +46,7 @@ export const useDuel = create<DuelStore>()(
         if (!state) return;
         const series = bestOf7(rosterOf(state.a, names.a, DUEL_COLORS.a), rosterOf(state.b, names.b, DUEL_COLORS.b), createRng(`${state.seed}:series`));
         set({ series, shown: 0 });
+        track({ type: 'duel' });
       },
       reveal: () => set((s) => ({ shown: Math.min((s.series?.games.length ?? 0), s.shown + 1) })),
       reset: () => set({ state: null, series: null, shown: 0 }),
