@@ -15,7 +15,10 @@
     "best": "En iyi derece",
     "modes": "Oyun modları",
     "resume": "Kaldığın yerden devam et",
-    "play": "Oyna"
+    "play": "Oyna",
+    "streak": "Giriş serisi",
+    "player": "Oyuncu",
+    "picks": "Seçimler"
   },
   "mode": {
     "current": {
@@ -609,5 +612,12 @@
   "profile": {
     "title": "Profil",
     "pick": "Avatarını seç"
+  },
+  "tabs": {
+    "daily": "Günlük",
+    "cards": "Kartlar",
+    "play": "Oyna",
+    "career": "Kariyer",
+    "duels": "Düello"
   }
 }

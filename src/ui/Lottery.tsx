@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Animated, Platform, StyleSheet, Text, View } from 'react-native';
+import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { Text } from './Text';
 import { feel } from '../audio/feel';
 import { useReducedMotion } from './fx';
 import { Button } from './components';

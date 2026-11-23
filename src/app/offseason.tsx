@@ -1,7 +1,8 @@
 import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { affordableFor, minimumException, openSlotCount, RESIGN_THRESHOLD, seasonLabel } from '../engine/career/offseason';
 import { ALL_SLOTS, type Player, type SlotId } from '../engine/types';

@@ -1,12 +1,15 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
 import { dailyKey } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { useGame } from '../../store/game';
-import { BackButton, Card, Header, Label, Screen } from '../../ui/components';
+import { BackButton, Card, Header, Label, Screen, TabTitle } from '../../ui/components';
 import { C, F, S } from '../../ui/theme';
+import { TabBar } from '../../ui/TabBar';
+import { Icon } from '../../ui/icons';
 
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/playoffs' | '/result'> = {
   draft: '/draft', season: '/season', deadline: '/deadline', playoffs: '/playoffs', result: '/result',
@@ -68,8 +71,8 @@ export default function DailyHub() {
   ];
 
   return (
-    <Screen>
-      <Header title={t('daily.title')} left={<BackButton onPress={() => router.back()} />} />
+    <Screen tint={C.blue} footer={<TabBar active="daily" />}>
+      <TabTitle icon={<Icon name="calendar" size={46} />} title={t('daily.title')} />
       <Label>{key}</Label>
       {items.map((it) => (
         <Card key={it.id} style={[styles.card, { borderColor: it.status ? C.line : it.accent }]} onPress={it.status ? undefined : it.open}>

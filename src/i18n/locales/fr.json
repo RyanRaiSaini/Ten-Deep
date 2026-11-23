@@ -15,7 +15,10 @@
     "best": "Meilleur bilan",
     "modes": "Modes de jeu",
     "resume": "Reprendre ta partie",
-    "play": "Jouer"
+    "play": "Jouer",
+    "streak": "Série de connexions",
+    "player": "Joueur",
+    "picks": "Choix"
   },
   "mode": {
     "current": {
@@ -613,5 +616,12 @@
   "profile": {
     "title": "Profil",
     "pick": "Choisis ton avatar"
+  },
+  "tabs": {
+    "daily": "Défis",
+    "cards": "Cartes",
+    "play": "Jouer",
+    "career": "Carrière",
+    "duels": "Duels"
   }
 }

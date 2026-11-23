@@ -15,7 +15,10 @@
     "best": "Best record",
     "modes": "Game modes",
     "resume": "Resume your run",
-    "play": "Play"
+    "play": "Play",
+    "streak": "Login streak",
+    "player": "Player",
+    "picks": "Picks"
   },
   "mode": {
     "current": {
@@ -609,5 +612,12 @@
   "profile": {
     "title": "Profile",
     "pick": "Pick your avatar"
+  },
+  "tabs": {
+    "daily": "Daily",
+    "cards": "Cards",
+    "play": "Play",
+    "career": "Career",
+    "duels": "Duels"
   }
 }

@@ -1,16 +1,19 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { MAX_SUPERSTARS, capRoom, superstarCount } from '../engine/cap';
 import { duelOptions, isDuelComplete } from '../engine/duel';
 import type { SlotId } from '../engine/types';
 import { DUEL_COLORS, DUEL_POOL, useDuel } from '../store/duel';
-import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
+import { BackButton, Button, Card, Header, Label, Screen, TabTitle } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, R, S, money } from '../ui/theme';
+import { TabBar } from '../ui/TabBar';
+import { Icon } from '../ui/icons';
 
 export default function Duel() {
   const { t } = useTranslation();
@@ -22,8 +25,8 @@ export default function Duel() {
   // --- Setup -------------------------------------------------------------------------------
   if (!d.state) {
     return (
-      <Screen>
-        <Header title={t('duel.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Screen tint={C.danger} footer={<TabBar active="duels" />}>
+        <TabTitle icon={<Icon name="vs" size={46} />} title={t('duel.title')} />
         <Text style={styles.lead}>{t('duel.passPlay')}</Text>
         <Card style={{ gap: S.md }}>
           <Label color={DUEL_COLORS.a[0]}>{t('duel.p1')}</Label>

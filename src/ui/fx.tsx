@@ -1,6 +1,7 @@
 /** Motion: count-up numbers, confetti, and a reduced-motion switch that turns both off. */
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AccessibilityInfo, Animated, Easing, Platform, StyleSheet, Text, useWindowDimensions, View, type StyleProp, type TextStyle } from 'react-native';
+import { AccessibilityInfo, Animated, Easing, Platform, StyleSheet, useWindowDimensions, View, type StyleProp, type TextStyle } from 'react-native';
+import { Text } from './Text';
 import { C } from './theme';
 
 const native = Platform.OS !== 'web';

@@ -1,7 +1,8 @@
 import { Redirect, router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { POOLS } from '../data';
 import { tradeSwap } from '../engine/season';
@@ -20,7 +21,7 @@ export default function Deadline() {
   const [spinKey, setSpinKey] = useState(0);
   const [landed, setLanded] = useState(true);
   const pool = POOLS[g.poolId];
-  const decoys = useMemo(() => pool?.teams.map((x) => x.label) ?? [], [pool]);
+  const decoys = useMemo(() => pool?.teams ?? [], [pool]);
 
   if (!g.season || !g.deadline || !pool) return <Redirect href="/season" />;
   const { season, deadline } = g;
@@ -70,7 +71,7 @@ export default function Deadline() {
 
       {deadline.spun && (
         <Card style={{ gap: S.md }}>
-          <Spinner target={deadline.spin?.label ?? ''} decoys={decoys} spinKey={spinKey} onLanded={() => setLanded(true)} />
+          <Spinner target={deadline.spin ?? null} decoys={decoys} spinKey={spinKey} onLanded={() => setLanded(true)} />
           {candidates.map(({ p, ok, why }) => (
             <PlayerCard key={p.id} player={p} disabled={!ok} note={why ?? undefined}
               onPress={() => done(() => { g.signDeadline(p); feel('pickChime'); })} />

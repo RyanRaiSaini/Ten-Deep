@@ -1,7 +1,8 @@
 import { Redirect, router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Animated, Platform, StyleSheet, Text, View } from 'react-native';
+import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { CARD_ROUNDS, cardDef, type Rarity } from '../engine/crisis/deck';
 import type { SlotId } from '../engine/types';

@@ -15,7 +15,10 @@
     "best": "Mejor récord",
     "modes": "Modos de juego",
     "resume": "Continuar tu partida",
-    "play": "Jugar"
+    "play": "Jugar",
+    "streak": "Racha de días",
+    "player": "Jugador",
+    "picks": "Sobres"
   },
   "mode": {
     "current": {
@@ -613,5 +616,12 @@
   "profile": {
     "title": "Perfil",
     "pick": "Elige tu avatar"
+  },
+  "tabs": {
+    "daily": "Diario",
+    "cards": "Cartas",
+    "play": "Jugar",
+    "career": "Carrera",
+    "duels": "Duelos"
   }
 }

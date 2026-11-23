@@ -15,7 +15,10 @@
     "best": "Beste Bilanz",
     "modes": "Spielmodi",
     "resume": "Deinen Run fortsetzen",
-    "play": "Spielen"
+    "play": "Spielen",
+    "streak": "Login-Serie",
+    "player": "Spieler",
+    "picks": "Picks"
   },
   "mode": {
     "current": {
@@ -609,5 +612,12 @@
   "profile": {
     "title": "Profil",
     "pick": "Wähle deinen Avatar"
+  },
+  "tabs": {
+    "daily": "Täglich",
+    "cards": "Karten",
+    "play": "Spielen",
+    "career": "Karriere",
+    "duels": "Duelle"
   }
 }

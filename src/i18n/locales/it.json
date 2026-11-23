@@ -15,7 +15,10 @@
     "best": "Miglior record",
     "modes": "Modalità di gioco",
     "resume": "Riprendi la partita",
-    "play": "Gioca"
+    "play": "Gioca",
+    "streak": "Serie di accessi",
+    "player": "Giocatore",
+    "picks": "Scelte"
   },
   "mode": {
     "current": {
@@ -613,5 +616,12 @@
   "profile": {
     "title": "Profilo",
     "pick": "Scegli il tuo avatar"
+  },
+  "tabs": {
+    "daily": "Sfide",
+    "cards": "Carte",
+    "play": "Gioca",
+    "career": "Carriera",
+    "duels": "Duelli"
   }
 }

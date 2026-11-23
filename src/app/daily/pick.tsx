@@ -1,7 +1,8 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
 import { feel } from '../../audio/feel';
 import { HISTORY, MODE_BY_ID } from '../../data/modes';
 import { dailyDerby, dailyKey, dailyTeamDuel, teamStrengthScore } from '../../engine/daily';
