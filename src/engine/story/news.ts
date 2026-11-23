@@ -30,7 +30,11 @@ function streak(s: SeasonState): number {
 }
 
 /** Headlines for the user's game in `round` (call after records and log are updated for that round). */
-export function roundNews(s: SeasonState, round: number): Headline[] {
+/** Alone in first place in the league. */
+export const leading = (s: SeasonState) => s.records.every((r, i) => i === 0 || s.records[0].w - s.records[0].l > r.w - r.l);
+
+/** `wasLeading`: whether you were alone in first before this round (the caller tracks it). */
+export function roundNews(s: SeasonState, round: number, wasLeading = false): Headline[] {
   const out: Headline[] = [];
   let game: SeasonState['log'][number] | undefined;
   for (let i = s.log.length - 1; i >= 0 && !game; i--) if (s.log[i].kind === 'game' && s.log[i].round === round) game = s.log[i];
@@ -53,12 +57,8 @@ export function roundNews(s: SeasonState, round: number): Headline[] {
       const best = s.records.reduce((b, r, i) => (i !== 0 && r.w - r.l > s.records[b].w - s.records[b].l ? i : b), opp === 1 ? 2 : 1);
       if (best === opp) out.push({ round, kind: 'upset', name: s.teams[opp].name });
     }
-    // Taking over first place in the league after 20 games.
-    if (round >= 20) {
-      const firstNow = s.records.every((r, i) => i === 0 || s.records[0].w - s.records[0].l > r.w - r.l);
-      const already = (s.news ?? []).some((h) => h.kind === 'first' && h.round >= round - 10);
-      if (firstNow && !already) out.push({ round, kind: 'first' });
-    }
+    // Taking over first place in the league after 20 games (news only on the day you take it).
+    if (round >= 20 && leading(s) && !wasLeading) out.push({ round, kind: 'first' });
   }
   for (const e of s.log) {
     if (e.kind === 'injury' && e.round === round && e.games >= 10) {

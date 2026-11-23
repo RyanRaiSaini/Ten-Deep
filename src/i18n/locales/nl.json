@@ -603,7 +603,8 @@
     "value": "Afgewezen: niet genoeg waarde voor hen",
     "cap": "Afgewezen: past niet onder het plafond",
     "position": "Afgewezen: een basisspeler moet op de positie passen",
-    "missing": "Kies eerst beide spelers"
+    "missing": "Kies eerst beide spelers",
+    "stars": "Afgewezen: maximaal twee 95+-supersterren per team"
   },
   "profile": {
     "title": "Profiel",

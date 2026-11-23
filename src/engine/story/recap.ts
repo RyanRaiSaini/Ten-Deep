@@ -61,7 +61,9 @@ export function recap(g: GameResult, home: Roster, away: Roster, seed: string): 
   const homeIds = new Set(Object.values(home.slots).map((p) => p.id));
   const awayIds = new Set(Object.values(away.slots).map((p) => p.id));
   // Call-ups (not on either roster) are credited by elimination.
-  const sideOf = (id: string): 0 | 1 => (homeIds.has(id) ? 0 : awayIds.has(id) ? 1 : homeIds.size ? 1 : 0);
+  const sideById = (id: string): 0 | 1 => (homeIds.has(id) ? 0 : awayIds.has(id) ? 1 : 1);
+  const sideOfLine = new Map(g.box.map((b) => [b.playerId + (b.home === undefined ? '' : String(b.home)), b.home === undefined ? sideById(b.playerId) : b.home ? 0 as const : 1 as const]));
+  const sideOf = (id: string, home?: boolean): 0 | 1 => sideOfLine.get(id + (home === undefined ? '' : String(home))) ?? sideById(id);
   const box = [...g.box].sort((a, b) => b.pts - a.pts || a.playerId.localeCompare(b.playerId));
   const moments: Moment[] = [];
 
@@ -72,17 +74,17 @@ export function recap(g: GameResult, home: Roster, away: Roster, seed: string): 
 
   for (const b of box) {
     if (b.pts >= 10 && ((b.reb >= 10 && b.ast >= 10) || (b.pts >= 20 && (b.reb >= 12 || b.ast >= 12)))) {
-      moments.push({ period: 2, kind: 'double', side: sideOf(b.playerId), name: b.name, line: `${b.pts}/${b.reb}/${b.ast}` });
+      moments.push({ period: 2, kind: 'double', side: sideOf(b.playerId, b.home), name: b.name, line: `${b.pts}/${b.reb}/${b.ast}` });
       break;
     }
   }
 
-  const winners = box.filter((b) => sideOf(b.playerId) === winner);
+  const winners = box.filter((b) => sideOf(b.playerId, b.home) === winner);
   const closer = winners[0];
   if (g.ot) moments.push({ period: 3 + g.ot, kind: 'ot', side: winner, name: closer?.name, n: g.ot });
   else if (Math.abs(margin) <= 4 && closer) moments.push({ period: 3, kind: 'clutch', side: winner, name: closer.name });
   else if (Math.abs(margin) >= 20) moments.push({ period: 3, kind: 'blowout', side: winner, n: Math.abs(margin) });
 
-  if (box[0]) moments.push({ period: 3 + g.ot, kind: 'top', side: sideOf(box[0].playerId), name: box[0].name, n: box[0].pts });
+  if (box[0]) moments.push({ period: 3 + g.ot, kind: 'top', side: sideOf(box[0].playerId, box[0].home), name: box[0].name, n: box[0].pts });
   return { periods, moments: moments.sort((a, b) => a.period - b.period) };
 }
