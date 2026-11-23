@@ -434,7 +434,10 @@
     "nextWeekly_one": "الاختيار الأسبوعي بعد يوم واحد",
     "nextWeekly_two": "الاختيار الأسبوعي بعد يومين",
     "nextWeekly_zero": "الاختيار الأسبوعي اليوم",
-    "nextWeekly_other": "الاختيار الأسبوعي بعد {{count}} يوم"
+    "nextWeekly_other": "الاختيار الأسبوعي بعد {{count}} يوم",
+    "powerUp": "تعزيز (المتبقي {{n}})",
+    "powerOdds": "فرصة {{pct}}٪ لترقية الاختيار بالكامل",
+    "upgraded": "تمت الترقية!"
   },
   "lineup": {
     "title": "التشكيلة",

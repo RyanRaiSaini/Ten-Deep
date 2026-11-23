@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import { POWER_TAPS, nextType, tapUpgrades } from '../engine/collect/powerup';
 import { ALL_CARDS } from '../data/cards';
 import { generatePick, runPickType, type PickType } from '../engine/collect/picks';
 import { autoFill, canPlace, cardLevel, stageReward, starterSquad, type Lineup } from '../engine/collect/lineup';
@@ -15,6 +16,8 @@ export interface PendingPick {
   cards: string[];
   /** What earned it, e.g. "day-7" or a run seed. */
   source: string;
+  /** Power-up taps used (0–3). */
+  taps?: number;
 }
 
 export interface CollectionStore {
@@ -38,6 +41,8 @@ export interface CollectionStore {
   setSlot: (slot: SlotId, cardId: string | null) => void;
   autoFillLineup: () => void;
   recordStage: (stage: number, won: boolean) => void;
+  /** One power-up tap on an unopened pick: 'up' if it upgraded, 'miss' if not, null if no taps are left. */
+  powerUp: (pickId: string) => 'up' | 'miss' | null;
   /** Add a pick from elsewhere (missions, achievements). Idempotent per source. */
   grant: (type: PickType, source: string) => void;
 }
@@ -102,6 +107,19 @@ export const useCollection = create<CollectionStore>()(
             pending: pay ? [...s.pending, pick(reward, `gauntlet-${stage}-${s.lastDay ?? ''}`)] : s.pending,
           };
         }),
+
+      powerUp: (pickId) => {
+        const p = get().pending.find((x) => x.id === pickId);
+        const taps = p?.taps ?? 0;
+        if (!p || taps >= POWER_TAPS) return null;
+        const next = nextType(p.type);
+        const hit = !!next && tapUpgrades(p.id, taps);
+        const upgraded: PendingPick = hit && next
+          ? { ...p, type: next, taps: taps + 1, cards: generatePick(ALL_CARDS, next, `${p.source}:up${taps}`).map((c) => c.id) }
+          : { ...p, taps: taps + 1 };
+        set((s) => ({ pending: s.pending.map((x) => (x.id === pickId ? upgraded : x)) }));
+        return hit ? 'up' : 'miss';
+      },
 
       grant: (type, source) =>
         set((s) => {

@@ -414,7 +414,10 @@
     "waiting_one": "{{count}} Pick wartet",
     "waiting_other": "{{count}} Picks warten",
     "nextWeekly_one": "Wochen-Pick in {{count}} Tag",
-    "nextWeekly_other": "Wochen-Pick in {{count}} Tagen"
+    "nextWeekly_other": "Wochen-Pick in {{count}} Tagen",
+    "powerUp": "Aufladen (noch {{n}})",
+    "powerOdds": "{{pct}} % Chance, den ganzen Pick aufzuwerten",
+    "upgraded": "AUFGEWERTET!"
   },
   "lineup": {
     "title": "Aufstellung",

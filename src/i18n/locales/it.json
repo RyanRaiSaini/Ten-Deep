@@ -419,7 +419,10 @@
     "waiting_other": "{{count}} scelte in attesa",
     "nextWeekly_many": "Scelta settimanale tra {{count}} giorni",
     "nextWeekly_one": "Scelta settimanale tra {{count}} giorno",
-    "nextWeekly_other": "Scelta settimanale tra {{count}} giorni"
+    "nextWeekly_other": "Scelta settimanale tra {{count}} giorni",
+    "powerUp": "Potenzia ({{n}} rimasti)",
+    "powerOdds": "{{pct}}% di probabilità di migliorare tutta la scelta",
+    "upgraded": "MIGLIORATO!"
   },
   "lineup": {
     "title": "Formazione",

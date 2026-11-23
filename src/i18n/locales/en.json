@@ -414,7 +414,10 @@
     "waiting_one": "{{count}} pick waiting",
     "waiting_other": "{{count}} picks waiting",
     "nextWeekly_one": "Weekly Pick in {{count}} day",
-    "nextWeekly_other": "Weekly Pick in {{count}} days"
+    "nextWeekly_other": "Weekly Pick in {{count}} days",
+    "powerUp": "Power up ({{n}} left)",
+    "powerOdds": "{{pct}}% chance to upgrade the whole pick",
+    "upgraded": "UPGRADED!"
   },
   "lineup": {
     "title": "Lineup",

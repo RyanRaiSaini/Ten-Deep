@@ -419,7 +419,10 @@
     "waiting_other": "{{count}} choix en attente",
     "nextWeekly_many": "Choix hebdo dans {{count}} jours",
     "nextWeekly_one": "Choix hebdo dans {{count}} jour",
-    "nextWeekly_other": "Choix hebdo dans {{count}} jours"
+    "nextWeekly_other": "Choix hebdo dans {{count}} jours",
+    "powerUp": "Booster ({{n}} restants)",
+    "powerOdds": "{{pct}} % de chances d'améliorer tout le choix",
+    "upgraded": "AMÉLIORÉ !"
   },
   "lineup": {
     "title": "Alignement",
