@@ -388,5 +388,30 @@
     "guarantee_mythic": "One guaranteed 90+",
     "guarantee_legendary": "One guaranteed Ultra",
     "nextWeekly": "Weekly Pick in {{n}} days"
+  },
+  "lineup": {
+    "title": "Lineup",
+    "chemistry": "Chemistry +{{n}}",
+    "teamRating": "Team rating {{n}}",
+    "autoFill": "Auto-fill best lineup",
+    "pickCard": "Choose a card for {{slot}}",
+    "clear": "Remove",
+    "noCards": "No owned cards fit this spot yet.",
+    "callupNote": "Empty spots play with call-ups (64).",
+    "empty": "Empty"
+  },
+  "gauntlet": {
+    "title": "The Gauntlet",
+    "desc": "Beat 10 great teams in a row with your card lineup. Best-of-3 each.",
+    "stage": "Stage {{n}}",
+    "play": "Play stage {{n}}",
+    "next": "Play game {{n}}",
+    "won": "You win the series {{w}}-{{l}}!",
+    "lost": "Eliminated {{w}}-{{l}}. Tweak your lineup and try again.",
+    "reward": "Reward: {{pick}}",
+    "cleared": "Cleared",
+    "locked": "Locked",
+    "complete": "Gauntlet complete!",
+    "editLineup": "Edit lineup"
   }
 }

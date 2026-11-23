@@ -196,6 +196,19 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('28-collection');
   });
 
+  await step('card lineup auto-fill and a Gauntlet stage', async () => {
+    await page.goto(`${base}/collection`);
+    await page.getByTestId('to-lineup').click();
+    await page.getByTestId('lineup-autofill').click();
+    await page.getByTestId('lineup-rating').waitFor();
+    await shot('29-lineup');
+    await page.getByTestId('to-gauntlet').click();
+    await page.getByTestId('gauntlet-play').click();
+    for (let i = 0; i < 3 && !(await page.getByTestId('gauntlet-result').count()); i++) await page.getByTestId('gauntlet-next').click();
+    await page.getByTestId('gauntlet-result').waitFor();
+    await shot('30-gauntlet');
+  });
+
   await step('pass-and-play duel: 20 picks and a best-of-7', async () => {
     await page.goto(base);
     await page.getByText('Duels').click();

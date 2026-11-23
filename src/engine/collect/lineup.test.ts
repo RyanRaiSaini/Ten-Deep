@@ -3,7 +3,7 @@ import { ALL_CARDS, CARD_BY_ID } from '../../data/cards';
 import { createRng } from '../rng';
 import { bestOf } from '../series';
 import { ALL_SLOTS, STARTER_SLOTS } from '../types';
-import { GAUNTLET, autoFill, canPlace, chemistry, cardPlayer, lineupRoster, playStage, stageReward } from './lineup';
+import { GAUNTLET, autoFill, canPlace, chemistry, cardPlayer, lineupRoster, playStage, stageReward, starterSquad } from './lineup';
 
 const byName = (n: string) => ALL_CARDS.filter((c) => c.name === n).sort((a, b) => b.ovr - a.ovr)[0];
 
@@ -76,6 +76,28 @@ describe('gauntlet', () => {
       if (playStage(callups, 0, `c${i}`).winner === 'a') callupWins++;
     }
     expect(legendWins).toBeGreaterThan(callupWins + 15);
+  });
+
+  it("starter squad: 10 distinct cards rated 74–80 that fill every lineup spot legally", () => {
+    const squad = starterSquad('seed');
+    expect(squad).toHaveLength(10);
+    const lineup = autoFill(squad);
+    expect(Object.keys(lineup)).toHaveLength(10);
+    for (const id of squad) expect(CARD_BY_ID[id].ovr).toBeGreaterThanOrEqual(74);
+    for (const id of squad) expect(CARD_BY_ID[id].ovr).toBeLessThanOrEqual(80);
+    expect(starterSquad('seed')).toEqual(squad);
+  });
+
+  it('a starter squad can beat stage 1 regularly, but not the final boss', () => {
+    let first = 0;
+    let last = 0;
+    for (let i = 0; i < 60; i++) {
+      const r = lineupRoster(autoFill(starterSquad(`s${i}`)));
+      if (playStage(r, 0, `a${i}`).winner === 'a') first++;
+      if (playStage(r, 9, `b${i}`).winner === 'a') last++;
+    }
+    expect(first / 60).toBeGreaterThan(0.35);
+    expect(last / 60).toBeLessThan(0.15);
   });
 
   it('rewards picks at stages 3, 6 and 10', () => {

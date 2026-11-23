@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { ALL_CARDS } from '../data/cards';
 import { generatePick, runPickType, type PickType } from '../engine/collect/picks';
-import { autoFill, canPlace, stageReward, type Lineup } from '../engine/collect/lineup';
+import { autoFill, canPlace, stageReward, starterSquad, type Lineup } from '../engine/collect/lineup';
 import { advanceStreak, streakRewards } from '../engine/collect/streak';
 import type { SlotId } from '../engine/types';
 
@@ -56,7 +56,14 @@ export const useCollection = create<CollectionStore>()(
         if (s.lastDay === today) return;
         const streak = advanceStreak(s.lastDay, today, s.streak);
         const earned = streakRewards(streak).map((type) => pick(type, `${today}:day-${streak}`));
-        set({ streak, lastDay: today, pending: [...s.pending, ...earned] });
+        // First visit ever: a 10-card starter squad so the lineup and Gauntlet are playable from day one.
+        const welcome = s.lastDay === null && Object.keys(s.owned).length === 0 ? starterSquad(today) : [];
+        const owned = { ...s.owned };
+        for (const id of welcome) owned[id] = { count: 1, firstDay: today };
+        set({
+          streak, lastDay: today, pending: [...s.pending, ...earned], owned,
+          lineup: welcome.length ? autoFill(welcome) : s.lineup,
+        });
       },
 
       awardRun: (runKey, result) => {

@@ -17,6 +17,14 @@ describe('collection store', () => {
     expect(p[0].cards).toHaveLength(5);
   });
 
+  it('first check-in grants a 10-card starter squad and a full lineup, once', () => {
+    useCollection.getState().checkIn('2026-11-22');
+    expect(Object.keys(useCollection.getState().owned)).toHaveLength(10);
+    expect(Object.keys(useCollection.getState().lineup)).toHaveLength(10);
+    useCollection.getState().checkIn('2026-11-23');
+    expect(Object.keys(useCollection.getState().owned)).toHaveLength(10);
+  });
+
   it('7 straight days earns a Weekly pick; a gap resets the streak', () => {
     for (let d = 1; d <= 7; d++) useCollection.getState().checkIn(`2026-12-0${d}`);
     expect(useCollection.getState().streak).toBe(7);
