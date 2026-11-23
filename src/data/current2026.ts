@@ -470,3 +470,16 @@ export const current2026: Pool = {
   ],
 };
 
+/** The 2026 draft class (first round, plus second-rounders on rosters): this season's rookies. */
+export const ROOKIES_2026 = [
+  'AJ Dybantsa', 'Darryn Peterson', 'Cameron Boozer', 'Caleb Wilson', 'Keaton Wagler', 'Mikel Brown Jr.', 'Darius Acuff Jr.',
+  'Kingston Flemings', 'Morez Johnson Jr.', 'Brayden Burries', 'Yaxel Lendeborg', 'Aday Mara', 'Nate Ament', 'Hannes Steinbach',
+  'Dailyn Swain', 'Bennett Stirtz', 'Ebuka Okorie', 'Christian Anderson', 'Allen Graves', 'Jayden Quaintance', 'Karim López',
+  'Labaron Philon Jr.', 'Zuby Ejiofor', 'Cameron Carr', 'Sergio de Larrea', 'Tarris Reed Jr.', 'Chris Cenac Jr.', 'Joshua Jefferson',
+  'Alex Karaban', 'Koa Peat', 'Isaiah Evans', 'Meleek Thomas',
+];
+{
+  const names = new Set(ROOKIES_2026.map((n) => n.toLowerCase()));
+  for (const t of current2026.teams) for (const p of t.players) if (names.has(p.name.toLowerCase())) p.rookie = true;
+}
+

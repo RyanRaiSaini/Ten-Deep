@@ -16,7 +16,7 @@ const RECENT_DAYS = 7;
 const MAX_GAMES_PER_RUN = 320;
 const HOUR = 3600_000;
 /** Bump when the rating model changes so the next request re-rates from stored box scores. */
-const MODEL = 2;
+const MODEL = 3;
 const DAY = 24 * HOUR;
 
 interface State {
@@ -138,7 +138,7 @@ async function refresh(): Promise<Latest> {
       recent.set(name, { gp, min: (t?.min ?? 0) + p.min, gmsc: ((t?.gmsc ?? 0) * (gp - 1) + p.gmsc) / gp });
     }
   }
-  const players = current2026.teams.flatMap((t) => t.players.map((p) => ({ name: p.name, ovr: p.ovr, age: p.age })));
+  const players = current2026.teams.flatMap((t) => t.players.map((p) => ({ name: p.name, ovr: p.ovr, age: p.age, rookie: p.rookie })));
   const deltas = computeForm(players, new Map(Object.entries(state.season)), recent);
   const latest: Latest = { updated: new Date().toISOString(), games: state.processed.length, source: 'ESPN box scores', model: MODEL, deltas };
   await writeBlob('form/state.json', state);
@@ -152,9 +152,12 @@ export async function GET(req: Request) {
   const age = latest ? Date.now() - Date.parse(latest.updated) : Infinity;
   const stale = latest?.model !== MODEL;
   const wantRefresh = stale || (url.searchParams.get('refresh') === '1' ? age > HOUR || !latest?.games : age > 20 * HOUR);
-  if (!wantRefresh && latest) return json(latest);
+  // ?only=name,name filters the answer (handy for checking a few players).
+  const only = url.searchParams.get('only')?.split(',').map((n) => normName(n));
+  const pickOut = (l: Latest) => (only ? { ...l, deltas: Object.fromEntries(Object.entries(l.deltas).filter(([k]) => only.includes(k))) } : l);
+  if (!wantRefresh && latest) return json(pickOut(latest));
   try {
-    return json(await refresh(), 200, 60);
+    return json(pickOut(await refresh()), 200, 60);
   } catch (e) {
     // Data source hiccup: serve what we have.
     return latest ? json(latest) : json({ updated: null, games: 0, deltas: {}, error: String(e).slice(0, 200) }, 200, 60);

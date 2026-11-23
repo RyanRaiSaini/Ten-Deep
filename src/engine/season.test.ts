@@ -162,7 +162,8 @@ describe('season', () => {
   it('tradeSwap replaces a user player in the same slot', () => {
     const s = advance(fresh(), 100);
     const outId = s.teams[0].slots.B5.id;
-    const incoming = { ...pool.teams[29].players[12], id: 'incoming', ovr: 64 };
+    // A made-up free agent (any real pool player might already be on an AI roster).
+    const incoming = { ...pool.teams[29].players[12], id: 'incoming', name: 'Test Free Agent', ovr: 64 };
     const t = tradeSwap(s, outId, incoming);
     expect(t.teams[0].slots.B5.id).toBe('incoming');
     expect(t.deadlineUsed).toBe(true);

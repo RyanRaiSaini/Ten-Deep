@@ -32,33 +32,33 @@ describe('salaryFor', () => {
 });
 
 describe('cap room and affordability', () => {
-  it('capRoom subtracts salaries from the $150M cap', () => {
-    expect(CAP).toBe(150);
+  it('capRoom subtracts salaries from the $200M cap', () => {
+    expect(CAP).toBe(200);
     expect(MIN_SALARY).toBe(1);
     const roster: RosterSlots = { PG: mk('a', 99), SG: mk('b', 90) };
-    expect(capRoom(roster)).toBe(70);
+    expect(capRoom(roster)).toBe(120);
   });
 
   it('reserves minimum salary for every slot still open after the pick', () => {
-    // 9 open slots: after picking, 8 remain and need $8M reserved.
-    const roster: RosterSlots = { PG: mk('a', 99), SG: mk('b', 99) }; // 100 used, 50 left, 8 open
-    // picking a 95 ($42M) leaves $8M for the 7 slots still open → ok
-    expect(canAfford(roster, mk('c', 95))).toBe(true);
-    // picking a 97 leaves less than 7 × $1M
-    expect(canAfford(roster, mk('d', 97))).toBe(false);
+    // 3 × 99 ($150M) + a 90 ($30M) = $180M used, $20M left, 6 open; after the pick 5 remain and need $5M.
+    const roster: RosterSlots = { PG: mk('a', 99), SG: mk('b', 99), SF: mk('c', 99), PF: mk('d', 90) };
+    // an 80 ($12M) leaves $8M for the 5 slots still open → ok
+    expect(canAfford(roster, mk('e', 80))).toBe(true);
+    // an 85 ($20M) leaves nothing for them
+    expect(canAfford(roster, mk('f', 85))).toBe(false);
   });
 
-  it('never lets three 99s fit with seven minimum slots left', () => {
-    const roster: RosterSlots = { PG: mk('a', 99), SG: mk('b', 99) };
-    expect(canAfford(roster, mk('c', 99))).toBe(false);
+  it('never lets four 99s fit with six minimum slots left', () => {
+    const roster: RosterSlots = { PG: mk('a', 99), SG: mk('b', 99), SF: mk('c', 99) };
+    expect(canAfford(roster, mk('d', 99))).toBe(false);
   });
 
   it('the last open slot only needs its own salary to fit', () => {
     const roster: RosterSlots = {
-      PG: mk('a', 99), SG: mk('b', 95), SF: mk('c', 90), PF: mk('d', 64), C: mk('e', 64),
+      PG: mk('a', 99), SG: mk('b', 95), SF: mk('c', 90), PF: mk('d', 99), C: mk('e', 64),
       B1: mk('f', 64), B2: mk('g', 64), B3: mk('h', 64), B4: mk('i', 64),
-    }; // 50+42+30+6 = 128 → 22 left, 1 open
-    expect(canAfford(roster, mk('j', 86))).toBe(salaryFor(86) <= 22);
+    }; // 50+42+30+50+5 = 177 → 23 left, 1 open
+    expect(canAfford(roster, mk('j', 86))).toBe(salaryFor(86) <= 23);
     expect(canAfford(roster, mk('k', 90))).toBe(false);
   });
 });
