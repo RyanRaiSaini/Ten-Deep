@@ -242,7 +242,12 @@ const minus = (a: PlayerTotals = ZERO, b: PlayerTotals = ZERO): PlayerTotals => 
 export function recordStint(state: SeasonState, outgoing: Player, incoming: Player): SeasonState {
   const stints = { ...state.stints };
   stints[outgoing.id] = { ...stints[outgoing.id], player: outgoing, to: { ...(state.totals[outgoing.id] ?? ZERO) } };
-  stints[incoming.id] = { player: incoming, from: { ...(state.totals[incoming.id] ?? ZERO) } };
+  const now = state.totals[incoming.id] ?? ZERO;
+  const back = stints[incoming.id];
+  // Coming back for a second stint: shift `from` so the earlier games with you still count.
+  stints[incoming.id] = back?.to
+    ? { player: incoming, from: minus(now, minus(back.to, back.from)) }
+    : { player: incoming, from: { ...now } };
   return { ...state, stints };
 }
 

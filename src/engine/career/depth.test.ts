@@ -124,3 +124,25 @@ describe('stints with your team', () => {
     expect(lines.length).toBe(11);
   });
 });
+
+describe('stint edge cases', () => {
+  it('a player who leaves and comes back keeps his first stint', async () => {
+    const { recordStint, userStints } = await import('../season');
+    const A: Player = P('a', 80, 25, 'SF');
+    const B: Player = P('b', 78, 25, 'SF');
+    const base = { teams: [{ id: 'u', name: 'U', colors: ['#000', '#fff'], slots: { B5: A } }], totals: { a: { gp: 20, pts: 200, reb: 50, ast: 30 } } } as never;
+    let s = recordStint(base, A, B); // A leaves after 20 games
+    s = { ...s, totals: { ...s.totals, a: { gp: 40, pts: 400, reb: 100, ast: 60 } } }; // 20 more games elsewhere
+    s = recordStint(s, B, A); // A comes back
+    s = { ...s, teams: [{ ...s.teams[0], slots: { B5: A } }] as never, totals: { ...s.totals, a: { gp: 60, pts: 600, reb: 150, ast: 90 } } };
+    const line = (userStints({ ...s, teams: [{ ...s.teams[0], slots: Object.fromEntries(['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4'].map((k) => [k, { ...A, id: `x-${k}` }]).concat([['B5', A]])) }] } as never)).find((l) => l.player.id === 'a')!;
+    expect(line.totals.gp).toBe(40); // 20 before leaving + 20 after returning
+  });
+
+  it('only players still with you at the end are credited with the title', () => {
+    const totals = { a: { gp: 80, pts: 100, reb: 1, ast: 1 }, b: { gp: 30, pts: 50, reb: 1, ast: 1 } };
+    const s = addSeason({}, [P('a', 80, 25), P('b', 80, 25)], totals, true, '2026-27', new Set(['a']));
+    expect(s.a.titles).toBe(1);
+    expect(s.b.titles).toBe(0);
+  });
+});

@@ -79,7 +79,7 @@ export default function Collection() {
 function Chip({ label, on, color, onPress }: { label: string; on: boolean; color: string; onPress: () => void }) {
   return (
     <Pressable onPress={onPress} style={[styles.chip, { borderColor: color }, on && { backgroundColor: color }]}>
-      <Text style={[styles.chipText, { color: on ? C.bg : color }]}>{label}</Text>
+      <Text style={[styles.chipText, { color: on ? C.ink : color }]}>{label}</Text>
     </Pressable>
   );
 }

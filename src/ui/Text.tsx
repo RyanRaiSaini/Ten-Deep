@@ -1,6 +1,5 @@
-import type { ComponentProps } from 'react';
+import { createContext, useContext, type ComponentProps } from 'react';
 import { StyleSheet, Text as RNText } from 'react-native';
-import { FONT } from './theme';
 
 /** Nunito ships one family per weight, so a fontWeight picks the matching family. */
 const BY_WEIGHT: Record<string, string> = {
@@ -10,8 +9,14 @@ const BY_WEIGHT: Record<string, string> = {
 };
 
 /** Drop-in for React Native's Text with the game's fonts applied. */
+/** Set inside a Text, so a nested span without its own weight keeps its parent's font. */
+const InText = createContext(false);
+
 export function Text({ style, ...rest }: ComponentProps<typeof RNText>) {
+  const nested = useContext(InText);
   const flat = StyleSheet.flatten(style) ?? {};
-  const fontFamily = flat.fontFamily ?? BY_WEIGHT[String(flat.fontWeight ?? '600')] ?? FONT.body;
-  return <RNText {...rest} style={[flat, { fontFamily, fontWeight: undefined }]} />;
+  const own = flat.fontFamily ?? (flat.fontWeight !== undefined ? BY_WEIGHT[String(flat.fontWeight)] : undefined);
+  const fontFamily = own ?? (nested ? undefined : BY_WEIGHT['600']);
+  const text = <RNText {...rest} style={[flat, fontFamily ? { fontFamily } : null, { fontWeight: undefined }]} />;
+  return nested ? text : <InText.Provider value>{text}</InText.Provider>;
 }

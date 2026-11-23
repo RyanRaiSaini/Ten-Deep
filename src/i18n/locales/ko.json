@@ -93,7 +93,8 @@
     "bench": "벤치",
     "startSeason": "시즌 시작",
     "landed": "나온 팀",
-    "empty": "비어 있음"
+    "empty": "비어 있음",
+    "benchSlot": "벤치 {{n}}"
   },
   "season": {
     "title": "정규 시즌",

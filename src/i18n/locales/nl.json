@@ -93,7 +93,8 @@
     "bench": "Bank",
     "startSeason": "Start het seizoen",
     "landed": "Je kreeg",
-    "empty": "Vrij"
+    "empty": "Vrij",
+    "benchSlot": "Bank {{n}}"
   },
   "season": {
     "title": "Reguliere competitie",

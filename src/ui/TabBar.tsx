@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { useEffect } from 'react';
+import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { feel } from '../audio/feel';
 import { Display } from './components';
@@ -22,6 +23,12 @@ const TABS: { key: Tab; icon: IconName; route: '/daily' | '/collection' | '/' | 
 export function TabBar({ active }: { active: Tab }) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  // Android back on a tab goes to Play first (tabs replace each other, so there is no stack to pop).
+  useEffect(() => {
+    if (active === 'play') return;
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => { router.replace('/'); return true; });
+    return () => sub.remove();
+  }, [active]);
   return (
     <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 8) }]} testID="tab-bar">
       <View style={styles.items}>

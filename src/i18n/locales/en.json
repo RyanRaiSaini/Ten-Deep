@@ -93,7 +93,8 @@
     "bench": "Bench",
     "startSeason": "Start the season",
     "landed": "You landed",
-    "empty": "Open"
+    "empty": "Open",
+    "benchSlot": "Bench {{n}}"
   },
   "season": {
     "title": "Regular season",
