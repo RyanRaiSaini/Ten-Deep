@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from './Text';
 import type { Card, Tier } from '../engine/collect/tiers';
 import Svg, { Path, Text as SvgText } from 'react-native-svg';
-import { teamGradient } from './Spinner';
+import { teamGradient } from './teamColors';
 import { C, F, FONT, R } from './theme';
 
 /** Tier look: frame gradient, accent and glow. */

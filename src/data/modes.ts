@@ -42,10 +42,15 @@ export interface Mode {
   colors: [string, string];
 }
 
-const era = (id: string, title: string, from: number, to: number, colors: [string, string]): Mode => ({
-  id, kind: 'era', title, subtitle: from === 0 ? 'Every era' : `${from}–${to}`, colors, leaguePoolId: id,
-  pool: buildPool(id, title, HISTORY, (t) => yearOf(t) >= from && yearOf(t) <= to),
-});
+/** Pools are built the first time a mode is opened (39 of them at launch cost real time on phones). */
+function lazyPool(m: Omit<Mode, 'pool'>, build: () => Pool): Mode {
+  let cache: Pool | undefined;
+  return Object.defineProperty(m, 'pool', { get: () => (cache ??= build()), enumerable: true }) as Mode;
+}
+
+const era = (id: string, title: string, from: number, to: number, colors: [string, string]): Mode =>
+  lazyPool({ id, kind: 'era', title, subtitle: from === 0 ? 'Every era' : `${from}–${to}`, colors, leaguePoolId: id },
+    () => buildPool(id, title, HISTORY, (t) => yearOf(t) >= from && yearOf(t) <= to));
 
 const FRANCHISES: [string, string, [string, string]][] = [
   ['lal', 'All-Time Lakers', ['#552583', '#FDB927']],
@@ -80,10 +85,9 @@ const FRANCHISES: [string, string, [string, string]][] = [
   ['was', 'All-Time Wizards', ['#002B5C', '#E31837']],
 ];
 
-const franchise = ([key, title, colors]: (typeof FRANCHISES)[number]): Mode => ({
-  id: `franchise-${key}`, kind: 'franchise', title, subtitle: 'Franchise history', colors, leaguePoolId: 'all-time',
-  pool: buildPool(`franchise-${key}`, title, HISTORY, (t) => t.franchise === key),
-});
+const franchise = ([key, title, colors]: (typeof FRANCHISES)[number]): Mode =>
+  lazyPool({ id: `franchise-${key}`, kind: 'franchise', title, subtitle: 'Franchise history', colors, leaguePoolId: 'all-time' },
+    () => buildPool(`franchise-${key}`, title, HISTORY, (t) => t.franchise === key));
 
 export const MODES: Mode[] = [
   { id: 'current-2026', kind: 'current', title: 'Current Day', subtitle: '2026-27', pool: current2026, leaguePoolId: 'current-2026', colors: ['#E8833A', '#3DF2C2'] },
