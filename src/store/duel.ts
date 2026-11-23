@@ -42,8 +42,8 @@ export const useDuel = create<DuelStore>()(
       pick: (playerId, slot) => set((s) => (s.state ? { state: duelPick(s.state, playerId, slot, POOL) } : {})),
       fallback: () => set((s) => (s.state ? { state: duelFallback(s.state, POOL) } : {})),
       playSeries: () => {
-        const { state, names } = get();
-        if (!state) return;
+        const { state, names, series: played } = get();
+        if (!state || played) return;
         const series = bestOf7(rosterOf(state.a, names.a, DUEL_COLORS.a), rosterOf(state.b, names.b, DUEL_COLORS.b), createRng(`${state.seed}:series`));
         set({ series, shown: 0 });
         track({ type: 'duel' });
