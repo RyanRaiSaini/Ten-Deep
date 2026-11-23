@@ -89,16 +89,18 @@ describe('gauntlet', () => {
   });
 
   it('a starter squad can beat stage 1 regularly, but not the final boss', () => {
+    // Enough squads that the rate, not the seeds, decides (the 74–80 card pool is large and varied).
+    const n = 300;
     let first = 0;
     let last = 0;
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < n; i++) {
       const r = lineupRoster(autoFill(starterSquad(`s${i}`)));
       if (playStage(r, 0, `a${i}`).winner === 'a') first++;
       if (playStage(r, 9, `b${i}`).winner === 'a') last++;
     }
-    expect(first / 60).toBeGreaterThan(0.35);
-    expect(last / 60).toBeLessThan(0.15);
-  });
+    expect(first / n).toBeGreaterThan(0.35);
+    expect(last / n).toBeLessThan(0.15);
+  }, 30_000);
 
   it('rewards picks at stages 3, 6 and 10', () => {
     expect([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(stageReward)).toEqual([null, null, 'playoffs', null, null, 'weekly', null, null, null, 'champion']);
