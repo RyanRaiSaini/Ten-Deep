@@ -48,6 +48,7 @@ export function useRoom(code: string | undefined, fast: boolean, stop: boolean) 
   const [offset, setOffset] = useState(0);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [nudge, setNudge] = useState(0);
+  const haveForm = useRef(false);
 
   useEffect(() => {
     if (!code) return;
@@ -55,7 +56,7 @@ export function useRoom(code: string | undefined, fast: boolean, stop: boolean) 
     const tick = async () => {
       const sent = Date.now();
       try {
-        const r = await fetch(`${URL_}?code=${code}`);
+        const r = await fetch(`${URL_}?code=${code}${haveForm.current ? '&lite=1' : ''}`);
         const ok = (r.headers.get('content-type') ?? '').includes('json');
         const j = ok ? await r.json() : null;
         if (!alive) return;
@@ -64,7 +65,9 @@ export function useRoom(code: string | undefined, fast: boolean, stop: boolean) 
         else {
           const got = Date.now();
           setOffset(j.now - (sent + got) / 2);
-          setRoom({ meta: j.meta, members: j.members });
+          // Keep the frozen form from the first load (lite polls leave it out).
+          setRoom((prev) => ({ meta: { ...j.meta, form: j.meta.form ?? prev?.meta.form }, members: j.members }));
+          haveForm.current = true;
           setError(null);
         }
       } catch {
