@@ -388,5 +388,30 @@
     "guarantee_mythic": "Eén 90+ gegarandeerd",
     "guarantee_legendary": "Eén Ultra gegarandeerd",
     "nextWeekly": "Weekkeuze over {{n}} dagen"
+  },
+  "lineup": {
+    "title": "Opstelling",
+    "chemistry": "Chemie +{{n}}",
+    "teamRating": "Teamrating {{n}}",
+    "autoFill": "Beste opstelling invullen",
+    "pickCard": "Kies een kaart voor {{slot}}",
+    "clear": "Verwijderen",
+    "noCards": "Geen van je kaarten past op deze plek.",
+    "callupNote": "Lege plekken spelen met invallers (64).",
+    "empty": "Leeg"
+  },
+  "gauntlet": {
+    "title": "De Uitdaging",
+    "desc": "Versla 10 grote teams op rij met je kaartopstelling. Best-of-3.",
+    "stage": "Etappe {{n}}",
+    "play": "Speel etappe {{n}}",
+    "next": "Speel wedstrijd {{n}}",
+    "won": "Je wint de serie met {{w}}-{{l}}!",
+    "lost": "Uitgeschakeld {{w}}-{{l}}. Pas je opstelling aan en probeer opnieuw.",
+    "reward": "Beloning: {{pick}}",
+    "cleared": "Gehaald",
+    "locked": "Op slot",
+    "complete": "Uitdaging voltooid!",
+    "editLineup": "Opstelling bewerken"
   }
 }

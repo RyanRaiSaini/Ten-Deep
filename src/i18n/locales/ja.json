@@ -388,5 +388,30 @@
     "guarantee_mythic": "90以上1枚確定",
     "guarantee_legendary": "ウルトラ1枚確定",
     "nextWeekly": "ウィークリーピックまであと{{n}}日"
+  },
+  "lineup": {
+    "title": "ラインナップ",
+    "chemistry": "ケミストリー +{{n}}",
+    "teamRating": "チームレーティング {{n}}",
+    "autoFill": "ベストラインナップを自動編成",
+    "pickCard": "{{slot}}のカードを選ぶ",
+    "clear": "外す",
+    "noCards": "この枠に入る所持カードがありません。",
+    "callupNote": "空き枠はコールアップ選手(64)が出場。",
+    "empty": "空き"
+  },
+  "gauntlet": {
+    "title": "ザ・ガントレット",
+    "desc": "カードのラインナップで強豪10チームに連勝しよう。各3戦2勝制。",
+    "stage": "ステージ{{n}}",
+    "play": "ステージ{{n}}に挑戦",
+    "next": "第{{n}}戦をプレイ",
+    "won": "シリーズを{{w}}勝{{l}}敗で制した！",
+    "lost": "{{w}}勝{{l}}敗で敗退。ラインナップを調整して再挑戦。",
+    "reward": "報酬：{{pick}}",
+    "cleared": "クリア",
+    "locked": "ロック中",
+    "complete": "ガントレット制覇！",
+    "editLineup": "ラインナップを編集"
   }
 }

@@ -388,5 +388,30 @@
     "guarantee_mythic": "Bir adet 90+ garantili",
     "guarantee_legendary": "Bir Ultra garantili",
     "nextWeekly": "{{n}} gün sonra haftalık seçim"
+  },
+  "lineup": {
+    "title": "Kadro",
+    "chemistry": "Uyum +{{n}}",
+    "teamRating": "Takım reytingi {{n}}",
+    "autoFill": "En iyi kadroyla doldur",
+    "pickCard": "{{slot}} için kart seç",
+    "clear": "Çıkar",
+    "noCards": "Bu pozisyona uyan kartın yok.",
+    "callupNote": "Boş yerlerde yedekler oynar (64).",
+    "empty": "Boş"
+  },
+  "gauntlet": {
+    "title": "Meydan Okuma",
+    "desc": "Kart kadronla 10 büyük takımı art arda yen. Her biri 3 maç üzerinden.",
+    "stage": "Aşama {{n}}",
+    "play": "{{n}}. aşamayı oyna",
+    "next": "{{n}}. maçı oyna",
+    "won": "Seriyi {{w}}-{{l}} kazandın!",
+    "lost": "{{w}}-{{l}} elendin. Kadronu düzenle ve tekrar dene.",
+    "reward": "Ödül: {{pick}}",
+    "cleared": "Geçildi",
+    "locked": "Kilitli",
+    "complete": "Meydan okuma tamamlandı!",
+    "editLineup": "Kadroyu düzenle"
   }
 }

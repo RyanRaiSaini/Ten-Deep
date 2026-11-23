@@ -388,5 +388,30 @@
     "guarantee_mythic": "Um 90+ garantido",
     "guarantee_legendary": "Uma Ultra garantida",
     "nextWeekly": "Escolha semanal em {{n}} dias"
+  },
+  "lineup": {
+    "title": "Escalação",
+    "chemistry": "Química +{{n}}",
+    "teamRating": "Nota do time {{n}}",
+    "autoFill": "Preencher com a melhor escalação",
+    "pickCard": "Escolha uma carta para {{slot}}",
+    "clear": "Remover",
+    "noCards": "Nenhuma carta sua serve nesta posição.",
+    "callupNote": "Vagas vazias jogam com reservas (64).",
+    "empty": "Vazio"
+  },
+  "gauntlet": {
+    "title": "O Desafio",
+    "desc": "Vença 10 grandes times seguidos com sua escalação. Melhor de 3.",
+    "stage": "Fase {{n}}",
+    "play": "Jogar fase {{n}}",
+    "next": "Jogar jogo {{n}}",
+    "won": "Você vence a série por {{w}}-{{l}}!",
+    "lost": "Eliminado por {{w}}-{{l}}. Ajuste a escalação e tente de novo.",
+    "reward": "Prêmio: {{pick}}",
+    "cleared": "Concluída",
+    "locked": "Bloqueada",
+    "complete": "Desafio completo!",
+    "editLineup": "Editar escalação"
   }
 }
