@@ -52,7 +52,6 @@ export default function Trade() {
     <Screen>
       <Header title={t('trade.title')} left={<BackButton onPress={() => goBack()} />} />
       <Text style={styles.hint}>{t('trade.hint')}</Text>
-      {msg && <Text style={[styles.msg, { color: msg.ok ? C.neon : C.danger }]} testID="trade-msg">{msg.text}</Text>}
 
       <Label>{t('trade.yours')}</Label>
       <View style={styles.wrap}>{roster(0).map((p) => chip(p, give === p.id, () => { setGive(p.id); setMsg(null); }, false, 'trade-give'))}</View>
@@ -77,6 +76,7 @@ export default function Trade() {
       )}
 
       <Card style={{ gap: S.sm }}>
+        {msg && <Text style={[styles.msg, { color: msg.ok ? C.neon : C.danger }]} testID="trade-msg">{msg.text}</Text>}
         <Button label={t('trade.propose')} variant="gold" disabled={!verdict} onPress={propose} testID="trade-propose" />
         <Button label={t('common.back')} variant="ghost" onPress={() => goBack()} />
       </Card>

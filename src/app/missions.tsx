@@ -11,6 +11,7 @@ import { BackButton, Button, Card, Header, Label, Screen } from '../ui/component
 import { C, R, S } from '../ui/theme';
 import { Icon } from '../ui/icons';
 import { goBack } from '../ui/nav';
+import { achievementIcon } from '../ui/gameIcons';
 
 const MEDAL: Record<Medal, string> = { bronze: '#D08A4E', silver: '#C9D3E8', gold: C.gold };
 
@@ -64,7 +65,7 @@ export default function Missions() {
           return (
             <View key={a.id} style={[styles.ach, { borderColor: got ? MEDAL[a.tier] : C.line, opacity: got ? 1 : 0.6 }]}
               accessibilityLabel={`${t(`ach.${a.id}`)}: ${t(`stat.${a.stat}`)} ${v}/${a.target}`}>
-              <Text style={[styles.achIcon, !got && { opacity: 0.35 }]}>{a.icon}</Text>
+              <View style={!got ? { opacity: 0.35 } : undefined}><Icon name={achievementIcon(a)} size={36} /></View>
               <Text style={styles.achName} numberOfLines={1}>{t(`ach.${a.id}`)}</Text>
               <Text style={styles.achDesc} numberOfLines={2}>{t(`stat.${a.stat}`)}</Text>
               <Text style={[styles.achProg, { color: got ? MEDAL[a.tier] : C.muted }]}>

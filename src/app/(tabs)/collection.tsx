@@ -42,9 +42,9 @@ export default function Collection() {
         <Button label={t('gauntlet.title')} icon={<Icon name="shield" size={22} />} variant="secondary" onPress={() => router.push('/gauntlet')} style={{ flex: 1 }} />
       </View>
       <View style={styles.chips}>
-        <Chip label={t('collect.all')} on={!filter} color={C.text} onPress={() => setFilter(null)} />
+        <Chip label={t('collect.all')} on={!filter} color={C.ink} onPress={() => setFilter(null)} />
         {TIERS.map((tier) => (
-          <Chip key={tier} label={`${t(`collect.tier_${tier}`)} ${counts[tier]}`} on={filter === tier} color={TIER_STYLE[tier].accent} onPress={() => setFilter(tier)} />
+          <Chip key={tier} label={`${t(`collect.tier_${tier}`)} ${counts[tier]}`} on={filter === tier} color={TIER_STYLE[tier].frame[0]} onPress={() => setFilter(tier)} />
         ))}
       </View>
       {owned.length === 0 && <Text style={styles.empty}>{t('collect.empty')}</Text>}
@@ -78,7 +78,7 @@ export default function Collection() {
 function Chip({ label, on, color, onPress }: { label: string; on: boolean; color: string; onPress: () => void }) {
   return (
     <Pressable onPress={onPress} style={[styles.chip, { borderColor: color }, on && { backgroundColor: color }]}>
-      <Text style={[styles.chipText, { color: on ? C.ink : color }]}>{label}</Text>
+      <Text style={[styles.chipText, { color: on ? '#FFFFFF' : color }]}>{label}</Text>
     </Pressable>
   );
 }
@@ -86,7 +86,7 @@ function Chip({ label, on, color, onPress }: { label: string; on: boolean; color
 const styles = StyleSheet.create({
   sub: { color: C.gold, fontWeight: '800', textAlign: 'center' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  chip: { borderWidth: 1.5, borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 5 },
+  chip: { borderWidth: 2, borderRadius: R.pill, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: '#FFFFFF' },
   chipText: { fontWeight: '800', fontSize: 12 },
   empty: { color: C.muted, textAlign: 'center', marginTop: S.xl },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center' },

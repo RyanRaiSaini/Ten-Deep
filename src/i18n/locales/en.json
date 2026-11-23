@@ -126,7 +126,7 @@
   },
   "playoffs": {
     "title": "Playoffs",
-    "round0": "First round",
+    "round0": "First Round",
     "round1": "Quarterfinals",
     "round2": "Semifinals",
     "round3": "Finals",
@@ -681,5 +681,9 @@
     "snap": "All in",
     "safe": "Play it safe",
     "on": "ALL IN"
+  },
+  "notFound": {
+    "title": "Air ball!",
+    "body": "That page is out of bounds."
   }
 }

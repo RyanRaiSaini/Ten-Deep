@@ -7,7 +7,6 @@ import { feel } from '../audio/feel';
 import { champion, seriesFor, seriesWinner } from '../engine/playoffs';
 import { standings } from '../engine/season';
 import { ALL_SLOTS } from '../engine/types';
-import { cardDef } from '../engine/crisis/deck';
 import { useCareer } from '../store/career';
 import { useCollection } from '../store/collection';
 import { useGame } from '../store/game';
@@ -84,7 +83,7 @@ export default function Result() {
               {t(`crisis.v_${g.crisis.verdict}`)}
             </Text>
             <Text style={styles.verdictSub}>{t('crisis.objective')}: {t(`crisis.obj_${g.crisis.objective.tier}`)}</Text>
-            <Text style={styles.verdictSub}>{g.crisis.drawn.map((id) => `${cardDef(id).icon} ${t(`crisis.cards.${id}.title`)}`).join('  ·  ')}</Text>
+            <Text style={styles.verdictSub}>{g.crisis.drawn.map((id) => t(`crisis.cards.${id}.title`)).join('  ·  ')}</Text>
           </View>
         )}
       </View>

@@ -686,5 +686,9 @@
     "snap": "All in",
     "safe": "Gioca sicuro",
     "on": "ALL IN"
+  },
+  "notFound": {
+    "title": "Air ball!",
+    "body": "Questa pagina è fuori dal campo."
   }
 }
