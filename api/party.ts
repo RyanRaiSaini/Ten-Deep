@@ -13,6 +13,8 @@
 import { get } from '@vercel/blob';
 import { Redis } from '@upstash/redis';
 import type { Store } from './_memstore';
+import { runtimeStore, sharedCache } from './_runtimestore';
+import { autoPick } from '../src/engine/party';
 import { MODE_BY_ID } from '../src/data/modes';
 import { affordableSlots, fallbackPick, options } from '../src/engine/draft';
 import { formPool } from '../src/engine/form';
@@ -25,11 +27,12 @@ const SLOTS = ['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4', 'B5'];
 
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL ?? '';
 const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN ?? '';
-/** Until the Upstash database is connected to the project, rooms answer "unavailable" instead of erroring. */
-let configured = !!(REDIS_URL && REDIS_TOKEN);
-let redis: Store = (configured ? new Redis({ url: REDIS_URL, token: REDIS_TOKEN }) : null) as unknown as Store;
+/** Upstash Redis when it's connected to the project; otherwise Vercel's Runtime Cache; elsewhere unavailable. */
+let storeName: 'redis' | 'runtime-cache' | 'memory' | 'none' = REDIS_URL && REDIS_TOKEN ? 'redis' : process.env.VERCEL ? 'runtime-cache' : 'none';
+let configured = storeName !== 'none';
+let redis: Store = (storeName === 'redis' ? new Redis({ url: REDIS_URL, token: REDIS_TOKEN }) : storeName === 'runtime-cache' ? runtimeStore() : null) as unknown as Store;
 /** Local end-to-end tests swap in an in-memory store. */
-export const useStore = (s: Store) => { redis = s; configured = true; };
+export const useStore = (s: Store) => { redis = s; configured = true; storeName = 'memory'; };
 
 type StoredMember = PartyMember & { keyHash: string };
 const K = {
@@ -74,6 +77,7 @@ export function OPTIONS() {
 
 export async function GET(req: Request) {
   if (!configured) return json({ error: 'unavailable' }, 503);
+  if (new URL(req.url).searchParams.get('selftest') === '1') return json(await selfTest(req.url));
   const code = parseRoomCode(new URL(req.url).searchParams.get('code') ?? '');
   if (!code) return json({ error: 'bad-code' }, 400);
   const room = await load(code);
@@ -169,4 +173,47 @@ export async function POST(req: Request) {
     default:
       return json({ error: 'bad-op' }, 400);
   }
+}
+
+/**
+ * Live self-test on the real storage: two simulated players create and join a room, start, and draft the first
+ * two rounds through this same API; reports every step. Rooms it makes expire like any other.
+ */
+async function selfTest(base: string) {
+  const steps: { step: string; ok: boolean; detail?: unknown }[] = [];
+  const hex = () => Array.from(crypto.getRandomValues(new Uint8Array(20)), (b) => b.toString(16).padStart(2, '0')).join('');
+  const pinOf = () => Array.from(crypto.getRandomValues(new Uint8Array(6)), (b) => 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[b % 31]).join('');
+  const players = [{ pin: pinOf(), key: hex(), name: 'Test A' }, { pin: pinOf(), key: hex(), name: 'Test B' }];
+  const post = async (body: Record<string, unknown>) => {
+    const r = await POST(new Request(base, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }));
+    return { status: r.status, body: await r.json() };
+  };
+  const t0 = Date.now();
+  const created = await post({ op: 'create', ...players[0], avatar: 'captain' });
+  const code = created.body.code as string;
+  steps.push({ step: 'create', ok: created.status === 200 && !!code, detail: created.body });
+  const joined = await post({ op: 'join', code, ...players[1], avatar: 'ace' });
+  steps.push({ step: 'join', ok: joined.status === 200, detail: joined.body });
+  let room = await load(code);
+  steps.push({ step: 'both in room', ok: room?.members.length === 2, detail: room?.members.map((m) => m.name) });
+  const started = await post({ op: 'start', code, ...players[0] });
+  steps.push({ step: 'start', ok: started.status === 200, detail: started.body });
+  await new Promise((ok) => setTimeout(ok, 3300)); // the draft opens 3 s after start
+  for (let r = 0; r < 2; r++) {
+    for (const p of players) {
+      room = await load(code);
+      const pool = formPool(MODE_BY_ID[room!.meta.poolId].pool, room!.meta.form ?? {});
+      const state = resolve(room!.meta, room!.members.map(strip), pool, Date.now());
+      const seat = seatOf(room!.members, p.pin);
+      const { player, slot } = autoPick(seatState(pool, seat, state.rosters, state.taken, state.spin, room!.meta.seed), pool);
+      const res = await post({ op: 'pick', code, ...p, r: state.round, pid: player.id, slot });
+      steps.push({ step: `round ${r + 1} pick ${p.name}`, ok: res.status === 200, detail: `${player.name} → ${slot} (${res.status})` });
+    }
+    await new Promise((ok) => setTimeout(ok, 3700)); // next spin lands
+  }
+  room = await load(code);
+  const pool = formPool(MODE_BY_ID[room!.meta.poolId].pool, room!.meta.form ?? {});
+  const final = resolve(room!.meta, room!.members.map(strip), pool, Date.now());
+  steps.push({ step: 'two rounds resolved for both', ok: final.round === 2 && final.rosters.every((x) => Object.keys(x).length === 2), detail: { round: final.round, rosters: final.rosters.map((x) => Object.values(x).map((p) => p!.name)) } });
+  return { store: storeName, sharedCache: storeName === 'runtime-cache' ? sharedCache() : null, ms: Date.now() - t0, ok: steps.every((s) => s.ok), code, steps };
 }
