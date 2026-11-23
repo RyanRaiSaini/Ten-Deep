@@ -15,6 +15,8 @@ const SUMMARY = (id: string) => `${ESPN}/summary?event=${id}`;
 const RECENT_DAYS = 7;
 const MAX_GAMES_PER_RUN = 320;
 const HOUR = 3600_000;
+/** Bump when the rating model changes so the next request re-rates from stored box scores. */
+const MODEL = 2;
 const DAY = 24 * HOUR;
 
 interface State {
@@ -25,7 +27,7 @@ interface State {
   /** Recent games only: gameId → date and each player's line summary. */
   recent: Record<string, { date: string; lines: Record<string, Production> }>;
 }
-interface Latest { updated: string; games: number; source: string; deltas: ReturnType<typeof computeForm> }
+interface Latest { updated: string; games: number; source: string; model?: number; deltas: ReturnType<typeof computeForm> }
 
 const json = (body: unknown, status = 200, maxAge = 600) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json', 'cache-control': `public, s-maxage=${maxAge}, stale-while-revalidate=86400`, 'access-control-allow-origin': '*' } });
@@ -138,7 +140,7 @@ async function refresh(): Promise<Latest> {
   }
   const players = current2026.teams.flatMap((t) => t.players.map((p) => ({ name: p.name, ovr: p.ovr, age: p.age })));
   const deltas = computeForm(players, new Map(Object.entries(state.season)), recent);
-  const latest: Latest = { updated: new Date().toISOString(), games: state.processed.length, source: 'ESPN box scores', deltas };
+  const latest: Latest = { updated: new Date().toISOString(), games: state.processed.length, source: 'ESPN box scores', model: MODEL, deltas };
   await writeBlob('form/state.json', state);
   await writeBlob('form/latest.json', latest);
   return latest;
@@ -148,7 +150,8 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const latest = await readBlob<Latest>('form/latest.json');
   const age = latest ? Date.now() - Date.parse(latest.updated) : Infinity;
-  const wantRefresh = url.searchParams.get('refresh') === '1' ? age > HOUR || !latest?.games : age > 20 * HOUR;
+  const stale = latest?.model !== MODEL;
+  const wantRefresh = stale || (url.searchParams.get('refresh') === '1' ? age > HOUR || !latest?.games : age > 20 * HOUR);
   if (!wantRefresh && latest) return json(latest);
   try {
     return json(await refresh(), 200, 60);
