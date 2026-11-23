@@ -136,7 +136,8 @@
     "seed": "Platz",
     "topScorer": "Topscorer",
     "playAgain": "Neu draften",
-    "home": "Start"
+    "home": "Start",
+    "awards": "Saison-Awards"
   },
   "injury": {
     "Day-to-day": "Fraglich",
@@ -533,5 +534,49 @@
     "loyal": "Treu",
     "devoted": "Hingebungsvoll",
     "pack-rat": "Packsammler"
+  },
+  "league": {
+    "title": "Liga",
+    "leaders": "Bestenliste",
+    "awards": "Award-Rennen",
+    "pts": "Punkte pro Spiel",
+    "reb": "Rebounds pro Spiel",
+    "ast": "Assists pro Spiel",
+    "mvp": "MVP",
+    "dpoy": "Defensivspieler des Jahres",
+    "roy": "Rookie des Jahres",
+    "smoy": "Sechster Mann des Jahres",
+    "none": "Noch keine qualifizierten Spieler",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "Du"
+  },
+  "news": {
+    "title": "News",
+    "streakW": "Siegesserie: {{n}}",
+    "streakL": "Niederlagenserie: {{n}}",
+    "big": "{{name}} explodiert: {{n}} PTS",
+    "triple": "{{name}} legt ein Triple-Double auf",
+    "wins": "Sieg Nr. {{n}} ist eingetütet",
+    "injury": "{{name}} fällt aus: {{n}} Spiele",
+    "first": "Allein an der Spitze",
+    "upset": "Ausrufezeichen gegen {{name}}"
+  },
+  "recap": {
+    "title": "Spielbericht",
+    "q": "V{{n}}",
+    "ot": "OT",
+    "run": "{{team}} holt das Viertel, +{{n}}",
+    "double": "{{name}} füllt den Statistikbogen: {{line}}",
+    "clutch": "{{name}} macht es am Ende klar",
+    "otGame": "Verlängerung! {{name}} übernimmt",
+    "blowout": "{{team}} zieht davon, +{{n}}",
+    "top": "Topscorer: {{name}} ({{n}})"
+  },
+  "box": {
+    "min": "MIN",
+    "pts": "PTS",
+    "reb": "REB",
+    "ast": "AST",
+    "tap": "Tippe auf ein aktuelles Spiel für den Boxscore"
   }
 }

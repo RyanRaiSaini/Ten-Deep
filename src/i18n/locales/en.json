@@ -136,7 +136,8 @@
     "seed": "Seed",
     "topScorer": "Top scorer",
     "playAgain": "Draft again",
-    "home": "Home"
+    "home": "Home",
+    "awards": "Season awards"
   },
   "injury": {
     "Day-to-day": "Day-to-day",
@@ -533,5 +534,49 @@
     "loyal": "Loyal",
     "devoted": "Devoted",
     "pack-rat": "Pack Rat"
+  },
+  "league": {
+    "title": "League",
+    "leaders": "Leaders",
+    "awards": "Award race",
+    "pts": "Points per game",
+    "reb": "Rebounds per game",
+    "ast": "Assists per game",
+    "mvp": "Most Valuable Player",
+    "dpoy": "Defensive Player of the Year",
+    "roy": "Rookie of the Year",
+    "smoy": "Sixth Man of the Year",
+    "none": "No qualified players yet",
+    "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
+    "you": "You"
+  },
+  "news": {
+    "title": "News",
+    "streakW": "Win streak: {{n}}",
+    "streakL": "Losing streak: {{n}}",
+    "big": "{{name}} erupts: {{n}} PTS",
+    "triple": "{{name}} records a triple-double",
+    "wins": "Win No. {{n}} is in the books",
+    "injury": "{{name}} out: {{n}} games",
+    "first": "Alone in first place",
+    "upset": "Statement win over {{name}}"
+  },
+  "recap": {
+    "title": "Game recap",
+    "q": "Q{{n}}",
+    "ot": "OT",
+    "run": "{{team}} takes the quarter, +{{n}}",
+    "double": "{{name}} fills the sheet: {{line}}",
+    "clutch": "{{name}} closes it out late",
+    "otGame": "Overtime! {{name}} takes over",
+    "blowout": "{{team}} runs away with it, +{{n}}",
+    "top": "Top scorer: {{name}} ({{n}})"
+  },
+  "box": {
+    "min": "MIN",
+    "pts": "PTS",
+    "reb": "REB",
+    "ast": "AST",
+    "tap": "Tap a recent game for its box score"
   }
 }
