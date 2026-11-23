@@ -881,5 +881,26 @@
       "not-allowed": "Hij past niet in je salarisplafond of selectie."
     },
     "table": "Stand"
+  },
+  "save": {
+    "title": "Cloudopslag",
+    "body": "Je voortgang wordt automatisch bewaard. Bewaar je herstelcode goed om alles op een nieuwe telefoon terug te zetten.",
+    "never": "nooit",
+    "last": "Laatste back-up: {{when}}",
+    "now": "Nu back-uppen",
+    "saved": "Opgeslagen!",
+    "offline": "Server niet bereikbaar. We proberen het later opnieuw.",
+    "copy": "Kopieer mijn herstelcode",
+    "copied": "Code gekopieerd. Houd hem geheim!",
+    "paste": "Plak een herstelcode",
+    "restore": "Voortgang herstellen",
+    "restoreSure": "Tik nog eens: dit vervangt de voortgang op dit apparaat",
+    "r": {
+      "ok": "Voortgang hersteld!",
+      "bad-code": "Dat is geen herstelcode.",
+      "not-found": "Nog geen back-up voor die code.",
+      "wrong-code": "Die code past niet bij de back-up.",
+      "offline": "Server niet bereikbaar. Probeer opnieuw."
+    }
   }
 }

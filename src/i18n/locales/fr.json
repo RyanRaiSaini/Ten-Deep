@@ -886,5 +886,26 @@
       "not-allowed": "Il ne rentre pas dans ton budget ou ton effectif."
     },
     "table": "Classement"
+  },
+  "save": {
+    "title": "Sauvegarde cloud",
+    "body": "Ta progression est sauvegardée automatiquement. Garde ton code de récupération en lieu sûr pour la restaurer sur un nouveau téléphone.",
+    "never": "jamais",
+    "last": "Dernière sauvegarde : {{when}}",
+    "now": "Sauvegarder maintenant",
+    "saved": "Sauvegardé !",
+    "offline": "Serveur injoignable. Nouvel essai plus tard.",
+    "copy": "Copier mon code de récupération",
+    "copied": "Code copié. Garde-le secret !",
+    "paste": "Colle un code de récupération",
+    "restore": "Restaurer la progression",
+    "restoreSure": "Touche encore : cela remplace la progression sur cet appareil",
+    "r": {
+      "ok": "Progression restaurée !",
+      "bad-code": "Ce n'est pas un code de récupération.",
+      "not-found": "Aucune sauvegarde pour ce code.",
+      "wrong-code": "Ce code ne correspond pas à la sauvegarde.",
+      "offline": "Serveur injoignable. Réessaie."
+    }
   }
 }

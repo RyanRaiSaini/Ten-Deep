@@ -881,5 +881,26 @@
       "not-allowed": "He doesn't fit your cap or roster."
     },
     "table": "League table"
+  },
+  "save": {
+    "title": "Cloud save",
+    "body": "Your progress backs up automatically. Keep your recovery code somewhere safe to restore it on a new phone.",
+    "never": "never",
+    "last": "Last backup: {{when}}",
+    "now": "Back up now",
+    "saved": "Backed up!",
+    "offline": "Couldn't reach the server. We'll try again later.",
+    "copy": "Copy my recovery code",
+    "copied": "Recovery code copied. Keep it private!",
+    "paste": "Paste a recovery code",
+    "restore": "Restore progress",
+    "restoreSure": "Tap again: this replaces progress on this device",
+    "r": {
+      "ok": "Progress restored!",
+      "bad-code": "That isn't a recovery code.",
+      "not-found": "No backup for that code yet.",
+      "wrong-code": "That code doesn't match the backup.",
+      "offline": "Couldn't reach the server. Try again."
+    }
   }
 }

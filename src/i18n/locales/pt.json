@@ -886,5 +886,26 @@
       "not-allowed": "Ele não cabe no seu teto ou no seu elenco."
     },
     "table": "Classificação"
+  },
+  "save": {
+    "title": "Salvamento na nuvem",
+    "body": "Seu progresso é salvo automaticamente. Guarde seu código de recuperação para restaurar num celular novo.",
+    "never": "nunca",
+    "last": "Último backup: {{when}}",
+    "now": "Salvar agora",
+    "saved": "Salvo!",
+    "offline": "Sem conexão com o servidor. Tentaremos depois.",
+    "copy": "Copiar meu código de recuperação",
+    "copied": "Código copiado. Guarde em segredo!",
+    "paste": "Cole um código de recuperação",
+    "restore": "Restaurar progresso",
+    "restoreSure": "Toque de novo: isso substitui o progresso deste aparelho",
+    "r": {
+      "ok": "Progresso restaurado!",
+      "bad-code": "Isso não é um código de recuperação.",
+      "not-found": "Ainda não há backup para esse código.",
+      "wrong-code": "Esse código não confere com o backup.",
+      "offline": "Sem conexão. Tente de novo."
+    }
   }
 }

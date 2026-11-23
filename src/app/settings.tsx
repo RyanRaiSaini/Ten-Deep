@@ -1,7 +1,9 @@
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { backup, lastBackup, recoveryCode, restore } from '../net/save';
+import { copyText } from '../ui/share';
 import { Text } from '../ui/Text';
 import { LANGUAGE_NAMES, LANGUAGES } from '../i18n/languages';
 import { SIM_SPEEDS, useSettings } from '../store/settings';
@@ -65,6 +67,8 @@ export default function Settings() {
         )}
       </Card>
 
+      <CloudSave />
+
       <Label>{t('settings.about')}</Label>
       <Card style={styles.group}>
         <Row label={t('settings.privacy')} onPress={() => router.push('/legal/privacy')} />
@@ -77,7 +81,44 @@ export default function Settings() {
   );
 }
 
+/** Cloud save: automatic backups under your PIN, a recovery code, and restore on another device. */
+function CloudSave() {
+  const { t } = useTranslation();
+  const [last, setLast] = useState(0);
+  const [msg, setMsg] = useState<string | null>(null);
+  const [code, setCode] = useState('');
+  const [sure, setSure] = useState(false);
+  useEffect(() => { void lastBackup().then(setLast); }, []);
+  const when = last ? new Date(last).toLocaleString() : t('save.never');
+  return (
+    <>
+      <Label>{t('save.title')}</Label>
+      <Card style={{ gap: S.sm }}>
+        <Text style={styles.sub}>{t('save.body')}</Text>
+        <Text style={styles.small} testID="save-last">{t('save.last', { when })}</Text>
+        <Button label={t('save.now')} variant="green" testID="save-now"
+          onPress={async () => { const at = await backup(true); if (at) { setLast(Date.parse(at)); setMsg(t('save.saved')); } else setMsg(t('save.offline')); }} />
+        <Button label={t('save.copy')} variant="secondary" testID="save-copy"
+          onPress={async () => setMsg((await copyText(recoveryCode())) ? t('save.copied') : recoveryCode())} />
+        <TextInput value={code} onChangeText={(v) => { setCode(v); setSure(false); }} placeholder={t('save.paste')} placeholderTextColor={C.muted}
+          autoCapitalize="none" autoCorrect={false} style={styles.input} testID="save-code" />
+        <Button label={sure ? t('save.restoreSure') : t('save.restore')} variant="dark" disabled={!code.trim()} testID="save-restore"
+          onPress={async () => {
+            if (!sure) return setSure(true);
+            const r = await restore(code);
+            setSure(false);
+            setMsg(t(`save.r.${r}`));
+            if (r === 'ok') setCode('');
+          }} />
+        {msg && <Text style={styles.small} testID="save-msg">{msg}</Text>}
+      </Card>
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
+  small: { color: C.muted, fontSize: 13, fontWeight: '700', textAlign: 'center' },
+  input: { borderWidth: 2, borderColor: C.line, borderRadius: R.md, padding: S.md, color: C.ink, backgroundColor: C.bg, fontFamily: 'Montserrat_600SemiBold' },
   group: { paddingVertical: S.sm, gap: 2 },
   sub: { color: C.text, fontSize: 15, paddingTop: S.sm, paddingBottom: S.sm },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: S.sm, paddingBottom: S.sm },
