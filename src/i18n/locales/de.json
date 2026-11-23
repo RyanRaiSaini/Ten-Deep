@@ -355,7 +355,14 @@
     "r_first": "In Runde 1 ausgeschieden",
     "r_missed": "Playoffs verpasst",
     "years": "{{n}} J.",
-    "nothingAffordable": "Niemand passt unter den Cap."
+    "nothingAffordable": "Niemand passt unter den Cap.",
+    "morale": "Moral",
+    "moraleEffect": "Teamrating",
+    "records": "Franchise-Topscorer",
+    "hof": "Hall of Fame",
+    "hofEmpty": "Vier Saisons bei dir und eine große Karriere sichern den Platz.",
+    "lottery": "Draft-Lotterie",
+    "lotterySkip": "Überspringen"
   },
   "collect": {
     "title": "Sammlung",
@@ -579,5 +586,18 @@
     "reb": "REB",
     "ast": "AST",
     "tap": "Tippe auf ein aktuelles Spiel für den Boxscore"
+  },
+  "trade": {
+    "title": "Trade",
+    "hint": "Ihr GM sagt nur Ja, wenn es ihnen hilft. ✓ markiert Spieler, die sie für deinen tauschen würden.",
+    "yours": "Dein Spieler",
+    "team": "Trade-Partner",
+    "theirs": "Spieler von {{team}}",
+    "propose": "Trade vorschlagen",
+    "accepted": "Deal perfekt!",
+    "value": "Abgelehnt: zu wenig Wert für sie",
+    "cap": "Abgelehnt: sprengt die Gehaltsgrenze",
+    "position": "Abgelehnt: ein Starter muss zur Position passen",
+    "missing": "Wähle zuerst beide Spieler"
   }
 }

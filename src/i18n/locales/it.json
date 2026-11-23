@@ -355,7 +355,14 @@
     "r_first": "Fuori al primo turno",
     "r_missed": "Niente playoff",
     "years": "{{n}} anni",
-    "nothingAffordable": "Nessuno rientra nel tetto."
+    "nothingAffordable": "Nessuno rientra nel tetto.",
+    "morale": "Morale",
+    "moraleEffect": "valutazione squadra",
+    "records": "Migliori marcatori della franchigia",
+    "hof": "Hall of Fame",
+    "hofEmpty": "Quattro stagioni con te e una grande carriera valgono un posto.",
+    "lottery": "Lotteria del draft",
+    "lotterySkip": "Salta"
   },
   "collect": {
     "title": "Collezione",
@@ -579,5 +586,18 @@
     "reb": "RIM",
     "ast": "AST",
     "tap": "Tocca una partita recente per il tabellino"
+  },
+  "trade": {
+    "title": "Scambio",
+    "hint": "Il loro GM accetta solo se ci guadagna. ✓ indica i giocatori che scambierebbe con il tuo.",
+    "yours": "Il tuo giocatore",
+    "team": "Partner",
+    "theirs": "Giocatori di {{team}}",
+    "propose": "Proponi scambio",
+    "accepted": "Affare fatto!",
+    "value": "Rifiutato: non conviene a loro",
+    "cap": "Rifiutato: sfora il tetto",
+    "position": "Rifiutato: un titolare deve adattarsi al ruolo",
+    "missing": "Scegli prima entrambi i giocatori"
   }
 }
