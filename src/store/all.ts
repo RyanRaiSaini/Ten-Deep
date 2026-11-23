@@ -5,10 +5,11 @@ import { useDaily } from './daily';
 import { useDuel } from './duel';
 import { useGame } from './game';
 import { useProfile } from './profile';
+import { useProgress } from './progress';
 import { useSettings } from './settings';
 
 /** Every persisted store. The root layout waits on all of them; delete-account resets all of them. */
-export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useCareer, useCollection] as const;
+export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useCareer, useCollection, useProgress] as const;
 
 /** Delete account: reset every store in memory (so nothing is re-saved) and clear storage. */
 export async function wipeAll() {

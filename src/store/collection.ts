@@ -34,6 +34,8 @@ export interface CollectionStore {
   setSlot: (slot: SlotId, cardId: string | null) => void;
   autoFillLineup: () => void;
   recordStage: (stage: number, won: boolean) => void;
+  /** Add a pick from elsewhere (missions, achievements). Idempotent per source. */
+  grant: (type: PickType, source: string) => void;
 }
 
 const pick = (type: PickType, source: string): PendingPick => ({
@@ -91,6 +93,12 @@ export const useCollection = create<CollectionStore>()(
             gauntlet: { cleared: stage + 1, rewarded: pay ? [...s.gauntlet.rewarded, stage] : s.gauntlet.rewarded },
             pending: pay ? [...s.pending, pick(reward, `gauntlet-${stage}-${s.lastDay ?? ''}`)] : s.pending,
           };
+        }),
+
+      grant: (type, source) =>
+        set((s) => {
+          const p = pick(type, source);
+          return s.pending.some((x) => x.id === p.id) ? {} : { pending: [...s.pending, p] };
         }),
 
       keep: (pickId, cardId) =>
