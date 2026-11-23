@@ -6,9 +6,9 @@ export const SIM = {
   /** League-average points per possession. */
   basePpp: 1.13,
   /** Points per possession gained per rating point of (offense − opposing defense). */
-  k: 0.014,
+  k: 0.0075,
   /** Star premium: effective rating += star × (rating − starFrom)² above starFrom. */
-  star: 0.02,
+  star: 0.012,
   starFrom: 80,
   homeAdv: 1.6,
   pace: 99,
@@ -16,9 +16,9 @@ export const SIM = {
   scoreSd: 9.5,
   /**
    * Box scores only (never changes results): a player's share of team points grows with offense^ptsExp.
-   * 3.3 keeps scoring leaders around 30–34 PPG, like the modern league.
+   * 3.8 keeps scoring leaders around 30–34 PPG, like the modern league.
    */
-  ptsExp: 3.3,
+  ptsExp: 3.8,
 };
 
 /** Effective rating used by the sim: stars bend games more than linearly. */

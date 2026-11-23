@@ -16,6 +16,8 @@ export interface Player {
   /** Durability 0–100: higher means fewer injuries. */
   dur: number;
   age?: number;
+  /** In his first NBA season (Current Day: the 2026 draft class). */
+  rookie?: boolean;
   tag?: string;
   /** Career mode: salary locked in when signed ($M). Without it, salary follows the current rating. */
   salary?: number;

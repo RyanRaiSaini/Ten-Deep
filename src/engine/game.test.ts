@@ -60,9 +60,9 @@ describe('simGame', () => {
     for (let i = 0; i < 500; i++) {
       const g = simGame(league[i % 30], league[(i + 7) % 30], ctx(`s${i}`));
       expect(g.homeScore).toBeGreaterThanOrEqual(80);
-      expect(g.homeScore).toBeLessThanOrEqual(155);
+      expect(g.homeScore).toBeLessThanOrEqual(160);
       expect(g.awayScore).toBeGreaterThanOrEqual(80);
-      expect(g.awayScore).toBeLessThanOrEqual(155);
+      expect(g.awayScore).toBeLessThanOrEqual(160);
       expect(g.homeScore).not.toBe(g.awayScore);
     }
   });

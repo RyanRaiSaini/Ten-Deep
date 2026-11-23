@@ -51,7 +51,7 @@ const production = (x: Omit<Ranked, 'value'>) => x.ppg + 0.45 * x.rpg + 0.65 * x
 /**
  * MVP: production scaled by team success (voters reward winners).
  * DPOY: defensive rating plus rebounding, nudged by team success.
- * ROY: production among players 21 and under. Sixth Man: production off the bench.
+ * ROY: production among this season's rookies (the 2026 class in Current Day; 21 and under for older seasons). Sixth Man: production off the bench.
  */
 export function awardRace(s: SeasonState, award: Award, n = 5): Ranked[] {
   if (s.round === 0) return [];
@@ -60,8 +60,11 @@ export function awardRace(s: SeasonState, award: Award, n = 5): Ranked[] {
       return top(qualified(s).map((x) => ({ ...x, value: production(x) * (0.55 + 0.9 * winPct(s, x.team)) })), n);
     case 'dpoy':
       return top(qualified(s).map((x) => ({ ...x, value: x.player.def + 0.6 * x.rpg + 12 * (winPct(s, x.team) - 0.5) })), n);
-    case 'roy':
-      return top(qualified(s, (p) => (p.age ?? 99) <= 21).map((x) => ({ ...x, value: production(x) })), n);
+    case 'roy': {
+      // Current Day marks the real rookie class; older seasons fall back to age (21 and under).
+      const flagged = s.teams.some((t) => Object.values(t.slots).some((p) => p?.rookie));
+      return top(qualified(s, (p) => (flagged ? !!p.rookie : (p.age ?? 99) <= 21)).map((x) => ({ ...x, value: production(x) })), n);
+    }
     case 'smoy':
       return top(qualified(s, (_, slot) => (BENCH_SLOTS as string[]).includes(slot)).map((x) => ({ ...x, value: production(x) })), n);
   }
