@@ -41,6 +41,10 @@
     "crisis": {
       "title": "Management-Krise",
       "desc": "Stell ein Team zusammen. Die Chefetage setzt ein Ziel. Alle zwei Monate ändert eine Krisenkarte alles."
+    },
+    "career": {
+      "title": "Karriere",
+      "desc": "Ein Franchise, viele Saisons. Alterung, Verträge, Drafts und Free Agency, bis die Chefetage dich feuert."
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "Superstar verpflichten",
       "superB": "Ablehnen"
     }
+  },
+  "career": {
+    "title": "Karriere",
+    "desc": "Ein Franchise, viele Saisons. Alterung, Verträge, Drafts und Free Agency, bis die Chefetage dich feuert.",
+    "start": "Karriere starten",
+    "resume": "Karriere fortsetzen",
+    "season": "Saison {{n}}",
+    "security": "Jobsicherheit",
+    "history": "Verlauf",
+    "noHistory": "Deine Geschichte beginnt mit dem Draft.",
+    "toOffseason": "Zur Offseason",
+    "progress": "Spielerentwicklung",
+    "retired": "Karriereende",
+    "expiring": "Auslaufende Verträge",
+    "expiringHint": "Tippe zum Verlängern zum aktuellen Rating. Wer nicht bleibt, geht.",
+    "resign": "Verlängern",
+    "release": "Gehen lassen",
+    "confirmContracts": "Verträge bestätigen",
+    "draft": "Rookie-Draft",
+    "yourPick": "Du pickst an #{{n}}",
+    "draftThis": "{{name}} draften",
+    "rosterFull": "Dein Kader ist voll: Wähle, wen du für den Rookie entlässt.",
+    "skipRookie": "Auf den Rookie verzichten",
+    "freeAgency": "Free Agency",
+    "openSpots": "{{n}} freie Plätze",
+    "sign": "Verpflichten",
+    "minException": "Minimum-Ausnahme: {{name}} verpflichten",
+    "startSeason": "{{label}} starten",
+    "over": "Karriere vorbei",
+    "overDesc": "Die Chefetage hat genug gesehen. {{n}} Saisons, {{titles}} Titel.",
+    "newCareer": "Neue Karriere",
+    "r_champion": "Meister",
+    "r_finals": "Im Finale verloren",
+    "r_semis": "Im Halbfinale verloren",
+    "r_quarters": "Im Viertelfinale verloren",
+    "r_first": "In Runde 1 ausgeschieden",
+    "r_missed": "Playoffs verpasst",
+    "years": "{{n}} J.",
+    "nothingAffordable": "Niemand passt unter den Cap."
   }
 }

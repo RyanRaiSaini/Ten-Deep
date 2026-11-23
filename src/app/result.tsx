@@ -7,6 +7,7 @@ import { champion, seriesFor, seriesWinner } from '../engine/playoffs';
 import { standings } from '../engine/season';
 import { ALL_SLOTS } from '../engine/types';
 import { cardDef } from '../engine/crisis/deck';
+import { useCareer } from '../store/career';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { Button, Card, Screen } from '../ui/components';
@@ -18,6 +19,9 @@ export default function Result() {
   const g = useGame();
   const ps = g.playoffs;
   const won = !!ps && champion(ps) === 0;
+  const career = useCareer();
+  // Career seasons are recorded once, as soon as the result is shown.
+  useEffect(() => { if (g.career) useCareer.getState().recordSeason(); }, [g.career]);
   useEffect(() => { if (won) feel('fanfare'); }, [won]);
   if (!ps) return <Redirect href="/" />;
 
@@ -58,7 +62,15 @@ export default function Result() {
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
       <RosterBoard roster={user.slots} />
-      <Button label={t('result.playAgain')} onPress={() => { if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />
+      {g.career ? (
+        <Button
+          label={career.ended ? t('career.over') : t('career.toOffseason')}
+          variant="gold"
+          onPress={() => { if (!career.ended) career.beginOffseason(); router.replace(career.ended ? '/career' : '/offseason'); }}
+          testID="career-continue"
+        />
+      ) : null}
+      {!g.career && <Button label={t('result.playAgain')} onPress={() => { if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />}
       <Button label={t('result.home')} variant="ghost" onPress={() => { g.quit(); goHome(); }} testID="go-home" />
     </Screen>
   );

@@ -41,6 +41,10 @@
     "crisis": {
       "title": "Management Crisis",
       "desc": "Draft a team. The board sets a goal. Every two months a crisis card changes everything."
+    },
+    "career": {
+      "title": "Career",
+      "desc": "One franchise, many seasons. Aging, contracts, drafts and free agency, until the board fires you."
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "Sign the superstar",
       "superB": "Decline"
     }
+  },
+  "career": {
+    "title": "Career",
+    "desc": "One franchise, many seasons. Aging, contracts, drafts and free agency, until the board fires you.",
+    "start": "Start a career",
+    "resume": "Continue career",
+    "season": "Season {{n}}",
+    "security": "Job security",
+    "history": "History",
+    "noHistory": "Your story starts with the draft.",
+    "toOffseason": "Go to the offseason",
+    "progress": "Player development",
+    "retired": "Retired",
+    "expiring": "Contracts expiring",
+    "expiringHint": "Tap to re-sign at today's rating. Anyone not kept leaves.",
+    "resign": "Re-sign",
+    "release": "Let go",
+    "confirmContracts": "Confirm contracts",
+    "draft": "Rookie draft",
+    "yourPick": "You pick #{{n}}",
+    "draftThis": "Draft {{name}}",
+    "rosterFull": "Your roster is full: choose who to cut for the rookie.",
+    "skipRookie": "Pass on the rookie",
+    "freeAgency": "Free agency",
+    "openSpots": "{{n}} open spots",
+    "sign": "Sign",
+    "minException": "Minimum exception: sign {{name}}",
+    "startSeason": "Start {{label}}",
+    "over": "Career over",
+    "overDesc": "The board has seen enough. {{n}} seasons, {{titles}} titles.",
+    "newCareer": "New career",
+    "r_champion": "Champions",
+    "r_finals": "Lost in the Finals",
+    "r_semis": "Lost in the Semis",
+    "r_quarters": "Lost in the Quarters",
+    "r_first": "First-round exit",
+    "r_missed": "Missed the playoffs",
+    "years": "{{n}}y",
+    "nothingAffordable": "Nobody fits under the cap."
   }
 }
