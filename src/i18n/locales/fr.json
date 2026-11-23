@@ -18,7 +18,11 @@
     "play": "Jouer",
     "streak": "Série de connexions",
     "player": "Joueur",
-    "picks": "Choix"
+    "picks": "Choix",
+    "streakSaved": "Série sauvée !",
+    "streakSavedBody_many": "Des gels de série ont couvert les {{count}} jours manqués.",
+    "streakSavedBody_one": "Un gel de série a couvert le jour manqué.",
+    "streakSavedBody_other": "Des gels de série ont couvert les {{count}} jours manqués."
   },
   "mode": {
     "current": {

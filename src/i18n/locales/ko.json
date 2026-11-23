@@ -18,7 +18,9 @@
     "play": "플레이",
     "streak": "연속 접속",
     "player": "플레이어",
-    "picks": "픽"
+    "picks": "픽",
+    "streakSaved": "연속 기록 유지!",
+    "streakSavedBody_other": "스트릭 프리즈가 빠진 {{count}}일을 지켜 줬습니다."
   },
   "mode": {
     "current": {

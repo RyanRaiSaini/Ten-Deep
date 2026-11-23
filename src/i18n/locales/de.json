@@ -18,7 +18,10 @@
     "play": "Spielen",
     "streak": "Login-Serie",
     "player": "Spieler",
-    "picks": "Picks"
+    "picks": "Picks",
+    "streakSaved": "Serie gerettet!",
+    "streakSavedBody_one": "Ein Serien-Freeze hat den verpassten Tag abgedeckt.",
+    "streakSavedBody_other": "Serien-Freezes haben die {{count}} verpassten Tage abgedeckt."
   },
   "mode": {
     "current": {

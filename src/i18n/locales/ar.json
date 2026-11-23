@@ -18,7 +18,14 @@
     "play": "العب",
     "streak": "سلسلة الدخول",
     "player": "اللاعب",
-    "picks": "الاختيارات"
+    "picks": "الاختيارات",
+    "streakSaved": "تم إنقاذ السلسلة!",
+    "streakSavedBody_few": "غطّت الحماية {{count}} أيام فاتتك.",
+    "streakSavedBody_many": "غطّت الحماية {{count}} يومًا فاتك.",
+    "streakSavedBody_one": "غطّت حماية السلسلة اليوم الذي فاتك.",
+    "streakSavedBody_two": "غطّت الحماية اليومين اللذين فاتاك.",
+    "streakSavedBody_zero": "لم تُستخدم أي حماية.",
+    "streakSavedBody_other": "غطّت الحماية {{count}} يوم فاتك."
   },
   "mode": {
     "current": {

@@ -18,7 +18,11 @@
     "play": "Gioca",
     "streak": "Serie di accessi",
     "player": "Giocatore",
-    "picks": "Scelte"
+    "picks": "Scelte",
+    "streakSaved": "Serie salvata!",
+    "streakSavedBody_many": "I congelamenti hanno coperto i {{count}} giorni saltati.",
+    "streakSavedBody_one": "Un congelamento ha coperto il giorno saltato.",
+    "streakSavedBody_other": "I congelamenti hanno coperto i {{count}} giorni saltati."
   },
   "mode": {
     "current": {

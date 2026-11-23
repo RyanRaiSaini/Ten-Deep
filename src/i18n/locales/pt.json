@@ -18,7 +18,11 @@
     "play": "Jogar",
     "streak": "Sequência de dias",
     "player": "Jogador",
-    "picks": "Escolhas"
+    "picks": "Escolhas",
+    "streakSaved": "Sequência salva!",
+    "streakSavedBody_many": "Congelamentos cobriram os {{count}} dias que você perdeu.",
+    "streakSavedBody_one": "Um congelamento cobriu o dia que você perdeu.",
+    "streakSavedBody_other": "Congelamentos cobriram os {{count}} dias que você perdeu."
   },
   "mode": {
     "current": {

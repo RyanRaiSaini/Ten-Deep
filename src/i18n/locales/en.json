@@ -18,7 +18,10 @@
     "play": "Play",
     "streak": "Login streak",
     "player": "Player",
-    "picks": "Picks"
+    "picks": "Picks",
+    "streakSaved": "Streak saved!",
+    "streakSavedBody_one": "A streak freeze covered the day you missed.",
+    "streakSavedBody_other": "Streak freezes covered the {{count}} days you missed."
   },
   "mode": {
     "current": {

@@ -48,6 +48,8 @@ export default function Home() {
   const phase = useGame((s) => s.phase);
   const pendingPicks = useCollection((s) => s.pending.length);
   const streak = useCollection((s) => s.streak);
+  const freezes = useCollection((s) => s.freezes ?? 0);
+  const freezesUsed = useCollection((s) => s.freezesUsed ?? 0);
   const lastDay = useCollection((s) => s.lastDay);
   const claimable = useProgress(claimableCount);
   const progress = useProgress();
@@ -69,7 +71,10 @@ export default function Home() {
   return (
     <Screen tint={C.hardwood} footer={<TabBar active="play" />}>
       <View style={styles.top}>
-        <Chip label={t('home.streak')} testID="streak-chip"><Icon name="flame" size={26} /><Text style={styles.chipNum}>{streak}</Text></Chip>
+        <Chip label={t('home.streak')} testID="streak-chip">
+          <Icon name="flame" size={26} /><Text style={styles.chipNum}>{streak}</Text>
+          {freezes > 0 && <><Icon name="freeze" size={20} /><Text style={styles.freezeNum}>{freezes}</Text></>}
+        </Chip>
         <Chip onPress={() => router.push('/profile')} testID="avatar" label={t('profile.title')}>
           <Avatar id={profile.avatarId} size={30} />
           <Text style={styles.chipFlag}>{flag}</Text>
@@ -110,6 +115,16 @@ export default function Home() {
         })}
       </View>
 
+      {freezesUsed > 0 && (
+        <View style={styles.saved} testID="streak-saved">
+          <Icon name="freeze" size={40} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.resultTitle}>{t('home.streakSaved')}</Text>
+            <Text style={styles.resultSub}>{t('home.streakSavedBody', { count: freezesUsed })}</Text>
+          </View>
+          <Button label="OK" variant="blue" onPress={() => useCollection.setState({ freezesUsed: 0 })} style={{ paddingHorizontal: 18, minHeight: 44, paddingVertical: 8 }} />
+        </View>
+      )}
       {leagueResult && (
         <View style={styles.result} testID="league-result">
           <TierBadge tier={leagueResult.tier} size={54} />
@@ -164,6 +179,8 @@ const styles = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', gap: S.sm, paddingTop: S.md, justifyContent: 'space-between' },
   chipNum: { fontFamily: FONT.display, fontSize: 22, color: C.ink },
   chipFlag: { fontSize: 20 },
+  freezeNum: { fontFamily: FONT.display, fontSize: 16, color: C.blue },
+  saved: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: '#E6F4FF', borderWidth: 2.5, borderColor: C.blue, borderBottomWidth: 6 },
   chipName: { fontWeight: '900', fontSize: 16, color: C.ink, maxWidth: 110 },
   logoRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm, marginTop: S.sm },
   tile: {

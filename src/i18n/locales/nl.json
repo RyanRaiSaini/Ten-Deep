@@ -18,7 +18,10 @@
     "play": "Spelen",
     "streak": "Inlogreeks",
     "player": "Speler",
-    "picks": "Keuzes"
+    "picks": "Keuzes",
+    "streakSaved": "Reeks gered!",
+    "streakSavedBody_one": "Een reeksbevriezing dekte de dag die je miste.",
+    "streakSavedBody_other": "Reeksbevriezingen dekten de {{count}} dagen die je miste."
   },
   "mode": {
     "current": {
