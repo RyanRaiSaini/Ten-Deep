@@ -98,7 +98,9 @@
     "startSeason": "시즌 시작",
     "landed": "나온 팀",
     "empty": "비어 있음",
-    "benchSlot": "벤치 {{n}}"
+    "benchSlot": "벤치 {{n}}",
+    "hot": "불붙음: 실제 폼으로 +{{n}}",
+    "cold": "부진: 실제 폼으로 −{{n}}"
   },
   "season": {
     "title": "정규 시즌",

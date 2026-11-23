@@ -99,7 +99,9 @@
     "startSeason": "Start het seizoen",
     "landed": "Je kreeg",
     "empty": "Vrij",
-    "benchSlot": "Bank {{n}}"
+    "benchSlot": "Bank {{n}}",
+    "hot": "On fire: +{{n}} door echte vorm",
+    "cold": "Koud: −{{n}} door echte vorm"
   },
   "season": {
     "title": "Reguliere competitie",

@@ -98,7 +98,9 @@
     "startSeason": "シーズン開始",
     "landed": "引いたチーム",
     "empty": "空き",
-    "benchSlot": "ベンチ{{n}}"
+    "benchSlot": "ベンチ{{n}}",
+    "hot": "絶好調：実際の調子で+{{n}}",
+    "cold": "不調：実際の調子で−{{n}}"
   },
   "season": {
     "title": "レギュラーシーズン",
