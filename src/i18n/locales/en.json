@@ -101,9 +101,11 @@
     "resume": "Play",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} out {{games}} games — {{label}}",
     "seasonEnding": "{{name}} is out for the season",
-    "standing": "Seed #{{n}}"
+    "standing": "Seed #{{n}}",
+    "injury_one": "{{name}} out {{count}} game — {{label}}",
+    "injury_other": "{{name}} out {{count}} games — {{label}}",
+    "play": "Play"
   },
   "deadline": {
     "title": "Trade deadline",
@@ -341,12 +343,11 @@
     "rosterFull": "Your roster is full: choose who to cut for the rookie.",
     "skipRookie": "Pass on the rookie",
     "freeAgency": "Free agency",
-    "openSpots": "{{n}} open spots",
     "sign": "Sign",
     "minException": "Minimum exception: sign {{name}}",
     "startSeason": "Start {{label}}",
     "over": "Career over",
-    "overDesc": "The board has seen enough. {{n}} seasons, {{titles}} titles.",
+    "overDesc": "The board has seen enough. Seasons: {{n}} · Titles: {{titles}}",
     "newCareer": "New career",
     "r_champion": "Champions",
     "r_finals": "Lost in the Finals",
@@ -362,7 +363,9 @@
     "hof": "Hall of Fame",
     "hofEmpty": "Four seasons with you and a great career earns a place.",
     "lottery": "Draft lottery",
-    "lotterySkip": "Skip"
+    "lotterySkip": "Skip",
+    "openSpots_one": "{{count}} open spot",
+    "openSpots_other": "{{count}} open spots"
   },
   "collect": {
     "title": "Collection",
@@ -378,7 +381,6 @@
     "empty": "Open a Player Pick to start your collection.",
     "all": "All",
     "claim": "Claim your pick",
-    "waiting": "{{n}} picks waiting",
     "t_daily": "Daily Pick",
     "t_run": "Run Pick",
     "t_playoffs": "Playoff Pick",
@@ -395,7 +397,10 @@
     "guarantee_champion": "Every card is 83+",
     "guarantee_mythic": "One guaranteed 90+",
     "guarantee_legendary": "One guaranteed Ultra",
-    "nextWeekly": "Weekly Pick in {{n}} days"
+    "waiting_one": "{{count}} pick waiting",
+    "waiting_other": "{{count}} picks waiting",
+    "nextWeekly_one": "Weekly Pick in {{count}} day",
+    "nextWeekly_other": "Weekly Pick in {{count}} days"
   },
   "lineup": {
     "title": "Lineup",
@@ -599,5 +604,9 @@
     "cap": "Rejected: it breaks the cap",
     "position": "Rejected: a starter must fit the position",
     "missing": "Pick both players first"
+  },
+  "profile": {
+    "title": "Profile",
+    "pick": "Pick your avatar"
   }
 }

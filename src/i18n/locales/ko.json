@@ -101,9 +101,10 @@
     "resume": "재생",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} {{games}}경기 결장 — {{label}}",
     "seasonEnding": "{{name}} 시즌 아웃",
-    "standing": "{{n}}번 시드"
+    "standing": "{{n}}번 시드",
+    "injury_other": "{{name}} {{count}}경기 결장 — {{label}}",
+    "play": "재생"
   },
   "deadline": {
     "title": "트레이드 마감",
@@ -341,12 +342,11 @@
     "rosterFull": "로스터가 가득 찼습니다: 루키를 위해 방출할 선수를 고르세요.",
     "skipRookie": "루키 포기",
     "freeAgency": "FA",
-    "openSpots": "빈자리 {{n}}",
     "sign": "계약",
     "minException": "최저 예외: {{name}} 계약",
     "startSeason": "{{label}} 시작",
     "over": "커리어 종료",
-    "overDesc": "구단은 충분히 봤습니다. {{n}}시즌, 우승 {{titles}}회.",
+    "overDesc": "구단의 인내심이 바닥났습니다. 시즌: {{n}} · 우승: {{titles}}",
     "newCareer": "새 커리어",
     "r_champion": "우승",
     "r_finals": "파이널 패배",
@@ -362,7 +362,8 @@
     "hof": "명예의 전당",
     "hofEmpty": "나와 함께한 4시즌과 위대한 커리어가 입성 조건입니다.",
     "lottery": "드래프트 추첨",
-    "lotterySkip": "건너뛰기"
+    "lotterySkip": "건너뛰기",
+    "openSpots_other": "빈자리 {{count}}개"
   },
   "collect": {
     "title": "컬렉션",
@@ -378,7 +379,6 @@
     "empty": "선수 픽을 열어 컬렉션을 시작하세요.",
     "all": "전체",
     "claim": "픽 받기",
-    "waiting": "대기 중인 픽 {{n}}개",
     "t_daily": "데일리 픽",
     "t_run": "런 픽",
     "t_playoffs": "플레이오프 픽",
@@ -395,7 +395,8 @@
     "guarantee_champion": "모든 카드 83+",
     "guarantee_mythic": "90+ 1장 확정",
     "guarantee_legendary": "울트라 1장 확정",
-    "nextWeekly": "{{n}}일 후 위클리 픽"
+    "waiting_other": "대기 중인 픽 {{count}}개",
+    "nextWeekly_other": "주간 픽까지 {{count}}일"
   },
   "lineup": {
     "title": "라인업",
@@ -599,5 +600,9 @@
     "cap": "거절: 샐러리캡을 넘습니다",
     "position": "거절: 주전은 포지션이 맞아야 합니다",
     "missing": "먼저 두 선수를 모두 고르세요"
+  },
+  "profile": {
+    "title": "프로필",
+    "pick": "아바타 선택"
   }
 }

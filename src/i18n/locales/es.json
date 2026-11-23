@@ -101,9 +101,12 @@
     "resume": "Jugar",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} baja {{games}} partidos — {{label}}",
     "seasonEnding": "{{name}} se pierde la temporada",
-    "standing": "Cabeza de serie n.º {{n}}"
+    "standing": "Cabeza de serie n.º {{n}}",
+    "injury_many": "{{name}} baja {{count}} partidos — {{label}}",
+    "injury_one": "{{name}} baja {{count}} partido — {{label}}",
+    "injury_other": "{{name}} baja {{count}} partidos — {{label}}",
+    "play": "Reanudar"
   },
   "deadline": {
     "title": "Cierre de traspasos",
@@ -341,12 +344,11 @@
     "rosterFull": "Tu plantilla está completa: elige a quién cortar por el novato.",
     "skipRookie": "Pasar del novato",
     "freeAgency": "Agencia libre",
-    "openSpots": "{{n}} plazas libres",
     "sign": "Fichar",
     "minException": "Excepción mínima: fichar a {{name}}",
     "startSeason": "Empezar {{label}}",
     "over": "Fin de la carrera",
-    "overDesc": "La directiva ya vio suficiente. {{n}} temporadas, {{titles}} títulos.",
+    "overDesc": "La directiva ya ha visto suficiente. Temporadas: {{n}} · Títulos: {{titles}}",
     "newCareer": "Nueva carrera",
     "r_champion": "Campeones",
     "r_finals": "Perdió la final",
@@ -362,7 +364,10 @@
     "hof": "Salón de la Fama",
     "hofEmpty": "Cuatro temporadas contigo y una gran carrera dan acceso.",
     "lottery": "Lotería del draft",
-    "lotterySkip": "Saltar"
+    "lotterySkip": "Saltar",
+    "openSpots_many": "{{count}} plazas libres",
+    "openSpots_one": "{{count}} plaza libre",
+    "openSpots_other": "{{count}} plazas libres"
   },
   "collect": {
     "title": "Colección",
@@ -378,7 +383,6 @@
     "empty": "Abre una elección de jugador para empezar tu colección.",
     "all": "Todas",
     "claim": "Reclamar tu elección",
-    "waiting": "{{n}} elecciones pendientes",
     "t_daily": "Elección diaria",
     "t_run": "Elección de partida",
     "t_playoffs": "Elección de playoffs",
@@ -395,7 +399,12 @@
     "guarantee_champion": "Todas las cartas 83+",
     "guarantee_mythic": "Un 90+ garantizado",
     "guarantee_legendary": "Una Ultra garantizada",
-    "nextWeekly": "Elección semanal en {{n}} días"
+    "waiting_many": "{{count}} elecciones pendientes",
+    "waiting_one": "{{count}} elección pendiente",
+    "waiting_other": "{{count}} elecciones pendientes",
+    "nextWeekly_many": "Elección semanal en {{count}} días",
+    "nextWeekly_one": "Elección semanal en {{count}} día",
+    "nextWeekly_other": "Elección semanal en {{count}} días"
   },
   "lineup": {
     "title": "Alineación",
@@ -599,5 +608,9 @@
     "cap": "Rechazado: rompe el tope salarial",
     "position": "Rechazado: un titular debe encajar en la posición",
     "missing": "Elige primero a los dos jugadores"
+  },
+  "profile": {
+    "title": "Perfil",
+    "pick": "Elige tu avatar"
   }
 }

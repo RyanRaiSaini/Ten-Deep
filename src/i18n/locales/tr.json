@@ -101,9 +101,11 @@
     "resume": "Oynat",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} {{games}} maç yok — {{label}}",
     "seasonEnding": "{{name}} sezonu kapattı",
-    "standing": "{{n}}. sıra"
+    "standing": "{{n}}. sıra",
+    "injury_one": "{{name}} {{count}} maç yok — {{label}}",
+    "injury_other": "{{name}} {{count}} maç yok — {{label}}",
+    "play": "Oynat"
   },
   "deadline": {
     "title": "Takas son günü",
@@ -341,12 +343,11 @@
     "rosterFull": "Kadron dolu: çaylak için kimi keseceğini seç.",
     "skipRookie": "Çaylağı geç",
     "freeAgency": "Serbest oyuncular",
-    "openSpots": "{{n}} boş yer",
     "sign": "İmzala",
     "minException": "Asgari istisna: {{name}} imzala",
     "startSeason": "{{label}} başlat",
     "over": "Kariyer bitti",
-    "overDesc": "Yönetim yeterince gördü. {{n}} sezon, {{titles}} şampiyonluk.",
+    "overDesc": "Yönetim yeterince gördü. Sezon: {{n}} · Şampiyonluk: {{titles}}",
     "newCareer": "Yeni kariyer",
     "r_champion": "Şampiyon",
     "r_finals": "Finalde kaybetti",
@@ -362,7 +363,9 @@
     "hof": "Şöhretler Müzesi",
     "hofEmpty": "Seninle dört sezon ve harika bir kariyer yer kazandırır.",
     "lottery": "Draft lotaryası",
-    "lotterySkip": "Atla"
+    "lotterySkip": "Atla",
+    "openSpots_one": "{{count}} boş yer",
+    "openSpots_other": "{{count}} boş yer"
   },
   "collect": {
     "title": "Koleksiyon",
@@ -378,7 +381,6 @@
     "empty": "Koleksiyonuna başlamak için bir oyuncu seçimi aç.",
     "all": "Tümü",
     "claim": "Seçimini al",
-    "waiting": "{{n}} seçim bekliyor",
     "t_daily": "Günlük seçim",
     "t_run": "Oyun seçimi",
     "t_playoffs": "Playoff seçimi",
@@ -395,7 +397,10 @@
     "guarantee_champion": "Tüm kartlar 83+",
     "guarantee_mythic": "Bir adet 90+ garantili",
     "guarantee_legendary": "Bir Ultra garantili",
-    "nextWeekly": "{{n}} gün sonra haftalık seçim"
+    "waiting_one": "{{count}} seçim bekliyor",
+    "waiting_other": "{{count}} seçim bekliyor",
+    "nextWeekly_one": "Haftalık Seçim {{count}} gün sonra",
+    "nextWeekly_other": "Haftalık Seçim {{count}} gün sonra"
   },
   "lineup": {
     "title": "Kadro",
@@ -599,5 +604,9 @@
     "cap": "Reddedildi: maaş tavanını aşıyor",
     "position": "Reddedildi: ilk beş oyuncusu pozisyona uymalı",
     "missing": "Önce iki oyuncuyu da seç"
+  },
+  "profile": {
+    "title": "Profil",
+    "pick": "Avatarını seç"
   }
 }

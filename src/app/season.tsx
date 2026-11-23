@@ -84,7 +84,7 @@ export default function Season() {
       <Header
         title={t('season.title')}
         left={<BackButton onPress={() => goHome()} />}
-        right={!over ? <Button label={playing ? '❚❚' : '▶'} variant="ghost" onPress={() => setPlaying((p) => !p)} style={{ paddingVertical: 6 }} /> : undefined}
+        right={!over ? <Button label={playing ? '❚❚' : '▶'} accessibilityLabel={playing ? t('season.pause') : t('season.play')} variant="ghost" onPress={() => setPlaying((p) => !p)} style={{ paddingVertical: 6 }} /> : undefined}
       />
 
       <Card style={styles.scoreboard}>
@@ -139,7 +139,7 @@ export default function Season() {
             </Expandable>
           ) : (
             <Text key={i} style={styles.injury}>
-              🩼 {e.label === 'Season-ending' ? t('season.seasonEnding', { name: e.name }) : t('season.injury', { name: e.name, games: e.games, label: t(`injury.${e.label}`) })}
+              🩼 {e.label === 'Season-ending' ? t('season.seasonEnding', { name: e.name }) : t('season.injury', { name: e.name, count: e.games, label: t(`injury.${e.label}`) })}
             </Text>
           ),
         )}
