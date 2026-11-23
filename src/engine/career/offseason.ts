@@ -35,6 +35,8 @@ export interface OffseasonState {
   rookies: Player[];
   /** Rookie picked by each team this draft (team index → player id). */
   picks: Record<number, string>;
+  /** Your players traded away this offseason. */
+  traded?: string[];
 }
 
 export const RESIGN_THRESHOLD = 75;
