@@ -538,7 +538,12 @@
     "promotions": "Steige in der Liga auf",
     "leagueBest": "Beste Ligastufe",
     "pickUpgrades": "Werte Picks auf",
-    "rerolls": "Nutze Rerolls"
+    "rerolls": "Nutze Rerolls",
+    "foils": "Ziehe Karten mit Spezial-Finish",
+    "hasGold": "Besitze eine Gold-Karte oder seltener",
+    "hasViolet": "Besitze eine Violett-Karte oder seltener",
+    "hasRainbow": "Besitze eine Regenbogen-Karte oder seltener",
+    "hasCosmic": "Besitze eine Kosmisch-Karte"
   },
   "ach": {
     "rookie": "Rookie",
@@ -595,7 +600,13 @@
     "climber": "Aufsteiger",
     "legend-tier": "Legendenstatus",
     "lucky-tap": "Glücksgriff",
-    "fresh-spin": "Neuer Dreh"
+    "fresh-spin": "Neuer Dreh",
+    "shiny": "Glänzend",
+    "foil-hoarder": "Foil-Sammler",
+    "golden-touch": "Goldenes Händchen",
+    "violet-hour": "Violette Stunde",
+    "over-the-rainbow": "Über dem Regenbogen",
+    "cosmic": "Kosmisch"
   },
   "league": {
     "title": "Liga",
@@ -902,5 +913,30 @@
       "wrong-code": "Dieser Code passt nicht zur Sicherung.",
       "offline": "Server nicht erreichbar. Versuch es nochmal."
     }
+  },
+  "rarity": {
+    "perfect": "PERFEKTE SAISON",
+    "perfectOdds": "82-0. Das schafft etwa 1 von 450 Drafts.",
+    "c75": "75-Siege-Club",
+    "c75Odds": "Nur etwa 3 % aller Drafts kommen hierher.",
+    "c70": "70-Siege-Club",
+    "c70Odds": "Etwa 1 von 10 Drafts schafft 70 Siege.",
+    "c65": "65-Siege-Saison",
+    "c65Odds": "Ein Draft aus dem besten Viertel.",
+    "near": "{{n}} Siege fehlen zum {{club}}"
+  },
+  "finish": {
+    "holo": "Holo",
+    "chrome": "Chrom",
+    "gold": "Gold",
+    "violet": "Violett",
+    "rainbow": "Regenbogen",
+    "cosmic": "Kosmisch",
+    "pull": "{{name}} GEZOGEN!",
+    "oneIn": "1 zu {{n}}",
+    "odds": "Finish-Chancen (jede Karte, jedes Pack)",
+    "rarest": "Seltenste Ziehungen",
+    "yours": "Deine Finishes",
+    "keepHint": "Nur die behaltene Karte kommt in deine Sammlung – samt Finish."
   }
 }

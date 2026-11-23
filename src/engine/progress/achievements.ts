@@ -1,9 +1,10 @@
-/** 55 achievements: each one is a stat reaching a target. Silver pays a Weekly pick, gold a Mythic pick. */
+/** 61 achievements: each one is a stat reaching a target. Silver pays a Weekly pick, gold a Mythic pick. */
 import type { PickType } from '../collect/picks';
 import type { StatKey, Stats } from './stats';
 
 /** Collection-derived values, read live from the collection rather than counted. */
-export type CollectionKey = 'owned' | 'hasEpic' | 'hasMythic' | 'hasUltra' | 'sets' | 'maxLevel' | 'gauntlet' | 'streak' | 'friends' | 'leagueBest';
+export type CollectionKey = 'owned' | 'hasEpic' | 'hasMythic' | 'hasUltra' | 'sets' | 'maxLevel' | 'gauntlet' | 'streak' | 'friends' | 'leagueBest'
+  | 'foils' | 'hasGold' | 'hasViolet' | 'hasRainbow' | 'hasCosmic';
 export type ProgressKey = StatKey | CollectionKey;
 
 export type Snapshot = { stats: Stats } & Record<CollectionKey, number>;
@@ -58,6 +59,12 @@ export const ACHIEVEMENTS: Achievement[] = [
   a('epic-pull', '💜', 'hasEpic', 1, 'bronze'),
   a('mythic-pull', '🌟', 'hasMythic', 1, 'silver'),
   a('ultra-pull', '🌈', 'hasUltra', 1, 'gold'),
+  a('shiny', '✨', 'foils', 1, 'bronze'),
+  a('foil-hoarder', '🪞', 'foils', 25, 'silver'),
+  a('golden-touch', '🥇', 'hasGold', 1, 'silver'),
+  a('violet-hour', '💜', 'hasViolet', 1, 'gold'),
+  a('over-the-rainbow', '🌈', 'hasRainbow', 1, 'gold'),
+  a('cosmic', '🌌', 'hasCosmic', 1, 'gold'),
   a('set-piece', '🧩', 'sets', 1, 'silver'),
   a('completionist', '📚', 'sets', 10, 'gold'),
   a('maxed', '⭐', 'maxLevel', 3, 'silver'),

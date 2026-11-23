@@ -538,7 +538,12 @@
     "promotions": "Lig atla",
     "leagueBest": "En iyi lig seviyesi",
     "pickUpgrades": "Seçim yükselt",
-    "rerolls": "Yeniden çevirme kullan"
+    "rerolls": "Yeniden çevirme kullan",
+    "foils": "Özel kaplamalı kart çek",
+    "hasGold": "Altın veya daha nadir bir karta sahip ol",
+    "hasViolet": "Mor veya daha nadir bir karta sahip ol",
+    "hasRainbow": "Gökkuşağı veya daha nadir bir karta sahip ol",
+    "hasCosmic": "Kozmik bir karta sahip ol"
   },
   "ach": {
     "rookie": "Çaylak",
@@ -595,7 +600,13 @@
     "climber": "Tırmanıcı",
     "legend-tier": "Efsane Statüsü",
     "lucky-tap": "Şanslı Dokunuş",
-    "fresh-spin": "Taze Çevirme"
+    "fresh-spin": "Taze Çevirme",
+    "shiny": "Parıltı",
+    "foil-hoarder": "Folyo Koleksiyoncusu",
+    "golden-touch": "Altın Dokunuş",
+    "violet-hour": "Mor Saat",
+    "over-the-rainbow": "Gökkuşağının Ötesi",
+    "cosmic": "Kozmik"
   },
   "league": {
     "title": "Lig",
@@ -902,5 +913,30 @@
       "wrong-code": "Bu kod yedekle eşleşmiyor.",
       "offline": "Sunucuya ulaşılamadı. Tekrar dene."
     }
+  },
+  "rarity": {
+    "perfect": "KUSURSUZ SEZON",
+    "perfectOdds": "82-0. 450 drafttan yalnızca 1'i bunu başarır.",
+    "c75": "75 Galibiyet Kulübü",
+    "c75Odds": "Draftların sadece %3'ü buraya ulaşır.",
+    "c70": "70 Galibiyet Kulübü",
+    "c70Odds": "Her 10 drafttan 1'i 70 galibiyete ulaşır.",
+    "c65": "65 galibiyetlik sezon",
+    "c65Odds": "En iyi %25'lik draft.",
+    "near": "{{club}} için {{n}} galibiyet eksik"
+  },
+  "finish": {
+    "holo": "Holo",
+    "chrome": "Krom",
+    "gold": "Altın",
+    "violet": "Mor",
+    "rainbow": "Gökkuşağı",
+    "cosmic": "Kozmik",
+    "pull": "{{name}} ÇIKTI!",
+    "oneIn": "{{n}}'de 1",
+    "odds": "Kaplama şansı (her kart, her paket)",
+    "rarest": "En nadir çekilişler",
+    "yours": "Kaplamaların",
+    "keepHint": "Sadece sakladığın kart koleksiyonuna girer, kaplamasıyla birlikte."
   }
 }

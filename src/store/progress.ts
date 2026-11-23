@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FINISHES, bestFinish, finishRank } from '../engine/collect/finishes';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { SETS } from '../engine/collect/sets';
@@ -39,6 +40,8 @@ export function snapshot(stats: Stats): Snapshot {
   const ids = Object.keys(col.owned);
   const owned = new Set(ids);
   const tiers = new Set(ids.map((id) => CARD_BY_ID[id]?.tier));
+  // Rarest finish anywhere in the collection (a higher finish counts for the lower achievements too).
+  const best = Math.max(0, ...Object.values(col.owned).map((o) => finishRank(bestFinish(o.finishes))));
   return {
     stats,
     owned: ids.length,
@@ -51,6 +54,11 @@ export function snapshot(stats: Stats): Snapshot {
     streak: col.streak,
     friends: useFriends.getState().friends.length,
     leagueBest: useLeague.getState().best,
+    foils: Object.values(col.owned).reduce((n, o) => n + FINISHES.reduce((m, f) => m + (f === 'base' ? 0 : o.finishes?.[f] ?? 0), 0), 0),
+    hasGold: best >= finishRank('gold') ? 1 : 0,
+    hasViolet: best >= finishRank('violet') ? 1 : 0,
+    hasRainbow: best >= finishRank('rainbow') ? 1 : 0,
+    hasCosmic: best >= finishRank('cosmic') ? 1 : 0,
   };
 }
 
