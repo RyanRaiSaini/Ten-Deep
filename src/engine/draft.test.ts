@@ -62,17 +62,20 @@ describe('draft', () => {
 
   it('rejects an unaffordable pick', () => {
     let s = spin(startDraft(pool, 'cap'), pool);
-    // 94s are below the superstar line, so only the cap can block the fourth one ($39.5M each).
+    // 94s are below the superstar line, so only the cap can block the fifth one ($39.5M each, $200M cap).
     const star = { ...pool.teams[0].players[0], ovr: 94, id: 'star', pos2: undefined };
     s = {
       ...s,
-      roster: { PG: { ...star, id: 's1', pos: 'PG' }, SG: { ...star, id: 's2', pos: 'SG' }, SF: { ...star, id: 's3', pos: 'SF' } },
-      used: ['s1', 's2', 's3'],
-      round: 3,
+      roster: {
+        PG: { ...star, id: 's1', pos: 'PG' }, SG: { ...star, id: 's2', pos: 'SG' }, SF: { ...star, id: 's3', pos: 'SF' },
+        PF: { ...star, id: 's4', pos: 'PF' },
+      },
+      used: ['s1', 's2', 's3', 's4'],
+      round: 4,
     };
-    s = { ...s, spin: { ...s.spin!, players: [{ ...star, id: 's4', pos: 'PF' }] } };
+    s = { ...s, spin: { ...s.spin!, players: [{ ...star, id: 's5', pos: 'C' }] } };
     expect(options(s, pool)[0].affordable).toBe(false);
-    expect(() => pick(s, 's4', 'PF', pool)).toThrow(/cap/i);
+    expect(() => pick(s, 's5', 'C', pool)).toThrow(/cap/i);
   });
 
   it('respins decrement and then throw when exhausted', () => {

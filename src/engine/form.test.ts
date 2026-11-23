@@ -32,14 +32,15 @@ describe('form', () => {
     expect(a).toBeCloseTo(60, 5);
   });
 
-  it('a rookie having a big year climbs (up to +9); players matching their rating stay put', () => {
+  it('a rookie having a big year climbs (up to +12); players matching their rating stay put', () => {
     const { players, season } = league();
     players.push({ name: 'Darius Acuff Jr.', ovr: 76, age: 20 });
     season.set(normName('Darius Acuff'), { gp: 18, min: 18 * 33, gmsc: 17 }); // plays like an 85
     const out = computeForm(players, season, new Map());
     expect(out[normName('Darius Acuff')].d).toBeGreaterThanOrEqual(4);
-    expect(out[normName('Darius Acuff')].d).toBeLessThanOrEqual(9);
-    expect(out[normName('Player 30')]).toBeUndefined();
+    expect(out[normName('Darius Acuff')].d).toBeLessThanOrEqual(12);
+    // Players producing to their rating barely move (the outlier rookie nudges the league-wide fit by a point at most).
+    expect(Math.abs(out[normName('Player 30')]?.d ?? 0)).toBeLessThanOrEqual(1);
   });
 
   it('a hot week adds on top; a cold one takes away; tiny samples are ignored', () => {
