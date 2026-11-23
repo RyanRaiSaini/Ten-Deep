@@ -27,6 +27,10 @@ export interface Friend {
 export interface FriendsStore {
   /** Your PIN: made once per install. */
   pin: string;
+  /** Secret that proves this device owns the PIN in the online directory (never shown). */
+  key: string;
+  /** What was last published online, and when. */
+  published: { code: string; at: number } | null;
   /** Your last finished drafted team (what friends play in a Finals showdown). */
   lastTeam: FriendSnapshot['team'];
   friends: Friend[];
@@ -47,10 +51,20 @@ export interface FriendsStore {
 
 export const MAX_FRIENDS = 100;
 
+function secret(): string {
+  const bytes = new Uint8Array(24);
+  const c = (globalThis as { crypto?: { getRandomValues?: (a: Uint8Array) => Uint8Array } }).crypto;
+  if (c?.getRandomValues) c.getRandomValues(bytes);
+  else for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+  return [...bytes].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
 export const useFriends = create<FriendsStore>()(
   persist(
     (set, get) => ({
       pin: newPin(),
+      key: secret(),
+      published: null,
       lastTeam: null,
       friends: [],
       races: {},

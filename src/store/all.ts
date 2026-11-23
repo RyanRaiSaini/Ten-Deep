@@ -27,4 +27,7 @@ export function startDay() {
   useCollection.getState().checkIn(dailyKey());
   useProgress.getState().rollover(dailyKey());
   useLeague.getState().rollover(dailyKey());
+  // Persist the PIN and its key on first run (an untouched initial state is never written), then go online.
+  useFriends.setState((s) => ({ pin: s.pin, key: s.key }));
+  void import('../net/pins').then((m) => m.publishMe());
 }
