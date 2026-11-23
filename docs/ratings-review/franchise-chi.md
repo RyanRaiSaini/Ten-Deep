@@ -94,15 +94,15 @@
 | Player | Pos | OVR | Age | Type | Salary | Dur |
 |---|---|---|---|---|---|---|
 | Josh Giddey | PG | **84** | 24 | playmaker | $18.5M | 80 |
-| Coby White | PG/SG | **82** | 26 | scorer | $15M | 80 |
+| Norman Powell | SG/SF | **81** | 33 | scorer | $13.5M | 80 |
 | Matas Buzelis | SF/PF | **80** | 22 | unicorn | $12M | 80 |
-| Nikola Vučević | C | **79** | 36 | big | $11M | 68 |
-| Ayo Dosunmu | SG/PG | **77** | 26 | twoway | $8.5M | 80 |
-| Kevin Huerter | SG | **74** | 28 | shooter | $5.5M | 80 |
+| Nic Claxton | C | **79** | 27 | rim | $11M | 80 |
+| Caleb Wilson | PF/SF | **76** | 20 | slasher | $7M | 80 |
+| Buddy Hield | SG | **75** | 33 | shooter | $6M | 80 |
 | Patrick Williams | PF | **74** | 25 | defender | $5.5M | 80 |
 | Tre Jones | PG | **74** | 26 | playmaker | $5.5M | 80 |
 | Jalen Smith | C/PF | **73** | 26 | big | $5M | 80 |
 | Isaac Okoro | SF | **72** | 25 | defender | $4M | 80 |
 | Zach Collins | C | **71** | 28 | big | $3.5M | 80 |
 | Noa Essengue | PF | **70** | 20 | slasher | $3M | 80 |
-| Julian Phillips | SF | **69** | 23 | defender | $2.5M | 80 |
+| Dailyn Swain | SF/SG | **69** | 21 | twoway | $2.5M | 80 |

@@ -132,12 +132,12 @@
 | Player | Pos | OVR | Age | Type | Salary | Dur |
 |---|---|---|---|---|---|---|
 | Jimmy Butler | SF/PF | **84** | 37 | twoway | $18.5M | 45 |
-| Jonathan Kuminga | PF/SF | **80** | 24 | slasher | $12M | 80 |
+| Kristaps Porziņģis | C/PF | **81** | 31 | stretch | $13.5M | 40 |
 | Brandin Podziemski | SG | **79** | 23 | twoway | $11M | 80 |
-| Moses Moody | SG/SF | **76** | 24 | wing3d | $7M | 80 |
-| Buddy Hield | SG | **75** | 33 | shooter | $6M | 80 |
 | Al Horford | C/PF | **75** | 40 | stretch | $6M | 60 |
 | De'Anthony Melton | SG/PG | **74** | 28 | defender | $5.5M | 50 |
-| Quinten Post | C | **71** | 26 | stretch | $3.5M | 80 |
-| Trayce Jackson-Davis | C | **70** | 26 | rim | $3M | 80 |
+| Brandon Williams | PG | **72** | 27 | scorer | $4M | 80 |
+| Yaxel Lendeborg | PF/SF | **72** | 24 | twoway | $4M | 80 |
+| Gui Santos | SF/PF | **71** | 24 | twoway | $3.5M | 80 |
 | Will Richard | SG | **69** | 23 | wing3d | $2.5M | 80 |
+| Charles Bassey | C | **68** | 26 | rim | $2.5M | 80 |
