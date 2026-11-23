@@ -3,7 +3,28 @@
   "installCommand": "npm install",
   "buildCommand": "npx expo export -p web",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
-  "functions": { "api/form.ts": { "maxDuration": 300 } },
-  "crons": [{ "path": "/api/form?refresh=1", "schedule": "17 11 * * *" }]
+  "rewrites": [
+    {
+      "source": "/pull/:c/:f",
+      "destination": "/api/pull?c=:c&f=:f"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/form.ts": {
+      "maxDuration": 300
+    },
+    "api/pull.ts": {
+      "includeFiles": "node_modules/@expo-google-fonts/{lilita-one/400Regular/LilitaOne_400Regular.ttf,montserrat/800ExtraBold/Montserrat_800ExtraBold.ttf}"
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/form?refresh=1",
+      "schedule": "17 11 * * *"
+    }
+  ]
 }

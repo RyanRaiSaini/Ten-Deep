@@ -941,6 +941,9 @@
     "odds": "Finish odds (any card, any pick)",
     "rarest": "Rarest pulls",
     "yours": "Your finishes",
-    "keepHint": "Only the card you keep joins your collection, finish and all."
+    "keepHint": "Only the card you keep joins your collection, finish and all.",
+    "share": "Share pull",
+    "shareText": "Just pulled a {{finish}} {{name}} in Ten Deep! {{odds}}",
+    "shareTextBase": "Just pulled {{name}} ({{tier}}) in Ten Deep!"
   }
 }

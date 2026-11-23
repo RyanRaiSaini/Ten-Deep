@@ -946,6 +946,9 @@
     "odds": "Probabilidad de acabado (cualquier carta y sobre)",
     "rarest": "Sacadas más raras",
     "yours": "Tus acabados",
-    "keepHint": "Solo la carta que te quedas entra en tu colección, con su acabado."
+    "keepHint": "Solo la carta que te quedas entra en tu colección, con su acabado.",
+    "share": "Compartir",
+    "shareText": "¡Acabo de sacar a {{name}} {{finish}} en Ten Deep! {{odds}}",
+    "shareTextBase": "¡Acabo de sacar a {{name}} ({{tier}}) en Ten Deep!"
   }
 }

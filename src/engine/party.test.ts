@@ -74,3 +74,13 @@ describe('party', () => {
     expect(s1.season.records.reduce((n, x) => n + x.w + x.l, 0)).toBe(30 * 82);
   }, 60_000);
 });
+
+describe('seat flex (rarest pull)', async () => {
+  const { parseFlex } = await import('./party');
+  it('accepts a real card with a special finish', () => {
+    expect(parseFlex('victor-wembanyama-2026-27:violet')).toEqual({ id: 'victor-wembanyama-2026-27', finish: 'violet' });
+  });
+  it('drops junk, unknown cards, base and fake finishes', () => {
+    for (const bad of [undefined, 42, '', 'nope:rainbow', 'victor-wembanyama-2026-27:base', 'victor-wembanyama-2026-27:<b>', 'x'.repeat(200)]) expect(parseFlex(bad)).toBeNull();
+  });
+});

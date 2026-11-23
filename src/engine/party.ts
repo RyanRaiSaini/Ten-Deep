@@ -9,6 +9,8 @@
  *   - the league, the season and the playoffs.
  * Players are exclusive: once someone drafts a player, nobody else can. Seat order (join order) breaks ties.
  */
+import { CARD_BY_ID } from '../data/cards';
+import { FINISHES, type Finish } from './collect/finishes';
 import { affordableSlots, fallbackPick, options, type DraftState } from './draft';
 import { draftLeague } from './aiDraft';
 import { simPlayoffsToEnd, startPlayoffs, champion, seriesFor, type PlayoffState } from './playoffs';
@@ -54,6 +56,16 @@ export interface PartyMember {
   avatar: string;
   joined: number;
   picks: PartyPick[];
+  /** Their rarest pull, "cardId:finish" (gold or better), shown on their seat. */
+  flex?: string;
+}
+
+/** Parse a seat's flex ("cardId:finish"); null unless the card exists and the finish is real and not base. */
+export function parseFlex(flex: unknown): { id: string; finish: Finish } | null {
+  if (typeof flex !== 'string' || flex.length > 90) return null;
+  const [id, f] = flex.split(':');
+  if (!id || !CARD_BY_ID[id] || !FINISHES.includes(f as Finish) || f === 'base') return null;
+  return { id, finish: f as Finish };
 }
 
 /** Seat order: join order, then PIN (stable everywhere). */
