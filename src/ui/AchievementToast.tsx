@@ -9,6 +9,7 @@ import { ACHIEVEMENTS } from '../engine/progress/achievements';
 import { useProgress } from '../store/progress';
 import { C, R, S } from './theme';
 import { Icon } from './icons';
+import { achievementIcon } from './gameIcons';
 
 const MEDAL = { bronze: '#D08A4E', silver: '#C9D3E8', gold: C.gold } as const;
 
@@ -17,7 +18,7 @@ export function AchievementToast() {
   const { t } = useTranslation();
   const id = useProgress((s) => s.toasts[0]);
   const insets = useSafeAreaInsets();
-  const y = useRef(new Animated.Value(-140)).current;
+  const y = useRef(new Animated.Value(200)).current;
   const a = ACHIEVEMENTS.find((x) => x.id === id);
 
   useEffect(() => {
@@ -26,21 +27,21 @@ export function AchievementToast() {
     const native = Platform.OS !== 'web';
     Animated.spring(y, { toValue: 0, friction: 8, useNativeDriver: native }).start();
     const timer = setTimeout(() => {
-      Animated.timing(y, { toValue: -140, duration: 220, useNativeDriver: native }).start(({ finished }) => { if (finished) useProgress.getState().dismissToast(); });
-    }, 3200);
+      Animated.timing(y, { toValue: 200, duration: 220, useNativeDriver: native }).start(({ finished }) => { if (finished) useProgress.getState().dismissToast(); });
+    }, 2200);
     return () => clearTimeout(timer);
   }, [a, y]);
 
   if (!a) return null;
   return (
-    <Animated.View style={[styles.wrap, { top: insets.top + S.sm, transform: [{ translateY: y }] }]}>
+    <Animated.View style={[styles.wrap, { bottom: insets.bottom + 96, transform: [{ translateY: y }] }]}>
       <Pressable
         style={[styles.toast, { borderColor: MEDAL[a.tier] }]}
         onPress={() => { useProgress.getState().dismissToast(); router.push('/missions'); }}
         accessibilityRole="button"
         testID="achievement-toast"
       >
-        <Text style={styles.icon}>{a.icon}</Text>
+        <Icon name={achievementIcon(a)} size={34} />
         <View style={{ flex: 1 }}>
           <Text style={[styles.kicker, { color: MEDAL[a.tier] }]}>{t('missions.unlocked')}</Text>
           <Text style={styles.name}>{t(`ach.${a.id}`)}</Text>
@@ -54,8 +55,8 @@ export function AchievementToast() {
 const styles = StyleSheet.create({
   wrap: { position: 'absolute', left: 0, right: 0, alignItems: 'center', paddingHorizontal: S.lg, zIndex: 50, pointerEvents: 'box-none' },
   toast: {
-    width: '100%', maxWidth: 480, flexDirection: 'row', alignItems: 'center', gap: S.md,
-    backgroundColor: C.surface2, borderWidth: 2, borderRadius: R.lg, padding: S.md,
+    width: '100%', maxWidth: 340, flexDirection: 'row', alignItems: 'center', gap: S.sm,
+    backgroundColor: '#FFFFFF', borderWidth: 2.5, borderRadius: R.pill, paddingVertical: 8, paddingHorizontal: 14,
     shadowColor: '#000', shadowOpacity: 0.4, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 8,
   },
   icon: { fontSize: 34 },

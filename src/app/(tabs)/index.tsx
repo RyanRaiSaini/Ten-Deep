@@ -10,6 +10,9 @@ import { useGame } from '../../store/game';
 import { useProfile } from '../../store/profile';
 import { claimableCount, useProgress } from '../../store/progress';
 import { useSettings } from '../../store/settings';
+import { Die } from '../../ui/Dice';
+import { useShop } from '../../store/shop';
+import { DailyTimer } from '../../ui/DailyTimer';
 import { Avatar } from '../../ui/Avatar';
 import { AVATARS } from '../../ui/avatars';
 import { Button, Chip, Display, IconButton, Label } from '../../ui/components';
@@ -66,6 +69,8 @@ export default function Home() {
   const checked = (d: string) => !!lastDay && d <= lastDay && d > shiftDay(lastDay, -streak);
   const weekday = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString(i18n.language, { weekday: 'short', timeZone: 'UTC' });
 
+  const rerolls = useShop((s) => s.rerolls);
+  const freeReady = useShop((s) => s.freeDay !== dailyKey());
   const startCurrent = () => { useGame.getState().newRun('current-2026'); router.push('/draft'); };
 
   return (
@@ -74,6 +79,10 @@ export default function Home() {
         <Chip label={t('home.streak')} testID="streak-chip">
           <Icon name="flame" size={26} /><Text style={styles.chipNum}>{streak}</Text>
           {freezes > 0 && <><Icon name="freeze" size={20} /><Text style={styles.freezeNum}>{freezes}</Text></>}
+        </Chip>
+        <Chip onPress={() => router.push('/shop')} testID="shop-chip" label={t('shop.title')}>
+          <Die size={26} color="white" /><Text style={styles.chipNum}>{rerolls}</Text>
+          {freeReady && <View style={styles.freeDot} />}
         </Chip>
         <Chip onPress={() => router.push('/profile')} testID="avatar" label={t('profile.title')}>
           <Avatar id={profile.avatarId} size={30} />
@@ -183,6 +192,7 @@ export default function Home() {
           <View style={{ flex: 1, gap: 2 }}>
             <Display size={22} align="left">{t(`mode.${m.key}.title`)}</Display>
             <Text style={styles.modeDesc} numberOfLines={2}>{t(`mode.${m.key}.desc`)}</Text>
+            {m.key === 'daily' && <DailyTimer small testID="home-daily-timer" />}
           </View>
           {m.badge && <View style={[styles.ribbon, { backgroundColor: m.accent }]}><Text style={styles.ribbonText}>{m.badge}</Text></View>}
         </Pressable>
@@ -192,6 +202,7 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+  freeDot: { position: 'absolute', top: -3, right: -3, width: 14, height: 14, borderRadius: 7, backgroundColor: C.danger, borderWidth: 2, borderColor: '#FFFFFF' },
   top: { flexDirection: 'row', alignItems: 'center', gap: S.sm, paddingTop: S.md, justifyContent: 'space-between' },
   chipNum: { fontFamily: FONT.display, fontSize: 22, color: C.ink },
   chipFlag: { fontSize: 20 },
@@ -223,9 +234,9 @@ const styles = StyleSheet.create({
     height: 190, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, marginTop: S.sm,
     justifyContent: 'center',
   },
-  heroBody: { paddingHorizontal: S.xl, gap: 2 },
+  heroBody: { paddingHorizontal: S.xl, gap: 2, paddingBottom: 40, maxWidth: '100%' },
   heroKicker: { color: '#FFFFFF', fontWeight: '900', letterSpacing: 2, fontSize: 13 },
-  heroDesc: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, maxWidth: 230, textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
+  heroDesc: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, maxWidth: '58%', textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
   heroPlay: {
     position: 'absolute', right: 16, bottom: 16, backgroundColor: '#FFFFFF', borderRadius: R.pill, paddingHorizontal: 22, paddingVertical: 10,
     borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6,

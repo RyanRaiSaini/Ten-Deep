@@ -174,7 +174,9 @@ export const useCareer = create<CareerStore>()(
 
       quit: () => {
         set({ ...fresh });
-        useGame.getState().quit();
+        // End only the career's own run; a quick run in progress is left alone.
+        if (useGame.getState().career) useGame.getState().quit();
+        useGame.setState({ parked: null });
       },
     }),
     { name: 'tendeep-career', version: 1, storage: createJSONStorage(() => AsyncStorage) },

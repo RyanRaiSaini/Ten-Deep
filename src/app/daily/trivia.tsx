@@ -10,6 +10,8 @@ import { useDaily } from '../../store/daily';
 import { BackButton, Button, Card, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
+import { Choice, Pips, ScoreCard } from '../../ui/dailyKit';
+import { Confetti } from '../../ui/fx';
 
 export default function Trivia() {
   const { t } = useTranslation();
@@ -48,28 +50,25 @@ export default function Trivia() {
   const prompt = q.kind === 'highest' ? t('daily.highest') : t('daily.teamQ', { name: q.players[0].name, season: q.season });
 
   return (
-    <Screen>
+    <Screen tint={C.pink} overlay={finished && (already ?? score) >= 4 ? <Confetti /> : null}>
       <Header title={t('daily.trivia')} left={<BackButton onPress={() => goBack()} />} />
       {finished ? (
-        <Card style={{ alignItems: 'center', gap: S.md, paddingVertical: S.xxl }}>
-          <Text style={styles.big} testID="trivia-score">{t('daily.yourScore', { n: already ?? score })}</Text>
-          <Text style={styles.muted}>{t('daily.tomorrow')}</Text>
-          <Button label={t('daily.done')} onPress={() => goBack()} testID="trivia-done" />
-        </Card>
+        <ScoreCard score={already ?? score} total={questions.length} onDone={() => goBack()} testID="trivia-score" doneTestID="trivia-done" />
       ) : (
         <>
-          <Label>{`${i + 1} / ${questions.length}`}</Label>
+          <Pips total={questions.length} at={i} />
           <Text style={styles.prompt}>{prompt}</Text>
           <View style={{ gap: S.sm }}>
-            {q.choices.map((c) => {
-              const isAnswer = c === q.answer;
-              const bg = !picked ? C.surface2 : isAnswer ? C.neon : c === picked ? C.danger : C.surface2;
-              return (
-                <Pressable key={c} testID="trivia-choice" onPress={() => choose(c)} style={[styles.choice, { backgroundColor: bg }]}>
-                  <Text style={[styles.choiceText, picked && (isAnswer || c === picked) && { color: C.ink }]}>{c}</Text>
-                </Pressable>
-              );
-            })}
+            {q.choices.map((c, k) => (
+              <Choice
+                key={c}
+                label={c}
+                index={k}
+                testID="trivia-choice"
+                onPress={() => choose(c)}
+                state={!picked ? 'idle' : c === q.answer ? 'right' : c === picked ? 'wrong' : 'dim'}
+              />
+            ))}
           </View>
           {picked && (
             <>
@@ -86,7 +85,7 @@ export default function Trivia() {
 }
 
 const styles = StyleSheet.create({
-  prompt: { color: C.text, fontSize: 22, lineHeight: 30, ...F.display },
+  prompt: { color: C.text, fontSize: 24, lineHeight: 31, ...F.display },
   choice: { padding: S.lg, borderRadius: R.md },
   choiceText: { color: C.text, fontSize: 16, fontWeight: '800' },
   verdict: { fontSize: 16, fontWeight: '800', textAlign: 'center' },

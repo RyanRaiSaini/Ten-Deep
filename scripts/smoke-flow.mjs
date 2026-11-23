@@ -304,6 +304,35 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('17-duel-result');
   });
 
+  await step('friends: add by link, Card Clash best of 5, W/L/D tally', async () => {
+    // A friend code made by encodeFriend (PIN K7Q2XM, "Jordan"): unknown cards are dropped, so it stays valid as data grows.
+    const code = 'TD1WzEsIks3UTJYTSIsIkpvcmRhbiIsImFjZSIsWzg3LDksMjMsMzEyLDVdLCJ3a0hlUDFoWllVdTFDMEphZzF0VDZGTjE3MVA3SzFoYUJlXzFmVVVDbjFYdk5kVTE5WHdpYzFoODZVdDEiLCI3MVA3S3RUNkZOaGFCZV93a0hlUGZVVUNuWHZOZFU5WHdpY2g4NlV0eWh5X0YtZXBIYkMwSmFnenI3YXFzaVBqS1dsTkp2YXdGUE85NnBFaGhaWVV1c1BxVzBsNzVOTWZBb1AxVzZ2cFZGTm9QMzd0NUZITnk1MHo5WEtnUVdKVGZNbFFnMWZZSkFDOC1nMmRFekY2V1gyMzhLcDVIVUNseE9iOE1LY0tVdDFKWHBBTFhpLWZncDZNTVFVWFVqX0E4VXJSZ1paaTdLSnZRMDI5S3pleTlpTnExTmRWdFBDaVpURU03bVBwMFVQRDB2cFVQMktSLTBhTG1USnZXTU11YmNvTVFEZk42b3JxSDlCMGhSRWg2NUZKbzhKUEM0SldaaVhMS2dPdDN3TkkiLFsiY3VycmVudC0yMDI2Iiw1OCwyNCwiY2hhbXBpb24iLFsiVzZ2cFYiLCJGTm9QMyIsImUwUzZVIiwiNGNJZW8iLCJMWlIwZyIsIl9PaTFHIiwiWmpVVEoiLCJvZzg4UCIsImc1N1ZtIiwwXV1d';
+    await page.goto(`${base}/f?c=${code}`);
+    await page.getByTestId('h2h').waitFor({ timeout: 15000 });
+    await shot('40-friend');
+    await page.getByText('Best of 5').click();
+    await page.getByTestId('play-clash').click();
+    await page.getByTestId('fsim').click();
+    await page.getByTestId('fwinner').waitFor();
+    await shot('41-clash');
+    await page.goto(`${base}/duel`);
+    await page.getByTestId('friend-K7Q2XM').waitFor();
+    const rec = (await page.getByTestId('friend-K7Q2XM').textContent()) ?? '';
+    if (!/[01]-[01]/.test(rec)) throw new Error(`tally not shown: ${rec}`);
+  });
+
+  await step('shop: free daily reroll and an ad break add rerolls', async () => {
+    await page.goto(`${base}/shop`);
+    const before = Number(await page.getByTestId('reroll-count').textContent());
+    await page.getByTestId('shop-free').click();
+    await page.getByTestId('shop-ad').click();
+    await page.getByTestId('ad-claim').click({ timeout: 9000 });
+    await page.waitForFunction((n) => Number(document.querySelector('[data-testid="reroll-count"]')?.textContent) === n, before + 2);
+    await page.getByTestId('buy-10').click();
+    await page.getByTestId('soon-ok').click();
+    await shot('42-shop');
+  });
+
   await step('profile: pick an avatar', async () => {
     await page.goto(base);
     await page.getByTestId('avatar').click();

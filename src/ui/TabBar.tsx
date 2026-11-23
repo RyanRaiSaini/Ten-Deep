@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { feel } from '../audio/feel';
+import { isRTL } from '../i18n';
 import { Display } from './components';
 import { useReducedMotion } from './fx';
 import { Icon, type IconName } from './icons';
@@ -61,13 +62,16 @@ function TabItem({ name, focused, onPress }: { name: string; focused: boolean; o
  */
 export function TabBar({ state, navigateToTab, insets }: BottomTabBarProps) {
   const reduce = useReducedMotion();
+  const { i18n } = useTranslation();
+  // Tabs lay out right-to-left in Arabic, so the highlight counts from the other end.
+  const pos = isRTL(i18n.language) ? state.routes.length - 1 - state.index : state.index;
   const [w, setW] = useState(0);
-  const x = useRef(new Animated.Value(state.index)).current;
+  const x = useRef(new Animated.Value(pos)).current;
   const n = state.routes.length;
   useEffect(() => {
-    if (reduce) { x.setValue(state.index); return; }
-    Animated.spring(x, { toValue: state.index, friction: 8, tension: 90, useNativeDriver: native }).start();
-  }, [state.index, reduce, x]);
+    if (reduce) { x.setValue(pos); return; }
+    Animated.spring(x, { toValue: pos, friction: 8, tension: 90, useNativeDriver: native }).start();
+  }, [pos, reduce, x]);
   const itemW = w / Math.max(1, n);
   return (
     <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 8) }]} testID="tab-bar">
@@ -90,7 +94,7 @@ export function TabBar({ state, navigateToTab, insets }: BottomTabBarProps) {
 
 const styles = StyleSheet.create({
   bar: { backgroundColor: '#FFFFFF', borderTopWidth: 2, borderTopColor: C.line, paddingTop: 6 },
-  items: { flexDirection: 'row', alignItems: 'flex-end', width: '100%', maxWidth: 640, alignSelf: 'center' },
+  items: { flexDirection: 'row', alignItems: 'flex-end', width: '100%', maxWidth: 760, alignSelf: 'center' },
   raised: {
     position: 'absolute', left: 0, top: -30, bottom: -6, backgroundColor: '#F7F2EA', borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 0,
     borderTopLeftRadius: 18, borderTopRightRadius: 18,

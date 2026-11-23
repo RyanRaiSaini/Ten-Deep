@@ -5,13 +5,14 @@ import { Text } from './Text';
 import { feel } from '../audio/feel';
 import { useReducedMotion } from './fx';
 import { Button } from './components';
+import { teamGradient } from './teamColors';
 import { C, R, S } from './theme';
 import { Icon } from './icons';
 
 const SHOWN = 14;
 
 /** The draft lottery, revealed from pick 14 up to pick 1, one ball at a time. */
-export function LotteryReveal({ order, names }: { order: number[]; names: (team: number) => string }) {
+export function LotteryReveal({ order, names, colors }: { order: number[]; names: (team: number) => string; colors?: (team: number) => [string, string] }) {
   const { t } = useTranslation();
   const reduce = useReducedMotion();
   const top = useMemo(() => order.slice(0, SHOWN), [order]);
@@ -40,9 +41,13 @@ export function LotteryReveal({ order, names }: { order: number[]; names: (team:
           const shown = SHOWN - i <= revealed;
           const newest = SHOWN - i === revealed;
           return (
-            <Animated.View key={i} style={[styles.row, team === 0 && shown && styles.mine, newest && { transform: [{ scale: pop }] }]}>
-              <View style={[styles.ball, shown && { backgroundColor: team === 0 ? C.gold : C.hardwood }]}><Text style={styles.ballText}>{i + 1}</Text></View>
-              <Text style={[styles.team, team === 0 && { color: C.gold }]} numberOfLines={1}>{shown ? names(team) : '· · ·'}</Text>
+            <Animated.View key={i} style={[
+              styles.row,
+              shown && colors && { backgroundColor: team === 0 ? '#FFC53D' : teamGradient(colors(team))[0], borderColor: C.ink },
+              team === 0 && shown && styles.mine, newest && { transform: [{ scale: pop }] },
+            ]}>
+              <View style={[styles.ball, shown && { backgroundColor: '#FFFFFF' }]}><Text style={styles.ballText}>{i + 1}</Text></View>
+              <Text style={[styles.team, shown && colors && { color: team === 0 ? C.ink : '#FFFFFF' }]} numberOfLines={1}>{shown ? names(team) : '· · ·'}</Text>
             </Animated.View>
           );
         })}
@@ -55,8 +60,8 @@ export function LotteryReveal({ order, names }: { order: number[]; names: (team:
 const styles = StyleSheet.create({
   box: { backgroundColor: C.surface, borderRadius: R.lg, borderWidth: 1, borderColor: C.line, padding: S.lg, gap: S.md },
   title: { color: C.text, fontWeight: '900', fontSize: 16 },
-  row: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingVertical: 2, paddingHorizontal: 4, borderRadius: R.sm },
-  mine: { backgroundColor: 'rgba(245,196,81,0.12)' },
+  row: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingVertical: 5, paddingHorizontal: 6, borderRadius: R.pill, borderWidth: 2, borderColor: 'transparent' },
+  mine: { borderWidth: 3, transform: [{ scale: 1.03 }] },
   ball: { width: 26, height: 26, borderRadius: 13, backgroundColor: C.surface2, alignItems: 'center', justifyContent: 'center' },
   ballText: { color: C.ink, fontWeight: '900', fontSize: 12 },
   team: { color: C.text, fontWeight: '700', flex: 1 },

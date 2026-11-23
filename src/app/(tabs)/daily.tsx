@@ -6,11 +6,12 @@ import { Text } from '../../ui/Text';
 import { dailyKey } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { useGame } from '../../store/game';
-import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
-import { C, F, FONT, R, S, alpha } from '../../ui/theme';
+import { Button, Card, Display, Screen, TabTitle } from '../../ui/components';
+import { C, FONT, R, S, alpha } from '../../ui/theme';
 import { Icon, type IconName } from '../../ui/icons';
 import { CONFIG } from '../../config';
 import { shareText } from '../../ui/share';
+import { DailyTimer } from '../../ui/DailyTimer';
 
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/playoffs' | '/result'> = {
   draft: '/draft', season: '/season', deadline: '/deadline', playoffs: '/playoffs', result: '/result',
@@ -75,6 +76,7 @@ export default function DailyHub() {
   return (
     <Screen tint={C.blue} tabbed>
       <TabTitle icon={<Icon name="calendar" size={46} />} title={t('daily.title')} />
+      <View style={{ marginTop: -4 }}><DailyTimer testID="daily-timer" /></View>
       <View style={styles.progressRow}>
         <View style={styles.progress}>
           {items.map((it) => <View key={it.id} style={[styles.seg, it.status ? { backgroundColor: '#18C08A' } : null]} />)}

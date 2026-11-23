@@ -2,7 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, View } from 'react-native';
 import { Text } from './Text';
 import type { Card, Tier } from '../engine/collect/tiers';
-import Svg, { Path, Text as SvgText } from 'react-native-svg';
+import Svg, { Circle, Path, Text as SvgText } from 'react-native-svg';
 import { teamGradient } from './teamColors';
 import { C, F, FONT, R } from './theme';
 
@@ -71,19 +71,21 @@ function Jersey({ size, main, trim, text }: { size: number; main: string; trim: 
   );
 }
 
-/** The back of a card (face down in a pack). */
+/** The back of a card (face down in a pack): ink base, a frame in the pack color, the ball and the wordmark. */
 export function CardBack({ width = 150, color = C.hardwood }: { width?: number; color?: string }) {
+  const k = width / 150;
   return (
-    <LinearGradient
-      colors={['#17121E', color, '#17121E']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={[styles.back, { width, height: width * 1.4, borderRadius: R.md }]}
-    >
+    <View style={[styles.back, { width, height: width * 1.4, borderRadius: R.md, borderColor: C.ink }]}>
+      <LinearGradient colors={['#2A2140', '#17121E']} style={[StyleSheet.absoluteFill, { borderRadius: R.md - 2 }]} />
       <View style={[styles.backInner, { borderColor: color }]}>
-        <Text style={[styles.backLogo, { fontSize: 22 * (width / 150) }]}>TEN{'\n'}DEEP</Text>
+        <View style={[styles.backDiamond, { borderColor: color, width: 70 * k, height: 70 * k }]} />
+        <Svg width={56 * k} height={56 * k} viewBox="0 0 48 48">
+          <Circle cx={24} cy={24} r={19} fill="#FF7417" stroke="#FFFFFF" strokeWidth={2.5} />
+          <Path d="M5 24 H43 M24 5 V43 M11 10 C18 18 18 30 11 38 M37 10 C30 18 30 30 37 38" fill="none" stroke="#17121E" strokeWidth={2.4} />
+        </Svg>
+        <Text style={[styles.backLogo, { fontSize: 17 * k, color }]}>TEN DEEP</Text>
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
@@ -103,7 +105,8 @@ const styles = StyleSheet.create({
   levelText: { fontWeight: '900' },
   ribbon: { position: 'absolute', top: 8, right: -26, transform: [{ rotate: '35deg' }], paddingHorizontal: 26, paddingVertical: 2 },
   ribbonText: { color: C.ink, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
-  back: { padding: 6, alignItems: 'stretch', justifyContent: 'center' },
-  backInner: { flex: 1, borderWidth: 2, borderRadius: R.sm, alignItems: 'center', justifyContent: 'center' },
+  back: { padding: 6, alignItems: 'stretch', justifyContent: 'center', borderWidth: 2.5, overflow: 'hidden' },
+  backInner: { flex: 1, borderWidth: 2.5, borderRadius: R.sm, alignItems: 'center', justifyContent: 'center', gap: 6 },
+  backDiamond: { position: 'absolute', borderWidth: 2, opacity: 0.35, transform: [{ rotate: '45deg' }] },
   backLogo: { color: '#FFFFFF', textAlign: 'center', ...F.display, letterSpacing: 3 },
 });

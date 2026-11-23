@@ -29,7 +29,7 @@ export function FlyingBall({ size = 64 }: { size?: number }) {
  */
 export function BrandLogo({ scale = 1, testID }: { scale?: number; testID?: string }) {
   return (
-    <View style={{ alignItems: 'center' }} testID={testID} accessibilityRole="header" accessibilityLabel="Ten Deep">
+    <View style={{ alignItems: 'center', alignSelf: 'center' }} testID={testID} accessibilityRole="header" accessibilityLabel="Ten Deep">
       <View style={{ transform: [{ rotate: '-6deg' }], alignItems: 'center' }}>
         <Display size={44 * scale} extrude={C.hardwood}>TEN</Display>
         <Display size={62 * scale} extrude={C.hardwood} style={{ marginTop: -26 * scale }}>DEEP</Display>

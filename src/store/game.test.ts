@@ -154,3 +154,28 @@ describe('game store', () => {
     expect(useProfile.getState().draftsPlayed).toBe(before + 1);
   });
 });
+
+describe('career parking', () => {
+  it('starting another run sets a live career season aside, and Continue career brings it back', () => {
+    useGame.getState().newRun('current-2026');
+    useGame.setState({ career: true, phase: 'season' });
+    const season = useGame.getState().draft;
+    useGame.getState().newRun('current-2026');
+    expect(useGame.getState().career).toBe(false);
+    expect(useGame.getState().parked?.phase).toBe('season');
+    expect(useGame.getState().resumeCareer()).toBe(true);
+    expect(useGame.getState()).toMatchObject({ career: true, phase: 'season', parked: null, draft: season });
+  });
+
+  it('shop rerolls are off in challenges', async () => {
+    const { useShop } = await import('./shop');
+    useShop.setState({ rerolls: 5 });
+    useGame.getState().newChallenge('current-2026', 'seed-x', { name: 'A', w: 50, l: 32 });
+    useGame.getState().doSpin();
+    expect(useGame.getState().doReroll()).toBe(false);
+    useGame.getState().newRun('current-2026');
+    useGame.getState().doSpin();
+    expect(useGame.getState().doReroll()).toBe(true);
+    expect(useShop.getState().rerolls).toBe(4);
+  });
+});
