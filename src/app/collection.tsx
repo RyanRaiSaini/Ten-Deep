@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CARD_BY_ID } from '../data/cards';
+import { cardLevel } from '../engine/collect/lineup';
+import { closestSets, completedSets, setReward } from '../engine/collect/sets';
 import { TIERS, type Tier } from '../engine/collect/tiers';
 import { useCollection } from '../store/collection';
 import { CollectCard, TIER_STYLE } from '../ui/CollectCard';
@@ -19,6 +21,9 @@ export default function Collection() {
     .filter((x) => x.card)
     .sort((a, b) => b.card.ovr - a.card.ovr);
   const shown = filter ? owned.filter((x) => x.card.tier === filter) : owned;
+  const ownedIds = new Set(Object.keys(col.owned));
+  const closest = closestSets(ownedIds, 3);
+  const done = completedSets(ownedIds).length;
   const counts = Object.fromEntries(TIERS.map((tier) => [tier, owned.filter((x) => x.card.tier === tier).length]));
 
   return (
@@ -41,12 +46,27 @@ export default function Collection() {
         ))}
       </View>
       {owned.length === 0 && <Text style={styles.empty}>{t('collect.empty')}</Text>}
+      {closest.length > 0 && (
+        <View style={{ gap: S.sm }}>
+          <Text style={styles.section}>{t('card.closest')} · {t('card.completed', { n: done })}</Text>
+          {closest.map(({ set, have }) => (
+            <View key={set.id} style={styles.setRow}>
+              <View style={[styles.swatch, { backgroundColor: set.colors[0], borderColor: set.colors[1] }]} />
+              <View style={{ flex: 1, gap: 3 }}>
+                <Text style={styles.setName}>{set.label}  <Text style={styles.setCount}>{have}/{set.cards.length}</Text></Text>
+                <View style={styles.bar}><View style={[styles.fill, { width: `${(have / set.cards.length) * 100}%`, backgroundColor: set.colors[0] }]} /></View>
+              </View>
+              <Text style={styles.reward}>🎁 {t(`collect.t_${setReward(set)}`)}</Text>
+            </View>
+          ))}
+        </View>
+      )}
       <View style={styles.grid}>
         {shown.map(({ card, count }) => (
-          <View key={card.id}>
-            <CollectCard card={card} width={104} />
+          <Pressable key={card.id} onPress={() => router.push(`/card/${card.id}`)} testID="collection-card">
+            <CollectCard card={card} width={104} level={cardLevel(count)} />
             {count > 1 && <Text style={styles.dupes}>×{count}</Text>}
-          </View>
+          </Pressable>
         ))}
       </View>
     </Screen>
@@ -68,5 +88,13 @@ const styles = StyleSheet.create({
   chipText: { fontWeight: '800', fontSize: 12 },
   empty: { color: C.muted, textAlign: 'center', marginTop: S.xl },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center' },
+  section: { color: C.text, fontWeight: '900', fontSize: 15 },
+  setRow: { flexDirection: 'row', alignItems: 'center', gap: S.md, backgroundColor: C.surface, borderRadius: R.md, padding: S.md },
+  swatch: { width: 22, height: 22, borderRadius: 11, borderWidth: 3 },
+  setName: { color: C.text, fontWeight: '800' },
+  setCount: { color: C.muted, fontWeight: '700' },
+  bar: { height: 6, borderRadius: R.pill, backgroundColor: C.surface2, overflow: 'hidden' },
+  fill: { height: 6 },
+  reward: { color: C.gold, fontWeight: '800', fontSize: 11 },
   dupes: { ...F.display, position: 'absolute', bottom: 6, right: 8, color: C.text },
 });

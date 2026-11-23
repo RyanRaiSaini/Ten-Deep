@@ -3,7 +3,8 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { ALL_CARDS } from '../data/cards';
 import { generatePick, runPickType, type PickType } from '../engine/collect/picks';
-import { autoFill, canPlace, stageReward, starterSquad, type Lineup } from '../engine/collect/lineup';
+import { autoFill, canPlace, cardLevel, stageReward, starterSquad, type Lineup } from '../engine/collect/lineup';
+import { newlyCompleted, setReward } from '../engine/collect/sets';
 import { advanceStreak, streakRewards } from '../engine/collect/streak';
 import type { SlotId } from '../engine/types';
 
@@ -97,12 +98,17 @@ export const useCollection = create<CollectionStore>()(
           const p = s.pending.find((x) => x.id === pickId);
           if (!p || !p.cards.includes(cardId)) return {};
           const prev = s.owned[cardId];
-          return {
-            pending: s.pending.filter((x) => x.id !== pickId),
-            owned: { ...s.owned, [cardId]: { count: (prev?.count ?? 0) + 1, firstDay: prev?.firstDay ?? s.lastDay ?? '' } },
-          };
+          const owned = { ...s.owned, [cardId]: { count: (prev?.count ?? 0) + 1, firstDay: prev?.firstDay ?? s.lastDay ?? '' } };
+          // Completing a team-season set pays its own pick.
+          const sets = newlyCompleted(new Set(Object.keys(s.owned)), new Set(Object.keys(owned)));
+          const setPicks = sets.map((set) => pick(setReward(set), `set:${set.id}`));
+          return { pending: [...s.pending.filter((x) => x.id !== pickId), ...setPicks], owned };
         }),
     }),
     { name: 'tendeep-collection', storage: createJSONStorage(() => AsyncStorage) },
   ),
 );
+
+/** Card id → level (from duplicates), for lineup rosters. */
+export const levelsOf = (owned: CollectionStore['owned']): Record<string, number> =>
+  Object.fromEntries(Object.entries(owned).map(([id, o]) => [id, cardLevel(o.count)]));

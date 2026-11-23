@@ -413,5 +413,21 @@
     "locked": "Kilitli",
     "complete": "Meydan okuma tamamlandı!",
     "editLineup": "Kadroyu düzenle"
+  },
+  "card": {
+    "level": "Sv {{n}}",
+    "dupes": "Kopya: {{n}}",
+    "inSets": "Bu setlerin parçası",
+    "notOwned": "Henüz koleksiyonunda değil",
+    "sets": "Setler",
+    "closest": "Tamamlanmaya en yakın",
+    "setReward": "Tamamla, {{pick}} kazan",
+    "completed": "Tamamlanan setler: {{n}}",
+    "off": "Hücum",
+    "def": "Savunma",
+    "reb": "Ribaund",
+    "ast": "Oyun kurma",
+    "three": "Şut",
+    "levelHint": "Her kopya bir seviye ekler (+1 reyting, en fazla +3)."
   }
 }
