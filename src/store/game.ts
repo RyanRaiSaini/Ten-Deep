@@ -152,8 +152,9 @@ export const useGame = create<GameStore>()(
         set({ career, crisis: { objective: null, drawn: [], resolved: 0, pending: null, verdict: null } });
       },
       startCareerSeason: (teams, seed, mod = 0) => {
+        // Morale's rating nudge is set on the team up front so the board's objective accounts for it.
         const season = {
-          ...createSeason(teams[0], teams.slice(1), seed), stops: CARD_ROUNDS.slice(1),
+          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed), stops: CARD_ROUNDS.slice(1),
           ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
         };
         set({

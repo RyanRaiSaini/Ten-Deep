@@ -9,6 +9,8 @@ export interface BoxLine {
   reb: number;
   ast: number;
   min: number;
+  /** Which side the player played for (older saves don't have it). */
+  home?: boolean;
 }
 
 export interface GameResult {
@@ -41,7 +43,7 @@ function allocate(total: number, weights: number[]): number[] {
   return floors;
 }
 
-function boxFor(lineup: LineupEntry[], pts: number, rng: Rng): BoxLine[] {
+function boxFor(lineup: LineupEntry[], pts: number, rng: Rng, home: boolean): BoxLine[] {
   const noise = () => Math.exp(rng.normal(0, 0.35));
   const ptsW = lineup.map((e) => e.minutes * (e.player.off / 80) ** SIM.ptsExp * noise());
   const rebW = lineup.map((e) => e.minutes * (e.player.reb / 80) ** 3 * noise());
@@ -50,7 +52,7 @@ function boxFor(lineup: LineupEntry[], pts: number, rng: Rng): BoxLine[] {
   const r = allocate(Math.max(30, Math.round(rng.normal(44, 4))), rebW);
   const a = allocate(Math.max(12, Math.round(rng.normal(25, 3.5))), astW);
   return lineup.map((e, i) => ({
-    playerId: e.player.id, name: e.player.name, pts: p[i], reb: r[i], ast: a[i], min: Math.round(e.minutes),
+    playerId: e.player.id, name: e.player.name, pts: p[i], reb: r[i], ast: a[i], min: Math.round(e.minutes), home,
   }));
 }
 
@@ -72,5 +74,5 @@ export function simGame(home: Roster, away: Roster, ctx: GameContext): GameResul
     hs += Math.max(2, Math.round(rng.normal(11, 3) + SIM.k * 10 * (sh.off - sa.def)));
     as += Math.max(2, Math.round(rng.normal(11, 3) + SIM.k * 10 * (sa.off - sh.def)));
   }
-  return { homeScore: hs, awayScore: as, ot, box: [...boxFor(lh, hs, rng), ...boxFor(la, as, rng)] };
+  return { homeScore: hs, awayScore: as, ot, box: [...boxFor(lh, hs, rng, true), ...boxFor(la, as, rng, false)] };
 }

@@ -603,6 +603,11 @@
     "value": "Rejected: not enough value for them",
     "cap": "Rejected: it breaks the cap",
     "position": "Rejected: a starter must fit the position",
-    "missing": "Pick both players first"
+    "missing": "Pick both players first",
+    "stars": "Rejected: a team can only have two 95+ superstars"
+  },
+  "profile": {
+    "title": "Profile",
+    "pick": "Pick your avatar"
   }
 }
