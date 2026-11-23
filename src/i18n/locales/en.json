@@ -721,8 +721,8 @@
     "shared": "Shared!",
     "add": "Add friend",
     "addTitle": "Add a friend",
-    "addHint": "Paste the friend code or link they sent you.",
-    "pinHint": "Only have a PIN? Ask them to tap \"Share my friend code\" — it carries their team and collection.",
+    "addHint": "Type their PIN, or paste the link they sent you.",
+    "pinHint": "Your PIN goes online the first time you open the app with a connection.",
     "placeholder": "Paste a code or link",
     "paste": "Paste",
     "addBtn": "Add friend",
@@ -778,7 +778,14 @@
     "streak": "Streak",
     "tier": "League",
     "series": "Series",
-    "scoreline": "{{a}} – {{b}}"
+    "scoreline": "{{a}} – {{b}}",
+    "pinTitle": "Enter their PIN",
+    "find": "Add by PIN",
+    "orCode": "Or paste their friend link",
+    "notFound": "No player with that PIN yet. Ask them to open the Duels tab while online.",
+    "offline": "Couldn't reach the server. Check your connection, or paste their link instead.",
+    "online": "Online",
+    "notOnline": "Not online yet"
   },
   "shop": {
     "title": "Shop",
