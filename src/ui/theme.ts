@@ -31,3 +31,9 @@ export function ovrColor(ovr: number): string {
 }
 
 export const money = (m: number) => `$${m % 1 === 0 ? m : m.toFixed(1)}M`;
+
+/** "#E8833A" + 0.4 → "#E8833A66" */
+export function alpha(hex: string, a: number): string {
+  const h = hex.length === 4 ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}` : hex.slice(0, 7);
+  return h + Math.round(Math.max(0, Math.min(1, a)) * 255).toString(16).padStart(2, '0');
+}

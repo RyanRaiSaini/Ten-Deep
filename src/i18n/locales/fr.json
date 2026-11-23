@@ -429,5 +429,16 @@
     "ast": "Création",
     "three": "Tir",
     "levelHint": "Chaque doublon ajoute un niveau (+1 de note, jusqu'à +3)."
+  },
+  "welcome": {
+    "t1": "Draft à dix",
+    "b1": "Tourne la roue, choisis un joueur et fais tenir dix joueurs sous un plafond de 150 M$. Deux stars 95+ maximum.",
+    "t2": "Survis à 82 matchs",
+    "b2": "Blessures, date limite des transferts et playoffs en sept matchs. 70 victoires, c'est rare. 82-0, c'est un mythe.",
+    "t3": "Collectionne les légendes",
+    "b3": "Chaque partie te rapporte un Choix de joueur. Monte un cinq de cartes et affronte le Défi.",
+    "next": "Suivant",
+    "skip": "Passer",
+    "start": "C'est parti"
   }
 }

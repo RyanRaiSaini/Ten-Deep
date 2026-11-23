@@ -41,8 +41,13 @@ const step = async (name, fn) => {
   }
 };
 
-await step('home renders', async () => {
+await step('first launch: welcome slides, then home', async () => {
   await page.goto(base);
+  await page.getByTestId('welcome-next').click();
+  await page.waitForTimeout(500); // let the slide fade in
+  await shot('00-welcome');
+  await page.getByTestId('welcome-next').click();
+  await page.getByTestId('welcome-start').click();
   await page.getByText('TEN DEEP', { exact: true }).waitFor();
   await page.getByText('Current Day').waitFor();
   await shot('01-home');

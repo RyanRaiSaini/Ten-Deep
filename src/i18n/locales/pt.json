@@ -429,5 +429,16 @@
     "ast": "Criação",
     "three": "Arremesso",
     "levelHint": "Cada cópia extra adiciona um nível (+1 de nota, até +3)."
+  },
+  "welcome": {
+    "t1": "Monte seus dez",
+    "b1": "Gire a roleta, escolha um jogador e encaixe dez abaixo do teto de US$150 mi. Só duas estrelas 95+.",
+    "t2": "Sobreviva a 82 jogos",
+    "b2": "Lesões, prazo de trocas e playoffs em sete jogos. 70 vitórias é raro. 82-0 é um mito.",
+    "t3": "Colecione lendas",
+    "b3": "Cada partida rende uma Escolha de jogador. Monte uma escalação de cartas e encare o Desafio.",
+    "next": "Próximo",
+    "skip": "Pular",
+    "start": "Bora"
   }
 }
