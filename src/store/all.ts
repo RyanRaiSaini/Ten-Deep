@@ -6,6 +6,7 @@ import { useDaily } from './daily';
 import { useDuel } from './duel';
 import { useFriends } from './friends';
 import { useShop } from './shop';
+import { syncForm, useForm } from './form';
 import { useGame } from './game';
 import { useLeague } from './league';
 import { useProfile } from './profile';
@@ -13,7 +14,7 @@ import { useProgress } from './progress';
 import { useSettings } from './settings';
 
 /** Every persisted store. The root layout waits on all of them; delete-account resets all of them. */
-export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useCareer, useCollection, useProgress, useLeague, useFriends, useShop] as const;
+export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useCareer, useCollection, useProgress, useLeague, useFriends, useShop, useForm] as const;
 
 /** Delete account: reset every store in memory (so nothing is re-saved) and clear storage. */
 export async function wipeAll() {
@@ -30,4 +31,6 @@ export function startDay() {
   // Persist the PIN and its key on first run (an untouched initial state is never written), then go online.
   useFriends.setState((s) => ({ pin: s.pin, key: s.key }));
   void import('../net/pins').then((m) => m.publishMe());
+  // Real-life form: today's rating nudges from NBA box scores.
+  void syncForm();
 }

@@ -100,7 +100,9 @@
     "startSeason": "Lancer la saison",
     "landed": "Tu tombes sur",
     "empty": "Libre",
-    "benchSlot": "Banc {{n}}"
+    "benchSlot": "Banc {{n}}",
+    "hot": "En feu : +{{n}} grâce à sa forme réelle",
+    "cold": "Froid : −{{n}} selon sa forme réelle"
   },
   "season": {
     "title": "Saison régulière",

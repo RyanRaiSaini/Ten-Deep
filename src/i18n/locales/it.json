@@ -100,7 +100,9 @@
     "startSeason": "Inizia la stagione",
     "landed": "È uscita",
     "empty": "Libero",
-    "benchSlot": "Panchina {{n}}"
+    "benchSlot": "Panchina {{n}}",
+    "hot": "In fiamme: +{{n}} per la forma reale",
+    "cold": "Freddo: −{{n}} per la forma reale"
   },
   "season": {
     "title": "Stagione regolare",

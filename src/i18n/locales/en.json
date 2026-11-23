@@ -99,7 +99,9 @@
     "startSeason": "Start the season",
     "landed": "You landed",
     "empty": "Open",
-    "benchSlot": "Bench {{n}}"
+    "benchSlot": "Bench {{n}}",
+    "hot": "On fire: +{{n}} from real-life form",
+    "cold": "Cold: −{{n}} from real-life form"
   },
   "season": {
     "title": "Regular season",
