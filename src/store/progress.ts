@@ -82,8 +82,8 @@ export const useProgress = create<ProgressStore>()(
           dayBase: s.stats,
           week,
           weekBase: newWeek ? s.stats : s.weekBase,
-          // Keep only this week's claims (weekly ones are still live).
-          claimed: s.claimed.filter((c) => c.startsWith(`${week}:`)),
+          // Claims are kept (capped), not pruned by week: moving the clock back must not re-open a paid mission.
+          claimed: s.claimed.slice(-400),
         });
         get().check();
       },
