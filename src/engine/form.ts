@@ -7,6 +7,8 @@
  * trusted more as games pile up; the last 7 days add a hot/cold swing on top.
  */
 
+import type { Player } from './types';
+
 export interface StatLine {
   min: number; pts: number; fgm: number; fga: number; ftm: number; fta: number;
   oreb: number; dreb: number; ast: number; stl: number; blk: number; tov: number; pf: number;
@@ -81,6 +83,27 @@ export function computeForm(
     if (delta !== 0) out[key] = { d: delta, gp: s.gp, gmsc: Math.round(s.gmsc * 10) / 10, ...(r && r.gp >= 2 ? { recent: Math.round(r.gmsc * 10) / 10 } : {}) };
   }
   return out;
+}
+
+/**
+ * A copy of `pool` with form nudges applied to its base ratings. Used where every device must agree on the
+ * numbers (Live Party freezes the day's form in the room). `base` returns a player's unadjusted ratings.
+ */
+export function formPool<P extends { teams: { players: Player[] }[] }>(pool: P, form: Record<string, number>, base: (p: Player) => Player = (p) => p): P {
+  const subs = ['ovr', 'off', 'def', 'reb', 'ast', 'three'] as const;
+  return {
+    ...pool,
+    teams: pool.teams.map((t) => ({
+      ...t,
+      players: t.players.map((p) => {
+        const b = base(p);
+        const d = form[normName(b.name)] ?? 0;
+        const out = { ...b, form: d || undefined } as Player & { form?: number };
+        for (const k of subs) (out as unknown as Record<string, number>)[k] = Math.max(40, Math.min(99, (b[k] as number) + d));
+        return out;
+      }),
+    })),
+  };
 }
 
 /** Add one game's line into a running production total. */
