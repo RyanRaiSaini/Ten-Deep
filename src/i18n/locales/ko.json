@@ -366,7 +366,13 @@
     "hofEmpty": "나와 함께한 4시즌과 위대한 커리어가 입성 조건입니다.",
     "lottery": "드래프트 추첨",
     "lotterySkip": "건너뛰기",
-    "openSpots_other": "빈자리 {{count}}개"
+    "openSpots_other": "빈자리 {{count}}개",
+    "f1Title": "프랜차이즈 구축",
+    "f1Body": "드래프트, 재계약, 트레이드로 한 팀을 매 시즌 키우세요.",
+    "f2Title": "자리를 지켜라",
+    "f2Body": "구단은 매년 목표를 정합니다. 너무 자주 실패하면 해고됩니다.",
+    "f3Title": "역사를 만들어라",
+    "f3Body": "우승, 명예의 전당, 그리고 남는 구단 기록."
   },
   "collect": {
     "title": "컬렉션",

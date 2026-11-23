@@ -368,7 +368,13 @@
     "lottery": "Draftloterij",
     "lotterySkip": "Overslaan",
     "openSpots_one": "{{count}} open plek",
-    "openSpots_other": "{{count}} open plekken"
+    "openSpots_other": "{{count}} open plekken",
+    "f1Title": "Bouw een franchise",
+    "f1Body": "Draft, verleng, ruil en ontwikkel één team, seizoen na seizoen.",
+    "f2Title": "Houd je baan",
+    "f2Body": "Het bestuur stelt elk jaar een doel. Mis het te vaak en je ligt eruit.",
+    "f3Title": "Schrijf geschiedenis",
+    "f3Body": "Titels, een Hall of Fame en clubrecords die blijven."
   },
   "collect": {
     "title": "Collectie",

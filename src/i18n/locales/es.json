@@ -370,7 +370,13 @@
     "lotterySkip": "Saltar",
     "openSpots_many": "{{count}} plazas libres",
     "openSpots_one": "{{count}} plaza libre",
-    "openSpots_other": "{{count}} plazas libres"
+    "openSpots_other": "{{count}} plazas libres",
+    "f1Title": "Construye una franquicia",
+    "f1Body": "Draftea, renueva, traspasa y desarrolla un equipo temporada tras temporada.",
+    "f2Title": "Conserva tu puesto",
+    "f2Body": "La directiva fija un objetivo cada año. Fállalo demasiado y te despiden.",
+    "f3Title": "Haz historia",
+    "f3Body": "Títulos, un Salón de la Fama y récords de franquicia."
   },
   "collect": {
     "title": "Colección",

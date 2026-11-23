@@ -370,7 +370,13 @@
     "lotterySkip": "Passer",
     "openSpots_many": "{{count}} places libres",
     "openSpots_one": "{{count}} place libre",
-    "openSpots_other": "{{count}} places libres"
+    "openSpots_other": "{{count}} places libres",
+    "f1Title": "Bâtis une franchise",
+    "f1Body": "Drafte, prolonge, échange et développe une équipe, saison après saison.",
+    "f2Title": "Garde ton poste",
+    "f2Body": "Le conseil fixe un objectif chaque année. Rate trop souvent et tu es viré.",
+    "f3Title": "Entre dans l'histoire",
+    "f3Body": "Des titres, un Hall of Fame et des records de franchise."
   },
   "collect": {
     "title": "Collection",

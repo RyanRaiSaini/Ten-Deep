@@ -368,7 +368,13 @@
     "lottery": "Draft lottery",
     "lotterySkip": "Skip",
     "openSpots_one": "{{count}} open spot",
-    "openSpots_other": "{{count}} open spots"
+    "openSpots_other": "{{count}} open spots",
+    "f1Title": "Build a franchise",
+    "f1Body": "Draft, re-sign, trade and develop one team, season after season.",
+    "f2Title": "Keep your job",
+    "f2Body": "The board sets a goal every year. Miss too often and you are fired.",
+    "f3Title": "Make history",
+    "f3Body": "Titles, a Hall of Fame and franchise records that last."
   },
   "collect": {
     "title": "Collection",

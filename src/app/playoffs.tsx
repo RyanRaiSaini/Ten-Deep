@@ -11,6 +11,7 @@ import { useRunColors } from '../ui/runColors';
 import { recap } from '../engine/story/recap';
 import { RecapCard } from '../ui/story';
 import { Icon } from '../ui/icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Playoffs() {
   const { t } = useTranslation();
@@ -62,9 +63,10 @@ export default function Playoffs() {
         <Card style={{ gap: S.md }}>
           <Label color={C.hardwood}>{t(`playoffs.round${mine.round}`)}</Label>
           <View style={styles.matchup}>
-            <Team name={name(mine.series.hi)} seed={mine.series.seedHi} wins={mine.series.winsHi} me={mine.series.hi === 0} />
-            <Text style={styles.vs}>vs</Text>
-            <Team name={name(mine.series.lo)} seed={mine.series.seedLo} wins={mine.series.winsLo} me={mine.series.lo === 0} />
+            <LinearGradient colors={['#1B1626', '#2A2140']} style={StyleSheet.absoluteFill} />
+            <Team name={name(mine.series.hi)} seed={mine.series.seedHi} wins={mine.series.winsHi} me={mine.series.hi === 0} color={ps.season.teams[mine.series.hi].colors[0]} />
+            <View style={styles.vsBadge}><Icon name="vs" size={46} /></View>
+            <Team name={name(mine.series.lo)} seed={mine.series.seedLo} wins={mine.series.winsLo} me={mine.series.lo === 0} color={ps.season.teams[mine.series.lo].colors[0]} />
           </View>
           <Text style={styles.status}>{status(mine.series)}</Text>
           {mine.series.games.map((gm, i) => {
@@ -118,23 +120,27 @@ export default function Playoffs() {
   );
 }
 
-function Team({ name, seed, wins, me }: { name: string; seed: number; wins: number; me: boolean }) {
+function Team({ name, seed, wins, me, color }: { name: string; seed: number; wins: number; me: boolean; color: string }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', gap: 2 }}>
-      <Text style={[styles.wins, me && { color: C.hardwood }]}>{wins}</Text>
+    <View style={{ flex: 1, alignItems: 'center', gap: 4, paddingVertical: S.md }}>
+      <View style={[styles.teamBar, { backgroundColor: color }]} />
+      <Text style={[styles.wins, { color: me ? '#FFC53D' : '#FFFFFF' }]}>{wins}</Text>
       <Text style={styles.team} numberOfLines={2}>{name}</Text>
-      <Text style={styles.seed}>#{seed}</Text>
+      <View style={styles.seedPill}><Text style={styles.seed}>#{seed}</Text></View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   big: { color: C.text, fontSize: 20, textAlign: 'center', ...F.display },
-  matchup: { flexDirection: 'row', alignItems: 'center' },
+  matchup: { flexDirection: 'row', alignItems: 'center', borderRadius: 20, overflow: 'hidden', borderWidth: 3, borderColor: C.ink },
+  vsBadge: { marginHorizontal: -8 },
+  teamBar: { position: 'absolute', top: 0, left: 8, right: 8, height: 6, borderBottomLeftRadius: 4, borderBottomRightRadius: 4 },
+  seedPill: { backgroundColor: '#3A3050', borderRadius: 999, paddingHorizontal: 10, paddingVertical: 2 },
   vs: { color: C.muted, fontWeight: '800' },
-  wins: { color: C.text, fontSize: 48, ...F.display },
-  team: { color: C.text, fontWeight: '800', textAlign: 'center' },
-  seed: { color: C.muted, fontSize: 12 },
+  wins: { fontSize: 56, ...F.display },
+  team: { color: '#FFFFFF', fontWeight: '900', textAlign: 'center' },
+  seed: { color: '#D9D2E8', fontSize: 12, fontWeight: '900' },
   status: { color: C.text, textAlign: 'center', fontWeight: '700' },
   gameLine: { fontWeight: '700' },
   bracket: { color: C.muted, fontSize: 13 },
