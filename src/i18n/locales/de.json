@@ -604,5 +604,9 @@
     "cap": "Abgelehnt: sprengt die Gehaltsgrenze",
     "position": "Abgelehnt: ein Starter muss zur Position passen",
     "missing": "Wähle zuerst beide Spieler"
+  },
+  "profile": {
+    "title": "Profil",
+    "pick": "Wähle deinen Avatar"
   }
 }

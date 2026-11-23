@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useProfile } from '../store/profile';
 import { useSettings } from '../store/settings';
 import { Avatar } from '../ui/Avatar';
-import { AVATARS, POSES, avatarById } from '../ui/avatars';
+import { AVATARS, avatarById } from '../ui/avatars';
 import { BackButton, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 
@@ -16,17 +16,17 @@ export default function Profile() {
 
   return (
     <Screen>
-      <Header title="Profile" left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('profile.title')} left={<BackButton onPress={() => router.back()} />} />
       <View style={styles.hero}>
-        <Avatar id={current.id} size={120} />
-        <Text style={styles.name}>{flag} {POSES[current.pose].label}</Text>
+        <Avatar id={current.id} size={132} />
+        <Text style={styles.name}>{flag}</Text>
       </View>
       <Card style={styles.stats}>
         <Stat label={t('home.draftsPlayed')} value={String(p.draftsPlayed)} />
         <Stat label={t('home.titles')} value={String(p.titles)} />
         <Stat label={t('home.best')} value={p.draftsPlayed ? `${p.bestWins}-${p.bestLosses}` : '—'} />
       </Card>
-      <Label>Avatar</Label>
+      <Label>{t('profile.pick')}</Label>
       <View style={styles.grid}>
         {AVATARS.map((a) => (
           <Pressable
@@ -34,8 +34,11 @@ export default function Profile() {
             testID={`avatar-${a.id}`}
             onPress={() => p.set({ avatarId: a.id })}
             style={[styles.cell, a.id === current.id && styles.on]}
+            accessibilityRole="button"
+            accessibilityState={{ selected: a.id === current.id }}
           >
-            <Avatar id={a.id} size={54} />
+            <Avatar id={a.id} size={72} />
+            {a.id === current.id && <Text style={styles.check}>✓</Text>}
           </Pressable>
         ))}
       </View>
@@ -58,7 +61,8 @@ const styles = StyleSheet.create({
   stats: { flexDirection: 'row' },
   value: { color: C.text, fontSize: 22, ...F.display },
   label: { color: C.muted, fontSize: 11, textAlign: 'center' },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: S.sm, justifyContent: 'center' },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: S.md, justifyContent: 'center' },
   cell: { padding: 3, borderRadius: R.pill, borderWidth: 2, borderColor: 'transparent' },
   on: { borderColor: C.neon },
+  check: { position: 'absolute', right: 0, bottom: 0, width: 24, height: 24, borderRadius: 12, overflow: 'hidden', backgroundColor: C.bg, color: C.neon, textAlign: 'center', lineHeight: 22, fontWeight: '900', borderWidth: 2, borderColor: C.neon },
 });

@@ -288,8 +288,8 @@ export async function runFlow({ page, base, step, shot }) {
   await step('profile: pick an avatar', async () => {
     await page.goto(base);
     await page.getByTestId('avatar').click();
-    await page.getByTestId('avatar-legend-gold').click();
-    await page.getByText('Legend', { exact: false }).first().waitFor();
+    await page.getByTestId('avatar-loc-star').click();
+    await page.locator('[data-testid="avatar-loc-star"] >> text=✓').waitFor();
     await shot('14-profile');
   });
 
