@@ -45,6 +45,10 @@
     "career": {
       "title": "커리어",
       "desc": "하나의 프랜차이즈로 여러 시즌. 노화, 계약, 드래프트, FA. 구단이 당신을 경질할 때까지."
+    },
+    "collection": {
+      "title": "컬렉션",
+      "desc": "선수 픽"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "플레이오프 실패",
     "years": "{{n}}년",
     "nothingAffordable": "캡 안에 들어오는 선수가 없습니다."
+  },
+  "collect": {
+    "title": "컬렉션",
+    "picks": "선수 픽",
+    "tapToOpen": "탭하여 열기",
+    "revealAll": "모두 공개",
+    "chooseOne": "카드 한 장 선택",
+    "keep": "{{name}} 획득",
+    "noPicks": "대기 중인 픽이 없습니다. 내일 데일리 픽을 받으러 오세요.",
+    "streak": "🔥 {{n}}일 연속",
+    "odds": "카드당 확률",
+    "cards": "{{n}}장",
+    "empty": "선수 픽을 열어 컬렉션을 시작하세요.",
+    "all": "전체",
+    "claim": "픽 받기",
+    "waiting": "대기 중인 픽 {{n}}개",
+    "t_daily": "데일리 픽",
+    "t_run": "런 픽",
+    "t_playoffs": "플레이오프 픽",
+    "t_weekly": "위클리 픽",
+    "t_champion": "챔피언 픽",
+    "t_mythic": "미식 픽",
+    "t_legendary": "레전더리 픽",
+    "tier_common": "커먼",
+    "tier_uncommon": "언커먼",
+    "tier_rare": "레어",
+    "tier_epic": "에픽",
+    "tier_mythic": "미식",
+    "tier_ultra": "울트라",
+    "guarantee_champion": "모든 카드 83+",
+    "guarantee_mythic": "90+ 1장 확정",
+    "guarantee_legendary": "울트라 1장 확정",
+    "nextWeekly": "{{n}}일 후 위클리 픽"
   }
 }

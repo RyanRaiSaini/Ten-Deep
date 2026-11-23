@@ -45,6 +45,10 @@
     "career": {
       "title": "Carreira",
       "desc": "Uma franquia, várias temporadas. Idade, contratos, drafts e agência livre, até a diretoria te demitir."
+    },
+    "collection": {
+      "title": "Coleção",
+      "desc": "Escolhas de jogador"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "Fora dos playoffs",
     "years": "{{n}} ano(s)",
     "nothingAffordable": "Ninguém cabe no teto."
+  },
+  "collect": {
+    "title": "Coleção",
+    "picks": "Escolhas de jogador",
+    "tapToOpen": "Toque para abrir",
+    "revealAll": "Revelar todas",
+    "chooseOne": "Fique com uma carta",
+    "keep": "Ficar com {{name}}",
+    "noPicks": "Nenhuma escolha esperando. Volte amanhã para sua escolha diária.",
+    "streak": "🔥 Sequência de {{n}} dias",
+    "odds": "Chances por carta",
+    "cards": "{{n}} cartas",
+    "empty": "Abra uma escolha de jogador para começar sua coleção.",
+    "all": "Todas",
+    "claim": "Resgatar sua escolha",
+    "waiting": "{{n}} escolhas esperando",
+    "t_daily": "Escolha diária",
+    "t_run": "Escolha da partida",
+    "t_playoffs": "Escolha dos playoffs",
+    "t_weekly": "Escolha semanal",
+    "t_champion": "Escolha do campeão",
+    "t_mythic": "Escolha mítica",
+    "t_legendary": "Escolha lendária",
+    "tier_common": "Comum",
+    "tier_uncommon": "Incomum",
+    "tier_rare": "Rara",
+    "tier_epic": "Épica",
+    "tier_mythic": "Mítica",
+    "tier_ultra": "Ultra",
+    "guarantee_champion": "Todas as cartas 83+",
+    "guarantee_mythic": "Um 90+ garantido",
+    "guarantee_legendary": "Uma Ultra garantida",
+    "nextWeekly": "Escolha semanal em {{n}} dias"
   }
 }

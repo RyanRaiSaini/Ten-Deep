@@ -45,6 +45,10 @@
     "career": {
       "title": "キャリア",
       "desc": "一つのフランチャイズで何シーズンも。加齢、契約、ドラフト、FA。フロントに解任されるまで続く。"
+    },
+    "collection": {
+      "title": "コレクション",
+      "desc": "プレイヤーピック"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "プレーオフ逃し",
     "years": "{{n}}年",
     "nothingAffordable": "キャップ内に収まる選手がいない。"
+  },
+  "collect": {
+    "title": "コレクション",
+    "picks": "プレイヤーピック",
+    "tapToOpen": "タップして開封",
+    "revealAll": "すべて表示",
+    "chooseOne": "1枚を選んで獲得",
+    "keep": "{{name}}を獲得",
+    "noPicks": "未開封のピックはありません。明日またデイリーピックを受け取ろう。",
+    "streak": "🔥 {{n}}日連続",
+    "odds": "カード1枚あたりの確率",
+    "cards": "{{n}}枚",
+    "empty": "プレイヤーピックを開封してコレクションを始めよう。",
+    "all": "すべて",
+    "claim": "ピックを受け取る",
+    "waiting": "未開封ピック{{n}}個",
+    "t_daily": "デイリーピック",
+    "t_run": "ランピック",
+    "t_playoffs": "プレーオフピック",
+    "t_weekly": "ウィークリーピック",
+    "t_champion": "チャンピオンピック",
+    "t_mythic": "ミシックピック",
+    "t_legendary": "レジェンダリーピック",
+    "tier_common": "コモン",
+    "tier_uncommon": "アンコモン",
+    "tier_rare": "レア",
+    "tier_epic": "エピック",
+    "tier_mythic": "ミシック",
+    "tier_ultra": "ウルトラ",
+    "guarantee_champion": "全カード83以上",
+    "guarantee_mythic": "90以上1枚確定",
+    "guarantee_legendary": "ウルトラ1枚確定",
+    "nextWeekly": "ウィークリーピックまであと{{n}}日"
   }
 }

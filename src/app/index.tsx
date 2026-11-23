@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useCollection } from '../store/collection';
 import { useGame } from '../store/game';
 import { useProfile } from '../store/profile';
 import { useSettings } from '../store/settings';
@@ -10,6 +11,7 @@ import { C, F, R, S } from '../ui/theme';
 
 const MODES = [
   { key: 'current', poolId: 'current-2026', live: true, accent: C.hardwood },
+  { key: 'collection', route: '/collection', live: true, accent: '#B26BFF', badge: 'NEW' },
   { key: 'career', route: '/career', live: true, accent: '#E84393', badge: 'NEW' },
   { key: 'crisis', picker: 'crisis', live: true, accent: '#FF7A1A' },
   { key: 'franchise', picker: 'franchise', live: true, accent: '#7C5CFF' },
@@ -28,6 +30,7 @@ export default function Home() {
   const flag = useSettings((s) => s.nationality);
   const phase = useGame((s) => s.phase);
   const newRun = useGame((s) => s.newRun);
+  const pendingPicks = useCollection((s) => s.pending.length);
 
   return (
     <Screen>
@@ -51,6 +54,9 @@ export default function Home() {
         <Stat label={t('home.best')} value={profile.draftsPlayed ? `${profile.bestWins}-${profile.bestLosses}` : '—'} />
       </Card>
 
+      {pendingPicks > 0 && (
+        <Button label={`🎁  ${t('collect.waiting', { n: pendingPicks })}`} variant="gold" onPress={() => router.push('/packs')} testID="picks-banner" />
+      )}
       {phase !== 'idle' && (
         <Button label={`▶  ${t('home.resume')}`} variant="gold" onPress={() => router.push(ROUTE[phase])} testID="resume" />
       )}
