@@ -21,6 +21,7 @@ import { Icon } from '../ui/icons';
 import { shareText } from '../ui/share';
 import { useProfile } from '../store/profile';
 import { runShareText } from '../engine/share';
+import { RarityBadge } from '../ui/RarityBadge';
 import { useFriends } from '../store/friends';
 import { MODE_BY_ID } from '../data/modes';
 import { CONFIG } from '../config';
@@ -96,6 +97,7 @@ export default function Result() {
         <Stat label={t('result.seed')} value={`#${seed}`} />
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
+      <RarityBadge wins={rec.w} />
       <LeagueGain gained={g.leagueGain} stake={g.stake} />
       <Card style={{ gap: S.sm }} testID="awards">
         <View style={styles.awardsHead}><Icon name="medal" size={26} /><Text style={styles.awardsTitle}>{t('result.awards')}</Text></View>

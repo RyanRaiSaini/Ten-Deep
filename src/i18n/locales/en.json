@@ -538,7 +538,12 @@
     "promotions": "Get promoted in the Weekly League",
     "leagueBest": "Reach a league tier",
     "pickUpgrades": "Upgrade a pick with a power-up tap",
-    "rerolls": "Use rerolls"
+    "rerolls": "Use rerolls",
+    "foils": "Pull special-finish cards",
+    "hasGold": "Own a Gold-or-rarer card",
+    "hasViolet": "Own a Violet-or-rarer card",
+    "hasRainbow": "Own a Rainbow-or-rarer card",
+    "hasCosmic": "Own a Cosmic card"
   },
   "ach": {
     "rookie": "Rookie",
@@ -595,7 +600,13 @@
     "climber": "Climber",
     "legend-tier": "Legend Status",
     "lucky-tap": "Lucky Tap",
-    "fresh-spin": "Fresh Spin"
+    "fresh-spin": "Fresh Spin",
+    "shiny": "Shiny",
+    "foil-hoarder": "Foil Hoarder",
+    "golden-touch": "Golden Touch",
+    "violet-hour": "Violet Hour",
+    "over-the-rainbow": "Over the Rainbow",
+    "cosmic": "Cosmic"
   },
   "league": {
     "title": "League",
@@ -902,5 +913,30 @@
       "wrong-code": "That code doesn't match the backup.",
       "offline": "Couldn't reach the server. Try again."
     }
+  },
+  "rarity": {
+    "perfect": "PERFECT SEASON",
+    "perfectOdds": "82-0. About 1 in 450 drafts ever do this.",
+    "c75": "75-Win Club",
+    "c75Odds": "Only about 3% of drafts get here.",
+    "c70": "70-Win Club",
+    "c70Odds": "About 1 in 10 drafts reach 70 wins.",
+    "c65": "65-Win Season",
+    "c65Odds": "A top-quarter draft.",
+    "near": "{{n}} wins short of the {{club}}"
+  },
+  "finish": {
+    "holo": "Holo",
+    "chrome": "Chrome",
+    "gold": "Gold",
+    "violet": "Violet",
+    "rainbow": "Rainbow",
+    "cosmic": "Cosmic",
+    "pull": "{{name}} PULL!",
+    "oneIn": "1 in {{n}}",
+    "odds": "Finish odds (any card, any pick)",
+    "rarest": "Rarest pulls",
+    "yours": "Your finishes",
+    "keepHint": "Only the card you keep joins your collection, finish and all."
   }
 }
