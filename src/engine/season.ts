@@ -2,6 +2,7 @@ import { canAfford, superstarBlocked } from './cap';
 import { simGame, type GameResult } from './game';
 import { rollInjury, type InjuryLabel } from './injuries';
 import { lineupMinutes } from './rotation';
+import { addNews, roundNews, type Headline } from './story/news';
 import { createRng, shuffle } from './rng';
 import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pos, type Rng, type Roster, type RosterSlots } from './types';
 
@@ -46,6 +47,8 @@ export interface SeasonState {
   stops?: number[];
   /** Temporary rating modifiers for the user's team (Management Crisis). */
   mods?: TeamMod[];
+  /** Headlines about the user's team, newest last. */
+  news?: Headline[];
 }
 
 export interface TeamMod {
@@ -186,6 +189,7 @@ export function advance(state: SeasonState, games: number): SeasonState {
       if (home === 0 || away === 0) s.log.push({ kind: 'game', round: s.round, home, away, result });
     }
     serveGame(s.injuries, sittingOut);
+    s.news = addNews(s.news, roundNews(s, s.round));
     s.round++;
     // Strip box scores from games that have scrolled out of the feed.
     let seen = 0;
