@@ -608,5 +608,9 @@
     "cap": "Recusada: estoura o teto",
     "position": "Recusada: um titular precisa servir na posição",
     "missing": "Escolha os dois jogadores primeiro"
+  },
+  "profile": {
+    "title": "Perfil",
+    "pick": "Escolha seu avatar"
   }
 }

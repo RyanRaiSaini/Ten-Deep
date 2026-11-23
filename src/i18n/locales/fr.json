@@ -608,5 +608,9 @@
     "cap": "Refusé : ça dépasse le plafond",
     "position": "Refusé : un titulaire doit correspondre au poste",
     "missing": "Choisis d'abord les deux joueurs"
+  },
+  "profile": {
+    "title": "Profil",
+    "pick": "Choisis ton avatar"
   }
 }
