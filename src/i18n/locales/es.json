@@ -100,7 +100,9 @@
     "startSeason": "Empezar la temporada",
     "landed": "Te ha tocado",
     "empty": "Libre",
-    "benchSlot": "Banco {{n}}"
+    "benchSlot": "Banco {{n}}",
+    "hot": "Encendido: +{{n}} por su forma real",
+    "cold": "Frío: −{{n}} por su forma real"
   },
   "season": {
     "title": "Temporada regular",

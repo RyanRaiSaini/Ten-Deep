@@ -99,7 +99,9 @@
     "startSeason": "Saison starten",
     "landed": "Gezogen",
     "empty": "Frei",
-    "benchSlot": "Bank {{n}}"
+    "benchSlot": "Bank {{n}}",
+    "hot": "Heiß: +{{n}} durch echte Form",
+    "cold": "Kalt: −{{n}} durch echte Form"
   },
   "season": {
     "title": "Hauptrunde",

@@ -100,7 +100,9 @@
     "startSeason": "Começar a temporada",
     "landed": "Você tirou",
     "empty": "Livre",
-    "benchSlot": "Banco {{n}}"
+    "benchSlot": "Banco {{n}}",
+    "hot": "Em chamas: +{{n}} pela fase real",
+    "cold": "Frio: −{{n}} pela fase real"
   },
   "season": {
     "title": "Temporada regular",

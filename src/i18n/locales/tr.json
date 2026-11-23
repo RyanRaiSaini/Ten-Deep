@@ -99,7 +99,9 @@
     "startSeason": "Sezonu başlat",
     "landed": "Çıkan takım",
     "empty": "Boş",
-    "benchSlot": "Yedek {{n}}"
+    "benchSlot": "Yedek {{n}}",
+    "hot": "Alev alev: gerçek formdan +{{n}}",
+    "cold": "Soğuk: gerçek formdan −{{n}}"
   },
   "season": {
     "title": "Normal sezon",
