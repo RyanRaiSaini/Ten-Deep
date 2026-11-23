@@ -43,9 +43,11 @@ export function calibrate(rows: { ovr: number; gmsc: number }[]): { a: number; b
   if (n < 20) return { a: 70, b: 1.1 };
   const mx = rows.reduce((s, r) => s + r.gmsc, 0) / n;
   const my = rows.reduce((s, r) => s + r.ovr, 0) / n;
-  let sxy = 0, sxx = 0;
-  for (const r of rows) { sxy += (r.gmsc - mx) * (r.ovr - my); sxx += (r.gmsc - mx) ** 2; }
-  const b = sxx > 0 ? Math.max(0.4, Math.min(2.5, sxy / sxx)) : 1.1;
+  let syy = 0, sxx = 0;
+  for (const r of rows) { syy += (r.ovr - my) ** 2; sxx += (r.gmsc - mx) ** 2; }
+  // Reduced-major-axis fit (slope = spread of ratings / spread of production): an ordinary least-squares fit
+  // shrinks toward the mean and would mark every superstar as "underperforming".
+  const b = sxx > 0 ? Math.max(0.4, Math.min(2.5, Math.sqrt(syy / sxx))) : 1.1;
   return { a: my - b * mx, b };
 }
 
@@ -67,10 +69,14 @@ export function computeForm(
     // How much to trust the season: grows with games and minutes.
     const trust = Math.min(1, s.gp / 15) * Math.min(1, mpg / 22);
     const earned = a + b * s.gmsc;
-    let d = (earned - p.ovr) * 0.55 * trust;
-    const r = recent.get(key);
-    if (r && r.gp >= 2) d += (r.gmsc - s.gmsc) * b * 0.35 * Math.min(1, r.gp / 3);
     const young = (p.age ?? 30) <= 21;
+    // Young players get most of the gap (a rookie's base rating is a guess; his season is evidence).
+    let d = (earned - p.ovr) * (young ? 0.8 : 0.55) * trust;
+    const r = recent.get(key);
+    // The last week is a swing of at most ±2 on top.
+    if (r && r.gp >= 2) d += Math.max(-2, Math.min(2, (r.gmsc - s.gmsc) * b * 0.25 * Math.min(1, r.gp / 3)));
+    // One cold stretch doesn't make a superstar ordinary.
+    if (p.ovr >= 92) d = Math.max(d, -3);
     const delta = Math.round(Math.max(FORM_CAP.down, Math.min(young ? FORM_CAP.youngUp : FORM_CAP.up, d)));
     if (delta !== 0) out[key] = { d: delta, gp: s.gp, gmsc: Math.round(s.gmsc * 10) / 10, ...(r && r.gp >= 2 ? { recent: Math.round(r.gmsc * 10) / 10 } : {}) };
   }
