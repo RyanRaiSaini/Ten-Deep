@@ -63,14 +63,14 @@ export function BackButton({ onPress }: { onPress: () => void }) {
   return <Button label={isRTL(i18n.language) ? '›' : '‹'} variant="ghost" onPress={onPress} style={{ paddingVertical: 6 }} testID="back" />;
 }
 
-export function Card({ children, style, onPress }: { children: ReactNode; style?: StyleProp<ViewStyle>; onPress?: () => void }) {
+export function Card({ children, style, onPress, testID }: { children: ReactNode; style?: StyleProp<ViewStyle>; onPress?: () => void; testID?: string }) {
   if (onPress)
     return (
-      <Pressable onPress={onPress} style={({ pressed }) => [styles.card, style, pressed && { opacity: 0.85 }]}>
+      <Pressable onPress={onPress} testID={testID} accessibilityRole="button" style={({ pressed }) => [styles.card, style, pressed && { opacity: 0.85 }]}>
         {children}
       </Pressable>
     );
-  return <View style={[styles.card, style]}>{children}</View>;
+  return <View style={[styles.card, style]} testID={testID}>{children}</View>;
 }
 
 export function Label({ children, color = C.muted }: { children: ReactNode; color?: string }) {

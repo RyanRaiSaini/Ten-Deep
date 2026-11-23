@@ -209,6 +209,17 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('30-gauntlet');
   });
 
+  await step('missions: progress from the runs so far, achievements unlocked', async () => {
+    await page.goto(base);
+    await page.getByTestId('to-missions').click();
+    await page.getByTestId('achievements').waitFor();
+    const grid = await page.getByTestId('achievements').textContent();
+    if (!grid?.includes('✓')) throw new Error('no achievement unlocked after several finished seasons');
+    const claim = page.locator('[data-testid^="claim-"]:not([aria-disabled="true"])');
+    if (await claim.count()) await claim.first().click();
+    await shot('32-missions');
+  });
+
   await step('card detail: tap a collection card, see level and sets', async () => {
     await page.goto(`${base}/collection`);
     await page.getByTestId('collection-card').first().click();

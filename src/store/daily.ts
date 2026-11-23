@@ -1,6 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import { track } from './progress';
+
+/** Daily trivia is five questions; 5/5 is a perfect score. */
+const TRIVIA_QUESTIONS = 5;
 
 /** Mid-challenge state, saved on every answer so leaving the screen can't reset a one-shot challenge. */
 export interface Progress {
@@ -32,10 +36,13 @@ export interface DailyStore {
 
 export const useDaily = create<DailyStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       days: {},
-      record: (key, kind, value) =>
-        set((s) => (s.days[key]?.[kind] !== undefined ? {} : { days: { ...s.days, [key]: { ...s.days[key], [kind]: value } } })),
+      record: (key, kind, value) => {
+        if (get().days[key]?.[kind] !== undefined) return;
+        set((s) => ({ days: { ...s.days, [key]: { ...s.days[key], [kind]: value } } }));
+        track({ type: 'daily', perfect: kind === 'trivia' && value === TRIVIA_QUESTIONS });
+      },
       saveProgress: (key, kind, p) =>
         set((s) => ({ days: { ...s.days, [key]: { ...s.days[key], progress: { ...s.days[key]?.progress, [kind]: p } } } })),
     }),

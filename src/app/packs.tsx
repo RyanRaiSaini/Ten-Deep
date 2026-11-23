@@ -11,6 +11,7 @@ import { useCollection } from '../store/collection';
 import { CardBack, CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Header, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
+import { track } from '../store/progress';
 
 const native = Platform.OS !== 'web';
 const PACK_COLOR: Record<PickType, [string, string]> = {
@@ -141,6 +142,7 @@ export default function Packs() {
   const keep = () => {
     if (!selected) return;
     col.keep(pick.id, selected);
+    track({ type: 'pack' });
     feel('pickChime');
   };
 

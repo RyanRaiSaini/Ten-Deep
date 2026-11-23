@@ -18,6 +18,7 @@ import { prepareCard, type CrisisCard } from '../engine/crisis/offers';
 import { dailySeed } from '../engine/daily';
 import { useDaily } from './daily';
 import { useCollection } from './collection';
+import { track } from './progress';
 import { useProfile } from './profile';
 
 export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'crisis' | 'playoffs' | 'result';
@@ -213,10 +214,20 @@ export const useGame = create<GameStore>()(
         useProfile.getState().recordDraft(result);
         // Every finished run earns a Player Pick, scaled by how it went.
         useCollection.getState().awardRun(playoffs.season.seed, { ...result, madePlayoffs: !!seriesFor(playoffs, 0) });
-        const { daily, crisis } = get();
+        const { daily, crisis, career, poolId } = get();
         if (daily) useDaily.getState().record(daily, 'draft', result);
-        if (crisis?.objective) set({ crisis: { ...crisis, verdict: verdict(crisis.objective, playoffs.season, playoffs) } });
+        const v = crisis?.objective ? verdict(crisis.objective, playoffs.season, playoffs) : null;
+        if (crisis?.objective) set({ crisis: { ...crisis, verdict: v } });
         set({ phase: 'result' });
+        const mine = playoffs.rounds.flat().filter((s) => s.hi === 0 || s.lo === 0);
+        track({
+          type: 'run', ...result,
+          madePlayoffs: mine.length > 0,
+          seed: mine[0] ? (mine[0].hi === 0 ? mine[0].seedHi : mine[0].seedLo) : 0,
+          playoffLosses: mine.reduce((n, s) => n + (s.hi === 0 ? s.winsLo : s.winsHi), 0),
+          kind: career ? 'career' : crisis ? 'crisis' : daily ? 'daily' : (MODE_BY_ID[poolId]?.kind ?? 'current'),
+          verdict: v,
+        });
       },
       quit: () => set({ phase: 'idle', daily: null, crisis: null, career: false, draft: null, season: null, playoffs: null, deadline: null }),
     }),
