@@ -12,12 +12,15 @@ import { useCareer } from '../store/career';
 import { useCollection } from '../store/collection';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
-import { Button, Card, Screen } from '../ui/components';
+import { Button, Card, Display, Screen } from '../ui/components';
 import { Confetti, CountUp } from '../ui/fx';
 import { useRunColors } from '../ui/runColors';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, S } from '../ui/theme';
 import { AWARDS, awardRace } from '../engine/story/leaders';
+import { Icon } from '../ui/icons';
+
+const VERDICT_ICON = { legend: 'crown', extended: 'medal', survived: 'clock', fired: 'flame' } as const;
 
 export default function Result() {
   const { t } = useTranslation();
@@ -51,14 +54,17 @@ export default function Result() {
   return (
     <Screen tint={won ? C.gold : colors[0]} overlay={won ? <Confetti colors={[C.gold, colors[0], colors[1], '#FFFFFF']} /> : null}>
       <View style={styles.hero}>
-        <Text style={styles.trophy}>{won ? '🏆' : mine ? '🏀' : '📉'}</Text>
-        <Text style={[styles.outcome, won && { color: C.gold }]}>{outcome}</Text>
+        <View style={[styles.trophyRing, { backgroundColor: won ? '#FFE9A8' : '#FFFFFF' }]}>
+          <Icon name={won ? 'trophy' : mine ? 'ball' : 'chart'} size={96} />
+        </View>
+        <Display size={won ? 40 : 32} color={won ? '#FFC53D' : '#FFFFFF'}>{outcome}</Display>
         {g.crisis?.verdict && g.crisis.objective && (
           <View style={styles.verdict} testID="crisis-verdict">
+            <Icon name={VERDICT_ICON[g.crisis.verdict]} size={44} />
             <Text style={styles.verdictBig}>
-              {{ legend: '👑', extended: '✍️', survived: '😐', fired: '🔥' }[g.crisis.verdict]} {t(`crisis.v_${g.crisis.verdict}`)}
+              {t(`crisis.v_${g.crisis.verdict}`)}
             </Text>
-            <Text style={styles.verdictSub}>🎯 {t('crisis.objective')}: {t(`crisis.obj_${g.crisis.objective.tier}`)}</Text>
+            <Text style={styles.verdictSub}>{t('crisis.objective')}: {t(`crisis.obj_${g.crisis.objective.tier}`)}</Text>
             <Text style={styles.verdictSub}>{g.crisis.drawn.map((id) => `${cardDef(id).icon} ${t(`crisis.cards.${id}.title`)}`).join('  ·  ')}</Text>
           </View>
         )}
@@ -72,7 +78,7 @@ export default function Result() {
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
       <Card style={{ gap: S.sm }} testID="awards">
-        <Text style={styles.awardsTitle}>🏅 {t('result.awards')}</Text>
+        <View style={styles.awardsHead}><Icon name="medal" size={26} /><Text style={styles.awardsTitle}>{t('result.awards')}</Text></View>
         {AWARDS.map((a) => {
           const w = awardRace(season, a, 1)[0];
           if (!w) return null;
@@ -80,7 +86,7 @@ export default function Result() {
             <View key={a} style={styles.awardRow}>
               <Text style={styles.awardName}>{t(`league.${a}`)}</Text>
               <Text style={[styles.awardWinner, w.team === 0 && { color: C.gold }]} numberOfLines={1}>
-                {w.team === 0 ? '⭐ ' : ''}{w.player.name}
+                {w.player.name}{w.team === 0 ? ' ★' : ''}
               </Text>
             </View>
           );
@@ -88,7 +94,7 @@ export default function Result() {
       </Card>
       <RosterBoard roster={user.slots} />
       {pendingPicks > 0 && (
-        <Button label={`🎁  ${t('collect.claim')}`} variant="gold" onPress={() => router.push('/packs')} testID="claim-pick" />
+        <Button label={t('collect.claim')} icon={<Icon name="gift" size={22} />} variant="gold" onPress={() => router.push('/packs')} testID="claim-pick" />
       )}
       {g.career ? (
         <Button
@@ -116,7 +122,8 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
 
 const styles = StyleSheet.create({
   hero: { alignItems: 'center', paddingTop: S.xxl, gap: S.sm },
-  trophy: { fontSize: 72 },
+  trophyRing: { width: 140, height: 140, borderRadius: 70, alignItems: 'center', justifyContent: 'center', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7 },
+  awardsHead: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   outcome: { color: C.text, fontSize: 30, textAlign: 'center', ...F.display },
   verdict: { alignItems: 'center', gap: 4, marginTop: S.sm },
   verdictBig: { color: C.hardwood, fontSize: 22, textAlign: 'center', ...F.display },

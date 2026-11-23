@@ -13,6 +13,7 @@ import { PlayerCard } from '../ui/PlayerCard';
 import { Spinner } from '../ui/Spinner';
 import { C, S } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
+import { Icon } from '../ui/icons';
 
 export default function Deadline() {
   const { t } = useTranslation();
@@ -61,7 +62,7 @@ export default function Deadline() {
             ))}
           </View>
           <Button
-            label={`🎰  ${t('deadline.spin')}`}
+            label={t('deadline.spin')} icon={<Icon name="ball" size={22} />}
             disabled={!deadline.outId}
             onPress={() => { setLanded(false); g.spinDeadline(); setSpinKey((k) => k + 1); }}
             testID="deadline-spin"

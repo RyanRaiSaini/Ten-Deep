@@ -376,7 +376,7 @@
     "chooseOne": "카드 한 장 선택",
     "keep": "{{name}} 획득",
     "noPicks": "대기 중인 픽이 없습니다. 내일 데일리 픽을 받으러 오세요.",
-    "streak": "🔥 {{n}}일 연속",
+    "streak": "{{n}}일 연속",
     "odds": "카드당 확률",
     "cards": "{{n}}장",
     "empty": "선수 픽을 열어 컬렉션을 시작하세요.",
@@ -607,7 +607,8 @@
   },
   "profile": {
     "title": "프로필",
-    "pick": "아바타 선택"
+    "pick": "아바타 선택",
+    "namePlaceholder": "이름"
   },
   "tabs": {
     "daily": "데일리",

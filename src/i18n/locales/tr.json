@@ -378,7 +378,7 @@
     "chooseOne": "Bir kart seç",
     "keep": "{{name}} al",
     "noPicks": "Bekleyen seçim yok. Günlük seçimin için yarın gel.",
-    "streak": "🔥 {{n}} günlük seri",
+    "streak": "{{n}} günlük seri",
     "odds": "Kart başına olasılık",
     "cards": "{{n}} kart",
     "empty": "Koleksiyonuna başlamak için bir oyuncu seçimi aç.",
@@ -611,7 +611,8 @@
   },
   "profile": {
     "title": "Profil",
-    "pick": "Avatarını seç"
+    "pick": "Avatarını seç",
+    "namePlaceholder": "Adın"
   },
   "tabs": {
     "daily": "Günlük",

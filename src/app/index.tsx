@@ -113,7 +113,8 @@ export default function Home() {
       <Pressable onPress={startCurrent} testID="mode-current" accessibilityRole="button" accessibilityLabel={t('mode.current.title')}
         style={({ pressed }) => [styles.hero, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 4 }]}
         onLayout={(e: LayoutChangeEvent) => setHeroW(e.nativeEvent.layout.width)}>
-        <View style={StyleSheet.absoluteFill}><CourtArt width={heroW} height={190} color={C.hardwood} color2={C.purple} /></View>
+        <View style={StyleSheet.absoluteFill}><CourtArt width={heroW} height={190} color={C.hardwood} /></View>
+        <LinearGradient colors={['rgba(255,116,23,0)', 'rgba(214,40,90,0.55)']} start={{ x: 0.2, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
         <View style={styles.heroBody}>
           <Text style={styles.heroKicker}>2026-27</Text>
           <Display size={38} align="left">{t('mode.current.title')}</Display>

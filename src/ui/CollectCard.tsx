@@ -2,7 +2,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, View } from 'react-native';
 import { Text } from './Text';
 import type { Card, Tier } from '../engine/collect/tiers';
-import { C, F, R } from './theme';
+import Svg, { Path, Text as SvgText } from 'react-native-svg';
+import { teamGradient } from './Spinner';
+import { C, F, FONT, R } from './theme';
 
 /** Tier look: frame gradient, accent and glow. */
 export const TIER_STYLE: Record<Tier, { frame: [string, string, ...string[]]; accent: string; glow: string }> = {
@@ -25,18 +27,16 @@ export function CollectCard({ card, width = 150, tierLabel, level = 0 }: { card:
     <View style={[styles.glow, { width, height: h, shadowColor: s.accent, borderRadius: R.md }]}>
       <LinearGradient colors={s.frame} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.frame, { borderRadius: R.md }]}>
         <LinearGradient
-          colors={[card.colors[0], '#0B1020']}
+          colors={teamGradient(card.colors)}
           start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
+          end={{ x: 0.3, y: 1 }}
           style={[styles.inner, { borderRadius: R.md - 3 }]}
         >
           <View style={styles.top}>
-            <Text style={[styles.ovr, { fontSize: 30 * big, color: s.accent }]}>{Math.min(99, card.ovr + level)}</Text>
+            <Text style={[styles.ovr, { fontSize: 32 * big }]}>{Math.min(99, card.ovr + level)}</Text>
             <Text style={[styles.pos, { fontSize: 11 * big }]}>{card.pos}{card.pos2 ? `/${card.pos2}` : ''}</Text>
           </View>
-          <View style={[styles.mono, { width: 64 * big, height: 64 * big, borderColor: s.accent }]}>
-            <Text style={[styles.monoText, { fontSize: 24 * big }]}>{initials(card.name)}</Text>
-          </View>
+          <Jersey size={78 * big} main={card.colors[0]} trim={card.colors[1]} text={initials(card.name)} />
           {card.tier === 'ultra' && <Text style={[styles.sparkle, { fontSize: 14 * big }]}>✦ ✧ ✦</Text>}
           <View style={{ alignSelf: 'stretch', alignItems: 'center', gap: 1 }}>
             <Text style={[styles.name, { fontSize: 13 * big }]} numberOfLines={1} ellipsizeMode="tail">{card.name}</Text>
@@ -58,11 +58,24 @@ export function CollectCard({ card, width = 150, tierLabel, level = 0 }: { card:
   );
 }
 
+/** A tank-top jersey in the team's colors with the player's initials (no faces, no logos). */
+function Jersey({ size, main, trim, text }: { size: number; main: string; trim: string; text: string }) {
+  const light = (hex: string) => { const n = parseInt(hex.slice(1, 7), 16); return (0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255 > 0.7; };
+  const ink = light(main) ? '#17121E' : '#FFFFFF';
+  return (
+    <Svg width={size} height={size} viewBox="0 0 60 60">
+      <Path d="M18 4 C20 10 24 13 30 13 C36 13 40 10 42 4 L50 8 C48 16 48 20 52 24 L52 56 L8 56 L8 24 C12 20 12 16 10 8 Z" fill={main} stroke="#17121E" strokeWidth={2.4} strokeLinejoin="round" />
+      <Path d="M18 4 C20 10 24 13 30 13 C36 13 40 10 42 4 M10 8 C12 16 12 20 8 24 M50 8 C48 16 48 20 52 24" fill="none" stroke={trim} strokeWidth={2.6} />
+      <SvgText x={30} y={44} fontSize={18} fontFamily={FONT.display} fill={ink} stroke={light(main) ? 'none' : '#17121E'} strokeWidth={0.8} textAnchor="middle">{text}</SvgText>
+    </Svg>
+  );
+}
+
 /** The back of a card (face down in a pack). */
 export function CardBack({ width = 150, color = C.hardwood }: { width?: number; color?: string }) {
   return (
     <LinearGradient
-      colors={['#141B2E', color, '#141B2E']}
+      colors={['#17121E', color, '#17121E']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={[styles.back, { width, height: width * 1.4, borderRadius: R.md }]}
@@ -79,18 +92,18 @@ const styles = StyleSheet.create({
   frame: { flex: 1, padding: 3 },
   inner: { flex: 1, padding: 10, justifyContent: 'space-between', alignItems: 'center', overflow: 'hidden' },
   top: { alignSelf: 'stretch', alignItems: 'flex-start' },
-  ovr: { ...F.display },
-  pos: { color: C.text, fontWeight: '900', marginTop: -2 },
+  ovr: { ...F.display, color: '#FFFFFF', textShadowColor: 'rgba(0,0,0,0.45)', textShadowRadius: 3, textShadowOffset: { width: 0, height: 1 } },
+  pos: { color: '#FFFFFF', fontWeight: '900', marginTop: -2, textShadowColor: 'rgba(0,0,0,0.45)', textShadowRadius: 3, textShadowOffset: { width: 0, height: 1 } },
   mono: { borderRadius: 999, borderWidth: 2, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(11,16,32,0.55)' },
   monoText: { color: C.text, fontWeight: '900', letterSpacing: 1 },
   sparkle: { color: '#FFF6D5', letterSpacing: 4 },
-  name: { color: C.text, fontWeight: '900', width: '100%', textAlign: 'center' },
-  team: { color: C.muted, fontWeight: '700', width: '100%', textAlign: 'center' },
+  name: { color: '#FFFFFF', fontWeight: '900', width: '100%', textAlign: 'center', textShadowColor: 'rgba(0,0,0,0.45)', textShadowRadius: 3, textShadowOffset: { width: 0, height: 1 } },
+  team: { color: 'rgba(255,255,255,0.8)', fontWeight: '800', width: '100%', textAlign: 'center' },
   level: { position: 'absolute', bottom: 6, left: 6, borderWidth: 1, borderRadius: 6, paddingHorizontal: 4, backgroundColor: 'rgba(11,16,32,0.7)' },
   levelText: { fontWeight: '900' },
   ribbon: { position: 'absolute', top: 8, right: -26, transform: [{ rotate: '35deg' }], paddingHorizontal: 26, paddingVertical: 2 },
   ribbonText: { color: C.bg, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
   back: { padding: 6, alignItems: 'stretch', justifyContent: 'center' },
   backInner: { flex: 1, borderWidth: 2, borderRadius: R.sm, alignItems: 'center', justifyContent: 'center' },
-  backLogo: { color: C.text, textAlign: 'center', ...F.display, letterSpacing: 3 },
+  backLogo: { color: '#FFFFFF', textAlign: 'center', ...F.display, letterSpacing: 3 },
 });

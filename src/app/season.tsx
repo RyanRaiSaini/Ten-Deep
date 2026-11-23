@@ -10,11 +10,13 @@ import { CARD_ROUNDS, cardDef } from '../engine/crisis/deck';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { useSettings } from '../store/settings';
-import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
+import { BackButton, Button, Card, Header, IconButton, Label, Screen } from '../ui/components';
 import { RosterBoard } from '../ui/RosterBoard';
-import { C, F, R, S } from '../ui/theme';
+import { C, F, FONT, R, S } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
 import { BoxScore, Expandable, NewsItem } from '../ui/story';
+import { Icon } from '../ui/icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const BASE_TICK_MS = 120;
 
@@ -85,25 +87,36 @@ export default function Season() {
       <Header
         title={t('season.title')}
         left={<BackButton onPress={() => goHome()} />}
-        right={!over ? <Button label={playing ? '❚❚' : '▶'} accessibilityLabel={playing ? t('season.pause') : t('season.play')} variant="ghost" onPress={() => setPlaying((p) => !p)} style={{ paddingVertical: 6 }} /> : undefined}
+        right={!over ? (
+          <IconButton onPress={() => setPlaying((p) => !p)} label={playing ? t('season.pause') : t('season.play')}>
+            {playing ? <Text style={styles.pause}>❚❚</Text> : <Icon name="play" size={22} />}
+          </IconButton>
+        ) : undefined}
       />
 
-      <Card style={styles.scoreboard}>
-        <Text style={styles.record} testID="record">{rec.w}-{rec.l}</Text>
-        <Text style={styles.sub}>{t('season.game', { n: season.round })} · {t('season.standing', { n: seed })}</Text>
+      <View style={styles.scoreboard}>
+        <LinearGradient colors={['#1B1626', '#2A2140']} style={StyleSheet.absoluteFill} />
+        <View style={[styles.boardStripe, { backgroundColor: runColors[0] }]} />
+        <Text style={styles.boardKicker}>{t('season.game', { n: season.round })}</Text>
+        <View style={styles.recordRow}>
+          <View style={styles.recordBox}><Text style={styles.recordLabel}>W</Text><Text style={[styles.record, { color: '#3DF2A8' }]} testID="record">{rec.w}</Text></View>
+          <Text style={styles.recordDash}>–</Text>
+          <View style={styles.recordBox}><Text style={styles.recordLabel}>L</Text><Text style={[styles.record, { color: '#FF7A8A' }]}>{rec.l}</Text></View>
+        </View>
+        <View style={styles.seedPill}><Text style={styles.seedText}>{t('season.standing', { n: seed })}</Text></View>
         <View style={styles.progress}>
           <View style={[styles.progressFill, { width: `${(season.round / SEASON_GAMES) * 100}%` }]} />
           <View style={[styles.deadlineMark, { [isRTL(i18n.language) ? "right" : "left"]: `${(DEADLINE_GAME / SEASON_GAMES) * 100}%` }]} />
         </View>
         {crisis?.objective && (
           <View style={styles.crisisRow}>
-            <Text style={styles.crisisGoal}>🎯 {t(`crisis.obj_${crisis.objective.tier}`)}</Text>
+            <Text style={styles.crisisGoal}>{t(`crisis.obj_${crisis.objective.tier}`)}</Text>
             <Text style={styles.crisisCards}>
               {CARD_ROUNDS.map((_, i) => (crisis.drawn[i] ? cardDef(crisis.drawn[i]).icon : '🂠')).join(' ')}
             </Text>
           </View>
         )}
-      </Card>
+      </View>
 
       {!over && (
         <View style={styles.row}>
@@ -114,7 +127,7 @@ export default function Season() {
         </View>
       )}
       {over && (
-        <Button label={`🏆  ${t('playoffs.title')}`} variant="gold" onPress={() => { g.beginPlayoffs(); router.replace('/playoffs'); }} testID="to-playoffs" />
+        <Button label={t('playoffs.title')} icon={<Icon name="trophy" size={22} />} variant="gold" onPress={() => { g.beginPlayoffs(); router.replace('/playoffs'); }} testID="to-playoffs" />
       )}
 
       {(season.news?.length ?? 0) > 0 && (
@@ -123,7 +136,7 @@ export default function Season() {
           {season.news!.slice(-3).reverse().map((h, i) => <NewsItem key={`${h.round}-${h.kind}-${i}`} h={h} />)}
         </Card>
       )}
-      <Button label={`📊  ${t('league.title')}`} variant="secondary" onPress={() => router.push('/league')} testID="to-league" />
+      <Button label={t('league.title')} icon={<Icon name="chart" size={22} />} variant="secondary" onPress={() => router.push('/league')} testID="to-league" />
 
       <Card style={{ gap: 6 }}>
         {feed.length === 0 && <Text style={styles.sub}>Tip-off…</Text>}
@@ -141,7 +154,7 @@ export default function Season() {
             </Expandable>
           ) : (
             <Text key={`i-${e.round}-${e.playerId}`} style={styles.injury}>
-              🩼 {e.label === 'Season-ending' ? t('season.seasonEnding', { name: e.name }) : t('season.injury', { name: e.name, count: e.games, label: t(`injury.${e.label}`) })}
+              + {e.label === 'Season-ending' ? t('season.seasonEnding', { name: e.name }) : t('season.injury', { name: e.name, count: e.games, label: t(`injury.${e.label}`) })}
             </Text>
           ),
         )}
@@ -168,12 +181,24 @@ function GameLine({ e, name, t }: { e: Extract<SeasonState['log'][number], { kin
 }
 
 const styles = StyleSheet.create({
-  scoreboard: { alignItems: 'center', gap: S.sm, paddingVertical: S.xl },
-  record: { color: C.text, fontSize: 64, ...F.display },
-  sub: { color: C.muted, fontSize: 13 },
-  progress: { height: 6, alignSelf: 'stretch', backgroundColor: C.surface2, borderRadius: R.pill, overflow: 'hidden', marginTop: S.sm },
-  progressFill: { height: 6, backgroundColor: C.hardwood },
-  deadlineMark: { position: 'absolute', top: 0, width: 2, height: 6, backgroundColor: C.gold },
+  scoreboard: {
+    alignItems: 'center', gap: S.sm, paddingVertical: S.lg, paddingHorizontal: S.lg, borderRadius: R.lg, overflow: 'hidden',
+    borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7,
+  },
+  boardStripe: { position: 'absolute', top: 0, left: 0, right: 0, height: 6 },
+  boardKicker: { color: '#B9B1C9', fontWeight: '900', letterSpacing: 2, fontSize: 12, textTransform: 'uppercase' },
+  recordRow: { flexDirection: 'row', alignItems: 'center', gap: S.md },
+  recordBox: { alignItems: 'center', backgroundColor: '#0E0B15', borderRadius: 14, paddingHorizontal: 18, paddingTop: 4, borderWidth: 2, borderColor: '#3A3050', minWidth: 104 },
+  recordLabel: { color: '#8D84A0', fontWeight: '900', fontSize: 11, letterSpacing: 2 },
+  record: { fontSize: 60, fontFamily: FONT.display, lineHeight: 70 },
+  recordDash: { color: '#6E6582', fontSize: 40, fontFamily: FONT.display },
+  seedPill: { backgroundColor: '#FFFFFF', borderRadius: R.pill, paddingHorizontal: 14, paddingVertical: 4 },
+  seedText: { fontWeight: '900', color: C.ink },
+  sub: { color: C.muted, fontSize: 13, fontWeight: '700' },
+  pause: { fontWeight: '900', fontSize: 16, color: C.ink },
+  progress: { height: 12, alignSelf: 'stretch', backgroundColor: '#0E0B15', borderRadius: R.pill, overflow: 'hidden', marginTop: S.sm, borderWidth: 2, borderColor: '#3A3050' },
+  progressFill: { height: '100%', backgroundColor: C.hardwood },
+  deadlineMark: { position: 'absolute', top: 0, width: 3, height: '100%', backgroundColor: '#FFC53D' },
   row: { flexDirection: 'row', gap: S.sm },
   gameLine: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   wl: { width: 18, fontWeight: '900' },
@@ -183,6 +208,6 @@ const styles = StyleSheet.create({
   injury: { color: C.gold, fontSize: 13 },
   hint: { color: C.muted, fontSize: 11 },
   crisisRow: { flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', marginTop: S.sm },
-  crisisGoal: { color: C.text, fontWeight: '800' },
+  crisisGoal: { color: '#FFFFFF', fontWeight: '900' },
   crisisCards: { fontSize: 18, letterSpacing: 2 },
 });

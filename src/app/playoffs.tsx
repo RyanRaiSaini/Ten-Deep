@@ -10,6 +10,7 @@ import { C, F, S } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
 import { recap } from '../engine/story/recap';
 import { RecapCard } from '../ui/story';
+import { Icon } from '../ui/icons';
 
 export default function Playoffs() {
   const { t } = useTranslation();
@@ -95,7 +96,7 @@ export default function Playoffs() {
         </Card>
       )}
 
-      <Button label={`📊  ${t('league.title')}`} variant="ghost" onPress={() => router.push('/league')} />
+      <Button label={t('league.title')} icon={<Icon name="chart" size={22} />} variant="ghost" onPress={() => router.push('/league')} />
       {champ === null && (
         <Button label={t('playoffs.simRest')} variant="secondary" onPress={() => { g.simPlayoffs(); if (champion(useGame.getState().playoffs!) === 0) feel('fanfare'); }} testID="playoff-sim" />
       )}

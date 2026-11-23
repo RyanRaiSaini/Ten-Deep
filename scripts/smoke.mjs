@@ -48,8 +48,8 @@ await step('first launch: welcome slides, then home', async () => {
   await shot('00-welcome');
   await page.getByTestId('welcome-next').click();
   await page.getByTestId('welcome-start').click();
-  await page.getByText('TEN DEEP', { exact: true }).waitFor();
-  await page.getByText('Current Day').waitFor();
+  await page.getByTestId('tab-bar').waitFor();
+  await page.getByTestId('mode-current').waitFor();
   await shot('01-home');
 });
 

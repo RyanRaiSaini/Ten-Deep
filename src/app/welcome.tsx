@@ -8,11 +8,12 @@ import { Button, Screen } from '../ui/components';
 import { useReducedMotion } from '../ui/fx';
 import { Logo } from '../ui/Logo';
 import { C, F, R, S } from '../ui/theme';
+import { Icon } from '../ui/icons';
 
 const SLIDES = [
   { n: 1, icon: null, tint: C.hardwood },
-  { n: 2, icon: '🏀', tint: C.neon },
-  { n: 3, icon: '🃏', tint: '#B26BFF' },
+  { n: 2, icon: 'ball', tint: C.blue },
+  { n: 3, icon: 'cards', tint: '#B26BFF' },
 ] as const;
 
 /** First-launch welcome: three slides, then home. */
@@ -41,7 +42,7 @@ export default function Welcome() {
         {!last && <Text style={styles.skip} onPress={done} testID="welcome-skip" accessibilityRole="button">{t('welcome.skip')}</Text>}
       </View>
       <Animated.View style={[styles.body, { opacity: fade, transform: [{ translateY: fade.interpolate({ inputRange: [0, 1], outputRange: [16, 0] }) }] }]}>
-        {slide.icon ? <Text style={styles.icon}>{slide.icon}</Text> : <Logo size={180} />}
+        {slide.icon ? <Icon name={slide.icon} size={150} /> : <Logo size={180} />}
         {i === 0 && <Text style={styles.brand}>TEN DEEP</Text>}
         <Text style={styles.title}>{t(`welcome.t${slide.n}`)}</Text>
         <Text style={styles.text}>{t(`welcome.b${slide.n}`)}</Text>
