@@ -15,7 +15,10 @@
     "best": "Melhor campanha",
     "modes": "Modos de jogo",
     "resume": "Retomar sua partida",
-    "play": "Jogar"
+    "play": "Jogar",
+    "streak": "Sequência de dias",
+    "player": "Jogador",
+    "picks": "Escolhas"
   },
   "mode": {
     "current": {
@@ -613,5 +616,12 @@
   "profile": {
     "title": "Perfil",
     "pick": "Escolha seu avatar"
+  },
+  "tabs": {
+    "daily": "Diário",
+    "cards": "Cartas",
+    "play": "Jogar",
+    "career": "Carreira",
+    "duels": "Duelos"
   }
 }

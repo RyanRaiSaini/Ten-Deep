@@ -1,15 +1,18 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { CARD_BY_ID } from '../data/cards';
 import { cardLevel } from '../engine/collect/lineup';
 import { closestSets, completedSets, setReward } from '../engine/collect/sets';
 import { TIERS, type Tier } from '../engine/collect/tiers';
 import { useCollection } from '../store/collection';
 import { CollectCard, TIER_STYLE } from '../ui/CollectCard';
-import { BackButton, Button, Header, Screen } from '../ui/components';
+import { BackButton, Button, Header, Screen, TabTitle } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
+import { TabBar } from '../ui/TabBar';
+import { Icon } from '../ui/icons';
 
 /** Your collection: tier-framed cards, best first, with tier filters. */
 export default function Collection() {
@@ -27,8 +30,8 @@ export default function Collection() {
   const counts = Object.fromEntries(TIERS.map((tier) => [tier, owned.filter((x) => x.card.tier === tier).length]));
 
   return (
-    <Screen>
-      <Header title={t('collect.title')} left={<BackButton onPress={() => router.back()} />} />
+    <Screen tint={C.purple} footer={<TabBar active="cards" />}>
+      <TabTitle icon={<Icon name="cards" size={46} />} title={t('collect.title')} />
       <Text style={styles.sub} testID="collection-count">
         {t('collect.cards', { n: owned.length })} · {t('collect.streak', { n: col.streak })}
       </Text>

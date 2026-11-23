@@ -1,6 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
 import { CARD_BY_ID } from '../../data/cards';
 import { cardLevel, cardPlayer } from '../../engine/collect/lineup';
 import { setsFor } from '../../engine/collect/sets';

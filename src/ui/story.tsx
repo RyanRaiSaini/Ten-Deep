@@ -1,7 +1,8 @@
 /** Storytelling pieces shared by the season, playoffs and result screens. */
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from './Text';
 import type { BoxLine, GameResult } from '../engine/game';
 import type { Headline } from '../engine/story/news';
 import type { Recap } from '../engine/story/recap';

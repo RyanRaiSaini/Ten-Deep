@@ -1,7 +1,8 @@
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Animated, Platform, StyleSheet, Text, View } from 'react-native';
+import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { useSettings } from '../store/settings';
 import { Button, Screen } from '../ui/components';
 import { useReducedMotion } from '../ui/fx';

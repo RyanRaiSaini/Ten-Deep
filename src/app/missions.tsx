@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { ACHIEVEMENTS, valueOf, type Medal } from '../engine/progress/achievements';
 import { dailyMissions, missionProgress, weeklyMissions, type Mission } from '../engine/progress/missions';

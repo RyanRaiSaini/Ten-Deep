@@ -1,6 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
 import { MODES } from '../../data';
 import { useGame } from '../../store/game';
 import { BackButton, Card, Header, Screen } from '../../ui/components';

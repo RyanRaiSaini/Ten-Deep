@@ -15,7 +15,10 @@
     "best": "최고 기록",
     "modes": "게임 모드",
     "resume": "이어서 하기",
-    "play": "플레이"
+    "play": "플레이",
+    "streak": "연속 접속",
+    "player": "플레이어",
+    "picks": "픽"
   },
   "mode": {
     "current": {
@@ -605,5 +608,12 @@
   "profile": {
     "title": "프로필",
     "pick": "아바타 선택"
+  },
+  "tabs": {
+    "daily": "데일리",
+    "cards": "카드",
+    "play": "플레이",
+    "career": "커리어",
+    "duels": "대결"
   }
 }

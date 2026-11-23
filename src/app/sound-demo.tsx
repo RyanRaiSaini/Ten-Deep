@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Text } from '../ui/Text';
 import { startMusic, stopMusic } from '../audio/music';
 import { SFX, type SfxName } from '../audio/sfx';
 import { BackButton, Button, Card, Header, Screen } from '../ui/components';

@@ -1,13 +1,16 @@
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { seasonLabel } from '../engine/career/offseason';
 import { useCareer } from '../store/career';
 import { useGame } from '../store/game';
-import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
+import { BackButton, Button, Card, Header, Label, Screen, TabTitle } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 import { franchiseLeaders, hallOfFame } from '../engine/career/legacy';
 import { MORALE_START, moraleMod } from '../engine/career/morale';
+import { TabBar } from '../ui/TabBar';
+import { Icon } from '../ui/icons';
 
 const VERDICT_ICON = { legend: '👑', extended: '✍️', survived: '😐', fired: '🔥' } as const;
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
@@ -34,8 +37,8 @@ export default function Career() {
   })();
 
   return (
-    <Screen>
-      <Header title={t('career.title')} left={<BackButton onPress={() => router.back()} />} />
+    <Screen tint={C.pink} footer={<TabBar active="career" />}>
+      <TabTitle icon={<Icon name="briefcase" size={46} />} title={t('career.title')} />
 
       {(!c.active || c.ended) && (
         <Card style={{ gap: S.md }}>

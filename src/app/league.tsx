@@ -1,7 +1,8 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { AWARDS, awardRace, leaders, type LeaderStat, type Ranked } from '../engine/story/leaders';
 import { useGame } from '../store/game';
 import { BackButton, Card, Header, Label, Screen, Segmented } from '../ui/components';

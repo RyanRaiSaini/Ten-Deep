@@ -15,7 +15,10 @@
     "best": "Beste record",
     "modes": "Spelmodi",
     "resume": "Ga verder met je run",
-    "play": "Spelen"
+    "play": "Spelen",
+    "streak": "Inlogreeks",
+    "player": "Speler",
+    "picks": "Keuzes"
   },
   "mode": {
     "current": {
@@ -609,5 +612,12 @@
   "profile": {
     "title": "Profiel",
     "pick": "Kies je avatar"
+  },
+  "tabs": {
+    "daily": "Dagelijks",
+    "cards": "Kaarten",
+    "play": "Spelen",
+    "career": "Carrière",
+    "duels": "Duels"
   }
 }

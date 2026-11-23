@@ -15,7 +15,10 @@
     "best": "最高成績",
     "modes": "ゲームモード",
     "resume": "続きから再開",
-    "play": "プレイ"
+    "play": "プレイ",
+    "streak": "連続ログイン",
+    "player": "プレイヤー",
+    "picks": "ピック"
   },
   "mode": {
     "current": {
@@ -605,5 +608,12 @@
   "profile": {
     "title": "プロフィール",
     "pick": "アバターを選ぶ"
+  },
+  "tabs": {
+    "daily": "デイリー",
+    "cards": "カード",
+    "play": "プレー",
+    "career": "キャリア",
+    "duels": "デュエル"
   }
 }

@@ -1,7 +1,8 @@
 import { Redirect, router } from 'expo-router';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { champion, seriesFor, seriesWinner } from '../engine/playoffs';
 import { standings } from '../engine/season';
