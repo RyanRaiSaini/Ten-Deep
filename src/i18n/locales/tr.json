@@ -426,7 +426,11 @@
     "nextWeekly_other": "Haftalık Seçim {{count}} gün sonra",
     "powerUp": "Güçlendir ({{n}} kaldı)",
     "powerOdds": "Tüm seçimi yükseltme şansı: %{{pct}}",
-    "upgraded": "YÜKSELDİ!"
+    "upgraded": "YÜKSELDİ!",
+    "swipeToRip": "Yırtmak için kaydır",
+    "tapFlip": "Çevirmek için dokun",
+    "tapNext": "Sonraki kart için dokun",
+    "cardOf": "Kart {{n}}/{{total}}"
   },
   "lineup": {
     "title": "Kadro",

@@ -431,7 +431,11 @@
     "nextWeekly_other": "Choix hebdo dans {{count}} jours",
     "powerUp": "Booster ({{n}} restants)",
     "powerOdds": "{{pct}} % de chances d'améliorer tout le choix",
-    "upgraded": "AMÉLIORÉ !"
+    "upgraded": "AMÉLIORÉ !",
+    "swipeToRip": "Glisse pour déchirer",
+    "tapFlip": "Touche pour retourner",
+    "tapNext": "Touche pour la carte suivante",
+    "cardOf": "Carte {{n}} sur {{total}}"
   },
   "lineup": {
     "title": "Alignement",
