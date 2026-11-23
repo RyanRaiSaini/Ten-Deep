@@ -721,8 +721,8 @@
     "shared": "Gedeeld!",
     "add": "Vriend toevoegen",
     "addTitle": "Voeg een vriend toe",
-    "addHint": "Plak de vriendcode of link die je hebt gekregen.",
-    "pinHint": "Heb je alleen een PIN? Vraag of ze op ‘Deel mijn vriendcode’ tikken: daarin zitten hun team en collectie.",
+    "addHint": "Typ hun PIN of plak de link die ze stuurden.",
+    "pinHint": "Je PIN gaat online zodra je de app met verbinding opent.",
     "placeholder": "Plak een code of link",
     "paste": "Plakken",
     "addBtn": "Vriend toevoegen",
@@ -778,7 +778,14 @@
     "streak": "Reeks",
     "tier": "League",
     "series": "Series",
-    "scoreline": "{{a}} – {{b}}"
+    "scoreline": "{{a}} – {{b}}",
+    "pinTitle": "Voer hun PIN in",
+    "find": "Toevoegen met PIN",
+    "orCode": "Of plak hun vriendenlink",
+    "notFound": "Nog geen speler met die PIN. Vraag ze het tabblad Duels online te openen.",
+    "offline": "Server niet bereikbaar. Check je verbinding of plak hun link.",
+    "online": "Online",
+    "notOnline": "Nog niet online"
   },
   "shop": {
     "title": "Winkel",

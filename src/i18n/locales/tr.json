@@ -721,8 +721,8 @@
     "shared": "Paylaşıldı!",
     "add": "Arkadaş ekle",
     "addTitle": "Arkadaş ekle",
-    "addHint": "Sana gönderilen arkadaş kodunu veya bağlantıyı yapıştır.",
-    "pinHint": "Sadece PIN mi var? \"Arkadaş kodumu paylaş\"a dokunmasını iste: takımı ve koleksiyonu da gelir.",
+    "addHint": "PIN kodunu yaz ya da gönderdiği bağlantıyı yapıştır.",
+    "pinHint": "PIN kodun, uygulamayı internete bağlıyken ilk açtığında çevrimiçi olur.",
     "placeholder": "Kod veya bağlantı yapıştır",
     "paste": "Yapıştır",
     "addBtn": "Arkadaş ekle",
@@ -778,7 +778,14 @@
     "streak": "Seri",
     "tier": "Lig",
     "series": "Seriler",
-    "scoreline": "{{a}} – {{b}}"
+    "scoreline": "{{a}} – {{b}}",
+    "pinTitle": "PIN kodunu gir",
+    "find": "PIN ile ekle",
+    "orCode": "Ya da arkadaş bağlantısını yapıştır",
+    "notFound": "Bu PIN ile henüz oyuncu yok. Çevrimiçiyken Düellolar sekmesini açmasını iste.",
+    "offline": "Sunucuya ulaşılamadı. Bağlantını kontrol et ya da bağlantıyı yapıştır.",
+    "online": "Çevrimiçi",
+    "notOnline": "Henüz çevrimiçi değil"
   },
   "shop": {
     "title": "Mağaza",
