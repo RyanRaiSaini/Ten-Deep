@@ -382,7 +382,9 @@
     "f2Title": "Houd je baan",
     "f2Body": "Het bestuur stelt elk jaar een doel. Mis het te vaak en je ligt eruit.",
     "f3Title": "Schrijf geschiedenis",
-    "f3Body": "Titels, een Hall of Fame en clubrecords die blijven."
+    "f3Body": "Titels, een Hall of Fame en clubrecords die blijven.",
+    "end": "Carrière beëindigen",
+    "endSure": "Tik nog eens: deze carrière stopt voorgoed"
   },
   "collect": {
     "title": "Collectie",

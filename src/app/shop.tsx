@@ -1,12 +1,13 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Easing, Modal, Pressable, StyleSheet, View } from 'react-native';
 import { feel } from '../audio/feel';
 import { dailyKey } from '../engine/daily';
 import { PRODUCTS, savings, type Product } from '../engine/shop';
 import { adsLeft, useShop } from '../store/shop';
 import { BrandLogo } from '../ui/BrandLogo';
+import { Die, DicePile, type PileKind } from '../ui/Dice';
 import { BackButton, Button, Display, Header, Screen } from '../ui/components';
 import { Icon } from '../ui/icons';
 import { goBack } from '../ui/nav';
@@ -14,8 +15,6 @@ import { Text } from '../ui/Text';
 import { C, FONT, R, S } from '../ui/theme';
 
 const AD_SECONDS = 5;
-/** Bigger bundles show a fan of 1–3 reroll icons, as offsets from the middle. */
-const fan = (n: number) => (n >= 25 ? [-1, 0, 1] : n >= 5 ? [-0.5, 0.5] : [0]);
 
 /** Rerolls: a free one a day, ad breaks, and bundles (purchases open with the store release). */
 export default function Shop() {
@@ -34,61 +33,43 @@ export default function Shop() {
     <Screen tint={C.purple}>
       <Header title={t('shop.title')} left={<BackButton onPress={goBack} />} />
 
-      <LinearGradient colors={['#8B5CFF', '#4C1DB8']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.wallet}>
-        <Icon name="reroll" size={64} />
+      <LinearGradient colors={['#9B6BFF', '#5B2BD9', '#33127F']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.wallet}>
+        <View style={styles.walletShine} />
+        <Tumble />
         <View style={{ flex: 1 }}>
           <Text style={styles.walletLabel}>{t('shop.have')}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 8 }}>
-            <Text style={[styles.walletN, bump && { color: '#FFD23F' }]} testID="reroll-count">{shop.rerolls}</Text>
-            <Text style={styles.walletUnit}>{t('shop.rerolls')}</Text>
-          </View>
+          <Text style={[styles.walletN, bump && { color: '#FFD23F' }]} testID="reroll-count">{shop.rerolls}</Text>
+          <Text style={styles.walletUnit}>{t('shop.rerolls')}</Text>
         </View>
       </LinearGradient>
       <Text style={styles.what}>{t('shop.what')}</Text>
 
       <View style={styles.freeRow}>
-        <Pressable disabled={!freeReady} onPress={() => { if (shop.claimFree(today)) gained(); }} testID="shop-free"
-          style={({ pressed }) => [styles.freeTile, { backgroundColor: freeReady ? '#18C08A' : C.surface2 }, pressed && styles.pressed]}>
-          <Icon name="gift" size={44} />
-          <Text style={[styles.freeTitle, !freeReady && { color: C.muted }]}>{t('shop.free')}</Text>
-          <View style={[styles.freeBtn, !freeReady && { backgroundColor: C.line }]}>
-            <Text style={styles.freeBtnText}>{freeReady ? t('shop.freeClaim') : t('shop.freeDone')}</Text>
-          </View>
+        <Pressable disabled={!freeReady} onPress={() => { if (shop.claimFree(today)) gained(); }} testID="shop-free" style={({ pressed }) => [styles.freeWrap, pressed && styles.pressed]}>
+          <LinearGradient colors={freeReady ? ['#3FE0A6', '#0FA572'] : ['#EEE7DC', '#DCD2C4']} style={styles.freeTile}>
+            <Die size={58} color={freeReady ? 'white' : 'white'} faces={[6, 2, 4]} />
+            <Text style={[styles.freeTitle, !freeReady && { color: C.muted }]}>{t('shop.free')}</Text>
+            <View style={[styles.freeBtn, !freeReady && { backgroundColor: C.muted }]}>
+              <Text style={styles.freeBtnText}>{freeReady ? t('shop.freeClaim') : t('shop.freeDone')}</Text>
+            </View>
+          </LinearGradient>
         </Pressable>
-        <Pressable disabled={ads <= 0} onPress={() => setAd(true)} testID="shop-ad"
-          style={({ pressed }) => [styles.freeTile, { backgroundColor: ads > 0 ? '#3B6CF0' : C.surface2 }, pressed && styles.pressed]}>
-          <Icon name="tv" size={44} />
-          <Text style={[styles.freeTitle, ads <= 0 && { color: C.muted }]}>{t('shop.ad')}</Text>
-          <View style={[styles.freeBtn, ads <= 0 && { backgroundColor: C.line }]}>
-            <Text style={styles.freeBtnText}>{ads > 0 ? t('shop.adSub', { n: ads }) : t('shop.adNone')}</Text>
-          </View>
+        <Pressable disabled={ads <= 0} onPress={() => setAd(true)} testID="shop-ad" style={({ pressed }) => [styles.freeWrap, pressed && styles.pressed]}>
+          <LinearGradient colors={ads > 0 ? ['#6FA0FF', '#2E57D9'] : ['#EEE7DC', '#DCD2C4']} style={styles.freeTile}>
+            <Icon name="tv" size={58} />
+            <Text style={[styles.freeTitle, ads <= 0 && { color: C.muted }]}>{t('shop.ad')}</Text>
+            <View style={[styles.freeBtn, ads <= 0 && { backgroundColor: C.muted }]}>
+              <Text style={styles.freeBtnText}>{ads > 0 ? t('shop.adSub', { n: ads }) : t('shop.adNone')}</Text>
+            </View>
+          </LinearGradient>
         </Pressable>
       </View>
 
       <Text style={styles.section}>{t('shop.bundles')}</Text>
-      <View style={styles.grid}>
-        {PRODUCTS.map((p) => (
-          <Pressable key={p.id} onPress={() => setSoon(p)} testID={`buy-${p.rerolls}`}
-            style={({ pressed }) => [styles.bundle, p.badge === 'popular' && styles.popular, pressed && styles.pressed]}>
-            {p.badge && (
-              <View style={[styles.badge, { backgroundColor: p.badge === 'popular' ? C.danger : '#E09A00' }]}>
-                <Text style={styles.badgeText}>{t(`shop.${p.badge}`)}</Text>
-              </View>
-            )}
-            <View style={styles.stack}>
-              {fan(p.rerolls).map((off, i) => (
-                <View key={i} style={{ marginLeft: i ? -22 : 0, transform: [{ rotate: `${off * 14}deg` }, { translateY: Math.abs(off) * 4 }] }}>
-                  <Icon name="reroll" size={46} />
-                </View>
-              ))}
-            </View>
-            <Text style={styles.bundleN}>×{p.rerolls}</Text>
-            <Text style={styles.bundleLabel}>{p.rerolls === 1 ? t('shop.bundleOne') : t('shop.bundle', { n: p.rerolls })}</Text>
-            {savings(p) > 0 && <Text style={styles.save}>{t('shop.save', { n: savings(p) })}</Text>}
-            <View style={styles.price}><Text style={styles.priceText}>{p.price}</Text></View>
-          </Pressable>
-        ))}
+      <View style={styles.pair}>
+        {PRODUCTS.filter((p) => !p.badge).map((p) => <Bundle key={p.id} p={p} onPress={() => setSoon(p)} />)}
       </View>
+      {PRODUCTS.filter((p) => p.badge).map((p) => <Bundle key={p.id} p={p} wide onPress={() => setSoon(p)} />)}
       <Text style={styles.fine}>{t('shop.fair')}</Text>
       <Text style={styles.fine}>{t('shop.notHere')}</Text>
 
@@ -104,6 +85,61 @@ export default function Shop() {
         </View>
       </Modal>
     </Screen>
+  );
+}
+
+const TIER: Record<string, { bg: [string, string]; pile: PileKind; ring: string }> = {
+  rerolls_1: { bg: ['#FFFFFF', '#EEF3FF'], pile: 'one', ring: '#3B6CF0' },
+  rerolls_5: { bg: ['#F3EDFF', '#DCCBFF'], pile: 'three', ring: '#7A4DFF' },
+  rerolls_10: { bg: ['#FF8A5B', '#E5484D'], pile: 'five', ring: '#E5484D' },
+  rerolls_25: { bg: ['#FFE07A', '#F5A524'], pile: 'vault', ring: '#E09A00' },
+};
+
+function Bundle({ p, wide = false, onPress }: { p: Product; wide?: boolean; onPress: () => void }) {
+  const { t } = useTranslation();
+  const tier = TIER[p.id];
+  const bright = !!p.badge;
+  const off = savings(p);
+  return (
+    <Pressable onPress={onPress} testID={`buy-${p.rerolls}`} style={({ pressed }) => [wide ? styles.wideWrap : styles.tileWrap, { borderColor: C.ink }, pressed && styles.pressed]}>
+      <LinearGradient colors={tier.bg} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.bundleFill, wide && styles.bundleWide]}>
+        {bright && <View style={styles.rays} />}
+        <DicePile kind={tier.pile} width={wide ? 156 : 140} glow={bright ? '#FFFFFF' : tier.ring} />
+        <View style={[styles.bundleText, wide && { alignItems: 'flex-start', flex: 1 }]}>
+          <Display size={wide ? 40 : 32} align={wide ? 'left' : 'center'}>{`×${p.rerolls}`}</Display>
+          <Text style={[styles.bundleLabel, bright && { color: '#FFFFFF' }]}>{p.rerolls === 1 ? t('shop.bundleOne') : t('shop.bundle', { n: p.rerolls })}</Text>
+          {off > 0 && <View style={styles.save}><Text style={styles.saveText}>{t('shop.save', { n: off })}</Text></View>}
+          <View style={[styles.price, wide && { alignSelf: 'stretch' }]}><Text style={styles.priceText}>{p.price}</Text></View>
+        </View>
+      </LinearGradient>
+      {p.badge && (
+        <View style={[styles.badge, { backgroundColor: p.badge === 'popular' ? C.ink : '#B35A00' }]}>
+          <Icon name={p.badge === 'popular' ? 'flame' : 'crown'} size={16} />
+          <Text style={styles.badgeText}>{t(`shop.${p.badge}`)}</Text>
+        </View>
+      )}
+    </Pressable>
+  );
+}
+
+/** Two dice tumbling in the wallet card. */
+function Tumble() {
+  const v = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    const loop = Animated.loop(Animated.sequence([
+      Animated.timing(v, { toValue: 1, duration: 1400, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+      Animated.timing(v, { toValue: 0, duration: 1400, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+    ]));
+    loop.start();
+    return () => loop.stop();
+  }, [v]);
+  const a = { transform: [{ translateY: v.interpolate({ inputRange: [0, 1], outputRange: [0, -8] }) }, { rotate: v.interpolate({ inputRange: [0, 1], outputRange: ['-14deg', '-6deg'] }) }] };
+  const b = { transform: [{ translateY: v.interpolate({ inputRange: [0, 1], outputRange: [-6, 2] }) }, { rotate: v.interpolate({ inputRange: [0, 1], outputRange: ['12deg', '20deg'] }) }] };
+  return (
+    <View style={styles.tumble}>
+      <Animated.View style={[{ position: 'absolute', left: 0, top: 18 }, a]}><Die size={70} color="white" faces={[5, 3, 2]} /></Animated.View>
+      <Animated.View style={[{ position: 'absolute', left: 58, top: 0 }, b]}><Die size={58} color="gold" faces={[6, 1, 4]} /></Animated.View>
+    </View>
   );
 }
 
@@ -134,32 +170,35 @@ function AdBreak({ visible, onClose }: { visible: boolean; onClose: (rewarded: b
 }
 
 const styles = StyleSheet.create({
-  wallet: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.lg, borderRadius: 24, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 7 },
+  wallet: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.lg, paddingVertical: S.lg + 4, borderRadius: 26, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 8, overflow: 'hidden' },
+  walletShine: { position: 'absolute', top: -60, right: -40, width: 200, height: 200, borderRadius: 100, backgroundColor: 'rgba(255,255,255,0.12)' },
+  tumble: { width: 124, height: 96 },
   walletLabel: { color: '#E9DDFF', fontWeight: '900', letterSpacing: 1.5, textTransform: 'uppercase', fontSize: 12 },
-  walletN: { fontFamily: FONT.display, fontSize: 54, color: '#FFFFFF', lineHeight: 58 },
-  walletUnit: { fontFamily: FONT.display, fontSize: 22, color: '#FFFFFF' },
+  walletN: { fontFamily: FONT.display, fontSize: 60, color: '#FFFFFF', lineHeight: 64, textShadowColor: C.ink, textShadowOffset: { width: 0, height: 3 }, textShadowRadius: 0 },
+  walletUnit: { fontFamily: FONT.display, fontSize: 20, color: '#FFFFFF', marginTop: -4 },
   what: { color: C.muted, fontWeight: '700', textAlign: 'center', fontSize: 14 },
   freeRow: { flexDirection: 'row', gap: S.sm },
-  freeTile: { flex: 1, alignItems: 'center', gap: 6, padding: S.md, borderRadius: 22, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 6 },
-  freeTitle: { fontFamily: FONT.display, fontSize: 18, color: '#FFFFFF', textAlign: 'center' },
+  freeWrap: { flex: 1, borderRadius: 22, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, overflow: 'hidden' },
+  freeTile: { flex: 1, alignItems: 'center', gap: 6, padding: S.md },
+  freeTitle: { fontFamily: FONT.display, fontSize: 18, color: '#FFFFFF', textAlign: 'center', textShadowColor: 'rgba(23,18,30,0.45)', textShadowOffset: { width: 0, height: 2 }, textShadowRadius: 0 },
   freeBtn: { backgroundColor: C.ink, borderRadius: R.pill, paddingHorizontal: 12, paddingVertical: 5 },
   freeBtnText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, textAlign: 'center' },
-  pressed: { transform: [{ translateY: 3 }], borderBottomWidth: 3 },
+  pressed: { transform: [{ translateY: 3 }], borderBottomWidth: 4 },
   section: { fontFamily: FONT.display, fontSize: 24, color: C.ink, marginTop: S.sm },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: S.sm, paddingTop: S.sm },
-  bundle: {
-    width: '48.5%', flexGrow: 1, alignItems: 'center', gap: 2, paddingTop: S.lg, paddingBottom: S.md, paddingHorizontal: S.sm,
-    backgroundColor: '#FFFFFF', borderRadius: 22, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 6,
-  },
-  popular: { borderColor: C.danger, backgroundColor: '#FFF1EC' },
-  badge: { position: 'absolute', top: -12, paddingHorizontal: 12, paddingVertical: 3, borderRadius: R.pill, borderWidth: 2, borderColor: '#FFFFFF' },
-  badgeText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1.5 },
-  stack: { height: 56, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
-  bundleN: { fontFamily: FONT.display, fontSize: 34, color: C.ink },
-  bundleLabel: { color: C.muted, fontWeight: '800', fontSize: 13 },
-  save: { color: '#14A86B', fontWeight: '900', fontSize: 13 },
-  price: { marginTop: 6, alignSelf: 'stretch', backgroundColor: '#18C08A', borderRadius: R.pill, paddingVertical: 8, borderWidth: 2, borderColor: C.ink, alignItems: 'center' },
-  priceText: { fontFamily: FONT.display, fontSize: 20, color: '#FFFFFF' },
+  pair: { flexDirection: 'row', gap: S.sm },
+  tileWrap: { flex: 1, borderRadius: 24, borderWidth: 3, borderBottomWidth: 8, overflow: 'visible' },
+  wideWrap: { borderRadius: 24, borderWidth: 3, borderBottomWidth: 8, marginTop: S.md },
+  bundleFill: { flex: 1, borderRadius: 21, alignItems: 'center', paddingVertical: S.md, paddingHorizontal: S.sm, gap: 2, overflow: 'hidden' },
+  bundleWide: { flexDirection: 'row', paddingHorizontal: S.md, gap: S.md, paddingTop: S.lg },
+  rays: { position: 'absolute', top: -80, left: -40, width: 260, height: 260, borderRadius: 130, backgroundColor: 'rgba(255,255,255,0.14)' },
+  bundleText: { alignItems: 'center', gap: 4 },
+  bundleLabel: { color: C.muted, fontWeight: '800', fontSize: 14 },
+  save: { backgroundColor: '#14A86B', borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 2, borderWidth: 2, borderColor: '#FFFFFF' },
+  saveText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12 },
+  price: { marginTop: 6, minWidth: 110, backgroundColor: '#FFFFFF', borderRadius: R.pill, paddingVertical: 8, paddingHorizontal: 16, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 5, alignItems: 'center' },
+  priceText: { fontFamily: FONT.display, fontSize: 21, color: C.ink },
+  badge: { position: 'absolute', top: -15, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 14, paddingVertical: 4, borderRadius: R.pill, borderWidth: 2.5, borderColor: '#FFFFFF' },
+  badgeText: { color: '#FFFFFF', fontWeight: '900', fontSize: 13, letterSpacing: 1.5 },
   fine: { color: C.muted, fontSize: 12, textAlign: 'center', fontWeight: '600' },
   scrim: { flex: 1, backgroundColor: 'rgba(23,18,30,0.55)', alignItems: 'center', justifyContent: 'center', padding: S.lg },
   sheet: { width: '100%', maxWidth: 420, backgroundColor: '#FFFFFF', borderRadius: 26, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 8, padding: S.lg, alignItems: 'center', gap: S.md },

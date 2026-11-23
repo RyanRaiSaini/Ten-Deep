@@ -385,7 +385,9 @@
     "f2Title": "Mantenha o emprego",
     "f2Body": "A diretoria define uma meta todo ano. Falhe demais e você é demitido.",
     "f3Title": "Faça história",
-    "f3Body": "Títulos, um Hall da Fama e recordes da franquia."
+    "f3Body": "Títulos, um Hall da Fama e recordes da franquia.",
+    "end": "Encerrar carreira",
+    "endSure": "Toque de novo: esta carreira acaba de vez"
   },
   "collect": {
     "title": "Coleção",

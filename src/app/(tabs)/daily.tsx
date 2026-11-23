@@ -6,12 +6,12 @@ import { Text } from '../../ui/Text';
 import { dailyKey } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { useGame } from '../../store/game';
-import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
-import { C, F, FONT, R, S, alpha } from '../../ui/theme';
+import { Button, Card, Display, Screen, TabTitle } from '../../ui/components';
+import { C, FONT, R, S, alpha } from '../../ui/theme';
 import { Icon, type IconName } from '../../ui/icons';
 import { CONFIG } from '../../config';
 import { shareText } from '../../ui/share';
-import { useDailyCountdown } from '../../ui/countdown';
+import { DailyTimer } from '../../ui/DailyTimer';
 
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/playoffs' | '/result'> = {
   draft: '/draft', season: '/season', deadline: '/deadline', playoffs: '/playoffs', result: '/result',
@@ -20,7 +20,6 @@ const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/playoffs' | '
 export default function DailyHub() {
   const { t } = useTranslation();
   const [key] = useState(() => dailyKey());
-  const countdown = useDailyCountdown();
   const day = useDaily((s) => s.days[key]) ?? {};
   const g = useGame();
   const [confirmReplace, setConfirmReplace] = useState(false);
@@ -77,10 +76,7 @@ export default function DailyHub() {
   return (
     <Screen tint={C.blue} tabbed>
       <TabTitle icon={<Icon name="calendar" size={46} />} title={t('daily.title')} />
-      <View style={styles.timer} testID="daily-timer">
-        <Icon name="clock" size={22} />
-        <Text style={styles.timerText}>{t('daily.endsIn')} <Text style={styles.timerNum}>{countdown}</Text></Text>
-      </View>
+      <View style={{ marginTop: -4 }}><DailyTimer testID="daily-timer" /></View>
       <View style={styles.progressRow}>
         <View style={styles.progress}>
           {items.map((it) => <View key={it.id} style={[styles.seg, it.status ? { backgroundColor: '#18C08A' } : null]} />)}
@@ -120,9 +116,6 @@ export default function DailyHub() {
 }
 
 const styles = StyleSheet.create({
-  timer: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'center', backgroundColor: C.ink, borderRadius: R.pill, paddingHorizontal: 16, paddingVertical: 7, marginTop: -4 },
-  timerText: { color: '#FFFFFF', fontWeight: '800', fontSize: 15 },
-  timerNum: { fontFamily: FONT.display, fontSize: 18, color: '#FFFFFF', letterSpacing: 1 },
   card: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingVertical: S.md },
   tile: { width: 66, height: 66, borderRadius: 18, borderWidth: 2.5, borderColor: C.ink, alignItems: 'center', justifyContent: 'center' },
   desc: { color: C.muted, fontSize: 13, fontWeight: '700' },

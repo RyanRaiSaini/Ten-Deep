@@ -385,7 +385,9 @@
     "f2Title": "Conserva tu puesto",
     "f2Body": "La directiva fija un objetivo cada año. Fállalo demasiado y te despiden.",
     "f3Title": "Haz historia",
-    "f3Body": "Títulos, un Salón de la Fama y récords de franquicia."
+    "f3Body": "Títulos, un Salón de la Fama y récords de franquicia.",
+    "end": "Terminar carrera",
+    "endSure": "Toca otra vez: esta carrera terminará para siempre"
   },
   "collect": {
     "title": "Colección",

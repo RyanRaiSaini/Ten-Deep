@@ -382,7 +382,9 @@
     "f2Title": "İşini koru",
     "f2Body": "Yönetim her yıl bir hedef koyar. Çok sık kaçırırsan kovulursun.",
     "f3Title": "Tarih yaz",
-    "f3Body": "Şampiyonluklar, Şöhretler Müzesi ve kalıcı rekorlar."
+    "f3Body": "Şampiyonluklar, Şöhretler Müzesi ve kalıcı rekorlar.",
+    "end": "Kariyeri bitir",
+    "endSure": "Tekrar dokun: bu kariyer kalıcı olarak biter"
   },
   "collect": {
     "title": "Koleksiyon",
