@@ -14,9 +14,11 @@ import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner } from '../ui/Spinner';
 import { C, F, R, S, money } from '../ui/theme';
+import { useRunColors } from '../ui/runColors';
 
 export default function Draft() {
   const { t } = useTranslation();
+  const runColors = useRunColors();
   const g = useGame();
   const [spinKey, setSpinKey] = useState(0);
   const [landed, setLanded] = useState(true);
@@ -53,7 +55,7 @@ export default function Draft() {
   };
 
   return (
-    <Screen>
+    <Screen tint={runColors[0]}>
       <Header
         title={complete ? t('draft.starters') : t('draft.pick', { n: d.round + 1 })}
         left={<BackButton onPress={() => goHome()} />}

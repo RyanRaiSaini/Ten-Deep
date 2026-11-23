@@ -17,6 +17,8 @@ export interface Settings {
   simSpeed: SimSpeed;
   nationality: string;
   language: Language | null;
+  /** Seen the first-launch welcome slides. */
+  onboarded: boolean;
   set: (patch: Partial<Omit<Settings, 'set'>>) => void;
 }
 
@@ -32,6 +34,7 @@ export const useSettings = create<Settings>()(
       simSpeed: 1,
       nationality: '🇨🇦',
       language: null,
+      onboarded: false,
       set: (patch) => set(patch),
     }),
     { name: 'tendeep-settings', storage: createJSONStorage(() => AsyncStorage) },

@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useCollection } from '../store/collection';
@@ -6,6 +6,7 @@ import { useGame } from '../store/game';
 import { useProfile } from '../store/profile';
 import { useSettings } from '../store/settings';
 import { Avatar } from '../ui/Avatar';
+import { Logo } from '../ui/Logo';
 import { Button, Card, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 
@@ -31,16 +32,21 @@ export default function Home() {
   const phase = useGame((s) => s.phase);
   const newRun = useGame((s) => s.newRun);
   const pendingPicks = useCollection((s) => s.pending.length);
+  const onboarded = useSettings((s) => s.onboarded);
+  if (!onboarded) return <Redirect href="/welcome" />;
 
   return (
-    <Screen>
+    <Screen tint={C.hardwood}>
       <View style={styles.top}>
         <Pressable onPress={() => router.push('/profile')} style={styles.avatar} testID="avatar" accessibilityLabel="Profile">
           <Avatar id={profile.avatarId} size={52} />
           <Text style={styles.flag}>{flag}</Text>
         </Pressable>
         <View style={{ flex: 1 }}>
-          <Text style={styles.brand}>TEN DEEP</Text>
+          <View style={styles.brandRow}>
+            <Logo size={30} />
+            <Text style={styles.brand}>TEN DEEP</Text>
+          </View>
           <Text style={styles.tagline}>{t('app.tagline')}</Text>
         </View>
         <Pressable accessibilityLabel={t('settings.title')} onPress={() => router.push('/settings')} style={styles.gear}>
@@ -103,6 +109,7 @@ const styles = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingTop: S.lg },
   avatar: { width: 56, height: 56, borderRadius: R.pill, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: C.hardwood },
   flag: { position: 'absolute', bottom: -6, right: -8, fontSize: 18 },
+  brandRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   brand: { color: C.text, fontSize: 30, ...F.display, letterSpacing: 2 },
   tagline: { color: C.muted, fontSize: 13 },
   gear: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },

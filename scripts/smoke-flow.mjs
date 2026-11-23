@@ -257,6 +257,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('confirm-delete').click();
     await page.getByText('✓ Deleted').waitFor();
     await page.goto(base);
+    await page.getByTestId('welcome-skip').click(); // a fresh account sees the welcome again
     await page.getByText('🔥 0').waitFor({ timeout: 5000 });
   });
 
