@@ -28,6 +28,8 @@ const page = await browser.newPage({ viewport: { width: 420, height: 900 }, devi
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+const warnings = [];
+page.on('console', (m) => m.type() === 'warning' && warnings.push(m.text().slice(0, 160)));
 
 const shot = (name) => page.screenshot({ path: `${out}/${name}.png`, fullPage: true });
 const step = async (name, fn) => {
@@ -70,6 +72,11 @@ await step('arabic is right-to-left', async () => {
   await shot('09-home-ar');
 });
 
+if (process.env.SMOKE_WARNINGS && warnings.length) {
+  const counts = {};
+  for (const w of warnings) counts[w] = (counts[w] ?? 0) + 1;
+  console.log('warnings:\n  ' + Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([w, n]) => `${n}× ${w}`).join('\n  '));
+}
 if (errors.length) {
   console.log('page errors:\n  ' + [...new Set(errors)].slice(0, 10).join('\n  '));
   process.exitCode = 1;

@@ -7,6 +7,7 @@ import { LANGUAGE_NAMES, LANGUAGES } from '../i18n/languages';
 import { SIM_SPEEDS, useSettings } from '../store/settings';
 import { BackButton, Button, Card, Header, Label, Row, Screen, Segmented, ToggleRow } from '../ui/components';
 import { C, R, S } from '../ui/theme';
+import { goBack } from '../ui/nav';
 
 const FLAGS = ['🇨🇦', '🇺🇸', '🇬🇧', '🇫🇷', '🇪🇸', '🇵🇹', '🇧🇷', '🇹🇷', '🇮🇹', '🇳🇱', '🇩🇪', '🇯🇵', '🇰🇷', '🇸🇦', '🇪🇬', '🇲🇦', '🇳🇬', '🇦🇺', '🇮🇳', '🇵🇭', '🇲🇽', '🇦🇷', '🇸🇷', '🇷🇸', '🇬🇷', '🇱🇹', '🇸🇮', '🇨🇲', '🇨🇳', '🇯🇲'];
 
@@ -17,7 +18,7 @@ export default function Settings() {
 
   return (
     <Screen>
-      <Header title={t('settings.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('settings.title')} left={<BackButton onPress={() => goBack()} />} />
 
       <Label>{t('settings.audio')}</Label>
       <Card style={styles.group}>

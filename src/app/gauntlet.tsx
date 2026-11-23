@@ -12,6 +12,7 @@ import { BackButton, Button, Card, Header, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 import { track } from '../store/progress';
 import { Icon } from '../ui/icons';
+import { goBack } from '../ui/nav';
 
 /** The Gauntlet: 10 great teams in a row, best-of-3 each, with your card lineup. */
 export default function Gauntlet() {
@@ -52,7 +53,7 @@ export default function Gauntlet() {
   const wonSeries = finished && series.result.winner === 'a';
   return (
     <Screen tint={C.gold} overlay={wonSeries ? <Confetti key={series.stage} /> : null}>
-      <Header title={t('gauntlet.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('gauntlet.title')} left={<BackButton onPress={() => goBack()} />} />
       <Text style={styles.desc}>{t('gauntlet.desc')}</Text>
 
       {series && (

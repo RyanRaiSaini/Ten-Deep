@@ -12,6 +12,7 @@ import { CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 import { Icon } from '../ui/icons';
+import { goBack } from '../ui/nav';
 
 /** Build a 10-card lineup from your collection. */
 export default function LineupScreen() {
@@ -38,7 +39,7 @@ export default function LineupScreen() {
 
   return (
     <Screen>
-      <Header title={t('lineup.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('lineup.title')} left={<BackButton onPress={() => goBack()} />} />
       <Card style={styles.summary}>
         <Text style={styles.rating} testID="lineup-rating">{t('lineup.teamRating', { n: rating })}</Text>
         <Text style={[styles.chem, { color: chem.bonus ? C.neon : C.muted }]}>

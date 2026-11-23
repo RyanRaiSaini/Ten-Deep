@@ -6,6 +6,7 @@ import { startMusic, stopMusic } from '../audio/music';
 import { SFX, type SfxName } from '../audio/sfx';
 import { BackButton, Button, Card, Header, Screen } from '../ui/components';
 import { C } from '../ui/theme';
+import { goBack } from '../ui/nav';
 
 const SOUNDS: { name: SfxName; what: string }[] = [
   { name: 'tick', what: 'Spinner tick (plays on every team that rolls past)' },
@@ -21,7 +22,7 @@ export default function SoundDemo() {
   const { t } = useTranslation();
   return (
     <Screen>
-      <Header title={t('settings.soundDemo')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('settings.soundDemo')} left={<BackButton onPress={() => goBack()} />} />
       <Text style={styles.note}>All sounds are synthesized in code — tap to preview.</Text>
       {SOUNDS.map((s) => (
         <Card key={s.name} style={{ gap: 10 }}>
