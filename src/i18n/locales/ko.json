@@ -22,7 +22,9 @@
     "streakSaved": "연속 기록 유지!",
     "streakSavedBody_other": "스트릭 프리즈가 빠진 {{count}}일을 지켜 줬습니다.",
     "duelTitle": "친구와 대결",
-    "duelCta": "누가 최고?"
+    "duelCta": "누가 최고?",
+    "hot": "상승세",
+    "hotSub": "실제 폼, 매일 업데이트"
   },
   "mode": {
     "current": {

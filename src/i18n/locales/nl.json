@@ -23,7 +23,9 @@
     "streakSavedBody_one": "Een reeksbevriezing dekte de dag die je miste.",
     "streakSavedBody_other": "Reeksbevriezingen dekten de {{count}} dagen die je miste.",
     "duelTitle": "Daag je vrienden uit",
-    "duelCta": "Wie is de beste?"
+    "duelCta": "Wie is de beste?",
+    "hot": "Op dreef",
+    "hotSub": "Echte vorm, dagelijks bijgewerkt"
   },
   "mode": {
     "current": {

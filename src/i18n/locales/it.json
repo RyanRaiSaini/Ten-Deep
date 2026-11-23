@@ -24,7 +24,9 @@
     "streakSavedBody_one": "Un congelamento ha coperto il giorno saltato.",
     "streakSavedBody_other": "I congelamenti hanno coperto i {{count}} giorni saltati.",
     "duelTitle": "Sfida i tuoi amici",
-    "duelCta": "Chi è il migliore?"
+    "duelCta": "Chi è il migliore?",
+    "hot": "In forma",
+    "hotSub": "Forma reale, aggiornata ogni giorno"
   },
   "mode": {
     "current": {

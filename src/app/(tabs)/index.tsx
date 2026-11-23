@@ -13,6 +13,7 @@ import { useSettings } from '../../store/settings';
 import { Die } from '../../ui/Dice';
 import { useShop } from '../../store/shop';
 import { DailyTimer } from '../../ui/DailyTimer';
+import { HotStrip } from '../../ui/HotStrip';
 import { Avatar } from '../../ui/Avatar';
 import { AVATARS } from '../../ui/avatars';
 import { Button, Chip, Display, IconButton, Label } from '../../ui/components';
@@ -166,6 +167,8 @@ export default function Home() {
         </View>
         <View style={styles.heroPlay}><Text style={styles.heroPlayText}>{t('home.play').toUpperCase()}</Text></View>
       </Pressable>
+
+      <HotStrip />
 
       <Pressable onPress={() => router.navigate('/duel')} testID="duel-banner" accessibilityRole="button"
         style={({ pressed }) => [styles.duel, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 3 }]}>

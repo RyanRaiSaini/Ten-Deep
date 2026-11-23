@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
@@ -10,7 +11,13 @@ import { BackButton, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, FONT, R, S } from '../ui/theme';
 import { goBack } from '../ui/nav';
 
+const GAP = 8;
+
 export default function Profile() {
+  // Four across on phones (more on wide screens), edge to edge.
+  const [gridW, setGridW] = useState(358);
+  const cols = Math.max(4, Math.floor((gridW + GAP) / (96 + GAP)));
+  const cell = Math.floor((gridW - GAP * (cols - 1)) / cols) - 10;
   const { t } = useTranslation();
   const p = useProfile();
   const flag = useSettings((s) => s.nationality);
@@ -42,7 +49,7 @@ export default function Profile() {
         <Stat label={t('home.best')} value={p.draftsPlayed ? `${p.bestWins}-${p.bestLosses}` : '—'} />
       </Card>
       <Label>{t('profile.pick')}</Label>
-      <View style={styles.grid}>
+      <View style={styles.grid} onLayout={(e) => setGridW(e.nativeEvent.layout.width)}>
         {AVATARS.map((a) => (
           <Pressable
             key={a.id}
@@ -52,7 +59,7 @@ export default function Profile() {
             accessibilityRole="button"
             accessibilityState={{ selected: a.id === current.id }}
           >
-            <Avatar id={a.id} size={72} />
+            <Avatar id={a.id} size={cell} />
             {a.id === current.id && <Text style={styles.check}>✓</Text>}
           </Pressable>
         ))}
@@ -79,7 +86,7 @@ const styles = StyleSheet.create({
   stats: { flexDirection: 'row' },
   value: { color: C.text, fontSize: 22, ...F.display },
   label: { color: C.muted, fontSize: 11, textAlign: 'center' },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: S.md, justifyContent: 'center' },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: GAP },
   cell: { padding: 3, borderRadius: R.pill, borderWidth: 2, borderColor: 'transparent' },
   on: { borderColor: C.neon },
   check: { position: 'absolute', right: 0, bottom: 0, width: 24, height: 24, borderRadius: 12, overflow: 'hidden', backgroundColor: C.bg, color: C.neon, textAlign: 'center', lineHeight: 22, fontWeight: '900', borderWidth: 2, borderColor: C.neon },

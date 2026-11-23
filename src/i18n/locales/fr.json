@@ -24,7 +24,9 @@
     "streakSavedBody_one": "Un gel de série a couvert le jour manqué.",
     "streakSavedBody_other": "Des gels de série ont couvert les {{count}} jours manqués.",
     "duelTitle": "Défie tes amis",
-    "duelCta": "Qui est le meilleur ?"
+    "duelCta": "Qui est le meilleur ?",
+    "hot": "En feu",
+    "hotSub": "Forme réelle, mise à jour chaque jour"
   },
   "mode": {
     "current": {

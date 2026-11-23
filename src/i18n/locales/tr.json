@@ -23,7 +23,9 @@
     "streakSavedBody_one": "Seri dondurucu kaçırdığın günü kapattı.",
     "streakSavedBody_other": "Seri dondurucular kaçırdığın {{count}} günü kapattı.",
     "duelTitle": "Arkadaşlarınla düello",
-    "duelCta": "En iyisi kim?"
+    "duelCta": "En iyisi kim?",
+    "hot": "Isınanlar",
+    "hotSub": "Gerçek form, her gün güncellenir"
   },
   "mode": {
     "current": {
