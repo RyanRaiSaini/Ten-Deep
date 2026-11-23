@@ -88,12 +88,26 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('see-result').click();
     await page.getByTestId('play-again').waitFor({ timeout: 15000 });
     await page.getByTestId('awards').waitFor();
+    await page.getByTestId('share').waitFor();
     await shot('08-result');
     await page.getByTestId('go-home').click();
     await page.getByTestId('tab-bar').waitFor();
     await page.goto(`${base}/profile`);
     const drafts = (await page.getByTestId('stat-drafts').textContent())?.trim() === '1';
     if (!drafts) throw new Error('drafts-played counter did not increment');
+  });
+
+  await step('a friend\'s challenge link: same spins, their record to beat', async () => {
+    await page.goto(`${base}/c?s=smoke-seed&p=current-2026&w=55&l=27&n=Ryan`);
+    await page.getByTestId('challenge-record').waitFor();
+    await shot('36-challenge');
+    await page.getByTestId('challenge-accept').click();
+    await page.getByTestId('spin').waitFor();
+    await page.goto(`${base}/c?s=bad&p=nope&w=1&l=1`);
+    await page.getByText('This challenge link is broken.').waitFor();
+    await page.goto(`${base}/ladder`);
+    await page.getByTestId('ladder-table').waitFor();
+    await shot('37-ladder');
   });
 
   await step('daily trivia and player rank play through and record', async () => {

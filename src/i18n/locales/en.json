@@ -651,5 +651,17 @@
     "gold": "Gold",
     "platinum": "Platinum",
     "legend": "Legend"
+  },
+  "challenge": {
+    "invalid": "This challenge link is broken.",
+    "title": "{{name}} challenges you",
+    "body": "Same spins, same league. Beat their record.",
+    "accept": "Accept challenge",
+    "share": "Share & challenge",
+    "shared": "Shared!",
+    "copied": "Link copied!",
+    "won": "You beat {{name}}!",
+    "lost": "{{name}} wins this one",
+    "tied": "Dead heat with {{name}}"
   }
 }

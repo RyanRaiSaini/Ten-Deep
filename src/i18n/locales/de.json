@@ -651,5 +651,17 @@
     "gold": "Gold",
     "platinum": "Platin",
     "legend": "Legende"
+  },
+  "challenge": {
+    "invalid": "Dieser Challenge-Link ist kaputt.",
+    "title": "{{name}} fordert dich heraus",
+    "body": "Gleiche Spins, gleiche Liga. Schlag die Bilanz.",
+    "accept": "Herausforderung annehmen",
+    "share": "Teilen und herausfordern",
+    "shared": "Geteilt!",
+    "copied": "Link kopiert!",
+    "won": "Du hast {{name}} geschlagen!",
+    "lost": "{{name}} gewinnt diesmal",
+    "tied": "Gleichstand mit {{name}}"
   }
 }

@@ -655,5 +655,17 @@
     "gold": "Oro",
     "platinum": "Platino",
     "legend": "Leggenda"
+  },
+  "challenge": {
+    "invalid": "Questo link di sfida non funziona.",
+    "title": "{{name}} ti sfida",
+    "body": "Stessi giri, stessa lega. Batti il suo record.",
+    "accept": "Accetta la sfida",
+    "share": "Condividi e sfida",
+    "shared": "Condiviso!",
+    "copied": "Link copiato!",
+    "won": "Hai battuto {{name}}!",
+    "lost": "Stavolta vince {{name}}",
+    "tied": "Pari con {{name}}"
   }
 }

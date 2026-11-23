@@ -651,5 +651,17 @@
     "gold": "Altın",
     "platinum": "Platin",
     "legend": "Efsane"
+  },
+  "challenge": {
+    "invalid": "Bu meydan okuma bağlantısı bozuk.",
+    "title": "{{name}} sana meydan okuyor",
+    "body": "Aynı çark, aynı lig. Derecesini geç.",
+    "accept": "Kabul et",
+    "share": "Paylaş ve meydan oku",
+    "shared": "Paylaşıldı!",
+    "copied": "Bağlantı kopyalandı!",
+    "won": "{{name}} karşısında kazandın!",
+    "lost": "Bu sefer {{name}} kazandı",
+    "tied": "{{name}} ile berabere"
   }
 }
