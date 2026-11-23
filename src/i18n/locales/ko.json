@@ -421,7 +421,11 @@
     "nextWeekly_other": "주간 픽까지 {{count}}일",
     "powerUp": "파워업 (남은 횟수 {{n}})",
     "powerOdds": "픽 전체가 업그레이드될 확률 {{pct}}%",
-    "upgraded": "업그레이드!"
+    "upgraded": "업그레이드!",
+    "swipeToRip": "밀어서 개봉",
+    "tapFlip": "탭해서 뒤집기",
+    "tapNext": "탭해서 다음 카드",
+    "cardOf": "{{total}}장 중 {{n}}번째"
   },
   "lineup": {
     "title": "라인업",

@@ -426,7 +426,11 @@
     "nextWeekly_other": "Wochen-Pick in {{count}} Tagen",
     "powerUp": "Aufladen (noch {{n}})",
     "powerOdds": "{{pct}} % Chance, den ganzen Pick aufzuwerten",
-    "upgraded": "AUFGEWERTET!"
+    "upgraded": "AUFGEWERTET!",
+    "swipeToRip": "Wischen zum Aufreißen",
+    "tapFlip": "Tippen zum Umdrehen",
+    "tapNext": "Tippen für die nächste Karte",
+    "cardOf": "Karte {{n}} von {{total}}"
   },
   "lineup": {
     "title": "Aufstellung",

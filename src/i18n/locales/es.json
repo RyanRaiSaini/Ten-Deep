@@ -431,7 +431,11 @@
     "nextWeekly_other": "Elección semanal en {{count}} días",
     "powerUp": "Potenciar ({{n}} restantes)",
     "powerOdds": "{{pct}} % de probabilidad de mejorar toda la elección",
-    "upgraded": "¡MEJORADO!"
+    "upgraded": "¡MEJORADO!",
+    "swipeToRip": "Desliza para abrir",
+    "tapFlip": "Toca para voltear",
+    "tapNext": "Toca para la siguiente carta",
+    "cardOf": "Carta {{n}} de {{total}}"
   },
   "lineup": {
     "title": "Alineación",

@@ -421,7 +421,11 @@
     "nextWeekly_other": "ウィークリーピックまであと{{count}}日",
     "powerUp": "パワーアップ（残り{{n}}回）",
     "powerOdds": "ピック全体が昇格する確率{{pct}}%",
-    "upgraded": "アップグレード！"
+    "upgraded": "アップグレード！",
+    "swipeToRip": "スワイプで開封",
+    "tapFlip": "タップでめくる",
+    "tapNext": "タップで次のカード",
+    "cardOf": "{{total}}枚中{{n}}枚目"
   },
   "lineup": {
     "title": "ラインナップ",
