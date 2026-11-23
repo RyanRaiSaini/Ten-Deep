@@ -1,3 +1,5 @@
+// Plural forms need Intl.PluralRules; load a small polyfill only on engines that lack it.
+if (typeof Intl === 'undefined' || typeof Intl.PluralRules === 'undefined') require('intl-pluralrules');
 import { getLocales } from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
