@@ -5,6 +5,8 @@ import { SEASON_GAMES, outSet, type SeasonState } from '../season';
 import { recordStint } from '../season';
 import { ALL_SLOTS, STARTER_SLOTS, type Player, type SlotId } from '../types';
 import type { CrisisCard } from './offers';
+import { reseat } from '../reseat';
+import { superstarBlocked } from '../cap';
 
 export interface Decision {
   /** Chosen incoming player (pick cards). */
@@ -22,11 +24,11 @@ export interface Decision {
 function swapIn(s: SeasonState, slot: SlotId, incoming: Player): SeasonState {
   const teams = [...s.teams];
   const outgoing = teams[0].slots[slot];
-  teams[0] = { ...teams[0], slots: { ...teams[0].slots, [slot]: incoming } };
+  teams[0] = { ...teams[0], slots: reseat({ ...teams[0].slots, [slot]: incoming }) };
   for (let i = 1; i < teams.length; i++) {
     const k = ALL_SLOTS.find((x) => teams[i].slots[x].name === incoming.name);
     if (k) {
-      teams[i] = { ...teams[i], slots: { ...teams[i].slots, [k]: outgoing } };
+      teams[i] = { ...teams[i], slots: reseat({ ...teams[i].slots, [k]: outgoing }) };
       break;
     }
   }
@@ -40,7 +42,14 @@ const addMod = (s: SeasonState, amount: number, from: number, to: number): Seaso
 export function applyCard(s: SeasonState, card: CrisisCard, d: Decision): SeasonState {
   const r = s.round;
   const chosen = card.offer?.find((p) => p.id === d.incomingId) ?? card.offer?.[0];
-  const out = d.outSlot && card.outSlots?.includes(d.outSlot) ? d.outSlot : card.outSlots?.[0];
+  let out = d.outSlot && card.outSlots?.includes(d.outSlot) ? d.outSlot : card.outSlots?.[0];
+  // Never a third 95+: if this pairing would break the rule, send out a slot that keeps it legal.
+  const mineNow = s.teams[0].slots;
+  if (chosen && out && superstarBlocked({ ...mineNow, [out]: undefined }, chosen)) {
+    const ok = card.outSlots?.find((k) => !superstarBlocked({ ...mineNow, [k]: undefined }, chosen));
+    if (!ok) return s;
+    out = ok;
+  }
 
   switch (card.id) {
     case 'hot-streak':
@@ -69,7 +78,8 @@ export function applyCard(s: SeasonState, card: CrisisCard, d: Decision): Season
       return d.option === 'b' && chosen && out ? swapIn(s, out, chosen) : addMod(s, -2, r, r + 15);
     case 'superteam-rumor': {
       if (d.option !== 'a' || !card.offer?.length) return s;
-      const paid = STARTER_SLOTS.map((k) => ({ k, sal: salaryFor(s.teams[0].slots[k].ovr) })).sort((a, b) => b.sal - a.sal);
+      // The star replaces your highest-paid player (so the two-superstar rule holds), the filler your next.
+      const paid = ALL_SLOTS.map((k) => ({ k, sal: salaryFor(s.teams[0].slots[k].ovr) })).sort((a, b) => b.sal - a.sal);
       let next = swapIn(s, paid[0].k, card.offer[0]);
       if (card.offer[1] && paid[1]) next = swapIn(next, paid[1].k, card.offer[1]);
       return next;

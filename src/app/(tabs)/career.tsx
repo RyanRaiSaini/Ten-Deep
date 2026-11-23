@@ -33,6 +33,8 @@ export default function Career() {
     if (!c.active || c.ended) return null;
     if (c.step) return { label: t('career.toOffseason'), go: () => router.push('/offseason') };
     if (g.career && g.phase !== 'idle' && g.phase !== 'result') return { label: t('career.resume'), go: () => router.push(ROUTE[g.phase]) };
+    // Another run replaced the live season: bring it back (that run is left behind, like any abandoned run).
+    if (g.parked && g.parked.phase !== 'idle') { const ph = g.parked.phase; return { label: t('career.resume'), go: () => { g.resumeCareer(); router.push(ROUTE[ph]); } }; }
     if (c.history.length >= c.season) return { label: t('career.toOffseason'), go: () => { c.beginOffseason(); router.push('/offseason'); } };
     return { label: t('career.resume'), go: () => router.push(g.career && g.phase !== 'idle' ? ROUTE[g.phase] : '/draft') };
   })();

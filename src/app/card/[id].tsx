@@ -17,7 +17,14 @@ export default function CardDetail() {
   const { t } = useTranslation();
   const owned = useCollection((s) => s.owned);
   const card = CARD_BY_ID[id ?? ''];
-  if (!card) return null;
+  if (!card) {
+    return (
+      <Screen>
+        <Header title={t('notFound.title')} left={<BackButton onPress={goBack} />} />
+        <Text style={{ color: C.muted, textAlign: 'center', fontWeight: '700' }}>{t('notFound.body')}</Text>
+      </Screen>
+    );
+  }
   const count = owned[card.id]?.count ?? 0;
   const level = cardLevel(count);
   const p = cardPlayer(card.id);

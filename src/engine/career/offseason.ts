@@ -10,6 +10,7 @@ import { progressPlayer, retires } from './aging';
 import { ROOKIE_YEARS, type Contracts } from './contracts';
 import { draftOrder } from './lottery';
 import { generateJourneymen, generateRookieClass } from './rookies';
+import { reseat } from '../reseat';
 
 export interface OffTeam {
   id: string;
@@ -171,7 +172,8 @@ export function rookieDraft(st: OffseasonState, userPick?: string, userCut?: Slo
       contracts[r.id] = ROOKIE_YEARS;
     } else freeAgents.push(r);
   }
-  return { ...st, teams, freeAgents: [...freeAgents, ...rookies], contracts, rookies: [], picks };
+  // A rookie dropped into a cut player's spot may not play it: re-seat so every starter is in position.
+  return { ...st, teams: teams.map((t) => ({ ...t, slots: reseat(t.slots) })), freeAgents: [...freeAgents, ...rookies], contracts, rookies: [], picks };
 }
 
 /** Free agents as a spinnable pool: one "team" per position group. */

@@ -86,6 +86,7 @@ export default function Packs() {
   const cards = useMemo(() => (pick ? pick.cards.map((id) => CARD_BY_ID[id]).filter(Boolean) : []), [pick]);
   const [open, setOpen] = useState(false);
   const [flipped, setFlipped] = useState<string[]>([]);
+  const revealing = useRef(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [burst, setBurst] = useState(0);
   const [showOdds, setShowOdds] = useState(false);
@@ -116,7 +117,7 @@ export default function Packs() {
   }
 
   const [c1, c2] = PACK_COLOR[pick.type];
-  const allRevealed = flipped.length === cards.length;
+  const allRevealed = cards.every((c) => flipped.includes(c.id));
   const best = [...cards].sort((a, b) => b.ovr - a.ovr)[0];
 
   const flip = (card: Card) => {
@@ -124,11 +125,15 @@ export default function Packs() {
       if (allRevealed) setSelected(card.id);
       return;
     }
-    setFlipped((f) => [...f, card.id]);
+    // Reveal-all timers call this with an old `flipped`, so de-duplicate inside the updater.
+    setFlipped((f) => (f.includes(card.id) ? f : [...f, card.id]));
     if (RANK[card.tier] >= RANK.mythic) { setBurst((b) => b + 1); feel('fanfare'); }
     else feel(RANK[card.tier] >= RANK.epic ? 'crowd' : 'swish');
   };
   const revealAll = () => {
+    if (revealing.current) return;
+    revealing.current = true;
+    setTimeout(() => { revealing.current = false; }, cards.length * 420 + 100);
     const order = cards.filter((c) => !flipped.includes(c.id)).sort((a, b) => a.ovr - b.ovr); // best last
     order.forEach((c, i) => setTimeout(() => flip(c), i * 420));
   };
