@@ -30,11 +30,15 @@ function Rays({ color }: { color: string }) {
  * scrolling content; `footer` (the tab bar) is pinned to the bottom.
  */
 export function Screen({
-  children, scroll = true, tint, overlay, footer, wide = false,
-}: { children: ReactNode; scroll?: boolean; tint?: string; overlay?: ReactNode; footer?: ReactNode; wide?: boolean }) {
-  const body = <View style={[styles.inner, wide && styles.innerWide, !!footer && { paddingBottom: 120 }]}>{children}</View>;
+  children, scroll = true, tint, overlay, footer, wide = false, tabbed = false,
+}: {
+  children: ReactNode; scroll?: boolean; tint?: string; overlay?: ReactNode; footer?: ReactNode; wide?: boolean;
+  /** Inside the tab navigator: leave room for the tab bar, which handles the bottom safe area. */
+  tabbed?: boolean;
+}) {
+  const body = <View style={[styles.inner, wide && styles.innerWide, (!!footer || tabbed) && { paddingBottom: 120 }]}>{children}</View>;
   return (
-    <SafeAreaView style={styles.screen} edges={footer ? ['top'] : ['top', 'bottom']}>
+    <SafeAreaView style={styles.screen} edges={footer || tabbed ? ['top'] : ['top', 'bottom']}>
       {tint && <LinearGradient colors={[alpha(tint, 0.28), alpha(tint, 0.06), alpha(C.bg, 0)]} locations={[0, 0.5, 1]} style={styles.tint} />}
       <Rays color={tint ?? C.ink} />
       {scroll ? <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>{body}</ScrollView> : body}

@@ -217,7 +217,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('crisis-card').waitFor({ timeout: 10000 });
     await page.goto(`${base}/career`);
     await page.getByText('Season 2').waitFor({ timeout: 5000 });
-    await page.getByText('2026-27').waitFor();
+    await page.getByText('2026-27').first().waitFor();
     await shot('24-career-hub');
   });
 

@@ -107,7 +107,7 @@ export default function Packs() {
         <Header title={t('collect.picks')} left={<BackButton onPress={() => goBack()} />} />
         <Text style={styles.empty}>{t('collect.noPicks')}</Text>
         <Text style={styles.streak}>{t('collect.streak', { n: col.streak })} · {t('collect.nextWeekly', { count: 7 - (col.streak % 7) })}</Text>
-        <Button label={t('collect.title')} variant="secondary" onPress={() => router.replace('/collection')} />
+        <Button label={t('collect.title')} variant="secondary" onPress={() => router.navigate('/collection')} />
       </Screen>
     );
   }
