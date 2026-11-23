@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MODE_BY_ID } from '../data/modes';
-import { HISTORY } from '../data/modes';
+import { MODE_BY_ID , HISTORY } from '../data/modes';
 import { dailyDerby, dailyKey, dailyRank, dailySeed, dailyTeamDuel, dailyTeamRank, dailyTrivia, scoreRank, teamStrengthScore } from './daily';
 
 const allTime = MODE_BY_ID['all-time'].pool;

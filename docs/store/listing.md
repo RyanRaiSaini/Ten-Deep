@@ -29,7 +29,7 @@ basketball,gm,draft,simulation,sports,manager,salary cap,playoffs,dynasty,career
 
 Draft ten deep. Survive 82.
 
-Spin a team, take one player, and build a 10-man rotation under a $150M salary cap. Only two 95+ superstars allowed. Then live with it: an 82-game season, injuries, a trade deadline, and best-of-seven playoffs played game by game.
+Spin a team, take one player, and build a 10-man rotation under a $200M salary cap. Only two 95+ superstars allowed. Then live with it: an 82-game season, injuries, a trade deadline, and best-of-seven playoffs played game by game.
 
 It's hard on purpose. 70 wins takes an elite roster. 82-0 has never happened.
 

@@ -4,7 +4,7 @@
 
 ## What's in the game
 
-- **Draft:** spin a team-season, pick one player per spin into a 10-man rotation (PG, SG, SF, PF, C and 5 bench). $150M cap, at most two players rated 95+, two respins. The cap reserve knows the player pool, so a draft can never dead-end.
+- **Draft:** spin a team-season, pick one player per spin into a 10-man rotation (PG, SG, SF, PF, C and 5 bench). $200M cap, at most two players rated 95+, two respins. The cap reserve knows the player pool, so a draft can never dead-end.
 - **Season:** 82 games at your chosen sim speed (with skip buttons), injuries that cost exactly the games they say, a one-swap trade deadline at game 50, then 16-team best-of-7 playoffs played game by game.
 - **Difficulty:** tuned so 70 wins needs an elite roster and 82-0 never happens (see `src/engine/calibration.test.ts`).
 - **Modes:**

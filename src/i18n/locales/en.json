@@ -893,7 +893,8 @@
       "taken": "Someone grabbed him first!",
       "round-closed": "Too late: that round closed.",
       "already-picked": "You've already picked this round.",
-      "not-allowed": "He doesn't fit your cap or roster."
+      "not-allowed": "He doesn't fit your cap or roster.",
+      "grabbedBy": "{{who}} grabbed {{name}} first. Pick again!"
     },
     "table": "League table"
   },

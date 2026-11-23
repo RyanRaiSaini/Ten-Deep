@@ -10,7 +10,7 @@ import { closestSets, completedSets, setReward } from '../../engine/collect/sets
 import { TIERS, type Tier } from '../../engine/collect/tiers';
 import { useCollection } from '../../store/collection';
 import { CollectCard, TIER_STYLE } from '../../ui/CollectCard';
-import { BackButton, Button, Header, Screen, TabTitle } from '../../ui/components';
+import { Button, Screen, TabTitle } from '../../ui/components';
 import { C, F, R, S } from '../../ui/theme';
 import { Icon } from '../../ui/icons';
 import { FINISHES, bestFinish, finishRank, type Finish } from '../../engine/collect/finishes';

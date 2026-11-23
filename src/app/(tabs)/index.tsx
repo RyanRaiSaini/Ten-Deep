@@ -16,9 +16,8 @@ import { DailyTimer } from '../../ui/DailyTimer';
 import { HotStrip } from '../../ui/HotStrip';
 import { Avatar } from '../../ui/Avatar';
 import { AVATARS } from '../../ui/avatars';
-import { Button, Chip, Display, IconButton, Label } from '../../ui/components';
+import { Button, Chip, Display, IconButton, Label , Screen } from '../../ui/components';
 import { CourtArt, Icon, type IconName } from '../../ui/icons';
-import { Screen } from '../../ui/components';
 import { BrandLogo } from '../../ui/BrandLogo';
 import { useLeague } from '../../store/league';
 import { LeagueCard } from '../../ui/LeagueCard';
@@ -59,6 +58,9 @@ export default function Home() {
   const progress = useProgress();
   const [heroW, setHeroW] = useState(360);
   const leagueResult = useLeague((s) => s.result);
+  // Hooks stay above the redirect: the hook count must not change when `onboarded` flips.
+  const rerolls = useShop((s) => s.rerolls);
+  const freeReady = useShop((s) => s.freeDay !== dailyKey());
   if (!onboarded) return <Redirect href="/welcome" />;
 
   const today = dailyKey();
@@ -70,8 +72,6 @@ export default function Home() {
   const checked = (d: string) => !!lastDay && d <= lastDay && d > shiftDay(lastDay, -streak);
   const weekday = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString(i18n.language, { weekday: 'short', timeZone: 'UTC' });
 
-  const rerolls = useShop((s) => s.rerolls);
-  const freeReady = useShop((s) => s.freeDay !== dailyKey());
   const startCurrent = () => { useGame.getState().newRun('current-2026'); router.push('/draft'); };
 
   return (

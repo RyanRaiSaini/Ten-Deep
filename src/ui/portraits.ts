@@ -279,7 +279,7 @@ function ears(c: Ctx): string {
   c.defs.push(rad(c.id('er'), [[0, mix(T.base, T.blush, 0.12)], [0.7, T.shadow], [1, T.deep]], 'cx="0.45" cy="0.45" r="0.6"'));
   let out = '';
   for (const side of [-1, 1]) {
-    const cx = 100 + side * (g.w + 0.5), cy = 111;
+    const cx = 100 + side * (g.w + 0.5);
     const X = (dx: number) => n(cx + side * dx);
     out += `<path d="M${X(-4)} 98C${X(6)} 93 ${X(12)} 101 ${X(11)} 111C${X(10)} 121 ${X(5)} 128 ${X(-3)} 126Z" fill="${c.u('er')}" stroke="${INK}" stroke-width="${OUT * 0.9}" stroke-linejoin="round"/>` +
       `<path d="M${X(0)} 103C${X(6)} 102 ${X(7)} 112 ${X(2)} 119" ${stroke(T.deep, 2.2, 'opacity="0.6"')}/>` +

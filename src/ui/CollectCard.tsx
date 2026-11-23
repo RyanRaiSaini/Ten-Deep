@@ -1,16 +1,16 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, View } from 'react-native';
 import { Text } from './Text';
-import type { Card, Tier } from '../engine/collect/tiers';
+import type { Card } from '../engine/collect/tiers';
 import Svg, { Circle, Path, Text as SvgText } from 'react-native-svg';
 import { teamGradient } from './teamColors';
 import { FINISH_STYLE, FinishChip, FinishOverlay } from './CardFinish';
 import type { Finish } from '../engine/collect/finishes';
 import { C, F, FONT, R } from './theme';
+import { TIER_STYLE } from './tierStyle';
 
 /** Tier look: frame gradient, accent and glow. */
 export { TIER_STYLE } from './tierStyle';
-import { TIER_STYLE } from './tierStyle';
 
 const initials = (name: string) => name.split(' ').filter((w) => !/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(w)).map((w) => w[0]).slice(0, 2).join('');
 

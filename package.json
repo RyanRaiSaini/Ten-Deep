@@ -14,7 +14,9 @@
     "typecheck": "tsc --noEmit",
     "review": "tsx scripts/review-sheet.ts",
     "calibrate": "tsx scripts/calibrate.ts",
-    "smoke": "expo export -p web && node scripts/smoke.mjs"
+    "smoke": "expo export -p web && node scripts/smoke.mjs",
+    "lint": "expo lint",
+    "audio": "tsx scripts/render-audio.mts"
   },
   "dependencies": {
     "@expo-google-fonts/lilita-one": "^0.4.1",
@@ -25,6 +27,7 @@
     "@vercel/functions": "^3.11.3",
     "@vercel/og": "^0.6.8",
     "expo": "~58.0.26",
+    "expo-audio": "~58.0.12",
     "expo-clipboard": "~58.0.4",
     "expo-constants": "~58.0.16",
     "expo-dev-client": "~58.0.21",
@@ -51,6 +54,8 @@
   },
   "devDependencies": {
     "@types/react": "~19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "~58.0.4",
     "tsx": "^4.23.15",
     "typescript": "~6.0.3",
     "vitest": "^5.1.1"

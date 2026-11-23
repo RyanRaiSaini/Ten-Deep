@@ -14,7 +14,8 @@ import { baseOf } from '../store/form';
 const URL_ = typeof document !== 'undefined' ? '/api/party' : `${CONFIG.webUrl}/api/party`;
 
 export type PartyError = 'offline' | 'not-found' | 'started' | 'full' | 'taken' | 'round-closed' | 'need-two' | 'unavailable' | string;
-export type Result<T> = { ok: true; data: T } | { ok: false; error: PartyError };
+/** `by`: on a lost tie ('claimed'), the name of whoever got the player first. */
+export type Result<T> = { ok: true; data: T } | { ok: false; error: PartyError; by?: string | null };
 
 async function call<T>(body: Record<string, unknown>): Promise<Result<T>> {
   const { pin, key } = useFriends.getState();
@@ -33,7 +34,7 @@ async function call<T>(body: Record<string, unknown>): Promise<Result<T>> {
     });
     if (!(r.headers.get('content-type') ?? '').includes('json')) return { ok: false, error: 'unavailable' };
     const j = await r.json();
-    return r.ok ? { ok: true, data: j as T } : { ok: false, error: j.error ?? 'unavailable' };
+    return r.ok ? { ok: true, data: j as T } : { ok: false, error: j.error ?? 'unavailable', by: typeof j.by === 'string' ? j.by : null };
   } catch {
     return { ok: false, error: 'offline' };
   }

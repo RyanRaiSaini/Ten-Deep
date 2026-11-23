@@ -29,7 +29,7 @@ const TWINKLES = [
 ];
 
 function useLoop(duration: number, delay = 0, reverse = true) {
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     const steps = [Animated.timing(v, { toValue: 1, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: native })];
     if (reverse) steps.push(Animated.timing(v, { toValue: 0, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: native }));
@@ -42,7 +42,7 @@ function useLoop(duration: number, delay = 0, reverse = true) {
 }
 
 function Spin({ children, duration }: { children: ReactNode; duration: number }) {
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     const loop = Animated.loop(Animated.timing(v, { toValue: 1, duration, easing: Easing.linear, useNativeDriver: native }));
     loop.start();
@@ -148,7 +148,7 @@ function Rays({ color }: { color: string }) {
 
 /** Holographic spirograph: thin iridescent loops in a ring, slowly turning. Sits behind the pack and the cards. */
 export function Halo({ size = 420, fire = 0 }: { size?: number; fire?: number }) {
-  const pop = useRef(new Animated.Value(1)).current;
+  const [pop] = useState(() => new Animated.Value(1));
   useEffect(() => {
     if (!fire) return;
     pop.setValue(0.6);
@@ -220,7 +220,7 @@ export function ArenaBackdrop({ color }: { color: string }) {
 
 /** A full-screen white flash; bump `fire` to trigger. */
 export function Flash({ fire, color = '#FFFFFF' }: { fire: number; color?: string }) {
-  const f = useRef(new Animated.Value(0)).current;
+  const [f] = useState(() => new Animated.Value(0));
   useEffect(() => {
     if (!fire) return;
     f.setValue(0.95);
@@ -231,7 +231,7 @@ export function Flash({ fire, color = '#FFFFFF' }: { fire: number; color?: strin
 
 /** Light beams shooting up out of the pack mouth (rarity-tinted). Bump `fire` to shoot them. */
 export function Beams({ fire, color }: { fire: number; color: string }) {
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     if (!fire) return;
     v.setValue(0);
@@ -318,9 +318,9 @@ export function RipPack({ c1, c2, label, type, hint, glow, onRip, onGone, testID
   /** How long the open wrapper stays put after the rip (so cards can rise out of it) before it falls away. */
   dropDelay?: number;
 }) {
-  const tear = useRef(new Animated.Value(0)).current; // 0..1 how far the strip is torn
-  const fly = useRef(new Animated.Value(0)).current; // strip flying off
-  const drop = useRef(new Animated.Value(0)).current; // wrapper falling away
+  const [tear] = useState(() => new Animated.Value(0)); // 0..1 how far the strip is torn
+  const [fly] = useState(() => new Animated.Value(0)); // strip flying off
+  const [drop] = useState(() => new Animated.Value(0)); // wrapper falling away
   const float = useLoop(1400);
   const shine = useLoop(1600, 900, false);
   const finger = useLoop(1100, 300, false);

@@ -1,5 +1,5 @@
 import type { BottomTabBarProps } from 'expo-router/build/layouts/Tabs';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { feel } from '../audio/feel';
@@ -26,7 +26,7 @@ function TabItem({ name, focused, onPress }: { name: string; focused: boolean; o
   const { t } = useTranslation();
   const tab = TABS[name];
   const reduce = useReducedMotion();
-  const v = useRef(new Animated.Value(focused ? 1 : 0)).current;
+  const [v] = useState(() => new Animated.Value(focused ? 1 : 0));
   useEffect(() => {
     if (reduce) { v.setValue(focused ? 1 : 0); return; }
     Animated.spring(v, { toValue: focused ? 1 : 0, friction: 6, tension: 120, useNativeDriver: native }).start();
@@ -66,7 +66,7 @@ export function TabBar({ state, navigateToTab, insets }: BottomTabBarProps) {
   // Tabs lay out right-to-left in Arabic, so the highlight counts from the other end.
   const pos = isRTL(i18n.language) ? state.routes.length - 1 - state.index : state.index;
   const [w, setW] = useState(0);
-  const x = useRef(new Animated.Value(pos)).current;
+  const [x] = useState(() => new Animated.Value(pos));
   const n = state.routes.length;
   useEffect(() => {
     if (reduce) { x.setValue(pos); return; }

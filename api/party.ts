@@ -171,9 +171,20 @@ export async function POST(req: Request) {
       if (!player) return json({ error: 'not-in-spin', spin: state.spin?.id ?? null }, 409);
       if (state.taken.has(pid)) return json({ error: 'taken' }, 409);
       if (!affordableSlots(st, player, pool).includes(slot)) return json({ error: 'not-allowed' }, 409);
+      // Who got this player in this round (for "X grabbed him first").
+      const winner = (ms: StoredMember[]) => ms.find((m) => m.pin !== pin && m.picks.some((x) => x.r === r && x.pid === pid))?.name;
       // Atomic claim: two simultaneous picks of the same player can't both win.
-      if (!(await redis.set(K.claim(code, pid), pin, { nx: true, ex: TTL }))) return json({ error: 'claimed' }, 409);
+      if (!(await redis.set(K.claim(code, pid), pin, { nx: true, ex: TTL }))) return json({ error: 'claimed', by: winner(members) ?? null }, 409);
       await redis.set(K.m(code, pin), { ...me, picks: [...me.picks, { r, pid, slot, t: now }] } satisfies StoredMember, { ex: TTL });
+      // Without a true atomic store (runtime cache) two claims can both land: re-read and let the timestamps decide,
+      // so the loser hears it now and picks again, instead of finding out when the round ends.
+      const after = await load(code);
+      if (after) {
+        const settled = resolve(meta, after.members.map(strip), pool, Date.now());
+        if (settled.phase === 'draft' && settled.round === r && !settled.picked[seatOf(after.members, pin)]) {
+          return json({ error: 'claimed', by: winner(after.members) ?? null }, 409);
+        }
+      }
       return json({ ok: true, t: now });
     }
     default:

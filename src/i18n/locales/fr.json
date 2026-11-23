@@ -898,7 +898,8 @@
       "taken": "Quelqu'un l'a pris avant toi !",
       "round-closed": "Trop tard : ce tour est terminé.",
       "already-picked": "Tu as déjà choisi à ce tour.",
-      "not-allowed": "Il ne rentre pas dans ton budget ou ton effectif."
+      "not-allowed": "Il ne rentre pas dans ton budget ou ton effectif.",
+      "grabbedBy": "{{who}} a pris {{name}} en premier. Choisis encore !"
     },
     "table": "Classement"
   },

@@ -51,7 +51,7 @@ export function Screen({
 
 /** Big outlined display type, like a sticker: white fill, ink outline, a little 3D drop. */
 export function Display({
-  children, size = 34, color = '#FFFFFF', stroke = C.ink, align = 'center', style, testID, extrude,
+  children: raw, size = 34, color = '#FFFFFF', stroke = C.ink, align = 'center', style, testID, extrude,
 }: {
   children: ReactNode; size?: number; color?: string; stroke?: string; align?: TextStyle['textAlign']; style?: StyleProp<ViewStyle>; testID?: string;
   /** Color of a chunky 3D extrusion under the letters (logo style). */
@@ -59,7 +59,7 @@ export function Display({
 }) {
   const w = size < 28 ? 1.5 : Math.max(2, Math.round(size / 11));
   // The outline copies fill thin spaces at small sizes; an en space keeps words apart.
-  if (typeof children === 'string') children = children.replace(/ /g, '\u2002');
+  const children = typeof raw === 'string' ? raw.replace(/ /g, '\u2002') : raw;
   const base: TextStyle = { fontFamily: FONT.display, fontSize: size, lineHeight: Math.round(size * 1.18), textAlign: align, letterSpacing: 0.3 };
   const ghost = { accessibilityElementsHidden: true, importantForAccessibility: 'no-hide-descendants' as const, 'aria-hidden': true, selectable: false };
   const offsets = [[-w, 0], [w, 0], [0, -w], [0, w], [-w, -w], [w, w], [-w, w], [w, -w]];

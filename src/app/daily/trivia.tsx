@@ -1,13 +1,12 @@
-import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Text } from '../../ui/Text';
 import { feel } from '../../audio/feel';
 import { MODE_BY_ID } from '../../data';
 import { dailyKey, dailyTrivia } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
-import { BackButton, Button, Card, Header, Label, Screen } from '../../ui/components';
+import { BackButton, Button, Header, Screen } from '../../ui/components';
 import { C, F, R, S } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
 import { Choice, Pips, ScoreCard } from '../../ui/dailyKit';

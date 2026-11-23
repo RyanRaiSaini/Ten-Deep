@@ -1,4 +1,3 @@
-import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { Text } from '../ui/Text';
