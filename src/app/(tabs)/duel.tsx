@@ -55,11 +55,11 @@ export default function Duel() {
         </View>
 
         <View style={styles.pinCard} testID="my-pin">
-          <View style={{ flex: 1 }}>
+          <View style={styles.pinTop}>
             <Text style={styles.pinLabel}>{t('friends.yourPin')}</Text>
-            <Text style={styles.pin} selectable>{formatPin(myPin)}</Text>
+            <Text style={styles.pin} selectable numberOfLines={1}>{formatPin(myPin)}</Text>
           </View>
-          <Button label={shareState ? t(`friends.${shareState}`) : t('friends.shareCode')} variant="dark" icon={<Icon name="share" size={20} />} onPress={shareCode} testID="share-code" style={{ flexShrink: 1 }} />
+          <Button label={shareState ? t(`friends.${shareState}`) : t('friends.shareCode')} variant="dark" icon={<Icon name="share" size={20} />} onPress={shareCode} testID="share-code" />
         </View>
 
         <View style={styles.sectionHead}>
@@ -204,8 +204,9 @@ const styles = StyleSheet.create({
   faceRing: { borderRadius: 50, borderWidth: 4, borderColor: '#FFC53D', backgroundColor: '#FFFFFF' },
   vsBadge: { marginHorizontal: -6, zIndex: 2 },
   lead: { color: C.text, fontSize: 15, lineHeight: 22 },
+  pinTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: S.md },
   pinCard: {
-    flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: R.lg, backgroundColor: '#FFFFFF',
+    gap: S.sm, padding: S.md, borderRadius: R.lg, backgroundColor: '#FFFFFF',
     borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 6,
   },
   pinLabel: { fontSize: 12, fontWeight: '900', letterSpacing: 1.5, color: C.muted, textTransform: 'uppercase' },
