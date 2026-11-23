@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   titleRow: { alignItems: 'center', gap: 4 },
   packName: { fontSize: 26, ...F.display },
   guarantee: { color: C.gold, fontWeight: '800' },
-  stage: { minHeight: 420, alignItems: 'center', justifyContent: 'center' },
+  stage: { minHeight: 420, alignItems: 'center', justifyContent: 'center', paddingVertical: S.md },
   pack: {
     width: 220, height: 300, borderRadius: R.lg, alignItems: 'center', justifyContent: 'center', gap: S.md,
     shadowOpacity: 0.9, shadowRadius: 30, shadowOffset: { width: 0, height: 0 }, elevation: 14,

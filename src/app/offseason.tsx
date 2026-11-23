@@ -85,7 +85,7 @@ export default function Offseason() {
     return (
       <Screen key="step-2">
         <Header title={t('career.draft')} left={<BackButton onPress={() => router.navigate('/career')} />} />
-        <LotteryReveal order={st.order} names={(i) => (i === 0 ? t('league.you') : st.teams[i].name)} />
+        <LotteryReveal order={st.order} names={(i) => (i === 0 ? t('league.you') : st.teams[i].name)} colors={(i) => st.teams[i].colors} />
         <Text style={styles.big} testID="pick-no">{t('career.yourPick', { n: pickNo })}</Text>
         {available.map((r) => (
           <PlayerCard key={r.id} player={r} testID="rookie" selected={pickId === r.id} onPress={() => setRookie(r.id)} />

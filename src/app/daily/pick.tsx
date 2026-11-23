@@ -10,6 +10,8 @@ import { useDaily } from '../../store/daily';
 import { BackButton, Button, Card, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S, ovrColor } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
+import { Pips, ScoreCard } from '../../ui/dailyKit';
+import { Icon } from '../../ui/icons';
 
 interface Side { id: string; title: string; sub: string; value: string }
 interface Round { a: Side; b: Side; winner: string; reveal?: string[] }
@@ -87,27 +89,24 @@ export default function Pick() {
   };
 
   return (
-    <Screen>
+    <Screen tint={duel ? C.blue : C.danger}>
       <Header title={duel ? t('daily.teamDuel') : t('daily.derby')} left={<BackButton onPress={() => goBack()} />} />
       {finished ? (
-        <Card style={{ alignItems: 'center', gap: S.md, paddingVertical: S.xxl }}>
-          <Text style={styles.big} testID="pick-score">
-            {duel
-              ? (already ?? score)
-                ? t('daily.youGuessed')
-                : t('daily.wrong', { answer: (r.winner === r.a.id ? r.a : r.b).title })
-              : t('daily.yourScore', { n: already ?? score })}
-          </Text>
-          <Text style={styles.sub}>{t('daily.tomorrow')}</Text>
-          <Button label={t('daily.done')} onPress={() => goBack()} testID="pick-done" />
-        </Card>
+        <ScoreCard
+          score={already ?? score}
+          total={duel ? 1 : rounds.length}
+          headline={duel ? ((already ?? score) ? t('daily.youGuessed') : t('daily.wrong', { answer: (r.winner === r.a.id ? r.a : r.b).title })) : undefined}
+          onDone={() => goBack()}
+          testID="pick-score"
+          doneTestID="pick-done"
+        />
       ) : (
         <>
-          {!duel && <Label>{`${i + 1} / ${rounds.length}`}</Label>}
+          {!duel && <Pips total={rounds.length} at={i} />}
           <Text style={styles.prompt}>{t('daily.whoWins')}</Text>
           <View style={{ gap: S.sm }}>
             {sideCard(r.a)}
-            <Text style={styles.vs}>vs</Text>
+            <View style={styles.vsWrap}><Icon name="vs" size={48} /></View>
             {sideCard(r.b)}
           </View>
           {picked && r.reveal && (
@@ -124,11 +123,12 @@ export default function Pick() {
 
 const styles = StyleSheet.create({
   prompt: { color: C.text, fontSize: 24, ...F.display },
-  side: { padding: S.lg, borderRadius: R.md, borderWidth: 2, backgroundColor: C.surface, gap: 2 },
+  side: { padding: S.lg, borderRadius: R.md + 4, borderWidth: 2.5, backgroundColor: '#FFFFFF', gap: 2, borderBottomWidth: 7 },
   title: { color: C.text, fontSize: 18, fontWeight: '900' },
   sub: { color: C.muted, fontSize: 13 },
   value: { fontSize: 26, ...F.display },
   vs: { color: C.muted, textAlign: 'center', fontWeight: '800' },
+  vsWrap: { alignItems: 'center', marginVertical: -18, zIndex: 2 },
   reveal: { color: C.text, fontWeight: '700' },
   revealLast: { color: C.neon, fontWeight: '900', marginTop: 4 },
   big: { color: C.text, fontSize: 26, textAlign: 'center', ...F.display },
