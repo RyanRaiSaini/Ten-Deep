@@ -47,6 +47,9 @@ export function applyForm(deltas: Record<string, FormDelta>) {
   }
 }
 
+/** A Current Day player's unadjusted ratings (form is applied in place, so pools that must agree use this). */
+export const baseOf = (p: Player): Player => BASE.get(p) ?? p;
+
 /** A player's current form nudge (for the HOT/COLD badge), 0 if none. */
 export const formOf = (p: Player): number => (p as Player & { form?: number }).form ?? 0;
 

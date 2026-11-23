@@ -1,7 +1,8 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Text } from '../../ui/Text';
 import { DUEL_COLORS, useDuel } from '../../store/duel';
 import { Button, Card, Display, Label, Screen } from '../../ui/components';
@@ -47,6 +48,21 @@ export default function Duel() {
         </View>
         <Display size={38}>{t('duel.title')}</Display>
       </View>
+
+      <Pressable onPress={() => router.push('/party')} testID="to-party" accessibilityRole="button"
+        style={({ pressed }) => [styles.partyCard, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 4 }]}>
+        <LinearGradient colors={['#2BC07A', '#0B6B3A']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+        <View style={styles.partyFaces}>
+          {[AVATARS[15], AVATARS[0], AVATARS[38]].map((a, i) => (
+            <View key={a.id} style={[styles.partyFace, { marginLeft: i ? -12 : 0 }]}><Avatar id={a.id} size={40} /></View>
+          ))}
+        </View>
+        <View style={{ flex: 1 }}>
+          <Display size={24} align="left">{t('party.banner')}</Display>
+          <Text style={styles.partySub}>{t('party.bannerSub')}</Text>
+        </View>
+        <View style={styles.liveDot}><Text style={styles.liveText}>LIVE</Text></View>
+      </Pressable>
 
       <View style={styles.pinCard} testID="my-pin">
         <View style={styles.pinTop}>
@@ -105,6 +121,15 @@ const styles = StyleSheet.create({
   faceRing: { borderRadius: 50, borderWidth: 4, borderColor: '#FFC53D', backgroundColor: '#FFFFFF' },
   vsBadge: { marginHorizontal: -6, zIndex: 2 },
   lead: { color: C.text, fontSize: 15, lineHeight: 22 },
+  partyCard: {
+    flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 22, overflow: 'hidden',
+    borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7,
+  },
+  partyFaces: { flexDirection: 'row' },
+  partyFace: { borderRadius: 24, borderWidth: 3, borderColor: '#FFFFFF', backgroundColor: C.surface2 },
+  partySub: { color: '#FFFFFF', fontWeight: '800', fontSize: 13 },
+  liveDot: { backgroundColor: C.danger, borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 4, borderWidth: 2, borderColor: '#FFFFFF' },
+  liveText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1.5 },
   pinTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: S.md },
   pinCard: {
     gap: S.sm, padding: S.md, borderRadius: R.lg, backgroundColor: '#FFFFFF',
