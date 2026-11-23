@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Animated, Easing, Platform, StyleSheet, View } from 'react-native';
 import { Logo } from './Logo';
 import { C } from './theme';
 
 /** Shown while saved progress and fonts load: the ball and an indeterminate bar (no text, fonts aren't ready). */
 export function Loading() {
-  const x = useRef(new Animated.Value(0)).current;
+  const [x] = useState(() => new Animated.Value(0));
   useEffect(() => {
     const loop = Animated.loop(Animated.timing(x, { toValue: 1, duration: 1100, easing: Easing.inOut(Easing.quad), useNativeDriver: Platform.OS !== 'web' }));
     loop.start();

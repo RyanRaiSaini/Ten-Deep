@@ -6,6 +6,11 @@ vi.mock('@react-native-async-storage/async-storage', () => ({
   default: { getItem: async () => null, setItem: async () => {}, removeItem: async () => {}, clear: async () => cleared() },
 }));
 
+// startDay() fires off cloud backup and PIN publishing in the background. Unmocked, those imports can finish after
+// the test ends (when the AsyncStorage mock is gone) and load the real react-native, which node can't parse.
+vi.mock('../net/save', () => ({ backup: async () => {} }));
+vi.mock('../net/pins', () => ({ publishMe: async () => {} }));
+
 const { STORES, wipeAll } = await import('./all');
 
 describe('all stores', () => {

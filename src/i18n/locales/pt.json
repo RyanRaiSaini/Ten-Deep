@@ -898,7 +898,8 @@
       "taken": "Alguém pegou ele primeiro!",
       "round-closed": "Tarde demais: essa rodada já fechou.",
       "already-picked": "Você já escolheu nesta rodada.",
-      "not-allowed": "Ele não cabe no seu teto ou no seu elenco."
+      "not-allowed": "Ele não cabe no seu teto ou no seu elenco.",
+      "grabbedBy": "{{who}} pegou {{name}} primeiro. Escolha de novo!"
     },
     "table": "Classificação"
   },

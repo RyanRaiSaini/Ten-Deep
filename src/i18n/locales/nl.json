@@ -893,7 +893,8 @@
       "taken": "Iemand was je voor!",
       "round-closed": "Te laat: die ronde is gesloten.",
       "already-picked": "Je hebt deze ronde al gekozen.",
-      "not-allowed": "Hij past niet in je salarisplafond of selectie."
+      "not-allowed": "Hij past niet in je salarisplafond of selectie.",
+      "grabbedBy": "{{who}} pakte {{name}} eerst. Kies opnieuw!"
     },
     "table": "Stand"
   },

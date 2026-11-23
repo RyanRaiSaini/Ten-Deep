@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { Text } from './Text';
@@ -18,7 +18,7 @@ export function AchievementToast() {
   const { t } = useTranslation();
   const id = useProgress((s) => s.toasts[0]);
   const insets = useSafeAreaInsets();
-  const y = useRef(new Animated.Value(200)).current;
+  const [y] = useState(() => new Animated.Value(200));
   const a = ACHIEVEMENTS.find((x) => x.id === id);
 
   useEffect(() => {

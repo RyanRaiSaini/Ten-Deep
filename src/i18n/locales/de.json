@@ -893,7 +893,8 @@
       "taken": "Jemand war schneller!",
       "round-closed": "Zu spät: Diese Runde ist geschlossen.",
       "already-picked": "Du hast in dieser Runde schon gewählt.",
-      "not-allowed": "Er passt nicht in dein Cap oder deinen Kader."
+      "not-allowed": "Er passt nicht in dein Cap oder deinen Kader.",
+      "grabbedBy": "{{who}} hat {{name}} zuerst geschnappt. Wähl neu!"
     },
     "table": "Tabelle"
   },

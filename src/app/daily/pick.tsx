@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -7,7 +7,7 @@ import { feel } from '../../audio/feel';
 import { HISTORY, MODE_BY_ID } from '../../data/modes';
 import { dailyDerby, dailyKey, dailyTeamDuel, teamStrengthScore } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
-import { BackButton, Button, Card, Header, Label, Screen } from '../../ui/components';
+import { BackButton, Button, Card, Header, Screen } from '../../ui/components';
 import { C, F, R, S, ovrColor } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
 import { Pips, ScoreCard } from '../../ui/dailyKit';

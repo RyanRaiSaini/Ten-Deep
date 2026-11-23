@@ -898,7 +898,8 @@
       "taken": "¡Alguien lo eligió primero!",
       "round-closed": "Demasiado tarde: esa ronda ya cerró.",
       "already-picked": "Ya elegiste en esta ronda.",
-      "not-allowed": "No encaja en tu tope salarial ni en tu plantilla."
+      "not-allowed": "No encaja en tu tope salarial ni en tu plantilla.",
+      "grabbedBy": "{{who}} se llevó a {{name}} primero. ¡Elige otra vez!"
     },
     "table": "Clasificación"
   },

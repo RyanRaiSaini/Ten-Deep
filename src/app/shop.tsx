@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Easing, Modal, Pressable, StyleSheet, View } from 'react-native';
 import { feel } from '../audio/feel';
@@ -124,7 +124,7 @@ function Bundle({ p, wide = false, onPress }: { p: Product; wide?: boolean; onPr
 
 /** Two dice tumbling in the wallet card. */
 function Tumble() {
-  const v = useRef(new Animated.Value(0)).current;
+  const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     const loop = Animated.loop(Animated.sequence([
       Animated.timing(v, { toValue: 1, duration: 1400, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),

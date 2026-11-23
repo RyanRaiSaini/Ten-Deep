@@ -6,7 +6,7 @@ import { Text } from '../../ui/Text';
 import { seasonLabel } from '../../engine/career/offseason';
 import { useCareer } from '../../store/career';
 import { useGame } from '../../store/game';
-import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
+import { Button, Card, Display, Label, Screen, TabTitle } from '../../ui/components';
 import { C, F, FONT, R, S } from '../../ui/theme';
 import { franchiseLeaders, hallOfFame } from '../../engine/career/legacy';
 import { MORALE_START, moraleMod } from '../../engine/career/morale';

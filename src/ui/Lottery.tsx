@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, StyleSheet, View } from 'react-native';
 import { Text } from './Text';
@@ -19,7 +19,7 @@ export function LotteryReveal({ order, names, colors }: { order: number[]; names
   const [revealed, setRevealed] = useState(0);
   // Reduce-motion resolves after the first render: skip straight to the full order.
   useEffect(() => { if (reduce) setRevealed(SHOWN); }, [reduce]);
-  const pop = useRef(new Animated.Value(1)).current;
+  const [pop] = useState(() => new Animated.Value(1));
 
   useEffect(() => {
     if (revealed >= SHOWN) return;

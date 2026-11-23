@@ -154,7 +154,10 @@ function Draft({ room, members, mySeat, pool, state, now, code, refresh }: {
     setChosen(null);
     if (r.ok) { feel('pickChime'); refresh(); return; }
     if (__DEV__ || typeof document !== 'undefined') console.warn('party pick rejected:', r.error, pid);
-    setNote(t(`party.err.${r.error === 'claimed' || r.error === 'not-in-spin' ? 'taken' : r.error}`, { defaultValue: t('party.err.unavailable') }));
+    const name = state.spin?.players.find((p) => p.id === pid)?.name;
+    // Lost a dead heat: say who won it, and that you can still pick (the clock is still yours).
+    if (r.error === 'claimed' && r.by && name) setNote(t('party.err.grabbedBy', { who: r.by, name }));
+    else setNote(t(`party.err.${r.error === 'claimed' || r.error === 'not-in-spin' ? 'taken' : r.error}`, { defaultValue: t('party.err.unavailable') }));
     feel('buzzer');
     refresh();
   };
