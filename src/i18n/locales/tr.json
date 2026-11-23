@@ -604,5 +604,9 @@
     "cap": "Reddedildi: maaş tavanını aşıyor",
     "position": "Reddedildi: ilk beş oyuncusu pozisyona uymalı",
     "missing": "Önce iki oyuncuyu da seç"
+  },
+  "profile": {
+    "title": "Profil",
+    "pick": "Avatarını seç"
   }
 }

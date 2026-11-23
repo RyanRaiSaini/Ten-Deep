@@ -608,5 +608,9 @@
     "cap": "Rechazado: rompe el tope salarial",
     "position": "Rechazado: un titular debe encajar en la posición",
     "missing": "Elige primero a los dos jugadores"
+  },
+  "profile": {
+    "title": "Perfil",
+    "pick": "Elige tu avatar"
   }
 }
