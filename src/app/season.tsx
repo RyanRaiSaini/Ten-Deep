@@ -129,16 +129,17 @@ export default function Season() {
         {feed.some((e) => e.kind === 'game' && e.result.box.length > 0) && <Text style={styles.hint}>{t('box.tap')}</Text>}
         {feed.map((e, i) =>
           e.kind === 'game' ? (
-            <Expandable key={i} enabled={e.result.box.length > 0} head={<GameLine e={e} name={name} t={t} />}>
+            <Expandable key={`g-${e.round}`} enabled={e.result.box.length > 0} head={<GameLine e={e} name={name} t={t} />}>
               <BoxScore
                 result={e.result}
                 mine={season.teams[0]}
                 theirs={season.teams[e.home === 0 ? e.away : e.home]}
                 names={[t('league.you'), name(e.home === 0 ? e.away : e.home)]}
+                userHome={e.home === 0}
               />
             </Expandable>
           ) : (
-            <Text key={i} style={styles.injury}>
+            <Text key={`i-${e.round}-${e.playerId}`} style={styles.injury}>
               🩼 {e.label === 'Season-ending' ? t('season.seasonEnding', { name: e.name }) : t('season.injury', { name: e.name, count: e.games, label: t(`injury.${e.label}`) })}
             </Text>
           ),

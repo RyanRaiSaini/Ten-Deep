@@ -607,7 +607,8 @@
     "value": "Recusada: não vale para eles",
     "cap": "Recusada: estoura o teto",
     "position": "Recusada: um titular precisa servir na posição",
-    "missing": "Escolha os dois jogadores primeiro"
+    "missing": "Escolha os dois jogadores primeiro",
+    "stars": "Recusada: no máximo duas superestrelas 95+ por time"
   },
   "profile": {
     "title": "Perfil",

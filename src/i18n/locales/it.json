@@ -607,7 +607,8 @@
     "value": "Rifiutato: non conviene a loro",
     "cap": "Rifiutato: sfora il tetto",
     "position": "Rifiutato: un titolare deve adattarsi al ruolo",
-    "missing": "Scegli prima entrambi i giocatori"
+    "missing": "Scegli prima entrambi i giocatori",
+    "stars": "Rifiutato: al massimo due superstar 95+ per squadra"
   },
   "profile": {
     "title": "Profilo",
