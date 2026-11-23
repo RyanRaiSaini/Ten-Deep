@@ -413,7 +413,8 @@
     "cleared": "Réussie",
     "locked": "Verrouillée",
     "complete": "Défi terminé !",
-    "editLineup": "Modifier l'alignement"
+    "editLineup": "Modifier l'alignement",
+    "replay": "Rejouer la dernière étape"
   },
   "card": {
     "level": "Niv. {{n}}",

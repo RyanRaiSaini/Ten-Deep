@@ -413,7 +413,8 @@
     "cleared": "Geschafft",
     "locked": "Gesperrt",
     "complete": "Spießrutenlauf geschafft!",
-    "editLineup": "Aufstellung bearbeiten"
+    "editLineup": "Aufstellung bearbeiten",
+    "replay": "Letzte Stufe erneut spielen"
   },
   "card": {
     "level": "Lv {{n}}",

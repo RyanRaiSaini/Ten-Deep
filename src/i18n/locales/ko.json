@@ -413,7 +413,8 @@
     "cleared": "클리어",
     "locked": "잠김",
     "complete": "건틀릿 완료!",
-    "editLineup": "라인업 편집"
+    "editLineup": "라인업 편집",
+    "replay": "마지막 스테이지 다시 하기"
   },
   "card": {
     "level": "Lv {{n}}",

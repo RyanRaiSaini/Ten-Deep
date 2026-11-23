@@ -2,13 +2,12 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { AppState, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useMusic } from '../audio/useMusic';
-import { dailyKey } from '../engine/daily';
 import { applyLanguage, deviceLanguage } from '../i18n';
 import { useNotificationSync } from '../notifications';
-import { STORES } from '../store/all';
+import { STORES, startDay } from '../store/all';
 import { useCollection } from '../store/collection';
 import { useSettings } from '../store/settings';
 import { C } from '../ui/theme';
@@ -40,10 +39,12 @@ export default function RootLayout() {
   // Daily check-in (login streak + Daily/Weekly/Mythic picks) once saved progress has loaded.
   useEffect(() => {
     if (!ready) return;
-    useCollection.getState().checkIn(dailyKey());
-    useProgress.getState().rollover(dailyKey());
+    startDay();
+    // Phones keep the app alive in the background for days: start the new day when it comes back.
+    const app = AppState.addEventListener('change', (st) => { if (st === 'active') startDay(); });
     // Collection milestones (cards, sets, Gauntlet, streak) unlock achievements as they happen.
-    return useCollection.subscribe((s, prev) => { if (s.owned !== prev.owned || s.gauntlet !== prev.gauntlet || s.streak !== prev.streak) useProgress.getState().check(); });
+    const unsub = useCollection.subscribe((s, prev) => { if (s.owned !== prev.owned || s.gauntlet !== prev.gauntlet || s.streak !== prev.streak) useProgress.getState().check(); });
+    return () => { app.remove(); unsub(); };
   }, [ready]);
   useEffect(() => applyLanguage(language ?? deviceLanguage()), [language]);
   useEffect(() => { if (ready) SplashScreen.hideAsync().catch(() => {}); }, [ready]);

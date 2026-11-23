@@ -413,7 +413,8 @@
     "cleared": "Gehaald",
     "locked": "Op slot",
     "complete": "Uitdaging voltooid!",
-    "editLineup": "Opstelling bewerken"
+    "editLineup": "Opstelling bewerken",
+    "replay": "Speel de laatste etappe opnieuw"
   },
   "card": {
     "level": "Lv {{n}}",

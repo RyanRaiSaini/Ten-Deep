@@ -413,7 +413,8 @@
     "cleared": "Geçildi",
     "locked": "Kilitli",
     "complete": "Meydan okuma tamamlandı!",
-    "editLineup": "Kadroyu düzenle"
+    "editLineup": "Kadroyu düzenle",
+    "replay": "Son aşamayı tekrar oyna"
   },
   "card": {
     "level": "Sv {{n}}",

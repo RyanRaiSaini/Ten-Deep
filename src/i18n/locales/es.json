@@ -413,7 +413,8 @@
     "cleared": "Superada",
     "locked": "Bloqueada",
     "complete": "¡Desafío completado!",
-    "editLineup": "Editar alineación"
+    "editLineup": "Editar alineación",
+    "replay": "Volver a jugar la última etapa"
   },
   "card": {
     "level": "Nv. {{n}}",

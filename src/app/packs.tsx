@@ -140,7 +140,7 @@ export default function Packs() {
     });
   };
   const keep = () => {
-    if (!selected) return;
+    if (!selected || !useCollection.getState().pending.some((x) => x.id === pick.id)) return;
     col.keep(pick.id, selected);
     track({ type: 'pack' });
     feel('pickChime');

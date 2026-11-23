@@ -413,7 +413,8 @@
     "cleared": "クリア",
     "locked": "ロック中",
     "complete": "ガントレット制覇！",
-    "editLineup": "ラインナップを編集"
+    "editLineup": "ラインナップを編集",
+    "replay": "最終ステージを再挑戦"
   },
   "card": {
     "level": "Lv{{n}}",
