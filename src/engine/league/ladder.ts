@@ -93,3 +93,14 @@ export function weekFraction(now: Date): number {
   const start = new Date(d.getFullYear(), d.getMonth(), d.getDate() - day).getTime();
   return Math.max(0, Math.min(1, (now.getTime() - start) / (7 * 24 * 3600 * 1000)));
 }
+
+/**
+ * Double or nothing on the playoffs: "snap" doubles the run's league points if you reach the Finals (a 4th
+ * series), halves them on a first-round exit, and leaves them alone otherwise.
+ */
+export function stakeGain(base: number, stake: 'snap' | 'safe' | null, seriesPlayed: number, champion: boolean): number {
+  if (stake !== 'snap') return base;
+  if (seriesPlayed >= 4) return base * 2;
+  if (seriesPlayed === 1 && !champion) return Math.round(base / 2);
+  return base;
+}

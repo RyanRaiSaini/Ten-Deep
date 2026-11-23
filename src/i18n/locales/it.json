@@ -22,7 +22,9 @@
     "streakSaved": "Serie salvata!",
     "streakSavedBody_many": "I congelamenti hanno coperto i {{count}} giorni saltati.",
     "streakSavedBody_one": "Un congelamento ha coperto il giorno saltato.",
-    "streakSavedBody_other": "I congelamenti hanno coperto i {{count}} giorni saltati."
+    "streakSavedBody_other": "I congelamenti hanno coperto i {{count}} giorni saltati.",
+    "duelTitle": "Sfida i tuoi amici",
+    "duelCta": "Chi è il migliore?"
   },
   "mode": {
     "current": {
@@ -677,5 +679,12 @@
     "won": "Hai battuto {{name}}!",
     "lost": "Stavolta vince {{name}}",
     "tied": "Pari con {{name}}"
+  },
+  "stake": {
+    "title": "Lascia o raddoppia?",
+    "body": "All in: arriva in finale per ×2 punti lega, ma l'uscita al primo turno ne costa metà.",
+    "snap": "All in",
+    "safe": "Gioca sicuro",
+    "on": "ALL IN"
   }
 }

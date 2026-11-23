@@ -22,7 +22,9 @@
     "streakSaved": "Sequência salva!",
     "streakSavedBody_many": "Congelamentos cobriram os {{count}} dias que você perdeu.",
     "streakSavedBody_one": "Um congelamento cobriu o dia que você perdeu.",
-    "streakSavedBody_other": "Congelamentos cobriram os {{count}} dias que você perdeu."
+    "streakSavedBody_other": "Congelamentos cobriram os {{count}} dias que você perdeu.",
+    "duelTitle": "Desafie seus amigos",
+    "duelCta": "Quem é o melhor?"
   },
   "mode": {
     "current": {
@@ -677,5 +679,12 @@
     "won": "Você venceu {{name}}!",
     "lost": "{{name}} vence desta vez",
     "tied": "Empate com {{name}}"
+  },
+  "stake": {
+    "title": "Dobro ou nada?",
+    "body": "Tudo ou nada: chegue às Finais para ×2 pontos de liga, mas cair na 1ª rodada custa metade.",
+    "snap": "Tudo ou nada",
+    "safe": "Jogar seguro",
+    "on": "TUDO OU NADA"
   }
 }

@@ -21,7 +21,9 @@
     "picks": "Picks",
     "streakSaved": "Serie gerettet!",
     "streakSavedBody_one": "Ein Serien-Freeze hat den verpassten Tag abgedeckt.",
-    "streakSavedBody_other": "Serien-Freezes haben die {{count}} verpassten Tage abgedeckt."
+    "streakSavedBody_other": "Serien-Freezes haben die {{count}} verpassten Tage abgedeckt.",
+    "duelTitle": "Fordere deine Freunde heraus",
+    "duelCta": "Wer ist der Beste?"
   },
   "mode": {
     "current": {
@@ -672,5 +674,12 @@
     "won": "Du hast {{name}} geschlagen!",
     "lost": "{{name}} gewinnt diesmal",
     "tied": "Gleichstand mit {{name}}"
+  },
+  "stake": {
+    "title": "Doppelt oder nichts?",
+    "body": "All in: Erreiche das Finale für ×2 Ligapunkte, aber ein Aus in Runde 1 kostet die Hälfte.",
+    "snap": "All in",
+    "safe": "Auf Nummer sicher",
+    "on": "ALL IN"
   }
 }

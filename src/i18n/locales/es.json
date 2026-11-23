@@ -22,7 +22,9 @@
     "streakSaved": "¡Racha salvada!",
     "streakSavedBody_many": "Los congeladores cubrieron los {{count}} días que faltaste.",
     "streakSavedBody_one": "Un congelador de racha cubrió el día que faltaste.",
-    "streakSavedBody_other": "Los congeladores cubrieron los {{count}} días que faltaste."
+    "streakSavedBody_other": "Los congeladores cubrieron los {{count}} días que faltaste.",
+    "duelTitle": "Reta a tus amigos",
+    "duelCta": "¿Quién es el mejor?"
   },
   "mode": {
     "current": {
@@ -677,5 +679,12 @@
     "won": "¡Superaste a {{name}}!",
     "lost": "{{name}} gana esta vez",
     "tied": "Empate con {{name}}"
+  },
+  "stake": {
+    "title": "¿Doble o nada?",
+    "body": "A todo o nada: llega a las Finales y ganas ×2 puntos de liga, pero caer en primera ronda cuesta la mitad.",
+    "snap": "A por todas",
+    "safe": "Ir sobre seguro",
+    "on": "A POR TODAS"
   }
 }

@@ -11,6 +11,7 @@ import { useProfile } from '../../store/profile';
 import { claimableCount, useProgress } from '../../store/progress';
 import { useSettings } from '../../store/settings';
 import { Avatar } from '../../ui/Avatar';
+import { AVATARS } from '../../ui/avatars';
 import { Button, Chip, Display, IconButton, Label } from '../../ui/components';
 import { CourtArt, Icon, type IconName } from '../../ui/icons';
 import { Screen } from '../../ui/components';
@@ -157,6 +158,22 @@ export default function Home() {
         <View style={styles.heroPlay}><Text style={styles.heroPlayText}>{t('home.play').toUpperCase()}</Text></View>
       </Pressable>
 
+      <Pressable onPress={() => router.navigate('/duel')} testID="duel-banner" accessibilityRole="button"
+        style={({ pressed }) => [styles.duel, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 3 }]}>
+        <Icon name="vs" size={64} />
+        <View style={{ flex: 1, gap: 6 }}>
+          <Display size={22} align="left">{t('home.duelTitle')}</Display>
+          <View style={styles.duelRow}>
+            <View style={styles.faces}>
+              {[3, 8, 25].map((i, k) => (
+                <View key={i} style={[styles.face, { marginLeft: k ? -12 : 0, zIndex: 3 - k }]}><Avatar id={AVATARS[i].id} size={30} /></View>
+              ))}
+            </View>
+            <View style={styles.duelPill}><Text style={styles.duelPillText}>{t('home.duelCta')}</Text></View>
+          </View>
+        </View>
+      </Pressable>
+
       <Label>{t('home.modes')}</Label>
       {MODES.map((m) => (
         <Pressable key={m.key} onPress={m.go} testID={`mode-${m.key}`} accessibilityRole="button" accessibilityLabel={t(`mode.${m.key}.title`)}
@@ -214,6 +231,12 @@ const styles = StyleSheet.create({
     borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6,
   },
   heroPlayText: { fontFamily: FONT.display, fontSize: 22, color: C.ink },
+  duel: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 22, backgroundColor: '#FFFFFF', borderWidth: 2.5, borderColor: C.line, borderBottomWidth: 6, borderBottomColor: C.edge },
+  duelRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
+  faces: { flexDirection: 'row' },
+  face: { borderRadius: 18, borderWidth: 2.5, borderColor: '#FFFFFF' },
+  duelPill: { borderRadius: R.pill, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 4, paddingHorizontal: 14, paddingVertical: 5, backgroundColor: '#FFFFFF' },
+  duelPillText: { fontWeight: '900', color: C.ink, fontSize: 14 },
   mode: {
     flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 22, borderWidth: 2.5, borderBottomWidth: 6,
     backgroundColor: '#FFFFFF', overflow: 'visible',

@@ -18,6 +18,8 @@ import { prepareCard, type CrisisCard } from '../engine/crisis/offers';
 import { dailySeed } from '../engine/daily';
 import { useDaily } from './daily';
 import { useCollection } from './collection';
+import { pointsFor, stakeGain } from '../engine/league/ladder';
+import { useLeague } from './league';
 import { track } from './progress';
 import { useProfile } from './profile';
 
@@ -51,6 +53,11 @@ export interface GameStore {
   newRun: (poolId: string) => void;
   /** A friend's challenge: same pool and seed (same spins), their record to beat. */
   challenge: { name: string; w: number; l: number } | null;
+  /** Double or nothing on the playoffs (chosen when they start). */
+  stake: 'snap' | 'safe' | null;
+  /** League points this run earned (after the stake), for the result screen. */
+  leagueGain: number;
+  setStake: (s: 'snap' | 'safe') => void;
   newChallenge: (poolId: string, seed: string, from: { name: string; w: number; l: number }) => void;
   /** Today's Daily Draft: Current Day pool, seed fixed by date, so everyone gets the same spins and league. */
   newDaily: (key: string) => 'started' | 'resumed' | 'locked';
@@ -89,6 +96,8 @@ export const useGame = create<GameStore>()(
       phase: 'idle',
       poolId: 'current-2026',
       challenge: null,
+      stake: null,
+      leagueGain: 0,
       daily: null,
       crisis: null,
       career: false,
@@ -213,7 +222,7 @@ export const useGame = create<GameStore>()(
       beginPlayoffs: () =>
         set((s) => {
           const done = advance(advance({ ...s.season!, deadlineUsed: true }, 82), 82);
-          return { phase: 'playoffs', season: done, playoffs: startPlayoffs(done) };
+          return { phase: 'playoffs', season: done, playoffs: startPlayoffs(done), stake: null };
         }),
       playoffGame: () => set((s) => ({ playoffs: playNextGame(s.playoffs!) })),
       simPlayoffs: () => set((s) => ({ playoffs: simPlayoffsToEnd(s.playoffs!) })),
@@ -231,6 +240,8 @@ export const useGame = create<GameStore>()(
         if (crisis?.objective) set({ crisis: { ...crisis, verdict: v } });
         set({ phase: 'result' });
         const mine = playoffs.rounds.flat().filter((s) => s.hi === 0 || s.lo === 0);
+        const base = pointsFor({ type: 'run', ...result, madePlayoffs: mine.length > 0 });
+        const gain = stakeGain(base, get().stake, mine.length, result.champion);
         track({
           type: 'run', ...result,
           madePlayoffs: mine.length > 0,
@@ -239,14 +250,18 @@ export const useGame = create<GameStore>()(
           kind: career ? 'career' : crisis ? 'crisis' : daily ? 'daily' : (MODE_BY_ID[poolId]?.kind ?? 'current'),
           verdict: v,
         });
+        // track() added the base points; the stake adds or takes the difference.
+        if (gain !== base) useLeague.getState().adjust(gain - base);
+        set({ leagueGain: gain });
       },
+      setStake: (stake) => set({ stake }),
       quit: () => set({ phase: 'idle', challenge: null, daily: null, crisis: null, career: false, draft: null, season: null, playoffs: null, deadline: null }),
     }),
     {
       name: 'tendeep-run',
       version: 1,
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (s) => ({ phase: s.phase, poolId: s.poolId, daily: s.daily, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
+      partialize: (s) => ({ phase: s.phase, poolId: s.poolId, challenge: s.challenge, stake: s.stake, leagueGain: s.leagueGain, daily: s.daily, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
     },
   ),
 );

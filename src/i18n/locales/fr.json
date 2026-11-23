@@ -22,7 +22,9 @@
     "streakSaved": "Série sauvée !",
     "streakSavedBody_many": "Des gels de série ont couvert les {{count}} jours manqués.",
     "streakSavedBody_one": "Un gel de série a couvert le jour manqué.",
-    "streakSavedBody_other": "Des gels de série ont couvert les {{count}} jours manqués."
+    "streakSavedBody_other": "Des gels de série ont couvert les {{count}} jours manqués.",
+    "duelTitle": "Défie tes amis",
+    "duelCta": "Qui est le meilleur ?"
   },
   "mode": {
     "current": {
@@ -677,5 +679,12 @@
     "won": "Tu as battu {{name}} !",
     "lost": "{{name}} gagne cette fois",
     "tied": "Égalité avec {{name}}"
+  },
+  "stake": {
+    "title": "Quitte ou double ?",
+    "body": "Tapis : atteins la finale pour ×2 points de ligue, mais une élimination au 1er tour en coûte la moitié.",
+    "snap": "Tapis",
+    "safe": "Rester prudent",
+    "on": "TAPIS"
   }
 }

@@ -20,7 +20,9 @@
     "player": "プレイヤー",
     "picks": "ピック",
     "streakSaved": "連続記録を守った！",
-    "streakSavedBody_other": "ストリークフリーズが休んだ{{count}}日分をカバーしました。"
+    "streakSavedBody_other": "ストリークフリーズが休んだ{{count}}日分をカバーしました。",
+    "duelTitle": "友だちとデュエル",
+    "duelCta": "誰が一番？"
   },
   "mode": {
     "current": {
@@ -667,5 +669,12 @@
     "won": "{{name}}に勝利！",
     "lost": "今回は{{name}}の勝ち",
     "tied": "{{name}}と引き分け"
+  },
+  "stake": {
+    "title": "ダブル・オア・ナッシング？",
+    "body": "オールイン：ファイナル進出でリーグpt×2、ただし1回戦敗退なら半分に。",
+    "snap": "オールイン",
+    "safe": "安全策",
+    "on": "オールイン"
   }
 }
