@@ -19,6 +19,9 @@
     },
     "api/pull.ts": {
       "includeFiles": "node_modules/{@vercel/og/package.json,@vercel/og/dist/**,@expo-google-fonts/lilita-one/400Regular/LilitaOne_400Regular.ttf,@expo-google-fonts/montserrat/800ExtraBold/Montserrat_800ExtraBold.ttf}"
+    },
+    "api/account.ts": {
+      "includeFiles": "node_modules/jose/{package.json,dist/webapi/**}"
     }
   },
   "crons": [

@@ -946,5 +946,24 @@
     "share": "Delen",
     "shareText": "Net een {{finish}} {{name}} getrokken in Ten Deep! {{odds}}",
     "shareTextBase": "Net {{name}} ({{tier}}) getrokken in Ten Deep!"
+  },
+  "account": {
+    "title": "Account",
+    "body": "Log in om je voortgang, kaarten en vrienden op elk apparaat te houden.",
+    "signedIn": "Ingelogd met {{provider}}",
+    "synced": "Je voortgang wordt automatisch in je account bewaard. Log in op een nieuwe telefoon om alles terug te krijgen.",
+    "signOut": "Uitloggen op dit apparaat",
+    "foundTitle": "Dit account heeft al voortgang",
+    "foundBody": "Op dit apparaat laden? De huidige voortgang op dit apparaat wordt vervangen.",
+    "load": "Mijn voortgang laden",
+    "keepHere": "Niet nu",
+    "restored": "Welkom terug! Je voortgang is geladen.",
+    "linked": "Ingelogd. Je voortgang is opgeslagen in je account.",
+    "offline": "Kan de server niet bereiken. Probeer opnieuw.",
+    "failed": "Inloggen is niet gelukt. Probeer opnieuw.",
+    "working": "Even geduld…",
+    "google": "Doorgaan met Google",
+    "eraseOffline": "Kan de server niet bereiken, dus je online back-up is niet verwijderd. Probeer opnieuw als je online bent.",
+    "eraseLocal": "Alleen van dit apparaat verwijderen"
   }
 }

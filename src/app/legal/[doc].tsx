@@ -1,4 +1,6 @@
 import { useLocalSearchParams } from 'expo-router';
+import { googleSignOut } from '../../auth/google';
+import { eraseServerData } from '../../net/account';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Linking, StyleSheet } from 'react-native';
@@ -18,11 +20,16 @@ const DOCS: Record<string, { title: string; body: string[] }> = {
     title: 'Privacy Policy',
     body: [
       `Last updated ${CONFIG.legalUpdated}. This policy explains what ${CONFIG.appName} ("we") collects and why.`,
-      'What we collect today: your game progress, settings, nationality flag and avatar choice. All of it is stored on your device only.',
-      'When accounts launch: your sign-in identity (Apple, Google or email), username, game history and leaderboard results will be stored on our servers to sync your progress and power duels and daily challenges. We will update this policy before that happens.',
+      'On your device: your game progress, settings, nationality flag and avatar choice.',
+      'Cloud backup: every 30 minutes the game backs up your progress to our server (hosted by Vercel), filed under a random PIN and protected by a secret key that stays on your device. Your recovery code (in Settings) is that PIN and key.',
+      'Friends: when you share your friend code, your display name, avatar, PIN, best cards and last drafted team are published under your PIN so friends can look you up.',
+      'Party rooms: while you play a party, your display name, avatar, picks and rarest card are kept for the room (deleted automatically after 3 hours).',
+      'Sign in with Apple or Google (optional): we store a one-way fingerprint of your account ID linked to your PIN, so signing in on a new device finds your progress. We do not ask for or store your name or email.',
+      'Share links: a shared pull is a link to a picture of the card. It contains the card and its finish, nothing about you.',
+      'Real-life ratings use public NBA box scores; nothing about you is sent.',
       'We do not sell personal data. We do not show ads today; if ads are added later, this policy will describe the ad partners and your choices.',
       'Children: the game is not directed at children under 13.',
-      'Your rights: you can delete everything at any time from Settings → Delete account.',
+      'Your rights: Settings → Delete account erases your progress on this device and on our server (cloud backup, friend code entry and account link). Party rooms expire by themselves.',
       `Questions: see the Contact us page.`,
     ],
   },
@@ -47,8 +54,8 @@ const DOCS: Record<string, { title: string; body: string[] }> = {
   delete: {
     title: 'Delete account',
     body: [
-      'This permanently erases your profile, drafts played, titles, settings and any run in progress from this device.',
-      'Once accounts launch, this will also delete your account and all server data.',
+      'This permanently erases your profile, drafts played, titles, cards, settings and any run in progress.',
+      'It also deletes your data on our server: your cloud backup, your friend code entry and any Apple or Google sign-in link. Friends who already added you keep the copy they saved.',
     ],
   },
 };
@@ -59,7 +66,11 @@ export default function Legal() {
   const [deleted, setDeleted] = useState(false);
   const d = DOCS[doc ?? ''] ?? DOCS.terms;
 
-  const wipe = async () => {
+  const [offline, setOffline] = useState(false);
+  const wipe = async (localOnly = false) => {
+    // Server first: once the device is wiped, its PIN and key (which prove the data is yours) are gone.
+    if (!localOnly && !(await eraseServerData())) { setOffline(true); return; }
+    await googleSignOut();
     await wipeAll();
     setDeleted(true);
   };
@@ -76,7 +87,17 @@ export default function Legal() {
       {doc === 'delete' && (
         deleted
           ? <Text style={[styles.p, { color: C.neon, textAlign: 'center' }]}>✓ Deleted</Text>
-          : <Button label={t('settings.deleteAccount')} onPress={wipe} style={{ backgroundColor: C.danger }} testID="confirm-delete" />
+          : (
+            <>
+              <Button label={t('settings.deleteAccount')} onPress={() => wipe()} style={{ backgroundColor: C.danger }} testID="confirm-delete" />
+              {offline && (
+                <>
+                  <Text style={[styles.p, { textAlign: 'center' }]}>{t('account.eraseOffline')}</Text>
+                  <Button label={t('account.eraseLocal')} variant="ghost" onPress={() => wipe(true)} testID="delete-local" />
+                </>
+              )}
+            </>
+          )
       )}
     </Screen>
   );

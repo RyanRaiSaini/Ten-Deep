@@ -951,5 +951,24 @@
     "share": "Partager",
     "shareText": "Je viens de tirer {{name}} en {{finish}} dans Ten Deep ! {{odds}}",
     "shareTextBase": "Je viens de tirer {{name}} ({{tier}}) dans Ten Deep !"
+  },
+  "account": {
+    "title": "Compte",
+    "body": "Connecte-toi pour garder ta progression, tes cartes et tes amis sur tous tes appareils.",
+    "signedIn": "Connecté avec {{provider}}",
+    "synced": "Ta progression est sauvegardée sur ton compte automatiquement. Connecte-toi sur un nouveau téléphone pour tout récupérer.",
+    "signOut": "Se déconnecter sur cet appareil",
+    "foundTitle": "Ce compte a déjà une progression",
+    "foundBody": "La charger sur cet appareil ? La progression actuelle de cet appareil sera remplacée.",
+    "load": "Charger ma progression",
+    "keepHere": "Pas maintenant",
+    "restored": "Content de te revoir ! Ta progression est chargée.",
+    "linked": "Connecté. Ta progression est sauvegardée sur ton compte.",
+    "offline": "Impossible de joindre le serveur. Réessaie.",
+    "failed": "La connexion n'a pas fonctionné. Réessaie.",
+    "working": "Un instant…",
+    "google": "Continuer avec Google",
+    "eraseOffline": "Serveur injoignable : ta sauvegarde en ligne n'a pas été supprimée. Réessaie une fois en ligne.",
+    "eraseLocal": "Supprimer seulement sur cet appareil"
   }
 }

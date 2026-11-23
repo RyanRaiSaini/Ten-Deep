@@ -60,10 +60,15 @@ First release. Draft, simulate, collect, and try to survive 82.
 
 **URLs (Owner)**
 - Support URL: needs a page or email.
-- Privacy policy URL: host the in-app Privacy Policy text (Settings → Privacy) on a public page.
+- Privacy policy URL: https://ten-deep.vercel.app/legal/privacy (the same text as Settings → Privacy, served by the web app).
 
 **App Privacy ("nutrition label")**
-Data not collected. Everything is stored on the device. Notifications are local reminders scheduled on the phone.
+Data is collected, used only for app functionality, **not linked to tracking** and **not used for tracking**:
+- **User ID**: a random PIN, and (if the player signs in) a one-way fingerprint of their Apple/Google account ID. Purpose: App Functionality.
+- **Gameplay Content**: game progress in the cloud backup; picks in Party rooms. Purpose: App Functionality.
+- **Other User Content**: the display name and avatar a player chooses, published with their friend code and Party seat. Purpose: App Functionality.
+- No name, email, contacts, location, usage analytics or ads. Notifications are local reminders scheduled on the phone.
+- Data is encrypted in transit (HTTPS) and can be deleted in the app (Settings → Delete account).
 
 ## Google Play
 
@@ -74,7 +79,7 @@ Data not collected. Everything is stored on the device. Notifications are local 
 | Category | Sports (Games) |
 | Content rating | Everyone (IARC questionnaire: no violence, no gambling, no user content) |
 | Package | `app.tendeep` |
-| Data safety | No data collected or shared |
+| Data safety | Collected, not shared: Personal info → User IDs (PIN, account fingerprint); App activity → Other user-generated content (display name, progress backup, Party picks). All for App functionality. Encrypted in transit. Players can request deletion in the app. |
 
 Full description: same as the App Store description above (Play allows 4,000 characters).
 
