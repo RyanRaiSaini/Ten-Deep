@@ -35,7 +35,7 @@ export default function Offseason() {
     const kept = keep ?? expiring.filter((p) => p.ovr >= RESIGN_THRESHOLD).map((p) => p.id);
     return (
       <Screen>
-        <Header title={`${t('career.title')} · ${seasonLabel(st.season)}`} left={<BackButton onPress={() => router.replace('/career')} />} />
+        <Header title={`${t('career.title')} · ${seasonLabel(st.season)}`} left={<BackButton onPress={() => router.navigate('/career')} />} />
         <Label>{t('career.progress')}</Label>
         <Card style={{ gap: 4 }}>
           {st.changes.map((x) => {
@@ -84,7 +84,7 @@ export default function Offseason() {
     const pick = available.find((r) => r.id === pickId);
     return (
       <Screen>
-        <Header title={t('career.draft')} left={<BackButton onPress={() => router.replace('/career')} />} />
+        <Header title={t('career.draft')} left={<BackButton onPress={() => router.navigate('/career')} />} />
         <LotteryReveal order={st.order} names={(i) => (i === 0 ? t('league.you') : st.teams[i].name)} />
         <Text style={styles.big} testID="pick-no">{t('career.yourPick', { n: pickNo })}</Text>
         {available.map((r) => (
@@ -118,7 +118,7 @@ export default function Offseason() {
   };
   return (
     <Screen>
-      <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.replace('/career')} />} />
+      <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.navigate('/career')} />} />
       <Text style={styles.big}>{t('career.openSpots', { count: open })}</Text>
       <Button label={t('trade.title')} icon={<Icon name="swap" size={22} />} variant="secondary" onPress={() => router.push('/trade')} testID="to-trade" />
       <RosterBoard

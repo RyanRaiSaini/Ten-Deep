@@ -2,21 +2,20 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { Text } from '../ui/Text';
-import { feel } from '../audio/feel';
-import { MAX_SUPERSTARS, capRoom, superstarCount } from '../engine/cap';
-import { duelOptions, isDuelComplete } from '../engine/duel';
-import type { SlotId } from '../engine/types';
-import { DUEL_COLORS, DUEL_POOL, useDuel } from '../store/duel';
-import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../ui/components';
-import { PlayerCard } from '../ui/PlayerCard';
-import { RosterBoard } from '../ui/RosterBoard';
-import { C, F, R, S, money } from '../ui/theme';
-import { TabBar } from '../ui/TabBar';
-import { Icon } from '../ui/icons';
-import { AVATARS } from '../ui/avatars';
-import { Avatar } from '../ui/Avatar';
-import { goBack } from '../ui/nav';
+import { Text } from '../../ui/Text';
+import { feel } from '../../audio/feel';
+import { MAX_SUPERSTARS, capRoom, superstarCount } from '../../engine/cap';
+import { duelOptions, isDuelComplete } from '../../engine/duel';
+import type { SlotId } from '../../engine/types';
+import { DUEL_COLORS, DUEL_POOL, useDuel } from '../../store/duel';
+import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
+import { PlayerCard } from '../../ui/PlayerCard';
+import { RosterBoard } from '../../ui/RosterBoard';
+import { C, F, R, S, money } from '../../ui/theme';
+import { Icon } from '../../ui/icons';
+import { AVATARS } from '../../ui/avatars';
+import { Avatar } from '../../ui/Avatar';
+import { goBack } from '../../ui/nav';
 
 export default function Duel() {
   const { t } = useTranslation();
@@ -28,7 +27,7 @@ export default function Duel() {
   // --- Setup -------------------------------------------------------------------------------
   if (!d.state) {
     return (
-      <Screen tint={C.danger} footer={<TabBar active="duels" />}>
+      <Screen tint={C.danger} tabbed>
         <View style={styles.banner}>
           <View style={[styles.half, { backgroundColor: '#E5484D' }]} />
           <View style={[styles.half, { backgroundColor: '#3B6CF0', left: '50%' }]} />

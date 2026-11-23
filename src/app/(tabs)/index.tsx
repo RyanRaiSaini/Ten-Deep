@@ -3,31 +3,30 @@ import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
-import { dailyKey } from '../engine/daily';
-import { dailyMissions, missionProgress } from '../engine/progress/missions';
-import { useCollection } from '../store/collection';
-import { useGame } from '../store/game';
-import { useProfile } from '../store/profile';
-import { claimableCount, useProgress } from '../store/progress';
-import { useSettings } from '../store/settings';
-import { Avatar } from '../ui/Avatar';
-import { Button, Chip, Display, IconButton, Label } from '../ui/components';
-import { CourtArt, Icon, type IconName } from '../ui/icons';
-import { Screen } from '../ui/components';
-import { BrandLogo } from '../ui/BrandLogo';
-import { useLeague } from '../store/league';
-import { LeagueCard } from '../ui/LeagueCard';
-import { TabBar } from '../ui/TabBar';
-import { TierBadge, tierName } from '../ui/TierBadge';
-import { Text } from '../ui/Text';
-import { alpha, C, FONT, R, S } from '../ui/theme';
+import { dailyKey } from '../../engine/daily';
+import { dailyMissions, missionProgress } from '../../engine/progress/missions';
+import { useCollection } from '../../store/collection';
+import { useGame } from '../../store/game';
+import { useProfile } from '../../store/profile';
+import { claimableCount, useProgress } from '../../store/progress';
+import { useSettings } from '../../store/settings';
+import { Avatar } from '../../ui/Avatar';
+import { Button, Chip, Display, IconButton, Label } from '../../ui/components';
+import { CourtArt, Icon, type IconName } from '../../ui/icons';
+import { Screen } from '../../ui/components';
+import { BrandLogo } from '../../ui/BrandLogo';
+import { useLeague } from '../../store/league';
+import { LeagueCard } from '../../ui/LeagueCard';
+import { TierBadge, tierName } from '../../ui/TierBadge';
+import { Text } from '../../ui/Text';
+import { alpha, C, FONT, R, S } from '../../ui/theme';
 
 type ModeKey = 'franchise' | 'era' | 'crisis' | 'daily';
 const MODES: { key: ModeKey; icon: IconName; accent: string; go: () => void; badge?: string }[] = [
   { key: 'franchise', icon: 'history', accent: C.purple, go: () => router.push('/modes/franchise') },
   { key: 'era', icon: 'clock', accent: C.teal, go: () => router.push('/modes/era') },
   { key: 'crisis', icon: 'siren', accent: C.danger, go: () => router.push('/modes/crisis'), badge: 'HOT' },
-  { key: 'daily', icon: 'calendar', accent: C.blue, go: () => router.replace('/daily') },
+  { key: 'daily', icon: 'calendar', accent: C.blue, go: () => router.navigate('/daily') },
 ];
 
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
@@ -69,7 +68,7 @@ export default function Home() {
   const startCurrent = () => { useGame.getState().newRun('current-2026'); router.push('/draft'); };
 
   return (
-    <Screen tint={C.hardwood} footer={<TabBar active="play" />}>
+    <Screen tint={C.hardwood} tabbed>
       <View style={styles.top}>
         <Chip label={t('home.streak')} testID="streak-chip">
           <Icon name="flame" size={26} /><Text style={styles.chipNum}>{streak}</Text>

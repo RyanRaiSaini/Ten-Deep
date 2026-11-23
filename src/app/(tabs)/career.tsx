@@ -2,16 +2,15 @@ import { useState } from 'react';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '../ui/Text';
-import { seasonLabel } from '../engine/career/offseason';
-import { useCareer } from '../store/career';
-import { useGame } from '../store/game';
-import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../ui/components';
-import { C, F, FONT, R, S } from '../ui/theme';
-import { franchiseLeaders, hallOfFame } from '../engine/career/legacy';
-import { MORALE_START, moraleMod } from '../engine/career/morale';
-import { TabBar } from '../ui/TabBar';
-import { CourtArt, Icon } from '../ui/icons';
+import { Text } from '../../ui/Text';
+import { seasonLabel } from '../../engine/career/offseason';
+import { useCareer } from '../../store/career';
+import { useGame } from '../../store/game';
+import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
+import { C, F, FONT, R, S } from '../../ui/theme';
+import { franchiseLeaders, hallOfFame } from '../../engine/career/legacy';
+import { MORALE_START, moraleMod } from '../../engine/career/morale';
+import { CourtArt, Icon } from '../../ui/icons';
 
 const VERDICT_ICON = { legend: 'crown', extended: 'medal', survived: 'clock', fired: 'flame' } as const;
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
@@ -39,7 +38,7 @@ export default function Career() {
   })();
 
   return (
-    <Screen tint={C.pink} footer={<TabBar active="career" />}>
+    <Screen tint={C.pink} tabbed>
       <TabTitle icon={<Icon name="briefcase" size={46} />} title={t('career.title')} />
 
       {(!c.active || c.ended) && (

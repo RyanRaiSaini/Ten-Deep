@@ -8,7 +8,6 @@ import { useDaily } from '../../store/daily';
 import { useGame } from '../../store/game';
 import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../../ui/components';
 import { C, F, FONT, R, S, alpha } from '../../ui/theme';
-import { TabBar } from '../../ui/TabBar';
 import { Icon, type IconName } from '../../ui/icons';
 import { CONFIG } from '../../config';
 import { shareText } from '../../ui/share';
@@ -74,7 +73,7 @@ export default function DailyHub() {
   ];
 
   return (
-    <Screen tint={C.blue} footer={<TabBar active="daily" />}>
+    <Screen tint={C.blue} tabbed>
       <TabTitle icon={<Icon name="calendar" size={46} />} title={t('daily.title')} />
       <View style={styles.progressRow}>
         <View style={styles.progress}>
