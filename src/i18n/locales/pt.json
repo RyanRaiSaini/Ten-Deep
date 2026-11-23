@@ -431,7 +431,11 @@
     "nextWeekly_other": "Escolha semanal em {{count}} dias",
     "powerUp": "Turbinar ({{n}} restantes)",
     "powerOdds": "{{pct}}% de chance de melhorar a escolha inteira",
-    "upgraded": "MELHORADO!"
+    "upgraded": "MELHORADO!",
+    "swipeToRip": "Deslize para rasgar",
+    "tapFlip": "Toque para virar",
+    "tapNext": "Toque para a próxima carta",
+    "cardOf": "Carta {{n}} de {{total}}"
   },
   "lineup": {
     "title": "Escalação",

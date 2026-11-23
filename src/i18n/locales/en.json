@@ -426,7 +426,11 @@
     "nextWeekly_other": "Weekly Pick in {{count}} days",
     "powerUp": "Power up ({{n}} left)",
     "powerOdds": "{{pct}}% chance to upgrade the whole pick",
-    "upgraded": "UPGRADED!"
+    "upgraded": "UPGRADED!",
+    "swipeToRip": "Swipe to rip",
+    "tapFlip": "Tap to flip",
+    "tapNext": "Tap for the next card",
+    "cardOf": "Card {{n}} of {{total}}"
   },
   "lineup": {
     "title": "Lineup",

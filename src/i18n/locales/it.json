@@ -431,7 +431,11 @@
     "nextWeekly_other": "Scelta settimanale tra {{count}} giorni",
     "powerUp": "Potenzia ({{n}} rimasti)",
     "powerOdds": "{{pct}}% di probabilità di migliorare tutta la scelta",
-    "upgraded": "MIGLIORATO!"
+    "upgraded": "MIGLIORATO!",
+    "swipeToRip": "Scorri per strappare",
+    "tapFlip": "Tocca per girare",
+    "tapNext": "Tocca per la carta successiva",
+    "cardOf": "Carta {{n}} di {{total}}"
   },
   "lineup": {
     "title": "Formazione",

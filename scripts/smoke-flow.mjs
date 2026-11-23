@@ -230,7 +230,8 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('25-pack-closed');
     // Power-up taps (up to three) before opening.
     for (let i = 0; i < 3 && (await page.getByTestId('pack-power').count()); i++) await page.getByTestId('pack-power').click();
-    await page.getByTestId('pack-open').click();
+    // The pack floats and sways, so it never holds still for Playwright's stability check.
+    await page.getByTestId('pack-open').click({ force: true });
     await page.getByTestId('pack-reveal-all').click();
     await page.waitForTimeout(400);
     await shot('26-pack-revealing');
