@@ -21,7 +21,9 @@
     "picks": "Keuzes",
     "streakSaved": "Reeks gered!",
     "streakSavedBody_one": "Een reeksbevriezing dekte de dag die je miste.",
-    "streakSavedBody_other": "Reeksbevriezingen dekten de {{count}} dagen die je miste."
+    "streakSavedBody_other": "Reeksbevriezingen dekten de {{count}} dagen die je miste.",
+    "duelTitle": "Daag je vrienden uit",
+    "duelCta": "Wie is de beste?"
   },
   "mode": {
     "current": {
@@ -672,5 +674,12 @@
     "won": "Je hebt {{name}} verslagen!",
     "lost": "{{name}} wint deze",
     "tied": "Gelijkspel met {{name}}"
+  },
+  "stake": {
+    "title": "Dubbel of niks?",
+    "body": "Alles inzetten: haal de finale voor ×2 competitiepunten, maar uitschakeling in ronde 1 kost de helft.",
+    "snap": "Alles inzetten",
+    "safe": "Op zeker spelen",
+    "on": "ALLES IN"
   }
 }

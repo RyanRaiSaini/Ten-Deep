@@ -21,7 +21,9 @@
     "picks": "Picks",
     "streakSaved": "Streak saved!",
     "streakSavedBody_one": "A streak freeze covered the day you missed.",
-    "streakSavedBody_other": "Streak freezes covered the {{count}} days you missed."
+    "streakSavedBody_other": "Streak freezes covered the {{count}} days you missed.",
+    "duelTitle": "Duel your friends",
+    "duelCta": "Who's the best?"
   },
   "mode": {
     "current": {
@@ -672,5 +674,12 @@
     "won": "You beat {{name}}!",
     "lost": "{{name}} wins this one",
     "tied": "Dead heat with {{name}}"
+  },
+  "stake": {
+    "title": "Double or nothing?",
+    "body": "Go all in: reach the Finals for ×2 league points, but a first-round exit costs half.",
+    "snap": "All in",
+    "safe": "Play it safe",
+    "on": "ALL IN"
   }
 }

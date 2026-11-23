@@ -15,6 +15,8 @@ export interface LeagueStore {
   best: number;
   rollover: (today: string) => void;
   add: (points: number) => void;
+  /** Change this week's points by a signed amount (never below zero). */
+  adjust: (delta: number) => void;
   dismiss: () => void;
 }
 
@@ -39,6 +41,7 @@ export const useLeague = create<LeagueStore>()(
       },
 
       add: (points) => set((s) => ({ points: s.points + Math.max(0, points) })),
+      adjust: (delta) => set((s) => ({ points: Math.max(0, s.points + delta) })),
       dismiss: () => set({ result: null }),
     }),
     { name: 'tendeep-league', storage: createJSONStorage(() => AsyncStorage) },

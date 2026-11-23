@@ -9,7 +9,7 @@ import { TierBadge } from './TierBadge';
 import { C, FONT, R, S } from './theme';
 
 /** "+38 league pts" with a bar filling toward the promotion line — every run visibly moves you. */
-export function LeagueGain({ gained }: { gained: number }) {
+export function LeagueGain({ gained, stake }: { gained: number; stake?: 'snap' | 'safe' | null }) {
   const { t } = useTranslation();
   const league = useLeague();
   const fill = useRef(new Animated.Value(0)).current;
@@ -31,7 +31,7 @@ export function LeagueGain({ gained }: { gained: number }) {
       <TierBadge tier={league.tier} size={46} />
       <View style={{ flex: 1, gap: 4 }}>
         <View style={styles.row}>
-          <Text style={styles.gain}>+{gained} {t('ladder.pts')}</Text>
+          <Text style={styles.gain}>+{gained} {t('ladder.pts')}{stake === 'snap' ? ` · ${t('stake.on')}` : ''}</Text>
           <Text style={styles.rank}>#{me.rank}</Text>
         </View>
         <View style={styles.track}>

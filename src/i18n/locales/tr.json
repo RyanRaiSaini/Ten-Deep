@@ -21,7 +21,9 @@
     "picks": "Seçimler",
     "streakSaved": "Seri kurtarıldı!",
     "streakSavedBody_one": "Seri dondurucu kaçırdığın günü kapattı.",
-    "streakSavedBody_other": "Seri dondurucular kaçırdığın {{count}} günü kapattı."
+    "streakSavedBody_other": "Seri dondurucular kaçırdığın {{count}} günü kapattı.",
+    "duelTitle": "Arkadaşlarınla düello",
+    "duelCta": "En iyisi kim?"
   },
   "mode": {
     "current": {
@@ -672,5 +674,12 @@
     "won": "{{name}} karşısında kazandın!",
     "lost": "Bu sefer {{name}} kazandı",
     "tied": "{{name}} ile berabere"
+  },
+  "stake": {
+    "title": "Ya hep ya hiç?",
+    "body": "Her şeyi koy: finale çıkarsan lig puanı ×2, ilk turda elenirsen yarısını kaybedersin.",
+    "snap": "Ya hep ya hiç",
+    "safe": "Garantici ol",
+    "on": "YA HEP YA HİÇ"
   }
 }

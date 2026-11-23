@@ -5,7 +5,7 @@ import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { champion, seriesFor, seriesOver, seriesWinner, type Series } from '../engine/playoffs';
 import { useGame } from '../store/game';
-import { Button, Card, Header, Label, Screen } from '../ui/components';
+import { Button, Card, Display, Header, Label, Screen } from '../ui/components';
 import { C, F, S } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
 import { recap } from '../engine/story/recap';
@@ -59,6 +59,17 @@ export default function Playoffs() {
 
       {!mine && <Text style={styles.big}>{t('playoffs.missed')}</Text>}
 
+      {mine && g.stake === null && mine.round === 0 && mine.series.games.length === 0 && (
+        <Card style={styles.stake} testID="stake">
+          <Display size={26}>{t('stake.title')}</Display>
+          <Text style={styles.stakeBody}>{t('stake.body')}</Text>
+          <View style={{ flexDirection: 'row', gap: S.sm }}>
+            <Button label={t('stake.snap')} variant="primary" icon={<Icon name="flame" size={22} />} onPress={() => { g.setStake('snap'); feel('crowd'); }} style={{ flex: 1 }} testID="stake-snap" />
+            <Button label={t('stake.safe')} variant="secondary" onPress={() => g.setStake('safe')} style={{ flex: 1 }} testID="stake-safe" />
+          </View>
+        </Card>
+      )}
+      {g.stake === 'snap' && <View style={styles.snapBadge}><Icon name="flame" size={18} /><Text style={styles.snapText}>{t('stake.on')}</Text></View>}
       {mine && (
         <Card style={{ gap: S.md }}>
           <Label color={C.hardwood}>{t(`playoffs.round${mine.round}`)}</Label>
@@ -132,6 +143,10 @@ function Team({ name, seed, wins, me, color }: { name: string; seed: number; win
 }
 
 const styles = StyleSheet.create({
+  stake: { gap: S.sm, alignItems: 'center', borderColor: C.hardwood, borderBottomColor: '#C2500A', backgroundColor: '#FFF1E3' },
+  stakeBody: { color: C.ink, fontWeight: '700', textAlign: 'center' },
+  snapBadge: { flexDirection: 'row', alignSelf: 'center', alignItems: 'center', gap: 6, backgroundColor: C.hardwood, borderRadius: 999, paddingHorizontal: 14, paddingVertical: 4 },
+  snapText: { color: '#FFFFFF', fontWeight: '900', letterSpacing: 1 },
   big: { color: C.text, fontSize: 20, textAlign: 'center', ...F.display },
   matchup: { flexDirection: 'row', alignItems: 'center', borderRadius: 20, overflow: 'hidden', borderWidth: 3, borderColor: C.ink },
   vsBadge: { marginHorizontal: -8 },

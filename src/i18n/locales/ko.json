@@ -20,7 +20,9 @@
     "player": "플레이어",
     "picks": "픽",
     "streakSaved": "연속 기록 유지!",
-    "streakSavedBody_other": "스트릭 프리즈가 빠진 {{count}}일을 지켜 줬습니다."
+    "streakSavedBody_other": "스트릭 프리즈가 빠진 {{count}}일을 지켜 줬습니다.",
+    "duelTitle": "친구와 대결",
+    "duelCta": "누가 최고?"
   },
   "mode": {
     "current": {
@@ -667,5 +669,12 @@
     "won": "{{name}}을(를) 이겼습니다!",
     "lost": "이번엔 {{name}} 승리",
     "tied": "{{name}}와(과) 무승부"
+  },
+  "stake": {
+    "title": "더블 오어 낫싱?",
+    "body": "올인: 파이널 진출 시 리그 점수 ×2, 1라운드 탈락 시 절반을 잃습니다.",
+    "snap": "올인",
+    "safe": "안전하게",
+    "on": "올인"
   }
 }

@@ -79,6 +79,7 @@ export async function runFlow({ page, base, step, shot }) {
 
   await step('playoffs to a result', async () => {
     await page.getByTestId('playoff-next').or(page.getByTestId('playoff-sim')).first().waitFor({ timeout: 15000 });
+    if (await page.getByTestId('stake-snap').count()) await page.getByTestId('stake-snap').click();
     if (await page.getByTestId('playoff-next').count()) {
       await page.getByTestId('playoff-next').click();
       await page.getByTestId('recap').waitFor();
@@ -89,6 +90,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('play-again').waitFor({ timeout: 15000 });
     await page.getByTestId('awards').waitFor();
     await page.getByTestId('share').waitFor();
+    await page.getByTestId('league-gain').waitFor();
     await shot('08-result');
     await page.getByTestId('go-home').click();
     await page.getByTestId('tab-bar').waitFor();

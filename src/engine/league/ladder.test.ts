@@ -48,3 +48,16 @@ describe('weekly league ladder', () => {
     expect(pointsFor({ type: 'daily' })).toBe(5);
   });
 });
+
+describe('double or nothing', () => {
+  it('doubles for reaching the Finals, halves for a first-round exit, otherwise unchanged', async () => {
+    const { stakeGain } = await import('./ladder');
+    expect(stakeGain(40, 'snap', 4, false)).toBe(80);
+    expect(stakeGain(40, 'snap', 4, true)).toBe(80);
+    expect(stakeGain(40, 'snap', 1, false)).toBe(20);
+    expect(stakeGain(40, 'snap', 2, false)).toBe(40);
+    expect(stakeGain(40, 'safe', 1, false)).toBe(40);
+    expect(stakeGain(40, null, 4, false)).toBe(40);
+    expect(stakeGain(15, 'snap', 0, false)).toBe(15); // missed the playoffs: no stake was offered
+  });
+});
