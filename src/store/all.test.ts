@@ -20,12 +20,23 @@ describe('all stores', () => {
     const { useCareer } = await import('./career');
     const { useSettings } = await import('./settings');
     useCollection.getState().checkIn('2026-11-22');
+    useCollection.setState({ streak: 9, pending: [] });
     useSettings.setState({ onboarded: true });
-    expect(Object.keys(useCollection.getState().owned).length).toBeGreaterThan(0);
     await wipeAll();
-    expect(useCollection.getState().owned).toEqual({});
+    // A fresh account: day-one streak and the day-one Daily pick, nothing carried over.
+    expect(useCollection.getState().streak).toBe(1);
+    expect(useCollection.getState().pending.map((p) => p.type)).toEqual(['daily']);
     expect(useCareer.getState()).toMatchObject(useCareer.getInitialState());
     expect(useSettings.getState().onboarded).toBe(false);
     expect(cleared).toHaveBeenCalled();
   });
+
+  it('after a wipe the new account starts today: starter squad and missions are ready', async () => {
+    const { useCollection } = await import('./collection');
+    const { useProgress } = await import('./progress');
+    await wipeAll();
+    expect(Object.keys(useCollection.getState().owned)).toHaveLength(10);
+    expect(useProgress.getState().day).not.toBeNull();
+  });
 });
+
