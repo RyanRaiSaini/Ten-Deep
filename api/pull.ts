@@ -6,7 +6,8 @@
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { ImageResponse } from '@vercel/og';
+import { pathToFileURL } from 'node:url';
+import type { ImageResponse as OgImageResponse } from '@vercel/og';
 import { CARD_BY_ID } from '../src/data/cards';
 import { FINISHES, ONE_IN, type Finish } from '../src/engine/collect/finishes';
 import type { Card } from '../src/engine/collect/tiers';
@@ -23,6 +24,14 @@ const grad = (colors: readonly string[], deg = 135) => `linear-gradient(${deg}de
 type El = { type: string; props: { style?: Record<string, unknown>; children?: unknown } };
 /** Satori takes React-element-shaped objects; this keeps the file plain .ts (no JSX). */
 const h = (style: Record<string, unknown>, ...children: unknown[]): El => ({ type: 'div', props: { style: { display: 'flex', ...style }, children: children.length === 1 ? children[0] : children } });
+
+/**
+ * @vercel/og is ESM-only, but Vercel compiles this function to CommonJS, where a static import becomes require()
+ * and crashes. A real import() (kept out of the compiler's reach) loads it; vercel.json ships its files.
+ */
+const esmImport = new Function('u', 'return import(u)') as (u: string) => Promise<{ ImageResponse: typeof OgImageResponse }>;
+let og: Promise<{ ImageResponse: typeof OgImageResponse }> | null = null;
+const loadOg = () => (og ??= esmImport(pathToFileURL(join(process.cwd(), 'node_modules/@vercel/og/dist/index.node.js')).href));
 
 let fonts: { name: string; data: ArrayBuffer; weight: 400 | 800; style: 'normal' }[] | null = null;
 function loadFonts() {
@@ -64,7 +73,8 @@ function cardEl(card: Card, finish: Finish) {
   );
 }
 
-function image(card: Card, finish: Finish) {
+async function image(card: Card, finish: Finish) {
+  const { ImageResponse } = await loadOg();
   const fs = FINISH_STYLE[finish];
   const accent = fs.frame ? fs.chip[0] : TIER_STYLE[card.tier].accent;
   const title = finish === 'base' ? `${TIER_NAME[card.tier].toUpperCase()} PULL` : `${FINISH_NAME[finish].toUpperCase()} PULL!`;
