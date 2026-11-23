@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   hint: { color: C.ink, fontSize: 16, fontWeight: '700', textAlign: 'center' },
   input: {
     minHeight: 96, borderWidth: 2, borderColor: C.line, borderRadius: R.md, padding: S.md, backgroundColor: C.bg,
-    color: C.ink, fontSize: 15, fontFamily: 'LeagueSpartan_600SemiBold', textAlignVertical: 'top',
+    color: C.ink, fontSize: 15, fontFamily: 'Montserrat_600SemiBold', textAlignVertical: 'top',
   },
   error: { color: C.danger, fontWeight: '800', textAlign: 'center' },
   row: { flexDirection: 'row', gap: S.sm },
