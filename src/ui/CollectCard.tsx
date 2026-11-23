@@ -4,6 +4,8 @@ import { Text } from './Text';
 import type { Card, Tier } from '../engine/collect/tiers';
 import Svg, { Circle, Path, Text as SvgText } from 'react-native-svg';
 import { teamGradient } from './teamColors';
+import { FINISH_STYLE, FinishChip, FinishOverlay } from './CardFinish';
+import type { Finish } from '../engine/collect/finishes';
 import { C, F, FONT, R } from './theme';
 
 /** Tier look: frame gradient, accent and glow. */
@@ -19,19 +21,25 @@ export const TIER_STYLE: Record<Tier, { frame: [string, string, ...string[]]; ac
 const initials = (name: string) => name.split(' ').filter((w) => !/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(w)).map((w) => w[0]).slice(0, 2).join('');
 
 /** A collectible card: tier frame, rating, monogram (no faces), name and season. */
-export function CollectCard({ card, width = 150, tierLabel, level = 0 }: { card: Card; width?: number; tierLabel?: string; level?: number }) {
+export function CollectCard({ card, width = 150, tierLabel, level = 0, finish = 'base', animate = false }: {
+  card: Card; width?: number; tierLabel?: string; level?: number;
+  /** Foil finish (see CardFinish): its frame replaces the tier frame, with a thin tier-coloured ring inside. */
+  finish?: Finish; animate?: boolean;
+}) {
   const s = TIER_STYLE[card.tier];
+  const fs = FINISH_STYLE[finish];
   const h = width * 1.4;
   const big = width / 150;
   return (
     <View style={[styles.glow, { width, height: h, shadowColor: s.accent, borderRadius: R.md }]}>
-      <LinearGradient colors={s.frame} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.frame, { borderRadius: R.md }]}>
+      <LinearGradient colors={fs.frame ?? s.frame} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.frame, { borderRadius: R.md }, fs.frame && { padding: 4 }]}>
         <LinearGradient
           colors={teamGradient(card.colors)}
           start={{ x: 0, y: 0 }}
           end={{ x: 0.3, y: 1 }}
-          style={[styles.inner, { borderRadius: R.md - 3 }]}
+          style={[styles.inner, { borderRadius: R.md - 3 }, fs.frame && { borderWidth: 1.5, borderColor: s.accent }]}
         >
+          <FinishOverlay finish={finish} animate={animate} />
           <View style={styles.top}>
             <Text style={[styles.ovr, { fontSize: 32 * big }]}>{Math.min(99, card.ovr + level)}</Text>
             <Text style={[styles.pos, { fontSize: 11 * big }]}>{card.pos}{card.pos2 ? `/${card.pos2}` : ''}</Text>
@@ -54,6 +62,7 @@ export function CollectCard({ card, width = 150, tierLabel, level = 0 }: { card:
           )}
         </LinearGradient>
       </LinearGradient>
+      {finish !== 'base' && <View style={[styles.finishChip, { bottom: -8 * big }]} pointerEvents="none"><FinishChip finish={finish} scale={big} /></View>}
     </View>
   );
 }
@@ -103,6 +112,8 @@ const styles = StyleSheet.create({
   team: { color: 'rgba(255,255,255,0.8)', fontWeight: '800', width: '100%', textAlign: 'center' },
   level: { position: 'absolute', bottom: 6, left: 6, borderWidth: 1, borderRadius: 6, paddingHorizontal: 4, backgroundColor: 'rgba(11,16,32,0.7)' },
   levelText: { fontWeight: '900' },
+  // Sits on the bottom edge of the frame, clear of the name and season lines.
+  finishChip: { position: 'absolute', left: 0, right: 0, alignItems: 'center' },
   ribbon: { position: 'absolute', top: 8, right: -26, transform: [{ rotate: '35deg' }], paddingHorizontal: 26, paddingVertical: 2 },
   ribbonText: { color: C.ink, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
   back: { padding: 6, alignItems: 'stretch', justifyContent: 'center', borderWidth: 2.5, overflow: 'hidden' },

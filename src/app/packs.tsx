@@ -10,6 +10,9 @@ import { PICK_ODDS, type PickType } from '../engine/collect/picks';
 import { TIERS, type Card } from '../engine/collect/tiers';
 import { useCollection } from '../store/collection';
 import { CardBack, CollectCard, TIER_STYLE } from '../ui/CollectCard';
+import { FINISH_STYLE } from '../ui/CardFinish';
+import { FoilPack, PackArena } from '../ui/PackArena';
+import { ONE_IN, finishFor, finishRank, type Finish } from '../engine/collect/finishes';
 import { BackButton, Button, Header, Label, Screen } from '../ui/components';
 import { C, F, FONT, R, S } from '../ui/theme';
 import { track } from '../store/progress';
@@ -58,8 +61,8 @@ function Sparkles({ fire, color }: { fire: number; color: string }) {
 }
 
 /** A card that flips from its back to its face (scaleX squash, swap, unsquash). */
-function FlipCard({ card, revealed, onPress, selected, width, packColor, tierLabel }: {
-  card: Card; revealed: boolean; onPress: () => void; selected: boolean; width: number; packColor: string; tierLabel: string;
+function FlipCard({ card, revealed, onPress, selected, width, packColor, tierLabel, finish }: {
+  card: Card; revealed: boolean; onPress: () => void; selected: boolean; width: number; packColor: string; tierLabel: string; finish: Finish;
 }) {
   const sx = useRef(new Animated.Value(1)).current;
   const [face, setFace] = useState(revealed);
@@ -73,7 +76,7 @@ function FlipCard({ card, revealed, onPress, selected, width, packColor, tierLab
   return (
     <Pressable onPress={onPress} testID={face ? 'pack-card-face' : 'pack-card-back'}>
       <Animated.View style={[{ transform: [{ scaleX: sx }, { scale: selected ? 1.06 : 1 }] }, selected && styles.selected]}>
-        {face ? <CollectCard card={card} width={width} tierLabel={tierLabel} /> : <CardBack width={width} color={packColor} />}
+        {face ? <CollectCard card={card} width={width} tierLabel={tierLabel} finish={finish} animate={finishRank(finish) >= finishRank('gold')} /> : <CardBack width={width} color={packColor} />}
       </Animated.View>
     </Pressable>
   );
@@ -89,6 +92,12 @@ export default function Packs() {
   const revealing = useRef(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [burst, setBurst] = useState(0);
+  // The rarest finish revealed so far gets a banner (gold and up).
+  const [banner, setBanner] = useState<Finish | null>(null);
+  const [flash, setFlash] = useState(0);
+  // Three cards across the arena when they fit (5 cards: 3 + 2).
+  const [stageW, setStageW] = useState(330);
+  const cardW = Math.min(124, Math.floor((stageW - 2 * 10) / 3));
   const [showOdds, setShowOdds] = useState(false);
   const [upgraded, setUpgraded] = useState(false);
   const pulse = useRef(new Animated.Value(0)).current;
@@ -96,7 +105,7 @@ export default function Packs() {
   const deal = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    setOpen(false); setFlipped([]); setSelected(null); setUpgraded(false);
+    setOpen(false); setFlipped([]); setSelected(null); setUpgraded(false); setBanner(null);
     const loop = Animated.loop(Animated.sequence([
       Animated.timing(pulse, { toValue: 1, duration: 900, useNativeDriver: native }),
       Animated.timing(pulse, { toValue: 0, duration: 900, useNativeDriver: native }),
@@ -119,6 +128,8 @@ export default function Packs() {
   const [c1, c2] = PACK_COLOR[pick.type];
   const allRevealed = cards.every((c) => flipped.includes(c.id));
   const best = [...cards].sort((a, b) => b.ovr - a.ovr)[0];
+  // Finishes are seeded by pick + card, the same roll useCollection.keep() records.
+  const finishOf = (c: Card) => finishFor(pick.id, c.id);
 
   const flip = (card: Card) => {
     if (flipped.includes(card.id)) {
@@ -127,14 +138,17 @@ export default function Packs() {
     }
     // Reveal-all timers call this with an old `flipped`, so de-duplicate inside the updater.
     setFlipped((f) => (f.includes(card.id) ? f : [...f, card.id]));
-    if (RANK[card.tier] >= RANK.mythic) { setBurst((b) => b + 1); feel('fanfare'); }
-    else feel(RANK[card.tier] >= RANK.epic ? 'crowd' : 'swish');
+    const f = finishOf(card);
+    if (finishRank(f) >= finishRank('gold')) { setBanner((b) => (b && finishRank(b) >= finishRank(f) ? b : f)); setFlash((n) => n + 1); }
+    if (RANK[card.tier] >= RANK.mythic || finishRank(f) >= finishRank('gold')) { setBurst((b) => b + 1); feel('fanfare'); }
+    else feel(RANK[card.tier] >= RANK.epic || f !== 'base' ? 'crowd' : 'swish');
   };
   const revealAll = () => {
     if (revealing.current) return;
     revealing.current = true;
     setTimeout(() => { revealing.current = false; }, cards.length * 420 + 100);
-    const order = cards.filter((c) => !flipped.includes(c.id)).sort((a, b) => a.ovr - b.ovr); // best last
+    // Best last: rarest finish, then highest rating.
+    const order = cards.filter((c) => !flipped.includes(c.id)).sort((a, b) => finishRank(finishOf(a)) - finishRank(finishOf(b)) || a.ovr - b.ovr);
     order.forEach((c, i) => setTimeout(() => flip(c), i * 420));
   };
   const openPack = () => {
@@ -143,6 +157,7 @@ export default function Packs() {
       ...[1, -1, 1, -1, 1, 0].map((x) => Animated.timing(shake, { toValue: x, duration: 70, useNativeDriver: native })),
     ]).start(() => {
       setOpen(true);
+      setFlash((n) => n + 1);
       setBurst((b) => b + 1);
       feel('thunk');
       deal.setValue(0);
@@ -163,47 +178,46 @@ export default function Packs() {
   return (
     <Screen>
       <Header title={t('collect.picks')} left={<BackButton onPress={() => goBack()} />} right={<Text style={styles.count}>{col.pending.length}</Text>} />
-      <View style={styles.titleRow}>
-        <Text style={[styles.packName, { color: c1 }]} testID="pack-type">{t(`collect.t_${pick.type}`)}</Text>
-        {guarantee && <Text style={styles.guarantee}>★ {t(`collect.${guarantee}`)}</Text>}
-      </View>
-
-      <View style={styles.stage}>
+      <PackArena
+        color={banner ? FINISH_STYLE[banner].chip[0] : c1}
+        flash={flash}
+        title={<Text style={[styles.packName, { textShadowColor: c1 }]} testID="pack-type">{t(`collect.t_${pick.type}`)}</Text>}
+        subtitle={guarantee ? <Text style={styles.guarantee}>★ {t(`collect.${guarantee}`)}</Text> : undefined}
+      >
         {!open ? (
           <Pressable onPress={openPack} testID="pack-open">
             <Animated.View
               style={{
                 transform: [
                   { rotate: shake.interpolate({ inputRange: [-1, 1], outputRange: ['-6deg', '6deg'] }) },
-                  { scale: pulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.05] }) },
+                  { scale: pulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.04] }) },
                 ],
               }}
             >
-              <LinearGradient colors={[c1, c2, c1]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.pack, { shadowColor: c1 }]}>
-                <Text style={styles.packLogo}>TEN{'\n'}DEEP</Text>
-                <Text style={styles.packType}>{t(`collect.t_${pick.type}`)}</Text>
-                <Text style={styles.tap}>{t('collect.tapToOpen')}</Text>
-              </LinearGradient>
+              <FoilPack c1={c1} c2={c2} label={t(`collect.t_${pick.type}`)} cta={t('collect.tapToOpen').toUpperCase()} />
             </Animated.View>
           </Pressable>
         ) : (
+          <View style={{ alignSelf: 'stretch' }} onLayout={(e) => { const w = e.nativeEvent.layout.width; if (w > 0) setStageW(w); }}>
           <Animated.View style={[styles.grid, { opacity: deal, transform: [{ translateY: deal.interpolate({ inputRange: [0, 1], outputRange: [80, 0] }) }] }]}>
             {cards.map((c) => (
               <FlipCard
                 key={c.id}
                 card={c}
-                width={112}
+                width={cardW}
                 packColor={c1}
                 revealed={flipped.includes(c.id)}
                 selected={selected === c.id}
                 tierLabel={t(`collect.tier_${c.tier}`)}
+                finish={finishOf(c)}
                 onPress={() => flip(c)}
               />
             ))}
           </Animated.View>
+          </View>
         )}
-        <Sparkles fire={burst} color={allRevealed && best ? TIER_STYLE[best.tier].accent : c1} />
-      </View>
+        <Sparkles fire={burst} color={banner ? FINISH_STYLE[banner].chip[0] : allRevealed && best ? TIER_STYLE[best.tier].accent : c1} />
+      </PackArena>
 
       {!open && nextType(pick.type) && (pick.taps ?? 0) < POWER_TAPS && (
         <View style={styles.power}>
@@ -222,10 +236,12 @@ export default function Packs() {
         </View>
       )}
       {!open && upgraded && <Text style={styles.upgraded} testID="pack-upgraded">{t('collect.upgraded')}</Text>}
+      {open && banner && <PullBanner finish={banner} />}
       {open && !allRevealed && <Button label={t('collect.revealAll')} variant="secondary" onPress={revealAll} testID="pack-reveal-all" />}
       {open && allRevealed && (
         <>
           <Label color={c1}>{t('collect.chooseOne')}</Label>
+          {cards.some((c) => finishOf(c) !== 'base') && <Text style={styles.keepHint}>{t('finish.keepHint')}</Text>}
           <Button
             label={selectedCard ? t('collect.keep', { name: selectedCard.name }) : t('collect.chooseOne')}
             disabled={!selectedCard}
@@ -248,28 +264,51 @@ export default function Packs() {
               <Text style={styles.oddsPct}>{odds[tier]}%</Text>
             </View>
           ))}
+          <Text style={styles.oddsHead}>{t('finish.odds')}</Text>
+          {(Object.keys(ONE_IN) as Exclude<Finish, 'base'>[]).map((f) => (
+            <View key={f} style={styles.oddsRow}>
+              <View style={[styles.dot, { backgroundColor: FINISH_STYLE[f].chip[0] }]} />
+              <Text style={styles.oddsTier}>{t(`finish.${f}`)}</Text>
+              <Text style={styles.oddsPct}>{t('finish.oneIn', { n: ONE_IN[f].toLocaleString('en-US') })}</Text>
+            </View>
+          ))}
         </View>
       )}
     </Screen>
   );
 }
 
+/** "RAINBOW PULL! 1 in 1,000" — pops in when a gold-or-better finish flips. */
+function PullBanner({ finish }: { finish: Finish }) {
+  const { t } = useTranslation();
+  const pop = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    pop.setValue(0);
+    Animated.spring(pop, { toValue: 1, friction: 4, tension: 90, useNativeDriver: native }).start();
+  }, [finish, pop]);
+  if (finish === 'base') return null;
+  return (
+    <Animated.View style={{ transform: [{ scale: pop }] }} testID={`pull-${finish}`}>
+      <LinearGradient colors={FINISH_STYLE[finish].frame ?? FINISH_STYLE[finish].chip} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.banner}>
+        <Text style={styles.bannerTitle}>{t('finish.pull', { name: t(`finish.${finish}`).toUpperCase() })}</Text>
+        <Text style={styles.bannerOdds}>{t('finish.oneIn', { n: ONE_IN[finish].toLocaleString('en-US') })}</Text>
+      </LinearGradient>
+    </Animated.View>
+  );
+}
+
 const styles = StyleSheet.create({
+  banner: { borderRadius: R.lg, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6, paddingVertical: S.sm, alignItems: 'center' },
+  bannerTitle: { fontFamily: FONT.display, fontSize: 26, color: '#FFFFFF', textShadowColor: C.ink, textShadowOffset: { width: 0, height: 2 }, textShadowRadius: 0 },
+  bannerOdds: { color: '#FFFFFF', fontWeight: '900', textShadowColor: C.ink, textShadowRadius: 2, textShadowOffset: { width: 0, height: 1 } },
+  keepHint: { color: C.muted, fontWeight: '700', fontSize: 12, textAlign: 'center' },
+  oddsHead: { color: C.text, fontWeight: '900', marginTop: S.sm },
   power: { gap: 4 },
   powerOdds: { color: C.muted, fontWeight: '800', fontSize: 12, textAlign: 'center' },
   upgraded: { fontFamily: FONT.display, fontSize: 26, color: C.blue, textAlign: 'center' },
   count: { color: C.gold, fontWeight: '900', fontSize: 16 },
-  titleRow: { alignItems: 'center', gap: 4 },
-  packName: { fontSize: 26, ...F.display },
-  guarantee: { color: C.gold, fontWeight: '800' },
-  stage: { minHeight: 420, alignItems: 'center', justifyContent: 'center', paddingVertical: S.md },
-  pack: {
-    width: 220, height: 300, borderRadius: R.lg, alignItems: 'center', justifyContent: 'center', gap: S.md,
-    shadowOpacity: 0.9, shadowRadius: 30, shadowOffset: { width: 0, height: 0 }, elevation: 14,
-  },
-  packLogo: { ...F.display, color: '#FFFFFF', fontSize: 40, textAlign: 'center', letterSpacing: 4 },
-  packType: { color: C.ink, fontWeight: '900', fontSize: 16, backgroundColor: 'rgba(244,246,251,0.85)', paddingHorizontal: 12, paddingVertical: 4, borderRadius: R.pill },
-  tap: { color: '#FFFFFF', fontWeight: '900', opacity: 0.95 },
+  packName: { fontSize: 30, ...F.display, color: '#FFFFFF', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 14 },
+  guarantee: { color: '#FFD86B', fontWeight: '900' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 10 },
   selected: { shadowColor: '#FFFFFF', shadowOpacity: 1, shadowRadius: 16, borderRadius: R.md },
   empty: { color: C.text, fontSize: 18, textAlign: 'center', marginTop: S.xxl },

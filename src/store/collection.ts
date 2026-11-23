@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { POWER_TAPS, nextType, tapUpgrades } from '../engine/collect/powerup';
+import { finishFor, type Finish } from '../engine/collect/finishes';
 import { ALL_CARDS } from '../data/cards';
 import { generatePick, runPickType, type PickType } from '../engine/collect/picks';
 import { autoFill, canPlace, cardLevel, stageReward, starterSquad, type Lineup } from '../engine/collect/lineup';
@@ -22,7 +23,8 @@ export interface PendingPick {
 }
 
 export interface CollectionStore {
-  owned: Record<string, { count: number; firstDay: string }>;
+  /** Card id → copies, first day, and how many of each finish you've pulled. */
+  owned: Record<string, { count: number; firstDay: string; finishes?: Partial<Record<Finish, number>> }>;
   pending: PendingPick[];
   streak: number;
   lastDay: string | null;
@@ -134,7 +136,9 @@ export const useCollection = create<CollectionStore>()(
           const p = s.pending.find((x) => x.id === pickId);
           if (!p || !p.cards.includes(cardId)) return {};
           const prev = s.owned[cardId];
-          const owned = { ...s.owned, [cardId]: { count: (prev?.count ?? 0) + 1, firstDay: prev?.firstDay ?? s.lastDay ?? '' } };
+          const finish = finishFor(pickId, cardId);
+          const finishes = { ...prev?.finishes, [finish]: (prev?.finishes?.[finish] ?? 0) + 1 };
+          const owned = { ...s.owned, [cardId]: { count: (prev?.count ?? 0) + 1, firstDay: prev?.firstDay ?? s.lastDay ?? '', finishes } };
           // Completing a team-season set pays its own pick.
           const sets = newlyCompleted(new Set(Object.keys(s.owned)), new Set(Object.keys(owned)));
           const setPicks = sets.map((set) => pick(setReward(set), `set:${set.id}`));

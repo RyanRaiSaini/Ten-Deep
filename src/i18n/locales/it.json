@@ -543,7 +543,12 @@
     "promotions": "Sali di lega",
     "leagueBest": "Miglior livello di lega",
     "pickUpgrades": "Potenzia scelte",
-    "rerolls": "Usa rigiri"
+    "rerolls": "Usa rigiri",
+    "foils": "Trova carte con finitura speciale",
+    "hasGold": "Possiedi una carta Oro o più rara",
+    "hasViolet": "Possiedi una carta Viola o più rara",
+    "hasRainbow": "Possiedi una carta Arcobaleno o più rara",
+    "hasCosmic": "Possiedi una carta Cosmica"
   },
   "ach": {
     "rookie": "Matricola",
@@ -600,7 +605,13 @@
     "climber": "Scalatore",
     "legend-tier": "Status da leggenda",
     "lucky-tap": "Tocco fortunato",
-    "fresh-spin": "Giro nuovo"
+    "fresh-spin": "Giro nuovo",
+    "shiny": "Luccicante",
+    "foil-hoarder": "Accumulatore di foil",
+    "golden-touch": "Tocco d'oro",
+    "violet-hour": "Ora viola",
+    "over-the-rainbow": "Oltre l'arcobaleno",
+    "cosmic": "Cosmica"
   },
   "league": {
     "title": "Lega",
@@ -907,5 +918,30 @@
       "wrong-code": "Quel codice non corrisponde al backup.",
       "offline": "Server non raggiungibile. Riprova."
     }
+  },
+  "rarity": {
+    "perfect": "STAGIONE PERFETTA",
+    "perfectOdds": "82-0. Ci riesce circa 1 draft su 450.",
+    "c75": "Club delle 75 vittorie",
+    "c75Odds": "Solo il 3% dei draft arriva qui.",
+    "c70": "Club delle 70 vittorie",
+    "c70Odds": "Circa 1 draft su 10 arriva a 70 vittorie.",
+    "c65": "Stagione da 65 vittorie",
+    "c65Odds": "Un draft del 25% migliore.",
+    "near": "A {{n}} vittorie dal {{club}}"
+  },
+  "finish": {
+    "holo": "Holo",
+    "chrome": "Cromo",
+    "gold": "Oro",
+    "violet": "Viola",
+    "rainbow": "Arcobaleno",
+    "cosmic": "Cosmica",
+    "pull": "ESTRATTA {{name}}!",
+    "oneIn": "1 su {{n}}",
+    "odds": "Probabilità finitura (ogni carta, ogni pacchetto)",
+    "rarest": "Estrazioni più rare",
+    "yours": "Le tue finiture",
+    "keepHint": "Solo la carta che tieni entra nella collezione, finitura compresa."
   }
 }

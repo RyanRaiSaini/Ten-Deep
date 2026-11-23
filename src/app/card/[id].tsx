@@ -10,6 +10,8 @@ import { CollectCard, TIER_STYLE } from '../../ui/CollectCard';
 import { BackButton, Card, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
+import { FINISHES, bestFinish } from '../../engine/collect/finishes';
+import { FinishChip } from '../../ui/CardFinish';
 
 /** One card up close: level, copies, rating bars, and the sets it belongs to. */
 export default function CardDetail() {
@@ -27,6 +29,9 @@ export default function CardDetail() {
   }
   const count = owned[card.id]?.count ?? 0;
   const level = cardLevel(count);
+  const finishes = owned[card.id]?.finishes ?? {};
+  const finish = bestFinish(finishes);
+  const special = FINISHES.filter((f) => f !== 'base' && (finishes[f] ?? 0) > 0).reverse();
   const p = cardPlayer(card.id);
   const accent = TIER_STYLE[card.tier].accent;
   const bars: [string, number][] = [
@@ -37,12 +42,25 @@ export default function CardDetail() {
     <Screen>
       <Header title={card.name} left={<BackButton onPress={() => goBack()} />} />
       <View style={styles.hero}>
-        <CollectCard card={card} width={200} level={level} tierLabel={t(`collect.tier_${card.tier}`)} />
+        <CollectCard card={card} width={200} level={level} tierLabel={t(`collect.tier_${card.tier}`)} finish={finish} animate />
       </View>
       <Text style={[styles.meta, { color: accent }]} testID="card-meta">
         {count ? `${t('card.level', { n: level })} · ${t('card.dupes', { n: count })}` : t('card.notOwned')}
       </Text>
       <Text style={styles.hint}>{t('card.levelHint')}</Text>
+      {special.length > 0 && (
+        <View style={styles.finishes} testID="card-finishes">
+          <Text style={styles.finishHead}>{t('finish.yours')}</Text>
+          <View style={styles.finishRow}>
+            {special.map((f) => (
+              <View key={f} style={styles.finishItem}>
+                <FinishChip finish={f} scale={1.2} />
+                {(finishes[f] ?? 0) > 1 && <Text style={styles.finishCount}>×{finishes[f]}</Text>}
+              </View>
+            ))}
+          </View>
+        </View>
+      )}
 
       <Card style={{ gap: S.sm }}>
         {bars.map(([label, v]) => (
@@ -73,6 +91,11 @@ const styles = StyleSheet.create({
   hero: { alignItems: 'center', paddingVertical: S.md },
   meta: { textAlign: 'center', fontWeight: '900', fontSize: 16 },
   hint: { color: C.muted, textAlign: 'center', fontSize: 12 },
+  finishes: { alignItems: 'center', gap: 6 },
+  finishHead: { color: C.text, fontWeight: '900' },
+  finishRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center' },
+  finishItem: { flexDirection: 'row', alignItems: 'center', gap: 3 },
+  finishCount: { color: C.muted, fontWeight: '900' },
   barRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   barLabel: { color: C.text, width: 92, fontWeight: '700', fontSize: 13 },
   bar: { flex: 1, height: 8, borderRadius: R.pill, backgroundColor: C.surface2, overflow: 'hidden' },
