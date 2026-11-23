@@ -93,7 +93,8 @@
     "bench": "Yedekler",
     "startSeason": "Sezonu başlat",
     "landed": "Çıkan takım",
-    "empty": "Boş"
+    "empty": "Boş",
+    "benchSlot": "Yedek {{n}}"
   },
   "season": {
     "title": "Normal sezon",

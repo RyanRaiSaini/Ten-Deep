@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { payOf } from '../engine/cap';
 import type { Player, SlotId } from '../engine/types';
@@ -23,6 +24,7 @@ export function PlayerCard({
   player: Player; onPress?: () => void; disabled?: boolean; note?: string; selected?: boolean; testID?: string;
   accent?: string; slots?: SlotId[]; onSlot?: (s: SlotId) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <Pressable
       testID={testID}
@@ -54,7 +56,7 @@ export function PlayerCard({
         <View style={styles.slots}>
           {slots.map((s) => (
             <Pressable key={s} onPress={() => onSlot(s)} style={({ pressed }) => [styles.slot, pressed && { transform: [{ translateY: 2 }] }]} testID={`choose-${s}`} accessibilityRole="button">
-              <Text style={styles.slotText}>{s.startsWith('B') ? `Bench ${s.slice(1)}` : s}</Text>
+              <Text style={styles.slotText}>{s.startsWith('B') ? t('draft.benchSlot', { n: s.slice(1) }) : s}</Text>
             </Pressable>
           ))}
         </View>

@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingVertical: 2, paddingHorizontal: 4, borderRadius: R.sm },
   mine: { backgroundColor: 'rgba(245,196,81,0.12)' },
   ball: { width: 26, height: 26, borderRadius: 13, backgroundColor: C.surface2, alignItems: 'center', justifyContent: 'center' },
-  ballText: { color: C.bg, fontWeight: '900', fontSize: 12 },
+  ballText: { color: C.ink, fontWeight: '900', fontSize: 12 },
   team: { color: C.text, fontWeight: '700', flex: 1 },
 });

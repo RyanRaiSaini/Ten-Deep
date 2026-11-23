@@ -93,7 +93,8 @@
     "bench": "Banco",
     "startSeason": "Começar a temporada",
     "landed": "Você tirou",
-    "empty": "Livre"
+    "empty": "Livre",
+    "benchSlot": "Banco {{n}}"
   },
   "season": {
     "title": "Temporada regular",

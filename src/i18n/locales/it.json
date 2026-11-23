@@ -93,7 +93,8 @@
     "bench": "Panchina",
     "startSeason": "Inizia la stagione",
     "landed": "È uscita",
-    "empty": "Libero"
+    "empty": "Libero",
+    "benchSlot": "Panchina {{n}}"
   },
   "season": {
     "title": "Stagione regolare",

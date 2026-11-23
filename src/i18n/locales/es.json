@@ -93,7 +93,8 @@
     "bench": "Banquillo",
     "startSeason": "Empezar la temporada",
     "landed": "Te ha tocado",
-    "empty": "Libre"
+    "empty": "Libre",
+    "benchSlot": "Banco {{n}}"
   },
   "season": {
     "title": "Temporada regular",

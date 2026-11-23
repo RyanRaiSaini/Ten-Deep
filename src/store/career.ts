@@ -112,7 +112,8 @@ export const useCareer = create<CareerStore>()(
           // Only the games each player played for you (mid-season swaps split a season between teams).
           stats: (() => {
             const lines = userStints(season);
-            return addSeason(c.stats ?? {}, lines.map((l) => l.player), Object.fromEntries(lines.map((l) => [l.player.id, l.totals])), result === 'champion', seasonLabel(c.season));
+            const finalRoster = new Set(ALL_SLOTS.map((k) => season.teams[0].slots[k].id));
+            return addSeason(c.stats ?? {}, lines.map((l) => l.player), Object.fromEntries(lines.map((l) => [l.player.id, l.totals])), result === 'champion', seasonLabel(c.season), finalRoster);
           })(),
           morale: moraleAfter(c.morale ?? MORALE_START, { wins: season.records[0].w, result, trades: 0 }),
           lastWins: season.records.map((r) => r.w),

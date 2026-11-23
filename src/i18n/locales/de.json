@@ -93,7 +93,8 @@
     "bench": "Bank",
     "startSeason": "Saison starten",
     "landed": "Gezogen",
-    "empty": "Frei"
+    "empty": "Frei",
+    "benchSlot": "Bank {{n}}"
   },
   "season": {
     "title": "Hauptrunde",

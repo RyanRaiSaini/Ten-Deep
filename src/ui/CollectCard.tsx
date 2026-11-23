@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   level: { position: 'absolute', bottom: 6, left: 6, borderWidth: 1, borderRadius: 6, paddingHorizontal: 4, backgroundColor: 'rgba(11,16,32,0.7)' },
   levelText: { fontWeight: '900' },
   ribbon: { position: 'absolute', top: 8, right: -26, transform: [{ rotate: '35deg' }], paddingHorizontal: 26, paddingVertical: 2 },
-  ribbonText: { color: C.bg, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  ribbonText: { color: C.ink, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
   back: { padding: 6, alignItems: 'stretch', justifyContent: 'center' },
   backInner: { flex: 1, borderWidth: 2, borderRadius: R.sm, alignItems: 'center', justifyContent: 'center' },
   backLogo: { color: '#FFFFFF', textAlign: 'center', ...F.display, letterSpacing: 3 },

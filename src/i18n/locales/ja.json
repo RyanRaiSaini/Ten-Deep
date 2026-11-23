@@ -93,7 +93,8 @@
     "bench": "ベンチ",
     "startSeason": "シーズン開始",
     "landed": "引いたチーム",
-    "empty": "空き"
+    "empty": "空き",
+    "benchSlot": "ベンチ{{n}}"
   },
   "season": {
     "title": "レギュラーシーズン",

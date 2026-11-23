@@ -93,7 +93,8 @@
     "bench": "الدكة",
     "startSeason": "ابدأ الموسم",
     "landed": "حصلت على",
-    "empty": "شاغر"
+    "empty": "شاغر",
+    "benchSlot": "البدلاء {{n}}"
   },
   "season": {
     "title": "الموسم العادي",

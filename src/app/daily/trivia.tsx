@@ -66,7 +66,7 @@ export default function Trivia() {
               const bg = !picked ? C.surface2 : isAnswer ? C.neon : c === picked ? C.danger : C.surface2;
               return (
                 <Pressable key={c} testID="trivia-choice" onPress={() => choose(c)} style={[styles.choice, { backgroundColor: bg }]}>
-                  <Text style={[styles.choiceText, picked && (isAnswer || c === picked) && { color: C.bg }]}>{c}</Text>
+                  <Text style={[styles.choiceText, picked && (isAnswer || c === picked) && { color: C.ink }]}>{c}</Text>
                 </Pressable>
               );
             })}

@@ -17,7 +17,10 @@ export interface CareerLine {
 }
 export type CareerStats = Record<string, CareerLine>;
 
-export function addSeason(stats: CareerStats, roster: Player[], totals: Record<string, PlayerTotals>, champion: boolean, label: string): CareerStats {
+/** `champions`: who gets the title (players still with you at the end); everyone else just adds their games. */
+export function addSeason(
+  stats: CareerStats, roster: Player[], totals: Record<string, PlayerTotals>, champion: boolean, label: string, champions?: Set<string>,
+): CareerStats {
   const out = { ...stats };
   for (const p of roster) {
     const t = totals[p.id];
@@ -25,7 +28,7 @@ export function addSeason(stats: CareerStats, roster: Player[], totals: Record<s
     const prev = out[p.id] ?? { name: p.name, gp: 0, pts: 0, reb: 0, ast: 0, seasons: 0, titles: 0, last: label };
     out[p.id] = {
       name: p.name, gp: prev.gp + t.gp, pts: prev.pts + t.pts, reb: prev.reb + t.reb, ast: prev.ast + t.ast,
-      seasons: prev.seasons + 1, titles: prev.titles + (champion ? 1 : 0), last: label,
+      seasons: prev.seasons + 1, titles: prev.titles + (champion && (!champions || champions.has(p.id)) ? 1 : 0), last: label,
     };
   }
   return out;
