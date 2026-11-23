@@ -45,6 +45,10 @@
     "career": {
       "title": "Carrière",
       "desc": "Une franchise, plusieurs saisons. Vieillissement, contrats, drafts et agents libres, jusqu'à ce que la direction te vire."
+    },
+    "collection": {
+      "title": "Collection",
+      "desc": "Choix de joueurs"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "Pas de playoffs",
     "years": "{{n}} an(s)",
     "nothingAffordable": "Personne ne rentre sous le plafond."
+  },
+  "collect": {
+    "title": "Collection",
+    "picks": "Choix de joueurs",
+    "tapToOpen": "Touche pour ouvrir",
+    "revealAll": "Tout révéler",
+    "chooseOne": "Garde une carte",
+    "keep": "Garder {{name}}",
+    "noPicks": "Aucun choix en attente. Reviens demain pour ton choix du jour.",
+    "streak": "🔥 Série de {{n}} jours",
+    "odds": "Probabilités par carte",
+    "cards": "{{n}} cartes",
+    "empty": "Ouvre un choix de joueurs pour lancer ta collection.",
+    "all": "Toutes",
+    "claim": "Récupérer ton choix",
+    "waiting": "{{n}} choix en attente",
+    "t_daily": "Choix du jour",
+    "t_run": "Choix de partie",
+    "t_playoffs": "Choix playoffs",
+    "t_weekly": "Choix de la semaine",
+    "t_champion": "Choix du champion",
+    "t_mythic": "Choix mythique",
+    "t_legendary": "Choix légendaire",
+    "tier_common": "Commune",
+    "tier_uncommon": "Peu commune",
+    "tier_rare": "Rare",
+    "tier_epic": "Épique",
+    "tier_mythic": "Mythique",
+    "tier_ultra": "Ultra",
+    "guarantee_champion": "Toutes les cartes 83+",
+    "guarantee_mythic": "Un 90+ garanti",
+    "guarantee_legendary": "Une Ultra garantie",
+    "nextWeekly": "Choix de la semaine dans {{n}} jours"
   }
 }

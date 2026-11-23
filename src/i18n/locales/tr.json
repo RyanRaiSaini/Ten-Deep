@@ -45,6 +45,10 @@
     "career": {
       "title": "Kariyer",
       "desc": "Tek kulüp, birçok sezon. Yaşlanma, sözleşmeler, draftlar ve serbest oyuncular; yönetim seni kovana kadar."
+    },
+    "collection": {
+      "title": "Koleksiyon",
+      "desc": "Oyuncu seçimleri"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "Playofflara kalamadı",
     "years": "{{n}} yıl",
     "nothingAffordable": "Tavana sığan kimse yok."
+  },
+  "collect": {
+    "title": "Koleksiyon",
+    "picks": "Oyuncu seçimleri",
+    "tapToOpen": "Açmak için dokun",
+    "revealAll": "Hepsini göster",
+    "chooseOne": "Bir kart seç",
+    "keep": "{{name}} al",
+    "noPicks": "Bekleyen seçim yok. Günlük seçimin için yarın gel.",
+    "streak": "🔥 {{n}} günlük seri",
+    "odds": "Kart başına olasılık",
+    "cards": "{{n}} kart",
+    "empty": "Koleksiyonuna başlamak için bir oyuncu seçimi aç.",
+    "all": "Tümü",
+    "claim": "Seçimini al",
+    "waiting": "{{n}} seçim bekliyor",
+    "t_daily": "Günlük seçim",
+    "t_run": "Oyun seçimi",
+    "t_playoffs": "Playoff seçimi",
+    "t_weekly": "Haftalık seçim",
+    "t_champion": "Şampiyon seçimi",
+    "t_mythic": "Mitik seçim",
+    "t_legendary": "Efsanevi seçim",
+    "tier_common": "Sıradan",
+    "tier_uncommon": "Nadirce",
+    "tier_rare": "Nadir",
+    "tier_epic": "Epik",
+    "tier_mythic": "Mitik",
+    "tier_ultra": "Ultra",
+    "guarantee_champion": "Tüm kartlar 83+",
+    "guarantee_mythic": "Bir adet 90+ garantili",
+    "guarantee_legendary": "Bir Ultra garantili",
+    "nextWeekly": "{{n}} gün sonra haftalık seçim"
   }
 }

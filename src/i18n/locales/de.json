@@ -45,6 +45,10 @@
     "career": {
       "title": "Karriere",
       "desc": "Ein Franchise, viele Saisons. Alterung, Verträge, Drafts und Free Agency, bis die Chefetage dich feuert."
+    },
+    "collection": {
+      "title": "Sammlung",
+      "desc": "Spieler-Picks"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "Playoffs verpasst",
     "years": "{{n}} J.",
     "nothingAffordable": "Niemand passt unter den Cap."
+  },
+  "collect": {
+    "title": "Sammlung",
+    "picks": "Spieler-Picks",
+    "tapToOpen": "Zum Öffnen tippen",
+    "revealAll": "Alle aufdecken",
+    "chooseOne": "Behalte eine Karte",
+    "keep": "{{name}} behalten",
+    "noPicks": "Keine Picks offen. Komm morgen für deinen Tages-Pick wieder.",
+    "streak": "🔥 {{n}}-Tage-Serie",
+    "odds": "Chancen pro Karte",
+    "cards": "{{n}} Karten",
+    "empty": "Öffne einen Spieler-Pick, um deine Sammlung zu starten.",
+    "all": "Alle",
+    "claim": "Pick abholen",
+    "waiting": "{{n}} Picks offen",
+    "t_daily": "Tages-Pick",
+    "t_run": "Run-Pick",
+    "t_playoffs": "Playoff-Pick",
+    "t_weekly": "Wochen-Pick",
+    "t_champion": "Meister-Pick",
+    "t_mythic": "Mythischer Pick",
+    "t_legendary": "Legendärer Pick",
+    "tier_common": "Gewöhnlich",
+    "tier_uncommon": "Ungewöhnlich",
+    "tier_rare": "Selten",
+    "tier_epic": "Episch",
+    "tier_mythic": "Mythisch",
+    "tier_ultra": "Ultra",
+    "guarantee_champion": "Alle Karten 83+",
+    "guarantee_mythic": "Ein 90+ garantiert",
+    "guarantee_legendary": "Eine Ultra garantiert",
+    "nextWeekly": "Wochen-Pick in {{n}} Tagen"
   }
 }

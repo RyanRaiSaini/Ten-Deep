@@ -45,6 +45,10 @@
     "career": {
       "title": "Career",
       "desc": "One franchise, many seasons. Aging, contracts, drafts and free agency, until the board fires you."
+    },
+    "collection": {
+      "title": "Collection",
+      "desc": "Player Picks"
     }
   },
   "settings": {
@@ -351,5 +355,38 @@
     "r_missed": "Missed the playoffs",
     "years": "{{n}}y",
     "nothingAffordable": "Nobody fits under the cap."
+  },
+  "collect": {
+    "title": "Collection",
+    "picks": "Player Picks",
+    "tapToOpen": "Tap to open",
+    "revealAll": "Reveal all",
+    "chooseOne": "Keep one card",
+    "keep": "Keep {{name}}",
+    "noPicks": "No picks waiting. Come back tomorrow for your Daily Pick.",
+    "streak": "🔥 {{n}}-day streak",
+    "odds": "Odds per card",
+    "cards": "Cards: {{n}}",
+    "empty": "Open a Player Pick to start your collection.",
+    "all": "All",
+    "claim": "Claim your pick",
+    "waiting": "{{n}} picks waiting",
+    "t_daily": "Daily Pick",
+    "t_run": "Run Pick",
+    "t_playoffs": "Playoff Pick",
+    "t_weekly": "Weekly Pick",
+    "t_champion": "Champion Pick",
+    "t_mythic": "Mythic Pick",
+    "t_legendary": "Legendary Pick",
+    "tier_common": "Common",
+    "tier_uncommon": "Uncommon",
+    "tier_rare": "Rare",
+    "tier_epic": "Epic",
+    "tier_mythic": "Mythic",
+    "tier_ultra": "Ultra",
+    "guarantee_champion": "Every card is 83+",
+    "guarantee_mythic": "One guaranteed 90+",
+    "guarantee_legendary": "One guaranteed Ultra",
+    "nextWeekly": "Weekly Pick in {{n}} days"
   }
 }
