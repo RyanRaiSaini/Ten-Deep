@@ -623,5 +623,29 @@
     "play": "플레이",
     "career": "커리어",
     "duels": "대결"
+  },
+  "ladder": {
+    "title": "주간 리그",
+    "promote": "승격",
+    "relegate": "강등",
+    "safe": "안전",
+    "endsIn": "{{time}} 후 종료",
+    "pts": "점",
+    "how": "점수 얻는 법",
+    "howRun": "시즌을 마칠 때마다: 승수의 절반",
+    "howBonus": "플레이오프 +10, 우승 +25",
+    "howDaily": "데일리 챌린지마다 +5",
+    "howMove": "월요일에 상위 {{up}}명 승격, 하위 {{down}}명 강등",
+    "standings": "이번 주",
+    "botsNote": "온라인 리그 출시 전까지 라이벌은 AI GM입니다.",
+    "promoted": "{{tier}}(으)로 승격!",
+    "relegated": "{{tier}}(으)로 강등",
+    "stayed": "{{tier}} 유지",
+    "finished": "지난주 {{rank}}위",
+    "bronze": "브론즈",
+    "silver": "실버",
+    "gold": "골드",
+    "platinum": "플래티넘",
+    "legend": "레전드"
   }
 }

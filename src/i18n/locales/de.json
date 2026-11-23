@@ -627,5 +627,29 @@
     "play": "Spielen",
     "career": "Karriere",
     "duels": "Duelle"
+  },
+  "ladder": {
+    "title": "Wochenliga",
+    "promote": "AUFSTIEG",
+    "relegate": "ABSTIEG",
+    "safe": "SICHER",
+    "endsIn": "Endet in {{time}}",
+    "pts": "Pkt.",
+    "how": "So punktest du",
+    "howRun": "Jede beendete Saison: die Hälfte deiner Siege als Punkte",
+    "howBonus": "+10 für die Playoffs, +25 für einen Titel",
+    "howDaily": "+5 pro täglicher Challenge",
+    "howMove": "Die Top {{up}} steigen montags auf, die letzten {{down}} ab",
+    "standings": "Diese Woche",
+    "botsNote": "Gegner sind KI-GMs, bis die Online-Ligen starten.",
+    "promoted": "Aufstieg in {{tier}}!",
+    "relegated": "Abstieg in {{tier}}",
+    "stayed": "Du bleibst in {{tier}}",
+    "finished": "Letzte Woche wurdest du {{rank}}.",
+    "bronze": "Bronze",
+    "silver": "Silber",
+    "gold": "Gold",
+    "platinum": "Platin",
+    "legend": "Legende"
   }
 }
