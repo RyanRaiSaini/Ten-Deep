@@ -2,13 +2,13 @@ import { createContext, useContext, type ComponentProps } from 'react';
 import { StyleSheet, Text as RNText } from 'react-native';
 
 /**
- * Body text is League Spartan (The League of Moveable Type, SIL OFL): a bold, athletic geometric face.
+ * Body text is Montserrat (SIL OFL): a clean, wide geometric sans, the look of mobile sports games.
  * It ships one family per weight, so a fontWeight picks the matching family (one step lighter reads best).
  */
 const BY_WEIGHT: Record<string, string> = {
-  '100': 'LeagueSpartan_500Medium', '200': 'LeagueSpartan_500Medium', '300': 'LeagueSpartan_500Medium', '400': 'LeagueSpartan_500Medium',
-  normal: 'LeagueSpartan_500Medium', '500': 'LeagueSpartan_500Medium', '600': 'LeagueSpartan_600SemiBold',
-  '700': 'LeagueSpartan_600SemiBold', bold: 'LeagueSpartan_700Bold', '800': 'LeagueSpartan_700Bold', '900': 'LeagueSpartan_800ExtraBold',
+  '100': 'Montserrat_500Medium', '200': 'Montserrat_500Medium', '300': 'Montserrat_500Medium', '400': 'Montserrat_500Medium',
+  normal: 'Montserrat_500Medium', '500': 'Montserrat_500Medium', '600': 'Montserrat_600SemiBold',
+  '700': 'Montserrat_600SemiBold', bold: 'Montserrat_700Bold', '800': 'Montserrat_700Bold', '900': 'Montserrat_800ExtraBold',
 };
 
 /** Drop-in for React Native's Text with the game's fonts applied. */
