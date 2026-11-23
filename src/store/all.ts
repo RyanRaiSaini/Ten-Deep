@@ -33,4 +33,6 @@ export function startDay() {
   void import('../net/pins').then((m) => m.publishMe());
   // Real-life form: today's rating nudges from NBA box scores.
   void syncForm();
+  // Cloud save (at most every 30 minutes).
+  void import('../net/save').then((m) => m.backup());
 }

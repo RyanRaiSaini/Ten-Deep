@@ -886,5 +886,26 @@
       "not-allowed": "Non entra nel tuo tetto o nella tua rosa."
     },
     "table": "Classifica"
+  },
+  "save": {
+    "title": "Salvataggio cloud",
+    "body": "I tuoi progressi si salvano da soli. Conserva il codice di recupero per ripristinarli su un nuovo telefono.",
+    "never": "mai",
+    "last": "Ultimo backup: {{when}}",
+    "now": "Salva ora",
+    "saved": "Salvato!",
+    "offline": "Server non raggiungibile. Riproveremo più tardi.",
+    "copy": "Copia il mio codice di recupero",
+    "copied": "Codice copiato. Tienilo segreto!",
+    "paste": "Incolla un codice di recupero",
+    "restore": "Ripristina progressi",
+    "restoreSure": "Tocca di nuovo: sostituisce i progressi su questo dispositivo",
+    "r": {
+      "ok": "Progressi ripristinati!",
+      "bad-code": "Non è un codice di recupero.",
+      "not-found": "Nessun backup per quel codice.",
+      "wrong-code": "Quel codice non corrisponde al backup.",
+      "offline": "Server non raggiungibile. Riprova."
+    }
   }
 }
