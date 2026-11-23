@@ -24,6 +24,7 @@ export function TabBar({ active }: { active: Tab }) {
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 8) }]} testID="tab-bar">
+      <View style={styles.items}>
       {TABS.map((tab) => {
         const on = tab.key === active;
         return (
@@ -45,15 +46,17 @@ export function TabBar({ active }: { active: Tab }) {
           </Pressable>
         );
       })}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   bar: {
-    position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-end',
+    position: 'absolute', left: 0, right: 0, bottom: 0,
     backgroundColor: '#FFFFFF', borderTopWidth: 2, borderTopColor: C.line, paddingTop: 6,
   },
+  items: { flexDirection: 'row', alignItems: 'flex-end', width: '100%', maxWidth: 640, alignSelf: 'center' },
   item: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 2, paddingVertical: 6 },
   itemOn: {
     flex: 1.5, marginTop: -30, backgroundColor: '#F7F2EA', borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 0,

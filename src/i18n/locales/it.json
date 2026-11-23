@@ -370,7 +370,13 @@
     "lotterySkip": "Salta",
     "openSpots_many": "{{count}} posti liberi",
     "openSpots_one": "{{count}} posto libero",
-    "openSpots_other": "{{count}} posti liberi"
+    "openSpots_other": "{{count}} posti liberi",
+    "f1Title": "Costruisci una franchigia",
+    "f1Body": "Drafta, rinnova, scambia e sviluppa una squadra, stagione dopo stagione.",
+    "f2Title": "Tieniti il posto",
+    "f2Body": "La dirigenza fissa un obiettivo ogni anno. Mancalo troppo spesso e sei fuori.",
+    "f3Title": "Entra nella storia",
+    "f3Body": "Titoli, una Hall of Fame e record di franchigia."
   },
   "collect": {
     "title": "Collezione",

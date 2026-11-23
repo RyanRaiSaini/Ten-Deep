@@ -370,7 +370,13 @@
     "lotterySkip": "Pular",
     "openSpots_many": "{{count}} vagas abertas",
     "openSpots_one": "{{count}} vaga aberta",
-    "openSpots_other": "{{count}} vagas abertas"
+    "openSpots_other": "{{count}} vagas abertas",
+    "f1Title": "Construa uma franquia",
+    "f1Body": "Drafte, renove, troque e desenvolva um time, temporada após temporada.",
+    "f2Title": "Mantenha o emprego",
+    "f2Body": "A diretoria define uma meta todo ano. Falhe demais e você é demitido.",
+    "f3Title": "Faça história",
+    "f3Body": "Títulos, um Hall da Fama e recordes da franquia."
   },
   "collect": {
     "title": "Coleção",

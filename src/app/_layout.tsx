@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { Loading } from '../ui/Loading';
 import { useEffect, useState } from 'react';
 import { AppState, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -55,10 +56,10 @@ export default function RootLayout() {
   useEffect(() => applyLanguage(language ?? deviceLanguage()), [language]);
   useEffect(() => { if (ready) SplashScreen.hideAsync().catch(() => {}); }, [ready]);
 
-  if (!ready) return <View style={{ flex: 1, backgroundColor: C.bg }} />;
+  if (!ready) return <Loading />;
   return (
     <SafeAreaProvider>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: C.bg }, animation: 'fade' }} />
       <AchievementToast />
     </SafeAreaProvider>

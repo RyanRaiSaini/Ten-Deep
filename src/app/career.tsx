@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -5,12 +6,12 @@ import { Text } from '../ui/Text';
 import { seasonLabel } from '../engine/career/offseason';
 import { useCareer } from '../store/career';
 import { useGame } from '../store/game';
-import { BackButton, Button, Card, Header, Label, Screen, TabTitle } from '../ui/components';
-import { C, F, R, S } from '../ui/theme';
+import { BackButton, Button, Card, Display, Header, Label, Screen, TabTitle } from '../ui/components';
+import { C, F, FONT, R, S } from '../ui/theme';
 import { franchiseLeaders, hallOfFame } from '../engine/career/legacy';
 import { MORALE_START, moraleMod } from '../engine/career/morale';
 import { TabBar } from '../ui/TabBar';
-import { Icon } from '../ui/icons';
+import { CourtArt, Icon } from '../ui/icons';
 
 const VERDICT_ICON = { legend: 'crown', extended: 'medal', survived: 'clock', fired: 'flame' } as const;
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
@@ -19,6 +20,7 @@ const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/p
 
 /** Career hub: season, job security, history, and the next thing to do. */
 export default function Career() {
+  const [bannerW, setBannerW] = useState(320);
   const { t } = useTranslation();
   const c = useCareer();
   const g = useGame();
@@ -48,9 +50,24 @@ export default function Career() {
               <Text style={styles.body}>{t('career.overDesc', { n: c.history.length, titles })}</Text>
             </>
           ) : (
-            <Text style={styles.body}>{t('career.desc')}</Text>
+            <>
+              <View style={styles.banner} onLayout={(e) => setBannerW(e.nativeEvent.layout.width)}>
+                <View style={StyleSheet.absoluteFill}><CourtArt width={bannerW} height={150} color="#C2185B" /></View>
+                <Display size={30}>{t('career.title')}</Display>
+                <Text style={styles.bannerSub}>{t('career.desc')}</Text>
+              </View>
+              {([['briefcase', 'f1'], ['siren', 'f2'], ['crown', 'f3']] as const).map(([icon, k]) => (
+                <View key={k} style={styles.feature}>
+                  <View style={styles.featureTile}><Icon name={icon} size={36} /></View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.featureTitle}>{t(`career.${k}Title`)}</Text>
+                    <Text style={styles.featureBody}>{t(`career.${k}Body`)}</Text>
+                  </View>
+                </View>
+              ))}
+            </>
           )}
-          <Button label={c.ended ? t('career.newCareer') : t('career.start')} onPress={() => { c.start(); router.push('/draft'); }} testID="career-start" />
+          <Button label={c.ended ? t('career.newCareer') : t('career.start')} variant="dark" onPress={() => { c.start(); router.push('/draft'); }} testID="career-start" />
         </Card>
       )}
 
@@ -120,6 +137,12 @@ const styles = StyleSheet.create({
   histRecord: { color: C.text, width: 56, fontWeight: '900' },
   histResult: { color: C.text, flex: 1 },
   histVerdict: { fontSize: 20 },
+  banner: { height: 150, borderRadius: 20, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, alignItems: 'center', justifyContent: 'center', paddingHorizontal: S.lg, gap: 4 },
+  bannerSub: { color: '#FFFFFF', fontWeight: '800', textAlign: 'center', fontSize: 13, textShadowColor: 'rgba(0,0,0,0.4)', textShadowRadius: 3, textShadowOffset: { width: 0, height: 1 } },
+  feature: { flexDirection: 'row', alignItems: 'center', gap: S.md },
+  featureTile: { width: 60, height: 60, borderRadius: 16, backgroundColor: '#FDE7F0', borderWidth: 2, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
+  featureTitle: { fontFamily: FONT.display, fontSize: 20, color: C.ink },
+  featureBody: { color: C.muted, fontWeight: '700', fontSize: 13 },
   hofName: { color: C.ink, fontWeight: '900', flex: 1 },
   hofRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   recRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },

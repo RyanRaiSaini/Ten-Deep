@@ -368,7 +368,13 @@
     "lottery": "Draft lotaryası",
     "lotterySkip": "Atla",
     "openSpots_one": "{{count}} boş yer",
-    "openSpots_other": "{{count}} boş yer"
+    "openSpots_other": "{{count}} boş yer",
+    "f1Title": "Bir takım kur",
+    "f1Body": "Sezon sezon draft yap, sözleşme uzat, takas yap ve takımını geliştir.",
+    "f2Title": "İşini koru",
+    "f2Body": "Yönetim her yıl bir hedef koyar. Çok sık kaçırırsan kovulursun.",
+    "f3Title": "Tarih yaz",
+    "f3Body": "Şampiyonluklar, Şöhretler Müzesi ve kalıcı rekorlar."
   },
   "collect": {
     "title": "Koleksiyon",

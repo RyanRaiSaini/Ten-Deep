@@ -368,7 +368,13 @@
     "lottery": "Draft-Lotterie",
     "lotterySkip": "Überspringen",
     "openSpots_one": "{{count}} freier Platz",
-    "openSpots_other": "{{count}} freie Plätze"
+    "openSpots_other": "{{count}} freie Plätze",
+    "f1Title": "Bau ein Franchise auf",
+    "f1Body": "Drafte, verlängere, trade und entwickle ein Team, Saison für Saison.",
+    "f2Title": "Behalte deinen Job",
+    "f2Body": "Der Vorstand setzt jedes Jahr ein Ziel. Verfehlst du es zu oft, fliegst du.",
+    "f3Title": "Schreib Geschichte",
+    "f3Body": "Titel, eine Hall of Fame und bleibende Franchise-Rekorde."
   },
   "collect": {
     "title": "Sammlung",
