@@ -10,10 +10,12 @@ export interface Profile {
   bestWins: number;
   bestLosses: number;
   avatarId: string;
+  /** Display name (local only until accounts exist). */
+  name: string;
   /** Day (YYYY-MM-DD) of the last finished draft; drives the streak reminder. */
   lastPlayed?: string;
   recordDraft: (result: { wins: number; losses: number; champion: boolean }) => void;
-  set: (patch: Partial<Pick<Profile, 'avatarId'>>) => void;
+  set: (patch: Partial<Pick<Profile, 'avatarId' | 'name'>>) => void;
 }
 
 export const useProfile = create<Profile>()(
@@ -24,6 +26,7 @@ export const useProfile = create<Profile>()(
       bestWins: 0,
       bestLosses: 0,
       avatarId: 'captain',
+      name: '',
       recordDraft: ({ wins, losses, champion }) =>
         set((s) => ({
           draftsPlayed: s.draftsPlayed + 1,

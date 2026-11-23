@@ -15,7 +15,14 @@
     "best": "최고 기록",
     "modes": "게임 모드",
     "resume": "이어서 하기",
-    "play": "플레이"
+    "play": "플레이",
+    "streak": "연속 접속",
+    "player": "플레이어",
+    "picks": "픽",
+    "streakSaved": "연속 기록 유지!",
+    "streakSavedBody_other": "스트릭 프리즈가 빠진 {{count}}일을 지켜 줬습니다.",
+    "duelTitle": "친구와 대결",
+    "duelCta": "누가 최고?"
   },
   "mode": {
     "current": {
@@ -90,7 +97,8 @@
     "bench": "벤치",
     "startSeason": "시즌 시작",
     "landed": "나온 팀",
-    "empty": "비어 있음"
+    "empty": "비어 있음",
+    "benchSlot": "벤치 {{n}}"
   },
   "season": {
     "title": "정규 시즌",
@@ -183,7 +191,8 @@
     "strength": "전력",
     "resume": "이어하기",
     "missed": "놓침",
-    "replaceRun": "진행 중인 게임이 대체됩니다. 다시 탭하여 시작하세요."
+    "replaceRun": "진행 중인 게임이 대체됩니다. 다시 탭하여 시작하세요.",
+    "share": "오늘 결과 공유"
   },
   "duel": {
     "title": "대결",
@@ -363,7 +372,13 @@
     "hofEmpty": "나와 함께한 4시즌과 위대한 커리어가 입성 조건입니다.",
     "lottery": "드래프트 추첨",
     "lotterySkip": "건너뛰기",
-    "openSpots_other": "빈자리 {{count}}개"
+    "openSpots_other": "빈자리 {{count}}개",
+    "f1Title": "프랜차이즈 구축",
+    "f1Body": "드래프트, 재계약, 트레이드로 한 팀을 매 시즌 키우세요.",
+    "f2Title": "자리를 지켜라",
+    "f2Body": "구단은 매년 목표를 정합니다. 너무 자주 실패하면 해고됩니다.",
+    "f3Title": "역사를 만들어라",
+    "f3Body": "우승, 명예의 전당, 그리고 남는 구단 기록."
   },
   "collect": {
     "title": "컬렉션",
@@ -373,7 +388,7 @@
     "chooseOne": "카드 한 장 선택",
     "keep": "{{name}} 획득",
     "noPicks": "대기 중인 픽이 없습니다. 내일 데일리 픽을 받으러 오세요.",
-    "streak": "🔥 {{n}}일 연속",
+    "streak": "{{n}}일 연속",
     "odds": "카드당 확률",
     "cards": "{{n}}장",
     "empty": "선수 픽을 열어 컬렉션을 시작하세요.",
@@ -396,7 +411,10 @@
     "guarantee_mythic": "90+ 1장 확정",
     "guarantee_legendary": "울트라 1장 확정",
     "waiting_other": "대기 중인 픽 {{count}}개",
-    "nextWeekly_other": "주간 픽까지 {{count}}일"
+    "nextWeekly_other": "주간 픽까지 {{count}}일",
+    "powerUp": "파워업 (남은 횟수 {{n}})",
+    "powerOdds": "픽 전체가 업그레이드될 확률 {{pct}}%",
+    "upgraded": "업그레이드!"
   },
   "lineup": {
     "title": "라인업",
@@ -604,6 +622,59 @@
   },
   "profile": {
     "title": "프로필",
-    "pick": "아바타 선택"
+    "pick": "아바타 선택",
+    "namePlaceholder": "이름"
+  },
+  "tabs": {
+    "daily": "데일리",
+    "cards": "카드",
+    "play": "플레이",
+    "career": "커리어",
+    "duels": "대결"
+  },
+  "ladder": {
+    "title": "주간 리그",
+    "promote": "승격",
+    "relegate": "강등",
+    "safe": "안전",
+    "endsIn": "{{time}} 후 종료",
+    "pts": "점",
+    "how": "점수 얻는 법",
+    "howRun": "시즌을 마칠 때마다: 승수의 절반",
+    "howBonus": "플레이오프 +10, 우승 +25",
+    "howDaily": "데일리 챌린지마다 +5",
+    "howMove": "월요일에 상위 {{up}}명 승격, 하위 {{down}}명 강등",
+    "standings": "이번 주",
+    "botsNote": "온라인 리그 출시 전까지 라이벌은 AI GM입니다.",
+    "promoted": "{{tier}}(으)로 승격!",
+    "relegated": "{{tier}}(으)로 강등",
+    "stayed": "{{tier}} 유지",
+    "finished": "지난주 {{rank}}위",
+    "bronze": "브론즈",
+    "silver": "실버",
+    "gold": "골드",
+    "platinum": "플래티넘",
+    "legend": "레전드",
+    "inPromotion": "승격권 진입!",
+    "toPromotion": "승격까지 {{n}}점"
+  },
+  "challenge": {
+    "invalid": "이 도전 링크는 사용할 수 없습니다.",
+    "title": "{{name}}의 도전장",
+    "body": "같은 스핀, 같은 리그. 기록을 넘어서세요.",
+    "accept": "도전 수락",
+    "share": "공유하고 도전하기",
+    "shared": "공유했습니다!",
+    "copied": "링크를 복사했습니다!",
+    "won": "{{name}}을(를) 이겼습니다!",
+    "lost": "이번엔 {{name}} 승리",
+    "tied": "{{name}}와(과) 무승부"
+  },
+  "stake": {
+    "title": "더블 오어 낫싱?",
+    "body": "올인: 파이널 진출 시 리그 점수 ×2, 1라운드 탈락 시 절반을 잃습니다.",
+    "snap": "올인",
+    "safe": "안전하게",
+    "on": "올인"
   }
 }

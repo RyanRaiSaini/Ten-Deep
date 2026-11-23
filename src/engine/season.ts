@@ -51,6 +51,8 @@ export interface SeasonState {
   news?: Headline[];
   /** Alone in first place after the last round (so "first place" is news only when you take it). */
   leading?: boolean;
+  /** Mid-season moves: each swapped player's totals when he joined (`from`) or left (`to`) your team. */
+  stints?: { [playerId: string]: { player: Player; from?: PlayerTotals; to?: PlayerTotals } };
 }
 
 export interface TeamMod {
@@ -230,5 +232,36 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
   if (!canAfford(without, incoming)) throw new Error('Over the cap');
   const teams = [...state.teams];
   teams[0] = { ...user, slots: { ...user.slots, [slot]: incoming } };
-  return { ...state, teams, deadlineUsed: true };
+  return { ...recordStint(state, user.slots[slot], incoming), teams, deadlineUsed: true };
+}
+
+const ZERO: PlayerTotals = { gp: 0, pts: 0, reb: 0, ast: 0 };
+const minus = (a: PlayerTotals = ZERO, b: PlayerTotals = ZERO): PlayerTotals => ({ gp: a.gp - b.gp, pts: a.pts - b.pts, reb: a.reb - b.reb, ast: a.ast - b.ast });
+
+/** Note a mid-season move so stats can be credited to the team a player actually played for. */
+export function recordStint(state: SeasonState, outgoing: Player, incoming: Player): SeasonState {
+  const stints = { ...state.stints };
+  stints[outgoing.id] = { ...stints[outgoing.id], player: outgoing, to: { ...(state.totals[outgoing.id] ?? ZERO) } };
+  const now = state.totals[incoming.id] ?? ZERO;
+  const back = stints[incoming.id];
+  // Coming back for a second stint: shift `from` so the earlier games with you still count.
+  stints[incoming.id] = back?.to
+    ? { player: incoming, from: minus(now, minus(back.to, back.from)) }
+    : { player: incoming, from: { ...now } };
+  return { ...state, stints };
+}
+
+/** Everyone who played for you this season, with only the games he played for you. */
+export function userStints(state: SeasonState): { player: Player; totals: PlayerTotals }[] {
+  const out: { player: Player; totals: PlayerTotals }[] = [];
+  const onRoster = new Set(ALL_SLOTS.map((k) => state.teams[0].slots[k].id));
+  for (const k of ALL_SLOTS) {
+    const p = state.teams[0].slots[k];
+    out.push({ player: p, totals: minus(state.totals[p.id], state.stints?.[p.id]?.from) });
+  }
+  for (const [id, st] of Object.entries(state.stints ?? {})) {
+    if (onRoster.has(id) || !st.to) continue;
+    out.push({ player: st.player, totals: minus(st.to, st.from) });
+  }
+  return out.filter((x) => x.totals.gp > 0);
 }

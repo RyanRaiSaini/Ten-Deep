@@ -1,15 +1,17 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { CARD_BY_ID } from '../data/cards';
-import { cardLevel } from '../engine/collect/lineup';
-import { closestSets, completedSets, setReward } from '../engine/collect/sets';
-import { TIERS, type Tier } from '../engine/collect/tiers';
-import { useCollection } from '../store/collection';
-import { CollectCard, TIER_STYLE } from '../ui/CollectCard';
-import { BackButton, Button, Header, Screen } from '../ui/components';
-import { C, F, R, S } from '../ui/theme';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
+import { CARD_BY_ID } from '../../data/cards';
+import { cardLevel } from '../../engine/collect/lineup';
+import { closestSets, completedSets, setReward } from '../../engine/collect/sets';
+import { TIERS, type Tier } from '../../engine/collect/tiers';
+import { useCollection } from '../../store/collection';
+import { CollectCard, TIER_STYLE } from '../../ui/CollectCard';
+import { BackButton, Button, Header, Screen, TabTitle } from '../../ui/components';
+import { C, F, R, S } from '../../ui/theme';
+import { Icon } from '../../ui/icons';
 
 /** Your collection: tier-framed cards, best first, with tier filters. */
 export default function Collection() {
@@ -27,17 +29,17 @@ export default function Collection() {
   const counts = Object.fromEntries(TIERS.map((tier) => [tier, owned.filter((x) => x.card.tier === tier).length]));
 
   return (
-    <Screen>
-      <Header title={t('collect.title')} left={<BackButton onPress={() => router.back()} />} />
+    <Screen tint={C.purple} tabbed>
+      <TabTitle icon={<Icon name="cards" size={46} />} title={t('collect.title')} />
       <Text style={styles.sub} testID="collection-count">
         {t('collect.cards', { n: owned.length })} · {t('collect.streak', { n: col.streak })}
       </Text>
       {col.pending.length > 0 && (
-        <Button label={`🎁  ${t('collect.waiting', { count: col.pending.length })}`} variant="gold" onPress={() => router.push('/packs')} />
+        <Button label={t('collect.waiting', { count: col.pending.length })} icon={<Icon name="gift" size={22} />} variant="gold" onPress={() => router.push('/packs')} />
       )}
       <View style={{ flexDirection: 'row', gap: S.sm }}>
-        <Button label={`🧩  ${t('lineup.title')}`} variant="secondary" onPress={() => router.push('/lineup')} style={{ flex: 1 }} testID="to-lineup" />
-        <Button label={`⚔️  ${t('gauntlet.title')}`} variant="secondary" onPress={() => router.push('/gauntlet')} style={{ flex: 1 }} />
+        <Button label={t('lineup.title')} icon={<Icon name="cards" size={22} />} variant="secondary" onPress={() => router.push('/lineup')} style={{ flex: 1 }} testID="to-lineup" />
+        <Button label={t('gauntlet.title')} icon={<Icon name="shield" size={22} />} variant="secondary" onPress={() => router.push('/gauntlet')} style={{ flex: 1 }} />
       </View>
       <View style={styles.chips}>
         <Chip label={t('collect.all')} on={!filter} color={C.text} onPress={() => setFilter(null)} />
@@ -56,7 +58,7 @@ export default function Collection() {
                 <Text style={styles.setName}>{set.label}  <Text style={styles.setCount}>{have}/{set.cards.length}</Text></Text>
                 <View style={styles.bar}><View style={[styles.fill, { width: `${(have / set.cards.length) * 100}%`, backgroundColor: set.colors[0] }]} /></View>
               </View>
-              <Text style={styles.reward}>🎁 {t(`collect.t_${setReward(set)}`)}</Text>
+              <View style={{ alignItems: 'center' }}><Icon name="gift" size={22} /><Text style={styles.reward}>{t(`collect.t_${setReward(set)}`)}</Text></View>
             </View>
           ))}
         </View>
@@ -76,7 +78,7 @@ export default function Collection() {
 function Chip({ label, on, color, onPress }: { label: string; on: boolean; color: string; onPress: () => void }) {
   return (
     <Pressable onPress={onPress} style={[styles.chip, { borderColor: color }, on && { backgroundColor: color }]}>
-      <Text style={[styles.chipText, { color: on ? C.bg : color }]}>{label}</Text>
+      <Text style={[styles.chipText, { color: on ? C.ink : color }]}>{label}</Text>
     </Pressable>
   );
 }

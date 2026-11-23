@@ -2,7 +2,7 @@
 export async function runFlow({ page, base, step, shot }) {
   await step('draft ten players', async () => {
     await page.goto(base);
-    await page.getByText('Current Day').click();
+    await page.getByTestId('mode-current').click();
     await page.getByTestId('spin').waitFor();
     await shot('02-draft-empty');
     for (let pick = 0; pick < 10; pick++) {
@@ -79,6 +79,7 @@ export async function runFlow({ page, base, step, shot }) {
 
   await step('playoffs to a result', async () => {
     await page.getByTestId('playoff-next').or(page.getByTestId('playoff-sim')).first().waitFor({ timeout: 15000 });
+    if (await page.getByTestId('stake-snap').count()) await page.getByTestId('stake-snap').click();
     if (await page.getByTestId('playoff-next').count()) {
       await page.getByTestId('playoff-next').click();
       await page.getByTestId('recap').waitFor();
@@ -88,16 +89,32 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('see-result').click();
     await page.getByTestId('play-again').waitFor({ timeout: 15000 });
     await page.getByTestId('awards').waitFor();
+    await page.getByTestId('share').waitFor();
+    await page.getByTestId('league-gain').waitFor();
     await shot('08-result');
     await page.getByTestId('go-home').click();
-    await page.getByText('TEN DEEP', { exact: true }).waitFor();
-    const drafts = await page.getByText('🔥 1').count();
+    await page.getByTestId('tab-bar').waitFor();
+    await page.goto(`${base}/profile`);
+    const drafts = (await page.getByTestId('stat-drafts').textContent())?.trim() === '1';
     if (!drafts) throw new Error('drafts-played counter did not increment');
+  });
+
+  await step('a friend\'s challenge link: same spins, their record to beat', async () => {
+    await page.goto(`${base}/c?s=smoke-seed&p=current-2026&w=55&l=27&n=Ryan`);
+    await page.getByTestId('challenge-record').waitFor();
+    await shot('36-challenge');
+    await page.getByTestId('challenge-accept').click();
+    await page.getByTestId('spin').waitFor();
+    await page.goto(`${base}/c?s=bad&p=nope&w=1&l=1`);
+    await page.getByText('This challenge link is broken.').waitFor();
+    await page.goto(`${base}/ladder`);
+    await page.getByTestId('ladder-table').waitFor();
+    await shot('37-ladder');
   });
 
   await step('daily trivia and player rank play through and record', async () => {
     await page.goto(base);
-    await page.getByText('Daily Challenge').click();
+    await page.getByTestId('tab-daily').click();
     await page.getByTestId('daily-trivia').click();
     for (let q = 0; q < 5; q++) {
       await page.getByTestId('trivia-choice').first().click();
@@ -139,7 +156,7 @@ export async function runFlow({ page, base, step, shot }) {
 
   await step('management crisis: 4 cards, deadline, playoffs, board verdict', async () => {
     await page.goto(base);
-    await page.getByText('Management Crisis').first().click();
+    await page.getByTestId('mode-crisis').click();
     await page.getByTestId('mode-current-2026').click();
     await draftTen(page);
     await page.getByTestId('start-season').click();
@@ -155,7 +172,7 @@ export async function runFlow({ page, base, step, shot }) {
 
   await step('career: season 1, full offseason, season 2 begins', async () => {
     await page.goto(base);
-    await page.getByText('Career').first().click();
+    await page.getByTestId('tab-career').click();
     await page.getByTestId('career-start').click();
     await draftTen(page);
     await page.getByTestId('start-season').click();
@@ -202,7 +219,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('crisis-card').waitFor({ timeout: 10000 });
     await page.goto(`${base}/career`);
     await page.getByText('Season 2').waitFor({ timeout: 5000 });
-    await page.getByText('2026-27').waitFor();
+    await page.getByText('2026-27').first().waitFor();
     await shot('24-career-hub');
   });
 
@@ -211,6 +228,8 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('picks-banner').click();
     await page.getByTestId('pack-open').waitFor();
     await shot('25-pack-closed');
+    // Power-up taps (up to three) before opening.
+    for (let i = 0; i < 3 && (await page.getByTestId('pack-power').count()); i++) await page.getByTestId('pack-power').click();
     await page.getByTestId('pack-open').click();
     await page.getByTestId('pack-reveal-all').click();
     await page.waitForTimeout(400);
@@ -260,7 +279,7 @@ export async function runFlow({ page, base, step, shot }) {
 
   await step('pass-and-play duel: 20 picks and a best-of-7', async () => {
     await page.goto(base);
-    await page.getByText('Duels').click();
+    await page.getByTestId('tab-duels').click();
     await page.getByTestId('p1').fill('Ryan');
     await page.getByTestId('p2').fill('Friend');
     await page.getByTestId('duel-start').click();
@@ -299,12 +318,13 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByText('✓ Deleted').waitFor();
     await page.goto(base);
     await page.getByTestId('welcome-skip').click(); // a fresh account sees the welcome again
-    await page.getByText('🔥 0').waitFor({ timeout: 5000 });
+    await page.goto(`${base}/profile`);
+    await page.waitForFunction(() => document.querySelector('[data-testid="stat-drafts"]')?.textContent?.trim() === '0', null, { timeout: 5000 });
   });
 
   await step('all-time lakers run starts and drafts', async () => {
     await page.goto(base);
-    await page.getByText('All-Time Franchises').click();
+    await page.getByTestId('mode-franchise').click();
     await page.getByTestId('mode-franchise-lal').click();
     await page.getByTestId('spin').click();
     await page.locator('[data-testid="option"], [data-testid="respin"]').first().waitFor({ timeout: 15000 });

@@ -2,6 +2,7 @@
 import { salaryFor } from '../cap';
 import { lineupMinutes } from '../rotation';
 import { SEASON_GAMES, outSet, type SeasonState } from '../season';
+import { recordStint } from '../season';
 import { ALL_SLOTS, STARTER_SLOTS, type Player, type SlotId } from '../types';
 import type { CrisisCard } from './offers';
 
@@ -29,7 +30,7 @@ function swapIn(s: SeasonState, slot: SlotId, incoming: Player): SeasonState {
       break;
     }
   }
-  return { ...s, teams };
+  return { ...recordStint(s, outgoing, incoming), teams };
 }
 
 const addMod = (s: SeasonState, amount: number, from: number, to: number): SeasonState => ({

@@ -1,6 +1,14 @@
+// Import only the weights the game uses, so the other 14 Nunito styles stay out of the app.
+import { LilitaOne_400Regular } from '@expo-google-fonts/lilita-one/400Regular';
+import { Nunito_600SemiBold } from '@expo-google-fonts/nunito/600SemiBold';
+import { Nunito_700Bold } from '@expo-google-fonts/nunito/700Bold';
+import { Nunito_800ExtraBold } from '@expo-google-fonts/nunito/800ExtraBold';
+import { Nunito_900Black } from '@expo-google-fonts/nunito/900Black';
+import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { Loading } from '../ui/Loading';
 import { useEffect, useState } from 'react';
 import { AppState, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -33,7 +41,10 @@ function useHydrated() {
 
 export default function RootLayout() {
   const language = useSettings((s) => s.language);
-  const ready = useHydrated();
+  const hydrated = useHydrated();
+  const [fontsLoaded, fontError] = useFonts({ LilitaOne_400Regular, Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold, Nunito_900Black });
+  // Fonts that fail to load fall back to system fonts rather than blocking the game.
+  const ready = hydrated && (fontsLoaded || !!fontError);
   useMusic();
   useNotificationSync(ready);
   // Daily check-in (login streak + Daily/Weekly/Mythic picks) once saved progress has loaded.
@@ -49,10 +60,10 @@ export default function RootLayout() {
   useEffect(() => applyLanguage(language ?? deviceLanguage()), [language]);
   useEffect(() => { if (ready) SplashScreen.hideAsync().catch(() => {}); }, [ready]);
 
-  if (!ready) return <View style={{ flex: 1, backgroundColor: C.bg }} />;
+  if (!ready) return <Loading />;
   return (
     <SafeAreaProvider>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: C.bg }, animation: 'fade' }} />
       <AchievementToast />
     </SafeAreaProvider>

@@ -1,13 +1,15 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
 import { feel } from '../../audio/feel';
 import { HISTORY, MODE_BY_ID } from '../../data/modes';
 import { dailyDerby, dailyKey, dailyTeamDuel, teamStrengthScore } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { BackButton, Button, Card, Header, Label, Screen } from '../../ui/components';
 import { C, F, R, S, ovrColor } from '../../ui/theme';
+import { goBack } from '../../ui/nav';
 
 interface Side { id: string; title: string; sub: string; value: string }
 interface Round { a: Side; b: Side; winner: string; reveal?: string[] }
@@ -86,7 +88,7 @@ export default function Pick() {
 
   return (
     <Screen>
-      <Header title={duel ? t('daily.teamDuel') : t('daily.derby')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={duel ? t('daily.teamDuel') : t('daily.derby')} left={<BackButton onPress={() => goBack()} />} />
       {finished ? (
         <Card style={{ alignItems: 'center', gap: S.md, paddingVertical: S.xxl }}>
           <Text style={styles.big} testID="pick-score">
@@ -97,7 +99,7 @@ export default function Pick() {
               : t('daily.yourScore', { n: already ?? score })}
           </Text>
           <Text style={styles.sub}>{t('daily.tomorrow')}</Text>
-          <Button label={t('daily.done')} onPress={() => router.back()} testID="pick-done" />
+          <Button label={t('daily.done')} onPress={() => goBack()} testID="pick-done" />
         </Card>
       ) : (
         <>

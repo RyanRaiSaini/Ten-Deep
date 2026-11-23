@@ -1,32 +1,53 @@
-/** "Arena night" design tokens. */
+/**
+ * "Hardwood pop" design tokens: a warm court-paint background, white sticker cards with ink outlines
+ * and a chunky 3D bottom edge, and loud accent colors.
+ */
 export const C = {
-  bg: '#0B1020',
-  surface: '#141B2E',
-  surface2: '#1C2540',
-  line: '#26304D',
-  text: '#F4F6FB',
-  muted: '#8C97B5',
-  hardwood: '#E8833A',
-  neon: '#3DF2C2',
-  danger: '#FF5C6C',
-  gold: '#F5C451',
+  bg: '#FFF4E6',
+  surface: '#FFFFFF',
+  surface2: '#F5EEE3',
+  line: '#E8DECF',
+  /** The darker bottom edge that makes cards and buttons look 3D. */
+  edge: '#D9CCB8',
+  ink: '#17121E',
+  text: '#17121E',
+  muted: '#7D7488',
+  hardwood: '#FF7417',
+  neon: '#0FA876',
+  danger: '#EE3B4F',
+  gold: '#F0A500',
+  blue: '#2F6BFF',
+  purple: '#7A4DFF',
+  pink: '#FF4F9E',
+  teal: '#12B5C2',
+  /** Text on top of a strong color. */
+  onColor: '#FFFFFF',
 } as const;
 
-export const R = { sm: 8, md: 14, lg: 22, pill: 999 } as const;
+export const R = { sm: 10, md: 16, lg: 24, pill: 999 } as const;
 export const S = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 36 } as const;
 
+/** Font families (loaded in the root layout). The Text wrapper maps fontWeight onto the Nunito family. */
+export const FONT = {
+  display: 'LilitaOne_400Regular',
+  body: 'Nunito_700Bold',
+} as const;
+
 export const F = {
-  /** Big condensed numbers & headings. */
-  display: { fontWeight: '900' as const, letterSpacing: -0.5 },
-  label: { fontSize: 12, fontWeight: '700' as const, letterSpacing: 1.2, textTransform: 'uppercase' as const },
+  /** Chunky display type for titles and big numbers. */
+  display: { fontFamily: FONT.display, letterSpacing: 0.2 },
+  label: { fontSize: 12, fontWeight: '900' as const, letterSpacing: 1.4, textTransform: 'uppercase' as const },
 };
+
+/** Hard drop shadow under raised elements. */
+export const lift = (color: string = C.edge, depth = 5) => ({ borderBottomWidth: depth, borderBottomColor: color });
 
 /** Rating color: elite gold, great neon, good text, role muted. */
 export function ovrColor(ovr: number): string {
-  if (ovr >= 95) return C.gold;
+  if (ovr >= 95) return '#E08A00';
   if (ovr >= 88) return C.neon;
-  if (ovr >= 80) return C.text;
-  if (ovr >= 72) return '#B9C2DB';
+  if (ovr >= 80) return C.blue;
+  if (ovr >= 72) return C.text;
   return C.muted;
 }
 

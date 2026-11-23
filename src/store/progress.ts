@@ -7,7 +7,9 @@ import { cardLevel } from '../engine/collect/lineup';
 import { newlyUnlocked, type Snapshot } from '../engine/progress/achievements';
 import { dailyMissions, missionProgress, weekKey, weeklyMissions } from '../engine/progress/missions';
 import { EMPTY_STATS, applyEvent, type GameEvent, type Stats } from '../engine/progress/stats';
+import { pointsFor } from '../engine/league/ladder';
 import { useCollection } from './collection';
+import { useLeague } from './league';
 import { useProfile } from './profile';
 
 export interface ProgressStore {
@@ -63,6 +65,9 @@ export const useProgress = create<ProgressStore>()(
 
       track: (e) => {
         set((s) => ({ stats: applyEvent(s.stats, e) }));
+        // League points for the week.
+        if (e.type === 'run') useLeague.getState().add(pointsFor(e));
+        if (e.type === 'daily') useLeague.getState().add(pointsFor({ type: 'daily' }));
         get().check();
       },
 
@@ -82,8 +87,8 @@ export const useProgress = create<ProgressStore>()(
           dayBase: s.stats,
           week,
           weekBase: newWeek ? s.stats : s.weekBase,
-          // Keep only this week's claims (weekly ones are still live).
-          claimed: s.claimed.filter((c) => c.startsWith(`${week}:`)),
+          // Claims are kept (capped), not pruned by week: moving the clock back must not re-open a paid mission.
+          claimed: s.claimed.slice(-400),
         });
         get().check();
       },

@@ -1,10 +1,12 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../../ui/Text';
 import { MODES } from '../../data';
 import { useGame } from '../../store/game';
 import { BackButton, Card, Header, Screen } from '../../ui/components';
 import { C, F, S } from '../../ui/theme';
+import { goBack } from '../../ui/nav';
 
 /** Pick a franchise or an era, then start a draft in it. */
 export default function ModePicker() {
@@ -19,7 +21,7 @@ export default function ModePicker() {
     <Screen>
       <Header
         title={kind === 'era' ? t('modes.pickEra') : kind === 'crisis' ? t('crisis.title') : t('modes.pickFranchise')}
-        left={<BackButton onPress={() => router.back()} />}
+        left={<BackButton onPress={() => goBack()} />}
       />
       {kind === 'crisis' && <Text style={styles.sub}>{t('crisis.chooseMode')}</Text>}
       {list.map((m) => {

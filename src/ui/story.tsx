@@ -1,22 +1,24 @@
 /** Storytelling pieces shared by the season, playoffs and result screens. */
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from './Text';
 import type { BoxLine, GameResult } from '../engine/game';
 import type { Headline } from '../engine/story/news';
 import type { Recap } from '../engine/story/recap';
 import type { Roster } from '../engine/types';
+import { Icon, type IconName } from './icons';
 import { C, F, R, S } from './theme';
 
-const NEWS_ICON: Record<Headline['kind'], string> = {
-  streakW: '🔥', streakL: '🧊', big: '💥', triple: '📊', wins: '✅', injury: '🩼', first: '🥇', upset: '😤',
+const NEWS_ICON: Record<Headline['kind'], IconName> = {
+  streakW: 'flame', streakL: 'news', big: 'star', triple: 'chart', wins: 'check', injury: 'siren', first: 'crown', upset: 'bolt',
 };
 
 export function NewsItem({ h }: { h: Headline }) {
   const { t } = useTranslation();
   return (
     <View style={styles.news}>
-      <Text style={styles.newsIcon}>{NEWS_ICON[h.kind]}</Text>
+      <Icon name={NEWS_ICON[h.kind]} size={24} />
       <Text style={styles.newsText}>{t(`news.${h.kind}`, { name: h.name, n: h.n })}</Text>
       <Text style={styles.newsG}>G{h.round + 1}</Text>
     </View>

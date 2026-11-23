@@ -15,7 +15,14 @@
     "best": "最高成績",
     "modes": "ゲームモード",
     "resume": "続きから再開",
-    "play": "プレイ"
+    "play": "プレイ",
+    "streak": "連続ログイン",
+    "player": "プレイヤー",
+    "picks": "ピック",
+    "streakSaved": "連続記録を守った！",
+    "streakSavedBody_other": "ストリークフリーズが休んだ{{count}}日分をカバーしました。",
+    "duelTitle": "友だちとデュエル",
+    "duelCta": "誰が一番？"
   },
   "mode": {
     "current": {
@@ -90,7 +97,8 @@
     "bench": "ベンチ",
     "startSeason": "シーズン開始",
     "landed": "引いたチーム",
-    "empty": "空き"
+    "empty": "空き",
+    "benchSlot": "ベンチ{{n}}"
   },
   "season": {
     "title": "レギュラーシーズン",
@@ -183,7 +191,8 @@
     "strength": "強さ",
     "resume": "再開",
     "missed": "未完了",
-    "replaceRun": "進行中のプレイが置き換わります。もう一度タップで開始。"
+    "replaceRun": "進行中のプレイが置き換わります。もう一度タップで開始。",
+    "share": "今日の結果をシェア"
   },
   "duel": {
     "title": "対戦",
@@ -363,7 +372,13 @@
     "hofEmpty": "あなたのもとで4シーズン、そして偉大なキャリアで殿堂入り。",
     "lottery": "ドラフト抽選",
     "lotterySkip": "スキップ",
-    "openSpots_other": "空き枠 {{count}}"
+    "openSpots_other": "空き枠 {{count}}",
+    "f1Title": "フランチャイズを築く",
+    "f1Body": "ドラフト、再契約、トレードで1つのチームを毎シーズン育てよう。",
+    "f2Title": "職を守る",
+    "f2Body": "経営陣は毎年目標を設定。達成できない年が続くと解任。",
+    "f3Title": "歴史を作る",
+    "f3Body": "優勝、殿堂、そして残り続けるチーム記録。"
   },
   "collect": {
     "title": "コレクション",
@@ -373,7 +388,7 @@
     "chooseOne": "1枚を選んで獲得",
     "keep": "{{name}}を獲得",
     "noPicks": "未開封のピックはありません。明日またデイリーピックを受け取ろう。",
-    "streak": "🔥 {{n}}日連続",
+    "streak": "{{n}}日連続",
     "odds": "カード1枚あたりの確率",
     "cards": "{{n}}枚",
     "empty": "プレイヤーピックを開封してコレクションを始めよう。",
@@ -396,7 +411,10 @@
     "guarantee_mythic": "90以上1枚確定",
     "guarantee_legendary": "ウルトラ1枚確定",
     "waiting_other": "未開封のピック {{count}}",
-    "nextWeekly_other": "ウィークリーピックまであと{{count}}日"
+    "nextWeekly_other": "ウィークリーピックまであと{{count}}日",
+    "powerUp": "パワーアップ（残り{{n}}回）",
+    "powerOdds": "ピック全体が昇格する確率{{pct}}%",
+    "upgraded": "アップグレード！"
   },
   "lineup": {
     "title": "ラインナップ",
@@ -604,6 +622,59 @@
   },
   "profile": {
     "title": "プロフィール",
-    "pick": "アバターを選ぶ"
+    "pick": "アバターを選ぶ",
+    "namePlaceholder": "名前"
+  },
+  "tabs": {
+    "daily": "デイリー",
+    "cards": "カード",
+    "play": "プレー",
+    "career": "キャリア",
+    "duels": "デュエル"
+  },
+  "ladder": {
+    "title": "ウィークリーリーグ",
+    "promote": "昇格",
+    "relegate": "降格",
+    "safe": "残留",
+    "endsIn": "残り{{time}}",
+    "pts": "pt",
+    "how": "ポイントの稼ぎ方",
+    "howRun": "シーズンを終えるごとに勝利数の半分",
+    "howBonus": "プレーオフ +10、優勝 +25",
+    "howDaily": "デイリーチャレンジ1つにつき +5",
+    "howMove": "月曜に上位{{up}}人が昇格、下位{{down}}人が降格",
+    "standings": "今週",
+    "botsNote": "オンラインリーグ開始まではライバルはAI GMです。",
+    "promoted": "{{tier}}に昇格！",
+    "relegated": "{{tier}}に降格",
+    "stayed": "{{tier}}に残留",
+    "finished": "先週の順位：{{rank}}位",
+    "bronze": "ブロンズ",
+    "silver": "シルバー",
+    "gold": "ゴールド",
+    "platinum": "プラチナ",
+    "legend": "レジェンド",
+    "inPromotion": "昇格圏内！",
+    "toPromotion": "昇格ラインまであと{{n}}pt"
+  },
+  "challenge": {
+    "invalid": "このチャレンジリンクは無効です。",
+    "title": "{{name}}からの挑戦状",
+    "body": "同じスピン、同じリーグ。記録を超えよう。",
+    "accept": "挑戦を受ける",
+    "share": "シェアして挑戦",
+    "shared": "シェアしました！",
+    "copied": "リンクをコピーしました！",
+    "won": "{{name}}に勝利！",
+    "lost": "今回は{{name}}の勝ち",
+    "tied": "{{name}}と引き分け"
+  },
+  "stake": {
+    "title": "ダブル・オア・ナッシング？",
+    "body": "オールイン：ファイナル進出でリーグpt×2、ただし1回戦敗退なら半分に。",
+    "snap": "オールイン",
+    "safe": "安全策",
+    "on": "オールイン"
   }
 }

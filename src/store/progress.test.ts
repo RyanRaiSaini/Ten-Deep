@@ -78,5 +78,17 @@ describe('progress store', () => {
     expect(useProgress.getState().stats.runs).toBe(12);
     useProfile.setState(useProfile.getInitialState(), true);
   });
+
+  it('moving the clock back to an earlier week cannot pay a weekly mission twice', async () => {
+    const { weeklyMissions } = await import('../engine/progress/missions');
+    useProgress.getState().rollover('2026-11-23');
+    const m = weeklyMissions('2026-11-23')[0];
+    useProgress.setState((s) => ({ stats: { ...s.stats, [m.stat]: s.stats[m.stat] + m.target } }));
+    expect(useProgress.getState().claim(m.id)).toBe(true);
+    useProgress.getState().rollover('2026-11-30'); // next week
+    useProgress.getState().rollover('2026-11-24'); // clock moved back
+    useProgress.setState((s) => ({ stats: { ...s.stats, [m.stat]: s.stats[m.stat] + m.target } }));
+    expect(useProgress.getState().claim(m.id)).toBe(false);
+  });
 });
 

@@ -96,3 +96,34 @@ describe('collection store', () => {
     expect(useCollection.getState().pending).toHaveLength(1);
   });
 });
+
+describe('streak freezes', () => {
+  it('a 7-day streak earns a freeze, and a missed day spends it instead of breaking the streak', () => {
+    useCollection.setState(useCollection.getInitialState(), true);
+    for (let d = 1; d <= 7; d++) useCollection.getState().checkIn(`2026-12-0${d}`);
+    expect(useCollection.getState()).toMatchObject({ streak: 7, freezes: 1 });
+    useCollection.getState().checkIn('2026-12-09'); // missed the 8th
+    expect(useCollection.getState()).toMatchObject({ streak: 8, freezes: 0, freezesUsed: 1 });
+    useCollection.getState().checkIn('2026-12-11'); // missed again, no freeze left
+    expect(useCollection.getState().streak).toBe(1);
+  });
+});
+
+describe('power-up taps', () => {
+  it('three taps at most; an upgrade changes the pick type and its cards, the same way every time', () => {
+    useCollection.setState(useCollection.getInitialState(), true);
+    useCollection.getState().checkIn('2026-11-22');
+    const id = useCollection.getState().pending[0].id;
+    const results = [useCollection.getState().powerUp(id), useCollection.getState().powerUp(id), useCollection.getState().powerUp(id)];
+    expect(useCollection.getState().powerUp(id)).toBeNull();
+    const p = useCollection.getState().pending[0];
+    expect(p.taps).toBe(3);
+    const ups = results.filter((r) => r === 'up').length;
+    expect(p.type).toBe((['daily', 'run', 'playoffs', 'weekly'] as const)[ups]);
+    // Replaying the same pick gives the same outcome.
+    useCollection.setState(useCollection.getInitialState(), true);
+    useCollection.getState().checkIn('2026-11-22');
+    const again = [0, 1, 2].map(() => useCollection.getState().powerUp(id));
+    expect(again).toEqual(results);
+  });
+});

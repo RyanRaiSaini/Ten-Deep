@@ -1,7 +1,8 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { CARD_BY_ID } from '../data/cards';
 import { canPlace, chemistry, lineupRoster } from '../engine/collect/lineup';
@@ -10,6 +11,8 @@ import { levelsOf, useCollection } from '../store/collection';
 import { CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
+import { Icon } from '../ui/icons';
+import { goBack } from '../ui/nav';
 
 /** Build a 10-card lineup from your collection. */
 export default function LineupScreen() {
@@ -36,11 +39,11 @@ export default function LineupScreen() {
 
   return (
     <Screen>
-      <Header title={t('lineup.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('lineup.title')} left={<BackButton onPress={() => goBack()} />} />
       <Card style={styles.summary}>
         <Text style={styles.rating} testID="lineup-rating">{t('lineup.teamRating', { n: rating })}</Text>
         <Text style={[styles.chem, { color: chem.bonus ? C.neon : C.muted }]}>
-          ⚡ {t('lineup.chemistry', { n: chem.bonus })}
+          + {t('lineup.chemistry', { n: chem.bonus })}
           {chem.franchise && chem.franchise.count >= 3 ? `  ·  ${chem.franchise.name} ×${chem.franchise.count}` : ''}
           {chem.decade && chem.decade.count >= 5 ? `  ·  ${chem.decade.name} ×${chem.decade.count}` : ''}
         </Text>
@@ -77,7 +80,7 @@ export default function LineupScreen() {
       )}
 
       <Button label={t('lineup.autoFill')} variant="secondary" onPress={() => { col.autoFillLineup(); feel('thunk'); }} testID="lineup-autofill" />
-      <Button label={`⚔️  ${t('gauntlet.title')}`} variant="gold" onPress={() => router.push('/gauntlet')} testID="to-gauntlet" />
+      <Button label={t('gauntlet.title')} icon={<Icon name="shield" size={22} />} variant="gold" onPress={() => router.push('/gauntlet')} testID="to-gauntlet" />
     </Screen>
   );
 }

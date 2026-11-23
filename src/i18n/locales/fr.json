@@ -15,7 +15,16 @@
     "best": "Meilleur bilan",
     "modes": "Modes de jeu",
     "resume": "Reprendre ta partie",
-    "play": "Jouer"
+    "play": "Jouer",
+    "streak": "Série de connexions",
+    "player": "Joueur",
+    "picks": "Choix",
+    "streakSaved": "Série sauvée !",
+    "streakSavedBody_many": "Des gels de série ont couvert les {{count}} jours manqués.",
+    "streakSavedBody_one": "Un gel de série a couvert le jour manqué.",
+    "streakSavedBody_other": "Des gels de série ont couvert les {{count}} jours manqués.",
+    "duelTitle": "Défie tes amis",
+    "duelCta": "Qui est le meilleur ?"
   },
   "mode": {
     "current": {
@@ -90,7 +99,8 @@
     "bench": "Banc",
     "startSeason": "Lancer la saison",
     "landed": "Tu tombes sur",
-    "empty": "Libre"
+    "empty": "Libre",
+    "benchSlot": "Banc {{n}}"
   },
   "season": {
     "title": "Saison régulière",
@@ -185,7 +195,8 @@
     "strength": "Force",
     "resume": "Reprendre",
     "missed": "Manqué",
-    "replaceRun": "Ceci remplace ta partie en cours. Touche encore pour commencer."
+    "replaceRun": "Ceci remplace ta partie en cours. Touche encore pour commencer.",
+    "share": "Partager mes résultats du jour"
   },
   "duel": {
     "title": "Duel",
@@ -367,7 +378,13 @@
     "lotterySkip": "Passer",
     "openSpots_many": "{{count}} places libres",
     "openSpots_one": "{{count}} place libre",
-    "openSpots_other": "{{count}} places libres"
+    "openSpots_other": "{{count}} places libres",
+    "f1Title": "Bâtis une franchise",
+    "f1Body": "Drafte, prolonge, échange et développe une équipe, saison après saison.",
+    "f2Title": "Garde ton poste",
+    "f2Body": "Le conseil fixe un objectif chaque année. Rate trop souvent et tu es viré.",
+    "f3Title": "Entre dans l'histoire",
+    "f3Body": "Des titres, un Hall of Fame et des records de franchise."
   },
   "collect": {
     "title": "Collection",
@@ -377,7 +394,7 @@
     "chooseOne": "Garde une carte",
     "keep": "Garder {{name}}",
     "noPicks": "Aucun choix en attente. Reviens demain pour ton choix du jour.",
-    "streak": "🔥 Série de {{n}} jours",
+    "streak": "Série de {{n}} jours",
     "odds": "Probabilités par carte",
     "cards": "{{n}} cartes",
     "empty": "Ouvre un choix de joueurs pour lancer ta collection.",
@@ -404,7 +421,10 @@
     "waiting_other": "{{count}} choix en attente",
     "nextWeekly_many": "Choix hebdo dans {{count}} jours",
     "nextWeekly_one": "Choix hebdo dans {{count}} jour",
-    "nextWeekly_other": "Choix hebdo dans {{count}} jours"
+    "nextWeekly_other": "Choix hebdo dans {{count}} jours",
+    "powerUp": "Booster ({{n}} restants)",
+    "powerOdds": "{{pct}} % de chances d'améliorer tout le choix",
+    "upgraded": "AMÉLIORÉ !"
   },
   "lineup": {
     "title": "Alignement",
@@ -612,6 +632,59 @@
   },
   "profile": {
     "title": "Profil",
-    "pick": "Choisis ton avatar"
+    "pick": "Choisis ton avatar",
+    "namePlaceholder": "Ton nom"
+  },
+  "tabs": {
+    "daily": "Défis",
+    "cards": "Cartes",
+    "play": "Jouer",
+    "career": "Carrière",
+    "duels": "Duels"
+  },
+  "ladder": {
+    "title": "Ligue de la semaine",
+    "promote": "MONTÉE",
+    "relegate": "RELÉGATION",
+    "safe": "SÛR",
+    "endsIn": "Fin dans {{time}}",
+    "pts": "pts",
+    "how": "Comment marquer",
+    "howRun": "Chaque saison terminée : la moitié de tes victoires en points",
+    "howBonus": "+10 pour les playoffs, +25 pour un titre",
+    "howDaily": "+5 par défi du jour",
+    "howMove": "Les {{up}} premiers montent lundi, les {{down}} derniers descendent",
+    "standings": "Cette semaine",
+    "botsNote": "Tes rivaux sont des GM IA en attendant les ligues en ligne.",
+    "promoted": "Promu en {{tier}} !",
+    "relegated": "Relégué en {{tier}}",
+    "stayed": "Tu restes en {{tier}}",
+    "finished": "La semaine dernière, tu as fini {{rank}}e",
+    "bronze": "Bronze",
+    "silver": "Argent",
+    "gold": "Or",
+    "platinum": "Platine",
+    "legend": "Légende",
+    "inPromotion": "En zone de montée !",
+    "toPromotion": "Encore {{n}} pts jusqu'à la montée"
+  },
+  "challenge": {
+    "invalid": "Ce lien de défi est cassé.",
+    "title": "{{name}} te défie",
+    "body": "Mêmes tirages, même ligue. Bats son bilan.",
+    "accept": "Relever le défi",
+    "share": "Partager et défier",
+    "shared": "Partagé !",
+    "copied": "Lien copié !",
+    "won": "Tu as battu {{name}} !",
+    "lost": "{{name}} gagne cette fois",
+    "tied": "Égalité avec {{name}}"
+  },
+  "stake": {
+    "title": "Quitte ou double ?",
+    "body": "Tapis : atteins la finale pour ×2 points de ligue, mais une élimination au 1er tour en coûte la moitié.",
+    "snap": "Tapis",
+    "safe": "Rester prudent",
+    "on": "TAPIS"
   }
 }

@@ -1,7 +1,8 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { evaluateTrade } from '../engine/career/trades';
 import { ALL_SLOTS, type Player } from '../engine/types';
@@ -9,6 +10,7 @@ import { useCareer } from '../store/career';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, R, S, money, ovrColor } from '../ui/theme';
 import { payOf } from '../engine/cap';
+import { goBack } from '../ui/nav';
 
 /** Offseason trades: pick one of yours, a partner, and one of theirs. Their GM only says yes to a deal that helps them. */
 export default function Trade() {
@@ -18,7 +20,7 @@ export default function Trade() {
   const [team, setTeam] = useState<number | null>(null);
   const [want, setWant] = useState<string | null>(null);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
-  if (!st) return <Screen><Header title={t('trade.title')} left={<BackButton onPress={() => router.back()} />} /></Screen>;
+  if (!st) return <Screen><Header title={t('trade.title')} left={<BackButton onPress={() => goBack()} />} /></Screen>;
 
   const roster = (ti: number) => ALL_SLOTS.map((k) => st.teams[ti].slots[k]).filter((p): p is Player => !!p);
   const verdict = give && team !== null && want ? evaluateTrade(st, give, team, want) : null;
@@ -48,7 +50,7 @@ export default function Trade() {
 
   return (
     <Screen>
-      <Header title={t('trade.title')} left={<BackButton onPress={() => router.back()} />} />
+      <Header title={t('trade.title')} left={<BackButton onPress={() => goBack()} />} />
       <Text style={styles.hint}>{t('trade.hint')}</Text>
       {msg && <Text style={[styles.msg, { color: msg.ok ? C.neon : C.danger }]} testID="trade-msg">{msg.text}</Text>}
 
@@ -76,7 +78,7 @@ export default function Trade() {
 
       <Card style={{ gap: S.sm }}>
         <Button label={t('trade.propose')} variant="gold" disabled={!verdict} onPress={propose} testID="trade-propose" />
-        <Button label={t('common.back')} variant="ghost" onPress={() => router.back()} />
+        <Button label={t('common.back')} variant="ghost" onPress={() => goBack()} />
       </Card>
     </Screen>
   );
