@@ -23,7 +23,7 @@ export const useProfile = create<Profile>()(
       titles: 0,
       bestWins: 0,
       bestLosses: 0,
-      avatarId: 'floor-general-hardwood',
+      avatarId: 'captain',
       recordDraft: ({ wins, losses, champion }) =>
         set((s) => ({
           draftsPlayed: s.draftsPlayed + 1,

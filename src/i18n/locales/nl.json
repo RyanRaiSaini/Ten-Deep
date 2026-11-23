@@ -97,13 +97,15 @@
     "game": "Wedstrijd {{n}} van 82",
     "skipDeadline": "Naar de deadline",
     "skipPlayoffs": "Naar de play-offs",
-    "pause": "Pauze",
+    "pause": "Pauzeren",
     "resume": "Afspelen",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} mist {{games}} wedstrijden — {{label}}",
     "seasonEnding": "{{name}} is uit voor het seizoen",
-    "standing": "Plaatsing #{{n}}"
+    "standing": "Plaatsing #{{n}}",
+    "injury_one": "{{name}} mist {{count}} wedstrijd — {{label}}",
+    "injury_other": "{{name}} mist {{count}} wedstrijden — {{label}}",
+    "play": "Afspelen"
   },
   "deadline": {
     "title": "Transferdeadline",
@@ -341,12 +343,11 @@
     "rosterFull": "Je selectie is vol: kies wie je schrapt voor de rookie.",
     "skipRookie": "Rookie overslaan",
     "freeAgency": "Vrije spelers",
-    "openSpots": "{{n}} open plekken",
     "sign": "Contracteren",
     "minException": "Minimumuitzondering: contracteer {{name}}",
     "startSeason": "Start {{label}}",
     "over": "Carrière voorbij",
-    "overDesc": "De directie heeft genoeg gezien. {{n}} seizoenen, {{titles}} titels.",
+    "overDesc": "Het bestuur heeft genoeg gezien. Seizoenen: {{n}} · Titels: {{titles}}",
     "newCareer": "Nieuwe carrière",
     "r_champion": "Kampioen",
     "r_finals": "Finale verloren",
@@ -362,7 +363,9 @@
     "hof": "Hall of Fame",
     "hofEmpty": "Vier seizoenen bij jou en een geweldige carrière geven een plek.",
     "lottery": "Draftloterij",
-    "lotterySkip": "Overslaan"
+    "lotterySkip": "Overslaan",
+    "openSpots_one": "{{count}} open plek",
+    "openSpots_other": "{{count}} open plekken"
   },
   "collect": {
     "title": "Collectie",
@@ -378,7 +381,6 @@
     "empty": "Open een spelerskeuze om je collectie te starten.",
     "all": "Alle",
     "claim": "Claim je keuze",
-    "waiting": "{{n}} keuzes in de wacht",
     "t_daily": "Dagkeuze",
     "t_run": "Runkeuze",
     "t_playoffs": "Play-offkeuze",
@@ -395,7 +397,10 @@
     "guarantee_champion": "Alle kaarten 83+",
     "guarantee_mythic": "Eén 90+ gegarandeerd",
     "guarantee_legendary": "Eén Ultra gegarandeerd",
-    "nextWeekly": "Weekkeuze over {{n}} dagen"
+    "waiting_one": "{{count}} keuze wacht",
+    "waiting_other": "{{count}} keuzes wachten",
+    "nextWeekly_one": "Weekkeuze over {{count}} dag",
+    "nextWeekly_other": "Weekkeuze over {{count}} dagen"
   },
   "lineup": {
     "title": "Opstelling",
@@ -599,5 +604,9 @@
     "cap": "Afgewezen: past niet onder het plafond",
     "position": "Afgewezen: een basisspeler moet op de positie passen",
     "missing": "Kies eerst beide spelers"
+  },
+  "profile": {
+    "title": "Profiel",
+    "pick": "Kies je avatar"
   }
 }

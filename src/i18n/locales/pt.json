@@ -101,9 +101,12 @@
     "resume": "Jogar",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} fora por {{games}} jogos — {{label}}",
     "seasonEnding": "{{name}} está fora da temporada",
-    "standing": "Cabeça de chave nº {{n}}"
+    "standing": "Cabeça de chave nº {{n}}",
+    "injury_many": "{{name}} fora por {{count}} jogos — {{label}}",
+    "injury_one": "{{name}} fora por {{count}} jogo — {{label}}",
+    "injury_other": "{{name}} fora por {{count}} jogos — {{label}}",
+    "play": "Continuar"
   },
   "deadline": {
     "title": "Prazo de trocas",
@@ -341,12 +344,11 @@
     "rosterFull": "Seu elenco está cheio: escolha quem cortar pelo calouro.",
     "skipRookie": "Abrir mão do calouro",
     "freeAgency": "Agência livre",
-    "openSpots": "{{n}} vagas abertas",
     "sign": "Contratar",
     "minException": "Exceção mínima: contratar {{name}}",
     "startSeason": "Começar {{label}}",
     "over": "Fim da carreira",
-    "overDesc": "A diretoria já viu o suficiente. {{n}} temporadas, {{titles}} títulos.",
+    "overDesc": "A diretoria já viu o bastante. Temporadas: {{n}} · Títulos: {{titles}}",
     "newCareer": "Nova carreira",
     "r_champion": "Campeões",
     "r_finals": "Perdeu a final",
@@ -362,7 +364,10 @@
     "hof": "Hall da Fama",
     "hofEmpty": "Quatro temporadas com você e uma grande carreira garantem a vaga.",
     "lottery": "Loteria do draft",
-    "lotterySkip": "Pular"
+    "lotterySkip": "Pular",
+    "openSpots_many": "{{count}} vagas abertas",
+    "openSpots_one": "{{count}} vaga aberta",
+    "openSpots_other": "{{count}} vagas abertas"
   },
   "collect": {
     "title": "Coleção",
@@ -378,7 +383,6 @@
     "empty": "Abra uma escolha de jogador para começar sua coleção.",
     "all": "Todas",
     "claim": "Resgatar sua escolha",
-    "waiting": "{{n}} escolhas esperando",
     "t_daily": "Escolha diária",
     "t_run": "Escolha da partida",
     "t_playoffs": "Escolha dos playoffs",
@@ -395,7 +399,12 @@
     "guarantee_champion": "Todas as cartas 83+",
     "guarantee_mythic": "Um 90+ garantido",
     "guarantee_legendary": "Uma Ultra garantida",
-    "nextWeekly": "Escolha semanal em {{n}} dias"
+    "waiting_many": "{{count}} escolhas esperando",
+    "waiting_one": "{{count}} escolha esperando",
+    "waiting_other": "{{count}} escolhas esperando",
+    "nextWeekly_many": "Escolha semanal em {{count}} dias",
+    "nextWeekly_one": "Escolha semanal em {{count}} dia",
+    "nextWeekly_other": "Escolha semanal em {{count}} dias"
   },
   "lineup": {
     "title": "Escalação",
@@ -599,5 +608,9 @@
     "cap": "Recusada: estoura o teto",
     "position": "Recusada: um titular precisa servir na posição",
     "missing": "Escolha os dois jogadores primeiro"
+  },
+  "profile": {
+    "title": "Perfil",
+    "pick": "Escolha seu avatar"
   }
 }

@@ -101,9 +101,11 @@
     "resume": "Abspielen",
     "vs": "vs",
     "at": "@",
-    "injury": "{{name}} fällt {{games}} Spiele aus — {{label}}",
     "seasonEnding": "{{name}} fällt für die Saison aus",
-    "standing": "Platz {{n}}"
+    "standing": "Platz {{n}}",
+    "injury_one": "{{name}} fällt {{count}} Spiel aus — {{label}}",
+    "injury_other": "{{name}} fällt {{count}} Spiele aus — {{label}}",
+    "play": "Weiter"
   },
   "deadline": {
     "title": "Trade Deadline",
@@ -341,12 +343,11 @@
     "rosterFull": "Dein Kader ist voll: Wähle, wen du für den Rookie entlässt.",
     "skipRookie": "Auf den Rookie verzichten",
     "freeAgency": "Free Agency",
-    "openSpots": "{{n}} freie Plätze",
     "sign": "Verpflichten",
     "minException": "Minimum-Ausnahme: {{name}} verpflichten",
     "startSeason": "{{label}} starten",
     "over": "Karriere vorbei",
-    "overDesc": "Die Chefetage hat genug gesehen. {{n}} Saisons, {{titles}} Titel.",
+    "overDesc": "Der Vorstand hat genug gesehen. Saisons: {{n}} · Titel: {{titles}}",
     "newCareer": "Neue Karriere",
     "r_champion": "Meister",
     "r_finals": "Im Finale verloren",
@@ -362,7 +363,9 @@
     "hof": "Hall of Fame",
     "hofEmpty": "Vier Saisons bei dir und eine große Karriere sichern den Platz.",
     "lottery": "Draft-Lotterie",
-    "lotterySkip": "Überspringen"
+    "lotterySkip": "Überspringen",
+    "openSpots_one": "{{count}} freier Platz",
+    "openSpots_other": "{{count}} freie Plätze"
   },
   "collect": {
     "title": "Sammlung",
@@ -378,7 +381,6 @@
     "empty": "Öffne einen Spieler-Pick, um deine Sammlung zu starten.",
     "all": "Alle",
     "claim": "Pick abholen",
-    "waiting": "{{n}} Picks offen",
     "t_daily": "Tages-Pick",
     "t_run": "Run-Pick",
     "t_playoffs": "Playoff-Pick",
@@ -395,7 +397,10 @@
     "guarantee_champion": "Alle Karten 83+",
     "guarantee_mythic": "Ein 90+ garantiert",
     "guarantee_legendary": "Eine Ultra garantiert",
-    "nextWeekly": "Wochen-Pick in {{n}} Tagen"
+    "waiting_one": "{{count}} Pick wartet",
+    "waiting_other": "{{count}} Picks warten",
+    "nextWeekly_one": "Wochen-Pick in {{count}} Tag",
+    "nextWeekly_other": "Wochen-Pick in {{count}} Tagen"
   },
   "lineup": {
     "title": "Aufstellung",
@@ -599,5 +604,9 @@
     "cap": "Abgelehnt: sprengt die Gehaltsgrenze",
     "position": "Abgelehnt: ein Starter muss zur Position passen",
     "missing": "Wähle zuerst beide Spieler"
+  },
+  "profile": {
+    "title": "Profil",
+    "pick": "Wähle deinen Avatar"
   }
 }
