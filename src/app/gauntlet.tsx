@@ -6,6 +6,7 @@ import { feel } from '../audio/feel';
 import { GAUNTLET, lineupRoster, playStage, stageReward } from '../engine/collect/lineup';
 import type { SeriesResult } from '../engine/series';
 import { levelsOf, useCollection } from '../store/collection';
+import { Confetti } from '../ui/fx';
 import { BackButton, Button, Card, Header, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
 
@@ -39,8 +40,9 @@ export default function Gauntlet() {
   const finished = !!series && shown >= series.result.games.length;
   const wa = games.filter((g) => g.scoreA > g.scoreB).length;
 
+  const wonSeries = finished && series.result.winner === 'a';
   return (
-    <Screen>
+    <Screen tint={C.gold} overlay={wonSeries ? <Confetti key={series.stage} /> : null}>
       <Header title={t('gauntlet.title')} left={<BackButton onPress={() => router.back()} />} />
       <Text style={styles.desc}>{t('gauntlet.desc')}</Text>
 

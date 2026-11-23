@@ -12,11 +12,13 @@ import { useSettings } from '../store/settings';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, R, S } from '../ui/theme';
+import { useRunColors } from '../ui/runColors';
 
 const BASE_TICK_MS = 120;
 
 export default function Season() {
   const { t, i18n } = useTranslation();
+  const runColors = useRunColors();
   const g = useGame();
   const speed = useSettings((s) => s.simSpeed);
   const [season, setSeason] = useState<SeasonState | null>(g.season);
@@ -77,7 +79,7 @@ export default function Season() {
   };
 
   return (
-    <Screen>
+    <Screen tint={runColors[0]}>
       <Header
         title={t('season.title')}
         left={<BackButton onPress={() => goHome()} />}

@@ -429,5 +429,16 @@
     "ast": "Spielaufbau",
     "three": "Wurf",
     "levelHint": "Jedes Duplikat bringt ein Level (+1 Rating, bis +3)."
+  },
+  "welcome": {
+    "t1": "Draft zehn tief",
+    "b1": "Dreh am Rad, wähl einen Spieler und bring zehn unter eine Gehaltsgrenze von 150 Mio. $. Höchstens zwei 95+-Stars.",
+    "t2": "Überstehe 82 Spiele",
+    "b2": "Verletzungen, eine Trade-Deadline und Playoffs über sieben Spiele. 70 Siege sind selten. 82-0 ist ein Mythos.",
+    "t3": "Sammle die Legenden",
+    "b3": "Jeder Run bringt dir einen Spieler-Pick. Stell ein Karten-Lineup auf und stell dich dem Gauntlet.",
+    "next": "Weiter",
+    "skip": "Überspringen",
+    "start": "Los geht's"
   }
 }

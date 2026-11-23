@@ -3,13 +3,22 @@ import { useTranslation } from 'react-i18next';
 import { isRTL } from '../i18n';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { C, F, R, S } from './theme';
+import { LinearGradient } from 'expo-linear-gradient';
+import { alpha, C, F, R, S } from './theme';
 
-export function Screen({ children, scroll = true }: { children: ReactNode; scroll?: boolean }) {
+/**
+ * A full screen. `tint` washes a team color down from the top; `overlay` (e.g. confetti)
+ * sits above the scrolling content across the whole screen.
+ */
+export function Screen({ children, scroll = true, tint, overlay }: { children: ReactNode; scroll?: boolean; tint?: string; overlay?: ReactNode }) {
   const body = <View style={styles.inner}>{children}</View>;
   return (
     <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
+      {tint && (
+        <LinearGradient colors={[alpha(tint, 0.42), alpha(tint, 0.12), alpha(C.bg, 0)]} locations={[0, 0.45, 1]} style={styles.tint} />
+      )}
       {scroll ? <ScrollView contentContainerStyle={styles.scroll}>{body}</ScrollView> : body}
+      {overlay}
     </SafeAreaView>
   );
 }
@@ -103,6 +112,7 @@ export function Segmented<T extends string | number>({
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: C.bg },
   scroll: { flexGrow: 1 },
+  tint: { position: 'absolute', top: 0, left: 0, right: 0, height: 380, pointerEvents: 'none' },
   inner: { flex: 1, width: '100%', maxWidth: 560, alignSelf: 'center', paddingHorizontal: S.lg, paddingBottom: S.xl, gap: S.md },
   header: { flexDirection: 'row', alignItems: 'center', paddingVertical: S.md, gap: S.sm },
   headerSide: { width: 72 },

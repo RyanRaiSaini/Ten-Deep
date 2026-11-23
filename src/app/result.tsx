@@ -12,6 +12,8 @@ import { useCollection } from '../store/collection';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
 import { Button, Card, Screen } from '../ui/components';
+import { Confetti, CountUp } from '../ui/fx';
+import { useRunColors } from '../ui/runColors';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, S } from '../ui/theme';
 
@@ -22,6 +24,7 @@ export default function Result() {
   const won = !!ps && champion(ps) === 0;
   const career = useCareer();
   const pendingPicks = useCollection((s) => s.pending.length);
+  const colors = useRunColors();
   // Career seasons are recorded once, as soon as the result is shown.
   useEffect(() => { if (g.career) useCareer.getState().recordSeason(); }, [g.career]);
   useEffect(() => { if (won) feel('fanfare'); }, [won]);
@@ -44,7 +47,7 @@ export default function Result() {
     .sort((a, b) => b.tot.pts / b.tot.gp - a.tot.pts / a.tot.gp)[0];
 
   return (
-    <Screen>
+    <Screen tint={won ? C.gold : colors[0]} overlay={won ? <Confetti colors={[C.gold, colors[0], colors[1], '#FFFFFF']} /> : null}>
       <View style={styles.hero}>
         <Text style={styles.trophy}>{won ? '🏆' : mine ? '🏀' : '📉'}</Text>
         <Text style={[styles.outcome, won && { color: C.gold }]}>{outcome}</Text>
@@ -59,7 +62,10 @@ export default function Result() {
         )}
       </View>
       <Card style={styles.stats}>
-        <Stat label={t('result.record')} value={`${rec.w}-${rec.l}`} />
+        <View style={{ flex: 1, alignItems: 'center', gap: 2 }}>
+          <CountUp to={rec.w} format={(n) => `${n}-${rec.l}`} style={[styles.value, won && { color: C.gold }]} testID="result-record" />
+          <Text style={styles.sub}>{t('result.record')}</Text>
+        </View>
         <Stat label={t('result.seed')} value={`#${seed}`} />
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>

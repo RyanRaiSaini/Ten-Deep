@@ -429,5 +429,16 @@
     "ast": "Oyun kurma",
     "three": "Şut",
     "levelHint": "Her kopya bir seviye ekler (+1 reyting, en fazla +3)."
+  },
+  "welcome": {
+    "t1": "On kişilik draft",
+    "b1": "Çarkı çevir, oyuncu seç ve on kişiyi 150 M$ tavanın altına sığdır. En fazla iki 95+ yıldız.",
+    "t2": "82 maçı atlat",
+    "b2": "Sakatlıklar, takas son tarihi ve yedi maçlık playofflar. 70 galibiyet nadirdir. 82-0 bir efsanedir.",
+    "t3": "Efsaneleri topla",
+    "b3": "Her oyun bir Oyuncu Seçimi kazandırır. Kart kadronu kur ve Meydan Okuma'ya çık.",
+    "next": "İleri",
+    "skip": "Atla",
+    "start": "Hadi başlayalım"
   }
 }

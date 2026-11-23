@@ -6,9 +6,11 @@ import { champion, seriesFor, seriesOver, seriesWinner, type Series } from '../e
 import { useGame } from '../store/game';
 import { Button, Card, Header, Label, Screen } from '../ui/components';
 import { C, F, S } from '../ui/theme';
+import { useRunColors } from '../ui/runColors';
 
 export default function Playoffs() {
   const { t } = useTranslation();
+  const runColors = useRunColors();
   const g = useGame();
   const ps = g.playoffs;
   if (!ps) return <Redirect href="/" />;
@@ -36,7 +38,7 @@ export default function Playoffs() {
   };
 
   return (
-    <Screen>
+    <Screen tint={runColors[0]}>
       <Header title={t('playoffs.title')} />
 
       {!mine && <Text style={styles.big}>{t('playoffs.missed')}</Text>}
