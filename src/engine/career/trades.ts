@@ -1,5 +1,5 @@
 /** Offseason trades: one of yours for one of theirs. The AI says yes only when it comes out ahead. */
-import { capRoom, salaryFor, payOf } from '../cap';
+import { capRoom, payOf, salaryFor, superstarBlocked } from '../cap';
 import { STARTER_SLOTS, type Player, type SlotId } from '../types';
 import type { OffseasonState } from './offseason';
 
@@ -16,7 +16,7 @@ const AI_EDGE = 1;
 /** How far over the cap a trade may take a team (same rule as AI re-signing). */
 const CAP_SLACK = -10;
 
-export type TradeVerdict = { ok: true } | { ok: false; reason: 'value' | 'cap' | 'position' | 'missing' };
+export type TradeVerdict = { ok: true } | { ok: false; reason: 'value' | 'cap' | 'position' | 'stars' | 'missing' };
 
 const slotOf = (slots: OffseasonState['teams'][number]['slots'], id: string) =>
   (Object.keys(slots) as SlotId[]).find((k) => slots[k]?.id === id);
@@ -31,6 +31,8 @@ export function evaluateTrade(st: OffseasonState, give: string, team: number, ge
   const out = mine[myK]!;
   const inc = theirs[theirK]!;
   if (!fits(inc, myK) || !fits(out, theirK)) return { ok: false, reason: 'position' };
+  // Same two-superstar rule as the draft and the deadline, for both sides.
+  if (superstarBlocked({ ...mine, [myK]: undefined }, inc) || superstarBlocked({ ...theirs, [theirK]: undefined }, out)) return { ok: false, reason: 'stars' };
   const afterMine = { ...mine, [myK]: inc };
   const afterTheirs = { ...theirs, [theirK]: out };
   // A trade may not push a team further over the cap than the slack allows (getting cheaper is always fine).
