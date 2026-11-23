@@ -1,6 +1,6 @@
 import { ALL_SLOTS, type Player, type RosterSlots } from './types';
 
-export const CAP = 150;
+export const CAP = 200;
 export const MIN_SALARY = 1;
 
 /** Anti-superteam rule: at most two players rated 95+ per roster. */

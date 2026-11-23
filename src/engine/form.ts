@@ -16,12 +16,12 @@ export interface StatLine {
 
 export interface Production { gp: number; min: number; gmsc: number }
 
-export interface RatedPlayer { name: string; ovr: number; age?: number }
+export interface RatedPlayer { name: string; ovr: number; age?: number; rookie?: boolean }
 
 export interface FormDelta { d: number; gp: number; gmsc: number; recent?: number }
 
 /** Max nudge each way; rookies and young players can climb further (a breakout first season). */
-export const FORM_CAP = { down: -5, up: 6, youngUp: 9 };
+export const FORM_CAP = { down: -6, up: 10, youngUp: 12 };
 
 export function gameScore(s: StatLine): number {
   return s.pts + 0.4 * s.fgm - 0.7 * s.fga - 0.4 * (s.fta - s.ftm) + 0.7 * s.oreb + 0.3 * s.dreb + s.stl + 0.7 * s.ast + 0.7 * s.blk - 0.4 * s.pf - s.tov;
@@ -71,9 +71,10 @@ export function computeForm(
     // How much to trust the season: grows with games and minutes.
     const trust = Math.min(1, s.gp / 15) * Math.min(1, mpg / 22);
     const earned = a + b * s.gmsc;
-    const young = (p.age ?? 30) <= 21;
-    // Young players get most of the gap (a rookie's base rating is a guess; his season is evidence).
-    let d = (earned - p.ovr) * (young ? 0.8 : 0.55) * trust;
+    const young = !!p.rookie || (p.age ?? 30) <= 21;
+    // A real sample of games is strong evidence: most of the gap for veterans, all of it for rookies and young
+    // players (their base rating is a pre-season guess).
+    let d = (earned - p.ovr) * (young ? 1 : 0.85) * trust;
     const r = recent.get(key);
     // The last week is a swing of at most ±2 on top.
     if (r && r.gp >= 2) d += Math.max(-2, Math.min(2, (r.gmsc - s.gmsc) * b * 0.25 * Math.min(1, r.gp / 3)));

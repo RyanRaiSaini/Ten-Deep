@@ -42,7 +42,7 @@ describe('trades', () => {
   });
 
   it('a trade that puts either team far over the cap is blocked', () => {
-    const rich = [P('pg', 80, 26, 'PG', 70), P('sg', 78, 26, 'SG', 70), P('sf', 70, 24, 'SF', 1), P('pf', 77, 30, 'PF', 5), P('c', 76, 29, 'C', 5)];
+    const rich = [P('pg', 80, 26, 'PG', 95), P('sg', 78, 26, 'SG', 95), P('sf', 70, 24, 'SF', 1), P('pf', 77, 30, 'PF', 5), P('c', 76, 29, 'C', 5)];
     const maxed = [P('tpg', 79, 27, 'PG', 1), P('tsg', 77, 25, 'SG', 1), P('tsf', 90, 31, 'SF', 50), P('tpf', 76, 28, 'PF', 1), P('tc', 75, 26, 'C', 1)];
     const st = state(rich, maxed);
     expect(capRoom(st.teams[0].slots)).toBeLessThan(10);
