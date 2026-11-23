@@ -9,6 +9,8 @@ import { Avatar } from '../ui/Avatar';
 import { Logo } from '../ui/Logo';
 import { Button, Card, Label, Screen } from '../ui/components';
 import { C, F, R, S } from '../ui/theme';
+import { ACHIEVEMENTS } from '../engine/progress/achievements';
+import { claimableCount, useProgress } from '../store/progress';
 
 const MODES = [
   { key: 'current', poolId: 'current-2026', live: true, accent: C.hardwood },
@@ -33,6 +35,8 @@ export default function Home() {
   const newRun = useGame((s) => s.newRun);
   const pendingPicks = useCollection((s) => s.pending.length);
   const onboarded = useSettings((s) => s.onboarded);
+  const claimable = useProgress(claimableCount);
+  const achieved = useProgress((s) => Object.keys(s.unlocked).length);
   if (!onboarded) return <Redirect href="/welcome" />;
 
   return (
@@ -63,6 +67,14 @@ export default function Home() {
       {pendingPicks > 0 && (
         <Button label={`🎁  ${t('collect.waiting', { n: pendingPicks })}`} variant="gold" onPress={() => router.push('/packs')} testID="picks-banner" />
       )}
+      <Card style={[styles.missions, claimable > 0 && { borderColor: C.gold }]} onPress={() => router.push('/missions')} testID="to-missions">
+        <Text style={styles.missionsIcon}>🎯</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.modeTitle}>{t('missions.title')}</Text>
+          <Text style={styles.modeDesc}>{t('missions.achievements')} · {achieved}/{ACHIEVEMENTS.length}</Text>
+        </View>
+        {claimable > 0 && <Text style={styles.claimBadge}>{t('missions.ready', { n: claimable })}</Text>}
+      </Card>
       {phase !== 'idle' && (
         <Button label={`▶  ${t('home.resume')}`} variant="gold" onPress={() => router.push(ROUTE[phase])} testID="resume" />
       )}
@@ -121,5 +133,8 @@ const styles = StyleSheet.create({
   modeTitle: { color: C.text, fontSize: 18, ...F.display },
   modeDesc: { color: C.muted, fontSize: 13 },
   modeCta: { fontWeight: '800', fontSize: 13 },
+  missions: { flexDirection: 'row', alignItems: 'center', gap: S.md, paddingVertical: S.md },
+  missionsIcon: { fontSize: 28 },
+  claimBadge: { color: C.bg, backgroundColor: C.gold, fontWeight: '900', fontSize: 12, paddingHorizontal: 10, paddingVertical: 4, borderRadius: R.pill, overflow: 'hidden' },
   badge: { fontSize: 11, fontWeight: '900', letterSpacing: 1 },
 });
