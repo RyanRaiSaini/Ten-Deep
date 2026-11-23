@@ -941,6 +941,9 @@
     "odds": "Finish-Chancen (jede Karte, jedes Pack)",
     "rarest": "Seltenste Ziehungen",
     "yours": "Deine Finishes",
-    "keepHint": "Nur die behaltene Karte kommt in deine Sammlung – samt Finish."
+    "keepHint": "Nur die behaltene Karte kommt in deine Sammlung – samt Finish.",
+    "share": "Teilen",
+    "shareText": "Gerade {{name}} in {{finish}} in Ten Deep gezogen! {{odds}}",
+    "shareTextBase": "Gerade {{name}} ({{tier}}) in Ten Deep gezogen!"
   }
 }

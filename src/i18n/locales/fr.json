@@ -946,6 +946,9 @@
     "odds": "Chances de finition (toute carte, tout tirage)",
     "rarest": "Tirages les plus rares",
     "yours": "Tes finitions",
-    "keepHint": "Seule la carte gardée rejoint ta collection, finition comprise."
+    "keepHint": "Seule la carte gardée rejoint ta collection, finition comprise.",
+    "share": "Partager",
+    "shareText": "Je viens de tirer {{name}} en {{finish}} dans Ten Deep ! {{odds}}",
+    "shareTextBase": "Je viens de tirer {{name}} ({{tier}}) dans Ten Deep !"
   }
 }

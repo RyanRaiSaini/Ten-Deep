@@ -936,6 +936,9 @@
     "odds": "仕上げの確率（全カード・全パック）",
     "rarest": "最レア",
     "yours": "あなたの仕上げ",
-    "keepHint": "コレクションに入るのはキープした1枚だけ（仕上げも含む）。"
+    "keepHint": "コレクションに入るのはキープした1枚だけ（仕上げも含む）。",
+    "share": "シェア",
+    "shareText": "Ten Deepで{{finish}}の{{name}}が出た！{{odds}}",
+    "shareTextBase": "Ten Deepで{{name}}（{{tier}}）が出た！"
   }
 }
