@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { Text } from '../../ui/Text';
@@ -14,6 +14,7 @@ import { encodeFriend, formatPin } from '../../engine/friends/code';
 import { mySnapshot, useFriends } from '../../store/friends';
 import { FriendRow } from '../../ui/FriendRow';
 import { shareText } from '../../ui/share';
+import { publishMe } from '../../net/pins';
 
 export default function Duel() {
   const { t } = useTranslation();
@@ -22,6 +23,8 @@ export default function Duel() {
   const [p2, setP2] = useState(d.names.b);
   const friends = useFriends((s) => s.friends);
   const myPin = useFriends((s) => s.pin);
+  const online = useFriends((s) => !!s.published);
+  useEffect(() => { void publishMe(); }, []);
   const [shareState, setShareState] = useState<'shared' | 'copied' | null>(null);
   const shareCode = async () => {
     const link = `${CONFIG.webUrl}/f?c=${encodeFriend(mySnapshot())}`;
@@ -47,7 +50,13 @@ export default function Duel() {
 
       <View style={styles.pinCard} testID="my-pin">
         <View style={styles.pinTop}>
-          <Text style={styles.pinLabel}>{t('friends.yourPin')}</Text>
+          <View>
+            <Text style={styles.pinLabel}>{t('friends.yourPin')}</Text>
+            <View style={styles.status}>
+              <View style={[styles.statusDot, { backgroundColor: online ? '#14A86B' : C.line }]} />
+              <Text style={styles.statusText}>{online ? t('friends.online') : t('friends.notOnline')}</Text>
+            </View>
+          </View>
           <Text style={styles.pin} selectable numberOfLines={1}>{formatPin(myPin)}</Text>
         </View>
         <Button label={shareState ? t(`friends.${shareState}`) : t('friends.shareCode')} variant="dark" icon={<Icon name="share" size={20} />} onPress={shareCode} testID="share-code" />
@@ -101,6 +110,9 @@ const styles = StyleSheet.create({
     gap: S.sm, padding: S.md, borderRadius: R.lg, backgroundColor: '#FFFFFF',
     borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 6,
   },
+  status: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 2 },
+  statusDot: { width: 9, height: 9, borderRadius: 5 },
+  statusText: { fontSize: 12, fontWeight: '800', color: C.muted },
   pinLabel: { fontSize: 12, fontWeight: '900', letterSpacing: 1.5, color: C.muted, textTransform: 'uppercase' },
   pin: { fontFamily: FONT.display, fontSize: 32, color: C.ink, letterSpacing: 2 },
   sectionHead: { flexDirection: 'row', alignItems: 'center', gap: S.sm, marginTop: S.md },

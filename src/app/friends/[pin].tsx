@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { refreshFriend } from '../../net/pins';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { CARD_BY_ID } from '../../data/cards';
@@ -31,6 +32,8 @@ export default function FriendPage() {
   const me = useProfile();
   const [bo, setBo] = useState<BestOf>(3);
   const [removing, setRemoving] = useState(false);
+  // Pull their latest team and collection from the online directory (silent if offline).
+  useEffect(() => { if (pin) void refreshFriend(pin); }, [pin]);
   if (!f) return <Screen><Header title={t('friends.title')} left={<BackButton onPress={goBack} />} /></Screen>;
   const s = f.snap;
   const hasMyLineup = ALL_SLOTS.some((k) => myLineup[k]);

@@ -721,8 +721,8 @@
     "shared": "Geteilt!",
     "add": "Freund hinzufügen",
     "addTitle": "Freund hinzufügen",
-    "addHint": "Füge den Freundescode oder Link ein, den du bekommen hast.",
-    "pinHint": "Nur eine PIN? Bitte sie, auf „Meinen Freundescode teilen“ zu tippen – darin stecken Team und Sammlung.",
+    "addHint": "Gib die PIN ein oder füge den geschickten Link ein.",
+    "pinHint": "Deine PIN geht online, sobald du die App mit Verbindung öffnest.",
     "placeholder": "Code oder Link einfügen",
     "paste": "Einfügen",
     "addBtn": "Hinzufügen",
@@ -778,7 +778,14 @@
     "streak": "Serie",
     "tier": "Liga",
     "series": "Serien",
-    "scoreline": "{{a}} – {{b}}"
+    "scoreline": "{{a}} – {{b}}",
+    "pinTitle": "PIN eingeben",
+    "find": "Per PIN hinzufügen",
+    "orCode": "Oder Freundeslink einfügen",
+    "notFound": "Noch kein Spieler mit dieser PIN. Bitte ihn, den Duelle-Tab online zu öffnen.",
+    "offline": "Server nicht erreichbar. Prüf die Verbindung oder füge den Link ein.",
+    "online": "Online",
+    "notOnline": "Noch nicht online"
   },
   "shop": {
     "title": "Shop",

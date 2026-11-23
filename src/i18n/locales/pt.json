@@ -726,8 +726,8 @@
     "shared": "Compartilhado!",
     "add": "Adicionar amigo",
     "addTitle": "Adicione um amigo",
-    "addHint": "Cole o código de amigo ou o link que te enviaram.",
-    "pinHint": "Só tem um PIN? Peça para tocarem em \"Compartilhar meu código de amigo\": ele leva o time e a coleção.",
+    "addHint": "Digite o PIN ou cole o link que te enviaram.",
+    "pinHint": "Seu PIN fica online na primeira vez que você abre o app conectado.",
     "placeholder": "Cole um código ou link",
     "paste": "Colar",
     "addBtn": "Adicionar amigo",
@@ -783,7 +783,14 @@
     "streak": "Sequência",
     "tier": "Liga",
     "series": "Séries",
-    "scoreline": "{{a}} – {{b}}"
+    "scoreline": "{{a}} – {{b}}",
+    "pinTitle": "Digite o PIN",
+    "find": "Adicionar por PIN",
+    "orCode": "Ou cole o link de amigo",
+    "notFound": "Ainda não há jogador com esse PIN. Peça para abrir a aba Duelos online.",
+    "offline": "Não foi possível acessar o servidor. Verifique a conexão ou cole o link.",
+    "online": "Online",
+    "notOnline": "Ainda não está online"
   },
   "shop": {
     "title": "Loja",
