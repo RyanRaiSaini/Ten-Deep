@@ -41,6 +41,10 @@
     "crisis": {
       "title": "Managementcrisis",
       "desc": "Stel een team samen. De directie zet een doel. Elke twee maanden verandert een crisiskaart alles."
+    },
+    "career": {
+      "title": "Carrière",
+      "desc": "Eén franchise, veel seizoenen. Veroudering, contracten, drafts en vrije spelers, tot de directie je ontslaat."
     }
   },
   "settings": {
@@ -308,5 +312,44 @@
       "superA": "Contracteer de superster",
       "superB": "Weigeren"
     }
+  },
+  "career": {
+    "title": "Carrière",
+    "desc": "Eén franchise, veel seizoenen. Veroudering, contracten, drafts en vrije spelers, tot de directie je ontslaat.",
+    "start": "Start een carrière",
+    "resume": "Carrière voortzetten",
+    "season": "Seizoen {{n}}",
+    "security": "Baanzekerheid",
+    "history": "Geschiedenis",
+    "noHistory": "Je verhaal begint met de draft.",
+    "toOffseason": "Naar de offseason",
+    "progress": "Spelersontwikkeling",
+    "retired": "Gestopt",
+    "expiring": "Aflopende contracten",
+    "expiringHint": "Tik om te verlengen tegen de huidige rating. Wie je niet houdt, vertrekt.",
+    "resign": "Verlengen",
+    "release": "Laten gaan",
+    "confirmContracts": "Contracten bevestigen",
+    "draft": "Rookiedraft",
+    "yourPick": "Jij kiest als #{{n}}",
+    "draftThis": "{{name}} draften",
+    "rosterFull": "Je selectie is vol: kies wie je schrapt voor de rookie.",
+    "skipRookie": "Rookie overslaan",
+    "freeAgency": "Vrije spelers",
+    "openSpots": "{{n}} open plekken",
+    "sign": "Contracteren",
+    "minException": "Minimumuitzondering: contracteer {{name}}",
+    "startSeason": "Start {{label}}",
+    "over": "Carrière voorbij",
+    "overDesc": "De directie heeft genoeg gezien. {{n}} seizoenen, {{titles}} titels.",
+    "newCareer": "Nieuwe carrière",
+    "r_champion": "Kampioen",
+    "r_finals": "Finale verloren",
+    "r_semis": "Halve finale verloren",
+    "r_quarters": "Kwartfinale verloren",
+    "r_first": "Eerste ronde uitgeschakeld",
+    "r_missed": "Geen play-offs",
+    "years": "{{n}} jr",
+    "nothingAffordable": "Niemand past onder het plafond."
   }
 }
