@@ -10,6 +10,9 @@ import { alpha, C, FONT, R, S } from './theme';
 
 const SUFFIX = /^(jr\.?|sr\.?|ii|iii|iv)$/i;
 /** "Jaime Jaquez Jr." → "Jaquez", "Gary Payton II" → "Payton". */
+/** Bench spots are the 6th to 10th men: B1 shows 6+, B2 7+, ... B5 10+. */
+const benchLabel = (slot: string) => `${Number(slot.slice(1)) + 5}+`;
+
 export function shortName(name: string): string {
   const parts = name.split(' ').filter((w) => !SUFFIX.test(w));
   return parts[parts.length - 1] ?? name;
@@ -76,8 +79,8 @@ export const RosterBoard = memo(function RosterBoard({ roster, highlight, onSlot
           p ? { backgroundColor: ovrBadge(p.ovr), borderStyle: 'solid' } : styles.discEmpty,
           lit && styles.lit,
         ]}>
-          {p ? <Text style={[styles.ovr, { fontSize: bench ? 20 : 24 }]}>{p.ovr}</Text> : <Text style={styles.pos}>{bench ? '6+' : slot}</Text>}
-          {p && <View style={styles.posTag}><Text style={styles.posTagText}>{bench ? '6+' : slot}</Text></View>}
+          {p ? <Text style={[styles.ovr, { fontSize: bench ? 20 : 24 }]}>{p.ovr}</Text> : <Text style={styles.pos}>{bench ? benchLabel(slot) : slot}</Text>}
+          {p && <View style={styles.posTag}><Text style={styles.posTagText}>{bench ? benchLabel(slot) : slot}</Text></View>}
         </View>
         {p && (
           <View style={styles.namePill}>

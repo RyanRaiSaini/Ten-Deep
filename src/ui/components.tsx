@@ -30,9 +30,11 @@ function Rays({ color }: { color: string }) {
  * scrolling content; `footer` (the tab bar) is pinned to the bottom.
  */
 export function Screen({
-  children, scroll = true, tint, overlay, footer, wide = false, tabbed = false,
+  children, scroll = true, tint, overlay, footer, wide = false, tabbed = false, backdrop,
 }: {
   children: ReactNode; scroll?: boolean; tint?: string; overlay?: ReactNode; footer?: ReactNode; wide?: boolean;
+  /** A full-screen background drawn behind everything (replaces the tint glow and rays). */
+  backdrop?: ReactNode;
   /** Inside the tab navigator: leave room for the tab bar, which handles the bottom safe area. */
   tabbed?: boolean;
 }) {
@@ -40,8 +42,12 @@ export function Screen({
   const body = <View style={[styles.inner, laptop && styles.innerLaptop, wide && styles.innerWide, (!!footer || tabbed) && { paddingBottom: 120 }]}>{children}</View>;
   return (
     <SafeAreaView style={styles.screen} edges={footer || tabbed ? ['top'] : ['top', 'bottom']}>
-      {tint && <LinearGradient colors={[alpha(tint, 0.28), alpha(tint, 0.06), alpha(C.bg, 0)]} locations={[0, 0.5, 1]} style={styles.tint} />}
-      <Rays color={tint ?? C.ink} />
+      {backdrop ? <View style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]}>{backdrop}</View> : (
+        <>
+          {tint && <LinearGradient colors={[alpha(tint, 0.28), alpha(tint, 0.06), alpha(C.bg, 0)]} locations={[0, 0.5, 1]} style={styles.tint} />}
+          <Rays color={tint ?? C.ink} />
+        </>
+      )}
       {scroll ? <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>{body}</ScrollView> : body}
       {footer}
       {overlay}

@@ -52,22 +52,4 @@ export function play(name: SoundName) {
   } catch { /* a sound is never worth a crash */ }
 }
 
-/** Fade a player out over ~150 ms, then pause it. */
-function fadeOut(p: Player) {
-  let v = p.volume;
-  const id = setInterval(() => {
-    v -= 0.2;
-    try {
-      if (v <= 0) { clearInterval(id); p.pause(); p.volume = volume; } else p.volume = v;
-    } catch { clearInterval(id); }
-  }, 30);
-}
 
-/** The suspense hum (a 6 s rise); returns a stop function that fades it out. */
-export function hum(strong: boolean): () => void {
-  const p = player(strong ? 'hum_strong' : 'hum_soft');
-  if (!p) return () => {};
-  try { p.volume = volume; void p.seekTo(0); p.play(); } catch { return () => {}; }
-  let stopped = false;
-  return () => { if (!stopped) { stopped = true; fadeOut(p); } };
-}

@@ -3,7 +3,7 @@ import * as Haptics from 'expo-haptics';
 import { Platform } from 'react-native';
 import { useSettings } from '../store/settings';
 import type { Finish } from '../engine/collect/finishes';
-import { SFX, hum, setVolume, sting, tear, type SfxName } from './sfx';
+import { SFX, setVolume, sting, tear, type SfxName } from './sfx';
 
 // Keep the sound-effects volume in step with Settings.
 setVolume(useSettings.getState().sfxVolume ?? 1);
@@ -43,11 +43,10 @@ export function feelFinish(f: Finish) {
 }
 
 /**
- * The wait before flipping a glowing card: a rising hum, plus a heartbeat of taps when something big is inside.
- * Returns a stop function (call it on flip or unmount).
+ * The wait before flipping a glowing card: a heartbeat of taps on the phone when something big is inside.
+ * No music: the pack only plays sound effects (tear, rip, flip, the finish sparkle). Returns a stop function.
  */
 export function feelSuspense(strong: boolean): () => void {
-  const stopHum = useSettings.getState().sfx ? hum(strong) : () => {};
   const beat = strong ? setInterval(() => { buzz(Haptics.ImpactFeedbackStyle.Medium); setTimeout(() => buzz(Haptics.ImpactFeedbackStyle.Light), 140); }, 900) : null;
-  return () => { stopHum(); if (beat) clearInterval(beat); };
+  return () => { if (beat) clearInterval(beat); };
 }
