@@ -1,5 +1,7 @@
 # Ten Deep
 
+**Play it: [ten-deep.vercel.app](https://ten-deep.vercel.app)** (I'm currently building this; it's playable now and changing often.)
+
 **Draft ten deep. Survive 82.** An NBA draft-and-simulate game: spin a team or era, draft a 10-man rotation under a salary cap, then watch your season, the trade deadline and the playoffs play out.
 
 ## What's in the game

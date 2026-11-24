@@ -33,6 +33,7 @@ export default function Playoffs() {
     const label = (i: number) => (i === 0 ? t('league.you') : ps.season.teams[i].name);
     return {
       names: [label(home), label(away)] as [string, string],
+      you: (home === 0 ? 0 : 1) as 0 | 1,
       recap: recap(lastGame.result, ps.season.teams[home], ps.season.teams[away], `${ps.season.seed}:${mine.round}:${mine.series.games.length}`),
     };
   })() : null;
@@ -95,7 +96,7 @@ export default function Playoffs() {
           {last && (
             <View style={styles.recap}>
               <Label>{t('recap.title')} · G{mine.series.games.length}</Label>
-              <RecapCard recap={last.recap} names={last.names} />
+              <RecapCard recap={last.recap} names={last.names} you={last.you} />
             </View>
           )}
           {alive && champ === null && (
