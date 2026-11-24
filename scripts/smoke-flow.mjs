@@ -105,6 +105,9 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('36-challenge');
     await page.getByTestId('challenge-accept').click();
     await page.getByTestId('spin').waitFor();
+    // A shared /run link (answered by the server on Vercel) lands on the same challenge when the app opens it.
+    await page.goto(`${base}/run?s=smoke-seed&p=current-2026&w=55&l=27&n=Ryan&v=2&res=round1`);
+    await page.getByTestId('challenge-record').waitFor();
     await page.goto(`${base}/c?s=bad&p=nope&w=1&l=1`);
     await page.getByText('This challenge link is broken.').waitFor();
     await page.goto(`${base}/ladder`);

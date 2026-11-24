@@ -9,7 +9,8 @@ describe('share', () => {
     expect(txt).toContain('61-21 · Champions 🏆');
     expect(txt).toContain('🟨🟩🟦🟦🟦 | ⬜⬜⬜⬜⬜');
     expect(txt).not.toMatch(/Jordan|Curry|James/);
-    expect(txt).toContain('https://ten-deep.vercel.app/c?s=abc-123&p=current-2026&w=61&l=21&n=Ryan');
+    expect(txt).toContain('https://ten-deep.vercel.app/run?s=abc-123&p=current-2026&w=61&l=21&n=Ryan');
+    expect(txt).toContain('&r=97.88.85.82.80.79.75.72.70.66&res=champion&mt=Current+Day');
   });
 
   it('challenge links round-trip, and junk is rejected', () => {
