@@ -3,7 +3,7 @@
 *2026-11-23 · Owner request: "a manager situation… management cards… every 2 months… winner ones and loser ones"*
 
 ## Intent
-A front-office mode in the spirit of a manager career (2K MyGM): you draft a team, the board sets an objective, and every ~2 in-game months a **Crisis Card** forces a change to your roster or team. Some cards help, some hurt, a few are huge gambles. The fun is adapting: the season you drafted isn't the season you play. Inspired by "management card" rebuild videos; the name, cards and visuals are our own.
+A front-office mode: you draft a team, the board sets an objective, and every ~2 in-game months a **Crisis Card** forces a change to your roster or team. Some cards help, some hurt, a few are huge gambles. The fun is adapting: the season you drafted isn't the season you play. The name, cards and visuals are our own.
 
 ## Goals
 - A new home-screen mode, "Management Crisis": draft in any mode's pool, then a season with 4 cards (preseason, December, February, April), then a board verdict.
