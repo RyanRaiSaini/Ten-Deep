@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
-import { affordableFor, minimumException, openSlotCount, RESIGN_THRESHOLD, seasonLabel } from '../engine/career/offseason';
+import { affordableFor, minimumException, openSlotCount, payrollAfterResign, RESIGN_THRESHOLD, seasonLabel } from '../engine/career/offseason';
+import { APRON, CAP, salaryFor } from '../engine/cap';
 import { ALL_SLOTS, type Player, type SlotId } from '../engine/types';
 import { useCareer } from '../store/career';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
-import { C, F, S } from '../ui/theme';
+import { C, money, F, S } from '../ui/theme';
 import { LotteryReveal } from '../ui/Lottery';
 import { Icon } from '../ui/icons';
 
@@ -32,7 +33,10 @@ export default function Offseason() {
   // --- Step 1: development + contracts ------------------------------------------------------------
   if (c.step === 'expiring') {
     const expiring = st.expiring.map((id) => ALL_SLOTS.map((k) => user.slots[k]).find((p) => p?.id === id)!).filter(Boolean);
-    const kept = keep ?? expiring.filter((p) => p.ovr >= RESIGN_THRESHOLD).map((p) => p.id);
+    // Default: re-sign the good ones, best first, while payroll stays under the apron.
+    const kept = keep ?? expiring.filter((p) => p.ovr >= RESIGN_THRESHOLD).sort((a, b) => b.ovr - a.ovr).map((p) => p.id)
+      .reduce<string[]>((acc, id) => (payrollAfterResign(st, [...acc, id]) <= APRON ? [...acc, id] : acc), []);
+    const payroll = payrollAfterResign(st, kept);
     return (
       <Screen key="step-1">
         <Header title={`${t('career.title')} · ${seasonLabel(st.season)}`} left={<BackButton onPress={() => router.navigate('/career')} />} />
@@ -58,16 +62,24 @@ export default function Offseason() {
           <>
             <Label>{t('career.expiring')}</Label>
             <Text style={styles.muted}>{t('career.expiringHint')}</Text>
-            {expiring.map((p) => (
-              <PlayerCard
-                key={p.id}
-                player={{ ...p, salary: undefined }}
-                testID="expiring"
-                selected={kept.includes(p.id)}
-                note={kept.includes(p.id) ? t('career.resign') : t('career.release')}
-                onPress={() => setKeep(kept.includes(p.id) ? kept.filter((x) => x !== p.id) : [...kept, p.id])}
-              />
-            ))}
+            <Text style={[styles.muted, payroll > CAP && { color: C.danger }]} testID="resign-payroll">
+              {t('career.payroll', { pay: money(payroll), cap: money(CAP), apron: money(APRON) })}
+            </Text>
+            {expiring.map((p) => {
+              const on = kept.includes(p.id);
+              const fits = on || payrollAfterResign(st, [...kept, p.id]) <= APRON;
+              return (
+                <PlayerCard
+                  key={p.id}
+                  // The new deal: today's market rate (his old contract, real or not, is up).
+                  player={{ ...p, salary: salaryFor(p.ovr), contractType: undefined, released: true }}
+                  testID="expiring"
+                  selected={on}
+                  note={on ? t('career.resign') : fits ? t('career.release') : t('career.overApron')}
+                  onPress={() => (on ? setKeep(kept.filter((x) => x !== p.id)) : fits ? setKeep([...kept, p.id]) : undefined)}
+                />
+              );
+            })}
           </>
         )}
         <Button label={t('career.confirmContracts')} onPress={() => { c.keep(kept); feel('pickChime'); }} testID="off-contracts" />

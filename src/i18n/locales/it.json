@@ -394,7 +394,9 @@
     "f3Title": "Entra nella storia",
     "f3Body": "Titoli, una Hall of Fame e record di franchigia.",
     "end": "Chiudi carriera",
-    "endSure": "Tocca di nuovo: questa carriera finirà per sempre"
+    "endSure": "Tocca di nuovo: questa carriera finirà per sempre",
+    "payroll": "Monte ingaggi dopo i rinnovi: {{pay}} (tetto {{cap}} · apron {{apron}})",
+    "overApron": "Oltre l’apron: non rinnovabile"
   },
   "collect": {
     "title": "Collezione",

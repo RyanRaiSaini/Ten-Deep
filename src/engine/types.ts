@@ -21,6 +21,8 @@ export interface Player {
   tag?: string;
   /** Career mode: salary locked in when signed (game $M). Without it: the real contract, else the market rate. */
   salary?: number;
+  /** Career mode: has been out of contract (a free agent), so his old real deal no longer applies. */
+  released?: boolean;
   /** Career mode: the kind of deal signed (e.g. 'rookie' for a draft pick). */
   contractType?: 'supermax' | 'max' | 'rookie' | 'twoWay' | 'min' | 'standard';
   /** Data needs owner verification (e.g. roster move after mid-2026). */

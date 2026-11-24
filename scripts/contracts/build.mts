@@ -5,7 +5,7 @@
  * Every real salary becomes a share of that season's salary cap, then game dollars:
  *   game $M = salary / cap × 171.4   (so a 35% supermax = $60M, a 30% max ≈ $51M, a 25% max ≈ $43M)
  * Types: supermax (≥34% of cap), max (≥24.5%, from 1999-00 when max contracts began), rookie scale
- * (first 4 years, between minimum and 9% of cap, from 1995-96 when the rookie scale began), two-way (marked TW),
+ * (first 4 years, between minimum and 11.5% of cap, from 1995-96 when the rookie scale began), two-way (marked TW),
  * minimum (≤ the 10-year veteran minimum), standard otherwise.
  * Seasons before the cap (pre-1984-85) use an implied cap: the season's real top salary / 0.35.
  * Players with no salary on record keep a rating-based estimate fitted to the real data (reported as coverage).
@@ -22,8 +22,13 @@ export const K = 60 / 0.35;
 const text = (s: string) => s.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/\s+/g, ' ').trim();
 const money = (s: string) => { const n = Number(s.replace(/[$,]/g, '')); return Number.isFinite(n) && n > 0 ? n : null; };
 /** "Nikola Jokić" → "nikola jokic"; drops Jr./Sr./II/III and punctuation. */
-export const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-  .replace(/\(tw\)/g, '').replace(/[.'’,-]/g, ' ').replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/\s+/g, ' ').trim();
+/** Spellings that differ between our data and Basketball Reference (normalized ours → theirs). */
+const ALIAS: Record<string, string> = { 'jakob poltl': 'jakob poeltl' };
+export const norm = (s: string) => {
+  const n = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/\(tw\)/g, '').replace(/[.'’]/g, '').replace(/[,-]/g, ' ').replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/\s+/g, ' ').trim();
+  return ALIAS[n] ?? n;
+};
 
 function rows(html: string, tableId: string): Record<string, { text: string; cls: string }>[] {
   // Tables after the first few are wrapped in HTML comments; unwrap them.
@@ -99,8 +104,8 @@ function classify(y: number, r: Real): ContractType {
   if (r.tw) return 'twoWay';
   if (y >= 2000 && pct >= 0.34) return 'supermax';
   if (y >= 2000 && pct >= 0.245) return 'max';
-  if (y >= 1996 && r.exp !== null && r.exp <= 3 && pct > 0.012 && pct <= 0.09 && (r.option || r.exp <= 3)) {
-    // Rookie scale: first four seasons, paid on the scale (between the minimum and ~9% of the cap).
+  if (y >= 1996 && r.exp !== null && r.exp <= 3 && pct > 0.012 && pct <= 0.115) {
+    // Rookie scale: first four seasons, paid on the scale (between the minimum and ~11.5% of the cap: a #1 pick's 4th year is ~10.5%).
     if (pct > VET_MIN_SHARE * 0.6) return 'rookie';
   }
   if (y >= 1985 && pct <= VET_MIN_SHARE) return 'min';

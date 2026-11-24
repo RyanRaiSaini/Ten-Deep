@@ -394,7 +394,9 @@
     "f3Title": "Haz historia",
     "f3Body": "Títulos, un Salón de la Fama y récords de franquicia.",
     "end": "Terminar carrera",
-    "endSure": "Toca otra vez: esta carrera terminará para siempre"
+    "endSure": "Toca otra vez: esta carrera terminará para siempre",
+    "payroll": "Nómina tras renovar: {{pay}} (tope {{cap}} · apron {{apron}})",
+    "overApron": "Por encima del apron: no se puede renovar"
   },
   "collect": {
     "title": "Colección",
