@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { payOf } from '../engine/cap';
+import { contractType, payOf } from '../engine/cap';
 import type { Player, SlotId } from '../engine/types';
 import { Icon } from './icons';
 import { Text } from './Text';
@@ -26,6 +26,8 @@ export function PlayerCard({
   accent?: string; slots?: SlotId[]; onSlot?: (s: SlotId) => void;
 }) {
   const { t } = useTranslation();
+  // Max and rookie-scale deals are worth calling out; plain veteran deals aren't.
+  const deal = (() => { const d = contractType(player); return d && d !== 'standard' ? d : null; })();
   // Real-life form nudge (from NBA box scores), if this player has one today.
   const form = (player as Player & { form?: number }).form ?? 0;
   return (
@@ -60,7 +62,10 @@ export function PlayerCard({
           </Text>
           {note && <Text style={styles.note} numberOfLines={1}>{note}</Text>}
         </View>
-        <View style={styles.salary}><Text style={styles.salaryText}>{money(payOf(player))}</Text></View>
+        <View style={{ alignItems: 'flex-end', gap: 3 }}>
+          <View style={styles.salary}><Text style={styles.salaryText}>{money(payOf(player))}</Text></View>
+          {deal && <View style={[styles.deal, { backgroundColor: DEAL_COLOR[deal] }]} testID={`deal-${deal}`}><Text style={styles.dealText}>{t(`contract.${deal}`)}</Text></View>}
+        </View>
       </View>
       {selected && slots && slots.length > 1 && onSlot && (
         <View style={styles.slots}>
@@ -74,6 +79,8 @@ export function PlayerCard({
     </Pressable>
   );
 }
+
+const DEAL_COLOR = { supermax: '#7A4DFF', max: '#E5484D', rookie: '#18A06A', twoWay: '#3B6CF0', min: '#6B7689' } as const;
 
 const styles = StyleSheet.create({
   card: {
@@ -95,6 +102,8 @@ const styles = StyleSheet.create({
   note: { color: C.danger, fontSize: 12, fontWeight: '800' },
   salary: { backgroundColor: '#FFF1E3', borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 5, borderWidth: 2, borderColor: '#FFD2A8' },
   salaryText: { color: '#C2500A', fontWeight: '900', fontSize: 13 },
+  deal: { borderRadius: R.pill, paddingHorizontal: 7, paddingVertical: 2 },
+  dealText: { color: '#FFFFFF', fontWeight: '900', fontSize: 9, letterSpacing: 0.4 },
   slots: { flexDirection: 'row', flexWrap: 'wrap', gap: S.sm },
   slot: { backgroundColor: C.ink, borderRadius: R.pill, paddingHorizontal: 16, paddingVertical: 8, borderBottomWidth: 3, borderBottomColor: '#000' },
   slotText: { color: '#FFFFFF', fontWeight: '900', fontSize: 14 },

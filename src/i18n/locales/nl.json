@@ -391,7 +391,9 @@
     "f3Title": "Schrijf geschiedenis",
     "f3Body": "Titels, een Hall of Fame en clubrecords die blijven.",
     "end": "Carrière beëindigen",
-    "endSure": "Tik nog eens: deze carrière stopt voorgoed"
+    "endSure": "Tik nog eens: deze carrière stopt voorgoed",
+    "payroll": "Salarissom na verlengen: {{pay}} (cap {{cap}} · apron {{apron}})",
+    "overApron": "Boven de apron: kan niet verlengen"
   },
   "collect": {
     "title": "Collectie",
@@ -968,5 +970,12 @@
     "google": "Doorgaan met Google",
     "eraseOffline": "Kan de server niet bereiken, dus je online back-up is niet verwijderd. Probeer opnieuw als je online bent.",
     "eraseLocal": "Alleen van dit apparaat verwijderen"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "ROOKIESCHAAL",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMUM"
   }
 }

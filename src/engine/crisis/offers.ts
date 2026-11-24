@@ -1,5 +1,5 @@
 /** Turn a drawn card into a concrete, seeded offer: which players are on the table and which of yours can go. */
-import { salaryFor, superstarBlocked } from '../cap';
+import { payOf, superstarBlocked } from '../cap';
 import { createRng, shuffle } from '../rng';
 import type { SeasonState } from '../season';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type SlotId } from '../types';
@@ -66,9 +66,9 @@ export function prepareCard(season: SeasonState, id: CardId, slot: number, pool:
       return { ...base, offer: pickN(offer, 3), outSlots: [target], target };
     }
     case 'luxury-tax': {
-      const target = [...mine].sort((a, b) => salaryFor(b.p.ovr) - salaryFor(a.p.ovr))[0].k;
-      const cap = salaryFor(user.slots[target].ovr) - 10;
-      const offer = others.filter((p) => salaryFor(p.ovr) <= Math.max(1, cap)).sort(byOvr).slice(0, 10);
+      const target = [...mine].sort((a, b) => payOf(b.p) - payOf(a.p))[0].k;
+      const cap = payOf(user.slots[target]) - 10;
+      const offer = others.filter((p) => payOf(p) <= Math.max(1, cap)).sort(byOvr).slice(0, 10);
       return { ...base, offer: pickN(offer, 3), outSlots: [target], target };
     }
     case 'locker-room-drama': {

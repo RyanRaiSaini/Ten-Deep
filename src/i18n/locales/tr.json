@@ -391,7 +391,9 @@
     "f3Title": "Tarih yaz",
     "f3Body": "Şampiyonluklar, Şöhretler Müzesi ve kalıcı rekorlar.",
     "end": "Kariyeri bitir",
-    "endSure": "Tekrar dokun: bu kariyer kalıcı olarak biter"
+    "endSure": "Tekrar dokun: bu kariyer kalıcı olarak biter",
+    "payroll": "Yenilemeler sonrası maaş: {{pay}} (tavan {{cap}} · apron {{apron}})",
+    "overApron": "Apron aşılıyor: yenilenemez"
   },
   "collect": {
     "title": "Koleksiyon",
@@ -968,5 +970,12 @@
     "google": "Google ile devam et",
     "eraseOffline": "Sunucuya ulaşılamadı, çevrimiçi yedeğin silinmedi. İnternete bağlıyken tekrar dene.",
     "eraseLocal": "Sadece bu cihazdan sil"
+  },
+  "contract": {
+    "supermax": "SÜPERMAKS",
+    "max": "MAKS",
+    "rookie": "ÇAYLAK ÖLÇEĞİ",
+    "twoWay": "İKİ YÖNLÜ",
+    "min": "ASGARİ"
   }
 }

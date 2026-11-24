@@ -394,7 +394,9 @@
     "f3Title": "Faça história",
     "f3Body": "Títulos, um Hall da Fama e recordes da franquia.",
     "end": "Encerrar carreira",
-    "endSure": "Toque de novo: esta carreira acaba de vez"
+    "endSure": "Toque de novo: esta carreira acaba de vez",
+    "payroll": "Folha após renovar: {{pay}} (teto {{cap}} · apron {{apron}})",
+    "overApron": "Acima do apron: não dá para renovar"
   },
   "collect": {
     "title": "Coleção",
@@ -973,5 +975,12 @@
     "google": "Continuar com o Google",
     "eraseOffline": "Não foi possível falar com o servidor, então seu backup online não foi apagado. Tente de novo quando estiver online.",
     "eraseLocal": "Apagar só neste aparelho"
+  },
+  "contract": {
+    "supermax": "SUPERMÁXIMO",
+    "max": "MÁXIMO",
+    "rookie": "ESCALA ROOKIE",
+    "twoWay": "TWO-WAY",
+    "min": "MÍNIMO"
   }
 }
