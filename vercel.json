@@ -9,6 +9,10 @@
       "destination": "/api/pull?c=:c&f=:f"
     },
     {
+      "source": "/run",
+      "destination": "/api/run"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
@@ -22,6 +26,9 @@
     },
     "api/account.ts": {
       "includeFiles": "node_modules/jose/{package.json,dist/webapi/**}"
+    },
+    "api/run.ts": {
+      "includeFiles": "node_modules/{@vercel/og/package.json,@vercel/og/dist/**,@expo-google-fonts/lilita-one/400Regular/LilitaOne_400Regular.ttf,@expo-google-fonts/montserrat/800ExtraBold/Montserrat_800ExtraBold.ttf}"
     }
   },
   "crons": [
