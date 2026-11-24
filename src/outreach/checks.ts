@@ -108,6 +108,9 @@ export function checkDraft(i: CheckInput): Check[] {
   else if (first && !new RegExp(`\\b${first.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(text)) add('recipient', 'warn', `The message doesn't use ${first}'s name. Check it's addressed to the right person.`);
   const wrong = i.otherNames.filter((n) => n.trim() && n.trim() !== contact.name.trim() && new RegExp(`\\b${n.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(text));
   if (wrong.length) add('wrong-name', 'error', `It mentions another contact: ${wrong.join(', ')}.`);
+  if (draft.kind === 'first' && (!contact.contentExample.trim() || !contact.contentSource.trim())) {
+    add('research', 'error', 'No verified content example with a source in the research yet. A first message needs one real reason for writing to this person.');
+  }
   if (draft.kind !== 'reply' && !contact.email) add('no-email', 'warn', 'No verified email for this contact. Send it where they publicly accept messages, or find a published business email first.');
 
   // Game link

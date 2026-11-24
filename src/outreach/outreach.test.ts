@@ -55,7 +55,7 @@ describe('contacts: import, dedupe, CSV', () => {
   });
 });
 
-const contact = blankContact({ name: 'Sam Lee', channel: 'Hoops Lab', email: 'biz@hoopslab.tv', emailSource: { url: 'https://x', checkedOn: '2026-11-24' }, status: 'Draft ready', links: { k1: 'hl-abc123' } });
+const contact = blankContact({ name: 'Sam Lee', channel: 'Hoops Lab', contentExample: 'A series rebuilding a team from one random season', contentSource: 'https://youtube.com/watch?v=x', email: 'biz@hoopslab.tv', emailSource: { url: 'https://x', checkedOn: '2026-11-24' }, status: 'Draft ready', links: { k1: 'hl-abc123' } });
 const LINK = `${GAME_URL}/?c=hl-abc123`;
 const good = `Hi Sam,
 
@@ -73,6 +73,10 @@ const ids = (i: CheckInput) => checkDraft(i).filter((c) => c.level !== 'ok').map
 describe('draft checks', () => {
   it('passes a good first message', () => {
     expect(ids(base(good))).toEqual([]);
+  });
+  it('a first message needs a verified content example with a source', () => {
+    expect(ids(base(good, { contact: { ...contact, contentExample: '' } }))).toContain('error:research');
+    expect(ids(base(good, { contact: { ...contact, contentSource: '' } }))).toContain('error:research');
   });
   it('flags invented familiarity unless it is documented', () => {
     const t = good.replace('Your series', "I've been watching your videos for years. Your series");
