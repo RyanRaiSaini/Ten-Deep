@@ -173,7 +173,7 @@
   "daily": {
     "title": "Desafio diário",
     "draft": "Draft diário",
-    "draftDesc": "Mesmos giros e mesma liga para todos hoje.",
+    "draftDesc": "Mesmos giros para todos hoje.",
     "trivia": "Trivia",
     "triviaDesc": "5 perguntas do banco de dados Ten Deep.",
     "rank": "Ranking",
@@ -653,10 +653,12 @@
     "q": "Q{{n}}",
     "ot": "Prorr.",
     "run": "{{team}} vence o quarto, +{{n}}",
+    "run_you": "Você vence o quarto, +{{n}}",
     "double": "{{name}} enche a súmula: {{line}}",
     "clutch": "{{name}} decide no fim",
     "otGame": "Prorrogação! {{name}} assume",
     "blowout": "{{team}} dispara, +{{n}}",
+    "blowout_you": "Você dispara, +{{n}}",
     "top": "Cestinha: {{name}} ({{n}})"
   },
   "box": {
@@ -721,7 +723,7 @@
   "challenge": {
     "invalid": "Este link de desafio está quebrado.",
     "title": "{{name}} desafia você",
-    "body": "Mesmos giros, mesma liga. Supere a campanha.",
+    "body": "Mesmos giros, na mesma ordem. Supere a campanha.",
     "accept": "Aceitar desafio",
     "share": "Compartilhar e desafiar",
     "shared": "Compartilhado!",

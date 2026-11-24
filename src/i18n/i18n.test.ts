@@ -46,3 +46,14 @@ describe('i18n resources', () => {
     }
   });
 });
+
+describe('recap lines for your own team', () => {
+  it('read "You take the quarter", not "You takes the quarter"', async () => {
+    const { createInstance } = await import('i18next');
+    const i18n = createInstance();
+    await i18n.init({ resources, lng: 'en', interpolation: { escapeValue: false } });
+    expect(i18n.t('recap.run', { team: 'You', n: 9, context: 'you' })).toBe('You take the quarter, +9');
+    expect(i18n.t('recap.run', { team: 'Denver Nuggets', n: 9, context: undefined })).toBe('Denver Nuggets takes the quarter, +9');
+    expect(i18n.t('recap.blowout', { team: 'You', n: 20, context: 'you' })).toBe('You run away with it, +20');
+  });
+});

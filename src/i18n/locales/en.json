@@ -171,7 +171,7 @@
   "daily": {
     "title": "Daily Challenge",
     "draft": "Daily Draft",
-    "draftDesc": "Same spins and league for everyone today.",
+    "draftDesc": "Same spins for everyone today.",
     "trivia": "Trivia",
     "triviaDesc": "5 questions from the Ten Deep database.",
     "rank": "Player Rank",
@@ -648,10 +648,12 @@
     "q": "Q{{n}}",
     "ot": "OT",
     "run": "{{team}} takes the quarter, +{{n}}",
+    "run_you": "You take the quarter, +{{n}}",
     "double": "{{name}} fills the sheet: {{line}}",
     "clutch": "{{name}} closes it out late",
     "otGame": "Overtime! {{name}} takes over",
     "blowout": "{{team}} runs away with it, +{{n}}",
+    "blowout_you": "You run away with it, +{{n}}",
     "top": "Top scorer: {{name}} ({{n}})"
   },
   "box": {
@@ -716,7 +718,7 @@
   "challenge": {
     "invalid": "This challenge link is broken.",
     "title": "{{name}} challenges you",
-    "body": "Same spins, same league. Beat their record.",
+    "body": "Same spins, in the same order. Beat their record.",
     "accept": "Accept challenge",
     "share": "Share & challenge",
     "shared": "Shared!",

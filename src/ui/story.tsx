@@ -72,7 +72,8 @@ export function Expandable({ head, children, enabled }: { head: React.ReactNode;
 }
 
 /** Period-by-period scoring and the key moments of one game. */
-export function RecapCard({ recap, names }: { recap: Recap; names: [string, string] }) {
+/** `you` is the side (0 home, 1 away) that is the player's team, so its lines read "You take the quarter". */
+export function RecapCard({ recap, names, you }: { recap: Recap; names: [string, string]; you?: 0 | 1 }) {
   const { t } = useTranslation();
   const label = (p: number) => (p < 4 ? t('recap.q', { n: p + 1 }) : p === 4 ? t('recap.ot') : `${t('recap.ot')}${p - 3}`);
   const total = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
@@ -93,7 +94,7 @@ export function RecapCard({ recap, names }: { recap: Recap; names: [string, stri
       {recap.moments.map((m, i) => (
         <Text key={i} style={styles.moment}>
           <Text style={styles.momentQ}>{label(Math.min(m.period, recap.periods[0].length - 1))}  </Text>
-          {t(`recap.${m.kind === 'ot' ? 'otGame' : m.kind}`, { name: m.name, n: m.n, line: m.line, team: names[m.side] })}
+          {t(`recap.${m.kind === 'ot' ? 'otGame' : m.kind}`, { name: m.name, n: m.n, line: m.line, team: names[m.side], context: m.side === you ? 'you' : undefined })}
         </Text>
       ))}
     </View>

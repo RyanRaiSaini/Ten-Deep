@@ -173,7 +173,7 @@
   "daily": {
     "title": "Sfida del giorno",
     "draft": "Draft del giorno",
-    "draftDesc": "Stessi giri e stessa lega per tutti oggi.",
+    "draftDesc": "Stessi giri per tutti oggi.",
     "trivia": "Quiz",
     "triviaDesc": "5 domande dal database di Ten Deep.",
     "rank": "Classifica",
@@ -653,10 +653,12 @@
     "q": "Q{{n}}",
     "ot": "Suppl.",
     "run": "{{team}} vince il quarto, +{{n}}",
+    "run_you": "Vinci il quarto, +{{n}}",
     "double": "{{name}} riempie il tabellino: {{line}}",
     "clutch": "{{name}} chiude i conti nel finale",
     "otGame": "Supplementare! {{name}} prende in mano la partita",
     "blowout": "{{team}} scappa via, +{{n}}",
+    "blowout_you": "Scappi via, +{{n}}",
     "top": "Miglior marcatore: {{name}} ({{n}})"
   },
   "box": {
@@ -721,7 +723,7 @@
   "challenge": {
     "invalid": "Questo link di sfida non funziona.",
     "title": "{{name}} ti sfida",
-    "body": "Stessi giri, stessa lega. Batti il suo record.",
+    "body": "Stessi giri, nello stesso ordine. Batti il suo record.",
     "accept": "Accetta la sfida",
     "share": "Condividi e sfida",
     "shared": "Condiviso!",

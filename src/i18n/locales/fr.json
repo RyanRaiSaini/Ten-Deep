@@ -173,7 +173,7 @@
   "daily": {
     "title": "Défi du jour",
     "draft": "Draft du jour",
-    "draftDesc": "Mêmes tirages et même ligue pour tous aujourd'hui.",
+    "draftDesc": "Mêmes tirages pour tous aujourd'hui.",
     "trivia": "Quiz",
     "triviaDesc": "5 questions tirées de la base Ten Deep.",
     "rank": "Classement",
@@ -653,10 +653,12 @@
     "q": "QT{{n}}",
     "ot": "Prol.",
     "run": "{{team}} remporte le quart-temps, +{{n}}",
+    "run_you": "Tu remportes le quart-temps, +{{n}}",
     "double": "{{name}} remplit la feuille : {{line}}",
     "clutch": "{{name}} plie le match en fin de rencontre",
     "otGame": "Prolongation ! {{name}} prend les commandes",
     "blowout": "{{team}} s'envole, +{{n}}",
+    "blowout_you": "Tu t'envoles, +{{n}}",
     "top": "Meilleur marqueur : {{name}} ({{n}})"
   },
   "box": {
@@ -721,7 +723,7 @@
   "challenge": {
     "invalid": "Ce lien de défi est cassé.",
     "title": "{{name}} te défie",
-    "body": "Mêmes tirages, même ligue. Bats son bilan.",
+    "body": "Mêmes tirages, dans le même ordre. Bats son bilan.",
     "accept": "Relever le défi",
     "share": "Partager et défier",
     "shared": "Partagé !",
