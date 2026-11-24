@@ -47,7 +47,7 @@ export function normName(name: string): string {
  */
 const OWNER = new Set(OWNER_RATED.map(normName));
 export const ownerRated = (name: string) => OWNER.has(normName(name));
-export const ANCHORED_MODEL = 4;
+export const ANCHORED_MODEL = 5;
 export function cleanDeltas<T>(deltas: Record<string, T>, model: number | undefined): Record<string, T> {
   if ((model ?? 0) >= ANCHORED_MODEL) return deltas;
   return Object.fromEntries(Object.entries(deltas).filter(([k]) => !OWNER.has(k)));
