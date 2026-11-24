@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CourtBackdrop } from '../../ui/SparkleBackdrop';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -41,7 +42,7 @@ export default function Career() {
   })();
 
   return (
-    <Screen tint={C.pink} tabbed>
+    <Screen tabbed backdrop={<CourtBackdrop split={0.26} />}>
       <TabTitle icon={<Icon name="briefcase" size={46} />} title={t('career.title')} />
 
       {(!c.active || c.ended) && (
@@ -54,7 +55,7 @@ export default function Career() {
           ) : (
             <>
               <View style={styles.banner} onLayout={(e) => setBannerW(e.nativeEvent.layout.width)}>
-                <View style={StyleSheet.absoluteFill}><CourtArt width={bannerW} height={150} color="#C2185B" /></View>
+                <View style={StyleSheet.absoluteFill}><CourtArt width={bannerW} height={150} color="#1C2A57" /></View>
                 <Display size={30}>{t('career.title')}</Display>
                 <Text style={styles.bannerSub}>{t('career.desc')}</Text>
               </View>
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   banner: { height: 150, borderRadius: 20, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, alignItems: 'center', justifyContent: 'center', paddingHorizontal: S.lg, gap: 4 },
   bannerSub: { color: '#FFFFFF', fontWeight: '800', textAlign: 'center', fontSize: 13, textShadowColor: 'rgba(0,0,0,0.4)', textShadowRadius: 3, textShadowOffset: { width: 0, height: 1 } },
   feature: { flexDirection: 'row', alignItems: 'center', gap: S.md },
-  featureTile: { width: 60, height: 60, borderRadius: 16, backgroundColor: '#FDE7F0', borderWidth: 2, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
+  featureTile: { width: 60, height: 60, borderRadius: 16, backgroundColor: '#E8EDFB', borderWidth: 2, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
   featureTitle: { fontFamily: FONT.display, fontSize: 20, color: C.ink },
   featureBody: { color: C.muted, fontWeight: '700', fontSize: 13 },
   hofName: { color: C.ink, fontWeight: '900', flex: 1 },

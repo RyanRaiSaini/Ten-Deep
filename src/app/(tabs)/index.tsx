@@ -2,7 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { Pressable, StyleSheet, View, type LayoutChangeEvent, useWindowDimensions } from 'react-native';
 import { dailyKey } from '../../engine/daily';
 import { dailyMissions, missionProgress } from '../../engine/progress/missions';
 import { useCollection } from '../../store/collection';
@@ -23,14 +23,17 @@ import { useLeague } from '../../store/league';
 import { LeagueCard } from '../../ui/LeagueCard';
 import { TierBadge, tierName } from '../../ui/TierBadge';
 import { Text } from '../../ui/Text';
-import { alpha, C, FONT, R, S } from '../../ui/theme';
+import { C, FONT, R, S } from '../../ui/theme';
 
 type ModeKey = 'franchise' | 'era' | 'crisis' | 'daily';
-const MODES: { key: ModeKey; icon: IconName; accent: string; go: () => void; badge?: string }[] = [
-  { key: 'franchise', icon: 'history', accent: C.purple, go: () => router.push('/modes/franchise') },
-  { key: 'era', icon: 'clock', accent: C.teal, go: () => router.push('/modes/era') },
-  { key: 'crisis', icon: 'siren', accent: C.danger, go: () => router.push('/modes/crisis'), badge: 'HOT' },
-  { key: 'daily', icon: 'calendar', accent: C.blue, go: () => router.navigate('/daily') },
+/** Each mode is a court banner in its own colors (court tint, light streak). */
+const MODE_H = 128;
+
+const MODES: { key: ModeKey; icon: IconName; accent: string; court: string; streak: string; go: () => void; badge?: string }[] = [
+  { key: 'franchise', icon: 'history', accent: C.purple, court: '#4B2BC2', streak: '#F5C451', go: () => router.push('/modes/franchise') },
+  { key: 'era', icon: 'clock', accent: C.teal, court: '#0B7A86', streak: '#7CF5E3', go: () => router.push('/modes/era') },
+  { key: 'crisis', icon: 'siren', accent: C.danger, court: '#B3202E', streak: '#FF9A3D', go: () => router.push('/modes/crisis'), badge: 'HOT' },
+  { key: 'daily', icon: 'calendar', accent: C.blue, court: '#1F4FD1', streak: '#5BD7FF', go: () => router.navigate('/daily') },
 ];
 
 const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
@@ -57,6 +60,7 @@ export default function Home() {
   const claimable = useProgress(claimableCount);
   const progress = useProgress();
   const [heroW, setHeroW] = useState(360);
+  const winW = useWindowDimensions().width;
   const leagueResult = useLeague((s) => s.result);
   // Hooks stay above the redirect: the hook count must not change when `onboarded` flips.
   const rerolls = useShop((s) => s.rerolls);
@@ -101,7 +105,7 @@ export default function Home() {
           {claimable > 0 && <View style={styles.dot}><Text style={styles.dotText}>{claimable}</Text></View>}
         </Pressable>
         <View style={styles.logo}>
-          <BrandLogo scale={0.82} testID="brand-logo" />
+          <BrandLogo scale={winW < 380 ? 1 : 1.15} testID="brand-logo" />
           <Text style={styles.tagline} numberOfLines={1} adjustsFontSizeToFit>{t('app.tagline')}</Text>
         </View>
         <Pressable onPress={() => router.push('/packs')} style={styles.tile} testID="picks-banner" accessibilityRole="button" accessibilityLabel={t('collect.waiting', { count: pendingPicks })}>
@@ -111,18 +115,29 @@ export default function Home() {
         </Pressable>
       </View>
 
-      <View style={styles.week}>
-        {days.map((d) => {
-          const isToday = d === today;
-          return (
-            <View key={d} style={[styles.day, isToday && styles.dayToday]}>
-              <Text style={[styles.dayName, d > today && { opacity: 0.4 }]}>{weekday(d)}</Text>
-              <View style={[styles.dayCircle, isToday && styles.dayCircleToday, d > today && { opacity: 0.4 }]}>
-                {checked(d) ? <Icon name="check" size={isToday ? 34 : 28} /> : <Text style={styles.dayNum}>{Number(d.slice(8))}</Text>}
+      <View style={styles.streakBoard} testID="streak-board">
+        <LinearGradient colors={['#1C2A57', '#101734']} style={StyleSheet.absoluteFill} />
+        <View style={styles.streakHead}>
+          <Icon name="flame" size={24} />
+          <Text style={styles.streakNum}>{streak}</Text>
+          <Text style={styles.streakLabel}>{t('home.streak')}</Text>
+        </View>
+        <View style={styles.week}>
+          {days.map((d, i) => {
+            const isToday = d === today;
+            const done = checked(d);
+            const chained = done && i > 0 && checked(days[i - 1]);
+            return (
+              <View key={d} style={styles.day}>
+                {chained && <View style={styles.chain} />}
+                <Text style={[styles.dayName, isToday && { color: '#FFC53D' }, d > today && { opacity: 0.35 }]}>{weekday(d)}</Text>
+                <View style={[styles.dayCircle, done && styles.dayDone, isToday && styles.dayCircleToday, d > today && { opacity: 0.35 }]}>
+                  {done ? <Text style={styles.dayCheck}>✓</Text> : <Text style={styles.dayNum}>{Number(d.slice(8))}</Text>}
+                </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
+        </View>
       </View>
 
       {freezesUsed > 0 && (
@@ -189,14 +204,17 @@ export default function Home() {
       <Label>{t('home.modes')}</Label>
       {MODES.map((m) => (
         <Pressable key={m.key} onPress={m.go} testID={`mode-${m.key}`} accessibilityRole="button" accessibilityLabel={t(`mode.${m.key}.title`)}
-          style={({ pressed }) => [styles.mode, { borderColor: m.accent, borderBottomColor: m.accent }, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 3 }]}>
-          <LinearGradient colors={[alpha(m.accent, 0.22), alpha(m.accent, 0.04)]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={[StyleSheet.absoluteFill, { borderRadius: 20 }]} />
-          <View style={[styles.badge, { backgroundColor: alpha(m.accent, 0.15), borderColor: C.ink }]}><Icon name={m.icon} size={40} /></View>
-          <View style={{ flex: 1, gap: 2 }}>
-            <Display size={22} align="left">{t(`mode.${m.key}.title`)}</Display>
+          style={({ pressed }) => [styles.mode, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 4 }]}>
+          <View style={[StyleSheet.absoluteFill, { borderRadius: 20, overflow: 'hidden' }]}>
+            <CourtArt width={heroW} height={MODE_H} color={m.court} color2={m.streak} />
+            <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(8,10,30,0.45)']} start={{ x: 0.3, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+          </View>
+          <View style={{ flex: 1, gap: 4 }}>
+            <Display size={26} align="left">{t(`mode.${m.key}.title`)}</Display>
             <Text style={styles.modeDesc} numberOfLines={3}>{t(`mode.${m.key}.desc`)}</Text>
             {m.key === 'daily' && <DailyTimer small testID="home-daily-timer" />}
           </View>
+          <View style={styles.modeIcon}><Icon name={m.icon} size={44} /></View>
           {m.badge && <View style={[styles.ribbon, { backgroundColor: m.accent }]}><Text style={styles.ribbonText}>{m.badge}</Text></View>}
         </Pressable>
       ))}
@@ -226,13 +244,22 @@ const styles = StyleSheet.create({
   logo: { flex: 1, alignItems: 'center' },
   logoBall: { position: 'absolute', top: -22, right: 4, transform: [{ rotate: '-18deg' }] },
   tagline: { fontWeight: '800', color: C.ink, fontSize: 12.5, marginTop: 2, textAlign: 'center' },
-  week: { flexDirection: 'row', justifyContent: 'space-between', marginTop: S.sm },
-  day: { alignItems: 'center', gap: 4, paddingVertical: 6, paddingHorizontal: 2, borderRadius: 18 },
-  dayToday: { backgroundColor: '#FFFFFF', borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge, paddingHorizontal: 6 },
-  dayName: { fontWeight: '800', color: C.muted, fontSize: 13 },
-  dayCircle: { width: 40, height: 40, borderRadius: 20, borderWidth: 2.5, borderColor: C.edge, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' },
-  dayCircleToday: { width: 46, height: 46, borderRadius: 23, borderColor: C.ink, borderWidth: 3 },
-  dayNum: { fontFamily: FONT.display, fontSize: 17, color: C.muted },
+  streakBoard: {
+    marginTop: S.sm, borderRadius: 22, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6,
+    paddingHorizontal: S.md, paddingTop: S.sm, paddingBottom: S.md, gap: 6,
+  },
+  streakHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  streakNum: { fontFamily: FONT.display, fontSize: 22, color: '#FFC53D' },
+  streakLabel: { color: '#C9D2EE', fontWeight: '900', fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase' },
+  week: { flexDirection: 'row', justifyContent: 'space-between' },
+  day: { flex: 1, alignItems: 'center', gap: 4 },
+  chain: { position: 'absolute', bottom: 18, right: '50%', width: '100%', height: 6, borderRadius: 3, backgroundColor: '#FF7417', shadowColor: '#FF9A3D', shadowOpacity: 0.9, shadowRadius: 6 },
+  dayName: { fontWeight: '800', color: '#AEB6CC', fontSize: 12 },
+  dayCircle: { width: 38, height: 38, borderRadius: 19, borderWidth: 2.5, borderColor: '#3B4A7A', backgroundColor: '#1A2447', alignItems: 'center', justifyContent: 'center' },
+  dayDone: { backgroundColor: '#FF7417', borderColor: '#FFC53D', shadowColor: '#FF9A3D', shadowOpacity: 0.9, shadowRadius: 8 },
+  dayCircleToday: { width: 44, height: 44, borderRadius: 22, borderColor: '#FFC53D', borderWidth: 3.5 },
+  dayCheck: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 20, marginTop: -1 },
+  dayNum: { fontFamily: FONT.display, fontSize: 16, color: '#C9D2EE' },
   hero: {
     height: 190, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, marginTop: S.sm,
     justifyContent: 'center',
@@ -252,11 +279,15 @@ const styles = StyleSheet.create({
   duelPill: { borderRadius: R.pill, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 4, paddingHorizontal: 14, paddingVertical: 5, backgroundColor: '#FFFFFF' },
   duelPillText: { fontWeight: '900', color: C.ink, fontSize: 14 },
   mode: {
-    flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 22, borderWidth: 2.5, borderBottomWidth: 6,
-    backgroundColor: '#FFFFFF', overflow: 'visible',
+    flexDirection: 'row', alignItems: 'center', gap: S.md, paddingHorizontal: S.lg, paddingVertical: S.md, minHeight: MODE_H,
+    borderRadius: 24, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, overflow: 'visible',
+  },
+  modeIcon: {
+    width: 70, height: 70, borderRadius: 35, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center',
+    borderWidth: 3, borderColor: C.ink, borderBottomWidth: 5,
   },
   badge: { width: 62, height: 62, borderRadius: 16, borderWidth: 2.5, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' },
-  modeDesc: { color: C.muted, fontSize: 12.5, lineHeight: 16, fontWeight: '600' },
+  modeDesc: { color: '#FFFFFF', fontSize: 13, lineHeight: 17, fontWeight: '800', textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
   result: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: '#FFF1D6', borderWidth: 2.5, borderColor: C.gold, borderBottomWidth: 6 },
   resultTitle: { fontFamily: FONT.display, fontSize: 19, color: C.ink },
   resultSub: { color: C.muted, fontWeight: '800', fontSize: 13 },
