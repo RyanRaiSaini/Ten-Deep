@@ -2,9 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { MODE_BY_ID, POOLS, leaguePoolFor } from '../data';
-import { draftLeague } from '../engine/aiDraft';
+import { draftLeague, fairLeague } from '../engine/aiDraft';
 import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, reroll, respin, spin, startDraft, type DraftState,
+  legacyDraft,
 } from '../engine/draft';
 import { champion, playNextGame, seriesFor, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
 import { createRng, shuffle } from '../engine/rng';
@@ -25,6 +26,9 @@ import { useProfile } from './profile';
 import { useFriends } from './friends';
 import { useShop } from './shop';
 import { raceOutcome } from '../engine/friends/match';
+
+/** First Daily Draft played on fair spins (dailies before it keep the original sequence). */
+export const FAIR_DAILY_FROM = '2026-11-25';
 
 export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'crisis' | 'playoffs' | 'result';
 
@@ -59,7 +63,7 @@ export interface GameStore {
   parked: Pick<GameStore, 'phase' | 'poolId' | 'draft' | 'season' | 'playoffs' | 'deadline' | 'crisis' | 'stake'> | null;
   resumeCareer: () => boolean;
   /** A friend's challenge: same pool and seed (same spins), their record to beat. */
-  challenge: { name: string; w: number; l: number; pin?: string; depth?: number } | null;
+  challenge: { name: string; w: number; l: number; pin?: string; depth?: number; fair?: boolean; formDay?: string } | null;
   /** Double or nothing on the playoffs (chosen when they start). */
   stake: 'snap' | 'safe' | null;
   /** League points this run earned (after the stake), for the result screen. */
@@ -132,7 +136,8 @@ export const useGame = create<GameStore>()(
         return true;
       },
       newChallenge: (poolId, seed, from) =>
-        park() || set({ phase: 'draft', poolId, challenge: from, daily: null, crisis: null, career: false, draft: startDraft(pool(poolId), seed), season: null, playoffs: null, deadline: null }),
+        // Links made before fair rules (no v=2) replay the original spin sequence, so the spins still match theirs.
+        park() || set({ phase: 'draft', poolId, challenge: from, daily: null, crisis: null, career: false, draft: from.fair ? startDraft(pool(poolId), seed) : legacyDraft(startDraft(pool(poolId), seed)), season: null, playoffs: null, deadline: null }),
       newRun: (poolId, seed) => park() || set({ phase: 'draft', poolId, challenge: null, daily: null, crisis: null, career: false, draft: startDraft(pool(poolId), seed ?? newSeed()), season: null, playoffs: null, deadline: null }),
       // One shot per day: begin once, resume while that run is alive, locked after it's abandoned or finished.
       newDaily: (key) => {
@@ -142,7 +147,9 @@ export const useGame = create<GameStore>()(
         if (day?.draftStarted || day?.draft) return 'locked';
         useDaily.getState().record(key, 'draftStarted', true);
         park();
-        set({ phase: 'draft', poolId: 'current-2026', challenge: null, daily: key, crisis: null, career: false, draft: startDraft(pool('current-2026'), dailySeed(key)), season: null, playoffs: null, deadline: null });
+        // Fair spins start with the next day's Daily, so everyone playing the same day gets the same spins.
+        const fresh = startDraft(pool('current-2026'), dailySeed(key));
+        set({ phase: 'draft', poolId: 'current-2026', challenge: null, daily: key, crisis: null, career: false, draft: key >= FAIR_DAILY_FROM ? fresh : legacyDraft(fresh), season: null, playoffs: null, deadline: null });
         return 'started';
       },
       doSpin: () => set((s) => ({ draft: spin(s.draft!, pool(s.poolId)) })),
@@ -168,10 +175,17 @@ export const useGame = create<GameStore>()(
         const lp = pool(mode ? leaguePoolFor(mode) : poolId);
         const user = { id: 'user', name: 'You', colors: ['#E8833A', '#3DF2C2'] as [string, string], slots: draft.roster as Required<RosterSlots> };
         const rng = createRng(`${draft.seed}:league`);
-        // Exclude by name: the league pool may hold a different season of the same player.
-        const mine = new Set(Object.values(draft.roster).map((x) => x!.name));
-        const exclude = new Set(lp.teams.flatMap((t) => t.players).filter((x) => mine.has(x.name)).map((x) => x.id));
-        const league = draftLeague(lp, exclude, 29, rng);
+        let league;
+        if (draft.scheme === 2) {
+          // Fair league: picked from the seed before the draft, so everyone on this seed faces the same teams
+          // (players you took are swapped for fixed replacements).
+          league = fairLeague(lp, Object.values(draft.roster) as Player[], rng);
+        } else {
+          // Older saved drafts: exclude your picks by name (the league pool may hold another season of the same player).
+          const mine = new Set(Object.values(draft.roster).map((x) => x!.name));
+          const exclude = new Set(lp.teams.flatMap((t) => t.players).filter((x) => mine.has(x.name)).map((x) => x.id));
+          league = draftLeague(lp, exclude, 29, rng);
+        }
         // One name per franchise (e.g. "Chicago Bulls"), never the user's.
         const seen = new Set<string>();
         const names = shuffle(lp.teams.filter((t) => t.id !== 'rookies-2026'), rng).filter((t) => {

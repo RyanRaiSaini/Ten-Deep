@@ -723,7 +723,9 @@
   "challenge": {
     "invalid": "Este link de desafio está quebrado.",
     "title": "{{name}} desafia você",
-    "body": "Mesmos giros, na mesma ordem. Supere a campanha.",
+    "body": "Mesmos giros e a mesma liga. Supere a campanha.",
+    "bodyOld": "Mesmos giros, na mesma ordem. Supere a campanha.",
+    "ratingsMoved": "As notas mudaram com jogos reais desde que {{name}} jogou ({{day}}), então alguns jogadores podem ter nota um pouco diferente.",
     "accept": "Aceitar desafio",
     "share": "Compartilhar e desafiar",
     "shared": "Compartilhado!",
@@ -984,5 +986,25 @@
     "rookie": "ESCALA ROOKIE",
     "twoWay": "TWO-WAY",
     "min": "MÍNIMO"
+  },
+  "how": {
+    "title": "Como funciona",
+    "link": "Como funciona",
+    "intro": "Escolha dez jogadores, fique abaixo do teto e veja até onde eles chegam.",
+    "spinT": "Gire um time",
+    "spinB": "Cada rodada cai numa temporada aleatória de um time da NBA. Escolha um jogador dela.",
+    "rosterT": "Monte seus dez",
+    "rosterB": "Preencha PG, SG, SF, PF e C, mais cinco vagas no banco. Alguns jogadores atuam em duas posições.",
+    "capT": "Fique abaixo de US$ 200 mi",
+    "capB": "Cada jogador custa o contrato real, ajustado ao teto daquela temporada. Contratos de novato são baratos; máximos e supermáximos, não. O jogo sempre deixa espaço para preencher todas as vagas.",
+    "rulesT": "As letras miúdas",
+    "rulesB": "No máximo dois jogadores com 95 ou mais. Dois giros extras grátis por draft. Se ninguém couber num giro, você recebe o jogador mais barato que cabe.",
+    "seasonT": "Jogue 82 partidas",
+    "seasonB": "Lesões custam os jogos indicados. No jogo 50 você tem uma troca no prazo final. Acompanhe jogo a jogo ou avance.",
+    "playoffsT": "Sobreviva aos playoffs",
+    "playoffsB": "16 times, séries melhor de 7, jogo a jogo. 70 vitórias é raro. 82-0 é lenda.",
+    "challengeT": "Desafie um amigo",
+    "challengeB": "Depois de uma campanha, compartilhe seu link. Quem abrir terá os mesmos giros e os mesmos 29 adversários. Se alguém escolher um jogador de um time da IA, esse time contrata um substituto parecido, então a única diferença são as escolhas.",
+    "play": "Começar um draft"
   }
 }
