@@ -16,14 +16,14 @@ export const SIM = {
   scoreSd: 9.5,
   /**
    * Box scores only (never changes results): a player's share of team points grows with offense^ptsExp.
-   * 3.1 keeps scoring leaders around 32–34 PPG, like the modern league (with real contracts, stars cluster more).
+   * 2.8 keeps scoring leaders around 32–35 PPG, like the modern league (with real contracts, stars cluster more).
    */
-  ptsExp: 3.1,
+  ptsExp: 2.8,
   /**
    * Season-to-season swing: every team draws a rating offset ~ N(0, formSd) once per season. Roster quality
    * sets the average; this gives the long tail (a great draft that also has a great year can run the table).
    */
-  formSd: 3.45,
+  formSd: 3.9,
   /** A rare "historic season" (think 73-9): this chance per team-season of an extra +hotBoost rating. */
   hotChance: 0.012,
   hotBoost: 18,
