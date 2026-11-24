@@ -147,9 +147,13 @@ function Tumble() {
 function AdBreak({ visible, onClose }: { visible: boolean; onClose: (rewarded: boolean) => void }) {
   const { t } = useTranslation();
   const [left, setLeft] = useState(AD_SECONDS);
+  const [wasVisible, setWasVisible] = useState(visible);
+  if (visible !== wasVisible) {
+    setWasVisible(visible);
+    if (visible) setLeft(AD_SECONDS);
+  }
   useEffect(() => {
     if (!visible) return;
-    setLeft(AD_SECONDS);
     const id = setInterval(() => setLeft((n) => Math.max(0, n - 1)), 1000);
     return () => clearInterval(id);
   }, [visible]);

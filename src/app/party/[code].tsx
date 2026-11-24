@@ -57,10 +57,8 @@ export default function PartyRoom() {
     void joinRoom(code).then(refresh);
   }, [room, code, mySeat, refresh]);
 
-  // Once the draft is over nothing on the server changes: stop polling.
-  useEffect(() => {
-    if (resolved?.phase === 'season') { setStopped(true); setFast(false); }
-  }, [resolved?.phase]);
+  // Once the draft is over nothing on the server changes: stop polling (a one-way latch, set during render).
+  if (resolved?.phase === 'season' && !stopped) { setStopped(true); setFast(false); }
 
   if (!room || !resolved || !pool) {
     return (
@@ -143,7 +141,9 @@ function Draft({ room, members, mySeat, pool, state, now, code, refresh }: {
     try { const player = fallbackPick(st, pool); return { player, slot: affordableSlots(st, player, pool)[0] }; } catch { return null; }
   })() : null;
 
-  useEffect(() => { setChosen(null); setNote(null); }, [state.round]);
+  // A new round clears last round's choice and message.
+  const [seenRound, setSeenRound] = useState(state.round);
+  if (seenRound !== state.round) { setSeenRound(state.round); setChosen(null); setNote(null); }
   useEffect(() => { if (left > 0 && left <= 5 && !picked) feel('tick'); }, [left, picked]);
 
   const send = async (pid: string, slot: SlotId) => {
