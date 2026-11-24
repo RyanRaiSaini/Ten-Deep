@@ -9,7 +9,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { CONFIG } from '../config';
 import { current2026 } from '../data/current2026';
 import { dailyKey } from '../engine/daily';
-import { normName, type FormDelta } from '../engine/form';
+import { formLocked, normName, type FormDelta } from '../engine/form';
 import type { Player } from '../engine/types';
 
 export interface FormStore {
@@ -39,7 +39,8 @@ export function applyForm(deltas: Record<string, FormDelta>) {
     for (const p of t.players) {
       if (!BASE.has(p)) BASE.set(p, { ...p });
       const base = BASE.get(p)!;
-      const d = deltas[normName(p.name)]?.d ?? 0;
+      // Owner-set ratings already include form (src/data/ownerRated.ts).
+      const d = formLocked(p.name) ? 0 : deltas[normName(p.name)]?.d ?? 0;
       const m = p as unknown as Record<string, number>;
       for (const k of SUBS) m[k] = Math.max(40, Math.min(99, (base[k] as number) + d));
       (p as Player & { form?: number }).form = d || undefined;
