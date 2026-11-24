@@ -2,7 +2,7 @@
  * Card finishes: a second, independent rarity on top of the player's tier. Any card can come out in any finish,
  * so a Violet Wembanyama or a Rainbow bench guy is its own chase. Finishes are fixed by the pick and the card
  * (seeded), so reopening a pick never rerolls them. Odds are published in the app.
- * (The names are our own.)
+ * (The finish names are our own.)
  */
 import { createRng } from '../rng';
 
