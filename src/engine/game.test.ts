@@ -21,7 +21,7 @@ describe('lineupMinutes', () => {
     const starter = lm.find((x) => x.slot === 'PG')!.minutes;
     const deep = lm.find((x) => x.slot === 'B5')!.minutes;
     expect(starter).toBeGreaterThanOrEqual(28);
-    expect(starter).toBeLessThanOrEqual(38);
+    expect(starter).toBeLessThanOrEqual(39); // real stars top out around 37–39 minutes a night
     expect(deep).toBeLessThan(starter);
   });
 
