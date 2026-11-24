@@ -1,4 +1,4 @@
-import { canAfford, capRoom, salaryFor, superstarBlocked } from './cap';
+import { canAfford, capRoom, payOf, superstarBlocked } from './cap';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Rng, type Roster, type RosterSlots, type SlotId,
 } from './types';
@@ -24,13 +24,13 @@ const AI_RESERVE_PER_SLOT = 3;
 
 function aiCanAfford(slots: RosterSlots, p: Player): boolean {
   const openAfter = ALL_SLOTS.filter((s) => !slots[s]).length - 1;
-  return capRoom(slots) - salaryFor(p.ovr) >= openAfter * AI_RESERVE_PER_SLOT;
+  return capRoom(slots) - payOf(p) >= openAfter * AI_RESERVE_PER_SLOT;
 }
 
 function value(team: AiTeam, p: Player, rng: Rng): number {
   const open = ALL_SLOTS.filter((s) => !team.slots[s]).length;
   const perSlotBudget = capRoom(team.slots) / Math.max(1, open);
-  const salary = salaryFor(p.ovr);
+  const salary = payOf(p);
   let v = p.ovr + rng.normal(0, 1.5 + (1 - team.acumen) * 7);
   if (team.style === 'balanced' && salary > perSlotBudget * 1.6) v -= (salary - perSlotBudget * 1.6) * 0.6;
   if (team.style === 'stars') v += (p.ovr - 85) * 0.3;

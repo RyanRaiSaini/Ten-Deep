@@ -2,7 +2,7 @@
  * The offseason as a series of pure steps, so the UI can pause for the user's decisions:
  * startOffseason → resolveExpiring → rookieDraft → (user free agency via signFreeAgent) → aiFreeAgency → finalizeOffseason.
  */
-import { capRoom, salaryFor } from '../cap';
+import { capRoom, rookieScale, salaryFor } from '../cap';
 import { affordableSlots, startDraft } from '../draft';
 import { createRng } from '../rng';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../types';
@@ -41,11 +41,12 @@ export interface OffseasonState {
 }
 
 export const RESIGN_THRESHOLD = 75;
-/** Rookie-scale deals: half the market rate, which is what makes good drafting valuable. */
-export const rookieSalary = (ovr: number) => Math.max(1, Math.round(salaryFor(ovr) * 0.5 * 2) / 2);
+/** Rookie-scale deals: the real rookie scale by draft slot (cheap for what they give you: why drafting well matters). */
+export const rookieSalary = (pick: number) => rookieScale(pick);
 /** Released players hit the market at their current asking price. */
-const unsigned = (p: Player): Player => { const { salary: _s, ...rest } = p; return rest; };
-const signedAt = (p: Player, salary = salaryFor(p.ovr)): Player => ({ ...p, salary });
+const unsigned = (p: Player): Player => { const { salary: _s, contractType: _c, ...rest } = p; return rest; };
+/** A new deal replaces the old one, including what kind it was (a re-signed rookie is no longer on the scale). */
+const signedAt = (p: Player, salary = salaryFor(p.ovr)): Player => ({ ...unsigned(p), salary });
 
 export function seasonLabel(n: number): string {
   const y = 2025 + n;
@@ -144,7 +145,9 @@ export function rookieDraft(st: OffseasonState, userPick?: string, userCut?: Slo
   const freeAgents = [...st.freeAgents];
   const contracts = { ...st.contracts };
   const picks: Record<number, string> = {};
+  let pickNo = 0;
   for (const ti of st.order) {
+    pickNo++;
     if (!rookies.length) break;
     const r = (ti === 0 && rookies.find((x) => x.id === userPick)) || rookies[0];
     rookies = rookies.filter((x) => x.id !== r.id);
@@ -168,7 +171,7 @@ export function rookieDraft(st: OffseasonState, userPick?: string, userCut?: Slo
       }
     }
     if (slot) {
-      t.slots[slot] = signedAt(r, rookieSalary(r.ovr));
+      t.slots[slot] = { ...signedAt(r, rookieSalary(pickNo)), contractType: 'rookie' };
       contracts[r.id] = ROOKIE_YEARS;
     } else freeAgents.push(r);
   }

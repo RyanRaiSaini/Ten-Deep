@@ -968,5 +968,12 @@
     "google": "Google ile devam et",
     "eraseOffline": "Sunucuya ulaşılamadı, çevrimiçi yedeğin silinmedi. İnternete bağlıyken tekrar dene.",
     "eraseLocal": "Sadece bu cihazdan sil"
+  },
+  "contract": {
+    "supermax": "SÜPERMAKS",
+    "max": "MAKS",
+    "rookie": "ÇAYLAK ÖLÇEĞİ",
+    "twoWay": "İKİ YÖNLÜ",
+    "min": "ASGARİ"
   }
 }

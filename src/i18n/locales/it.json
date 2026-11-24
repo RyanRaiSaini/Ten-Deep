@@ -973,5 +973,12 @@
     "google": "Continua con Google",
     "eraseOffline": "Server non raggiungibile: il backup online non è stato eliminato. Riprova quando sei online.",
     "eraseLocal": "Elimina solo da questo dispositivo"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "SCALA ROOKIE",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMO"
   }
 }
