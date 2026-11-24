@@ -14,7 +14,7 @@ export type Status = (typeof STATUSES)[number];
 export const CLOSED: readonly Status[] = ['Declined', 'Do not contact'];
 
 export const CATEGORIES = [
-  '2K / basketball gaming', 'YouTube / streaming', 'Analytics / writing', 'Podcast / analyst / journalist', 'Smaller creator',
+  'Basketball gaming', 'YouTube / streaming', 'Analytics / writing', 'Podcast / analyst / journalist', 'Smaller creator',
 ] as const;
 export type Category = (typeof CATEGORIES)[number];
 
