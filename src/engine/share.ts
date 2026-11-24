@@ -25,13 +25,20 @@ export interface ShareRun {
 /** Rating squares: 🟨 95+, 🟩 88+, 🟦 80+, ⬜ below. */
 const square = (o: number) => (o >= 95 ? '🟨' : o >= 88 ? '🟩' : o >= 80 ? '🟦' : '⬜');
 
-export function challengeLink(r: Pick<ShareRun, 'url' | 'seed' | 'poolId' | 'wins' | 'losses' | 'name' | 'pin' | 'depth' | 'fair' | 'formDay'>): string {
+/**
+ * The "beat my draft" link. It opens /run, which unfurls into a picture of the run (record, result, ratings)
+ * and forwards to the challenge screen (/c) with the same query.
+ */
+export function challengeLink(r: Pick<ShareRun, 'url' | 'seed' | 'poolId' | 'wins' | 'losses' | 'name' | 'pin' | 'depth' | 'fair' | 'formDay'> & Partial<Pick<ShareRun, 'ovrs' | 'result' | 'mode'>>): string {
   const q = new URLSearchParams({ s: r.seed, p: r.poolId, w: String(r.wins), l: String(r.losses), n: r.name.slice(0, 18) });
   if (r.pin) q.set('f', r.pin);
   if (r.depth !== undefined) q.set('d', String(r.depth));
   if (r.fair) q.set('v', '2');
   if (r.formDay) q.set('fd', r.formDay);
-  return `${r.url}/c?${q.toString()}`;
+  if (r.ovrs?.length === 10) q.set('r', r.ovrs.join('.'));
+  if (r.result) q.set('res', r.result);
+  if (r.mode) q.set('mt', r.mode.slice(0, 28));
+  return `${r.url}/run?${q.toString()}`;
 }
 
 export function runShareText(r: ShareRun): string {
