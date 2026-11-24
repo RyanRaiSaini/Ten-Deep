@@ -4,7 +4,7 @@
  */
 import { Platform } from 'react-native';
 import * as native from './native';
-import { OUTPUT, SOUNDS, humAt, tearAt, type SoundName } from './synth';
+import { OUTPUT, SOUNDS, tearAt, type SoundName } from './synth';
 
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
@@ -53,25 +53,6 @@ export function tear(level: number) {
   else native.play(level < 0.4 ? 'tear1' : level < 0.75 ? 'tear2' : 'tear3');
 }
 
-/**
- * A low hum that rises while a glowing card waits to be flipped. Returns a stop function.
- * `strong` (a big pull inside) makes it higher, louder and wobblier.
- */
-export function hum(strong: boolean): () => void {
-  const c = audio();
-  if (!c) return native.hum(strong);
-  const h = humAt(c, c.currentTime, strong);
-  let stopped = false;
-  return () => {
-    if (stopped) return;
-    stopped = true;
-    const n = c.currentTime;
-    h.gain.gain.cancelScheduledValues(n);
-    h.gain.gain.setValueAtTime(Math.max(0.0001, h.gain.gain.value), n);
-    h.gain.gain.exponentialRampToValueAtTime(0.0001, n + 0.15);
-    h.stop(n + 0.2);
-  };
-}
 
 export const SFX = {
   /** Spinner tick: a short wooden click. */

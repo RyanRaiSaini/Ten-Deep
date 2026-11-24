@@ -1,4 +1,5 @@
 import { useLocalSearchParams } from 'expo-router';
+import { SparkleBackdrop, TIER_BACKDROP } from '../../ui/SparkleBackdrop';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../../ui/Text';
@@ -40,7 +41,7 @@ export default function CardDetail() {
   ];
 
   return (
-    <Screen>
+    <Screen backdrop={<SparkleBackdrop key={card.tier} theme={TIER_BACKDROP[card.tier]} seed={card.id} count={34} glowAt={0.3} />}>
       <Header title={card.name} left={<BackButton onPress={() => goBack()} />} />
       <View style={styles.hero}>
         <CollectCard card={card} width={200} level={level} tierLabel={t(`collect.tier_${card.tier}`)} finish={finish} animate />
