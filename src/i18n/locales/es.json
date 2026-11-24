@@ -973,5 +973,12 @@
     "google": "Continuar con Google",
     "eraseOffline": "No se pudo conectar con el servidor, así que tu copia en línea no se borró. Inténtalo con conexión.",
     "eraseLocal": "Borrar solo en este dispositivo"
+  },
+  "contract": {
+    "supermax": "SUPERMÁXIMO",
+    "max": "MÁXIMO",
+    "rookie": "ESCALA ROOKIE",
+    "twoWay": "DOBLE VÍA",
+    "min": "MÍNIMO"
   }
 }

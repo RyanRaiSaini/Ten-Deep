@@ -968,5 +968,12 @@
     "google": "Weiter mit Google",
     "eraseOffline": "Server nicht erreichbar, deine Online-Sicherung wurde nicht gelöscht. Versuch es erneut, wenn du online bist.",
     "eraseLocal": "Nur auf diesem Gerät löschen"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "ROOKIE-SKALA",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMUM"
   }
 }

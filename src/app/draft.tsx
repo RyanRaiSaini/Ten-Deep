@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { POOLS } from '../data';
-import { CAP, MAX_SUPERSTARS, capRoom, salaryFor, superstarCount } from '../engine/cap';
+import { CAP, MAX_SUPERSTARS, capRoom, payOf, superstarCount } from '../engine/cap';
 import { fallbackPick, isComplete, options, reserveNeeded } from '../engine/draft';
 import type { SlotId } from '../engine/types';
 import { useGame } from '../store/game';
@@ -124,7 +124,7 @@ export default function Draft() {
           )}
           {fallback && d.respinsLeft === 0 && (
             <Button
-              label={t('draft.signFallback', { name: fallback.name, salary: money(salaryFor(fallback.ovr)) })}
+              label={t('draft.signFallback', { name: fallback.name, salary: money(payOf(fallback)) })}
               variant="dark"
               onPress={() => { g.doFallback(); feel('pickChime'); }}
               testID="fallback"

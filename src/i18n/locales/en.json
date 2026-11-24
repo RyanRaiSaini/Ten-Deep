@@ -968,5 +968,12 @@
     "google": "Continue with Google",
     "eraseOffline": "Couldn't reach the server, so your online backup wasn't deleted. Try again when you're online.",
     "eraseLocal": "Delete from this device only"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "ROOKIE SCALE",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMUM"
   }
 }

@@ -973,5 +973,12 @@
     "google": "Continuer avec Google",
     "eraseOffline": "Serveur injoignable : ta sauvegarde en ligne n'a pas été supprimée. Réessaie une fois en ligne.",
     "eraseLocal": "Supprimer seulement sur cet appareil"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "CONTRAT ROOKIE",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMUM"
   }
 }

@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import { feel } from '../../audio/feel';
 import { CONFIG } from '../../config';
 import { affordableSlots, fallbackPick, options } from '../../engine/draft';
-import { salaryFor } from '../../engine/cap';
+import { payOf } from '../../engine/cap';
 import {
   parseFlex,
   PARTY_COLORS, PARTY_ROUNDS, PICK_MS, PLAYOFF_REVEAL_MS, SEASON_REVEAL_MS, partySeason, placings, resolve, seatState, seats,
@@ -194,7 +194,7 @@ function Draft({ room, members, mySeat, pool, state, now, code, refresh }: {
         <View style={{ gap: S.sm }}>
           <Text style={styles.hint}>{t('party.autoNote')}</Text>
           {fallback && (
-            <Button label={t('draft.signFallback', { name: fallback.player.name, salary: money(salaryFor(fallback.player.ovr)) })} variant="dark"
+            <Button label={t('draft.signFallback', { name: fallback.player.name, salary: money(payOf(fallback.player)) })} variant="dark"
               disabled={sending} onPress={() => send(fallback.player.id, fallback.slot)} testID="party-fallback" />
           )}
           {opts.map((o) => {

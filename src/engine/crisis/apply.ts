@@ -1,5 +1,5 @@
 /** Apply a resolved Crisis Card to the season. Pure: returns a new SeasonState. */
-import { salaryFor, superstarBlocked } from '../cap';
+import { payOf, superstarBlocked } from '../cap';
 import { lineupMinutes } from '../rotation';
 import { SEASON_GAMES, outSet, recordStint, type SeasonState } from '../season';
 import { ALL_SLOTS, type Player, type SlotId } from '../types';
@@ -77,7 +77,7 @@ export function applyCard(s: SeasonState, card: CrisisCard, d: Decision): Season
     case 'superteam-rumor': {
       if (d.option !== 'a' || !card.offer?.length) return s;
       // The star replaces your highest-paid player (so the two-superstar rule holds), the filler your next.
-      const paid = ALL_SLOTS.map((k) => ({ k, sal: salaryFor(s.teams[0].slots[k].ovr) })).sort((a, b) => b.sal - a.sal);
+      const paid = ALL_SLOTS.map((k) => ({ k, sal: payOf(s.teams[0].slots[k]) })).sort((a, b) => b.sal - a.sal);
       let next = swapIn(s, paid[0].k, card.offer[0]);
       if (card.offer[1] && paid[1]) next = swapIn(next, paid[1].k, card.offer[1]);
       return next;

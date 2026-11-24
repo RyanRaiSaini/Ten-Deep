@@ -973,5 +973,12 @@
     "google": "Continuar com o Google",
     "eraseOffline": "Não foi possível falar com o servidor, então seu backup online não foi apagado. Tente de novo quando estiver online.",
     "eraseLocal": "Apagar só neste aparelho"
+  },
+  "contract": {
+    "supermax": "SUPERMÁXIMO",
+    "max": "MÁXIMO",
+    "rookie": "ESCALA ROOKIE",
+    "twoWay": "TWO-WAY",
+    "min": "MÍNIMO"
   }
 }

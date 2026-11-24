@@ -1,6 +1,6 @@
 /** Headless multi-season career (auto decisions) — used by tests and balance checks. */
 import { draftLeague } from '../aiDraft';
-import { salaryFor } from '../cap';
+import { payOf } from '../cap';
 import { simPlayoffsToEnd, startPlayoffs } from '../playoffs';
 import { createRng } from '../rng';
 import { advance, createSeason } from '../season';
@@ -8,9 +8,9 @@ import { ALL_SLOTS, type Player, type Pool, type Roster } from '../types';
 import { initialContracts } from './contracts';
 import { aiFreeAgency, finalizeOffseason, resolveExpiring, rookieDraft, seasonLabel, startOffseason, RESIGN_THRESHOLD } from './offseason';
 
-/** Career start: everyone's salary is locked in at today's rating. */
+/** Career start: everyone's real contract is locked in (an estimate for anyone without one). */
 export function withSignedSalaries(teams: Roster[]): Roster[] {
-  return teams.map((t) => ({ ...t, slots: Object.fromEntries(ALL_SLOTS.map((k) => [k, { ...t.slots[k], salary: salaryFor(t.slots[k].ovr) }])) as Roster['slots'] }));
+  return teams.map((t) => ({ ...t, slots: Object.fromEntries(ALL_SLOTS.map((k) => [k, { ...t.slots[k], salary: payOf(t.slots[k]) }])) as Roster['slots'] }));
 }
 
 export function simulateCareer(user: Roster, pool: Pool, seed: string, seasons: number) {

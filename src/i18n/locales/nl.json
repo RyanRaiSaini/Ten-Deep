@@ -968,5 +968,12 @@
     "google": "Doorgaan met Google",
     "eraseOffline": "Kan de server niet bereiken, dus je online back-up is niet verwijderd. Probeer opnieuw als je online bent.",
     "eraseLocal": "Alleen van dit apparaat verwijderen"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "ROOKIESCHAAL",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMUM"
   }
 }

@@ -1,4 +1,4 @@
-import { capRoom, salaryFor, superstarBlocked } from './cap';
+import { capRoom, payOf, superstarBlocked } from './cap';
 import { createRng } from './rng';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type RosterSlots, type SlotId, type TeamSeason,
@@ -109,7 +109,7 @@ export function jointReserve(rosters: RosterSlots[], used: Set<string>, pool: Po
           return;
         }
         taken.add(p.id);
-        costs[i] += salaryFor(p.ovr);
+        costs[i] += payOf(p);
       });
   return costs;
 }
@@ -175,6 +175,6 @@ export function fallbackPick(state: DraftState, pool: Pool): Player {
   // Cheapest first; the reserve guarantees the cheapest eligible player always fits.
   const ok = bySalary(pool).filter((p) => !state.used.includes(p.id) && affordableSlots(state, p, pool).length > 0);
   if (ok.length === 0) throw new Error('No fallback player available');
-  const cheapest = salaryFor(ok[0].ovr);
-  return ok.filter((p) => salaryFor(p.ovr) === cheapest).sort((a, b) => b.ovr - a.ovr)[0];
+  const cheapest = payOf(ok[0]);
+  return ok.filter((p) => payOf(p) === cheapest).sort((a, b) => b.ovr - a.ovr)[0];
 }
