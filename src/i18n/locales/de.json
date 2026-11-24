@@ -64,7 +64,6 @@
   "settings": {
     "title": "Einstellungen",
     "audio": "Sound & Gefühl",
-    "music": "Musik",
     "sfx": "Soundeffekte",
     "haptics": "Vibration",
     "notifications": "Benachrichtigungen",
@@ -80,7 +79,11 @@
     "terms": "Nutzungsbedingungen",
     "contact": "Kontakt",
     "deleteAccount": "Konto löschen",
-    "soundDemo": "Soundlabor"
+    "soundDemo": "Soundlabor",
+    "volOff": "Aus",
+    "volLow": "Leise",
+    "volMed": "Mittel",
+    "volHigh": "Laut"
   },
   "draft": {
     "pick": "Pick {{n}} von 10",

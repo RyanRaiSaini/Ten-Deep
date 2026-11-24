@@ -63,7 +63,6 @@
   "settings": {
     "title": "설정",
     "audio": "사운드 및 느낌",
-    "music": "음악",
     "sfx": "효과음",
     "haptics": "진동",
     "notifications": "알림",
@@ -79,7 +78,11 @@
     "terms": "서비스 약관",
     "contact": "문의하기",
     "deleteAccount": "계정 삭제",
-    "soundDemo": "사운드 랩"
+    "soundDemo": "사운드 랩",
+    "volOff": "끄기",
+    "volLow": "작게",
+    "volMed": "보통",
+    "volHigh": "크게"
   },
   "draft": {
     "pick": "{{n}}번째 지명 / 10",

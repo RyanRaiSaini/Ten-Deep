@@ -64,7 +64,6 @@
   "settings": {
     "title": "Settings",
     "audio": "Audio & feel",
-    "music": "Music",
     "sfx": "Sound effects",
     "haptics": "Haptics",
     "notifications": "Notifications",
@@ -80,7 +79,11 @@
     "terms": "Terms of Service",
     "contact": "Contact us",
     "deleteAccount": "Delete account",
-    "soundDemo": "Sound lab"
+    "soundDemo": "Sound lab",
+    "volOff": "Off",
+    "volLow": "Low",
+    "volMed": "Medium",
+    "volHigh": "High"
   },
   "draft": {
     "pick": "Pick {{n}} of 10",

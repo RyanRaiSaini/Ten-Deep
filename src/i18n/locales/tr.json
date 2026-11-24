@@ -64,7 +64,6 @@
   "settings": {
     "title": "Ayarlar",
     "audio": "Ses ve his",
-    "music": "Müzik",
     "sfx": "Ses efektleri",
     "haptics": "Titreşim",
     "notifications": "Bildirimler",
@@ -80,7 +79,11 @@
     "terms": "Hizmet Şartları",
     "contact": "Bize ulaşın",
     "deleteAccount": "Hesabı sil",
-    "soundDemo": "Ses laboratuvarı"
+    "soundDemo": "Ses laboratuvarı",
+    "volOff": "Kapalı",
+    "volLow": "Düşük",
+    "volMed": "Orta",
+    "volHigh": "Yüksek"
   },
   "draft": {
     "pick": "Seçim {{n}} / 10",

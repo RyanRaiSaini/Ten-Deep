@@ -3,7 +3,11 @@ import * as Haptics from 'expo-haptics';
 import { Platform } from 'react-native';
 import { useSettings } from '../store/settings';
 import type { Finish } from '../engine/collect/finishes';
-import { SFX, hum, sting, tear, type SfxName } from './sfx';
+import { SFX, hum, setVolume, sting, tear, type SfxName } from './sfx';
+
+// Keep the sound-effects volume in step with Settings.
+setVolume(useSettings.getState().sfxVolume ?? 1);
+useSettings.subscribe((s) => setVolume(s.sfxVolume ?? 1));
 
 const HAPTIC: Partial<Record<SfxName, () => Promise<void>>> = {
   tick: () => Haptics.selectionAsync(),

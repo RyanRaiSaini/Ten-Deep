@@ -219,7 +219,8 @@ export default function Packs() {
   };
   // Wrapper gone → the stack drops into place.
   const onGone = () => {
-    setPhase('stack');
+    // Only if we're still mid-rip: a quick "Reveal all" may already have jumped to the pick screen.
+    setPhase((p) => (p === 'burst' ? 'stack' : p));
     feel('swish');
     Animated.spring(settle, { toValue: 1, friction: 6, tension: 60, useNativeDriver: native }).start();
   };
