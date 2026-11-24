@@ -1,3 +1,4 @@
+import { CONTRACTS, MARKET_CURVE, type ContractType } from '../data/contracts';
 import { ALL_SLOTS, type Player, type RosterSlots } from './types';
 
 export const CAP = 200;
@@ -15,35 +16,70 @@ export function superstarBlocked(roster: RosterSlots, p: Player): boolean {
   return p.ovr >= SUPERSTAR_OVR && superstarCount(roster) >= MAX_SUPERSTARS;
 }
 
-/** Salary anchors ($M) from the design spec; linear between points. */
-const ANCHORS: [number, number][] = [
-  [64, 1], [70, 3], [75, 6], [80, 12], [85, 20], [90, 30], [95, 42], [99, 50],
-];
+/**
+ * Game dollars: a real salary as a share of that season's cap, × 171.4 (so a 35% supermax = $60M).
+ * See src/data/contracts.ts (generated from real contracts by scripts/contracts/build.mts).
+ */
+export const GAME_DOLLARS_PER_CAP = 60 / 0.35;
 
+/**
+ * Market rate for a rating: the median real veteran contract at that rating (fitted, MARKET_CURVE).
+ * Used where no real contract exists: Career-mode free agency and re-signing.
+ */
 export function salaryFor(ovr: number): number {
-  if (ovr <= ANCHORS[0][0]) return ANCHORS[0][1];
-  const last = ANCHORS[ANCHORS.length - 1];
-  if (ovr >= last[0]) return last[1];
-  for (let i = 1; i < ANCHORS.length; i++) {
-    const [o1, s1] = ANCHORS[i];
-    if (ovr <= o1) {
-      const [o0, s0] = ANCHORS[i - 1];
-      const raw = s0 + ((ovr - o0) / (o1 - o0)) * (s1 - s0);
-      return Math.round(raw * 2) / 2;
-    }
+  const c = MARKET_CURVE;
+  if (ovr <= c[0][0]) return c[0][1];
+  for (let i = c.length - 1; i >= 0; i--) if (ovr >= c[i][0]) return c[i][1];
+  return c[0][1];
+}
+
+/** Real rookie scale (2026-27, signed at 120%) as a share of the cap, by first-round pick; linear between. */
+const ROOKIE_SCALE: [number, number][] = [[1, 0.0894], [2, 0.08], [3, 0.0718], [4, 0.0646], [5, 0.0585], [7, 0.048], [10, 0.0392], [15, 0.0298], [20, 0.0236], [25, 0.0198], [30, 0.0177]];
+/** Second-round picks and later sign near the rookie minimum. */
+const SECOND_ROUND_SHARE = 0.0083;
+
+/**
+ * The apron: how far over the cap a team may go by re-signing its own players (like the NBA's Bird rights,
+ * limited by the aprons). New signings still have to fit under the cap; minimum deals and rookies don't.
+ */
+export const APRON = CAP + 30;
+
+/** A minimum contract (the floor of the real market curve): what the minimum-salary exception pays. */
+export const MIN_CONTRACT = MARKET_CURVE[0][1];
+
+export function rookieScale(pick: number): number {
+  let share = SECOND_ROUND_SHARE;
+  if (pick <= 30) {
+    const i = ROOKIE_SCALE.findIndex(([p]) => p >= pick);
+    const [p1, s1] = ROOKIE_SCALE[i];
+    const [p0, s0] = ROOKIE_SCALE[Math.max(0, i - 1)];
+    share = p1 === p0 ? s1 : s0 + ((pick - p0) / (p1 - p0)) * (s1 - s0);
   }
-  return last[1];
+  return Math.round(share * GAME_DOLLARS_PER_CAP * 10) / 10;
 }
 
 const filled = (roster: RosterSlots) => ALL_SLOTS.filter((s) => roster[s]);
 
-/** What a player costs: his signed contract if he has one (career mode), else the market rate for his rating. */
+/**
+ * What a player costs: his signed contract in Career mode, else his real contract for that season,
+ * else the market rate for his rating.
+ */
 export function payOf(p: Player): number {
-  return p.salary ?? salaryFor(p.ovr);
+  if (p.salary !== undefined) return p.salary;
+  return (!p.released && CONTRACTS[p.id]?.[0]) || salaryFor(p.ovr);
+}
+
+/** The kind of deal a player is on (supermax, max, rookie scale, two-way, minimum…); null when it's an estimate. */
+export function contractType(p: Player): Exclude<ContractType, 'est'> | null {
+  if (p.contractType) return p.contractType;
+  if (p.released) return null;
+  const t = CONTRACTS[p.id]?.[1];
+  return t && t !== 'est' ? t : null;
 }
 
 export function capRoom(roster: RosterSlots): number {
-  return CAP - filled(roster).reduce((sum, s) => sum + payOf(roster[s]!), 0);
+  // Salaries are in $0.1M steps; round so float noise (2.9999999…) can't make an exact fit look over the cap.
+  return Math.round((CAP - filled(roster).reduce((sum, s) => sum + payOf(roster[s]!), 0)) * 10) / 10;
 }
 
 /** True if picking `p` still leaves enough room to fill every other open slot at minimum salary. */

@@ -19,8 +19,12 @@ export interface Player {
   /** In his first NBA season (Current Day: the 2026 draft class). */
   rookie?: boolean;
   tag?: string;
-  /** Career mode: salary locked in when signed ($M). Without it, salary follows the current rating. */
+  /** Career mode: salary locked in when signed (game $M). Without it: the real contract, else the market rate. */
   salary?: number;
+  /** Career mode: has been out of contract (a free agent), so his old real deal no longer applies. */
+  released?: boolean;
+  /** Career mode: the kind of deal signed (e.g. 'rookie' for a draft pick). */
+  contractType?: 'supermax' | 'max' | 'rookie' | 'twoWay' | 'min' | 'standard';
   /** Data needs owner verification (e.g. roster move after mid-2026). */
   verify?: boolean;
   stats?: { ppg: number; rpg: number; apg: number };

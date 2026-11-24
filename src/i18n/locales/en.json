@@ -391,7 +391,9 @@
     "f3Title": "Make history",
     "f3Body": "Titles, a Hall of Fame and franchise records that last.",
     "end": "End career",
-    "endSure": "Tap again: this career ends for good"
+    "endSure": "Tap again: this career ends for good",
+    "payroll": "Payroll after re-signing: {{pay}} (cap {{cap}} · apron {{apron}})",
+    "overApron": "Over the apron: can’t re-sign"
   },
   "collect": {
     "title": "Collection",
@@ -968,5 +970,12 @@
     "google": "Continue with Google",
     "eraseOffline": "Couldn't reach the server, so your online backup wasn't deleted. Try again when you're online.",
     "eraseLocal": "Delete from this device only"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "ROOKIE SCALE",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMUM"
   }
 }

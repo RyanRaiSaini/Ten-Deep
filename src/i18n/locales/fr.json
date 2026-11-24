@@ -394,7 +394,9 @@
     "f3Title": "Entre dans l'histoire",
     "f3Body": "Des titres, un Hall of Fame et des records de franchise.",
     "end": "Terminer la carrière",
-    "endSure": "Touche encore : cette carrière sera définitivement terminée"
+    "endSure": "Touche encore : cette carrière sera définitivement terminée",
+    "payroll": "Masse salariale après prolongations : {{pay}} (plafond {{cap}} · apron {{apron}})",
+    "overApron": "Au-dessus de l’apron : impossible"
   },
   "collect": {
     "title": "Collection",
@@ -973,5 +975,12 @@
     "google": "Continuer avec Google",
     "eraseOffline": "Serveur injoignable : ta sauvegarde en ligne n'a pas été supprimée. Réessaie une fois en ligne.",
     "eraseLocal": "Supprimer seulement sur cet appareil"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "CONTRAT ROOKIE",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMUM"
   }
 }

@@ -3,7 +3,7 @@
  *   npx tsx scripts/calibrate.ts [seasons] [k=0.012 star=0.05 scoreSd=10 ...]
  */
 import { draftLeague } from '../src/engine/aiDraft';
-import { affordableSlots, isComplete, options, pick, spin, startDraft, type DraftState } from '../src/engine/draft';
+import { affordableSlots, fallbackPick, isComplete, options, pick, pickFallback, spin, startDraft, type DraftState } from '../src/engine/draft';
 import { champion, simPlayoffsToEnd, startPlayoffs } from '../src/engine/playoffs';
 import { createRng } from '../src/engine/rng';
 import { lineupMinutes, teamStrength } from '../src/engine/rotation';
@@ -45,6 +45,11 @@ export function spinDraft(pool: Pool, seed: string): Roster {
   while (!isComplete(s)) {
     const o = options(s, pool).find((x) => x.affordable);
     if (o) s = pick(s, o.player.id, o.slots[0], pool);
+    else {
+      // Nothing on this spin fits: take the cheapest signing that does (the draft screen offers the same).
+      const fb = fallbackPick(s, pool);
+      s = pickFallback(s, fb, affordableSlots(s, fb, pool)[0], pool);
+    }
     if (!isComplete(s)) s = spin(s, pool);
   }
   return asRoster(s.roster, 'Spin');

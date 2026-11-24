@@ -391,7 +391,9 @@
     "f3Title": "Schreib Geschichte",
     "f3Body": "Titel, eine Hall of Fame und bleibende Franchise-Rekorde.",
     "end": "Karriere beenden",
-    "endSure": "Nochmal tippen: Diese Karriere endet endgültig"
+    "endSure": "Nochmal tippen: Diese Karriere endet endgültig",
+    "payroll": "Gehälter nach Verlängerungen: {{pay}} (Cap {{cap}} · Apron {{apron}})",
+    "overApron": "Über dem Apron: keine Verlängerung"
   },
   "collect": {
     "title": "Sammlung",
@@ -968,5 +970,12 @@
     "google": "Weiter mit Google",
     "eraseOffline": "Server nicht erreichbar, deine Online-Sicherung wurde nicht gelöscht. Versuch es erneut, wenn du online bist.",
     "eraseLocal": "Nur auf diesem Gerät löschen"
+  },
+  "contract": {
+    "supermax": "SUPERMAX",
+    "max": "MAX",
+    "rookie": "ROOKIE-SKALA",
+    "twoWay": "TWO-WAY",
+    "min": "MINIMUM"
   }
 }

@@ -66,7 +66,8 @@ export interface CareerStore {
   beginOffseason: () => void;
   keep: (ids: string[]) => void;
   draftRookie: (rookieId?: string, cut?: SlotId) => void;
-  sign: (player: Player, slot: SlotId) => void;
+  /** `salary`: a set amount (the minimum exception's minimum deal); otherwise his market rate. */
+  sign: (player: Player, slot: SlotId, salary?: number) => void;
   /** One of yours for one of theirs; returns whether their GM said yes. */
   trade: (give: string, team: number, want: string) => boolean;
   autoSign: () => void;
@@ -142,7 +143,7 @@ export const useCareer = create<CareerStore>()(
       draftRookie: (rookieId, cut) =>
         set((c) => (c.offseason ? { offseason: ensureDepth(rookieDraft(c.offseason, rookieId, cut)), step: 'freeAgency' } : {})),
 
-      sign: (player, slot) => set((c) => (c.offseason ? { offseason: signFreeAgent(c.offseason, 0, player, slot) } : {})),
+      sign: (player, slot, salary) => set((c) => (c.offseason ? { offseason: signFreeAgent(c.offseason, 0, player, slot, salary) } : {})),
 
       trade: (give, team, want) => {
         const st = get().offseason;
@@ -158,8 +159,8 @@ export const useCareer = create<CareerStore>()(
         const st = get().offseason;
         if (!st) return;
         const best = affordableFor(st, 0).sort((a, b) => b.player.ovr - a.player.ovr)[0];
-        const move = best ? { player: best.player, slot: best.slots[0] } : minimumException(st, 0);
-        if (move) get().sign(move.player, move.slot);
+        const move = best ? { player: best.player, slot: best.slots[0], salary: undefined } : minimumException(st, 0);
+        if (move) get().sign(move.player, move.slot, move.salary);
       },
 
       startNextSeason: () => {

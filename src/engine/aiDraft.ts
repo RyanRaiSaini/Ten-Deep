@@ -1,4 +1,4 @@
-import { canAfford, capRoom, salaryFor, superstarBlocked } from './cap';
+import { canAfford, capRoom, payOf, superstarBlocked } from './cap';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Rng, type Roster, type RosterSlots, type SlotId,
 } from './types';
@@ -19,18 +19,21 @@ function openSlotFor(slots: RosterSlots, p: Player, startersOnly: boolean): Slot
   return null;
 }
 
-/** AI teams keep ~$3M per remaining open slot in reserve; truly cheap players are scarce. */
-const AI_RESERVE_PER_SLOT = 3;
-
-function aiCanAfford(slots: RosterSlots, p: Player): boolean {
+/**
+ * AI teams keep enough cap to fill their other open slots with the cheapest real contracts still available
+ * (minimums, two-ways, late rookie deals), so they don't spend themselves into a corner.
+ */
+function aiCanAfford(slots: RosterSlots, p: Player, cheapest: number[]): boolean {
   const openAfter = ALL_SLOTS.filter((s) => !slots[s]).length - 1;
-  return capRoom(slots) - salaryFor(p.ovr) >= openAfter * AI_RESERVE_PER_SLOT;
+  let reserve = 0;
+  for (let i = 0; i < openAfter && i < cheapest.length; i++) reserve += cheapest[i];
+  return capRoom(slots) - payOf(p) >= reserve;
 }
 
 function value(team: AiTeam, p: Player, rng: Rng): number {
   const open = ALL_SLOTS.filter((s) => !team.slots[s]).length;
   const perSlotBudget = capRoom(team.slots) / Math.max(1, open);
-  const salary = salaryFor(p.ovr);
+  const salary = payOf(p);
   let v = p.ovr + rng.normal(0, 1.5 + (1 - team.acumen) * 7);
   if (team.style === 'balanced' && salary > perSlotBudget * 1.6) v -= (salary - perSlotBudget * 1.6) * 0.6;
   if (team.style === 'stars') v += (p.ovr - 85) * 0.3;
@@ -38,12 +41,15 @@ function value(team: AiTeam, p: Player, rng: Rng): number {
   return v;
 }
 
-/** Cheapest affordable unused player into the first open slot, even out of position. */
+/**
+ * Cheapest contract left into the first open slot, even out of position. If nothing fits under the cap, the
+ * cheapest deal anyway: like the real NBA's minimum-salary exception, which lets capped-out teams sign minimums.
+ */
 function lastResort(slots: RosterSlots, available: Player[], used: Set<string>): { p: Player; slot: SlotId; v: number } {
   const slot = ALL_SLOTS.find((s) => !slots[s])!;
-  const cands = available.filter((p) => !used.has(p.id) && canAfford(slots, p)).sort((a, b) => a.ovr - b.ovr);
-  if (cands.length === 0) throw new Error('AI draft: pool exhausted');
-  return { p: cands[0], slot, v: 0 };
+  const left = available.filter((p) => !used.has(p.id)).sort((a, b) => payOf(a) - payOf(b) || a.ovr - b.ovr);
+  if (left.length === 0) throw new Error('AI draft: pool exhausted');
+  return { p: left.find((p) => canAfford(slots, p)) ?? left[0], slot, v: 0 };
 }
 
 /**
@@ -64,9 +70,10 @@ export function draftLeague(pool: Pool, exclude: Set<string>, count: number, rng
     const order = round % 2 === 0 ? teams : [...teams].reverse();
     for (const team of order) {
       const startersOpen = STARTER_SLOTS.some((s) => !team.slots[s]);
+      const cheapest = available.filter((p) => !used.has(p.id)).map(payOf).sort((a, b) => a - b).slice(0, ALL_SLOTS.length);
       let best: { p: Player; slot: SlotId; v: number } | null = null;
       for (const p of available) {
-        if (used.has(p.id) || superstarBlocked(team.slots, p) || !aiCanAfford(team.slots, p)) continue;
+        if (used.has(p.id) || superstarBlocked(team.slots, p) || !aiCanAfford(team.slots, p, cheapest)) continue;
         const slot = openSlotFor(team.slots, p, startersOpen);
         if (!slot) continue;
         const v = value(team, p, rng);
