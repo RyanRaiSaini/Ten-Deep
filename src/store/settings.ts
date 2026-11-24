@@ -8,8 +8,10 @@ export const SIM_SPEEDS = [0.5, 1, 2, 4] as const;
 export type SimSpeed = (typeof SIM_SPEEDS)[number];
 
 export interface Settings {
-  music: boolean;
+  /** Sound effects on/off (off when the volume is 0). */
   sfx: boolean;
+  /** Sound-effects volume, 0..1. */
+  sfxVolume: number;
   haptics: boolean;
   notifDaily: boolean;
   notifStreak: boolean;
@@ -25,8 +27,8 @@ export interface Settings {
 export const useSettings = create<Settings>()(
   persist(
     (set) => ({
-      music: true,
       sfx: true,
+      sfxVolume: 1,
       haptics: true,
       notifDaily: true,
       notifStreak: true,

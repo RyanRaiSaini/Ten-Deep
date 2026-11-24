@@ -8,6 +8,10 @@ import { copyText } from '../ui/share';
 import { Text } from '../ui/Text';
 import { LANGUAGE_NAMES, LANGUAGES } from '../i18n/languages';
 import { SIM_SPEEDS, useSettings } from '../store/settings';
+import { feel } from '../audio/feel';
+
+/** Sound-effects volume steps (the game has no music). */
+const SFX_LEVELS = [0, 0.35, 0.7, 1] as const;
 import { BackButton, Button, Card, Header, Label, Row, Screen, Segmented, ToggleRow } from '../ui/components';
 import { C, R, S } from '../ui/theme';
 import { goBack } from '../ui/nav';
@@ -25,8 +29,13 @@ export default function Settings() {
 
       <Label>{t('settings.audio')}</Label>
       <Card style={styles.group}>
-        <ToggleRow label={t('settings.music')} value={s.music} onChange={(v) => s.set({ music: v })} />
-        <ToggleRow label={t('settings.sfx')} value={s.sfx} onChange={(v) => s.set({ sfx: v })} />
+        <Text style={styles.sub}>{t('settings.sfx')}</Text>
+        <Segmented
+          options={SFX_LEVELS}
+          value={s.sfx ? (SFX_LEVELS.find((l) => Math.abs(l - s.sfxVolume) < 0.01) ?? 1) : 0}
+          onChange={(v) => { s.set({ sfx: v > 0, ...(v > 0 ? { sfxVolume: v } : {}) }); if (v > 0) setTimeout(() => feel('pickChime'), 0); }}
+          format={(v) => t(`settings.vol${v === 0 ? 'Off' : v < 0.5 ? 'Low' : v < 0.9 ? 'Med' : 'High'}`)}
+        />
         <ToggleRow label={t('settings.haptics')} value={s.haptics} onChange={(v) => s.set({ haptics: v })} />
         <Row label={t('settings.soundDemo')} onPress={() => router.push('/sound-demo')} />
       </Card>

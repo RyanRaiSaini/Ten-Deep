@@ -1,9 +1,9 @@
 /**
- * iOS/Android playback of the pre-rendered sounds and music (assets/audio, made by scripts/render-audio.mts from
+ * iOS/Android playback of the pre-rendered sound effects (assets/audio, made by scripts/render-audio.mts from
  * the same synth code the web plays live). No-ops on the web and in tests: expo-audio is only required on native.
  */
 import { Platform } from 'react-native';
-import { MUSIC_ASSETS, SFX_ASSETS } from './assets';
+import { SFX_ASSETS } from './assets';
 import type { SoundName } from './synth';
 
 type ExpoAudio = typeof import('expo-audio');
@@ -26,6 +26,9 @@ function audioLib(): ExpoAudio | null {
 const POOL = 3;
 const pools = new Map<SoundName, Player[]>();
 const next = new Map<SoundName, number>();
+let volume = 1;
+
+export function setVolume(v: number) { volume = v; }
 
 function player(name: SoundName): Player | null {
   const a = audioLib();
@@ -43,7 +46,7 @@ export function play(name: SoundName) {
   const p = player(name);
   if (!p) return;
   try {
-    p.volume = 1;
+    p.volume = volume;
     void p.seekTo(0);
     p.play();
   } catch { /* a sound is never worth a crash */ }
@@ -55,7 +58,7 @@ function fadeOut(p: Player) {
   const id = setInterval(() => {
     v -= 0.2;
     try {
-      if (v <= 0) { clearInterval(id); p.pause(); p.volume = 1; } else p.volume = v;
+      if (v <= 0) { clearInterval(id); p.pause(); p.volume = volume; } else p.volume = v;
     } catch { clearInterval(id); }
   }, 30);
 }
@@ -64,32 +67,7 @@ function fadeOut(p: Player) {
 export function hum(strong: boolean): () => void {
   const p = player(strong ? 'hum_strong' : 'hum_soft');
   if (!p) return () => {};
-  try { p.volume = 1; void p.seekTo(0); p.play(); } catch { return () => {}; }
+  try { p.volume = volume; void p.seekTo(0); p.play(); } catch { return () => {}; }
   let stopped = false;
   return () => { if (!stopped) { stopped = true; fadeOut(p); } };
-}
-
-let music: { key: keyof typeof MUSIC_ASSETS; player: Player } | null = null;
-
-export function startMusic(key: 'menu' | 'playoffs') {
-  const a = audioLib();
-  const src = MUSIC_ASSETS[key];
-  if (!a || src == null) return;
-  if (music?.key === key) return;
-  stopMusic();
-  try {
-    const p = a.createAudioPlayer(src);
-    p.loop = true;
-    p.volume = 1;
-    p.play();
-    music = { key, player: p };
-  } catch { music = null; }
-}
-
-export function stopMusic() {
-  if (!music) return;
-  const p = music.player;
-  music = null;
-  fadeOut(p);
-  setTimeout(() => { try { p.remove(); } catch { /* already gone */ } }, 400);
 }

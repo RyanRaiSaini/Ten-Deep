@@ -12,7 +12,6 @@ import { Loading } from '../ui/Loading';
 import { useEffect, useState } from 'react';
 import { AppState } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useMusic } from '../audio/useMusic';
 import { applyLanguage, deviceLanguage } from '../i18n';
 import { useNotificationSync } from '../notifications';
 import { STORES, startDay } from '../store/all';
@@ -45,7 +44,6 @@ export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({ LilitaOne_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold, Montserrat_800ExtraBold });
   // Fonts that fail to load fall back to system fonts rather than blocking the game.
   const ready = hydrated && (fontsLoaded || !!fontError);
-  useMusic();
   useNotificationSync(ready);
   // Daily check-in (login streak + Daily/Weekly/Mythic picks) once saved progress has loaded.
   useEffect(() => {

@@ -64,7 +64,6 @@
   "settings": {
     "title": "Instellingen",
     "audio": "Geluid en gevoel",
-    "music": "Muziek",
     "sfx": "Geluidseffecten",
     "haptics": "Trillingen",
     "notifications": "Meldingen",
@@ -80,7 +79,11 @@
     "terms": "Servicevoorwaarden",
     "contact": "Contact",
     "deleteAccount": "Account verwijderen",
-    "soundDemo": "Geluidslab"
+    "soundDemo": "Geluidslab",
+    "volOff": "Uit",
+    "volLow": "Laag",
+    "volMed": "Middel",
+    "volHigh": "Hoog"
   },
   "draft": {
     "pick": "Keuze {{n}} van 10",

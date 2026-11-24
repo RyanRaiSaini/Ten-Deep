@@ -63,7 +63,6 @@
   "settings": {
     "title": "設定",
     "audio": "サウンドと操作感",
-    "music": "音楽",
     "sfx": "効果音",
     "haptics": "振動",
     "notifications": "通知",
@@ -79,7 +78,11 @@
     "terms": "利用規約",
     "contact": "お問い合わせ",
     "deleteAccount": "アカウントを削除",
-    "soundDemo": "サウンドラボ"
+    "soundDemo": "サウンドラボ",
+    "volOff": "オフ",
+    "volLow": "小",
+    "volMed": "中",
+    "volHigh": "大"
   },
   "draft": {
     "pick": "指名 {{n}} / 10",
