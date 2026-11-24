@@ -18,7 +18,7 @@ export const current2026: Pool = {
   label: 'Current Day',
   teams: [
     team('atl', 'Atlanta', 'Hawks', S, ['#C8102E', '#FDB927'], `
-      Jalen Johnson|SF/PF|86|24|twoway|70
+      Jalen Johnson|SF/PF|87|24|twoway|70
       Dyson Daniels|SG/PG|86|23|defender
       Onyeka Okongwu|C/PF|80|25|rim
       Nickeil Alexander-Walker|SG/SF|79|28|wing3d
