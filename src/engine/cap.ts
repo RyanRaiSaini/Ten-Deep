@@ -38,6 +38,15 @@ const ROOKIE_SCALE: [number, number][] = [[1, 0.0894], [2, 0.08], [3, 0.0718], [
 /** Second-round picks and later sign near the rookie minimum. */
 const SECOND_ROUND_SHARE = 0.0083;
 
+/**
+ * The apron: how far over the cap a team may go by re-signing its own players (like the NBA's Bird rights,
+ * limited by the aprons). New signings still have to fit under the cap; minimum deals and rookies don't.
+ */
+export const APRON = CAP + 30;
+
+/** A minimum contract (the floor of the real market curve): what the minimum-salary exception pays. */
+export const MIN_CONTRACT = MARKET_CURVE[0][1];
+
 export function rookieScale(pick: number): number {
   let share = SECOND_ROUND_SHARE;
   if (pick <= 30) {
@@ -56,12 +65,14 @@ const filled = (roster: RosterSlots) => ALL_SLOTS.filter((s) => roster[s]);
  * else the market rate for his rating.
  */
 export function payOf(p: Player): number {
-  return p.salary ?? CONTRACTS[p.id]?.[0] ?? salaryFor(p.ovr);
+  if (p.salary !== undefined) return p.salary;
+  return (!p.released && CONTRACTS[p.id]?.[0]) || salaryFor(p.ovr);
 }
 
 /** The kind of deal a player is on (supermax, max, rookie scale, two-way, minimum…); null when it's an estimate. */
 export function contractType(p: Player): Exclude<ContractType, 'est'> | null {
   if (p.contractType) return p.contractType;
+  if (p.released) return null;
   const t = CONTRACTS[p.id]?.[1];
   return t && t !== 'est' ? t : null;
 }

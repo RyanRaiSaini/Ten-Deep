@@ -1,4 +1,4 @@
-import { canAfford, superstarBlocked } from './cap';
+import { canAfford, payOf, superstarBlocked } from './cap';
 import { simGame, type GameResult } from './game';
 import { rollInjury, type InjuryLabel } from './injuries';
 import { lineupMinutes } from './rotation';
@@ -243,7 +243,8 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
   const without: RosterSlots = { ...user.slots };
   delete without[slot];
   if (superstarBlocked(without, incoming)) throw new Error('Superstar limit reached (max 2 players rated 95+)');
-  if (!canAfford(without, incoming)) throw new Error('Over the cap');
+  // Under the cap, any deal that fits; over it, the NBA's salary-matching rule (take back up to 125% of what goes out).
+  if (!canAfford(without, incoming) && payOf(incoming) > payOf(user.slots[slot]) * 1.25 + 0.1) throw new Error('Over the cap');
   const teams = [...state.teams];
   teams[0] = { ...user, slots: { ...user.slots, [slot]: incoming } };
   return { ...recordStint(state, user.slots[slot], incoming), teams, deadlineUsed: true };

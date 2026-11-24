@@ -394,7 +394,9 @@
     "f3Title": "Faça história",
     "f3Body": "Títulos, um Hall da Fama e recordes da franquia.",
     "end": "Encerrar carreira",
-    "endSure": "Toque de novo: esta carreira acaba de vez"
+    "endSure": "Toque de novo: esta carreira acaba de vez",
+    "payroll": "Folha após renovar: {{pay}} (teto {{cap}} · apron {{apron}})",
+    "overApron": "Acima do apron: não dá para renovar"
   },
   "collect": {
     "title": "Coleção",
