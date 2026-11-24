@@ -9,21 +9,23 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { CONFIG } from '../config';
 import { current2026 } from '../data/current2026';
 import { dailyKey } from '../engine/daily';
-import { formLocked, normName, type FormDelta } from '../engine/form';
+import { ANCHORED_MODEL, cleanDeltas, normName, type FormDelta } from '../engine/form';
 import type { Player } from '../engine/types';
 
 export interface FormStore {
   day: string | null;
   updated: string | null;
   deltas: Record<string, FormDelta>;
-  set: (day: string, updated: string | null, deltas: Record<string, FormDelta>) => void;
+  /** The server's rating model for these deltas (older ones are cleaned of owner-rated players). */
+  model?: number;
+  set: (day: string, updated: string | null, deltas: Record<string, FormDelta>, model?: number) => void;
 }
 
 export const useForm = create<FormStore>()(
   persist(
     (set) => ({
       day: null, updated: null, deltas: {},
-      set: (day, updated, deltas) => set({ day, updated, deltas }),
+      set: (day, updated, deltas, model) => set({ day, updated, deltas: cleanDeltas(deltas, model), model: Math.max(model ?? 0, ANCHORED_MODEL) }),
     }),
     { name: 'tendeep-form', storage: createJSONStorage(() => AsyncStorage) },
   ),
@@ -39,8 +41,7 @@ export function applyForm(deltas: Record<string, FormDelta>) {
     for (const p of t.players) {
       if (!BASE.has(p)) BASE.set(p, { ...p });
       const base = BASE.get(p)!;
-      // Owner-set ratings already include form (src/data/ownerRated.ts).
-      const d = formLocked(p.name) ? 0 : deltas[normName(p.name)]?.d ?? 0;
+      const d = deltas[normName(p.name)]?.d ?? 0;
       const m = p as unknown as Record<string, number>;
       for (const k of SUBS) m[k] = Math.max(40, Math.min(99, (base[k] as number) + d));
       (p as Player & { form?: number }).form = d || undefined;
@@ -59,7 +60,9 @@ const URL_ = typeof document !== 'undefined' ? '/api/form' : `${CONFIG.webUrl}/a
 
 /** Apply what we have now, then refresh from the server once a day. Quiet when offline. */
 export async function syncForm() {
-  const s = useForm.getState();
+  let s = useForm.getState();
+  // Form saved before owner-rated players were anchored counted their whole season: drop it for them.
+  if ((s.model ?? 0) < ANCHORED_MODEL) { s.set(s.day ?? '', s.updated, s.deltas, s.model); s = useForm.getState(); }
   applyForm(s.deltas);
   const today = dailyKey();
   if (s.day === today) return;
@@ -69,8 +72,8 @@ export async function syncForm() {
     const body = await r.json();
     if (!body || typeof body.deltas !== 'object') return;
     // Today's Daily Draft must be the same for everyone: only take new form at the start of a day.
-    useForm.getState().set(today, body.updated ?? null, body.deltas);
-    applyForm(body.deltas);
+    useForm.getState().set(today, body.updated ?? null, body.deltas, typeof body.model === 'number' ? body.model : undefined);
+    applyForm(useForm.getState().deltas);
   } catch {
     // Offline: keep yesterday's form.
   }
