@@ -26,6 +26,7 @@ const DOCS: Record<string, { title: string; body: string[] }> = {
       'Party rooms: while you play a party, your display name, avatar, picks and rarest card are kept for the room (deleted automatically after 3 hours).',
       'Sign in with Apple or Google (optional): we store a one-way fingerprint of your account ID linked to your PIN, so signing in on a new device finds your progress. We do not ask for or store your name or email.',
       'Share links: a shared pull is a link to a picture of the card. It contains the card and its finish, nothing about you.',
+      'Campaign links: if you open the game from a link we gave a creator or community (it has ?c= in it), the game makes a random ID on this device and records a few anonymous milestones against that link: that you visited, came back on another day, started or finished a draft, simulated a season, or shared a result. We use the totals to see whether the invitation helped. No name, email or IP address is stored with them, and nothing is recorded if you never open such a link.',
       'Real-life ratings use public NBA box scores; nothing about you is sent.',
       'We do not sell personal data. We do not show ads today; if ads are added later, this policy will describe the ad partners and your choices.',
       'Children: the game is not directed at children under 13.',
