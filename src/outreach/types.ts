@@ -112,7 +112,8 @@ export interface Campaign {
   createdAt: string;
 }
 
-export type EvidenceKind = 'feedback' | 'bug' | 'observation' | 'metric';
+export const EVIDENCE_KINDS = ['feedback', 'bug', 'observation', 'metric'] as const;
+export type EvidenceKind = (typeof EVIDENCE_KINDS)[number];
 
 /** Something that actually happened: a message, a playtest note, a recorded number. */
 export interface Evidence {
