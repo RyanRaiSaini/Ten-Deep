@@ -78,7 +78,8 @@ export function contractType(p: Player): Exclude<ContractType, 'est'> | null {
 }
 
 export function capRoom(roster: RosterSlots): number {
-  return CAP - filled(roster).reduce((sum, s) => sum + payOf(roster[s]!), 0);
+  // Salaries are in $0.1M steps; round so float noise (2.9999999…) can't make an exact fit look over the cap.
+  return Math.round((CAP - filled(roster).reduce((sum, s) => sum + payOf(roster[s]!), 0)) * 10) / 10;
 }
 
 /** True if picking `p` still leaves enough room to fill every other open slot at minimum salary. */

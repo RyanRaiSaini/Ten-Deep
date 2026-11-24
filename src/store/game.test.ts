@@ -43,7 +43,7 @@ describe('game store', () => {
     useGame.getState().openDeadline(s);
     useGame.getState().chooseDeadlineOut(s.teams[0].slots.B5.id);
     useGame.getState().spinDeadline();
-    const cheap = { ...s.teams[0].slots.B5, id: 'cheap-signing', name: 'Cheap Signing', ovr: 64 };
+    const cheap = { ...s.teams[0].slots.B5, id: 'cheap-signing', name: 'Cheap Signing', ovr: 64, salary: 0.5 };
     useGame.getState().signDeadline(cheap);
     expect(() => useGame.getState().signDeadline(cheap)).not.toThrow();
     expect(useGame.getState().season!.teams[0].slots.B5.id).toBe('cheap-signing');

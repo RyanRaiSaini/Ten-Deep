@@ -76,7 +76,8 @@ const sortedCache = new WeakMap<Pool, Player[]>();
 function bySalary(pool: Pool): Player[] {
   let list = sortedCache.get(pool);
   if (!list) {
-    list = pool.teams.flatMap((t) => t.players).sort((a, b) => a.ovr - b.ovr);
+    // By real salary (cheapest first), not rating: a low-rated veteran can be expensive, a rookie cheap.
+    list = pool.teams.flatMap((t) => t.players).sort((a, b) => payOf(a) - payOf(b) || a.ovr - b.ovr);
     sortedCache.set(pool, list);
   }
   return list;
@@ -109,7 +110,7 @@ export function jointReserve(rosters: RosterSlots[], used: Set<string>, pool: Po
           return;
         }
         taken.add(p.id);
-        costs[i] += payOf(p);
+        costs[i] = Math.round((costs[i] + payOf(p)) * 10) / 10;
       });
   return costs;
 }
