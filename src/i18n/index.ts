@@ -1,6 +1,6 @@
 // Plural forms need Intl.PluralRules; load a small polyfill only on engines that lack it.
 import { getLocales } from 'expo-localization';
-import i18n from 'i18next';
+import i18n, { changeLanguage, use as addPlugin } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { I18nManager, Platform } from 'react-native';
 import { LANGUAGES, RTL_LANGUAGES, type Language } from './languages';
@@ -14,7 +14,7 @@ export function deviceLanguage(): Language {
   return (LANGUAGES as readonly string[]).includes(code) ? (code as Language) : 'en';
 }
 
-i18n.use(initReactI18next).init({
+addPlugin(initReactI18next).init({
   resources,
   lng: deviceLanguage(),
   fallbackLng: 'en',
@@ -29,7 +29,7 @@ export const isRTL = (lng: string) => RTL_LANGUAGES.includes(lng as Language);
  * applies on the next app launch.
  */
 export function applyLanguage(lng: Language) {
-  if (i18n.language !== lng) i18n.changeLanguage(lng);
+  if (i18n.language !== lng) changeLanguage(lng);
   const rtl = isRTL(lng);
   if (Platform.OS === 'web') {
     if (typeof document !== 'undefined') {

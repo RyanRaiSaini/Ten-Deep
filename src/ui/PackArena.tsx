@@ -4,7 +4,7 @@
  * Everything is vector + Animated, so it costs no image assets and runs the same on iOS, Android and web.
  */
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Animated, Easing, PanResponder, Platform, StyleSheet, View } from 'react-native';
 import Svg, { Circle, Defs, Ellipse, G, Line, Path, Polygon, RadialGradient, Rect, Stop, LinearGradient as SvgLinear } from 'react-native-svg';
 import { Text } from './Text';
@@ -349,7 +349,9 @@ export function RipPack({ c1, c2, label, type, hint, glow, onRip, onGone, testID
     Animated.timing(tear, { toValue: 0.85, duration: 260, easing: Easing.in(Easing.quad), useNativeDriver: false }).start(() => finish());
   };
 
-  const pan = useMemo(() => PanResponder.create({
+  // Created once; its handlers only read the refs on touches, never during render (the compiler can't see that).
+  // eslint-disable-next-line react-hooks/refs
+  const [pan] = useState(() => PanResponder.create({
     onStartShouldSetPanResponder: () => !done.current,
     onMoveShouldSetPanResponder: () => !done.current,
     onPanResponderTerminationRequest: () => false,
@@ -370,8 +372,7 @@ export function RipPack({ c1, c2, label, type, hint, glow, onRip, onGone, testID
       bucket.current = 0;
       Animated.spring(tear, { toValue: 0, friction: 5, useNativeDriver: false }).start();
     },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), []);
+  }));
 
   const seamW = tear.interpolate({ inputRange: [0, 1], outputRange: [0, PW] });
   return (
