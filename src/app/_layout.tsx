@@ -1,4 +1,5 @@
 // Import only the weights the game uses, so the other font styles stay out of the app.
+import { startCampaignTracking } from '../net/campaign';
 import { Montserrat_500Medium } from '@expo-google-fonts/montserrat/500Medium';
 import { Montserrat_600SemiBold } from '@expo-google-fonts/montserrat/600SemiBold';
 import { Montserrat_700Bold } from '@expo-google-fonts/montserrat/700Bold';
@@ -46,6 +47,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (!ready) return;
     startDay();
+    startCampaignTracking();
     // Phones keep the app alive in the background for days: start the new day when it comes back.
     const app = AppState.addEventListener('change', (st) => { if (st === 'active') startDay(); });
     // Collection milestones (cards, sets, Gauntlet, streak) unlock achievements as they happen.
