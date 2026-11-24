@@ -46,7 +46,7 @@ const glowOf = (c: Card, f: Finish) => (finishRank(f) >= finishRank('gold') ? FI
 
 /** Burst of sparkles radiating from the center. Re-fires whenever `fire` changes. */
 function Sparkles({ fire, color }: { fire: number; color: string }) {
-  const parts = useMemo(() => Array.from({ length: 40 }, (_, i) => ({ a: (i / 40) * Math.PI * 2 + Math.random() * 0.3, d: 110 + Math.random() * 160, s: 4 + Math.random() * 8 })), []);
+  const [parts] = useState(() => Array.from({ length: 40 }, (_, i) => ({ a: (i / 40) * Math.PI * 2 + Math.random() * 0.3, d: 110 + Math.random() * 160, s: 4 + Math.random() * 8 })));
   const [v] = useState(() => new Animated.Value(0));
   useEffect(() => {
     if (!fire) return;
@@ -126,7 +126,13 @@ function FlipCard({ card, revealed, onPress, selected, width, packColor, tierLab
   );
 }
 
+/** Each pending pack gets a fresh opening screen (all state and animation reset by remounting on its id). */
 export default function Packs() {
+  const pickId = useCollection((s) => s.pending[0]?.id);
+  return <PackOpening key={pickId ?? 'none'} />;
+}
+
+function PackOpening() {
   const { t } = useTranslation();
   const col = useCollection();
   const pick = col.pending[0];
@@ -151,11 +157,6 @@ export default function Packs() {
   const [settle] = useState(() => new Animated.Value(0)); // stack settling to centre once the wrapper is gone
   const [fling] = useState(() => new Animated.Value(0)); // top card flying away
   const busy = useRef(false);
-
-  useEffect(() => {
-    setPhase('sealed'); setFlipped([]); setIndex(0); setSelected(null); setUpgraded(false); setBanner(null);
-    lift.setValue(0); settle.setValue(0); fling.setValue(0); busy.current = false;
-  }, [pick?.id, lift, settle, fling]);
 
   if (!pick) {
     return (

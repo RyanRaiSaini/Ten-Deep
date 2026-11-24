@@ -9,12 +9,12 @@ import { Text } from '../ui/Text';
 import { LANGUAGE_NAMES, LANGUAGES } from '../i18n/languages';
 import { SIM_SPEEDS, useSettings } from '../store/settings';
 import { feel } from '../audio/feel';
-
-/** Sound-effects volume steps (the game has no music). */
-const SFX_LEVELS = [0, 0.35, 0.7, 1] as const;
 import { BackButton, Button, Card, Header, Label, Row, Screen, Segmented, ToggleRow } from '../ui/components';
 import { C, R, S } from '../ui/theme';
 import { goBack } from '../ui/nav';
+
+/** Sound-effects volume steps (the game has no music). */
+const SFX_LEVELS = [0, 0.35, 0.7, 1] as const;
 
 const FLAGS = ['🇨🇦', '🇺🇸', '🇬🇧', '🇫🇷', '🇪🇸', '🇵🇹', '🇧🇷', '🇹🇷', '🇮🇹', '🇳🇱', '🇩🇪', '🇯🇵', '🇰🇷', '🇸🇦', '🇪🇬', '🇲🇦', '🇳🇬', '🇦🇺', '🇮🇳', '🇵🇭', '🇲🇽', '🇦🇷', '🇸🇷', '🇷🇸', '🇬🇷', '🇱🇹', '🇸🇮', '🇨🇲', '🇨🇳', '🇯🇲'];
 
