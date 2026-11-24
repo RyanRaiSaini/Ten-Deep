@@ -26,7 +26,7 @@ describe('applyForm', () => {
 describe('owner-set ratings', () => {
   const all = current2026.teams.flatMap((t) => t.players);
   const naw = all.find((p) => p.name === 'Nickeil Alexander-Walker')!;
-  const other = all.find((p) => p.name === 'Jalen Johnson')!;
+  const other = all.find((p) => p.name === 'Trae Young')!;
 
   it('form saved by the old model is dropped for them, so it never stacks on the owner\'s number', async () => {
     const { useForm } = await import('./form');
@@ -37,6 +37,11 @@ describe('owner-set ratings', () => {
     applyForm(useForm.getState().deltas);
     expect(naw.ovr).toBe(86);
     expect(other.ovr).toBe(otherBase + 2);
+    // Earlier owner calls too: Ty Jerome is 87, not 87 + 10.
+    const ty = all.find((p) => p.name === 'Ty Jerome')!;
+    useForm.getState().set('2026-11-24', null, { [normName(ty.name)]: { d: 10, gp: 18, gmsc: 20 } }, 4);
+    applyForm(useForm.getState().deltas);
+    expect(ty.ovr).toBe(87);
     // New-model form for them is relative to the owner's number, so it applies.
     useForm.getState().set('2026-11-25', null, { [normName(naw.name)]: { d: 2, gp: 4, gmsc: 18 } }, ANCHORED_MODEL);
     applyForm(useForm.getState().deltas);

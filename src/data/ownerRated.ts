@@ -1,5 +1,5 @@
 /**
- * Current Day players whose rating the owner set by hand on 2026-11-24, after November's games. Those numbers
+ * Current Day players whose rating the owner set by hand (2026-11-23/24, including November's games). Those numbers
  * already include form up to then, so live form (src/engine/form.ts) measures them only on games played after
  * OWNER_RATED_FROM, against the owner's number: right after the update they show exactly what the owner set,
  * then drift up or down with how they play from here.
@@ -150,4 +150,19 @@ export const OWNER_RATED: readonly string[] = [
   'AJ Dybantsa',
   'Alex Sarr',
   'Kyshawn George',
+  // Earlier owner calls (2026-11-23/24: PR #45, #46, #47).
+  'Tyrese Maxey',
+  'Stephon Castle',
+  "De'Aaron Fox",
+  'Shai Gilgeous-Alexander',
+  'Luka Dončić',
+  'Giannis Antetokounmpo',
+  'Nikola Jokić',
+  'Jayson Tatum',
+  'Jaylen Brown',
+  'Ty Jerome',
+  'Cameron Boozer',
+  'Dyson Daniels',
+  'Jalen Johnson',
+  'Rudy Gobert',
 ];
