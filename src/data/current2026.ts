@@ -348,7 +348,7 @@ export const current2026: Pool = {
       Noah Penda|SF/PF|69|21|defender|?
     `),
     team('phi', 'Philadelphia', '76ers', S, ['#006BB6', '#ED174C'], `
-      Tyrese Maxey|PG|90|25|scorer
+      Tyrese Maxey|PG|92|25|scorer
       Jaylen Brown|SG/SF|89|30|slasher
       LeBron James|SF/PF|88|41|point|60
       Joel Embiid|C|87|32|scorer|25
@@ -409,9 +409,9 @@ export const current2026: Pool = {
     `),
     team('sas', 'San Antonio', 'Spurs', S, ['#C4CED4', '#000000'], `
       Victor Wembanyama|C|97|22|unicorn|70
-      De'Aaron Fox|PG|86|28|slasher
-      Stephon Castle|PG/SG|84|21|twoway
-      Dylan Harper|SG/PG|82|20|scorer
+      De'Aaron Fox|PG|83|28|slasher
+      Stephon Castle|PG/SG|86|21|twoway
+      Dylan Harper|SG/PG|86|20|scorer
       Devin Vassell|SG|79|26|wing3d
       Keldon Johnson|SF|78|26|slasher
       Tobias Harris|PF|78|34|twoway
