@@ -1,6 +1,6 @@
 # Career Mode (multi-season Management Crisis) — Design
 
-*2026-11-23 · Owner: "start the multi-season career mode" (MyGM-style, building on Management Crisis)*
+*2026-11-23 · Owner: "start the multi-season career mode" (building on Management Crisis)*
 
 ## Intent
 Keep one franchise across many seasons. Each season is a Management Crisis season (board objective, 4 crisis cards, verdict); between seasons comes an offseason of aging, retirements, contracts, a rookie draft and free agency. The career ends when the board fires you. Success means building a lasting team, not just one lucky draft.

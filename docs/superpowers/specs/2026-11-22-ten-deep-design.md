@@ -32,14 +32,14 @@ Ten Deep is an NBA draft-and-simulate game. A player spins a team or era, drafts
 - **Superteams.** LeBron, Jordan, Steph and Kobe on one roster must be impossible.
 - **Easy titles or easy 70-win seasons.**
 - **Real-person likenesses or NBA/team logos and trademarks** in art. Player names and stats as facts are fine.
-- **Our own visual identity.**
+- **A copy of any other game's look.** Ten Deep has its own visual identity.
 - Guest play. Sign-in is required.
 
 ## 3. Constraints
 
 - The owner won't do manual setup. Anything that needs the owner's identity (creating the GitHub repo, Apple Developer and Google Cloud OAuth credentials, a Supabase account) is listed as an owner step and kept to a minimum. Everything else is automated.
 - Commits: about 20–30 per day of work, meaningful rather than spammy.
-- Player ratings are original numbers. 2K-style ratings can guide intuition but are not copied.
+- Player ratings are original numbers, not copied from any other game.
 
 ## 4. Approaches considered
 
