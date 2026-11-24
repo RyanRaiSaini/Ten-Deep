@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { current2026 } from '../data/current2026';
-import { normName } from '../engine/form';
+import { formLocked, normName } from '../engine/form';
 import { useForm } from '../store/form';
 import { Icon } from './icons';
 import { ovrBadge } from './PlayerCard';
@@ -16,7 +16,7 @@ export function HotStrip() {
   const deltas = useForm((s) => s.deltas);
   const hot = useMemo(() => {
     const rows = current2026.teams.flatMap((team) =>
-      team.players.map((p) => ({ p, team, d: deltas[normName(p.name)]?.d ?? 0 })));
+      team.players.map((p) => ({ p, team, d: formLocked(p.name) ? 0 : deltas[normName(p.name)]?.d ?? 0 })));
     return rows.filter((r) => r.d >= 3).sort((a, b) => b.d - a.d || b.p.ovr - a.p.ovr).slice(0, 10);
   }, [deltas]);
   if (!hot.length) return null;

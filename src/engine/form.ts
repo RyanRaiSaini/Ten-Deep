@@ -7,6 +7,7 @@
  * trusted more as games pile up; the last 7 days add a hot/cold swing on top.
  */
 
+import { OWNER_RATED } from '../data/ownerRated';
 import type { Player } from './types';
 
 export interface StatLine {
@@ -39,6 +40,10 @@ export function normName(name: string): string {
     .trim();
 }
 
+/** Players whose rating the owner set by hand, form included (src/data/ownerRated.ts): live form never moves them. */
+const LOCKED = new Set(OWNER_RATED.map(normName));
+export const formLocked = (name: string) => LOCKED.has(normName(name));
+
 /** Least-squares fit of rating on Game Score per game, among rotation players with a real sample. */
 export function calibrate(rows: { ovr: number; gmsc: number }[]): { a: number; b: number } {
   const n = rows.length;
@@ -65,6 +70,7 @@ export function computeForm(
   const out: Record<string, FormDelta> = {};
   for (const p of players) {
     const key = normName(p.name);
+    if (LOCKED.has(key)) continue;
     const s = season.get(key);
     if (!s || s.gp < 3) continue;
     const mpg = s.min / s.gp;
@@ -98,7 +104,7 @@ export function formPool<P extends { teams: { players: Player[] }[] }>(pool: P, 
       ...t,
       players: t.players.map((p) => {
         const b = base(p);
-        const d = form[normName(b.name)] ?? 0;
+        const d = LOCKED.has(normName(b.name)) ? 0 : form[normName(b.name)] ?? 0;
         const out = { ...b, form: d || undefined } as Player & { form?: number };
         for (const k of subs) (out as unknown as Record<string, number>)[k] = Math.max(40, Math.min(99, (b[k] as number) + d));
         return out;
