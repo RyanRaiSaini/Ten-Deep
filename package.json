@@ -10,6 +10,7 @@
     "web": "expo start --web",
     "build:web": "expo export -p web",
     "party:e2e": "expo export -p web && tsx scripts/party-e2e.mts",
+    "admin:e2e": "expo export -p web && tsx scripts/admin-e2e.mts",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --noEmit",
     "review": "tsx scripts/review-sheet.ts",

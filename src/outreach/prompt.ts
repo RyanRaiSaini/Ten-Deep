@@ -80,7 +80,7 @@ export function buildPrompt(i: PromptInput): { system: string; user: string } {
     `Sender: ${i.settings.ownerIntro}`,
     `Recipient: ${c.name}${c.channel ? `, ${c.channel}` : ''}${c.platform ? ` (${c.platform})` : ''}`,
     c.category && `Audience category: ${c.category}`,
-    c.contentExample && `Verified content example: ${c.contentExample}${c.contentSource ? ` (source: ${c.contentSource})` : ''}`,
+    c.contentExample ? `Verified content example: ${c.contentExample}${c.contentSource ? ` (source: ${c.contentSource})` : ''}` : 'Verified content example: none recorded. Do not reference or describe their content at all.',
     c.fit && `Why it could fit: ${c.fit}`,
     c.angle && `Suggested angle: ${c.angle}`,
     `Documented connection: ${c.familiarity.trim() || 'none (do not claim any familiarity)'}`,
