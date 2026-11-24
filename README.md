@@ -63,8 +63,11 @@ src/ui/           design system, portraits, logo, cards, effects, spinner, roste
 src/audio/        synthesized sound effects (rendered to files for iOS/Android)
 src/notifications/ local reminder rules + scheduling
 src/i18n/         11 locales
+src/outreach/     private creator-outreach workspace logic (admin at /admin; see docs/outreach/README.md)
 docs/             design specs, plans, ratings review sheets, store listing draft
 ```
+
+The private creator-outreach admin (`/admin`, behind `ADMIN_KEY`) is documented in [docs/outreach/README.md](docs/outreach/README.md).
 
 ## Not built yet (needs owner accounts)
 
