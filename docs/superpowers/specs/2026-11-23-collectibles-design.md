@@ -4,7 +4,7 @@
 
 ## Cards
 - A card is a **player-season** from the historical database plus the 2026 pool; id is the player-season id. Name, season label, team, position and overall come from the data.
-- **Tiers by overall:** Common 64–74 · Uncommon 75–79 · Rare 80–84 · Epic 85–89 · Mythic 90–94 · Ultra 95–99. (We deliberately avoid 2K's gem tier names.)
+- **Tiers by overall:** Common 64–74 · Uncommon 75–79 · Rare 80–84 · Epic 85–89 · Mythic 90–94 · Ultra 95–99. (The tier names are our own.)
 - Stylized art only: tier frame, team colors, jersey number. No faces.
 
 ## Player Picks (5 cards, keep 1)

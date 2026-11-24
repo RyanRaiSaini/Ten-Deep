@@ -12,7 +12,7 @@ Everything here is ready to paste into App Store Connect and the Google Play Con
 
 | Field | Value |
 |---|---|
-| Name (30) | Ten Deep: Basketball GM |
+| Name (30) | Ten Deep: Draft & Sim |
 | Subtitle (30) | Draft ten deep. Survive 82. |
 | Category | Games → Sports (secondary: Games → Simulation) |
 | Age rating | 4+ (no objectionable content; no gambling: picks are free and can't be bought) |
@@ -74,7 +74,7 @@ Data is collected, used only for app functionality, **not linked to tracking** a
 
 | Field | Value |
 |---|---|
-| App name (30) | Ten Deep: Basketball GM |
+| App name (30) | Ten Deep: Draft & Sim |
 | Short description (80) | Draft a 10-man rotation under the cap, then survive 82 games and the playoffs. |
 | Category | Sports (Games) |
 | Content rating | Everyone (IARC questionnaire: no violence, no gambling, no user content) |
