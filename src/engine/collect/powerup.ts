@@ -1,5 +1,5 @@
 /**
- * Power-up taps (Clash Royale "Lucky Drop" style): before opening a pick you get three taps; each has a
+ * Power-up taps: before opening a pick you get three taps; each has a
  * published chance to upgrade the whole pick one step. Rolls are seeded by the pick, so reloading can't re-roll.
  */
 import { createRng } from '../rng';

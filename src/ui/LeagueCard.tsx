@@ -31,7 +31,7 @@ const ZONE = {
   relegate: { color: C.danger, bg: '#FDE6E8' },
 } as const;
 
-/** Golazo-style league card: tier, countdown, your rank, and the zone you're in. */
+/** League card: tier, countdown, your rank, and the zone you're in. */
 export function LeagueCard() {
   const { t } = useTranslation();
   const league = useLeague();

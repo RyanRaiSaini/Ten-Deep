@@ -1,6 +1,6 @@
 import type { Pos } from '../types';
 
-/** Collectible tiers, lowest to highest. (Deliberately not 2K's gem names.) */
+/** Collectible tiers, lowest to highest. (The names are our own.) */
 export const TIERS = ['common', 'uncommon', 'rare', 'epic', 'mythic', 'ultra'] as const;
 export type Tier = (typeof TIERS)[number];
 

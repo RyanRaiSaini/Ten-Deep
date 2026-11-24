@@ -1,4 +1,4 @@
-/** Spoiler-free share text (Wordle-style) and challenge links. Pure, so it's testable. */
+/** Spoiler-free share text (colored squares, no names) and challenge links. Pure, so it's testable. */
 
 export interface ShareRun {
   wins: number;

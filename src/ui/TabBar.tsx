@@ -57,7 +57,7 @@ function TabItem({ name, focused, onPress }: { name: string; focused: boolean; o
 }
 
 /**
- * Golazo-style bottom bar for the tab navigator: a raised panel springs to the active tab while its icon pops
+ * Bottom bar for the tab navigator: a raised panel springs to the active tab while its icon pops
  * up and its outlined label fades in.
  */
 export function TabBar({ state, navigateToTab, insets }: BottomTabBarProps) {
