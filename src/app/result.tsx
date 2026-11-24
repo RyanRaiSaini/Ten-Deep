@@ -1,3 +1,4 @@
+import { track } from '../net/campaign';
 import { Redirect, router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -136,7 +137,7 @@ export default function Result() {
               pin: useFriends.getState().pin, depth: won ? 4 : mine ? mine.round + 1 : 0,
             });
             const r = await shareText(text);
-            if (r !== 'failed') setShared(r);
+            if (r !== 'failed') { setShared(r); track('shared'); }
           }} />
       )}
       {!g.career && <Button label={t('result.playAgain')} onPress={() => { if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />}
