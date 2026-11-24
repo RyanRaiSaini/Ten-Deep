@@ -33,7 +33,7 @@ export const norm = (s: string) => {
 function rows(html: string, tableId: string): Record<string, { text: string; cls: string }>[] {
   // Tables after the first few are wrapped in HTML comments; unwrap them.
   const s = html.replace(/<!--/g, '').replace(/-->/g, '');
-  const i = s.indexOf(`id="${tableId}"`);
+  const i = s.search(new RegExp(`<table[^>]*id="${tableId}"`));
   if (i < 0) return [];
   const seg = s.slice(i, s.indexOf('</table>', i));
   return [...seg.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((m) => {
@@ -62,6 +62,12 @@ const put = (y: number, name: string, r: Real) => {
   m.set(k, old ? { ...old, ...r, salary: Math.max(old.salary, r.salary), exp: r.exp ?? old.exp, tw: old.tw || r.tw } : r);
 };
 
+/** 2026-27: which team each player is on (roster pages), and every team that lists a contract for him. */
+const rosterTeam = new Map<string, string>();
+const conByTeam = new Map<string, { team: string; real: Real }[]>();
+/** 2026-27: salary rows per player on his own team's table (two rows = waived and re-signed). */
+const rowsOnTeam = new Map<string, number[]>();
+
 const files = readdirSync(dir);
 for (const f of files) {
   const html = readFileSync(join(dir, f), 'utf8');
@@ -74,24 +80,55 @@ for (const f of files) {
       const e = r.years_experience?.text;
       exp.set(norm(r.player.text), { exp: e === 'R' ? 0 : e && /^\d+$/.test(e) ? Number(e) : null, tw: /\(TW\)/.test(r.player.text) });
     }
+    if (y === 2027) for (const k of exp.keys()) rosterTeam.set(k, m[1]);
     for (const r of rows(html, 'salaries2')) {
       const s = r.salary && money(r.salary.text);
       if (!r.player || !s) continue;
       const x = exp.get(norm(r.player.text));
+      // 2026-27: only players on this team's roster (the table can also list money owed to released players).
+      // Past seasons keep every row: a player traded mid-season really was paid by that team.
+      if (!x && y === 2027) continue;
+      if (y === 2027) { const k = norm(r.player.text); rowsOnTeam.set(k, [...(rowsOnTeam.get(k) ?? []), s]); }
       put(y, r.player.text, { salary: s, exp: x?.exp ?? null, tw: !!x?.tw, option: false });
     }
     // Two-way players are on the roster but often not in the salary table.
     for (const [k, x] of exp) if (x.tw && !bySeason.get(y)?.has(k)) put(y, k, { salary: caps.get(y)! * 0.0047, exp: x.exp, tw: true, option: false });
     for (const [k, x] of exp) { const cur = bySeason.get(y)?.get(k); if (cur) cur.exp = cur.exp ?? x.exp; }
   } else if ((m = f.match(/^con-([A-Z]+)\.html$/))) {
-    for (const r of rows(html, `contracts_${m[1].toLowerCase()}`)) {
+    for (const r of rows(html, 'contracts')) {
       const s = r.y1 && money(r.y1.text);
-      if (!r.player || !s) continue;
+      if (!r.player || !s || /^team totals/i.test(r.player.text)) continue;
       const option = /salary-tm/.test(r.y2?.cls ?? '') || /salary-tm/.test(r.y3?.cls ?? '');
-      put(2027, r.player.text, { salary: s, exp: null, tw: false, option });
+      const k = norm(r.player.text);
+      conByTeam.set(k, [...(conByTeam.get(k) ?? []), { team: m[1], real: { salary: s, exp: null, tw: false, option } }]);
     }
   }
 }
+
+// A player can be on two teams' contract pages: the deal he plays on, and money a former team still owes him
+// (waived or bought out). Use the contract with the team he's on; if he's on no roster, the smallest.
+const doubled: string[] = [];
+for (const [k, list] of conByTeam) {
+  const mine = list.find((c) => c.team === rosterTeam.get(k)) ?? [...list].sort((a, b) => a.real.salary - b.real.salary)[0];
+  if (list.length > 1) doubled.push(`${k} (${list.map((c) => `${c.team} ${Math.round(c.real.salary / 1e5) / 10}M`).join(', ')} → ${mine.team})`);
+  const cur = bySeason.get(2027)?.get(k);
+  const m = bySeason.get(2027) ?? new Map<string, Real>(); bySeason.set(2027, m);
+  m.set(k, { ...mine.real, exp: cur?.exp ?? null, tw: cur?.tw ?? false });
+}
+console.log(`players on two teams' contract pages (${doubled.length}):`, doubled.join('; '));
+
+// Waived and re-signed by the same team (e.g. Jonathan Isaac, 2026): the table lists the money still owed from the
+// old deal and the new contract; the contract page sums them. The player plays on the new (smaller) deal.
+const resigned: string[] = [];
+for (const [k, list] of rowsOnTeam) {
+  if (list.length < 2) continue;
+  const cur = bySeason.get(2027)?.get(k);
+  if (!cur) continue;
+  cur.salary = Math.min(...list);
+  cur.option = false;
+  resigned.push(`${k} (${list.map((x) => Math.round(x / 1e5) / 10).join(' + ')}M → ${Math.round(cur.salary / 1e5) / 10}M)`);
+}
+console.log(`waived and re-signed (${resigned.length}):`, resigned.join('; '));
 
 // ---- implied caps before the real cap existed ----
 for (const [y, m] of bySeason) if (!caps.has(y) && m.size) caps.set(y, Math.max(...[...m.values()].map((r) => r.salary)) / 0.35);
