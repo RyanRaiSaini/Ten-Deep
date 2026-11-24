@@ -10,7 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Animated, Easing, Platform, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Animated, BackHandler, Easing, Platform, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../ui/Text';
 import { feel, feelFinish, feelSuspense } from '../audio/feel';
@@ -79,7 +79,7 @@ function Sparkles({ fire, color }: { fire: number; color: string }) {
 /** A pulsing aura behind a face-down card: the rarity tease. */
 function Aura({ color, strong, size }: { color: string; strong: boolean; size: number }) {
   const [v] = useState(() => new Animated.Value(0));
-  // While it waits face down: a rising hum, and a heartbeat on the phone if something big is under it.
+  // While it waits face down: a heartbeat on the phone if something big is under it (no music).
   useEffect(() => feelSuspense(strong), [strong]);
   useEffect(() => {
     const loop = Animated.loop(Animated.sequence([
@@ -157,6 +157,13 @@ function PackOpening() {
   const [settle] = useState(() => new Animated.Value(0)); // stack settling to centre once the wrapper is gone
   const [fling] = useState(() => new Animated.Value(0)); // top card flying away
   const busy = useRef(false);
+
+  // Android's back button can't skip the pick either, once the pack is open.
+  useEffect(() => {
+    if (phase === 'sealed') return;
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => true);
+    return () => sub.remove();
+  }, [phase]);
 
   if (!pick) {
     return (
@@ -266,7 +273,8 @@ function PackOpening() {
       <ArenaBackdrop color={stageColor} />
       <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom']}>
         <View style={styles.header}>
-          <BackButton onPress={() => goBack()} />
+          {/* Once the pack is ripped you have to keep a card before leaving. */}
+          {phase === 'sealed' ? <BackButton onPress={() => goBack()} /> : <View style={{ width: 52 }} />}
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={[styles.packName, { textShadowColor: c1 }]} testID="pack-type">{t(`collect.t_${pick.type}`)}</Text>
             {guarantee && <Text style={styles.guarantee}>★ {t(`collect.${guarantee}`)}</Text>}

@@ -20,7 +20,4 @@ export const SFX_ASSETS: Partial<Record<SoundName, number>> = {
   sting_violet: require('../../assets/audio/sting_violet.m4a'),
   sting_rainbow: require('../../assets/audio/sting_rainbow.m4a'),
   sting_cosmic: require('../../assets/audio/sting_cosmic.m4a'),
-  hum_soft: require('../../assets/audio/hum_soft.m4a'),
-  hum_strong: require('../../assets/audio/hum_strong.m4a'),
 };
-
