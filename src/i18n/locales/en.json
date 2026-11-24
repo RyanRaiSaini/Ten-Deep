@@ -718,7 +718,9 @@
   "challenge": {
     "invalid": "This challenge link is broken.",
     "title": "{{name}} challenges you",
-    "body": "Same spins, in the same order. Beat their record.",
+    "body": "Same spins and the same league. Beat their record.",
+    "bodyOld": "Same spins, in the same order. Beat their record.",
+    "ratingsMoved": "Ratings have moved with real games since {{name}} played ({{day}}), so a few players may rate a little differently.",
     "accept": "Accept challenge",
     "share": "Share & challenge",
     "shared": "Shared!",
@@ -979,5 +981,25 @@
     "rookie": "ROOKIE SCALE",
     "twoWay": "TWO-WAY",
     "min": "MINIMUM"
+  },
+  "how": {
+    "title": "How it works",
+    "link": "How it works",
+    "intro": "Draft ten players, stay under the cap, then see how far they go.",
+    "spinT": "Spin a team",
+    "spinB": "Each round lands on a random NBA team-season. Pick one player from it.",
+    "rosterT": "Build ten deep",
+    "rosterB": "Fill PG, SG, SF, PF and C, plus five bench spots. Some players can play two positions.",
+    "capT": "Stay under $200M",
+    "capB": "Every player costs his real contract, scaled to that season's cap. Rookie deals are cheap; max and supermax deals aren't. The game always keeps enough room for you to fill every spot.",
+    "rulesT": "The fine print",
+    "rulesB": "At most two players rated 95 or higher. Two free respins per draft. If a spin has nobody you can fit, you get the cheapest player who does.",
+    "seasonT": "Play 82 games",
+    "seasonB": "Injuries cost the games they say. At game 50 you get one trade at the deadline. Watch it game by game or skip ahead.",
+    "playoffsT": "Survive the playoffs",
+    "playoffsB": "16 teams, best-of-7 series, game by game. 70 wins is rare. 82-0 is a myth.",
+    "challengeT": "Challenge a friend",
+    "challengeB": "After a run, share your link. Whoever opens it gets the same spins and the same 29 opponents. If someone drafts a player an AI team had, that team signs a similar replacement, so your picks are the only difference.",
+    "play": "Start a draft"
   }
 }

@@ -723,7 +723,9 @@
   "challenge": {
     "invalid": "Este enlace de desafío no funciona.",
     "title": "{{name}} te desafía",
-    "body": "Mismos giros, en el mismo orden. Supera su récord.",
+    "body": "Mismos giros y la misma liga. Supera su récord.",
+    "bodyOld": "Mismos giros, en el mismo orden. Supera su récord.",
+    "ratingsMoved": "Las valoraciones han cambiado con partidos reales desde que jugó {{name}} ({{day}}), así que algunos jugadores pueden valer un poco distinto.",
     "accept": "Aceptar desafío",
     "share": "Compartir y desafiar",
     "shared": "¡Compartido!",
@@ -984,5 +986,25 @@
     "rookie": "ESCALA ROOKIE",
     "twoWay": "DOBLE VÍA",
     "min": "MÍNIMO"
+  },
+  "how": {
+    "title": "Cómo funciona",
+    "link": "Cómo funciona",
+    "intro": "Draftea diez jugadores, no te pases del tope y mira hasta dónde llegan.",
+    "spinT": "Gira un equipo",
+    "spinB": "Cada ronda cae en una temporada al azar de un equipo NBA. Elige un jugador de ahí.",
+    "rosterT": "Arma tus diez",
+    "rosterB": "Cubre PG, SG, SF, PF y C, más cinco puestos de banca. Algunos jugadores pueden jugar dos posiciones.",
+    "capT": "No pases de 200 M$",
+    "capB": "Cada jugador cuesta su contrato real, escalado al tope de esa temporada. Los contratos de novato son baratos; los máximos y supermáximos, no. El juego siempre deja espacio para llenar todos los puestos.",
+    "rulesT": "La letra pequeña",
+    "rulesB": "Como mucho dos jugadores de 95 o más. Dos giros extra gratis por draft. Si en un giro no cabe nadie, te dan el jugador más barato que sí cabe.",
+    "seasonT": "Juega 82 partidos",
+    "seasonB": "Las lesiones cuestan los partidos que indican. En el partido 50 tienes un traspaso en la fecha límite. Míralo partido a partido o adelanta.",
+    "playoffsT": "Sobrevive a los playoffs",
+    "playoffsB": "16 equipos, series al mejor de 7, partido a partido. 70 victorias es raro. El 82-0 es un mito.",
+    "challengeT": "Reta a un amigo",
+    "challengeB": "Después de una partida, comparte tu enlace. Quien lo abra tiene los mismos giros y los mismos 29 rivales. Si alguien draftea a un jugador que tenía un equipo de la IA, ese equipo ficha a un sustituto parecido, así que la única diferencia son tus elecciones.",
+    "play": "Empezar un draft"
   }
 }

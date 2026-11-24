@@ -156,7 +156,15 @@ export default function Draft() {
       <Header
         title={complete ? t('draft.starters') : t('draft.pick', { n: d.round + 1 })}
         left={<BackButton onPress={() => goHome()} />}
-        right={<Text style={styles.round}>{Math.min(10, d.round + (complete ? 0 : 1))}/10</Text>}
+        right={(
+          <View style={styles.headRight}>
+            <Pressable onPress={() => router.push('/how')} accessibilityRole="button" accessibilityLabel={t('how.link')} testID="how-link"
+              style={({ pressed }) => [styles.help, pressed && { transform: [{ translateY: 2 }], borderBottomWidth: 2 }]}>
+              <Text style={styles.helpText}>?</Text>
+            </Pressable>
+            <Text style={styles.round}>{Math.min(10, d.round + (complete ? 0 : 1))}/10</Text>
+          </View>
+        )}
       />
       {wide ? (
         <View style={styles.columns}>
@@ -177,6 +185,9 @@ export default function Draft() {
 
 const styles = StyleSheet.create({
   round: { fontFamily: FONT.display, fontSize: 20, color: C.ink, textAlign: 'right' },
+  headRight: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
+  help: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 4 },
+  helpText: { fontFamily: FONT.display, fontSize: 20, color: C.ink, marginTop: -1 },
   stars: { flexDirection: 'row', gap: 2 },
   capRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   capLabel: { fontWeight: '900', fontSize: 12, letterSpacing: 1.4, color: C.muted, textTransform: 'uppercase' },

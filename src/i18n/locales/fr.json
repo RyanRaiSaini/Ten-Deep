@@ -723,7 +723,9 @@
   "challenge": {
     "invalid": "Ce lien de défi est cassé.",
     "title": "{{name}} te défie",
-    "body": "Mêmes tirages, dans le même ordre. Bats son bilan.",
+    "body": "Mêmes tirages et même ligue. Bats son bilan.",
+    "bodyOld": "Mêmes tirages, dans le même ordre. Bats son bilan.",
+    "ratingsMoved": "Les notes ont bougé avec les vrais matchs depuis la partie de {{name}} ({{day}}), quelques joueurs peuvent donc être notés un peu différemment.",
     "accept": "Relever le défi",
     "share": "Partager et défier",
     "shared": "Partagé !",
@@ -984,5 +986,25 @@
     "rookie": "CONTRAT ROOKIE",
     "twoWay": "TWO-WAY",
     "min": "MINIMUM"
+  },
+  "how": {
+    "title": "Comment ça marche",
+    "link": "Comment ça marche",
+    "intro": "Draft dix joueurs, reste sous le plafond, puis vois jusqu'où ils vont.",
+    "spinT": "Tire une équipe",
+    "spinB": "Chaque tour tombe sur une saison d'équipe NBA au hasard. Choisis-y un joueur.",
+    "rosterT": "Construis tes dix",
+    "rosterB": "Remplis PG, SG, SF, PF et C, plus cinq places sur le banc. Certains joueurs peuvent jouer à deux postes.",
+    "capT": "Reste sous 200 M$",
+    "capB": "Chaque joueur coûte son vrai contrat, ramené au plafond de sa saison. Les contrats rookie sont bon marché, les max et supermax non. Le jeu garde toujours assez de place pour remplir tous les postes.",
+    "rulesT": "Les petites lignes",
+    "rulesB": "Au plus deux joueurs notés 95 ou plus. Deux relances gratuites par draft. Si personne ne rentre sur un tirage, tu reçois le joueur le moins cher qui rentre.",
+    "seasonT": "Joue 82 matchs",
+    "seasonB": "Les blessures coûtent les matchs indiqués. Au match 50, tu as droit à un échange avant la date limite. Suis match par match ou avance.",
+    "playoffsT": "Survis aux playoffs",
+    "playoffsB": "16 équipes, séries au meilleur des 7, match par match. 70 victoires, c'est rare. Le 82-0 est un mythe.",
+    "challengeT": "Défie un ami",
+    "challengeB": "Après une partie, partage ton lien. Celui qui l'ouvre a les mêmes tirages et les mêmes 29 adversaires. Si quelqu'un drafte un joueur d'une équipe IA, cette équipe recrute un remplaçant proche, donc seuls vos choix font la différence.",
+    "play": "Lancer un draft"
   }
 }

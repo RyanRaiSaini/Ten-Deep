@@ -15,10 +15,18 @@ describe('share', () => {
   it('challenge links round-trip, and junk is rejected', () => {
     const url = new URL(challengeLink(run));
     const parsed = parseChallenge(Object.fromEntries(url.searchParams));
-    expect(parsed).toEqual({ seed: 'abc-123', poolId: 'current-2026', w: 61, l: 21, name: 'Ryan' });
+    expect(parsed).toEqual({ seed: 'abc-123', poolId: 'current-2026', w: 61, l: 21, name: 'Ryan', fair: false });
     expect(parseChallenge({ s: 'x', p: 'current-2026', w: '90', l: '0' })).toBeNull();
     expect(parseChallenge({ p: 'current-2026', w: '1', l: '1' })).toBeNull();
     expect(parseChallenge({ s: '<script>', p: 'a', w: '1', l: '1' })).toBeNull();
     expect(parseChallenge({ s: 'ok', p: 'a', w: '1', l: '1' })?.name).toBe('A friend');
+  });
+
+  it('fair links carry v=2 and the ratings day; older links parse as not fair', () => {
+    const link = challengeLink({ url: 'https://x', seed: 'abc', poolId: 'current-2026', wins: 50, losses: 32, name: 'Sam', fair: true, formDay: '2026-11-24' });
+    const q = Object.fromEntries(new URL(link).searchParams);
+    expect(parseChallenge(q)).toMatchObject({ fair: true, formDay: '2026-11-24' });
+    expect(parseChallenge({ s: 'abc', p: 'current-2026', w: '50', l: '32' })).toMatchObject({ fair: false });
+    expect(parseChallenge({ s: 'abc', p: 'current-2026', w: '50', l: '32', fd: 'nope' })?.formDay).toBeUndefined();
   });
 });

@@ -6,6 +6,7 @@ import { MODE_BY_ID } from '../data/modes';
 import { parseChallenge } from '../engine/share';
 import { useGame } from '../store/game';
 import { useFriends } from '../store/friends';
+import { useForm } from '../store/form';
 import { raceOutcome } from '../engine/friends/match';
 import { BrandLogo } from '../ui/BrandLogo';
 import { Button, Card, Display, Screen } from '../ui/components';
@@ -17,6 +18,7 @@ import { C, FONT, S } from '../ui/theme';
 /** A friend's "beat my draft" link: same spins, their record to beat. */
 export default function Challenge() {
   const { t } = useTranslation();
+  const formDay = useForm((s) => s.day);
   const params = useLocalSearchParams();
   const c = parseChallenge(params);
   const mode = c ? MODE_BY_ID[c.poolId] : undefined;
@@ -60,7 +62,7 @@ export default function Challenge() {
   }
 
   const accept = () => {
-    useGame.getState().newChallenge(c.poolId, c.seed, { name: c.name, w: c.w, l: c.l, pin: c.pin, depth: c.depth });
+    useGame.getState().newChallenge(c.poolId, c.seed, { name: c.name, w: c.w, l: c.l, pin: c.pin, depth: c.depth, fair: c.fair, formDay: c.formDay });
     router.replace('/draft');
   };
 
@@ -73,7 +75,8 @@ export default function Challenge() {
           <Display size={30}>{t('challenge.title', { name: c.name })}</Display>
           <Text style={styles.record} testID="challenge-record">{c.w}-{c.l}</Text>
           <Text style={styles.mode}>{mode.title}</Text>
-          <Text style={styles.body}>{t('challenge.body')}</Text>
+          <Text style={styles.body}>{t(c.fair ? 'challenge.body' : 'challenge.bodyOld')}</Text>
+          {c.formDay && formDay && c.formDay !== formDay ? <Text style={styles.note} testID="ratings-moved">{t('challenge.ratingsMoved', { name: c.name, day: c.formDay })}</Text> : null}
           <Button label={t('challenge.accept')} onPress={accept} testID="challenge-accept" icon={<Icon name="play" size={22} />} />
         </Card>
         <Button label={t('result.home')} variant="ghost" onPress={goHome} />
@@ -88,4 +91,5 @@ const styles = StyleSheet.create({
   record: { fontFamily: FONT.display, fontSize: 56, color: C.ink },
   mode: { fontWeight: '900', color: C.muted, letterSpacing: 1.5, textTransform: 'uppercase' },
   body: { color: C.muted, fontWeight: '700', textAlign: 'center' },
+  note: { color: C.gold, fontWeight: '700', fontSize: 13, textAlign: 'center' },
 });

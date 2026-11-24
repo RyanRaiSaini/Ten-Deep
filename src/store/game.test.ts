@@ -64,12 +64,13 @@ describe('game store', () => {
   it('daily draft: same spins for everyone, result recorded once for the day', async () => {
     const { useDaily } = await import('./daily');
     const { dailySeed } = await import('../engine/daily');
-    const { spin } = await import('../engine/draft');
+    const { spin, legacyDraft } = await import('../engine/draft');
     useGame.getState().newDaily('2026-11-22');
     useGame.getState().doSpin();
     // Anyone else's draft for the same day starts from the same seed, so it lands on the same team.
     const pool = POOLS['current-2026'];
-    expect(useGame.getState().draft!.spin!.id).toBe(spin(startDraft(pool, dailySeed('2026-11-22')), pool).spin!.id);
+    // (A Daily before fair spins started replays the original sequence.)
+    expect(useGame.getState().draft!.spin!.id).toBe(spin(legacyDraft(startDraft(pool, dailySeed('2026-11-22'))), pool).spin!.id);
 
     useGame.getState().quit();
     draftAll();
@@ -177,5 +178,28 @@ describe('career parking', () => {
     useGame.getState().doSpin();
     expect(useGame.getState().doReroll()).toBe(true);
     expect(useShop.getState().rerolls).toBe(4);
+  });
+});
+
+describe('fair challenges', () => {
+  beforeEach(() => useGame.getState().quit());
+  it('new runs and v=2 challenge links use fair spins; older links replay the original sequence', () => {
+    useGame.getState().newRun('current-2026', 'fair-seed');
+    expect(useGame.getState().draft!.scheme).toBe(2);
+    useGame.getState().quit();
+    useGame.getState().newChallenge('current-2026', 'fair-seed', { name: 'Sam', w: 50, l: 32, fair: true });
+    expect(useGame.getState().draft!.scheme).toBe(2);
+    useGame.getState().quit();
+    useGame.getState().newChallenge('current-2026', 'old-seed', { name: 'Sam', w: 50, l: 32 });
+    expect(useGame.getState().draft!.scheme).toBeUndefined();
+  });
+  it('the Daily switches to fair spins from its start date, so a day never mixes the two', async () => {
+    const { FAIR_DAILY_FROM } = await import('./game');
+    const before = new Date(Date.parse(`${FAIR_DAILY_FROM}T12:00:00Z`) - 86400000).toISOString().slice(0, 10);
+    useGame.getState().newDaily(before);
+    expect(useGame.getState().draft!.scheme).toBeUndefined();
+    useGame.getState().quit();
+    useGame.getState().newDaily(FAIR_DAILY_FROM);
+    expect(useGame.getState().draft!.scheme).toBe(2);
   });
 });

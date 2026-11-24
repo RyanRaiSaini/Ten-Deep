@@ -82,4 +82,4 @@ Follow-ups (private reminders)      Report (messages logged here | website event
 - Event counts are unique per device and browser. Clearing storage or switching devices counts as a new visitor, and anyone who knows a link code could add visits. There's no rate limiting.
 - Attribution is per link. A visitor through the general campaign link isn't tied to a person. Opens and creator participation are never inferred.
 - Single-owner workspace: two tabs saving at once get a conflict message and the latest version is reloaded.
-- Challenge links share spins, not opponents (see `src/outreach/facts.ts`). Don't promise identical conditions until the fair challenge idea ships.
+- Challenge links (v=2) share spins and the 29 AI opponents; results still differ with each player's picks, and Current Day ratings move daily (the challenge screen says so when they have). Links made before 2026-11-24 replay the original rules.
