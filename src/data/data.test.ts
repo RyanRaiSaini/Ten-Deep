@@ -43,10 +43,10 @@ describe('Current Day 2026 pool', () => {
     expect(players.length).toBeGreaterThanOrEqual(350);
   });
 
-  it('rates the 2026 superstars at the top (owner calls: SGA, Luka, Giannis 98; Jokić, Wemby 97)', () => {
-    for (const n of ['Shai Gilgeous-Alexander', 'Luka Dončić', 'Giannis Antetokounmpo'])
+  it('rates the 2026 superstars at the top (owner calls: SGA, Luka, Giannis, Wemby 98; Jokić 97)', () => {
+    for (const n of ['Shai Gilgeous-Alexander', 'Luka Dončić', 'Giannis Antetokounmpo', 'Victor Wembanyama'])
       expect(players.find((p) => p.name === n)?.ovr, n).toBe(98);
-    for (const n of ['Nikola Jokić', 'Victor Wembanyama'])
+    for (const n of ['Nikola Jokić'])
       expect(players.find((p) => p.name === n)?.ovr, n).toBe(97);
     const lebron = players.find((p) => p.name === 'LeBron James')!;
     expect(lebron.ovr).toBeGreaterThanOrEqual(86);
