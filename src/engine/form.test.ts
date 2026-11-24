@@ -34,11 +34,11 @@ describe('form', () => {
 
   it('a rookie having a big year climbs (up to +12); players matching their rating stay put', () => {
     const { players, season } = league();
-    players.push({ name: 'Darius Acuff Jr.', ovr: 76, age: 20 });
-    season.set(normName('Darius Acuff'), { gp: 18, min: 18 * 33, gmsc: 17 }); // plays like an 85
+    players.push({ name: 'Test Rookie Jr.', ovr: 76, age: 20 });
+    season.set(normName('Test Rookie'), { gp: 18, min: 18 * 33, gmsc: 17 }); // plays like an 85
     const out = computeForm(players, season, new Map());
-    expect(out[normName('Darius Acuff')].d).toBeGreaterThanOrEqual(4);
-    expect(out[normName('Darius Acuff')].d).toBeLessThanOrEqual(12);
+    expect(out[normName('Test Rookie')].d).toBeGreaterThanOrEqual(4);
+    expect(out[normName('Test Rookie')].d).toBeLessThanOrEqual(12);
     // Players producing to their rating barely move (the outlier rookie nudges the league-wide fit by a point at most).
     expect(Math.abs(out[normName('Player 30')]?.d ?? 0)).toBeLessThanOrEqual(1);
   });
