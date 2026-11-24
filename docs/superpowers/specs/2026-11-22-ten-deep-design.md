@@ -4,7 +4,7 @@
 
 ## 1. Intent
 
-Ten Deep is an NBA draft-and-simulate game in the same genre as Golazo (a football draft game). A player spins a team or era, drafts a **10-man rotation** under a **salary cap**, then watches a realistic 82-game season, playoffs and Finals play out.
+Ten Deep is an NBA draft-and-simulate game. A player spins a team or era, drafts a **10-man rotation** under a **salary cap**, then watches a realistic 82-game season, playoffs and Finals play out.
 
 **Why it exists:** draft games are popular right now, and the NBA versions (Draft 82-0, DraftBattle, DraftDawg) all stop at a starting five. Ten Deep's hook is depth: the bench plays real minutes, injuries happen, and a mid-season trade deadline lets you fix your roster. The owner sees v1 as the start of a long-lived app with many more features to come.
 
@@ -32,14 +32,14 @@ Ten Deep is an NBA draft-and-simulate game in the same genre as Golazo (a footba
 - **Superteams.** LeBron, Jordan, Steph and Kobe on one roster must be impossible.
 - **Easy titles or easy 70-win seasons.**
 - **Real-person likenesses or NBA/team logos and trademarks** in art. Player names and stats as facts are fine.
-- **A copy of Golazo's look.** Same genre, our own visual identity.
+- **A copy of any other game's look.** Ten Deep has its own visual identity.
 - Guest play. Sign-in is required.
 
 ## 3. Constraints
 
 - The owner won't do manual setup. Anything that needs the owner's identity (creating the GitHub repo, Apple Developer and Google Cloud OAuth credentials, a Supabase account) is listed as an owner step and kept to a minimum. Everything else is automated.
 - Commits: about 20–30 per day of work, meaningful rather than spammy.
-- Player ratings are original numbers. 2K-style ratings can guide intuition but are not copied.
+- Player ratings are original numbers, not copied from any other game.
 
 ## 4. Approaches considered
 
@@ -132,7 +132,7 @@ At about game 50 (the sim calendar's early February), the deadline opens. The pl
 Every string goes through i18n (i18next). Arabic uses a right-to-left layout. The translations in v1 are machine-quality and flagged for native review later. Player and team names are not translated.
 
 ## 6. Visual direction
-Dark, high-contrast "arena night" UI: a deep navy or charcoal background, a hardwood-orange accent and a single neon highlight, with big bold condensed type for numbers and ratings. Player cards show overall, position and salary. The look is our own; we don't copy Golazo's layout or palette.
+Dark, high-contrast "arena night" UI: a deep navy or charcoal background, a hardwood-orange accent and a single neon highlight, with big bold condensed type for numbers and ratings. Player cards show overall, position and salary. The look is our own.
 
 ## 7. Architecture
 ```

@@ -9,7 +9,7 @@ import { Icon } from './icons';
 import { Text } from './Text';
 import { alpha, C, F, FONT, R, S } from './theme';
 
-/** Soft sunburst behind the top of every screen (Golazo-style). */
+/** Soft sunburst behind the top of every screen. */
 function Rays({ color }: { color: string }) {
   const n = 14;
   const d = Array.from({ length: n }, (_, i) => {
@@ -78,7 +78,7 @@ export function Display({
   );
 }
 
-/** Big centered tab title with its icon, like Golazo's "Friends" header. */
+/** Big centered tab title with its icon. */
 export function TabTitle({ icon, title }: { icon: ReactNode; title: string }) {
   return (
     <View style={styles.tabTitle}>
