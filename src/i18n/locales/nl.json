@@ -171,7 +171,7 @@
   "daily": {
     "title": "Dagelijkse uitdaging",
     "draft": "Dagelijkse draft",
-    "draftDesc": "Vandaag dezelfde draaien en competitie voor iedereen.",
+    "draftDesc": "Vandaag dezelfde draaien voor iedereen.",
     "trivia": "Quiz",
     "triviaDesc": "5 vragen uit de Ten Deep-database.",
     "rank": "Spelersranglijst",
@@ -648,10 +648,12 @@
     "q": "K{{n}}",
     "ot": "VL",
     "run": "{{team}} pakt het kwart, +{{n}}",
+    "run_you": "Jij pakt het kwart, +{{n}}",
     "double": "{{name}} vult het scoreformulier: {{line}}",
     "clutch": "{{name}} maakt het af in de slotfase",
     "otGame": "Verlenging! {{name}} neemt het over",
     "blowout": "{{team}} loopt weg, +{{n}}",
+    "blowout_you": "Jij loopt weg, +{{n}}",
     "top": "Topscorer: {{name}} ({{n}})"
   },
   "box": {
@@ -716,7 +718,7 @@
   "challenge": {
     "invalid": "Deze uitdaginglink werkt niet.",
     "title": "{{name}} daagt je uit",
-    "body": "Zelfde spins, zelfde competitie. Verbeter de score.",
+    "body": "Zelfde spins, in dezelfde volgorde. Verbeter de score.",
     "accept": "Uitdaging aannemen",
     "share": "Delen en uitdagen",
     "shared": "Gedeeld!",

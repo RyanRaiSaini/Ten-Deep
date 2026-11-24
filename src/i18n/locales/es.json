@@ -173,7 +173,7 @@
   "daily": {
     "title": "Reto diario",
     "draft": "Draft diario",
-    "draftDesc": "Mismos giros y misma liga para todos hoy.",
+    "draftDesc": "Mismos giros para todos hoy.",
     "trivia": "Trivia",
     "triviaDesc": "5 preguntas de la base de datos de Ten Deep.",
     "rank": "Ranking",
@@ -653,10 +653,12 @@
     "q": "C{{n}}",
     "ot": "Prór.",
     "run": "{{team}} se lleva el cuarto, +{{n}}",
+    "run_you": "Te llevas el cuarto, +{{n}}",
     "double": "{{name}} llena la planilla: {{line}}",
     "clutch": "{{name}} lo cierra al final",
     "otGame": "¡Prórroga! {{name}} toma el mando",
     "blowout": "{{team}} se escapa, +{{n}}",
+    "blowout_you": "Te escapas, +{{n}}",
     "top": "Máximo anotador: {{name}} ({{n}})"
   },
   "box": {
@@ -721,7 +723,7 @@
   "challenge": {
     "invalid": "Este enlace de desafío no funciona.",
     "title": "{{name}} te desafía",
-    "body": "Mismos giros, misma liga. Supera su récord.",
+    "body": "Mismos giros, en el mismo orden. Supera su récord.",
     "accept": "Aceptar desafío",
     "share": "Compartir y desafiar",
     "shared": "¡Compartido!",
