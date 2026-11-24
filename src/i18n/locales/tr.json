@@ -171,7 +171,7 @@
   "daily": {
     "title": "Günlük görev",
     "draft": "Günlük draft",
-    "draftDesc": "Bugün herkese aynı çevirmeler ve lig.",
+    "draftDesc": "Bugün herkese aynı çevirmeler.",
     "trivia": "Bilgi yarışması",
     "triviaDesc": "Ten Deep veritabanından 5 soru.",
     "rank": "Oyuncu sıralaması",
@@ -648,10 +648,12 @@
     "q": "{{n}}. Ç",
     "ot": "UZ",
     "run": "{{team}} çeyreği aldı, +{{n}}",
+    "run_you": "Çeyreği sen aldın, +{{n}}",
     "double": "{{name}} istatistik doldurdu: {{line}}",
     "clutch": "{{name}} maçı sonda bitirdi",
     "otGame": "Uzatma! {{name}} sahneye çıktı",
     "blowout": "{{team}} farkı açtı, +{{n}}",
+    "blowout_you": "Farkı sen açtın, +{{n}}",
     "top": "En skorer: {{name}} ({{n}})"
   },
   "box": {
@@ -716,7 +718,7 @@
   "challenge": {
     "invalid": "Bu meydan okuma bağlantısı bozuk.",
     "title": "{{name}} sana meydan okuyor",
-    "body": "Aynı çark, aynı lig. Derecesini geç.",
+    "body": "Aynı çark, aynı sırayla. Derecesini geç.",
     "accept": "Kabul et",
     "share": "Paylaş ve meydan oku",
     "shared": "Paylaşıldı!",

@@ -171,7 +171,7 @@
   "daily": {
     "title": "Tägliche Challenge",
     "draft": "Tagesdraft",
-    "draftDesc": "Heute gleiche Drehungen und Liga für alle.",
+    "draftDesc": "Heute gleiche Drehungen für alle.",
     "trivia": "Quiz",
     "triviaDesc": "5 Fragen aus der Ten-Deep-Datenbank.",
     "rank": "Spieler-Ranking",
@@ -648,10 +648,12 @@
     "q": "V{{n}}",
     "ot": "OT",
     "run": "{{team}} holt das Viertel, +{{n}}",
+    "run_you": "Du holst das Viertel, +{{n}}",
     "double": "{{name}} füllt den Statistikbogen: {{line}}",
     "clutch": "{{name}} macht es am Ende klar",
     "otGame": "Verlängerung! {{name}} übernimmt",
     "blowout": "{{team}} zieht davon, +{{n}}",
+    "blowout_you": "Du ziehst davon, +{{n}}",
     "top": "Topscorer: {{name}} ({{n}})"
   },
   "box": {
@@ -716,7 +718,7 @@
   "challenge": {
     "invalid": "Dieser Challenge-Link ist kaputt.",
     "title": "{{name}} fordert dich heraus",
-    "body": "Gleiche Spins, gleiche Liga. Schlag die Bilanz.",
+    "body": "Gleiche Spins in gleicher Reihenfolge. Schlag die Bilanz.",
     "accept": "Herausforderung annehmen",
     "share": "Teilen und herausfordern",
     "shared": "Geteilt!",
