@@ -28,7 +28,7 @@ export const STARTER_IDEAS: Idea[] = [
     benefit: 'A record on a challenge link means the same thing for everyone, which makes "beat my draft" content credible.',
     effort: 'M', dependencies: 'Changes to league building in src/store/game.ts; old challenge links keep their current behavior.',
     success: 'Two test devices on one link produce identical opponents and schedules (automated test), and no creator feedback reports unequal conditions.',
-    value: 5, shareability: 5, nextAction: 'Prototype league-before-picks and test with two seeded runs.',
+    value: 5, shareability: 5, status: 'Shipped', nextAction: 'Shipped 2026-11-24 (spins keyed by round, league picked before the draft, v=2 links). Watch feedback on fairness.',
   }),
   idea({
     id: 'idea_result_card', title: 'Shareable result card for each run',

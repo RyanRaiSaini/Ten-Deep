@@ -85,7 +85,8 @@ describe('draft checks', () => {
   });
   it('flags unsupported claims, placeholders, emoji, em dashes and stale dates', () => {
     expect(ids(base(`${good}\nIt's on the App Store too.`))).toContain('error:claim-app-store');
-    expect(ids(base(`${good}\nYou'll face the same league as me.`))).toContain('error:claim-same-opponents');
+    expect(ids(base(`${good}\nYou'll face the same league as me.`))).not.toContain('error:claim-identical-results');
+    expect(ids(base(`${good}\nWe'll get identical results.`))).toContain('error:claim-identical-results');
     expect(ids(base(good.replace('Hi Sam', 'Hi {{first_name}}')))).toContain('error:placeholder');
     expect(ids(base(`${good} 🏀`))).toContain('error:emoji');
     expect(ids(base(good.replace(', and I built', '— I built')))).toContain('error:em-dash');

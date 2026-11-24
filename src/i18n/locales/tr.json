@@ -718,7 +718,9 @@
   "challenge": {
     "invalid": "Bu meydan okuma bağlantısı bozuk.",
     "title": "{{name}} sana meydan okuyor",
-    "body": "Aynı çark, aynı sırayla. Derecesini geç.",
+    "body": "Aynı çark, aynı lig. Derecesini geç.",
+    "bodyOld": "Aynı çark, aynı sırayla. Derecesini geç.",
+    "ratingsMoved": "{{name}} oynadığından beri ({{day}}) reytingler gerçek maçlarla değişti, bu yüzden birkaç oyuncunun puanı biraz farklı olabilir.",
     "accept": "Kabul et",
     "share": "Paylaş ve meydan oku",
     "shared": "Paylaşıldı!",
@@ -979,5 +981,25 @@
     "rookie": "ÇAYLAK ÖLÇEĞİ",
     "twoWay": "İKİ YÖNLÜ",
     "min": "ASGARİ"
+  },
+  "how": {
+    "title": "Nasıl oynanır",
+    "link": "Nasıl oynanır",
+    "intro": "On oyuncu seç, maaş tavanının altında kal ve ne kadar ileri gittiklerini gör.",
+    "spinT": "Takım çevir",
+    "spinB": "Her tur rastgele bir NBA takım sezonuna denk gelir. Oradan bir oyuncu seç.",
+    "rosterT": "On kişilik kadro",
+    "rosterB": "PG, SG, SF, PF ve C ile beş yedek yerini doldur. Bazı oyuncular iki pozisyonda oynayabilir.",
+    "capT": "200 milyon doların altında kal",
+    "capB": "Her oyuncu, o sezonun tavanına göre ölçeklenmiş gerçek sözleşmesine mal olur. Çaylak sözleşmeleri ucuz, maksimum ve süper maksimum sözleşmeler değil. Oyun her yeri doldurman için her zaman yer bırakır.",
+    "rulesT": "Ayrıntılar",
+    "rulesB": "95 ve üzeri en fazla iki oyuncu. Her draftta iki ücretsiz yeniden çevirme. Bir çevirmede sığan kimse yoksa, sığan en ucuz oyuncuyu alırsın.",
+    "seasonT": "82 maç oyna",
+    "seasonB": "Sakatlıklar yazan maç sayısı kadar sürer. 50. maçta takas tarihinde bir takas hakkın olur. Maç maç izle ya da ileri sar.",
+    "playoffsT": "Playofflarda hayatta kal",
+    "playoffsB": "16 takım, 7 maç üzerinden seriler, maç maç. 70 galibiyet nadirdir. 82-0 bir efsanedir.",
+    "challengeT": "Bir arkadaşına meydan oku",
+    "challengeB": "Sezon bitince bağlantını paylaş. Açan kişi aynı çevirmeleri ve aynı 29 rakibi alır. Biri bir yapay zekâ takımının oyuncusunu seçerse o takım benzer bir yedek alır, yani tek fark seçimlerinizdir.",
+    "play": "Draft başlat"
   }
 }

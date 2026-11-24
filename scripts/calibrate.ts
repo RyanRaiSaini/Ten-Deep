@@ -2,7 +2,7 @@
  * Calibration report: how hard is Ten Deep?
  *   npx tsx scripts/calibrate.ts [seasons] [k=0.012 star=0.05 scoreSd=10 ...]
  */
-import { draftLeague } from '../src/engine/aiDraft';
+import { draftLeague, fairLeague } from '../src/engine/aiDraft';
 import { affordableSlots, fallbackPick, isComplete, options, pick, pickFallback, spin, startDraft, type DraftState } from '../src/engine/draft';
 import { champion, simPlayoffsToEnd, startPlayoffs } from '../src/engine/playoffs';
 import { createRng } from '../src/engine/rng';
@@ -65,8 +65,8 @@ export function runSeasons(user: Roster | ((i: number) => Roster), pool: Pool, n
   let titles = 0;
   for (let i = 0; i < n; i++) {
     const u = typeof user === 'function' ? user(i) : user;
-    const exclude = new Set(ALL_SLOTS.map((s) => u.slots[s].id));
-    const league = draftLeague(pool, exclude, 29, createRng(`${tag}-league-${i}`));
+    // The league the game builds for a run: drafted from the seed alone, your players swapped out.
+    const league = fairLeague(pool, ALL_SLOTS.map((s) => u.slots[s]), createRng(`${tag}-league-${i}`));
     let season = createSeason(u, league, `${tag}-season-${i}`);
     season = advance(advance(season, 82), 82);
     wins.push(season.records[0].w);

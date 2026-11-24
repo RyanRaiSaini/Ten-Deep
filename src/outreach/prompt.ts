@@ -41,7 +41,7 @@ https://ten-deep.vercel.app/?c=example2`,
     label: 'Example (fictional): reply to a streamer who asked two questions',
     text: `Hey Jo, thanks, glad it caught your eye.
 
-It runs in the phone browser, no download. For your chat, the Share button after a run makes a challenge link with your record. Anyone who opens it gets the same spins in the same order, though their opponents can differ depending on their picks.
+It runs in the phone browser, no download. For your chat, the Share button after a run makes a challenge link with your record. Anyone who opens it gets the same spins and the same opponents, so it's a fair race.
 
 If you want, I can set up one specific challenge for a stream.`,
   },

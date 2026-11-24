@@ -63,6 +63,15 @@ if (flow === 'full') {
   await runFlow({ page, base, step, shot });
 }
 
+await step('how it works: reachable from the draft screen, every rule shown', async () => {
+  await page.goto(base);
+  await page.getByTestId('mode-current').click();
+  await page.getByTestId('how-link').click();
+  for (const k of ['spin', 'roster', 'cap', 'rules', 'season', 'playoffs', 'challenge']) await page.getByTestId(`how-${k}`).waitFor();
+  await shot('38-how');
+  if (await page.getByTestId('how-play').count()) throw new Error('start button shown while a draft is in progress');
+});
+
 await step('arabic is right-to-left', async () => {
   await page.goto(`${base}/settings`);
   await page.getByText('Language').click();

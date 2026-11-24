@@ -723,7 +723,9 @@
   "challenge": {
     "invalid": "Questo link di sfida non funziona.",
     "title": "{{name}} ti sfida",
-    "body": "Stessi giri, nello stesso ordine. Batti il suo record.",
+    "body": "Stessi giri e stessa lega. Batti il suo record.",
+    "bodyOld": "Stessi giri, nello stesso ordine. Batti il suo record.",
+    "ratingsMoved": "Le valutazioni sono cambiate con le partite reali da quando ha giocato {{name}} ({{day}}), quindi qualche giocatore può valere un po' diversamente.",
     "accept": "Accetta la sfida",
     "share": "Condividi e sfida",
     "shared": "Condiviso!",
@@ -984,5 +986,25 @@
     "rookie": "SCALA ROOKIE",
     "twoWay": "TWO-WAY",
     "min": "MINIMO"
+  },
+  "how": {
+    "title": "Come funziona",
+    "link": "Come funziona",
+    "intro": "Drafta dieci giocatori, resta sotto il tetto e guarda fin dove arrivano.",
+    "spinT": "Gira una squadra",
+    "spinB": "Ogni turno cade su una stagione NBA casuale di una squadra. Scegli un giocatore da lì.",
+    "rosterT": "Costruisci i tuoi dieci",
+    "rosterB": "Copri PG, SG, SF, PF e C, più cinque posti in panchina. Alcuni giocatori possono giocare in due ruoli.",
+    "capT": "Resta sotto 200 mln $",
+    "capB": "Ogni giocatore costa il suo vero contratto, rapportato al tetto di quella stagione. I contratti da rookie costano poco, i massimi e supermassimi no. Il gioco lascia sempre spazio per riempire tutti i posti.",
+    "rulesT": "Le regole minori",
+    "rulesB": "Al massimo due giocatori con 95 o più. Due giri extra gratis per draft. Se in un giro non entra nessuno, ricevi il giocatore più economico che entra.",
+    "seasonT": "Gioca 82 partite",
+    "seasonB": "Gli infortuni costano le partite indicate. Alla partita 50 hai uno scambio alla scadenza. Guarda partita per partita o vai avanti.",
+    "playoffsT": "Sopravvivi ai playoff",
+    "playoffsB": "16 squadre, serie al meglio delle 7, partita per partita. 70 vittorie sono rare. L'82-0 è un mito.",
+    "challengeT": "Sfida un amico",
+    "challengeB": "Dopo una partita, condividi il tuo link. Chi lo apre ha gli stessi giri e gli stessi 29 avversari. Se qualcuno drafta un giocatore di una squadra IA, quella squadra ingaggia un sostituto simile, quindi l'unica differenza sono le vostre scelte.",
+    "play": "Inizia un draft"
   }
 }
