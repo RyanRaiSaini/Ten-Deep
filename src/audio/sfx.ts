@@ -1,19 +1,34 @@
 /**
- * Sound effects. The web synthesizes them live with Web Audio (audio/synth.ts); iOS and Android play the same
- * sounds pre-rendered to files (audio/native.ts). No licensed audio anywhere.
+ * Sound effects (the game has no music). The web synthesizes them live with Web Audio (audio/synth.ts); iOS and
+ * Android play the same sounds pre-rendered to files (audio/native.ts). No licensed audio anywhere.
  */
 import { Platform } from 'react-native';
 import * as native from './native';
-import { SOUNDS, humAt, tearAt, type SoundName } from './synth';
+import { OUTPUT, SOUNDS, humAt, tearAt, type SoundName } from './synth';
 
 let ctx: AudioContext | null = null;
+let master: GainNode | null = null;
+let level = 1;
+
+/** Sound-effects volume, 0..1 (Settings). */
+export function setVolume(v: number) {
+  level = Math.max(0, Math.min(1, v));
+  if (master && ctx) master.gain.setValueAtTime(level, ctx.currentTime);
+  native.setVolume(level);
+}
 
 /** The live Web Audio context (web only); null on native, where audio/native.ts plays files instead. */
 export function audio(): AudioContext | null {
   if (Platform.OS !== 'web' || typeof window === 'undefined') return null;
   const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
   if (!AC) return null;
-  ctx ??= new AC();
+  if (!ctx) {
+    ctx = new AC();
+    master = ctx.createGain();
+    master.gain.value = level;
+    master.connect(ctx.destination);
+    OUTPUT.set(ctx, master);
+  }
   if (ctx.state === 'suspended') void ctx.resume();
   return ctx;
 }

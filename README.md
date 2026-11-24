@@ -22,10 +22,10 @@
 - **Missions and achievements:** 3 daily and 3 weekly missions, and 42 bronze/silver/gold achievements, all paid in Player Picks.
 - **Stats and story:** league leaders, live MVP, DPOY, ROY and Sixth Man races, a season news feed, box scores, playoff game recaps, and season awards.
 - **Profile:** drafts played, titles, best record, and 40 original illustrated portraits (no real likenesses).
-- **Feel:** synthesized sound effects and two original music loops (Settings → Sound lab), haptics on phones, team-color washes, confetti, welcome slides.
+- **Feel:** synthesized sound effects with a volume control (Settings; preview them in Sound lab), no music, haptics on phones, team-color washes, confetti, welcome slides.
 - **Notifications** (phones): daily challenge ready at 9:00, and a streak reminder at 19:00 if you haven't drafted.
 - **11 languages:** English, French, Spanish, Portuguese, Turkish, Italian, Dutch, German, Japanese, Korean, Arabic (right-to-left), with each language's own plural forms.
-- **Settings and legal:** music, sound, haptics, notifications, sim speed, nationality, language, Privacy Policy, Terms, Contact, and Delete account (wipes all data).
+- **Settings and legal:** sound-effects volume, haptics, notifications, sim speed, nationality, language, Privacy Policy, Terms, Contact, and Delete account (wipes all data).
 
 ## Run it on any laptop
 
@@ -58,7 +58,7 @@ src/engine/       pure, seeded game engine: cap, draft, duel, AI league, game si
 src/data/         2026 pool, historical team-seasons, mode definitions
 src/store/        persisted state (run, profile, settings, daily, duel, career, collection, progress)
 src/ui/           design system, portraits, logo, cards, effects, spinner, roster board
-src/audio/        synthesized sound effects and music
+src/audio/        synthesized sound effects (rendered to files for iOS/Android)
 src/notifications/ local reminder rules + scheduling
 src/i18n/         11 locales
 docs/             design specs, plans, ratings review sheets, store listing draft

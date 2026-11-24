@@ -68,7 +68,6 @@
   "settings": {
     "title": "الإعدادات",
     "audio": "الصوت والإحساس",
-    "music": "الموسيقى",
     "sfx": "المؤثرات الصوتية",
     "haptics": "الاهتزاز",
     "notifications": "الإشعارات",
@@ -84,7 +83,11 @@
     "terms": "شروط الخدمة",
     "contact": "اتصل بنا",
     "deleteAccount": "حذف الحساب",
-    "soundDemo": "مختبر الصوت"
+    "soundDemo": "مختبر الصوت",
+    "volOff": "إيقاف",
+    "volLow": "منخفض",
+    "volMed": "متوسط",
+    "volHigh": "مرتفع"
   },
   "draft": {
     "pick": "الاختيار {{n}} من ١٠",

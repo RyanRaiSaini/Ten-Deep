@@ -24,7 +24,3 @@ export const SFX_ASSETS: Partial<Record<SoundName, number>> = {
   hum_strong: require('../../assets/audio/hum_strong.m4a'),
 };
 
-export const MUSIC_ASSETS: Partial<Record<'menu' | 'playoffs', number>> = {
-  menu: require('../../assets/audio/music_menu.wav'),
-  playoffs: require('../../assets/audio/music_playoffs.wav'),
-};

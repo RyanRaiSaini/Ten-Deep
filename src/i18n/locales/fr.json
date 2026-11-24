@@ -65,7 +65,6 @@
   "settings": {
     "title": "Réglages",
     "audio": "Son et sensations",
-    "music": "Musique",
     "sfx": "Effets sonores",
     "haptics": "Vibrations",
     "notifications": "Notifications",
@@ -81,7 +80,11 @@
     "terms": "Conditions d'utilisation",
     "contact": "Nous contacter",
     "deleteAccount": "Supprimer le compte",
-    "soundDemo": "Labo sonore"
+    "soundDemo": "Labo sonore",
+    "volOff": "Off",
+    "volLow": "Bas",
+    "volMed": "Moyen",
+    "volHigh": "Fort"
   },
   "draft": {
     "pick": "Choix {{n}} sur 10",

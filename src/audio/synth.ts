@@ -1,15 +1,18 @@
 /**
- * The game's sounds and music voices, as pure Web Audio graph code (no React Native, no files).
- * The web plays these live (sfx.ts, music.ts). For iOS/Android, scripts/render-audio.mts renders the very same
- * functions offline in Chromium into assets/audio/*, which audio/native.ts plays. One source, identical sound.
+ * The game's sound effects, as pure Web Audio graph code (no React Native, no files). There is no music.
+ * The web plays these live (sfx.ts). For iOS/Android, scripts/render-audio.mts renders the very same functions
+ * offline in Chromium into assets/audio/*, which audio/native.ts plays. One source, identical sound.
  */
-import { midiToHz, type NoteEvent } from './score';
 
 type Ctx = BaseAudioContext;
 
+/** Where a context's sounds go: the live player registers a volume node here; offline renders use the destination. */
+export const OUTPUT = new WeakMap<BaseAudioContext, AudioNode>();
+const out0 = (c: Ctx): AudioNode => OUTPUT.get(c) ?? c.destination;
+
 export function tone(
   c: Ctx, freq: number, start: number, dur: number,
-  { type = 'sine', gain = 0.2, slideTo, out = c.destination }: { type?: OscillatorType; gain?: number; slideTo?: number; out?: AudioNode } = {},
+  { type = 'sine', gain = 0.2, slideTo, out = out0(c) }: { type?: OscillatorType; gain?: number; slideTo?: number; out?: AudioNode } = {},
 ) {
   const o = c.createOscillator();
   const g = c.createGain();
@@ -24,7 +27,7 @@ export function tone(
   o.stop(start + dur + 0.02);
 }
 
-export function noise(c: Ctx, start: number, dur: number, { gain = 0.15, lowpass = 1200, highpass = 0, out = c.destination as AudioNode } = {}) {
+export function noise(c: Ctx, start: number, dur: number, { gain = 0.15, lowpass = 1200, highpass = 0, out = out0(c) } = {}) {
   const buf = c.createBuffer(1, Math.ceil(c.sampleRate * dur), c.sampleRate);
   const data = buf.getChannelData(0);
   for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
@@ -63,7 +66,7 @@ export function tearAt(c: Ctx, t: number, level: number) {
  * The suspense hum: a low sawtooth that rises over 6 s. Returns its gain node so a live player can fade it out;
  * offline it's rendered whole (and faded by volume on native).
  */
-export function humAt(c: Ctx, t: number, strong: boolean, out: AudioNode = c.destination) {
+export function humAt(c: Ctx, t: number, strong: boolean, out: AudioNode = out0(c)) {
   const o = c.createOscillator();
   const lfo = c.createOscillator();
   const lfoGain = c.createGain();
@@ -186,62 +189,3 @@ export const SOUNDS = {
 } satisfies Record<string, { dur: number; play: (c: Ctx, t: number) => void }>;
 
 export type SoundName = keyof typeof SOUNDS;
-
-/** One music note event (drums, bass, chord stabs) into `out`. */
-export function voice(c: Ctx, out: AudioNode, e: NoteEvent, t: number, spb: number) {
-  const end = t + e.len * spb;
-  const env = (g: GainNode, peak: number, attack = 0.005) => {
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(peak, t + attack);
-    g.gain.exponentialRampToValueAtTime(0.0001, end);
-  };
-  if (e.kind === 'kick') {
-    const o = c.createOscillator();
-    const g = c.createGain();
-    o.frequency.setValueAtTime(120, t);
-    o.frequency.exponentialRampToValueAtTime(42, t + 0.2);
-    env(g, 0.9);
-    o.connect(g).connect(out);
-    o.start(t);
-    o.stop(end + 0.05);
-    return;
-  }
-  if (e.kind === 'snare' || e.kind === 'hat') {
-    const dur = e.kind === 'snare' ? 0.16 : 0.04;
-    const buf = c.createBuffer(1, Math.ceil(c.sampleRate * dur), c.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    const src = c.createBufferSource();
-    src.buffer = buf;
-    const f = c.createBiquadFilter();
-    f.type = e.kind === 'snare' ? 'bandpass' : 'highpass';
-    f.frequency.value = e.kind === 'snare' ? 1800 : 7000;
-    const g = c.createGain();
-    g.gain.setValueAtTime(e.kind === 'snare' ? 0.35 : 0.08, t);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    src.connect(f).connect(g).connect(out);
-    src.start(t);
-    return;
-  }
-  for (const n of e.notes) {
-    const o = c.createOscillator();
-    const g = c.createGain();
-    o.type = e.kind === 'bass' ? 'triangle' : 'sine';
-    o.frequency.setValueAtTime(midiToHz(n), t);
-    env(g, e.kind === 'bass' ? 0.32 : 0.06, e.kind === 'bass' ? 0.01 : 0.03);
-    o.connect(g).connect(out);
-    o.start(t);
-    o.stop(end + 0.05);
-  }
-}
-
-/** The music bus: master gain into a lo-fi low-pass (darker on the menu). */
-export function musicBus(c: Ctx, key: 'menu' | 'playoffs', out: AudioNode = c.destination) {
-  const lofi = c.createBiquadFilter();
-  lofi.type = 'lowpass';
-  lofi.frequency.value = key === 'menu' ? 3200 : 6000;
-  const master = c.createGain();
-  master.gain.value = 0.28;
-  master.connect(lofi).connect(out);
-  return master;
-}
