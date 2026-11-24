@@ -32,12 +32,13 @@ export default function FriendPlay() {
   const [round, setRound] = useState(0);
   const [shown, setShown] = useState(0);
   const counted = useRef(-1);
+  const [visit] = useState(() => Date.now().toString(36));
   const bestOf = (BEST_OF.includes(Number(n) as BestOf) ? Number(n) : 3) as BestOf;
 
   const series = useMemo(() => {
     if (!f) return null;
     const myName = me.name || t('friends.you');
-    const seed = `${mode}:${f.pin}:${Date.now().toString(36)}:${round}`;
+    const seed = `${mode}:${f.pin}:${visit}:${round}`;
     if (mode === 'finals') {
       if (!myTeam || !f.snap.team) return null;
       return friendSeries(teamRoster(myTeam.players, 'me', myName, ME), teamRoster(f.snap.team.players, `friend-${f.pin}`, f.snap.name, THEM), 7, seed);

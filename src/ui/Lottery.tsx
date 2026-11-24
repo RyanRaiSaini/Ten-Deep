@@ -16,13 +16,13 @@ export function LotteryReveal({ order, names, colors }: { order: number[]; names
   const { t } = useTranslation();
   const reduce = useReducedMotion();
   const top = useMemo(() => order.slice(0, SHOWN), [order]);
-  const [revealed, setRevealed] = useState(0);
-  // Reduce-motion resolves after the first render: skip straight to the full order.
-  useEffect(() => { if (reduce) setRevealed(SHOWN); }, [reduce]);
+  const [ticked, setRevealed] = useState(0);
+  // Reduce motion (it resolves after the first render) shows the full order at once.
+  const revealed = reduce ? SHOWN : ticked;
   const [pop] = useState(() => new Animated.Value(1));
 
   useEffect(() => {
-    if (revealed >= SHOWN) return;
+    if (reduce || revealed >= SHOWN) return;
     const id = setTimeout(() => {
       setRevealed((n) => n + 1);
       const pick = SHOWN - revealed - 1;
@@ -31,7 +31,7 @@ export function LotteryReveal({ order, names, colors }: { order: number[]; names
       Animated.spring(pop, { toValue: 1, friction: 5, useNativeDriver: Platform.OS !== 'web' }).start();
     }, revealed === 0 ? 400 : 260);
     return () => clearTimeout(id);
-  }, [revealed, pop, top]);
+  }, [revealed, reduce, pop, top]);
 
   return (
     <View style={styles.box} testID="lottery">

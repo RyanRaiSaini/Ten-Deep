@@ -1,5 +1,5 @@
 /** Motion: count-up numbers, confetti, and a reduced-motion switch that turns both off. */
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { AccessibilityInfo, Animated, Easing, Platform, StyleSheet, useWindowDimensions, View, type StyleProp, type TextStyle } from 'react-native';
 import { Text } from './Text';
 import { C } from './theme';
@@ -21,9 +21,10 @@ export function CountUp({
   to, duration = 900, format = String, style, testID,
 }: { to: number; duration?: number; format?: (n: number) => string; style?: StyleProp<TextStyle>; testID?: string }) {
   const reduce = useReducedMotion();
-  const [n, setN] = useState(0);
+  const [ticked, setN] = useState(0);
+  const n = reduce || to === 0 ? to : ticked;
   useEffect(() => {
-    if (reduce || to === 0) return setN(to);
+    if (reduce || to === 0) return;
     const start = Date.now();
     let raf = 0;
     const tick = () => {
@@ -41,8 +42,8 @@ export function CountUp({
 export function Confetti({ colors = [C.gold, C.hardwood, C.neon, '#FFFFFF'], count = 56 }: { colors?: string[]; count?: number }) {
   const reduce = useReducedMotion();
   const { width, height } = useWindowDimensions();
-  const pieces = useMemo(
-    () => Array.from({ length: count }, (_, i) => ({
+  // Random layout chosen once per burst (a new burst is a new mount).
+  const [pieces] = useState(() => Array.from({ length: count }, (_, i) => ({
       x: Math.random(),
       drift: (Math.random() - 0.5) * 160,
       delay: Math.random() * 700,
@@ -51,11 +52,8 @@ export function Confetti({ colors = [C.gold, C.hardwood, C.neon, '#FFFFFF'], cou
       color: colors[i % colors.length],
       w: 6 + Math.random() * 6,
       h: 10 + Math.random() * 10,
-    })),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [count],
-  );
-  const vals = useRef(pieces.map(() => new Animated.Value(0))).current;
+    })));
+  const [vals] = useState(() => pieces.map(() => new Animated.Value(0)));
   useEffect(() => {
     if (reduce) return;
     const anim = Animated.parallel(vals.map((v, i) => Animated.timing(v, {

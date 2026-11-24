@@ -20,7 +20,9 @@ export function Spinner({
   target, decoys, spinKey, onLanded,
 }: { target: TeamSeason | null; decoys: TeamSeason[]; spinKey: number; onLanded: () => void }) {
   const [shown, setShown] = useState<TeamSeason | null>(target);
-  const [rolling, setRolling] = useState(false);
+  // Rolling until the current spin lands (derived, so a new spinKey shows rolling on the very next render).
+  const [landedKey, setLandedKey] = useState(0);
+  const rolling = spinKey !== 0 && landedKey !== spinKey;
   const speed = useSettings((s) => s.simSpeed);
   const landed = useRef(onLanded);
   useEffect(() => { landed.current = onLanded; }, [onLanded]);
@@ -34,12 +36,11 @@ export function Spinner({
     const factor = speed >= 4 ? 0.35 : speed >= 2 ? 0.6 : 1;
     let i = 0;
     let timer: ReturnType<typeof setTimeout>;
-    setRolling(true);
     const next = () => {
       i++;
       if (i >= steps) {
         setShown(latest.current);
-        setRolling(false);
+        setLandedKey(spinKey);
         feel('thunk');
         pop.setValue(0.86);
         Animated.spring(pop, { toValue: 1, friction: 4, tension: 120, useNativeDriver: native }).start();

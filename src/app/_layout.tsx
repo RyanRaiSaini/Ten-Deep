@@ -9,7 +9,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { Loading } from '../ui/Loading';
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { AppState } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { applyLanguage, deviceLanguage } from '../i18n';
@@ -24,19 +24,16 @@ import { AchievementToast } from '../ui/AchievementToast';
 // Keep the splash up until saved progress has loaded.
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-const allHydrated = () => STORES.every((s) => s.persist.hasHydrated());
+/** True once every store has loaded its saved state; latched, so a later rehydrate (cloud restore) never blanks the app. */
+let hydratedOnce = false;
+const allHydrated = () => (hydratedOnce ||= STORES.every((s) => s.persist.hasHydrated()));
+const onHydration = (cb: () => void) => {
+  const unsubs = STORES.map((s) => s.persist.onFinishHydration(cb));
+  return () => unsubs.forEach((u) => u());
+};
 
 /** Wait for saved runs/settings to load so a fast tap can't be overwritten by late-arriving saved state. */
-function useHydrated() {
-  const [ready, setReady] = useState(allHydrated);
-  useEffect(() => {
-    if (ready) return;
-    const unsubs = STORES.map((s) => s.persist.onFinishHydration(() => allHydrated() && setReady(true)));
-    if (allHydrated()) setReady(true);
-    return () => unsubs.forEach((u) => u());
-  }, [ready]);
-  return ready;
-}
+const useHydrated = () => useSyncExternalStore(onHydration, allHydrated, allHydrated);
 
 export default function RootLayout() {
   const language = useSettings((s) => s.language);
