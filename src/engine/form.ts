@@ -40,9 +40,18 @@ export function normName(name: string): string {
     .trim();
 }
 
-/** Players whose rating the owner set by hand, form included (src/data/ownerRated.ts): live form never moves them. */
-const LOCKED = new Set(OWNER_RATED.map(normName));
-export const formLocked = (name: string) => LOCKED.has(normName(name));
+/**
+ * Players whose rating the owner set by hand, form included (src/data/ownerRated.ts). Their form is measured only
+ * on games after that update (`anchored` in computeForm). Form computed by older models (before ANCHORED_MODEL)
+ * counted their whole season and must be dropped for them, or it would stack on the owner's number.
+ */
+const OWNER = new Set(OWNER_RATED.map(normName));
+export const ownerRated = (name: string) => OWNER.has(normName(name));
+export const ANCHORED_MODEL = 4;
+export function cleanDeltas<T>(deltas: Record<string, T>, model: number | undefined): Record<string, T> {
+  if ((model ?? 0) >= ANCHORED_MODEL) return deltas;
+  return Object.fromEntries(Object.entries(deltas).filter(([k]) => !OWNER.has(k)));
+}
 
 /** Least-squares fit of rating on Game Score per game, among rotation players with a real sample. */
 export function calibrate(rows: { ovr: number; gmsc: number }[]): { a: number; b: number } {
@@ -62,6 +71,8 @@ export function computeForm(
   players: RatedPlayer[],
   season: Map<string, Production>,
   recent: Map<string, Production>,
+  /** Owner-rated players: measured on production since the owner's update only (no games yet → no nudge). */
+  anchored?: { season: Map<string, Production>; recent: Map<string, Production> },
 ): Record<string, FormDelta> {
   const rows = players
     .map((p) => ({ p, s: season.get(normName(p.name)) }))
@@ -70,8 +81,8 @@ export function computeForm(
   const out: Record<string, FormDelta> = {};
   for (const p of players) {
     const key = normName(p.name);
-    if (LOCKED.has(key)) continue;
-    const s = season.get(key);
+    const own = !!anchored && OWNER.has(key);
+    const s = (own ? anchored!.season : season).get(key);
     if (!s || s.gp < 3) continue;
     const mpg = s.min / s.gp;
     // How much to trust the season: grows with games and minutes.
@@ -81,7 +92,7 @@ export function computeForm(
     // A real sample of games is strong evidence: most of the gap for veterans, all of it for rookies and young
     // players (their base rating is a pre-season guess).
     let d = (earned - p.ovr) * (young ? 1 : 0.85) * trust;
-    const r = recent.get(key);
+    const r = (own ? anchored!.recent : recent).get(key);
     // The last week is a swing of at most ±2 on top.
     if (r && r.gp >= 2) d += Math.max(-2, Math.min(2, (r.gmsc - s.gmsc) * b * 0.25 * Math.min(1, r.gp / 3)));
     // One cold stretch doesn't make a superstar ordinary.
@@ -104,7 +115,7 @@ export function formPool<P extends { teams: { players: Player[] }[] }>(pool: P, 
       ...t,
       players: t.players.map((p) => {
         const b = base(p);
-        const d = LOCKED.has(normName(b.name)) ? 0 : form[normName(b.name)] ?? 0;
+        const d = form[normName(b.name)] ?? 0;
         const out = { ...b, form: d || undefined } as Player & { form?: number };
         for (const k of subs) (out as unknown as Record<string, number>)[k] = Math.max(40, Math.min(99, (b[k] as number) + d));
         return out;

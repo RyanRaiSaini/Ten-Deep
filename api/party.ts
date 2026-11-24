@@ -17,7 +17,7 @@ import { runtimeStore, sharedCache } from './_runtimestore';
 import { autoPick } from '../src/engine/party';
 import { MODE_BY_ID } from '../src/data/modes';
 import { affordableSlots, fallbackPick, options } from '../src/engine/draft';
-import { formPool } from '../src/engine/form';
+import { cleanDeltas, formPool } from '../src/engine/form';
 import { PARTY_MAX, newRoomCode, parseFlex, parseRoomCode, resolve, seatOf, seatState, type PartyMember, type PartyMeta } from '../src/engine/party';
 import type { SlotId } from '../src/engine/types';
 
@@ -64,8 +64,9 @@ async function todaysForm(): Promise<Record<string, number>> {
   try {
     const r = await get('form/latest.json', { access: 'private' });
     if (!r || r.statusCode !== 200) return {};
-    const latest = JSON.parse(await new Response(r.stream).text()) as { deltas?: Record<string, { d: number }> };
-    return Object.fromEntries(Object.entries(latest.deltas ?? {}).map(([k, v]) => [k, v.d]));
+    const latest = JSON.parse(await new Response(r.stream).text()) as { model?: number; deltas?: Record<string, { d: number }> };
+    // Older form counted owner-rated players' whole season (it would stack on their owner-set rating).
+    return Object.fromEntries(Object.entries(cleanDeltas(latest.deltas ?? {}, latest.model)).map(([k, v]) => [k, v.d]));
   } catch {
     return {};
   }

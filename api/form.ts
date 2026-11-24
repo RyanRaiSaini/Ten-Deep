@@ -7,6 +7,7 @@
  */
 import { get, put } from '@vercel/blob';
 import { current2026 } from '../src/data/current2026';
+import { OWNER_RATED_FROM } from '../src/data/ownerRated';
 import { addGame, computeForm, normName, type Production, type StatLine } from '../src/engine/form';
 
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
@@ -16,7 +17,7 @@ const RECENT_DAYS = 7;
 const MAX_GAMES_PER_RUN = 320;
 const HOUR = 3600_000;
 /** Bump when the rating model changes so the next request re-rates from stored box scores. */
-const MODEL = 3;
+const MODEL = 4; // 4: owner-rated players measured only on games after their update (src/data/ownerRated.ts)
 const DAY = 24 * HOUR;
 
 interface State {
@@ -26,6 +27,8 @@ interface State {
   season: Record<string, Production>;
   /** Recent games only: gameId → date and each player's line summary. */
   recent: Record<string, { date: string; lines: Record<string, Production> }>;
+  /** Production in games from OWNER_RATED_FROM on (owner-rated players' form starts from here). */
+  since?: Record<string, Production>;
 }
 interface Latest { updated: string; games: number; source: string; model?: number; deltas: ReturnType<typeof computeForm> }
 
@@ -82,9 +85,24 @@ function linesOf(group: Group): { name: string; line: StatLine }[] {
   return out;
 }
 
+/** Combine two production totals (games, minutes, average Game Score). */
+function mergeProd(a: Production | undefined, b: Production): Production {
+  if (!a) return { ...b };
+  const gp = a.gp + b.gp;
+  return { gp, min: a.min + b.min, gmsc: (a.gmsc * a.gp + b.gmsc * b.gp) / gp };
+}
+
 async function refresh(): Promise<Latest> {
   const state: State = (await readBlob<State>('form/state.json')) ?? { processed: [], scanned: [], season: {}, recent: {} };
   state.scanned ??= [];
+  // Owner-rated players' form starts at OWNER_RATED_FROM: seed it from the stored recent games on first run.
+  if (!state.since) {
+    state.since = {};
+    for (const g of Object.values(state.recent)) {
+      if (g.date < OWNER_RATED_FROM) continue;
+      for (const [name, p] of Object.entries(g.lines)) state.since[name] = mergeProd(state.since[name], p);
+    }
+  }
   const done = new Set(state.processed);
   const scanned = new Set(state.scanned);
 
@@ -120,6 +138,7 @@ async function refresh(): Promise<Latest> {
         for (const l of linesOf(t.statistics?.[0] ?? {})) {
           state.season[l.name] = addGame(state.season[l.name], l.line);
           lines[l.name] = addGame(undefined, l.line);
+          if (g.date >= OWNER_RATED_FROM) state.since![l.name] = addGame(state.since![l.name], l.line);
         }
       }
       state.processed.push(g.id);
@@ -138,8 +157,13 @@ async function refresh(): Promise<Latest> {
       recent.set(name, { gp, min: (t?.min ?? 0) + p.min, gmsc: ((t?.gmsc ?? 0) * (gp - 1) + p.gmsc) / gp });
     }
   }
+  const anchoredRecent = new Map<string, Production>();
+  for (const g of Object.values(state.recent)) {
+    if (g.date < OWNER_RATED_FROM) continue;
+    for (const [name, p] of Object.entries(g.lines)) anchoredRecent.set(name, mergeProd(anchoredRecent.get(name), p));
+  }
   const players = current2026.teams.flatMap((t) => t.players.map((p) => ({ name: p.name, ovr: p.ovr, age: p.age, rookie: p.rookie })));
-  const deltas = computeForm(players, new Map(Object.entries(state.season)), recent);
+  const deltas = computeForm(players, new Map(Object.entries(state.season)), recent, { season: new Map(Object.entries(state.since)), recent: anchoredRecent });
   const latest: Latest = { updated: new Date().toISOString(), games: state.processed.length, source: 'ESPN box scores', model: MODEL, deltas };
   await writeBlob('form/state.json', state);
   await writeBlob('form/latest.json', latest);

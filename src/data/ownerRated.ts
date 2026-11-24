@@ -1,8 +1,12 @@
 /**
  * Current Day players whose rating the owner set by hand on 2026-11-24, after November's games. Those numbers
- * already include recent form, so live form (src/engine/form.ts) is not added on top of them: what the owner
- * set is exactly what players see. Remove a name here to let live form move that player again.
+ * already include form up to then, so live form (src/engine/form.ts) measures them only on games played after
+ * OWNER_RATED_FROM, against the owner's number: right after the update they show exactly what the owner set,
+ * then drift up or down with how they play from here.
  */
+
+/** First game day (UTC date of tip-off, as stored by api/form.ts) that counts toward their form: Nov 24 ET evening on. */
+export const OWNER_RATED_FROM = '2026-11-25';
 export const OWNER_RATED: readonly string[] = [
   'Nickeil Alexander-Walker',
   'CJ McCollum',
