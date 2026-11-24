@@ -718,7 +718,9 @@
   "challenge": {
     "invalid": "Deze uitdaginglink werkt niet.",
     "title": "{{name}} daagt je uit",
-    "body": "Zelfde spins, in dezelfde volgorde. Verbeter de score.",
+    "body": "Zelfde spins en dezelfde competitie. Verbeter de score.",
+    "bodyOld": "Zelfde spins, in dezelfde volgorde. Verbeter de score.",
+    "ratingsMoved": "De ratings zijn sinds {{name}} speelde ({{day}}) bijgewerkt met echte wedstrijden, dus een paar spelers kunnen iets anders scoren.",
     "accept": "Uitdaging aannemen",
     "share": "Delen en uitdagen",
     "shared": "Gedeeld!",
@@ -979,5 +981,25 @@
     "rookie": "ROOKIESCHAAL",
     "twoWay": "TWO-WAY",
     "min": "MINIMUM"
+  },
+  "how": {
+    "title": "Zo werkt het",
+    "link": "Zo werkt het",
+    "intro": "Draft tien spelers, blijf onder het salarisplafond en kijk hoe ver ze komen.",
+    "spinT": "Draai een team",
+    "spinB": "Elke ronde landt op een willekeurig NBA-teamseizoen. Kies daar één speler uit.",
+    "rosterT": "Tien diep",
+    "rosterB": "Vul PG, SG, SF, PF en C, plus vijf bankplekken. Sommige spelers kunnen op twee posities spelen.",
+    "capT": "Blijf onder $200 mln",
+    "capB": "Elke speler kost zijn echte contract, omgerekend naar het plafond van dat seizoen. Rookiecontracten zijn goedkoop, max- en supermaxcontracten niet. Het spel houdt altijd genoeg ruimte om elke plek te vullen.",
+    "rulesT": "De kleine lettertjes",
+    "rulesB": "Hoogstens twee spelers van 95 of hoger. Twee gratis respins per draft. Past er bij een draai niemand, dan krijg je de goedkoopste speler die wel past.",
+    "seasonT": "Speel 82 wedstrijden",
+    "seasonB": "Blessures kosten precies de genoemde wedstrijden. Bij wedstrijd 50 krijg je één ruil voor de deadline. Volg het per wedstrijd of spoel door.",
+    "playoffsT": "Overleef de play-offs",
+    "playoffsB": "16 teams, best-of-7, wedstrijd voor wedstrijd. 70 zeges is zeldzaam. 82-0 is een mythe.",
+    "challengeT": "Daag een vriend uit",
+    "challengeB": "Deel na een run je link. Wie hem opent krijgt dezelfde draaien en dezelfde 29 tegenstanders. Draft iemand een speler van een AI-team, dan haalt dat team een vergelijkbare vervanger, dus alleen jullie keuzes maken het verschil.",
+    "play": "Start een draft"
   }
 }

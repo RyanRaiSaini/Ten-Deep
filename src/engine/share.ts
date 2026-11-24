@@ -16,15 +16,21 @@ export interface ShareRun {
   pin?: string;
   /** Playoff series played (0–4), the tiebreak. */
   depth?: number;
+  /** Played under fair rules (round-keyed spins, league picked before the draft): the link says so with v=2. */
+  fair?: boolean;
+  /** The day of the live ratings used (YYYY-MM-DD), so a challenger can be told if ratings have moved since. */
+  formDay?: string;
 }
 
 /** Rating squares: 🟨 95+, 🟩 88+, 🟦 80+, ⬜ below. */
 const square = (o: number) => (o >= 95 ? '🟨' : o >= 88 ? '🟩' : o >= 80 ? '🟦' : '⬜');
 
-export function challengeLink(r: Pick<ShareRun, 'url' | 'seed' | 'poolId' | 'wins' | 'losses' | 'name' | 'pin' | 'depth'>): string {
+export function challengeLink(r: Pick<ShareRun, 'url' | 'seed' | 'poolId' | 'wins' | 'losses' | 'name' | 'pin' | 'depth' | 'fair' | 'formDay'>): string {
   const q = new URLSearchParams({ s: r.seed, p: r.poolId, w: String(r.wins), l: String(r.losses), n: r.name.slice(0, 18) });
   if (r.pin) q.set('f', r.pin);
   if (r.depth !== undefined) q.set('d', String(r.depth));
+  if (r.fair) q.set('v', '2');
+  if (r.formDay) q.set('fd', r.formDay);
   return `${r.url}/c?${q.toString()}`;
 }
 
@@ -41,15 +47,17 @@ export function runShareText(r: ShareRun): string {
 }
 
 /** Parse a challenge link's params; null if anything is missing or malformed. */
-export function parseChallenge(p: Record<string, string | string[] | undefined>): { seed: string; poolId: string; w: number; l: number; name: string; pin?: string; depth?: number } | null {
+export function parseChallenge(p: Record<string, string | string[] | undefined>): { seed: string; poolId: string; w: number; l: number; name: string; pin?: string; depth?: number; fair: boolean; formDay?: string } | null {
   const one = (k: string) => (Array.isArray(p[k]) ? p[k]![0] : p[k]) as string | undefined;
   const seed = one('s'); const poolId = one('p'); const w = Number(one('w')); const l = Number(one('l'));
   const name = (one('n') ?? '').trim().slice(0, 18) || 'A friend';
   if (!seed || !poolId || !/^[\w:.-]{1,64}$/.test(seed) || !Number.isInteger(w) || !Number.isInteger(l) || w < 0 || l < 0 || w + l > 82) return null;
   const pin = one('f');
   const depth = Number(one('d'));
+  const fd = one('fd');
   return {
-    seed, poolId, w, l, name,
+    seed, poolId, w, l, name, fair: one('v') === '2',
+    ...(fd && /^\d{4}-\d{2}-\d{2}$/.test(fd) ? { formDay: fd } : {}),
     ...(pin && /^[A-HJKMNP-Z2-9]{6}$/.test(pin) ? { pin } : {}),
     ...(Number.isInteger(depth) && depth >= 0 && depth <= 4 ? { depth } : {}),
   };

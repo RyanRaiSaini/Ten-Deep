@@ -24,6 +24,14 @@ export interface DraftState {
   rivals?: RosterSlots[];
   /** This player's seat among the rosters (fixed order shared by all players; default 0). */
   seat?: number;
+  /**
+   * Fair spins (2): each spin is keyed by round and attempt, so everyone on the same seed sees the same team in
+   * every round, and a respin in one round never changes later rounds. Older saved drafts have no scheme and
+   * keep the original sequence (spin number across the whole draft).
+   */
+  scheme?: 2;
+  /** Spins made in the current round (scheme 2). */
+  attempt?: number;
 }
 
 export interface DraftOption {
@@ -32,8 +40,14 @@ export interface DraftOption {
   affordable: boolean;
 }
 
+/** A draft on the original spin sequence, for replaying links and dailies made before fair spins. */
+export function legacyDraft(d: DraftState): DraftState {
+  const { scheme: _s, attempt: _a, ...rest } = d;
+  return rest;
+}
+
 export function startDraft(pool: Pool, seed: string): DraftState {
-  return { poolId: pool.id, seed, round: 0, respinsLeft: RESPINS_PER_DRAFT, roster: {}, used: [], spin: null, spins: 0 };
+  return { poolId: pool.id, seed, round: 0, respinsLeft: RESPINS_PER_DRAFT, roster: {}, used: [], spin: null, spins: 0, scheme: 2, attempt: 0 };
 }
 
 export function isComplete(state: DraftState): boolean {
@@ -49,6 +63,16 @@ export function eligibleSlots(state: DraftState, p: Player): SlotId[] {
 }
 
 function landSpin(state: DraftState, pool: Pool): DraftState {
+  if (state.scheme === 2) {
+    // Draw from every team in a fixed order; skip a team only if all its players are taken (never in practice),
+    // moving to the next attempt so the result still depends only on seed, round and attempt.
+    let attempt = state.attempt ?? 0;
+    for (let tries = 0; tries < 64; tries++, attempt++) {
+      const team = createRng(`${state.seed}:spin:r${state.round}:a${attempt}`).pick(pool.teams);
+      if (team.players.some((p) => !state.used.includes(p.id))) return { ...state, spin: team, spins: state.spins + 1, attempt: attempt + 1 };
+    }
+    throw new Error('Pool exhausted');
+  }
   const rng = createRng(`${state.seed}:spin:${state.spins}`);
   const candidates = pool.teams.filter((t) => t.players.some((p) => !state.used.includes(p.id)));
   if (candidates.length === 0) throw new Error('Pool exhausted');
@@ -168,6 +192,7 @@ function place(state: DraftState, player: Player | null, slot: SlotId, pool: Poo
     used: [...state.used, player.id],
     round: state.round + 1,
     spin: null,
+    ...(state.scheme === 2 ? { attempt: 0 } : {}),
   };
 }
 

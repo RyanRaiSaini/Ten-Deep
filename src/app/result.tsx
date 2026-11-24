@@ -1,4 +1,5 @@
 import { track } from '../net/campaign';
+import { useForm } from '../store/form';
 import { Redirect, router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -135,6 +136,7 @@ export default function Result() {
               mode: MODE_BY_ID[g.poolId]?.title ?? 'Ten Deep', ovrs: ALL_SLOTS.map((k) => user.slots[k].ovr), seed: season.seed,
               poolId: g.poolId, name: profileName || t('home.player'), url: CONFIG.webUrl,
               pin: useFriends.getState().pin, depth: won ? 4 : mine ? mine.round + 1 : 0,
+              fair: g.draft?.scheme === 2, formDay: useForm.getState().day ?? undefined,
             });
             const r = await shareText(text);
             if (r !== 'failed') { setShared(r); track('shared'); }

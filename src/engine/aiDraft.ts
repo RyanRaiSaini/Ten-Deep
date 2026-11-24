@@ -92,3 +92,30 @@ export function draftLeague(pool: Pool, exclude: Set<string>, count: number, rng
     slots: t.slots as Required<RosterSlots>,
   }));
 }
+
+/**
+ * The AI league for a fair run: drafted from the seed alone, before (and regardless of) your picks, so everyone
+ * on the same seed starts against the same 29 teams. A player you also drafted is swapped, on his AI team, for
+ * the closest-rated player who fits the same slot and isn't in the league or on your roster. Your own picks are
+ * the only thing that changes the league.
+ */
+export function fairLeague(pool: Pool, mine: Player[], rng: Rng, count = 29): Roster[] {
+  const league = draftLeague(pool, new Set(), count, rng);
+  const myNames = new Set(mine.map((p) => p.name));
+  const taken = new Set([...league.flatMap((r) => Object.values(r.slots).map((p) => p!.name)), ...myNames]);
+  const all = pool.teams.flatMap((t) => t.players);
+  for (const r of league) {
+    for (const slot of ALL_SLOTS) {
+      const p = r.slots[slot];
+      if (!p || !myNames.has(p.name)) continue;
+      const fits = (x: Player) => BENCH_SLOTS.includes(slot) || x.pos === slot || x.pos2 === slot;
+      const rep = all
+        .filter((x) => !taken.has(x.name) && fits(x))
+        .sort((a, b) => Math.abs(a.ovr - p.ovr) - Math.abs(b.ovr - p.ovr) || b.ovr - a.ovr || a.id.localeCompare(b.id))[0];
+      if (!rep) continue;
+      r.slots[slot] = rep;
+      taken.add(rep.name);
+    }
+  }
+  return league;
+}
