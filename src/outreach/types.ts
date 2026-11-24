@@ -150,9 +150,22 @@ export interface Idea {
   createdAt: string;
 }
 
+export interface Settings {
+  /** How you introduce yourself in creator outreach (kept separate from any other campaign). */
+  ownerIntro: string;
+  /** Days without a reply before a follow-up is suggested. */
+  followUpDays: number;
+}
+
+export const DEFAULT_SETTINGS: Settings = {
+  ownerIntro: "I'm Ryan, a math student at the University of Waterloo, and I built Ten Deep.",
+  followUpDays: 7,
+};
+
 export interface Db {
   rev: number;
   updatedAt: string;
+  settings: Settings;
   contacts: Contact[];
   campaigns: Campaign[];
   drafts: Draft[];
@@ -161,7 +174,7 @@ export interface Db {
   evidence: Evidence[];
 }
 
-export const emptyDb = (): Db => ({ rev: 0, updatedAt: '', contacts: [], campaigns: [], drafts: [], messages: [], ideas: [], evidence: [] });
+export const emptyDb = (): Db => ({ rev: 0, updatedAt: '', settings: { ...DEFAULT_SETTINGS }, contacts: [], campaigns: [], drafts: [], messages: [], ideas: [], evidence: [] });
 
 /** Anonymous, per-visitor website events recorded for campaign links. */
 export const EVENT_KINDS = ['visit', 'return', 'draft_started', 'draft_completed', 'season_simulated', 'shared'] as const;

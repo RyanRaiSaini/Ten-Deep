@@ -47,7 +47,7 @@ export const words = (s: string) => s.replace(/https?:\/\/\S+/g, ' ').match(/[A-
 /** Sentences that ask the recipient something (questions or polite requests). */
 export function asks(text: string): string[] {
   const sentences = text.replace(/https?:\/\/\S+/g, 'LINK').split(/(?<=[.?!])\s+|\n+/).map((s) => s.trim()).filter(Boolean);
-  const req = /\b(?:would you|could you|can you|will you|let me know|happy to hear|give it a (?:try|go|shot)|try it|check it out|take a look|have a look|feel free to|if you(?:'re| are)? (?:up for|open to|interested|get a chance|have a (?:minute|few minutes)))\b/i;
+  const req = /\b(?:would you|could you|can you|will you|let me know|happy to hear|give it a (?:try|go|shot)|try it|check (?:it|this|my \w+) out|check out|take a look|have a look|feel free to|if you(?:'re| are)? (?:up for|open to|interested|get a chance|have a (?:minute|few minutes)))\b/i;
   return sentences.filter((s) => s.endsWith('?') || req.test(s));
 }
 
