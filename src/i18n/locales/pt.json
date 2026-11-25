@@ -840,7 +840,7 @@
     "title": "Loja",
     "rerolls": "Rerolagens",
     "have": "Você tem",
-    "what": "Uma rerolagem gira a roleta de novo quando você não curte o resultado, depois de usar seus 2 giros grátis.",
+    "what": "Uma rerolagem gira a roleta de novo quando você não curte o resultado, depois de usar seu giro grátis.",
     "free": "Rerolagem diária grátis",
     "freeClaim": "Resgatar",
     "freeDone": "Volte amanhã",
@@ -1013,7 +1013,7 @@
     "capT": "Fique abaixo de US$ 200 mi",
     "capB": "Cada jogador custa o contrato real, ajustado ao teto daquela temporada. Contratos de novato são baratos; máximos e supermáximos, não. O jogo sempre deixa espaço para preencher todas as vagas.",
     "rulesT": "As letras miúdas",
-    "rulesB": "No máximo dois jogadores com 95 ou mais. Dois giros extras grátis por draft. Se ninguém couber num giro, você recebe o jogador mais barato que cabe.",
+    "rulesB": "No máximo dois jogadores com 95 ou mais. Um giro extra grátis por draft. Se ninguém couber num giro, você recebe o jogador mais barato que cabe.",
     "seasonT": "Jogue 82 partidas",
     "seasonB": "Lesões custam os jogos indicados. No jogo 50 você tem uma troca no prazo final. Acompanhe jogo a jogo ou avance.",
     "playoffsT": "Sobreviva aos playoffs",
@@ -1022,7 +1022,11 @@
     "challengeB": "Depois de uma partida, compartilhe seu link. Quem abrir recebe os mesmos giros e a mesma liga: os times reais. Se alguém escolher um jogador de um time, esse time joga sem ele e o banco sobe, então suas escolhas são a única diferença.",
     "play": "Começar um draft",
     "divT": "Escolha sua divisão",
-    "divB": "Escolha conferência e divisão antes do jogo começar. Você enfrenta a liga inteira de qualquer jeito; os playoffs são classificados dentro de cada conferência."
+    "divB": "Escolha conferência e divisão antes do jogo começar. Você enfrenta a liga inteira de qualquer jeito; os playoffs são classificados dentro de cada conferência.",
+    "squadT": "Nota do elenco",
+    "squadB": "Seus dez jogadores em um só número. Os titulares contam mais, 15% cada; o banco conta 9, 6, 5, 3 e 2% do sexto ao décimo homem. Quanto maior, mais você vence: cerca de 66 vitórias com 87 e cerca de 75 com 91. Só um elenco de elite pode fazer 82-0.",
+    "packsT": "Ganhe pacotes",
+    "packsB": "Cada temporada terminada dá um pacote, um melhor com 60+ vitórias. Chegue à final de conferência ou mais longe para um segundo pacote que melhora quanto mais você avança, até o Pacote supremo (só cartas 98+) com 82-0 e 16-0. Você tem um power-up por dia."
   },
   "conf": {
     "east": "Leste",
@@ -1041,5 +1045,16 @@
   "squad": {
     "rating": "Nota do elenco",
     "short": "Elenco"
+  },
+  "rewards": {
+    "title": "Você ganhou",
+    "next": "Da próxima vez",
+    "goal_good": "Vença 60+ jogos para uma Escolha boa",
+    "goal_confFinals": "Chegue à final de conferência para uma Escolha da final de conferência",
+    "goal_finals": "Vença sua conferência para uma Escolha das Finais",
+    "goal_champion": "Vença as Finais para uma Escolha do campeão",
+    "goal_sweep": "Vença as Finais por 4-0 para uma Escolha do campeão invicto nas Finais",
+    "goal_ultimate": "Faça 82-0 e depois 16-0 nos playoffs para a Escolha suprema (só 98+)",
+    "maxed": "A Escolha suprema. Não há nada acima."
   }
 }

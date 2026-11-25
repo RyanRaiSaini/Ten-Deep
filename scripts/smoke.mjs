@@ -67,7 +67,7 @@ await step('how it works: reachable from the draft screen, every rule shown', as
   await page.goto(base);
   await page.getByTestId('mode-current').click();
   await page.getByTestId('how-link').click();
-  for (const k of ['spin', 'roster', 'cap', 'rules', 'season', 'playoffs', 'challenge']) await page.getByTestId(`how-${k}`).waitFor();
+  for (const k of ['spin', 'roster', 'cap', 'rules', 'squad', 'season', 'div', 'playoffs', 'packs', 'challenge']) await page.getByTestId(`how-${k}`).waitFor();
   await shot('38-how');
   if (await page.getByTestId('how-play').count()) throw new Error('start button shown while a draft is in progress');
 });

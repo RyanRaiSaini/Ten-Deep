@@ -78,10 +78,9 @@ describe('draft', () => {
     expect(() => pick(s, 's5', 'C', pool)).toThrow(/cap/i);
   });
 
-  it('respins decrement and then throw when exhausted', () => {
+  it('one respin per draft, then respinning throws', () => {
     let s = spin(startDraft(pool, 'respin'), pool);
-    expect(s.respinsLeft).toBe(2);
-    s = respin(s, pool);
+    expect(s.respinsLeft).toBe(1);
     s = respin(s, pool);
     expect(s.respinsLeft).toBe(0);
     expect(() => respin(s, pool)).toThrow();

@@ -163,7 +163,7 @@ export function PlayoffBackdrop({ finals = false }: { finals?: boolean }) {
     </Svg>
   );
   return (
-    <View style={StyleSheet.absoluteFill}>
+    <View style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]}>
       <LinearGradient colors={base as [string, string, string]} style={StyleSheet.absoluteFill} />
       <View style={StyleSheet.absoluteFill}>{field(0)}</View>
       <Twinkle delay={300} still={still}>{field(1)}</Twinkle>

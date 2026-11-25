@@ -14,9 +14,11 @@ const STEPS: { key: string; icon: IconName; color: string }[] = [
   { key: 'roster', icon: 'clipboard', color: C.blue },
   { key: 'cap', icon: 'coin', color: C.gold },
   { key: 'rules', icon: 'shield', color: C.purple },
+  { key: 'squad', icon: 'chart', color: C.neon },
   { key: 'season', icon: 'calendar', color: C.teal },
   { key: 'div', icon: 'globe', color: C.blue },
   { key: 'playoffs', icon: 'trophy', color: C.danger },
+  { key: 'packs', icon: 'gift', color: C.gold },
   { key: 'challenge', icon: 'vs', color: C.neon },
 ];
 

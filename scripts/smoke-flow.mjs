@@ -97,11 +97,13 @@ export async function runFlow({ page, base, step, shot }) {
       await shot('07-playoffs');
     }
     await page.getByTestId('playoff-sim').click();
+    await page.getByTestId('bracket').waitFor();
     await page.getByTestId('see-result').click();
     await page.getByTestId('play-again').waitFor({ timeout: 15000 });
     await page.getByTestId('awards').waitFor();
     await page.getByTestId('share').waitFor();
     await page.getByTestId('league-gain').waitFor();
+    await page.getByTestId('run-rewards').waitFor();
     await shot('08-result');
     await page.getByTestId('go-home').click();
     await page.getByTestId('tab-bar').waitFor();

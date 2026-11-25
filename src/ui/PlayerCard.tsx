@@ -58,7 +58,7 @@ export function PlayerCard({
         <View style={{ flex: 1, gap: 1 }}>
           <Text style={styles.name} numberOfLines={1}>{player.name}</Text>
           <Text style={styles.meta} numberOfLines={1}>
-            {player.pos}{player.pos2 ? `/${player.pos2}` : ''} · {player.tag}{player.age ? ` · ${player.age}y` : ''}
+            {player.pos}{player.pos2 ? `/${player.pos2}` : ''}{player.age ? ` · ${player.age}y` : ''}
           </Text>
           {note && <Text style={styles.note} numberOfLines={1}>{note}</Text>}
         </View>

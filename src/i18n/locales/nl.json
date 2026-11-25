@@ -835,7 +835,7 @@
     "title": "Winkel",
     "rerolls": "Rerolls",
     "have": "Je hebt",
-    "what": "Met een reroll draai je het wiel opnieuw als je de uitkomst niet bevalt, zodra je 2 gratis herkansingen op zijn.",
+    "what": "Met een reroll draai je het wiel opnieuw als je de uitkomst niet bevalt, zodra je gratis herkansing op is.",
     "free": "Gratis dagelijkse reroll",
     "freeClaim": "Ophalen",
     "freeDone": "Morgen weer",
@@ -1008,7 +1008,7 @@
     "capT": "Blijf onder $200 mln",
     "capB": "Elke speler kost zijn echte contract, omgerekend naar het plafond van dat seizoen. Rookiecontracten zijn goedkoop, max- en supermaxcontracten niet. Het spel houdt altijd genoeg ruimte om elke plek te vullen.",
     "rulesT": "De kleine lettertjes",
-    "rulesB": "Hoogstens twee spelers van 95 of hoger. Twee gratis respins per draft. Past er bij een draai niemand, dan krijg je de goedkoopste speler die wel past.",
+    "rulesB": "Hoogstens twee spelers van 95 of hoger. Eén gratis respin per draft. Past er bij een draai niemand, dan krijg je de goedkoopste speler die wel past.",
     "seasonT": "Speel 82 wedstrijden",
     "seasonB": "Blessures kosten precies de genoemde wedstrijden. Bij wedstrijd 50 krijg je één ruil voor de deadline. Volg het per wedstrijd of spoel door.",
     "playoffsT": "Overleef de play-offs",
@@ -1017,7 +1017,11 @@
     "challengeB": "Deel na een run je link. Wie hem opent krijgt dezelfde spins en dezelfde competitie: de echte teams. Draft iemand een speler van een team, dan speelt dat team zonder hem en schuift de bank door, dus jouw keuzes zijn het enige verschil.",
     "play": "Start een draft",
     "divT": "Kies je divisie",
-    "divB": "Kies je conference en divisie voor de tip-off. Je speelt hoe dan ook tegen de hele competitie; de play-offs worden per conference geplaatst."
+    "divB": "Kies je conference en divisie voor de tip-off. Je speelt hoe dan ook tegen de hele competitie; de play-offs worden per conference geplaatst.",
+    "squadT": "Selectiescore",
+    "squadB": "Je tien spelers in één getal. Basisspelers tellen het zwaarst, 15% elk; de bank telt 9, 6, 5, 3 en 2% van je 6e tot je 10e man. Hoe hoger, hoe meer je wint: zo'n 66 zeges bij 87, zo'n 75 bij 91. Alleen een topselectie kan 82-0 gaan.",
+    "packsT": "Verdien packs",
+    "packsB": "Elk afgerond seizoen levert een pack op, een betere bij 60+ zeges. Haal de conference-finale of verder voor een tweede pack dat beter wordt hoe verder je komt, tot het Ultieme pack (alleen 98+) voor 82-0 en 16-0. Je hebt één power-up per dag."
   },
   "conf": {
     "east": "Oost",
@@ -1036,5 +1040,16 @@
   "squad": {
     "rating": "Selectiescore",
     "short": "Selectie"
+  },
+  "rewards": {
+    "title": "Verdiend",
+    "next": "Volgende keer",
+    "goal_good": "Win 60+ wedstrijden voor een Goede keuze",
+    "goal_confFinals": "Haal de conference-finale voor een Conference-finalekeuze",
+    "goal_finals": "Win je conference voor een Finalskeuze",
+    "goal_champion": "Win de Finals voor een Kampioenskeuze",
+    "goal_sweep": "Win de Finals met 4-0 voor een Sweep-kampioenskeuze",
+    "goal_ultimate": "Ga 82-0 en daarna 16-0 in de play-offs voor de Ultieme keuze (alleen 98+)",
+    "maxed": "De Ultieme keuze. Hoger bestaat niet."
   }
 }
