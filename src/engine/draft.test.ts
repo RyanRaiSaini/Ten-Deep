@@ -67,15 +67,25 @@ describe('draft', () => {
     s = {
       ...s,
       roster: {
-        PG: { ...star, id: 's1', pos: 'PG' }, SG: { ...star, id: 's2', pos: 'SG' }, SF: { ...star, id: 's3', pos: 'SF' },
-        PF: { ...star, id: 's4', pos: 'PF' },
+        PG: { ...star, id: 's1', name: 'Star 1', pos: 'PG' }, SG: { ...star, id: 's2', name: 'Star 2', pos: 'SG' }, SF: { ...star, id: 's3', name: 'Star 3', pos: 'SF' },
+        PF: { ...star, id: 's4', name: 'Star 4', pos: 'PF' },
       },
       used: ['s1', 's2', 's3', 's4'],
       round: 4,
     };
-    s = { ...s, spin: { ...s.spin!, players: [{ ...star, id: 's5', pos: 'C' }] } };
+    s = { ...s, spin: { ...s.spin!, players: [{ ...star, id: 's5', name: 'Star 5', pos: 'C' }] } };
     expect(options(s, pool)[0].affordable).toBe(false);
     expect(() => pick(s, 's5', 'C', pool)).toThrow(/cap/i);
+  });
+
+  it('the same person can\'t be drafted twice, even from another of his seasons', () => {
+    let s = spin(startDraft(pool, 'dupe'), pool);
+    const o = options(s, pool).find((x) => x.affordable)!;
+    s = pick(s, o.player.id, o.slots[0], pool);
+    const twin = { ...o.player, id: `${o.player.id}-another-season` };
+    s = { ...s, spin: { ...s.spin ?? pool.teams[0], id: 'twin-team', players: [twin, ...pool.teams[1].players] } };
+    expect(options(s, pool).some((x) => x.player.name === o.player.name)).toBe(false);
+    expect(() => pick(s, twin.id, 'B5', pool)).toThrow(/already/);
   });
 
   it('one respin per draft, then respinning throws', () => {
@@ -127,7 +137,7 @@ describe('draft on the real 2026 pool', async () => {
 describe('superstar limit', () => {
   it('blocks a third player rated 95+ even when the cap would allow it', () => {
     let s = spin(startDraft(pool, 'stars'), pool);
-    const star = (id: string, pos: 'PG' | 'SG' | 'SF') => ({ ...pool.teams[0].players[0], id, pos, pos2: undefined, ovr: 95 });
+    const star = (id: string, pos: 'PG' | 'SG' | 'SF') => ({ ...pool.teams[0].players[0], id, name: `Star ${id}`, pos, pos2: undefined, ovr: 95 });
     s = { ...s, roster: { PG: star('a', 'PG'), SG: star('b', 'SG') }, used: ['a', 'b'], round: 2 };
     s = { ...s, spin: { ...s.spin!, players: [star('c', 'SF')] } };
     expect(MAX_SUPERSTARS).toBe(2);

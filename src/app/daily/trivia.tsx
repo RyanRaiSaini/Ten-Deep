@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../../ui/Text';
 import { feel } from '../../audio/feel';
-import { MODE_BY_ID } from '../../data';
+import { classicAllTime } from '../../data/modes';
 import { dailyKey, dailyTrivia } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { BackButton, Button, Header, Screen } from '../../ui/components';
@@ -17,7 +17,7 @@ export default function Trivia() {
   const { t } = useTranslation();
   // Freeze the day on open: content must not change if midnight passes mid-challenge.
   const [key] = useState(() => dailyKey());
-  const questions = useMemo(() => dailyTrivia(MODE_BY_ID['all-time'].pool, key), [key]);
+  const questions = useMemo(() => dailyTrivia(classicAllTime(), key), [key]);
   const already = useDaily((s) => s.days[key]?.trivia);
   const record = useDaily((s) => s.record);
   const saveProgress = useDaily((s) => s.saveProgress);

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { MODE_BY_ID , HISTORY } from '../data/modes';
+import { HISTORY, classicAllTime } from '../data/modes';
 import { dailyDerby, dailyKey, dailyRank, dailySeed, dailyTeamDuel, dailyTeamRank, dailyTrivia, scoreRank, teamStrengthScore } from './daily';
 
-const allTime = MODE_BY_ID['all-time'].pool;
+const allTime = classicAllTime();
 
 describe('daily robustness (review findings)', () => {
   const days = Array.from({ length: 400 }, (_, i) => dailyKey(new Date(2026, 0, 1 + i)));
@@ -108,8 +108,8 @@ describe('daily', () => {
 describe('real NBA trivia in the daily quiz', () => {
   it('earlier days keep their original quiz; from the switch date it is real trivia at 1, 3 and 5', async () => {
     const { dailyTrivia, NBA_TRIVIA_FROM } = await import('./daily');
-    const { MODE_BY_ID } = await import('../data');
-    const pool = MODE_BY_ID['all-time'].pool;
+    const { classicAllTime } = await import('../data/modes');
+    const pool = classicAllTime();
     expect(dailyTrivia(pool, '2026-11-20').some((q) => q.kind === 'nba')).toBe(false);
     for (const day of [NBA_TRIVIA_FROM, '2026-12-01', '2027-01-15']) {
       const qs = dailyTrivia(pool, day);

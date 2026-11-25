@@ -62,6 +62,11 @@ export function eligibleSlots(state: DraftState, p: Player): SlotId[] {
   });
 }
 
+/** Names already on your roster: the same person can't be drafted twice, even from another of his seasons. */
+const takenNames = (state: DraftState) => new Set(Object.values(state.roster).map((p) => p!.name));
+/** Still draftable: not this exact player-season, and not another season of someone you already have. */
+export const available = (state: DraftState, p: Player, names = takenNames(state)) => !state.used.includes(p.id) && !names.has(p.name);
+
 function landSpin(state: DraftState, pool: Pool): DraftState {
   if (state.scheme === 2) {
     // Draw from every team in a fixed order; skip a team only if all its players are taken (never in practice),
@@ -69,12 +74,12 @@ function landSpin(state: DraftState, pool: Pool): DraftState {
     let attempt = state.attempt ?? 0;
     for (let tries = 0; tries < 64; tries++, attempt++) {
       const team = createRng(`${state.seed}:spin:r${state.round}:a${attempt}`).pick(pool.teams);
-      if (team.players.some((p) => !state.used.includes(p.id))) return { ...state, spin: team, spins: state.spins + 1, attempt: attempt + 1 };
+      if (team.players.some((p) => available(state, p))) return { ...state, spin: team, spins: state.spins + 1, attempt: attempt + 1 };
     }
     throw new Error('Pool exhausted');
   }
   const rng = createRng(`${state.seed}:spin:${state.spins}`);
-  const candidates = pool.teams.filter((t) => t.players.some((p) => !state.used.includes(p.id)));
+  const candidates = pool.teams.filter((t) => t.players.some((p) => available(state, p)));
   if (candidates.length === 0) throw new Error('Pool exhausted');
   return { ...state, spin: rng.pick(candidates), spins: state.spins + 1 };
 }
@@ -97,6 +102,14 @@ export function reroll(state: DraftState, pool: Pool): DraftState {
 }
 
 const sortedCache = new WeakMap<Pool, Player[]>();
+const nameCache = new WeakMap<Pool, Map<string, string>>();
+/** Player id → name for a pool, built once. */
+function namesById(pool: Pool): Map<string, string> {
+  let m = nameCache.get(pool);
+  if (!m) { m = new Map(pool.teams.flatMap((t) => t.players.map((p) => [p.id, p.name] as const))); nameCache.set(pool, m); }
+  return m;
+}
+
 function bySalary(pool: Pool): Player[] {
   let list = sortedCache.get(pool);
   if (!list) {
@@ -122,18 +135,23 @@ export function reserveNeeded(roster: RosterSlots, used: Set<string>, pool: Pool
  */
 export function jointReserve(rosters: RosterSlots[], used: Set<string>, pool: Pool): number[] {
   const taken = new Set(used);
+  // The same person can't be on a roster twice (another of his seasons included), so names count as taken too.
+  const names = new Set(rosters.flatMap((r) => Object.values(r).map((p) => p!.name)));
+  const byId = namesById(pool);
+  for (const id of taken) { const n = byId.get(id); if (n) names.add(n); }
   const costs = rosters.map(() => 0);
   for (const group of [STARTER_SLOTS, BENCH_SLOTS])
     for (const slot of group)
       rosters.forEach((roster, i) => {
         if (roster[slot] || costs[i] === Infinity) return;
         const bench = BENCH_SLOTS.includes(slot);
-        const p = bySalary(pool).find((x) => !taken.has(x.id) && (bench || x.pos === slot || x.pos2 === slot));
+        const p = bySalary(pool).find((x) => !taken.has(x.id) && !names.has(x.name) && (bench || x.pos === slot || x.pos2 === slot));
         if (!p) {
           costs[i] = Infinity;
           return;
         }
         taken.add(p.id);
+        names.add(p.name);
         costs[i] = Math.round((costs[i] + payOf(p)) * 10) / 10;
       });
   return costs;
@@ -157,8 +175,9 @@ export function affordableSlots(state: DraftState, p: Player, pool: Pool): SlotI
 
 export function options(state: DraftState, pool: Pool): DraftOption[] {
   if (!state.spin) return [];
+  const names = takenNames(state);
   return state.spin.players
-    .filter((p) => !state.used.includes(p.id))
+    .filter((p) => available(state, p, names))
     .map((player) => {
       const ok = affordableSlots(state, player, pool);
       return ok.length
@@ -172,12 +191,13 @@ export function pick(state: DraftState, playerId: string, slot: SlotId, pool: Po
   if (!state.spin) throw new Error('No active spin');
   if (state.used.includes(playerId)) throw new Error('Player already drafted');
   const player = state.spin.players.find((p) => p.id === playerId) ?? null;
+  if (player && !available(state, player)) throw new Error(`${player.name} is already on your roster`);
   return place(state, player, slot, pool);
 }
 
 /** Place a fallback player (from anywhere in the pool) when a spin offers nothing usable. */
 export function pickFallback(state: DraftState, player: Player, slot: SlotId, pool: Pool): DraftState {
-  if (state.used.includes(player.id)) throw new Error('Player already drafted');
+  if (!available(state, player)) throw new Error('Player already drafted');
   return place(state, player, slot, pool);
 }
 
@@ -199,7 +219,8 @@ function place(state: DraftState, player: Player | null, slot: SlotId, pool: Poo
 /** Cheapest eligible, affordable, unused player anywhere in the pool (ties → higher overall). */
 export function fallbackPick(state: DraftState, pool: Pool): Player {
   // Cheapest first; the reserve guarantees the cheapest eligible player always fits.
-  const ok = bySalary(pool).filter((p) => !state.used.includes(p.id) && affordableSlots(state, p, pool).length > 0);
+  const names = takenNames(state);
+  const ok = bySalary(pool).filter((p) => available(state, p, names) && affordableSlots(state, p, pool).length > 0);
   if (ok.length === 0) throw new Error('No fallback player available');
   const cheapest = payOf(ok[0]);
   return ok.filter((p) => payOf(p) === cheapest).sort((a, b) => b.ovr - a.ovr)[0];
