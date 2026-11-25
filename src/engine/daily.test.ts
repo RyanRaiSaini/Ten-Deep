@@ -104,3 +104,29 @@ describe('daily', () => {
     expect(scoreRank([...r.answer].reverse(), r.answer)).toBe(1);
   });
 });
+
+describe('real NBA trivia in the daily quiz', () => {
+  it('earlier days keep their original quiz; from the switch date it is real trivia at 1, 3 and 5', async () => {
+    const { dailyTrivia, NBA_TRIVIA_FROM } = await import('./daily');
+    const { MODE_BY_ID } = await import('../data');
+    const pool = MODE_BY_ID['all-time'].pool;
+    expect(dailyTrivia(pool, '2026-11-20').some((q) => q.kind === 'nba')).toBe(false);
+    for (const day of [NBA_TRIVIA_FROM, '2026-12-01', '2027-01-15']) {
+      const qs = dailyTrivia(pool, day);
+      expect(qs.map((q) => q.kind)).toEqual(['nba', 'team', 'nba', 'highest', 'nba']);
+      const prompts = qs.filter((q) => q.kind === 'nba').map((q) => q.prompt);
+      expect(new Set(prompts).size).toBe(3);
+      for (const q of qs) expect(q.choices).toContain(q.answer);
+    }
+    expect(dailyTrivia(pool, '2026-12-01')).toEqual(dailyTrivia(pool, '2026-12-01'));
+  });
+  it('every bank question has four different choices, one right answer, and no em dashes', async () => {
+    const { NBA_TRIVIA } = await import('../data/nbaTrivia');
+    expect(NBA_TRIVIA.length).toBeGreaterThanOrEqual(50);
+    expect(new Set(NBA_TRIVIA.map((x) => x.q)).size).toBe(NBA_TRIVIA.length);
+    for (const x of NBA_TRIVIA) {
+      expect(new Set([x.a, ...x.wrong]).size, x.q).toBe(4);
+      expect(`${x.q}${x.a}${x.wrong.join('')}${x.fact}`).not.toMatch(/—/);
+    }
+  });
+});

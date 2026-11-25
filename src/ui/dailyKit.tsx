@@ -1,7 +1,9 @@
 /** Shared pieces for the daily mini-games: progress pips, answer cards and the score card. */
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Display } from './components';
+import { DailyTimer } from './DailyTimer';
 import { Icon } from './icons';
 import { Text } from './Text';
 import { C, FONT, R, S } from './theme';
@@ -49,18 +51,23 @@ export function ScoreCard({
   score, total, headline, onDone, testID, doneTestID,
 }: { score: number; total: number; headline?: string; onDone: () => void; testID?: string; doneTestID?: string }) {
   const { t } = useTranslation();
+  // A jumbotron: night arena, spotlights, glowing stars, the score in lights, and the countdown to tomorrow.
   return (
     <View style={styles.card}>
+      <LinearGradient colors={['#1C2A57', '#101734']} style={StyleSheet.absoluteFill} />
+      <LinearGradient colors={['rgba(255,236,190,0.28)', 'rgba(255,236,190,0)']} style={[styles.beam, { left: '8%', transform: [{ rotate: '-18deg' }] }]} />
+      <LinearGradient colors={['rgba(255,236,190,0.28)', 'rgba(255,236,190,0)']} style={[styles.beam, { right: '8%', transform: [{ rotate: '18deg' }] }]} />
       <View style={styles.stars}>
         {Array.from({ length: total }, (_, i) => (
-          <View key={i} style={{ opacity: i < score ? 1 : 0.2, transform: [{ translateY: i === Math.floor(total / 2) ? -8 : 0 }] }}>
-            <Icon name="star" size={i === Math.floor(total / 2) ? 46 : 36} />
+          <View key={i} style={[styles.star, { opacity: i < score ? 1 : 0.22, transform: [{ translateY: i === Math.floor(total / 2) ? -10 : 0 }] }]}>
+            <Icon name="star" size={i === Math.floor(total / 2) ? 52 : 40} />
           </View>
         ))}
       </View>
-      <Display size={headline ? 28 : 64} testID={testID}>{headline ?? `${score}/${total}`}</Display>
+      <Display size={headline ? 30 : 76} color={score === total && !headline ? '#FFC53D' : '#FFFFFF'} extrude="#7A4DFF" testID={testID}>{headline ?? `${score}/${total}`}</Display>
       <Text style={styles.note}>{t('daily.tomorrow')}</Text>
-      <Button label={t('daily.done')} variant="dark" onPress={onDone} testID={doneTestID} style={{ alignSelf: 'stretch' }} />
+      <DailyTimer small />
+      <Button label={t('daily.done')} variant="gold" onPress={onDone} testID={doneTestID} style={{ alignSelf: 'stretch', marginTop: S.sm }} />
     </View>
   );
 }
@@ -78,9 +85,11 @@ const styles = StyleSheet.create({
   letterText: { fontFamily: FONT.display, fontSize: 18, color: C.ink },
   choiceText: { flex: 1, fontSize: 17, fontWeight: '900' },
   card: {
-    alignItems: 'center', gap: S.md, paddingVertical: S.xl, paddingHorizontal: S.lg, borderRadius: R.lg, backgroundColor: '#FFFFFF',
-    borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 7, marginTop: S.lg,
+    alignItems: 'center', gap: S.md, paddingVertical: S.xl, paddingHorizontal: S.lg, borderRadius: 26, overflow: 'hidden',
+    borderWidth: 3, borderColor: C.ink, borderBottomWidth: 8, marginTop: S.lg,
   },
-  stars: { flexDirection: 'row', alignItems: 'flex-end', gap: 4 },
-  note: { color: C.muted, fontWeight: '800' },
+  beam: { position: 'absolute', top: -40, width: 110, height: 320 },
+  stars: { flexDirection: 'row', alignItems: 'flex-end', gap: 6 },
+  star: {},
+  note: { color: '#C9D2EE', fontWeight: '800', textAlign: 'center' },
 });
