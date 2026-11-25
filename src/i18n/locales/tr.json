@@ -1008,7 +1008,7 @@
     "playoffsT": "Playofflarda hayatta kal",
     "playoffsB": "Her konferansın ilk 6'sı doğrudan girer; 7-10 arası play-in oynar. 7 maç üzerinden seriler, maç maç. 70 galibiyet nadirdir. 82-0 bir efsanedir.",
     "challengeT": "Bir arkadaşına meydan oku",
-    "challengeB": "Sezon bitince bağlantını paylaş. Açan kişi aynı çevirmeleri ve aynı 29 rakibi alır. Biri bir yapay zekâ takımının oyuncusunu seçerse o takım benzer bir yedek alır, yani tek fark seçimlerinizdir.",
+    "challengeB": "Bir oyundan sonra bağlantını paylaş. Açan kişi aynı çevirmeleri ve aynı ligi alır: gerçek takımlar. Biri bir takımdan oyuncu seçerse o takım onsuz oynar ve yedekleri bir basamak yükselir; tek fark senin seçimlerindir.",
     "play": "Draft başlat",
     "divT": "Divizyonunu seç",
     "divB": "Başlangıçtan önce konferansını ve divizyonunu seç. Her durumda tüm ligle oynarsın; playoff sıralaması her konferansın içinde yapılır."
@@ -1026,5 +1026,9 @@
     "pick": "Divizyonunu seç",
     "hint": "Her durumda tüm ligle oynarsın. Divizyonun konferansını belirler; playoff sıralaması her konferansın içinde yapılır.",
     "seed": "{{conf}} {{n}}. sıra"
+  },
+  "squad": {
+    "rating": "Kadro puanı",
+    "short": "Kadro"
   }
 }

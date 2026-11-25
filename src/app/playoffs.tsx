@@ -8,15 +8,14 @@ import { champion, outInPlayIn, playInFor, seriesFor, seriesOver, seriesWinner, 
 import { useGame } from '../store/game';
 import { Button, Card, Display, Header, Label, Screen } from '../ui/components';
 import { C, F, S } from '../ui/theme';
-import { useRunColors } from '../ui/runColors';
 import { recap } from '../engine/story/recap';
 import { RecapCard } from '../ui/story';
 import { Icon } from '../ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { PlayoffBackdrop } from '../ui/SparkleBackdrop';
 
 export default function Playoffs() {
   const { t } = useTranslation();
-  const runColors = useRunColors();
   const g = useGame();
   const ps = g.playoffs;
   if (!ps) return <Redirect href="/" />;
@@ -56,8 +55,8 @@ export default function Playoffs() {
   };
 
   return (
-    <Screen tint={runColors[0]}>
-      <Header title={t('playoffs.title')} />
+    <Screen backdrop={<PlayoffBackdrop finals={ps.rounds.length === 4} />}>
+      <Header title={ps.rounds.length === 4 ? t('playoffs.round3') : t('playoffs.title')} light />
 
       {!mine && <Text style={styles.big}>{outInPlayIn(ps, 0) ? t('playoffs.outPlayIn') : t('playoffs.missed')}</Text>}
 
@@ -130,14 +129,14 @@ export default function Playoffs() {
       {[...ps.rounds].reverse().map((round, ri) => {
         const r = ps.rounds.length - 1 - ri;
         const line = (s: Series, i: number) => (
-          <Text key={i} style={[styles.bracket, (s.hi === 0 || s.lo === 0) && { color: C.text, fontWeight: '900' }]}>
+          <Text key={i} style={[styles.bracket, (s.hi === 0 || s.lo === 0) && { color: '#FFFFFF', fontWeight: '900' }]}>
             ({s.seedHi}) {name(s.hi)} {s.winsHi}–{s.winsLo} {name(s.lo)} ({s.seedLo})
           </Text>
         );
         const confs = [0, 1].filter((c) => round.some((s) => s.conf === c));
         return (
           <View key={r} style={{ gap: 4 }}>
-            <Label>{t(`playoffs.round${r}`)}</Label>
+            <Label color="#FFC53D">{t(`playoffs.round${r}`)}</Label>
             {confs.length === 0 ? round.map(line) : confs.map((c) => (
               <View key={c} style={{ gap: 2 }}>
                 <Text style={styles.confTag}>{t(`conf.${CONFERENCES[c]}`)}</Text>
@@ -149,7 +148,7 @@ export default function Playoffs() {
       })}
       {ps.playIn && (
         <View style={{ gap: 4 }}>
-          <Label>{t('playoffs.playIn')}</Label>
+          <Label color="#FFC53D">{t('playoffs.playIn')}</Label>
           {[0, 1].map((c) => (
             <View key={c} style={{ gap: 2 }}>
               <Text style={styles.confTag}>{t(`conf.${CONFERENCES[c]}`)}</Text>
@@ -182,7 +181,7 @@ function PlayInLine({ g, name, me }: { g: PlayInGame; name: (i: number) => strin
   }
   const homeWon = winnerOf(g) === g.home;
   return (
-    <Text style={[styles.bracket, (g.home === 0 || g.away === 0) && { color: C.text }]}>
+    <Text style={[styles.bracket, (g.home === 0 || g.away === 0) && { color: '#FFFFFF' }]}>
       <Text style={homeWon ? styles.win : undefined}>({g.seedHome}) {name(g.home)}</Text> {g.result.homeScore}–{g.result.awayScore}{ot}{' '}
       <Text style={!homeWon ? styles.win : undefined}>{name(g.away)} ({g.seedAway})</Text>
     </Text>
@@ -205,7 +204,7 @@ const styles = StyleSheet.create({
   stakeBody: { color: C.ink, fontWeight: '700', textAlign: 'center' },
   snapBadge: { flexDirection: 'row', alignSelf: 'center', alignItems: 'center', gap: 6, backgroundColor: C.hardwood, borderRadius: 999, paddingHorizontal: 14, paddingVertical: 4 },
   snapText: { color: '#FFFFFF', fontWeight: '900', letterSpacing: 1 },
-  big: { color: C.text, fontSize: 20, textAlign: 'center', ...F.display },
+  big: { color: '#FFFFFF', fontSize: 20, textAlign: 'center', ...F.display },
   matchup: { flexDirection: 'row', alignItems: 'center', borderRadius: 20, overflow: 'hidden', borderWidth: 3, borderColor: C.ink },
   vsBadge: { marginHorizontal: -8 },
   teamBar: { position: 'absolute', top: 0, left: 8, right: 8, height: 6, borderBottomLeftRadius: 4, borderBottomRightRadius: 4 },
@@ -216,7 +215,7 @@ const styles = StyleSheet.create({
   seed: { color: '#D9D2E8', fontSize: 12, fontWeight: '900' },
   status: { color: C.text, textAlign: 'center', fontWeight: '700' },
   gameLine: { fontWeight: '700' },
-  bracket: { color: C.muted, fontSize: 13 },
+  bracket: { color: '#C9C2D6', fontSize: 13 },
   confTag: { color: C.hardwood, fontSize: 11, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
   stage: { color: C.muted, fontSize: 11, fontWeight: '800' },
   win: { fontWeight: '900' },

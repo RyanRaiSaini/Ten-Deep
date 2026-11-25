@@ -2,6 +2,8 @@
  * Full-screen backgrounds drawn behind a Screen (see Screen's `backdrop`):
  *  - CourtBackdrop: a basketball room (navy arena ceiling, spotlights, hardwood floor). Career, Collection.
  *  - NebulaBackdrop: deep space in a card's own colors, with a fine starfield. A card up close, pack reveals.
+ *  - PlayoffBackdrop: a dark arena at playoff time, sweeping red and gold spotlights and camera flashes (all gold
+ *    for the Finals).
  * Both cover the whole screen, including the notch area on phones.
  */
 import { LinearGradient } from 'expo-linear-gradient';
@@ -116,7 +118,68 @@ export function NebulaBackdrop({ color, accent, seed = 'nebula', focusY = 0.32 }
   );
 }
 
+/** A spotlight beam that swings slowly from its top end. */
+function Beam({ color, side, delay, still }: { color: string; side: 'left' | 'right'; delay: number; still: boolean }) {
+  const { height } = useWindowDimensions();
+  const [v] = useState(() => new Animated.Value(0.5));
+  useEffect(() => {
+    if (still) return;
+    const loop = Animated.loop(Animated.sequence([
+      Animated.delay(delay),
+      Animated.timing(v, { toValue: 1, duration: 4200, easing: Easing.inOut(Easing.sin), useNativeDriver: native }),
+      Animated.timing(v, { toValue: 0, duration: 4200, easing: Easing.inOut(Easing.sin), useNativeDriver: native }),
+    ]));
+    loop.start();
+    return () => loop.stop();
+  }, [v, delay, still]);
+  const sign = side === 'left' ? -1 : 1;
+  const rotate = v.interpolate({ inputRange: [0, 1], outputRange: [`${sign * 8}deg`, `${sign * 34}deg`] });
+  return (
+    <Animated.View style={[styles.beamWrap, { [side]: '18%', height: height * 0.95, transformOrigin: 'top', transform: [{ rotate }] }]}>
+      <LinearGradient colors={[color, 'rgba(0,0,0,0)']} style={StyleSheet.absoluteFill} />
+    </Animated.View>
+  );
+}
+
+/**
+ * Playoff time: a dark arena in deep red (gold for the Finals), two spotlights sweeping the floor, camera flashes
+ * in the stands, and the court's edge glowing.
+ */
+export function PlayoffBackdrop({ finals = false }: { finals?: boolean }) {
+  const { width, height } = useWindowDimensions();
+  const still = useReducedMotion();
+  const [flashes] = useState(() => {
+    const rng = createRng('playoff-flashes');
+    return Array.from({ length: 70 }, () => ({ x: rng.next(), y: 0.38 + rng.next() * 0.22, r: 0.8 + rng.next() * 1.4, g: Math.floor(rng.next() * 3) }));
+  });
+  const base = finals ? ['#0B0803', '#2B1C05', '#3E2A07'] : ['#07060C', '#1C0710', '#300A14'];
+  const hot = finals ? 'rgba(255,197,61,0.42)' : 'rgba(255,64,64,0.40)';
+  const warm = 'rgba(255,197,61,0.38)';
+  const edge = finals ? '#FFC53D' : '#FF3B4F';
+  const floorTop = Math.round(height * 0.62);
+  const field = (group: number) => (
+    <Svg width={width} height={height}>
+      {flashes.filter((f) => f.g === group).map((f, i) => <Circle key={i} cx={f.x * width} cy={f.y * height} r={f.r} fill="#FFFFFF" opacity={0.85} />)}
+    </Svg>
+  );
+  return (
+    <View style={StyleSheet.absoluteFill}>
+      <LinearGradient colors={base as [string, string, string]} style={StyleSheet.absoluteFill} />
+      <View style={StyleSheet.absoluteFill}>{field(0)}</View>
+      <Twinkle delay={300} still={still}>{field(1)}</Twinkle>
+      <Twinkle delay={1300} still={still}>{field(2)}</Twinkle>
+      {/* The floor: dark wood catching the lights, with the court's edge glowing. */}
+      <LinearGradient colors={[finals ? 'rgba(120,80,20,0.55)' : 'rgba(110,30,30,0.55)', 'rgba(20,10,6,0.95)']} style={{ position: 'absolute', left: 0, right: 0, top: floorTop, bottom: 0 }} />
+      <LinearGradient colors={[`${edge}00`, edge, `${edge}00`]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} style={{ position: 'absolute', left: 0, right: 0, top: floorTop - 2, height: 4 }} />
+      <LinearGradient colors={[`${edge}55`, `${edge}00`]} style={{ position: 'absolute', left: 0, right: 0, top: floorTop, height: 120 }} />
+      <Beam color={hot} side="left" delay={0} still={still} />
+      <Beam color={warm} side="right" delay={1800} still={still} />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
+  beamWrap: { position: 'absolute', top: -30, width: 120, opacity: 0.9 },
   beam: { position: 'absolute', top: -60, width: 150 },
   line: { position: 'absolute', borderWidth: 3, borderColor: 'rgba(255,255,255,0.55)' },
 });

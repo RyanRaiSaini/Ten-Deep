@@ -65,6 +65,20 @@ export function squadRating(roster: Roster): number {
   return lineupMinutes(roster, new Set()).reduce((n, e) => n + (e.minutes / 240) * (e.player.ovr - (e.outOfPosition ? OOP_PENALTY : 0)), 0);
 }
 
+/** Squad Rating so far, while drafting: the filled spots only, each weighted by its role's share. Null when empty. */
+export function partialSquadRating(slots: Partial<Record<SlotId, Player>>): number | null {
+  let sum = 0;
+  let w = 0;
+  STARTER_SLOTS.forEach((s) => { const p = slots[s]; if (p) { sum += STARTER_SHARE * p.ovr; w += STARTER_SHARE; } });
+  BENCH_SLOTS.forEach((s, i) => { const p = slots[s]; if (p) { sum += BENCH_SHARES[i] * p.ovr; w += BENCH_SHARES[i]; } });
+  return w ? sum / w : null;
+}
+
+/** Squad Rating from ten overalls in slot order (PG, SG, SF, PF, C, then the bench 6th to 10th man). */
+export function squadRatingOf(ovrs: readonly number[]): number {
+  return ovrs.slice(0, 10).reduce((n, o, i) => n + (i < 5 ? STARTER_SHARE : BENCH_SHARES[i - 5]) * o, 0);
+}
+
 export interface Strength {
   off: number;
   def: number;

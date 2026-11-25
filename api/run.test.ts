@@ -6,7 +6,7 @@ const q = (s: string) => new URLSearchParams(s);
 describe('run share page', () => {
   it('reads a run from the link and ignores junk', () => {
     expect(runInfo(q('s=abc&p=current-2026&w=66&l=16&n=Ryan&v=2&r=97.92.88.86.84.83.80.78.74.70&res=champion&mt=Current+Day'))).toEqual({
-      name: 'Ryan', w: 66, l: 16, fair: true, ratings: [97, 92, 88, 86, 84, 83, 80, 78, 74, 70], result: 'Champions', mode: 'Current Day',
+      name: 'Ryan', w: 66, l: 16, fair: true, ratings: [97, 92, 88, 86, 84, 83, 80, 78, 74, 70], result: 'Champions', mode: 'Current Day', squad: 87,
     });
     const junk = runInfo(q('s=abc&p=current-2026&w=40&l=42&n=Jo&r=1.2.3&res=hacked&mt=<b>x</b>'))!;
     expect(junk.ratings).toEqual([]);
