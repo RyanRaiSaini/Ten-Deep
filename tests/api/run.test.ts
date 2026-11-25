@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { GET, runInfo, tileColor } from './run';
+import { GET, runInfo, tileColor } from '../../api/run';
 
 const q = (s: string) => new URLSearchParams(s);
 
