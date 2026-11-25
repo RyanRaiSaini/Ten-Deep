@@ -1,6 +1,7 @@
 import type { Pool, TeamSeason } from '../engine/types';
 import { current2026 } from './current2026';
 import { buildPool } from './history/build';
+import { fullSeasons } from './fullHistory';
 import { bulls } from './history/bulls';
 import { celtics } from './history/celtics';
 import { classics } from './history/classics';
@@ -24,10 +25,26 @@ const currentAsHistory: TeamSeason[] = current2026.teams
   .filter((t) => t.id !== 'rookies-2026')
   .map((t) => ({ ...t, franchise: t.id.split('-')[0] }));
 
+/** The hand-built history (the famous team-seasons, each with its key players). Collectible cards come from these. */
 export const HISTORY: TeamSeason[] = [
   ...lakers, ...celtics, ...bulls, ...warriors, ...spurs, ...knicks, ...heat, ...sixers, ...pistons, ...rockets,
   ...others, ...classics, ...west, ...east, ...currentAsHistory,
 ];
+
+let seasonsCache: TeamSeason[] | null = null;
+/**
+ * Every team-season the draft modes use: every team of every season the full rosters cover (src/data/fullHistory.ts,
+ * which already carry the hand-rated players), the hand-built seasons from before that, and the 2026-27 rosters.
+ */
+export function allSeasons(): TeamSeason[] {
+  if (!seasonsCache) {
+    const full = fullSeasons();
+    const ids = new Set(full.map((t) => t.id));
+    // A hand-built season the full rosters don't cover (or name differently) is kept as it is.
+    seasonsCache = [...HISTORY.filter((t) => t.season.includes('-') || !ids.has(t.id)), ...full];
+  }
+  return seasonsCache;
+}
 
 export type ModeKind = 'current' | 'franchise' | 'era';
 
@@ -54,7 +71,7 @@ function lazyPool(m: Omit<Mode, 'pool'>, build: () => Pool): Mode {
 
 const era = (id: string, title: string, from: number, to: number, colors: [string, string], extra: Pick<Mode, 'tagline' | 'hidden'> = {}): Mode =>
   lazyPool({ id, kind: 'era', title, subtitle: from === 0 ? 'Every era' : `${from}–${to}`, colors, leaguePoolId: id, ...extra },
-    () => buildPool(id, title, HISTORY, (t) => yearOf(t) >= from && yearOf(t) <= to));
+    () => buildPool(id, title, allSeasons(), (t) => yearOf(t) >= from && yearOf(t) <= to));
 
 const FRANCHISES: [string, string, [string, string]][] = [
   ['lal', 'All-Time Lakers', ['#552583', '#FDB927']],
@@ -91,7 +108,7 @@ const FRANCHISES: [string, string, [string, string]][] = [
 
 const franchise = ([key, title, colors]: (typeof FRANCHISES)[number]): Mode =>
   lazyPool({ id: `franchise-${key}`, kind: 'franchise', title, subtitle: 'Franchise history', colors, leaguePoolId: 'all-time' },
-    () => buildPool(`franchise-${key}`, title, HISTORY, (t) => t.franchise === key));
+    () => buildPool(`franchise-${key}`, title, allSeasons(), (t) => t.franchise === key));
 
 export const MODES: Mode[] = [
   { id: 'current-2026', kind: 'current', title: 'Current Day', subtitle: '2026-27', pool: current2026, leaguePoolId: 'current-2026', colors: ['#E8833A', '#3DF2C2'] },

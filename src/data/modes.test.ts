@@ -23,17 +23,29 @@ describe('modes', () => {
       expect(p.ovr).toBeLessThanOrEqual(99);
     }
     expect(new Set(players.map((p) => p.id)).size).toBe(players.length);
-    if (m.kind !== 'current') expect(new Set(players.map((p) => p.name)).size).toBe(players.length);
+    // A player can be on several team-seasons (the draft takes each person once), but only once per team.
+    for (const t of m.pool.teams) expect(new Set(t.players.map((p) => p.name)).size, t.id).toBe(t.players.length);
     const covered = new Set(players.flatMap((p) => [p.pos, p.pos2]));
     for (const pos of POSITIONS) expect(covered.has(pos)).toBe(true);
   });
 
-  it('All-Time has at least 400 unique players and keeps prime versions', () => {
+  it('every era covers every team of every season, with full rosters; hand-set ratings are kept', () => {
+    for (const id of ['era-magic-bird', 'era-jordan', 'era-kobe', 'era-lebron', 'era-steph', 'era-modern']) {
+      const m = MODE_BY_ID[id];
+      const [from, to] = m.subtitle.split('–').map(Number);
+      for (let y = from; y <= Math.min(to, 2025); y++) {
+        const teams = m.pool.teams.filter((t) => !t.season.includes('-') && Number(t.season) === y);
+        // 23 teams in 1984-85, 30 since 2004-05.
+        expect(teams.length, `${id} ${y}`).toBeGreaterThanOrEqual(y >= 2005 ? 30 : 23);
+        for (const t of teams) expect(t.players.length, t.id).toBeGreaterThanOrEqual(10);
+      }
+    }
     const all = MODE_BY_ID['all-time'].pool.teams.flatMap((t) => t.players);
-    expect(all.length).toBeGreaterThanOrEqual(400);
     const mj = all.filter((p) => p.name === 'Michael Jordan');
-    expect(mj).toHaveLength(1);
-    expect(mj[0].ovr).toBe(99);
+    expect(mj.length).toBeGreaterThan(10); // every season he played
+    expect(Math.max(...mj.map((p) => p.ovr))).toBe(99);
+    const bulls96 = MODE_BY_ID['all-time'].pool.teams.find((t) => t.id === 'chi-1996')!;
+    expect(bulls96.players.map((p) => p.name)).toEqual(expect.arrayContaining(['Michael Jordan', 'Scottie Pippen', 'Dennis Rodman', 'Toni Kukoč', 'Steve Kerr', 'Luc Longley']));
   });
 
   it('every franchise pool has at least 40 players', () => {
