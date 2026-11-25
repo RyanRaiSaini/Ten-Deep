@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { entryPath, parseEntry, sortBoard, weeklyPrize, type WeeklyEntry } from '../src/engine/weekly';
-import { makeHandler, type Store } from './weekly';
+import { entryPath, parseEntry, sortBoard, weeklyPrize, type WeeklyEntry } from '../../src/engine/weekly';
+import { makeHandler, type Store } from '../../api/weekly';
 
 function memory(owners: Record<string, string> = {}): Store & { files: Map<string, { body: string; at: string }> } {
   const files = new Map<string, { body: string; at: string }>();

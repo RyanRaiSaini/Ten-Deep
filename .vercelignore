@@ -1,0 +1,3 @@
+# Tests never ship: Vercel would count any api/*.ts as a function (the Hobby plan allows 12).
+tests/
+**/*.test.ts

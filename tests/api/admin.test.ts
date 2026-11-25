@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { memoryOutreachStore } from './_outreachstore';
-import { AiError, makeHandler, type Ai } from './admin';
-import { makeTrack } from './track';
-import { blankContact, emptyDb, type Db } from '../src/outreach/types';
+import { memoryOutreachStore } from '../../api/_outreachstore';
+import { AiError, makeHandler, type Ai } from '../../api/admin';
+import { makeTrack } from '../../api/track';
+import { blankContact, emptyDb, type Db } from '../../src/outreach/types';
 
 const KEY = 'k'.repeat(32);
 const setup = (opts: { key?: string; ai?: Ai } = {}) => {

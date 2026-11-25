@@ -1,7 +1,7 @@
 import { SignJWT, createLocalJWKSet, exportJWK, generateKeyPair } from 'jose';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { makeVerifier, type Provider } from './_auth';
-import { makeHandler, type Store } from './account';
+import { makeVerifier, type Provider } from '../../api/_auth';
+import { makeHandler, type Store } from '../../api/account';
 
 const AUD = { apple: ['app.tendeep'], google: ['web-client.apps.googleusercontent.com'] };
 const ISS = { apple: 'https://appleid.apple.com', google: 'https://accounts.google.com' };
