@@ -40,6 +40,10 @@ export interface Mode {
   /** Pool the 29 AI teams draft from (franchise modes use All-Time). */
   leaguePoolId: string;
   colors: [string, string];
+  /** One line about the era, shown on its banner. */
+  tagline?: string;
+  /** Kept so saved runs and shared links still open, but no longer offered in the pickers. */
+  hidden?: boolean;
 }
 
 /** Pools are built the first time a mode is opened (39 of them at launch cost real time on phones). */
@@ -48,8 +52,8 @@ function lazyPool(m: Omit<Mode, 'pool'>, build: () => Pool): Mode {
   return Object.defineProperty(m, 'pool', { get: () => (cache ??= build()), enumerable: true }) as Mode;
 }
 
-const era = (id: string, title: string, from: number, to: number, colors: [string, string]): Mode =>
-  lazyPool({ id, kind: 'era', title, subtitle: from === 0 ? 'Every era' : `${from}–${to}`, colors, leaguePoolId: id },
+const era = (id: string, title: string, from: number, to: number, colors: [string, string], extra: Pick<Mode, 'tagline' | 'hidden'> = {}): Mode =>
+  lazyPool({ id, kind: 'era', title, subtitle: from === 0 ? 'Every era' : `${from}–${to}`, colors, leaguePoolId: id, ...extra },
     () => buildPool(id, title, HISTORY, (t) => yearOf(t) >= from && yearOf(t) <= to));
 
 const FRANCHISES: [string, string, [string, string]][] = [
@@ -91,14 +95,19 @@ const franchise = ([key, title, colors]: (typeof FRANCHISES)[number]): Mode =>
 
 export const MODES: Mode[] = [
   { id: 'current-2026', kind: 'current', title: 'Current Day', subtitle: '2026-27', pool: current2026, leaguePoolId: 'current-2026', colors: ['#E8833A', '#3DF2C2'] },
-  era('all-time', 'All-Time', 0, 9999, ['#F5C451', '#0B1020']),
-  era('era-jordan', 'Jordan Era', 1984, 1998, ['#CE1141', '#000000']),
-  era('era-shaq-kobe-duncan', 'Shaq, Kobe & Duncan Era', 1999, 2010, ['#552583', '#C4CED4']),
-  era('era-lebron', 'LeBron Era', 2003, 2018, ['#860038', '#98002E']),
-  era('era-steph', 'Steph Era', 2015, 2026, ['#1D428A', '#FFC72C']),
-  era('era-1980s', 'NBA 1980s', 1980, 1989, ['#E8833A', '#5A2D81']),
-  era('era-1990s', 'NBA 1990s', 1990, 1999, ['#00788C', '#1D1160']),
-  era('era-2010s', 'NBA 2010s', 2010, 2019, ['#3DF2C2', '#141B2E']),
+  era('all-time', 'All-Time', 0, 9999, ['#F5C451', '#0B1020'], { tagline: 'Every legend, every season, one draft.' }),
+  // The owner's eras (season years, the year a season ends; each era includes its first and last year).
+  era('era-magic-bird', 'Magic vs. Bird', 1984, 1991, ['#552583', '#007A33'], { tagline: 'Showtime against the Garden.' }),
+  era('era-jordan', 'Jordan Era', 1991, 2003, ['#CE1141', '#000000'], { tagline: 'Two three-peats in Chicago.' }),
+  era('era-kobe', 'Kobe Era', 2003, 2010, ['#552583', '#FDB927'], { tagline: 'Mamba mentality, back-to-back titles.' }),
+  era('era-lebron', 'LeBron Era', 2010, 2016, ['#860038', '#FDBB30'], { tagline: 'The Heatles, then the comeback in Cleveland.' }),
+  era('era-steph', 'Steph Era', 2016, 2020, ['#1D428A', '#FFC72C'], { tagline: 'Splash Brothers and the 73-win season.' }),
+  era('era-modern', 'Modern Era', 2020, 2026, ['#0E7C86', '#FF7417'], { tagline: 'Giannis, Jokić, SGA and Wemby.' }),
+  // Retired from the pickers (older saves and links still open them).
+  era('era-shaq-kobe-duncan', 'Shaq, Kobe & Duncan Era', 1999, 2010, ['#552583', '#C4CED4'], { hidden: true }),
+  era('era-1980s', 'NBA 1980s', 1980, 1989, ['#E8833A', '#5A2D81'], { hidden: true }),
+  era('era-1990s', 'NBA 1990s', 1990, 1999, ['#00788C', '#1D1160'], { hidden: true }),
+  era('era-2010s', 'NBA 2010s', 2010, 2019, ['#3DF2C2', '#141B2E'], { hidden: true }),
   ...FRANCHISES.map(franchise),
 ];
 
