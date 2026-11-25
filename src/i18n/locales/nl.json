@@ -134,8 +134,8 @@
   "playoffs": {
     "title": "Play-offs",
     "round0": "Eerste ronde",
-    "round1": "Kwartfinales",
-    "round2": "Halve finales",
+    "round1": "Conference-halve finales",
+    "round2": "Conference-finales",
     "round3": "Finale",
     "next": "Speel wedstrijd {{n}}",
     "simRest": "Simuleer tot het einde",
@@ -144,7 +144,13 @@
     "won": "{{team}} wint met {{w}}-{{l}}",
     "missed": "Je hebt de play-offs gemist.",
     "eliminated": "Uitgeschakeld.",
-    "seeResult": "Bekijk resultaat"
+    "seeResult": "Bekijk resultaat",
+    "playIn": "Play-in",
+    "outPlayIn": "Uitgeschakeld in de play-in.",
+    "inVia": "Via de play-in als nummer {{n}} geplaatst.",
+    "stage_a": "7 tegen 8: de winnaar wordt 7e",
+    "stage_b": "9 tegen 10: de verliezer ligt eruit",
+    "stage_c": "Om de 8e plek"
   },
   "result": {
     "champions": "Kampioen",
@@ -155,7 +161,8 @@
     "topScorer": "Topscorer",
     "playAgain": "Opnieuw drafen",
     "home": "Home",
-    "awards": "Seizoensprijzen"
+    "awards": "Seizoensprijzen",
+    "playIn": "Uitgeschakeld in de play-in"
   },
   "injury": {
     "Day-to-day": "Twijfelachtig",
@@ -236,7 +243,7 @@
     "legendary": "Legendarisch",
     "objective": "Doel van de directie",
     "obj_title": "Win de titel",
-    "obj_semis": "Haal de halve finale",
+    "obj_semis": "Haal de conference-finale",
     "obj_playoffs": "Haal de play-offs",
     "obj_wins30": "Win 30 wedstrijden",
     "v_legend": "Legende — je shirt wordt teruggetrokken",
@@ -369,8 +376,8 @@
     "newCareer": "Nieuwe carrière",
     "r_champion": "Kampioen",
     "r_finals": "Finale verloren",
-    "r_semis": "Halve finale verloren",
-    "r_quarters": "Kwartfinale verloren",
+    "r_semis": "Conference-finale verloren",
+    "r_quarters": "Tweede ronde verloren",
     "r_first": "Eerste ronde uitgeschakeld",
     "r_missed": "Geen play-offs",
     "years": "{{n}} jr",
@@ -630,7 +637,9 @@
     "smoy": "Zesde man van het jaar",
     "none": "Nog geen gekwalificeerde spelers",
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
-    "you": "Jij"
+    "you": "Jij",
+    "standings": "Stand",
+    "legend": "Top 6 is door. 7 tot en met 10 spelen de play-in. ★ leidt de divisie."
   },
   "news": {
     "title": "Nieuws",
@@ -997,9 +1006,25 @@
     "seasonT": "Speel 82 wedstrijden",
     "seasonB": "Blessures kosten precies de genoemde wedstrijden. Bij wedstrijd 50 krijg je één ruil voor de deadline. Volg het per wedstrijd of spoel door.",
     "playoffsT": "Overleef de play-offs",
-    "playoffsB": "16 teams, best-of-7, wedstrijd voor wedstrijd. 70 zeges is zeldzaam. 82-0 is een mythe.",
+    "playoffsB": "De top 6 van elke conference is door; 7 tot en met 10 spelen de play-in. Best-of-7, wedstrijd voor wedstrijd. 70 zeges is zeldzaam. 82-0 is een mythe.",
     "challengeT": "Daag een vriend uit",
     "challengeB": "Deel na een run je link. Wie hem opent krijgt dezelfde draaien en dezelfde 29 tegenstanders. Draft iemand een speler van een AI-team, dan haalt dat team een vergelijkbare vervanger, dus alleen jullie keuzes maken het verschil.",
-    "play": "Start een draft"
+    "play": "Start een draft",
+    "divT": "Kies je divisie",
+    "divB": "Kies je conference en divisie voor de tip-off. Je speelt hoe dan ook tegen de hele competitie; de play-offs worden per conference geplaatst."
+  },
+  "conf": {
+    "east": "Oost",
+    "west": "West",
+    "atlantic": "Atlantic",
+    "central": "Central",
+    "southeast": "Southeast",
+    "northwest": "Northwest",
+    "pacific": "Pacific",
+    "southwest": "Southwest",
+    "yours": "Jouw divisie",
+    "pick": "Kies je divisie",
+    "hint": "Je speelt hoe dan ook tegen de hele competitie. Je divisie bepaalt je conference, en de play-offs worden per conference geplaatst.",
+    "seed": "{{conf}} #{{n}}"
   }
 }

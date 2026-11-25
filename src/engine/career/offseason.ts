@@ -17,6 +17,7 @@ export interface OffTeam {
   name: string;
   colors: [string, string];
   slots: RosterSlots;
+  franchise?: string;
 }
 
 export interface OffseasonState {
@@ -100,7 +101,7 @@ export function startOffseason(o: {
         freeAgents.push(unsigned(np));
       }
     }
-    return { id: t.id, name: t.name, colors: t.colors, slots };
+    return { id: t.id, name: t.name, colors: t.colors, slots, ...(t.franchise ? { franchise: t.franchise } : {}) };
   });
 
   const order = draftOrder(o.wins, o.playoff, rng.fork('lottery'));
@@ -268,6 +269,6 @@ export function openSlotCount(st: OffseasonState, ti: number): number {
 export function finalizeOffseason(st: OffseasonState): Roster[] {
   return st.teams.map((t) => {
     if (openSlots(t).length) throw new Error(`${t.name} still has open roster spots`);
-    return { id: t.id, name: t.name, colors: t.colors, slots: t.slots as Required<RosterSlots> };
+    return { id: t.id, name: t.name, colors: t.colors, slots: t.slots as Required<RosterSlots>, ...(t.franchise ? { franchise: t.franchise } : {}) };
   });
 }

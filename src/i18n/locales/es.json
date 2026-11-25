@@ -136,8 +136,8 @@
   "playoffs": {
     "title": "Playoffs",
     "round0": "Primera ronda",
-    "round1": "Cuartos de final",
-    "round2": "Semifinales",
+    "round1": "Semifinales de conferencia",
+    "round2": "Finales de conferencia",
     "round3": "Finales",
     "next": "Jugar partido {{n}}",
     "simRest": "Simular hasta el final",
@@ -146,7 +146,13 @@
     "won": "{{team}} se impone {{w}}-{{l}}",
     "missed": "Te quedaste fuera de los playoffs.",
     "eliminated": "Eliminado.",
-    "seeResult": "Ver resultado"
+    "seeResult": "Ver resultado",
+    "playIn": "Play-In",
+    "outPlayIn": "Eliminado en el play-in.",
+    "inVia": "Clasificado por el play-in como cabeza de serie n.º {{n}}.",
+    "stage_a": "7 contra 8: el ganador es el 7.º",
+    "stage_b": "9 contra 10: el perdedor queda fuera",
+    "stage_c": "Por el 8.º puesto"
   },
   "result": {
     "champions": "Campeones",
@@ -157,7 +163,8 @@
     "topScorer": "Máximo anotador",
     "playAgain": "Draftear de nuevo",
     "home": "Inicio",
-    "awards": "Premios de la temporada"
+    "awards": "Premios de la temporada",
+    "playIn": "Eliminado en el play-in"
   },
   "injury": {
     "Day-to-day": "Día a día",
@@ -238,7 +245,7 @@
     "legendary": "Legendaria",
     "objective": "Objetivo de la directiva",
     "obj_title": "Ganar el título",
-    "obj_semis": "Llegar a semifinales",
+    "obj_semis": "Llegar a la final de conferencia",
     "obj_playoffs": "Entrar en playoffs",
     "obj_wins30": "Ganar 30 partidos",
     "v_legend": "Leyenda — colgarán tu camiseta",
@@ -371,8 +378,8 @@
     "newCareer": "Nueva carrera",
     "r_champion": "Campeones",
     "r_finals": "Perdió la final",
-    "r_semis": "Perdió en semifinales",
-    "r_quarters": "Perdió en cuartos",
+    "r_semis": "Perdió en la final de conferencia",
+    "r_quarters": "Perdió en segunda ronda",
     "r_first": "Eliminado en primera ronda",
     "r_missed": "Sin playoffs",
     "years": "{{n}} año(s)",
@@ -635,7 +642,9 @@
     "smoy": "Sexto hombre del año",
     "none": "Aún no hay jugadores clasificados",
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
-    "you": "Tú"
+    "you": "Tú",
+    "standings": "Clasificación",
+    "legend": "Los 6 primeros entran. Del 7 al 10 juegan el play-in. ★ lidera su división."
   },
   "news": {
     "title": "Noticias",
@@ -1002,9 +1011,25 @@
     "seasonT": "Juega 82 partidos",
     "seasonB": "Las lesiones cuestan los partidos que indican. En el partido 50 tienes un traspaso en la fecha límite. Míralo partido a partido o adelanta.",
     "playoffsT": "Sobrevive a los playoffs",
-    "playoffsB": "16 equipos, series al mejor de 7, partido a partido. 70 victorias es raro. El 82-0 es un mito.",
+    "playoffsB": "Los 6 primeros de cada conferencia entran; del 7 al 10 juegan el play-in. Series al mejor de 7, partido a partido. 70 victorias es raro. El 82-0 es un mito.",
     "challengeT": "Reta a un amigo",
     "challengeB": "Después de una partida, comparte tu enlace. Quien lo abra tiene los mismos giros y los mismos 29 rivales. Si alguien draftea a un jugador que tenía un equipo de la IA, ese equipo ficha a un sustituto parecido, así que la única diferencia son tus elecciones.",
-    "play": "Empezar un draft"
+    "play": "Empezar un draft",
+    "divT": "Elige tu división",
+    "divB": "Elige conferencia y división antes del salto inicial. Juegas contra toda la liga igualmente; los playoffs se ordenan dentro de cada conferencia."
+  },
+  "conf": {
+    "east": "Este",
+    "west": "Oeste",
+    "atlantic": "Atlántico",
+    "central": "Central",
+    "southeast": "Sureste",
+    "northwest": "Noroeste",
+    "pacific": "Pacífico",
+    "southwest": "Suroeste",
+    "yours": "Tu división",
+    "pick": "Elige tu división",
+    "hint": "Juegas contra toda la liga igualmente. Tu división define tu conferencia, y los playoffs se ordenan dentro de cada conferencia.",
+    "seed": "{{conf}} n.º {{n}}"
   }
 }

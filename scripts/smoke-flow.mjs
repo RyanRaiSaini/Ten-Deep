@@ -34,6 +34,12 @@ export async function runFlow({ page, base, step, shot }) {
     }
     await page.getByTestId('start-season').waitFor();
     await shot('04-draft-complete');
+    // Choose a division: the Pacific, in the West.
+    await page.getByTestId('division-toggle').click();
+    await page.getByTestId('division-pacific').click();
+    await shot('04b-division');
+    const current = await page.getByTestId('division-current').textContent();
+    if (!current?.includes('Pacific')) throw new Error(`division not chosen: ${current}`);
   });
 
   if (process.env.SMOKE_FLOW_DRAFT_ONLY) return;
@@ -41,6 +47,7 @@ export async function runFlow({ page, base, step, shot }) {
   await step('refreshing mid-season resumes the season', async () => {
     await page.getByTestId('start-season').click();
     await page.getByTestId('record').waitFor();
+    if (!(await page.getByText(/West #\d+/).count())) throw new Error('season should show the West seed');
     await page.waitForTimeout(1500); // let a few games tick and get saved
     await page.reload();
     await page.getByTestId('record').waitFor({ timeout: 10000 });
@@ -63,6 +70,10 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('box-score').first().waitFor();
     await shot('33-season-news-box');
     await page.getByTestId('to-league').click();
+    await page.getByTestId('standings').first().waitFor();
+    if ((await page.getByTestId('standings').count()) !== 2) throw new Error('expected East and West tables');
+    await shot('34a-standings');
+    await page.getByText('Leaders', { exact: true }).click();
     await page.getByTestId('leaders-pts').waitFor();
     await page.getByText('Award race').click();
     await page.getByTestId('award-mvp').waitFor();

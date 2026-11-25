@@ -65,6 +65,8 @@ export interface Roster {
   mod?: number;
   /** This season's form (health, chemistry, career years): a rating swing drawn once per season. */
   seasonForm?: number;
+  /** The franchise an AI team represents (e.g. 'chi'): sets its name and its division. */
+  franchise?: string;
 }
 
 export interface Rng {

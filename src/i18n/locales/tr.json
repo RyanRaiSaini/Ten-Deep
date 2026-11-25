@@ -134,8 +134,8 @@
   "playoffs": {
     "title": "Playofflar",
     "round0": "İlk tur",
-    "round1": "Çeyrek final",
-    "round2": "Yarı final",
+    "round1": "Konferans yarı finali",
+    "round2": "Konferans finali",
     "round3": "Final",
     "next": "{{n}}. maçı oyna",
     "simRest": "Sona kadar simüle et",
@@ -144,7 +144,13 @@
     "won": "{{team}} {{w}}-{{l}} kazandı",
     "missed": "Playofflara kalamadın.",
     "eliminated": "Elendin.",
-    "seeResult": "Sonucu gör"
+    "seeResult": "Sonucu gör",
+    "playIn": "Play-in",
+    "outPlayIn": "Play-in'de elendin.",
+    "inVia": "Play-in'den {{n}}. sıra olarak geçtin.",
+    "stage_a": "7 - 8: kazanan 7. sıra",
+    "stage_b": "9 - 10: kaybeden elenir",
+    "stage_c": "8. sıra için"
   },
   "result": {
     "champions": "Şampiyon",
@@ -155,7 +161,8 @@
     "topScorer": "En skorer",
     "playAgain": "Yeniden draft yap",
     "home": "Ana sayfa",
-    "awards": "Sezon ödülleri"
+    "awards": "Sezon ödülleri",
+    "playIn": "Play-in'de elendi"
   },
   "injury": {
     "Day-to-day": "Günlük takip",
@@ -236,7 +243,7 @@
     "legendary": "Efsanevi",
     "objective": "Yönetim hedefi",
     "obj_title": "Şampiyon ol",
-    "obj_semis": "Yarı finale çık",
+    "obj_semis": "Konferans finaline çık",
     "obj_playoffs": "Playofflara kal",
     "obj_wins30": "30 maç kazan",
     "v_legend": "Efsane — formanı emekliye ayıracaklar",
@@ -369,8 +376,8 @@
     "newCareer": "Yeni kariyer",
     "r_champion": "Şampiyon",
     "r_finals": "Finalde kaybetti",
-    "r_semis": "Yarı finalde kaybetti",
-    "r_quarters": "Çeyrek finalde kaybetti",
+    "r_semis": "Konferans finalinde kaybetti",
+    "r_quarters": "İkinci turda kaybetti",
     "r_first": "İlk turda elendi",
     "r_missed": "Playofflara kalamadı",
     "years": "{{n}} yıl",
@@ -630,7 +637,9 @@
     "smoy": "Yılın Altıncı Adamı",
     "none": "Henüz uygun oyuncu yok",
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
-    "you": "Sen"
+    "you": "Sen",
+    "standings": "Puan durumu",
+    "legend": "İlk 6 doğrudan girer. 7-10 arası play-in oynar. ★ divizyon lideri."
   },
   "news": {
     "title": "Haberler",
@@ -997,9 +1006,25 @@
     "seasonT": "82 maç oyna",
     "seasonB": "Sakatlıklar yazan maç sayısı kadar sürer. 50. maçta takas tarihinde bir takas hakkın olur. Maç maç izle ya da ileri sar.",
     "playoffsT": "Playofflarda hayatta kal",
-    "playoffsB": "16 takım, 7 maç üzerinden seriler, maç maç. 70 galibiyet nadirdir. 82-0 bir efsanedir.",
+    "playoffsB": "Her konferansın ilk 6'sı doğrudan girer; 7-10 arası play-in oynar. 7 maç üzerinden seriler, maç maç. 70 galibiyet nadirdir. 82-0 bir efsanedir.",
     "challengeT": "Bir arkadaşına meydan oku",
     "challengeB": "Sezon bitince bağlantını paylaş. Açan kişi aynı çevirmeleri ve aynı 29 rakibi alır. Biri bir yapay zekâ takımının oyuncusunu seçerse o takım benzer bir yedek alır, yani tek fark seçimlerinizdir.",
-    "play": "Draft başlat"
+    "play": "Draft başlat",
+    "divT": "Divizyonunu seç",
+    "divB": "Başlangıçtan önce konferansını ve divizyonunu seç. Her durumda tüm ligle oynarsın; playoff sıralaması her konferansın içinde yapılır."
+  },
+  "conf": {
+    "east": "Doğu",
+    "west": "Batı",
+    "atlantic": "Atlantik",
+    "central": "Merkez",
+    "southeast": "Güneydoğu",
+    "northwest": "Kuzeybatı",
+    "pacific": "Pasifik",
+    "southwest": "Güneybatı",
+    "yours": "Senin divizyonun",
+    "pick": "Divizyonunu seç",
+    "hint": "Her durumda tüm ligle oynarsın. Divizyonun konferansını belirler; playoff sıralaması her konferansın içinde yapılır.",
+    "seed": "{{conf}} {{n}}. sıra"
   }
 }

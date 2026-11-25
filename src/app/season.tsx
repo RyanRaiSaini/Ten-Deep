@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
-import { DEADLINE_GAME, SEASON_GAMES, advance, outSet, standings, type SeasonState } from '../engine/season';
+import { DEADLINE_GAME, SEASON_GAMES, advance, outSet, type SeasonState } from '../engine/season';
+import { seedLabel } from '../ui/seedLabel';
 import { isRTL } from '../i18n';
 import { CARD_ROUNDS } from '../engine/crisis/deck';
 import { useGame } from '../store/game';
@@ -69,7 +70,6 @@ export default function Season() {
   if (!season) return <Redirect href="/" />;
 
   const rec = season.records[0];
-  const seed = standings(season).findIndex((r) => r.team === 0) + 1;
   const out = outSet(season.injuries, season.teams[0]);
   const feed = season.log.slice(-14).reverse();
   const name = (i: number) => (i === 0 ? 'You' : season.teams[i].name);
@@ -104,7 +104,7 @@ export default function Season() {
           <Text style={styles.recordDash}>–</Text>
           <View style={styles.recordBox}><Text style={styles.recordLabel}>L</Text><Text style={[styles.record, { color: '#FF7A8A' }]}>{rec.l}</Text></View>
         </View>
-        <View style={styles.seedPill}><Text style={styles.seedText}>{t('season.standing', { n: seed })}</Text></View>
+        <View style={styles.seedPill}><Text style={styles.seedText}>{seedLabel(t, season)}</Text></View>
         <View style={styles.progress}>
           <View style={[styles.progressFill, { width: `${(season.round / SEASON_GAMES) * 100}%` }]} />
           <View style={[styles.deadlineMark, { [isRTL(i18n.language) ? "right" : "left"]: `${(DEADLINE_GAME / SEASON_GAMES) * 100}%` }]} />

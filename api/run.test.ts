@@ -14,6 +14,7 @@ describe('run share page', () => {
     expect(junk.mode).toBe('bxb');
     expect(runInfo(q('s=<x>&p=a&w=1&l=1'))).toBeNull();
     expect(tileColor(95)).not.toBe(tileColor(94));
+    expect(runInfo(q('s=abc&p=current-2026&w=44&l=38&n=Jo&res=playin'))!.result).toBe('Out in the play-in');
   });
 
   it('serves preview tags with everything escaped, then forwards to the challenge screen with the same query', async () => {

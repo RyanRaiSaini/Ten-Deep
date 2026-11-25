@@ -134,8 +134,8 @@
   "playoffs": {
     "title": "Playoffs",
     "round0": "First Round",
-    "round1": "Quarterfinals",
-    "round2": "Semifinals",
+    "round1": "Conference Semifinals",
+    "round2": "Conference Finals",
     "round3": "Finals",
     "next": "Play game {{n}}",
     "simRest": "Sim to the end",
@@ -144,7 +144,13 @@
     "won": "{{team}} win {{w}}-{{l}}",
     "missed": "You missed the playoffs.",
     "eliminated": "Eliminated.",
-    "seeResult": "See result"
+    "seeResult": "See result",
+    "playIn": "Play-In",
+    "outPlayIn": "Knocked out in the play-in.",
+    "inVia": "Through the play-in as the {{n}} seed.",
+    "stage_a": "7 v 8: the winner is the 7 seed",
+    "stage_b": "9 v 10: the loser is out",
+    "stage_c": "For the 8 seed"
   },
   "result": {
     "champions": "Champions",
@@ -155,7 +161,8 @@
     "topScorer": "Top scorer",
     "playAgain": "Draft again",
     "home": "Home",
-    "awards": "Season awards"
+    "awards": "Season awards",
+    "playIn": "Out in the play-in"
   },
   "injury": {
     "Day-to-day": "Day-to-day",
@@ -236,7 +243,7 @@
     "legendary": "Legendary",
     "objective": "Board objective",
     "obj_title": "Win the title",
-    "obj_semis": "Reach the semifinals",
+    "obj_semis": "Reach the conference finals",
     "obj_playoffs": "Make the playoffs",
     "obj_wins30": "Win 30 games",
     "v_legend": "Legend — they'll hang your banner",
@@ -369,8 +376,8 @@
     "newCareer": "New career",
     "r_champion": "Champions",
     "r_finals": "Lost in the Finals",
-    "r_semis": "Lost in the Semis",
-    "r_quarters": "Lost in the Quarters",
+    "r_semis": "Lost in the Conference Finals",
+    "r_quarters": "Lost in the Second Round",
     "r_first": "First-round exit",
     "r_missed": "Missed the playoffs",
     "years": "{{n}}y",
@@ -630,7 +637,9 @@
     "smoy": "Sixth Man of the Year",
     "none": "No qualified players yet",
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
-    "you": "You"
+    "you": "You",
+    "standings": "Standings",
+    "legend": "Top 6 are in. 7 to 10 play in. ★ leads its division."
   },
   "news": {
     "title": "News",
@@ -997,9 +1006,25 @@
     "seasonT": "Play 82 games",
     "seasonB": "Injuries cost the games they say. At game 50 you get one trade at the deadline. Watch it game by game or skip ahead.",
     "playoffsT": "Survive the playoffs",
-    "playoffsB": "16 teams, best-of-7 series, game by game. 70 wins is rare. 82-0 is a myth.",
+    "playoffsB": "The top 6 in each conference are in; 7 to 10 play in. Best-of-7 series, game by game. 70 wins is rare. 82-0 is a myth.",
     "challengeT": "Challenge a friend",
     "challengeB": "After a run, share your link. Whoever opens it gets the same spins and the same 29 opponents. If someone drafts a player an AI team had, that team signs a similar replacement, so your picks are the only difference.",
-    "play": "Start a draft"
+    "play": "Start a draft",
+    "divT": "Pick your division",
+    "divB": "Choose your conference and division before tip-off. You play the whole league either way; the playoffs are seeded inside each conference."
+  },
+  "conf": {
+    "east": "East",
+    "west": "West",
+    "atlantic": "Atlantic",
+    "central": "Central",
+    "southeast": "Southeast",
+    "northwest": "Northwest",
+    "pacific": "Pacific",
+    "southwest": "Southwest",
+    "yours": "Your division",
+    "pick": "Choose your division",
+    "hint": "You play the whole league either way. Your division sets your conference, and the playoffs are seeded inside each conference.",
+    "seed": "{{conf}} #{{n}}"
   }
 }
