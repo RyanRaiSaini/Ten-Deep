@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { draftLeague } from '../engine/aiDraft';
 import { affordableSlots, fallbackPick, isComplete, options, pick, pickFallback, spin, startDraft } from '../engine/draft';
 import { createRng } from '../engine/rng';
 import { POSITIONS } from '../engine/types';
-import { MODES, MODE_BY_ID, leaguePoolFor } from './modes';
+import { MODES, MODE_BY_ID } from './modes';
+import { current2026 } from './current2026';
+import { leagueFranchises } from '../engine/conference';
+import { realLeague } from '../engine/realLeague';
 
 describe('modes', () => {
   it('registers current day, All-Time plus the six eras (older eras kept hidden), and 30 franchises', () => {
@@ -55,8 +57,11 @@ describe('modes', () => {
 
   it('every mode can field a full 29-team AI league', () => {
     for (const m of MODES) {
-      const league = MODE_BY_ID[leaguePoolFor(m)].pool;
-      expect(() => draftLeague(league, new Set(), 29, createRng(`lg-${m.id}`)), m.id).not.toThrow();
+      // The league the game builds: the 29 other franchises' real team-seasons from this mode's history.
+      const seasons = m.kind === 'franchise' ? MODE_BY_ID['all-time'].pool.teams : m.pool.teams;
+      const league = realLeague(leagueFranchises(0, `lg-${m.id}`), [], `lg-${m.id}`, seasons, MODE_BY_ID['all-time'].pool.teams, current2026.teams);
+      expect(league, m.id).toHaveLength(29);
+      for (const r of league) expect(Object.keys(r.slots), r.name).toHaveLength(10);
     }
   }, 60_000);
 

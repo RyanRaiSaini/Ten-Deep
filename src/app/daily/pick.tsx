@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Text } from '../../ui/Text';
 import { feel } from '../../audio/feel';
-import { HISTORY, MODE_BY_ID } from '../../data/modes';
+import { HISTORY, classicAllTime } from '../../data/modes';
 import { dailyDerby, dailyKey, dailyTeamDuel, teamStrengthScore } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { BackButton, Button, Card, Header, Screen } from '../../ui/components';
@@ -38,7 +38,7 @@ export default function Pick() {
         ],
       }];
     }
-    const pool = MODE_BY_ID['all-time'].pool;
+    const pool = classicAllTime();
     const team = (id: string) => pool.teams.find((tm) => tm.players.some((p) => p.id === id))?.label ?? '';
     return dailyDerby(pool, key).map((m) => ({
       a: { id: m.a.id, title: m.a.name, sub: `${m.a.pos} · ${team(m.a.id)}`, value: String(m.a.ovr) },

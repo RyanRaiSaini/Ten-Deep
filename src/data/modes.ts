@@ -128,6 +128,22 @@ export const MODES: Mode[] = [
   ...FRANCHISES.map(franchise),
 ];
 
+let classicPool: Pool | null = null;
+/**
+ * The famous players only (the hand-built history), each once on his best season: the pool the daily games
+ * (trivia, Who's better, Player Rank) ask about. Stable, so a day's questions never change under a player.
+ */
+export function classicAllTime(): Pool {
+  if (!classicPool) {
+    const best = new Map<string, { team: string; ovr: number }>();
+    const kept = [...HISTORY].sort((a, b) => Number(a.season) - Number(b.season));
+    for (const t of kept) for (const p of t.players) { const cur = best.get(p.name); if (!cur || p.ovr > cur.ovr) best.set(p.name, { team: t.id, ovr: p.ovr }); }
+    const teams = kept.map((t) => ({ ...t, players: t.players.filter((p) => best.get(p.name)?.team === t.id) })).filter((t) => t.players.length > 0);
+    classicPool = { id: 'all-time', label: 'All-Time', teams };
+  }
+  return classicPool;
+}
+
 export const MODE_BY_ID: Record<string, Mode> = Object.fromEntries(MODES.map((m) => [m.id, m]));
 
 /** 29 AI rosters × 10 plus headroom for the user's picks and cap-friendly benches. */

@@ -26,13 +26,11 @@ describe('season()', () => {
 describe('buildPool()', () => {
   const all = [bulls91, bulls96, lakers87];
 
-  it('keeps each player once, on his highest-rated season', () => {
+  it('keeps every team-season whole: a player is on each of his seasons (the draft takes each person once)', () => {
     const pool = buildPool('t', 'Test', all, () => true);
     const players = pool.teams.flatMap((t) => t.players);
-    expect(players.filter((p) => p.name === 'Michael Jordan')).toHaveLength(1);
-    expect(players.find((p) => p.name === 'Michael Jordan')!.ovr).toBe(99);
-    expect(pool.teams.find((t) => t.id === 'chi-1991')!.players.map((p) => p.name)).toEqual(['Michael Jordan']);
-    expect(players.find((p) => p.name === 'Scottie Pippen')!.ovr).toBe(91);
+    expect(players.filter((p) => p.name === 'Michael Jordan').map((p) => p.ovr).sort()).toEqual([...all.flatMap((t) => t.players).filter((p) => p.name === 'Michael Jordan').map((p) => p.ovr)].sort());
+    expect(pool.teams.find((t) => t.id === 'chi-1991')!.players).toEqual(bulls91.players);
   });
 
   it('filters seasons and drops team-seasons left empty', () => {

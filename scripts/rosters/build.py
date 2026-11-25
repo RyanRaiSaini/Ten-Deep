@@ -9,7 +9,7 @@ Output: src/data/history/full/<year>.ts, one module per season: every team, its 
 Ratings:
   - Every rating already in the game is kept exactly (curated history players, matched by name, season and team).
   - Everyone else gets an overall from our own formula on their season stats (box plus-minus, minutes, efficiency,
-    usage, win shares), fitted to the game's existing ratings: last season's stats against the hand-checked 2026-27
+    usage, win shares) and honors (All-Star, All-NBA, All-Defense, MVP voting), fitted to the game's existing ratings: last season's stats against the hand-checked 2026-27
     ratings (stars to end of bench), plus the historical stars already rated.
   - Archetype from how they played (3-point rate, assist, rebound and block rates, usage, defense);
     durability from games played.
@@ -114,7 +114,13 @@ def features(r, y):
     usg = num(r, 'usg_pct', 18)
     ts = num(r, 'ts_pct', 0.53)
     share = min(1.0, g / SEASON_GAMES[y])
-    return [1.0, bpm, max(bpm, 0) ** 2, obpm, dbpm, ws48 * 10, per, mpg, mpg ** 2 / 36, usg, ts * 10, share]
+    # Honors the league gave that season: All-Star, All-NBA (1st = 3), All-Defense (1st = 2), MVP voting place.
+    aw = [a.strip() for a in (r.get('awards') or '').split(',')]
+    star = 1.0 if 'AS' in aw else 0.0
+    allnba = 3.0 if 'NBA1' in aw else 2.0 if 'NBA2' in aw else 1.0 if 'NBA3' in aw else 0.0
+    alldef = 2.0 if 'DEF1' in aw else 1.0 if 'DEF2' in aw else 0.0
+    mvp = next((max(0.0, (11 - int(a[4:])) / 10) for a in aw if re.fullmatch(r'MVP-\d+', a)), 0.0)
+    return [1.0, bpm, max(bpm, 0) ** 2, obpm, dbpm, ws48 * 10, per, mpg, mpg ** 2 / 36, usg, ts * 10, share, star, allnba, alldef, mvp]
 
 
 def archetype(r, pos):
@@ -207,6 +213,8 @@ def main():
             if best_team[r['pid']][0] == r['team_name_abbr'] and num(r, 'games') >= 5:
                 by_team[r['team_name_abbr']].append(r)
         teams = []
+        # A hand-rated player is on his hand-built team that season and nowhere else (traded players included).
+        curated_names = {norm(p['name']) for (cy, _), t in curated.items() if cy == y for p in t['players']}
         for code, members in sorted(by_team.items()):
             if code not in TEAMS:
                 print(f'unknown team {code} {y}', file=sys.stderr); continue
@@ -224,7 +232,7 @@ def main():
             for r in members:
                 if len(lines) >= ROSTER: break
                 n = norm(r['name_display'])
-                if n in names: continue
+                if n in names or n in curated_names: continue
                 whole = total.get(r['pid'], r)
                 p1, p2 = positions(r)
                 g = num(whole, 'games')

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Text } from '../../ui/Text';
 import { feel } from '../../audio/feel';
-import { HISTORY, MODE_BY_ID } from '../../data/modes';
+import { HISTORY, classicAllTime } from '../../data/modes';
 import { dailyKey, dailyRank, dailyTeamRank, scoreRank, teamStrengthScore } from '../../engine/daily';
 import { useDaily } from '../../store/daily';
 import { BackButton, Button, Header, Label, Screen } from '../../ui/components';
@@ -31,7 +31,7 @@ export default function Rank() {
         items: c.teams.map((x): Item => ({ id: x.id, title: x.label, sub: x.city, value: Math.round(teamStrengthScore(x) * 10) / 10 })),
       };
     }
-    const pool = MODE_BY_ID['all-time'].pool;
+    const pool = classicAllTime();
     const c = dailyRank(pool, key);
     return {
       answer: c.answer,

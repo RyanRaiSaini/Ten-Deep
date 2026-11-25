@@ -11,8 +11,14 @@ let cache: TeamSeason[] | null = null;
 
 export function fullSeasons(): TeamSeason[] {
   if (!cache) {
+    const seen = new Set<string>();
     cache = Object.entries(FULL_SEASONS).flatMap(([y, teams]) =>
-      teams.map(([franchise, city, name, colors, roster]) => season(franchise, city, name, Number(y), colors, roster)));
+      teams.map(([franchise, city, name, colors, roster]) => {
+        const t = season(franchise, city, name, Number(y), colors, roster);
+        // Two different players with the same name in one season (the two Eddie Johnsons): the second gets his
+        // team in his id, so every player-season has its own.
+        return { ...t, players: t.players.map((p) => (seen.has(p.id) ? { ...p, id: `${p.id}-${franchise}` } : (seen.add(p.id), p))) };
+      }));
   }
   return cache;
 }

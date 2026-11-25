@@ -102,6 +102,14 @@ export function reroll(state: DraftState, pool: Pool): DraftState {
 }
 
 const sortedCache = new WeakMap<Pool, Player[]>();
+const nameCache = new WeakMap<Pool, Map<string, string>>();
+/** Player id → name for a pool, built once. */
+function namesById(pool: Pool): Map<string, string> {
+  let m = nameCache.get(pool);
+  if (!m) { m = new Map(pool.teams.flatMap((t) => t.players.map((p) => [p.id, p.name] as const))); nameCache.set(pool, m); }
+  return m;
+}
+
 function bySalary(pool: Pool): Player[] {
   let list = sortedCache.get(pool);
   if (!list) {
@@ -127,18 +135,23 @@ export function reserveNeeded(roster: RosterSlots, used: Set<string>, pool: Pool
  */
 export function jointReserve(rosters: RosterSlots[], used: Set<string>, pool: Pool): number[] {
   const taken = new Set(used);
+  // The same person can't be on a roster twice (another of his seasons included), so names count as taken too.
+  const names = new Set(rosters.flatMap((r) => Object.values(r).map((p) => p!.name)));
+  const byId = namesById(pool);
+  for (const id of taken) { const n = byId.get(id); if (n) names.add(n); }
   const costs = rosters.map(() => 0);
   for (const group of [STARTER_SLOTS, BENCH_SLOTS])
     for (const slot of group)
       rosters.forEach((roster, i) => {
         if (roster[slot] || costs[i] === Infinity) return;
         const bench = BENCH_SLOTS.includes(slot);
-        const p = bySalary(pool).find((x) => !taken.has(x.id) && (bench || x.pos === slot || x.pos2 === slot));
+        const p = bySalary(pool).find((x) => !taken.has(x.id) && !names.has(x.name) && (bench || x.pos === slot || x.pos2 === slot));
         if (!p) {
           costs[i] = Infinity;
           return;
         }
         taken.add(p.id);
+        names.add(p.name);
         costs[i] = Math.round((costs[i] + payOf(p)) * 10) / 10;
       });
   return costs;
