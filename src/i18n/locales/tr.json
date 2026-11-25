@@ -1084,5 +1084,20 @@
     "depth3": "Konferans finali",
     "depth4": "Finalde kaybetti",
     "depth5": "Şampiyon"
+  },
+  "breakdown": {
+    "title": "Neden {{w}} galibiyet?",
+    "squad": "Kadro puanı {{sr}}: ligde {{n}} takım içinde {{rank}}. (ortalama {{avg}}).",
+    "marginUp": "Maç başına rakiplerinden {{diff}} sayı fazla attın. Bu fark genelde yaklaşık {{exp}} galibiyet demek.",
+    "marginDown": "Rakiplerin maç başına senden {{diff}} sayı fazla attı. Bu fark genelde yaklaşık {{exp}} galibiyet demek.",
+    "luckUp": "Bundan {{n}} fazla kazandın: çekişmeli maçlar senin lehine döndü.",
+    "luckDown": "Bundan {{n}} az kazandın: çekişmeli maçlar aleyhine döndü.",
+    "luckEven": "Sayı farkının hak ettiği kadar.",
+    "close": "Çekişmeli maçlar (5 sayı veya daha az ya da uzatma): {{w}}-{{l}}.",
+    "injuries": "Sakatlıklar {{games}} maça mal oldu ({{starter}} ilk beşten). En çok etkilenen: {{name}}, {{worst}} maç.",
+    "healthy": "On oyuncun tüm sezon sağlıklı kaldı.",
+    "formUp": "Takımın bu sezon puanlarının üzerinde oynadı (+{{n}}).",
+    "formDown": "Takımın bu sezon puanlarının altında oynadı (−{{n}}).",
+    "streak": "En uzun galibiyet serisi: {{n}} maç."
   }
 }

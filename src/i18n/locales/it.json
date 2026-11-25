@@ -1089,5 +1089,20 @@
     "depth3": "Finale di conference",
     "depth4": "Perse le Finali",
     "depth5": "Campioni"
+  },
+  "breakdown": {
+    "title": "Perché {{w}} vittorie?",
+    "squad": "Valutazione squadra {{sr}}: n. {{rank}} su {{n}} nella lega (media {{avg}}).",
+    "marginUp": "Hai superato gli avversari di {{diff}} punti a partita. Quel margine di solito vale circa {{exp}} vittorie.",
+    "marginDown": "Gli avversari ti hanno superato di {{diff}} punti a partita. Quel margine di solito vale circa {{exp}} vittorie.",
+    "luckUp": "Hai vinto {{n}} partite in più: le gare punto a punto sono andate a te.",
+    "luckDown": "Hai vinto {{n}} partite in meno: le gare punto a punto ti sono sfuggite.",
+    "luckEven": "Esattamente ciò che meritava il tuo scarto punti.",
+    "close": "Partite punto a punto (5 punti o meno, o supplementari): {{w}}-{{l}}.",
+    "injuries": "Gli infortuni sono costati {{games}} partite ({{starter}} ai titolari). Il più colpito: {{name}}, {{worst}} partite.",
+    "healthy": "I tuoi dieci sono rimasti sani per tutta la stagione.",
+    "formUp": "La tua squadra ha giocato sopra le sue valutazioni quest’anno (+{{n}}).",
+    "formDown": "La tua squadra ha giocato sotto le sue valutazioni quest’anno (−{{n}}).",
+    "streak": "Striscia di vittorie più lunga: {{n}} partite."
   }
 }

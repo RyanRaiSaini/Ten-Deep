@@ -1089,5 +1089,20 @@
     "depth3": "Final de conferencia",
     "depth4": "Perdió las Finales",
     "depth5": "Campeones"
+  },
+  "breakdown": {
+    "title": "¿Por qué {{w}} victorias?",
+    "squad": "Valoración del equipo {{sr}}: n.º {{rank}} de {{n}} en la liga (media {{avg}}).",
+    "marginUp": "Superaste a tus rivales por {{diff}} puntos por partido. Ese margen suele dar unas {{exp}} victorias.",
+    "marginDown": "Tus rivales te superaron por {{diff}} puntos por partido. Ese margen suele dar unas {{exp}} victorias.",
+    "luckUp": "Ganaste {{n}} más que eso: los partidos ajustados cayeron de tu lado.",
+    "luckDown": "Ganaste {{n}} menos que eso: los partidos ajustados se te escaparon.",
+    "luckEven": "Justo lo que merecía tu diferencia de puntos.",
+    "close": "Partidos ajustados (5 puntos o menos, o prórroga): {{w}}-{{l}}.",
+    "injuries": "Las lesiones costaron {{games}} partidos ({{starter}} de titulares). El más afectado: {{name}}, {{worst}} partidos.",
+    "healthy": "Tus diez estuvieron sanos toda la temporada.",
+    "formUp": "Tu equipo jugó por encima de sus valoraciones esta temporada (+{{n}}).",
+    "formDown": "Tu equipo jugó por debajo de sus valoraciones esta temporada (−{{n}}).",
+    "streak": "Racha de victorias más larga: {{n}} partidos."
   }
 }

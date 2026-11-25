@@ -1089,5 +1089,20 @@
     "depth3": "Finale de conférence",
     "depth4": "Perdu en Finales",
     "depth5": "Champions"
+  },
+  "breakdown": {
+    "title": "Pourquoi {{w}} victoires ?",
+    "squad": "Note d'équipe {{sr}} : n°{{rank}} sur {{n}} dans la ligue (moyenne {{avg}}).",
+    "marginUp": "Tu as dominé tes adversaires de {{diff}} points par match. Cet écart donne d'habitude environ {{exp}} victoires.",
+    "marginDown": "Tes adversaires t'ont dominé de {{diff}} points par match. Cet écart donne d'habitude environ {{exp}} victoires.",
+    "luckUp": "Tu as gagné {{n}} de plus : les matchs serrés ont tourné pour toi.",
+    "luckDown": "Tu as gagné {{n}} de moins : les matchs serrés ont tourné contre toi.",
+    "luckEven": "Exactement ce que ton écart de points méritait.",
+    "close": "Matchs serrés (5 points ou moins, ou prolongation) : {{w}}-{{l}}.",
+    "injuries": "Les blessures ont coûté {{games}} matchs ({{starter}} pour les titulaires). Le plus touché : {{name}}, {{worst}} matchs.",
+    "healthy": "Tes dix joueurs sont restés en forme toute la saison.",
+    "formUp": "Ton équipe a joué au-dessus de ses notes cette saison (+{{n}}).",
+    "formDown": "Ton équipe a joué en dessous de ses notes cette saison (−{{n}}).",
+    "streak": "Plus longue série de victoires : {{n}} matchs."
   }
 }
