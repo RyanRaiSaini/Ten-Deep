@@ -6,6 +6,8 @@ import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { DEADLINE_GAME, SEASON_GAMES, advance, outSet, type SeasonState } from '../engine/season';
 import { seedLabel } from '../ui/seedLabel';
+import { SquadBadge } from '../ui/SquadBadge';
+import { squadRating } from '../engine/rotation';
 import { isRTL } from '../i18n';
 import { CARD_ROUNDS } from '../engine/crisis/deck';
 import { useGame } from '../store/game';
@@ -104,7 +106,10 @@ export default function Season() {
           <Text style={styles.recordDash}>–</Text>
           <View style={styles.recordBox}><Text style={styles.recordLabel}>L</Text><Text style={[styles.record, { color: '#FF7A8A' }]}>{rec.l}</Text></View>
         </View>
-        <View style={styles.seedPill}><Text style={styles.seedText}>{seedLabel(t, season)}</Text></View>
+        <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+          <View style={styles.seedPill}><Text style={styles.seedText}>{seedLabel(t, season)}</Text></View>
+          <SquadBadge value={squadRating(season.teams[0])} size="sm" />
+        </View>
         <View style={styles.progress}>
           <View style={[styles.progressFill, { width: `${(season.round / SEASON_GAMES) * 100}%` }]} />
           <View style={[styles.deadlineMark, { [isRTL(i18n.language) ? "right" : "left"]: `${(DEADLINE_GAME / SEASON_GAMES) * 100}%` }]} />

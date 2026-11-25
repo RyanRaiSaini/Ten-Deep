@@ -1008,7 +1008,7 @@
     "playoffsT": "Überleb die Playoffs",
     "playoffsB": "Die Top 6 jeder Conference sind drin, 7 bis 10 spielen das Play-In. Best-of-7, Spiel für Spiel. 70 Siege sind selten. 82-0 ist ein Mythos.",
     "challengeT": "Fordere Freunde heraus",
-    "challengeB": "Teile nach einem Lauf deinen Link. Wer ihn öffnet, bekommt dieselben Spins und dieselben 29 Gegner. Draftet jemand einen Spieler eines KI-Teams, holt dieses Team einen ähnlichen Ersatz, also machen nur eure Picks den Unterschied.",
+    "challengeB": "Teile nach einem Durchgang deinen Link. Wer ihn öffnet, bekommt dieselben Spins und dieselbe Liga: die echten Teams. Draftet jemand einen Spieler eines Teams, spielt dieses Team ohne ihn und seine Bank rückt auf. So sind deine Picks der einzige Unterschied.",
     "play": "Draft starten",
     "divT": "Wähle deine Division",
     "divB": "Wähle Conference und Division vor dem Tip-off. Du spielst so oder so gegen die ganze Liga; die Playoffs werden innerhalb jeder Conference gesetzt."
@@ -1026,5 +1026,9 @@
     "pick": "Wähle deine Division",
     "hint": "Du spielst so oder so gegen die ganze Liga. Deine Division bestimmt deine Conference, und die Playoffs werden innerhalb jeder Conference gesetzt.",
     "seed": "{{conf}} #{{n}}"
+  },
+  "squad": {
+    "rating": "Kader-Rating",
+    "short": "Kader"
   }
 }
