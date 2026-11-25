@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { POWER_TAPS, nextType, tapUpgrades } from '../engine/collect/powerup';
+import { nextType, tapUpgrades } from '../engine/collect/powerup';
 import { finishFor, type Finish } from '../engine/collect/finishes';
 import { ALL_CARDS } from '../data/cards';
-import { generatePick, runPickType, type PickType } from '../engine/collect/picks';
+import { generatePick, runRewards, type PickType, type RunOutcome } from '../engine/collect/picks';
 import { autoFill, canPlace, cardLevel, stageReward, starterSquad, type Lineup } from '../engine/collect/lineup';
 import { newlyCompleted, setReward } from '../engine/collect/sets';
 import { MAX_FREEZES, advanceWithFreezes, freezeEarned, streakRewards } from '../engine/collect/streak';
@@ -18,7 +18,7 @@ export interface PendingPick {
   cards: string[];
   /** What earned it, e.g. "day-7" or a run seed. */
   source: string;
-  /** Power-up taps used (0–3). */
+  /** Power-up taps used on it. */
   taps?: number;
 }
 
@@ -38,14 +38,17 @@ export interface CollectionStore {
   freezes: number;
   /** Freezes spent at the last check-in (to tell the player). */
   freezesUsed: number;
+  /** The day today's power-up was used (one a day, on any pick); null if never. */
+  powerDay: string | null;
   checkIn: (today: string) => void;
-  awardRun: (runKey: string, result: { wins: number; champion: boolean; madePlayoffs: boolean }) => void;
+  /** A finished run's picks (a season pick, plus a playoff pick for a deep run). Once per run. */
+  awardRun: (runKey: string, result: RunOutcome) => void;
   keep: (pickId: string, cardId: string) => void;
   setSlot: (slot: SlotId, cardId: string | null) => void;
   autoFillLineup: () => void;
   recordStage: (stage: number, won: boolean) => void;
-  /** One power-up tap on an unopened pick: 'up' if it upgraded, 'miss' if not, null if no taps are left. */
-  powerUp: (pickId: string) => 'up' | 'miss' | null;
+  /** Today's power-up on an unopened pick: 'up' if it upgraded, 'miss' if not, null if already used today. */
+  powerUp: (pickId: string, today: string) => 'up' | 'miss' | null;
   /** Add a pick from elsewhere (missions, achievements). Idempotent per source. */
   grant: (type: PickType, source: string) => void;
 }
@@ -66,6 +69,7 @@ export const useCollection = create<CollectionStore>()(
       gauntlet: { cleared: 0, rewarded: [] },
       freezes: 0,
       freezesUsed: 0,
+      powerDay: null,
 
       /** Opening the app on a new day: advance the streak and grant that day's picks. */
       checkIn: (today) => {
@@ -88,7 +92,8 @@ export const useCollection = create<CollectionStore>()(
       awardRun: (runKey, result) => {
         const s = get();
         if (s.awardedRuns.includes(runKey)) return;
-        set({ awardedRuns: [...s.awardedRuns.slice(-200), runKey], pending: [...s.pending, pick(runPickType(result), runKey)] });
+        const picks = runRewards(result).map((type, i) => pick(type, i === 0 ? runKey : `${runKey}:playoffs`));
+        set({ awardedRuns: [...s.awardedRuns.slice(-200), runKey], pending: [...s.pending, ...picks] });
       },
 
       setSlot: (slot, cardId) =>
@@ -111,16 +116,18 @@ export const useCollection = create<CollectionStore>()(
           };
         }),
 
-      powerUp: (pickId) => {
-        const p = get().pending.find((x) => x.id === pickId);
-        const taps = p?.taps ?? 0;
-        if (!p || taps >= POWER_TAPS) return null;
+      powerUp: (pickId, today) => {
+        const s = get();
+        const p = s.pending.find((x) => x.id === pickId);
+        if (!p || s.powerDay === today) return null;
+        const taps = p.taps ?? 0;
         const next = nextType(p.type);
-        const hit = !!next && tapUpgrades(p.id, taps);
-        const upgraded: PendingPick = hit && next
+        if (!next) return null;
+        const hit = tapUpgrades(p.id, today);
+        const upgraded: PendingPick = hit
           ? { ...p, type: next, taps: taps + 1, cards: generatePick(ALL_CARDS, next, `${p.source}:up${taps}`).map((c) => c.id) }
           : { ...p, taps: taps + 1 };
-        set((s) => ({ pending: s.pending.map((x) => (x.id === pickId ? upgraded : x)) }));
+        set((st) => ({ powerDay: today, pending: st.pending.map((x) => (x.id === pickId ? upgraded : x)) }));
         if (hit) track({ type: 'pickUpgrade' });
         return hit ? 'up' : 'miss';
       },

@@ -28,9 +28,9 @@ describe('all stores', () => {
     useCollection.setState({ streak: 9, pending: [] });
     useSettings.setState({ onboarded: true });
     await wipeAll();
-    // A fresh account: day-one streak and the day-one Daily pick, nothing carried over.
+    // A fresh account: day-one streak, no picks (logging in alone earns none), nothing carried over.
     expect(useCollection.getState().streak).toBe(1);
-    expect(useCollection.getState().pending.map((p) => p.type)).toEqual(['daily']);
+    expect(useCollection.getState().pending).toEqual([]);
     expect(useCareer.getState()).toMatchObject(useCareer.getInitialState());
     expect(useSettings.getState().onboarded).toBe(false);
     expect(cleared).toHaveBeenCalled();

@@ -275,8 +275,14 @@ export const useGame = create<GameStore>()(
         const rec = playoffs.season.records[0];
         const result = { wins: rec.w, losses: rec.l, champion: champion(playoffs) === 0 };
         useProfile.getState().recordDraft(result);
-        // Every finished run earns a Player Pick, scaled by how it went.
-        useCollection.getState().awardRun(playoffs.season.seed, { ...result, madePlayoffs: !!seriesFor(playoffs, 0) });
+        // Every finished run earns a pick; a deep playoff run stacks a playoff pick on top (see runRewards).
+        const series = playoffs.rounds.flat().filter((x) => x.hi === 0 || x.lo === 0);
+        const final = playoffs.rounds[3]?.[0];
+        useCollection.getState().awardRun(playoffs.season.seed, {
+          ...result, madePlayoffs: series.length > 0, round: seriesFor(playoffs, 0)?.round ?? -1,
+          finalsSweep: result.champion && !!final && Math.min(final.winsHi, final.winsLo) === 0,
+          playoffLosses: series.reduce((n, x) => n + (x.hi === 0 ? x.winsLo : x.winsHi), 0),
+        });
         const { daily, crisis, career, poolId } = get();
         if (daily) useDaily.getState().record(daily, 'draft', result);
         const v = crisis?.objective ? verdict(crisis.objective, playoffs.season, playoffs) : null;

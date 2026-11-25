@@ -30,7 +30,8 @@ import { C, F, FONT, R, S } from '../ui/theme';
 import { track } from '../store/progress';
 import { goBack } from '../ui/nav';
 import { Icon } from '../ui/icons';
-import { POWER_TAPS, UPGRADE_CHANCE, nextType } from '../engine/collect/powerup';
+import { UPGRADE_CHANCE, nextType } from '../engine/collect/powerup';
+import { dailyKey } from '../engine/daily';
 
 const native = Platform.OS !== 'web';
 const GUARANTEE_KEY: Partial<Record<PickType, string>> = { champion: 'guarantee_champion', mythic: 'guarantee_mythic', legendary: 'guarantee_legendary' };
@@ -371,22 +372,22 @@ function PackOpening() {
           </Animated.View>
 
           <View style={styles.controls}>
-            {phase === 'sealed' && nextType(pick.type) && (pick.taps ?? 0) < POWER_TAPS && (
+            {phase === 'sealed' && nextType(pick.type) && !upgraded && (col.powerDay !== dailyKey() ? (
               <View style={{ gap: 4 }}>
                 <Button
-                  label={t('collect.powerUp', { n: POWER_TAPS - (pick.taps ?? 0) })}
+                  label={t('collect.powerUp', { n: 1 })}
                   variant="blue"
                   icon={<Icon name="bolt" size={24} />}
                   testID="pack-power"
                   onPress={() => {
-                    const r = useCollection.getState().powerUp(pick.id);
+                    const r = useCollection.getState().powerUp(pick.id, dailyKey());
                     if (r === 'up') { feel('fanfare'); celebrate(c1, true); setUpgraded(true); }
                     else if (r === 'miss') { feel('buzzer'); doShake(0.5); }
                   }}
                 />
-                <Text style={styles.powerOdds}>{t('collect.powerOdds', { pct: Math.round(UPGRADE_CHANCE[pick.taps ?? 0] * 100) })}</Text>
+                <Text style={styles.powerOdds}>{t('collect.powerOdds', { pct: Math.round(UPGRADE_CHANCE * 100) })}</Text>
               </View>
-            )}
+            ) : <Text style={styles.powerOdds} testID="power-used">{t('collect.powerTomorrow')}</Text>)}
             {phase === 'sealed' && upgraded && <Text style={styles.upgraded} testID="pack-upgraded">{t('collect.upgraded')}</Text>}
             {phase === 'stack' && top && topFace && isBig(top, finishOf(top)) && <SharePull card={top} finish={finishOf(top)} />}
             {(phase === 'burst' || phase === 'stack') && <Button label={t('collect.revealAll')} variant="dark" onPress={revealAll} testID="pack-reveal-all" />}

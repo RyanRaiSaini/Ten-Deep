@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ALL_CARDS } from '../../data/cards';
-import { PICK_TYPES, generatePick, runPickType, type PickType } from './picks';
+import { PICK_TYPES, generatePick, runRewards, type PickType, type RunOutcome } from './picks';
 import { advanceStreak, streakRewards } from './streak';
 import { TIERS, tierOf } from './tiers';
 
@@ -52,11 +52,25 @@ describe('picks', () => {
     expect(rate('daily', (o) => o >= 85)).toBeLessThan(weekly);
   });
 
-  it('run rewards: 82-0 legendary, title champion, playoffs better than missing', () => {
-    expect(runPickType({ wins: 82, champion: true, madePlayoffs: true })).toBe('legendary');
-    expect(runPickType({ wins: 65, champion: true, madePlayoffs: true })).toBe('champion');
-    expect(runPickType({ wins: 50, champion: false, madePlayoffs: true })).toBe('playoffs');
-    expect(runPickType({ wins: 20, champion: false, madePlayoffs: false })).toBe('run');
+  it('run rewards: a season pick for every run, plus a playoff pick that grows with how deep you went', () => {
+    const run = (o: Partial<RunOutcome>): RunOutcome => ({ wins: 45, losses: 37, champion: false, madePlayoffs: false, round: -1, finalsSweep: false, playoffLosses: 0, ...o });
+    expect(runRewards(run({}))).toEqual(['run']);
+    expect(runRewards(run({ wins: 59, losses: 23, madePlayoffs: true, round: 1 }))).toEqual(['run']);
+    expect(runRewards(run({ wins: 60, losses: 22, madePlayoffs: true, round: 0 }))).toEqual(['good']);
+    expect(runRewards(run({ wins: 62, losses: 20, madePlayoffs: true, round: 2 }))).toEqual(['good', 'confFinals']);
+    expect(runRewards(run({ wins: 50, losses: 32, madePlayoffs: true, round: 3 }))).toEqual(['run', 'finals']);
+    expect(runRewards(run({ wins: 66, losses: 16, madePlayoffs: true, round: 3, champion: true, playoffLosses: 5 }))).toEqual(['good', 'champion']);
+    expect(runRewards(run({ wins: 70, losses: 12, madePlayoffs: true, round: 3, champion: true, finalsSweep: true, playoffLosses: 3 }))).toEqual(['good', 'sweep']);
+    expect(runRewards(run({ wins: 82, losses: 0, madePlayoffs: true, round: 3, champion: true, finalsSweep: true, playoffLosses: 1 }))).toEqual(['legendary', 'sweep']);
+    expect(runRewards(run({ wins: 82, losses: 0, madePlayoffs: true, round: 3, champion: true, finalsSweep: true, playoffLosses: 0 }))).toEqual(['legendary', 'ultimate']);
+  });
+
+  it('the Ultimate pick is 98+ only; Sweep and Champion picks have their floors', () => {
+    for (let i = 0; i < 30; i++) {
+      expect(generatePick(ALL_CARDS, 'ultimate', `u${i}`).every((c) => c.ovr >= 98)).toBe(true);
+      expect(generatePick(ALL_CARDS, 'sweep', `s${i}`).every((c) => c.ovr >= 85)).toBe(true);
+      expect(generatePick(ALL_CARDS, 'finals', `f${i}`).every((c) => c.ovr >= 80)).toBe(true);
+    }
   });
 });
 
@@ -69,11 +83,12 @@ describe('login streak', () => {
     expect(advanceStreak('2026-11-20', '2026-11-23', 9)).toBe(1);
   });
 
-  it('daily pick every day, weekly every 7th day, mythic every 31st', () => {
-    expect(streakRewards(1)).toEqual(['daily']);
-    expect(streakRewards(7)).toEqual(['daily', 'weekly']);
-    expect(streakRewards(14)).toEqual(['daily', 'weekly']);
-    expect(streakRewards(31)).toEqual(['daily', 'mythic']);
-    expect(streakRewards(62)).toEqual(['daily', 'mythic']);
+  it('no pick for just logging in; a Weekly pick every 7th day, a Mythic every 31st', () => {
+    expect(streakRewards(1)).toEqual([]);
+    expect(streakRewards(6)).toEqual([]);
+    expect(streakRewards(7)).toEqual(['weekly']);
+    expect(streakRewards(14)).toEqual(['weekly']);
+    expect(streakRewards(31)).toEqual(['mythic']);
+    expect(streakRewards(62)).toEqual(['mythic']);
   });
 });
