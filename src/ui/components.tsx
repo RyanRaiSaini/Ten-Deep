@@ -94,11 +94,11 @@ export function TabTitle({ icon, title }: { icon: ReactNode; title: string }) {
   );
 }
 
-export function Header({ title, left, right }: { title: string; left?: ReactNode; right?: ReactNode }) {
+export function Header({ title, left, right, light }: { title: string; left?: ReactNode; right?: ReactNode; light?: boolean }) {
   return (
     <View style={styles.header}>
       <View style={styles.headerSide}>{left}</View>
-      <Text style={styles.headerTitle} numberOfLines={2}>{title}</Text>
+      <Text style={[styles.headerTitle, light && { color: '#FFFFFF' }]} numberOfLines={2}>{title}</Text>
       <View style={[styles.headerSide, { alignItems: 'flex-end' }]}>{right}</View>
     </View>
   );

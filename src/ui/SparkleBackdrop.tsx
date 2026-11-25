@@ -1,91 +1,33 @@
 /**
- * A soft full-screen background: a pastel gradient, a glow, and twinkling sparkles. Used behind the Collection
- * and behind a card up close (colored to match the card's tier). Light enough that dark text stays readable.
- * Sparkles sit still with reduced motion.
+ * Full-screen backgrounds drawn behind a Screen (see Screen's `backdrop`):
+ *  - CourtBackdrop: a basketball room (navy arena ceiling, spotlights, hardwood floor). Career, Collection.
+ *  - NebulaBackdrop: deep space in a card's own colors, with a fine starfield. A card up close, pack reveals.
+ * Both cover the whole screen, including the notch area on phones.
  */
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Animated, Easing, Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
-import type { Tier } from '../engine/collect/tiers';
+import Svg, { Circle, Defs, Ellipse, RadialGradient, Stop } from 'react-native-svg';
 import { createRng } from '../engine/rng';
 import { useReducedMotion } from './fx';
 import { CourtArt } from './icons';
 
 const native = Platform.OS !== 'web';
 
-export interface BackdropTheme {
-  /** Gradient stops, top to bottom. */
-  colors: [string, string, ...string[]];
-  /** Sparkle colors (picked in turn). */
-  sparkles: string[];
-  /** The glow behind the focal point. */
-  glow: string;
+/** Relative luminance (0 dark .. 1 light) of a #RRGGBB color. */
+function luma(hex: string): number {
+  const n = parseInt(hex.replace('#', '').slice(0, 6), 16);
+  if (Number.isNaN(n)) return 0;
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 }
 
-/** One palette per card tier: each tier's color as a soft, sparkly room. */
-export const TIER_BACKDROP: Record<Tier, BackdropTheme> = {
-  common: { colors: ['#E9EDF4', '#F4F6FA', '#FFF7EC'], sparkles: ['#AEB6C8', '#FFFFFF'], glow: 'rgba(174,182,200,0.45)' },
-  uncommon: { colors: ['#CFF3E0', '#E9FBF1', '#FFF7EC'], sparkles: ['#3DDC84', '#FFFFFF', '#9BEFC4'], glow: 'rgba(61,220,132,0.4)' },
-  rare: { colors: ['#CFDDFF', '#E7EEFF', '#FFF7EC'], sparkles: ['#4F8BFF', '#FFFFFF', '#A9C4FF'], glow: 'rgba(79,139,255,0.42)' },
-  epic: { colors: ['#CDB3FF', '#E6D6FF', '#F7F1FF'], sparkles: ['#9B5CFF', '#FFFFFF', '#D9C2FF', '#7A4DFF'], glow: 'rgba(155,92,255,0.5)' },
-  mythic: { colors: ['#FFD2C2', '#FFE7D6', '#FFF7EC'], sparkles: ['#FF7A45', '#FFB13B', '#FFFFFF'], glow: 'rgba(255,90,54,0.42)' },
-  ultra: { colors: ['#FFE39A', '#FFF3CC', '#D2FBEF', '#D6E2FF'], sparkles: ['#F5C451', '#3DF2C2', '#4F8BFF', '#B26BFF', '#FFFFFF'], glow: 'rgba(245,196,81,0.55)' },
-};
-
-/** The Collection tab: a violet-to-blue card room with gold sparkles. */
-export const COLLECTION_BACKDROP: BackdropTheme = {
-  colors: ['#C9B8FF', '#DCD4FF', '#E6ECFF', '#FFF7EC'],
-  sparkles: ['#7A4DFF', '#4F8BFF', '#F5C451', '#FFFFFF'],
-  glow: 'rgba(122,77,255,0.32)',
-};
-
-function Sparkle({ x, y, size, color, delay, still }: { x: number; y: number; size: number; color: string; delay: number; still: boolean }) {
-  const [v] = useState(() => new Animated.Value(still ? 0.75 : 0));
-  useEffect(() => {
-    if (still) return;
-    const loop = Animated.loop(Animated.sequence([
-      Animated.delay(delay),
-      Animated.timing(v, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.quad), useNativeDriver: native }),
-      Animated.timing(v, { toValue: 0.15, duration: 1100, easing: Easing.inOut(Easing.quad), useNativeDriver: native }),
-    ]));
-    loop.start();
-    return () => loop.stop();
-  }, [v, delay, still]);
-  const fs = size * 3.2;
-  return (
-    <Animated.Text
-      style={{
-        position: 'absolute', left: x - fs / 2, top: y - fs / 2, fontSize: fs, lineHeight: fs * 1.1, color,
-        textShadowColor: color, textShadowRadius: size * 1.5, textShadowOffset: { width: 0, height: 0 },
-        opacity: v, transform: [{ scale: v.interpolate({ inputRange: [0, 1], outputRange: [0.55, 1.05] }) }],
-      }}
-    >
-      ✦
-    </Animated.Text>
-  );
+/** The color to glow with: the card's main color, unless it's too dark or too pale to show (then its trim, then `fallback`). */
+export function glowColor(colors: readonly string[], fallback: string): string {
+  return colors.find((c) => luma(c) > 0.12 && luma(c) < 0.92) ?? fallback;
 }
 
-export function SparkleBackdrop({ theme, seed = 'room', count = 26, glowAt = 0.28 }: { theme: BackdropTheme; seed?: string; count?: number; glowAt?: number }) {
-  const { width, height } = useWindowDimensions();
-  const still = useReducedMotion();
-  const [dots] = useState(() => {
-    const rng = createRng(`sparkle:${seed}`);
-    return Array.from({ length: count }, (_, i) => ({ fx: rng.next(), fy: rng.next() * 0.85, size: 3 + rng.next() * 6, color: theme.sparkles[i % theme.sparkles.length], delay: Math.floor(rng.next() * 2400) }));
-  });
-  const glow = Math.min(width, 700) * 0.9;
-  return (
-    <View style={StyleSheet.absoluteFill}>
-      <LinearGradient colors={theme.colors} style={StyleSheet.absoluteFill} />
-      <View style={{ position: 'absolute', left: width / 2 - glow / 2, top: height * glowAt - glow / 2, width: glow, height: glow, borderRadius: glow / 2, backgroundColor: theme.glow, opacity: 0.55, shadowColor: theme.glow, shadowOpacity: 1, shadowRadius: 80, shadowOffset: { width: 0, height: 0 } }} />
-      {dots.map((d, i) => <Sparkle key={i} x={d.fx * width} y={d.fy * height} size={d.size} color={d.color} delay={d.delay} still={still} />)}
-    </View>
-  );
-}
-
-/**
- * A basketball room: a navy arena ceiling with two spotlights, fading into a lit hardwood floor with faint court
- * lines. Covers the whole screen (including the notch area on iOS).
- */
+/** A basketball room: a navy arena ceiling with two spotlights, fading into a lit hardwood floor with faint court lines. */
 export function CourtBackdrop({ split = 0.3 }: { split?: number }) {
   const { width, height } = useWindowDimensions();
   const floorTop = Math.round(height * split);
@@ -104,6 +46,72 @@ export function CourtBackdrop({ split = 0.3 }: { split?: number }) {
       </View>
       {/* The floor's edge catches the light. */}
       <LinearGradient colors={['rgba(255,154,61,0)', 'rgba(255,154,61,0.55)', 'rgba(255,154,61,0)']} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} style={{ position: 'absolute', left: 0, right: 0, top: floorTop - 2, height: 4 }} />
+    </View>
+  );
+}
+
+/** A slow twinkle for a group of the brighter stars. */
+function Twinkle({ children, delay, still }: { children: ReactNode; delay: number; still: boolean }) {
+  const [v] = useState(() => new Animated.Value(still ? 1 : 0.35));
+  useEffect(() => {
+    if (still) return;
+    const loop = Animated.loop(Animated.sequence([
+      Animated.delay(delay),
+      Animated.timing(v, { toValue: 1, duration: 1600, easing: Easing.inOut(Easing.quad), useNativeDriver: native }),
+      Animated.timing(v, { toValue: 0.35, duration: 1800, easing: Easing.inOut(Easing.quad), useNativeDriver: native }),
+    ]));
+    loop.start();
+    return () => loop.stop();
+  }, [v, delay, still]);
+  return <Animated.View style={[StyleSheet.absoluteFill, { opacity: v }]}>{children}</Animated.View>;
+}
+
+/**
+ * Deep space in a card's colors: a soft nebula of the card's main color with its accent drifting beside it, a dark
+ * base, and a fine starfield whose brighter stars twinkle. Clean: no shapes, no badges.
+ */
+export function NebulaBackdrop({ color, accent, seed = 'nebula', focusY = 0.32 }: { color: string; accent: string; seed?: string; focusY?: number }) {
+  const { width, height } = useWindowDimensions();
+  const still = useReducedMotion();
+  const [stars] = useState(() => {
+    const rng = createRng(`stars:${seed}`);
+    return Array.from({ length: 150 }, () => ({
+      x: rng.next(), y: rng.next(), r: rng.next() < 0.85 ? 0.5 + rng.next() * 0.8 : 1.3 + rng.next() * 0.9, o: 0.35 + rng.next() * 0.6, g: Math.floor(rng.next() * 3),
+    }));
+  });
+  const cy = height * focusY;
+  const field = (group: number) => (
+    <Svg width={width} height={height}>
+      {stars.filter((s) => s.g === group).map((s, i) => <Circle key={i} cx={s.x * width} cy={s.y * height} r={s.r} fill="#FFFFFF" opacity={s.o} />)}
+    </Svg>
+  );
+  return (
+    <View style={StyleSheet.absoluteFill}>
+      <LinearGradient colors={['#04030F', '#0A0A24', '#05040F']} style={StyleSheet.absoluteFill} />
+      <Svg width={width} height={height} style={StyleSheet.absoluteFill}>
+        <Defs>
+          <RadialGradient id="core" cx="50%" cy="50%" r="50%">
+            <Stop offset="0" stopColor={color} stopOpacity={0.8} />
+            <Stop offset="0.45" stopColor={color} stopOpacity={0.32} />
+            <Stop offset="1" stopColor={color} stopOpacity={0} />
+          </RadialGradient>
+          <RadialGradient id="drift" cx="50%" cy="50%" r="50%">
+            <Stop offset="0" stopColor={accent} stopOpacity={0.4} />
+            <Stop offset="1" stopColor={accent} stopOpacity={0} />
+          </RadialGradient>
+          <RadialGradient id="low" cx="50%" cy="50%" r="50%">
+            <Stop offset="0" stopColor={color} stopOpacity={0.3} />
+            <Stop offset="1" stopColor={color} stopOpacity={0} />
+          </RadialGradient>
+        </Defs>
+        <Ellipse cx={width * 0.5} cy={cy} rx={Math.max(width * 0.75, 320)} ry={height * 0.36} fill="url(#core)" />
+        <Ellipse cx={width * 0.15} cy={cy + height * 0.24} rx={width * 0.6} ry={height * 0.2} fill="url(#drift)" />
+        <Ellipse cx={width * 0.88} cy={cy - height * 0.14} rx={width * 0.45} ry={height * 0.16} fill="url(#drift)" />
+        <Ellipse cx={width * 0.55} cy={height * 0.95} rx={width * 0.9} ry={height * 0.22} fill="url(#low)" />
+      </Svg>
+      <View style={StyleSheet.absoluteFill}>{field(0)}</View>
+      <Twinkle delay={0} still={still}>{field(1)}</Twinkle>
+      <Twinkle delay={900} still={still}>{field(2)}</Twinkle>
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { COLLECTION_BACKDROP, SparkleBackdrop } from '../../ui/SparkleBackdrop';
+import { CourtBackdrop } from '../../ui/SparkleBackdrop';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +47,7 @@ export default function Collection() {
   const counts = Object.fromEntries(TIERS.map((tier) => [tier, owned.filter((x) => x.card.tier === tier).length]));
 
   return (
-    <Screen tabbed backdrop={<SparkleBackdrop theme={COLLECTION_BACKDROP} seed="collection" count={30} glowAt={0.45} />}>
+    <Screen tabbed backdrop={<CourtBackdrop split={0.2} />}>
       <TabTitle icon={<Icon name="cards" size={46} />} title={t('collect.title')} />
       <Text style={styles.sub} testID="collection-count">
         {t('collect.cards', { n: owned.length })} · {t('collect.streak', { n: col.streak })}
