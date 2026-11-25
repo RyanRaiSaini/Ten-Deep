@@ -1084,5 +1084,20 @@
     "depth3": "Conference-finale",
     "depth4": "Finals verloren",
     "depth5": "Kampioen"
+  },
+  "breakdown": {
+    "title": "Waarom {{w}} zeges?",
+    "squad": "Selectiescore {{sr}}: #{{rank}} van {{n}} in de competitie (gemiddeld {{avg}}).",
+    "marginUp": "Je scoorde per wedstrijd {{diff}} punten meer dan je tegenstanders. Dat levert meestal zo’n {{exp}} zeges op.",
+    "marginDown": "Je scoorde per wedstrijd {{diff}} punten minder dan je tegenstanders. Dat levert meestal zo’n {{exp}} zeges op.",
+    "luckUp": "Je won er {{n}} meer: de spannende wedstrijden vielen jouw kant op.",
+    "luckDown": "Je won er {{n}} minder: de spannende wedstrijden vielen de verkeerde kant op.",
+    "luckEven": "Precies wat je puntenverschil verdiende.",
+    "close": "Spannende wedstrijden (5 punten of minder, of verlenging): {{w}}-{{l}}.",
+    "injuries": "Blessures kostten {{games}} wedstrijden ({{starter}} bij basisspelers). Het zwaarst getroffen: {{name}}, {{worst}} wedstrijden.",
+    "healthy": "Je tien bleven het hele seizoen fit.",
+    "formUp": "Je team speelde dit seizoen boven zijn ratings (+{{n}}).",
+    "formDown": "Je team speelde dit seizoen onder zijn ratings (−{{n}}).",
+    "streak": "Langste zegereeks: {{n}} wedstrijden."
   }
 }

@@ -104,6 +104,9 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('share').waitFor();
     await page.getByTestId('league-gain').waitFor();
     await page.getByTestId('run-rewards').waitFor();
+    await page.getByTestId('season-breakdown').waitFor();
+    await page.getByTestId('season-breakdown').scrollIntoViewIfNeeded();
+    await shot('08b-breakdown');
     await shot('08-result');
     await page.getByTestId('go-home').click();
     await page.getByTestId('tab-bar').waitFor();

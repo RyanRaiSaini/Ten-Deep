@@ -1084,5 +1084,20 @@
     "depth3": "Conference finals",
     "depth4": "Lost the Finals",
     "depth5": "Champions"
+  },
+  "breakdown": {
+    "title": "Why {{w}} wins?",
+    "squad": "Squad Rating {{sr}}: #{{rank}} of {{n}} in the league (average {{avg}}).",
+    "marginUp": "You outscored teams by {{diff}} a game. That margin usually means about {{exp}} wins.",
+    "marginDown": "You were outscored by {{diff}} a game. That margin usually means about {{exp}} wins.",
+    "luckUp": "You won {{n}} more than that: close games went your way.",
+    "luckDown": "You won {{n}} fewer than that: close games went against you.",
+    "luckEven": "Right on what your margin earned.",
+    "close": "Close games (5 points or fewer, or overtime): {{w}}-{{l}}.",
+    "injuries": "Injuries cost {{games}} games ({{starter}} by starters). Hardest hit: {{name}}, {{worst}} games.",
+    "healthy": "Your ten stayed healthy all season.",
+    "formUp": "Your team played above its ratings this season (+{{n}}).",
+    "formDown": "Your team played below its ratings this season (−{{n}}).",
+    "streak": "Longest win streak: {{n}} games."
   }
 }

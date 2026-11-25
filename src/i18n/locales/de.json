@@ -1084,5 +1084,20 @@
     "depth3": "Conference Finals",
     "depth4": "Finals verloren",
     "depth5": "Meister"
+  },
+  "breakdown": {
+    "title": "Warum {{w}} Siege?",
+    "squad": "Kader-Rating {{sr}}: Platz {{rank}} von {{n}} in der Liga (Schnitt {{avg}}).",
+    "marginUp": "Du hast pro Spiel {{diff}} Punkte mehr erzielt als der Gegner. Das bedeutet meist etwa {{exp}} Siege.",
+    "marginDown": "Du hast pro Spiel {{diff}} Punkte weniger erzielt als der Gegner. Das bedeutet meist etwa {{exp}} Siege.",
+    "luckUp": "Du hast {{n}} mehr gewonnen: Die knappen Spiele liefen für dich.",
+    "luckDown": "Du hast {{n}} weniger gewonnen: Die knappen Spiele liefen gegen dich.",
+    "luckEven": "Genau das, was deine Punktedifferenz verdient hat.",
+    "close": "Knappe Spiele (5 Punkte oder weniger oder Verlängerung): {{w}}-{{l}}.",
+    "injuries": "Verletzungen kosteten {{games}} Spiele ({{starter}} davon bei Startern). Am härtesten traf es {{name}}: {{worst}} Spiele.",
+    "healthy": "Deine Zehn blieben die ganze Saison gesund.",
+    "formUp": "Dein Team spielte diese Saison über seinen Ratings (+{{n}}).",
+    "formDown": "Dein Team spielte diese Saison unter seinen Ratings (−{{n}}).",
+    "streak": "Längste Siegesserie: {{n}} Spiele."
   }
 }

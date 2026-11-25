@@ -9,6 +9,7 @@ import { feel } from '../audio/feel';
 import { CONFERENCES } from '../engine/conference';
 import { champion, outInPlayIn, runOutcome, seriesFor, seriesWinner } from '../engine/playoffs';
 import { RunRewards } from '../ui/RunRewards';
+import { SeasonBreakdown } from '../ui/SeasonBreakdown';
 import { seedOf } from '../engine/season';
 import { ALL_SLOTS } from '../engine/types';
 import { useCareer } from '../store/career';
@@ -105,6 +106,7 @@ export default function Result() {
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
       <View style={{ alignItems: 'center' }}><SquadBadge value={squadRating(season.teams[0])} /></View>
+      <SeasonBreakdown season={season} />
       <RarityBadge wins={rec.w} />
       <LeagueGain gained={g.leagueGain} stake={g.stake} />
       <Card style={{ gap: S.sm }} testID="awards">
