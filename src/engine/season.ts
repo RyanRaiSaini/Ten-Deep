@@ -4,6 +4,7 @@ import { rollInjury, type InjuryLabel } from './injuries';
 import { lineupMinutes } from './rotation';
 import { addNews, leading, roundNews, type Headline } from './story/news';
 import { SIM } from './simConfig';
+import { confOfDiv, type Conf } from './conference';
 import { createRng, shuffle } from './rng';
 import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pos, type Rng, type Roster, type RosterSlots } from './types';
 
@@ -54,6 +55,11 @@ export interface SeasonState {
   leading?: boolean;
   /** Mid-season moves: each swapped player's totals when he joined (`from`) or left (`to`) your team. */
   stints?: { [playerId: string]: { player: Player; from?: PlayerTotals; to?: PlayerTotals } };
+  /**
+   * Each team's division (index into DIVISIONS; 0–2 East, 3–5 West). With it, seeding is by conference with a
+   * play-in; without it (older saves, Party rooms) the top 16 overall make one bracket.
+   */
+  divs?: number[];
 }
 
 export interface TeamMod {
@@ -101,7 +107,7 @@ function buildSchedule(n: number, rng: Rng): [number, number][][] {
   return out;
 }
 
-export function createSeason(user: Roster, league: Roster[], seed: string): SeasonState {
+export function createSeason(user: Roster, league: Roster[], seed: string, divs?: number[]): SeasonState {
   // Each team's form for this season, seeded (same season seed → same form on every device).
   const formRng = createRng(`${seed}:season-form`);
   const teams = [user, ...league].map((t) => {
@@ -126,6 +132,7 @@ export function createSeason(user: Roster, league: Roster[], seed: string): Seas
     log: [],
     totals: {},
     deadlineUsed: false,
+    ...(divs && divs.length === teams.length ? { divs } : {}),
   };
 }
 
@@ -221,13 +228,40 @@ export function advance(state: SeasonState, games: number): SeasonState {
   return s;
 }
 
-export function standings(state: SeasonState): (Record & { team: number })[] {
+export function standings(state: SeasonState): Row[] {
   // Exact ties fall to a coin flip seeded by the season (a fixed order would always favor team 0, the user).
   const coin = shuffle(state.records.map((_, i) => i), createRng(`${state.seed}:tiebreak`));
   const rank = new Map(coin.map((team, i) => [team, i]));
   return state.records
     .map((r, team) => ({ ...r, team }))
     .sort((a, b) => b.w - a.w || b.pf - b.pa - (a.pf - a.pa) || rank.get(a.team)! - rank.get(b.team)!);
+}
+
+export type Row = Record & { team: number };
+
+/** One conference's table (0 East, 1 West), best first; same order rules as the full standings. */
+export function confStandings(state: SeasonState, conf: Conf): Row[] {
+  const divs = state.divs;
+  return divs ? standings(state).filter((r) => confOfDiv(divs[r.team]) === conf) : standings(state);
+}
+
+/** Each division's leader (the best record in it), as a set of team indexes. */
+export function divisionLeaders(state: SeasonState): Set<number> {
+  const out = new Set<number>();
+  if (!state.divs) return out;
+  const seen = new Set<number>();
+  for (const r of standings(state)) {
+    const d = state.divs[r.team];
+    if (!seen.has(d)) { seen.add(d); out.add(r.team); }
+  }
+  return out;
+}
+
+/** Where a team stands: its seed in its conference (or overall, without conferences) and that conference. */
+export function seedOf(state: SeasonState, team: number): { seed: number; conf: Conf | null } {
+  const conf = state.divs ? confOfDiv(state.divs[team]) : null;
+  const table = conf === null ? standings(state) : confStandings(state, conf);
+  return { seed: table.findIndex((r) => r.team === team) + 1, conf };
 }
 
 /** Trade deadline: swap one user player for `incoming` in the same slot, under the cap. Once per season. */

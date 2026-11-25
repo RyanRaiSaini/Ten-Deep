@@ -1,7 +1,8 @@
 /** The board: sets a season objective from your roster's strength, then grades you at the end. */
 import { champion, seriesFor, type PlayoffState } from '../playoffs';
 import { lineupMinutes, teamStrength } from '../rotation';
-import { standings, type SeasonState } from '../season';
+import { confOfDiv } from '../conference';
+import { confStandings, standings, type SeasonState } from '../season';
 
 export type ObjectiveTier = 'title' | 'semis' | 'playoffs' | 'wins30';
 export interface Objective {
@@ -28,7 +29,8 @@ export function verdict(o: Objective, s: SeasonState, ps: PlayoffState): Verdict
         : o.tier === 'playoffs' ? !!mine
           : wins >= 30;
   if (met) return 'extended';
-  const lastSeedWins = standings(s)[15].w;
+  // The last playoff spot: the 8 seed in your conference (16th overall in a one-table league).
+  const lastSeedWins = s.divs ? confStandings(s, confOfDiv(s.divs[0]))[7].w : standings(s)[15].w;
   const close =
     o.tier === 'title' ? !!mine && mine.round === 3
       : o.tier === 'semis' ? !!mine && mine.round === 1

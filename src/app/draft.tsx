@@ -14,6 +14,7 @@ import { BackButton, Button, Card, Display, Header, Screen } from '../ui/compone
 import { Icon } from '../ui/icons';
 import { Confetti, Pulse } from '../ui/fx';
 import { PlayerCard } from '../ui/PlayerCard';
+import { DivisionPicker } from '../ui/DivisionPicker';
 import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner, teamGradient } from '../ui/Spinner';
 import { C, FONT, R, S, money } from '../ui/theme';
@@ -148,7 +149,10 @@ export default function Draft() {
   );
 
   const start = complete && (
+    <View style={{ gap: S.md }}>
+    <DivisionPicker seed={d.seed} />
     <Button label={t('draft.startSeason')} variant="gold" icon={<Icon name="play" size={22} />} onPress={() => { g.startSeason(); router.replace(useGame.getState().phase === 'crisis' ? '/crisis' : '/season'); }} testID="start-season" />
+    </View>
   );
 
   return (

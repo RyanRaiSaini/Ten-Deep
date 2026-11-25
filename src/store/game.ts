@@ -1,14 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { MODE_BY_ID, POOLS, leaguePoolFor } from '../data';
+import { MODE_BY_ID, POOLS, current2026, leaguePoolFor } from '../data';
+import { alignLeague, assignDivisions, defaultDivision, franchiseOf } from '../engine/conference';
 import { draftLeague, fairLeague } from '../engine/aiDraft';
 import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, reroll, respin, spin, startDraft, type DraftState,
   legacyDraft,
 } from '../engine/draft';
 import { champion, playNextGame, seriesFor, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
-import { createRng, shuffle } from '../engine/rng';
+import { createRng } from '../engine/rng';
 import { SEASON_GAMES, advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
 import { ALL_SLOTS, type Player, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
 import { withSignedSalaries } from '../engine/career/simulate';
@@ -87,6 +88,9 @@ export interface GameStore {
   doPick: (playerId: string, slot: SlotId) => void;
   doFallback: () => void;
   startSeason: () => void;
+  /** Your division (index into DIVISIONS), kept for every run; null until you pick one (then the seed picks). */
+  division: number | null;
+  setDivision: (d: number) => void;
   setSeason: (s: SeasonState) => void;
   openDeadline: (season: SeasonState) => void;
   chooseDeadlineOut: (playerId: string) => void;
@@ -101,6 +105,10 @@ export interface GameStore {
 }
 
 const pool = (id: string) => POOLS[id];
+/** Older careers saved team names without a franchise: find it from the name (e.g. "Seattle SuperSonics" → okc). */
+let byName: Map<string, string> | null = null;
+const franchiseByName = (name: string) =>
+  (byName ??= new Map([...pool('all-time').teams, ...current2026.teams].map((t) => [`${t.city} ${t.name}`, franchiseOf(t)]))).get(name);
 const newSeed = () => `${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
 
 export const useGame = create<GameStore>()(
@@ -129,6 +137,8 @@ export const useGame = create<GameStore>()(
       deadline: null,
 
       parked: null,
+      division: null,
+      setDivision: (d) => set({ division: d }),
       resumeCareer: () => {
         const p = get().parked;
         if (!p) return false;
@@ -186,22 +196,14 @@ export const useGame = create<GameStore>()(
           const exclude = new Set(lp.teams.flatMap((t) => t.players).filter((x) => mine.has(x.name)).map((x) => x.id));
           league = draftLeague(lp, exclude, 29, rng);
         }
-        // One name per franchise (e.g. "Chicago Bulls"), never the user's.
-        const seen = new Set<string>();
-        const names = shuffle(lp.teams.filter((t) => t.id !== 'rookies-2026'), rng).filter((t) => {
-          const n = `${t.city} ${t.name}`;
-          if (seen.has(n)) return false;
-          seen.add(n);
-          return true;
-        });
-        league.forEach((r, i) => {
-          const t = names[i % names.length];
-          r.name = `${t.city} ${t.name}`;
-          r.colors = t.colors;
-        });
+        // The AI teams take the real franchises' names and divisions around the division you chose.
+        // Not chosen yet: the seed picks, and that pick sticks for later runs (a career keeps its division).
+        const division = get().division ?? defaultDivision(draft.seed);
+        if (get().division === null) set({ division });
+        const { teams, divs } = alignLeague([user, ...league], division, draft.seed, lp.teams, current2026.teams);
         // Career mode locks every salary in at signing so payrolls carry over between seasons.
-        const [u, ...rest] = get().career ? withSignedSalaries([user, ...league]) : [user, ...league];
-        const season = createSeason(u, rest, draft.seed);
+        const [u, ...rest] = get().career ? withSignedSalaries(teams) : teams;
+        const season = createSeason(u, rest, draft.seed, divs);
         if (get().crisis) {
           const withStops = { ...season, stops: CARD_ROUNDS.slice(1) };
           set({ season: withStops, crisis: { ...get().crisis!, objective: boardObjective(withStops) } });
@@ -215,8 +217,9 @@ export const useGame = create<GameStore>()(
       },
       startCareerSeason: (teams, seed, mod = 0) => {
         // Morale's rating nudge is set on the team up front so the board's objective accounts for it.
+        const divs = assignDivisions(teams.map((t) => t.franchise ?? franchiseByName(t.name)), get().division ?? defaultDivision(seed));
         const season = {
-          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed), stops: CARD_ROUNDS.slice(1),
+          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), stops: CARD_ROUNDS.slice(1),
           ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
         };
         set({
@@ -325,7 +328,7 @@ export const useGame = create<GameStore>()(
       name: 'tendeep-run',
       version: 1,
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (s) => ({ parked: s.parked, phase: s.phase, poolId: s.poolId, challenge: s.challenge, stake: s.stake, leagueGain: s.leagueGain, daily: s.daily, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
+      partialize: (s) => ({ division: s.division, parked: s.parked, phase: s.phase, poolId: s.poolId, challenge: s.challenge, stake: s.stake, leagueGain: s.leagueGain, daily: s.daily, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
     },
   ),
 );
