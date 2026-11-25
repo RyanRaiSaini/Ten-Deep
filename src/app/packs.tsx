@@ -19,6 +19,7 @@ import { PICK_ODDS, type PickType } from '../engine/collect/picks';
 import { TIERS, type Card } from '../engine/collect/tiers';
 import { useCollection } from '../store/collection';
 import { CardBack, CollectCard, TIER_STYLE } from '../ui/CollectCard';
+import { glowColor, NebulaBackdrop } from '../ui/SparkleBackdrop';
 import { FINISH_STYLE } from '../ui/CardFinish';
 import { ArenaBackdrop, Beams, Flash, Halo, RipPack } from '../ui/PackArena';
 import { PACK_STYLE } from '../ui/packStyle';
@@ -271,6 +272,12 @@ function PackOpening() {
   return (
     <View style={styles.root}>
       <ArenaBackdrop color={stageColor} />
+      {/* Once the cards are out, each card glows against deep space in its own colors. */}
+      {(phase === 'stack' || phase === 'pick') && (
+        topFace && phase === 'stack'
+          ? <NebulaBackdrop key={top.id} color={glowColor(top.colors, TIER_STYLE[top.tier].accent)} accent={glowOf(top, finishOf(top))} seed={top.id} focusY={0.42} />
+          : <NebulaBackdrop key="pack" color={stageColor} accent={c1} seed="pack" focusY={0.42} />
+      )}
       <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom']}>
         <View style={styles.header}>
           {/* Once the pack is ripped you have to keep a card before leaving. */}
