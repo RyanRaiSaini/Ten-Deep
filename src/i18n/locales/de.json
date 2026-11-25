@@ -59,6 +59,10 @@
     "collection": {
       "title": "Sammlung",
       "desc": "Spieler-Picks"
+    },
+    "weekly": {
+      "title": "Wochen-Challenge",
+      "desc": "Ein Draft pro Woche, dieselben Spins für alle. Klettere in der Rangliste."
     }
   },
   "settings": {
@@ -1035,7 +1039,8 @@
     "yours": "Deine Division",
     "pick": "Wähle deine Division",
     "hint": "Du spielst so oder so gegen die ganze Liga. Deine Division bestimmt deine Conference, und die Playoffs werden innerhalb jeder Conference gesetzt.",
-    "seed": "{{conf}} #{{n}}"
+    "seed": "{{conf}} #{{n}}",
+    "fixed": "In dieser Challenge spielen alle in derselben Division."
   },
   "squad": {
     "rating": "Kader-Rating",
@@ -1051,5 +1056,33 @@
     "goal_sweep": "Gewinne die Finals 4-0 für einen Sweep-Meister-Pick",
     "goal_ultimate": "Spiele 82-0 und dann 16-0 in den Playoffs für den Ultimate-Pick (nur 98+)",
     "maxed": "Der Ultimate-Pick. Höher geht es nicht."
+  },
+  "weekly": {
+    "title": "Wochen-Challenge",
+    "ends": "endet in {{time}}",
+    "rules": "Ein Versuch. Dieselben Spins und dieselbe Liga für alle. Die meisten Siege führen; dein Playoff-Lauf entscheidet bei Gleichstand.",
+    "play": "Diese Woche spielen",
+    "playAnyway": "Trotzdem starten",
+    "replace": "Dein laufender Durchgang wird beiseitegelegt.",
+    "resume": "Weiterspielen",
+    "missed": "Du hast den Durchgang dieser Woche begonnen, aber nicht beendet.",
+    "sending": "Wird an die Rangliste gesendet…",
+    "rankOf": "#{{rank}} von {{total}}",
+    "lastWeek": "Letzte Woche",
+    "prizes": "Preise am Ende der Woche",
+    "prize_1": "#1",
+    "prize_top10": "Top 10",
+    "prize_top25": "Top 25 %",
+    "prizeNote": "Die Preise landen in deinen Packs, sobald du diese Seite nach Wochenende öffnest.",
+    "board": "Rangliste",
+    "offline": "Die Rangliste ist gerade offline. Dein Durchgang ist gespeichert und wird gesendet.",
+    "empty": "Noch keine Durchgänge diese Woche. Sei der Erste.",
+    "seeBoard": "Wochen-Rangliste",
+    "depth0": "Playoffs verpasst",
+    "depth1": "Erste Runde",
+    "depth2": "Zweite Runde",
+    "depth3": "Conference Finals",
+    "depth4": "Finals verloren",
+    "depth5": "Meister"
   }
 }

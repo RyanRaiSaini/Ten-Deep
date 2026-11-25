@@ -13,9 +13,10 @@ import { useLeague } from './league';
 import { useProfile } from './profile';
 import { useProgress } from './progress';
 import { useSettings } from './settings';
+import { useWeekly } from './weekly';
 
 /** Every persisted store. The root layout waits on all of them; delete-account resets all of them. */
-export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useCareer, useCollection, useProgress, useLeague, useFriends, useShop, useForm, useAccount] as const;
+export const STORES = [useGame, useProfile, useSettings, useDaily, useDuel, useCareer, useCollection, useProgress, useLeague, useFriends, useShop, useForm, useAccount, useWeekly] as const;
 
 /** Delete account: reset every store in memory (so nothing is re-saved) and clear storage. */
 export async function wipeAll() {

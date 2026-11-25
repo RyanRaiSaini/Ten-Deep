@@ -108,7 +108,7 @@ export default function Draft() {
           {d.respinsLeft > 0 && (
             <Button label={t('draft.respin', { n: d.respinsLeft })} variant="secondary" icon={<Die size={26} color="purple" faces={[3, 5, 1]} />} onPress={() => doSpin(true)} testID="respin" />
           )}
-          {d.respinsLeft === 0 && !complete && !g.daily && !g.challenge && (
+          {d.respinsLeft === 0 && !complete && !g.daily && !g.weekly && !g.challenge && (
             rerolls > 0 ? (
               <Button label={t('shop.use', { n: rerolls })} variant="blue" icon={<Die size={26} color="white" />} testID="reroll"
                 onPress={() => { setChosen(null); setLanded(false); if (g.doReroll()) setSpinKey((k) => k + 1); else setLanded(true); }} />
@@ -157,7 +157,7 @@ export default function Draft() {
 
   const start = complete && (
     <View style={{ gap: S.md }}>
-    <DivisionPicker seed={d.seed} />
+    <DivisionPicker seed={d.seed} fixed={!!(g.daily || g.weekly || g.challenge)} />
     <Button label={t('draft.startSeason')} variant="gold" icon={<Icon name="play" size={22} />} onPress={() => { g.startSeason(); router.replace(useGame.getState().phase === 'crisis' ? '/crisis' : '/season'); }} testID="start-season" />
     </View>
   );

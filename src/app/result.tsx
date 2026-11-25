@@ -124,6 +124,9 @@ export default function Result() {
       </Card>
       <RosterBoard roster={user.slots} />
       <RunRewards outcome={runOutcome(ps)} />
+      {g.weekly && (
+        <Button label={t('weekly.seeBoard')} variant="gold" icon={<Icon name="trophy" size={22} />} onPress={() => router.push('/weekly')} testID="weekly-board-link" />
+      )}
       {pendingPicks > 0 && (
         <Button label={t('collect.claim')} icon={<Icon name="gift" size={22} />} variant="gold" onPress={() => router.push('/packs')} testID="claim-pick" />
       )}

@@ -59,6 +59,10 @@
     "collection": {
       "title": "Collection",
       "desc": "Player Picks"
+    },
+    "weekly": {
+      "title": "Weekly Challenge",
+      "desc": "One draft a week, same spins for everyone. Climb the leaderboard."
     }
   },
   "settings": {
@@ -1035,7 +1039,8 @@
     "yours": "Your division",
     "pick": "Choose your division",
     "hint": "You play the whole league either way. Your division sets your conference, and the playoffs are seeded inside each conference.",
-    "seed": "{{conf}} #{{n}}"
+    "seed": "{{conf}} #{{n}}",
+    "fixed": "Same division for everyone in this challenge."
   },
   "squad": {
     "rating": "Squad Rating",
@@ -1051,5 +1056,33 @@
     "goal_sweep": "Sweep the Finals 4-0 for a Sweep Champion Pick",
     "goal_ultimate": "Go 82-0, then 16-0 in the playoffs, for the Ultimate Pick (98+ only)",
     "maxed": "The Ultimate Pick. There is nothing higher."
+  },
+  "weekly": {
+    "title": "Weekly Challenge",
+    "ends": "ends in {{time}}",
+    "rules": "One shot. Same spins and the same league for everyone. Most wins tops the board; your playoff run breaks ties.",
+    "play": "Play this week",
+    "playAnyway": "Start it anyway",
+    "replace": "This sets aside the run you have going.",
+    "resume": "Resume your run",
+    "missed": "You started this week’s run but didn’t finish it.",
+    "sending": "Sending to the leaderboard…",
+    "rankOf": "#{{rank}} of {{total}}",
+    "lastWeek": "Last week",
+    "prizes": "Prizes when the week ends",
+    "prize_1": "#1",
+    "prize_top10": "Top 10",
+    "prize_top25": "Top 25%",
+    "prizeNote": "Prizes land in your packs the first time you open this page after the week ends.",
+    "board": "Leaderboard",
+    "offline": "The leaderboard is offline right now. Your run is saved and will be sent.",
+    "empty": "No runs yet this week. Be the first.",
+    "seeBoard": "Weekly leaderboard",
+    "depth0": "Missed the playoffs",
+    "depth1": "First round",
+    "depth2": "Second round",
+    "depth3": "Conference finals",
+    "depth4": "Lost the Finals",
+    "depth5": "Champions"
   }
 }

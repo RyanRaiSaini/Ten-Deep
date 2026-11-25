@@ -59,6 +59,10 @@
     "collection": {
       "title": "Koleksiyon",
       "desc": "Oyuncu seçimleri"
+    },
+    "weekly": {
+      "title": "Haftalık Meydan Okuma",
+      "desc": "Haftada bir draft, herkese aynı çevirmeler. Sıralamada yüksel."
     }
   },
   "settings": {
@@ -1035,7 +1039,8 @@
     "yours": "Senin divizyonun",
     "pick": "Divizyonunu seç",
     "hint": "Her durumda tüm ligle oynarsın. Divizyonun konferansını belirler; playoff sıralaması her konferansın içinde yapılır.",
-    "seed": "{{conf}} {{n}}. sıra"
+    "seed": "{{conf}} {{n}}. sıra",
+    "fixed": "Bu meydan okumada herkes aynı divizyonda oynar."
   },
   "squad": {
     "rating": "Kadro puanı",
@@ -1051,5 +1056,33 @@
     "goal_sweep": "Süpürme şampiyonu seçimi için Finalleri 4-0 kazan",
     "goal_ultimate": "Nihai seçim için 82-0, ardından playofflarda 16-0 yap (sadece 98+)",
     "maxed": "Nihai seçim. Daha yükseği yok."
+  },
+  "weekly": {
+    "title": "Haftalık Meydan Okuma",
+    "ends": "{{time}} sonra bitiyor",
+    "rules": "Tek hak. Herkese aynı çevirmeler ve aynı lig. En çok galibiyet zirvede; eşitlikte playoff yolculuğun belirler.",
+    "play": "Bu hafta oyna",
+    "playAnyway": "Yine de başla",
+    "replace": "Devam eden oyunun kenara alınır.",
+    "resume": "Oyununa devam et",
+    "missed": "Bu haftanın oyununa başladın ama bitirmedin.",
+    "sending": "Sıralamaya gönderiliyor…",
+    "rankOf": "{{total}} içinde #{{rank}}",
+    "lastWeek": "Geçen hafta",
+    "prizes": "Hafta sonu ödülleri",
+    "prize_1": "#1",
+    "prize_top10": "İlk 10",
+    "prize_top25": "İlk %25",
+    "prizeNote": "Ödüller, hafta bittikten sonra bu sayfayı ilk açtığında paketlerine gelir.",
+    "board": "Sıralama",
+    "offline": "Sıralama şu an çevrimdışı. Oyunun kaydedildi ve gönderilecek.",
+    "empty": "Bu hafta henüz oyun yok. İlk sen ol.",
+    "seeBoard": "Haftalık sıralama",
+    "depth0": "Playofflara kalamadı",
+    "depth1": "İlk tur",
+    "depth2": "İkinci tur",
+    "depth3": "Konferans finali",
+    "depth4": "Finalde kaybetti",
+    "depth5": "Şampiyon"
   }
 }
