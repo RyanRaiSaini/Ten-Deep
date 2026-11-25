@@ -14,7 +14,11 @@ Ratings:
   - Archetype from how they played (3-point rate, assist, rebound and block rates, usage, defense);
     durability from games played.
 
-    python3 scripts/rosters/build.py <bbrefCacheDir> <known.json> [outDir]
+  - Contracts: each player's real salary that season (the team pages' salary tables), as a share of that
+    season's cap in game dollars (salary / cap x 171.4, the same rule as src/data/contracts.ts), with the deal type.
+    A player with no salary on record gets what players of his rating were really paid that season.
+
+    python3 scripts/rosters/build.py <bbrefCacheDir> <known.json> [outDir] [teamPagesDir]
 """
 import html
 import json
@@ -28,6 +32,8 @@ import numpy as np
 
 CACHE, KNOWN = sys.argv[1], sys.argv[2]
 OUT = sys.argv[3] if len(sys.argv) > 3 else 'src/data/history/full'
+# Team-season pages (roster + salary table, scripts/rosters/fetch_teams.py) and the salary-cap history page.
+TEAM_CACHE = sys.argv[4] if len(sys.argv) > 4 else None
 FIRST, LAST = 1984, 2026
 ROSTER = 13
 MIN_OVR, MAX_OVR = 64, 99
@@ -99,6 +105,71 @@ def season(y):
     for r in rows:
         total.setdefault(r['pid'], r)
     return rows, total
+
+
+K = 60 / 0.35
+VET_MIN_SHARE = 0.0225
+TYPE_CODE = {'supermax': 'S', 'max': 'M', 'rookie': 'R', 'twoWay': 'T', 'min': 'N', 'standard': 'D', 'est': 'E'}
+
+
+def html_rows(h, tid):
+    h = h.replace('<!--', '').replace('-->', '')
+    i = h.find(f'id="{tid}"')
+    if i < 0: return []
+    seg = h[i:h.index('</table>', i)]
+    return [cells(r) for r in re.findall(r'<tr[^>]*>(.*?)</tr>', seg, re.S)]
+
+
+def money(s):
+    try:
+        v = float(re.sub(r'[$,]', '', s or ''))
+        return v if v > 0 else None
+    except ValueError:
+        return None
+
+
+def load_pay(years):
+    """Season end year → player id → (salary $, years of experience or None, two-way)."""
+    caps = {}
+    for r in html_rows(open(os.path.join(TEAM_CACHE, 'caphist.html'), encoding='utf-8').read(), 'salary_cap_history'):
+        y, c = r.get('year_id', ''), money(r.get('cap', ''))
+        if re.fullmatch(r'\d{4}-\d{2}', y) and c: caps[int(y[:4]) + 1] = c
+    pay = defaultdict(dict)
+    for f in os.listdir(TEAM_CACHE):
+        m = re.fullmatch(r'team-([A-Z]{3})-(\d{4})\.html', f)
+        if not m or int(m.group(2)) not in years: continue
+        y = int(m.group(2))
+        h = open(os.path.join(TEAM_CACHE, f), encoding='utf-8').read()
+        exp = {}
+        for r in html_rows(h, 'roster'):
+            if not r.get('pid'): continue
+            e = r.get('years_experience', '')
+            exp[r['pid']] = (0 if e == 'R' else int(e) if e.isdigit() else None, '(TW)' in r.get('player', ''))
+        for r in html_rows(h, 'salaries2'):
+            sal = money(r.get('salary', ''))
+            if not r.get('pid') or not sal: continue
+            e, tw = exp.get(r['pid'], (None, False))
+            old = pay[y].get(r['pid'])
+            # Paid by two teams in a season (traded): his salary is the larger line.
+            pay[y][r['pid']] = (max(sal, old[0]) if old else sal, e if e is not None else (old[1] if old else None), tw or (old[2] if old else False))
+    for y in years:
+        # Before the cap began (1984-85), an implied cap: the season's top salary is a 35% deal.
+        if y not in caps and pay.get(y): caps[y] = max(v[0] for v in pay[y].values()) / 0.35
+    return caps, pay
+
+
+def classify(y, cap, sal, exp, tw):
+    pct = sal / cap
+    if tw: return 'twoWay'
+    if y >= 2000 and pct >= 0.34: return 'supermax'
+    if y >= 2000 and pct >= 0.245: return 'max'
+    if y >= 1996 and exp is not None and exp <= 3 and 0.012 < pct <= 0.115 and pct > VET_MIN_SHARE * 0.6: return 'rookie'
+    if y >= 1985 and pct <= VET_MIN_SHARE: return 'min'
+    return 'standard'
+
+
+def game_dollars(cap, sal):
+    return min(60.0, max(0.5, round(sal / cap * K, 1)))
 
 
 def by_year_name_keys(curated, y):
@@ -222,9 +293,18 @@ def main():
         if '-' in t['season']: colors[(t['franchise'], '*')] = t['colors']
 
     os.makedirs(OUT, exist_ok=True)
-    stats = {'teams': 0, 'players': 0, 'kept': 0}
+    stats = {'teams': 0, 'players': 0, 'kept': 0, 'real': 0, 'est': 0}
+    caps, pay = load_pay(set(data)) if TEAM_CACHE else ({}, {})
+
+    def contract(y, pid):
+        """(game $M, type) from his real salary that season, or None when there's none on record."""
+        if not TEAM_CACHE or not pid or pid not in pay.get(y, {}) or y not in caps: return None
+        sal, exp, tw = pay[y][pid]
+        return game_dollars(caps[y], sal), classify(y, caps[y], sal, exp, tw)
     index = []
     for y, (rows, total) in data.items():
+        pid_of = {norm(r['name_display']): r['pid'] for r in list(rows) + list(total.values())}
+        season_lines = []  # [team lines list, index, ovr, contract or None] to fill in once the season's market is known
         by_team = defaultdict(list)
         # A player traded mid-season appears once, on the team he played the most minutes for.
         best_team = {}
@@ -249,6 +329,7 @@ def main():
                 for p in cur['players']:
                     pos = p['pos'] + (f"/{p['pos2']}" if p['pos2'] else '')
                     lines.append(f"{p['name']}|{pos}|{p['ovr']}|{p['age'] or 27}|{p['tag'] or 'twoway'}|{p['dur']}")
+                    season_lines.append([lines, len(lines) - 1, p['ovr'], contract(y, pid_of.get(norm(p['name'])))])
                     names.add(norm(p['name']))
                     stats['kept'] += 1
             for r in members:
@@ -260,7 +341,9 @@ def main():
                 g = num(whole, 'games')
                 dur = int(round(min(95, max(40, 45 + 50 * g / SEASON_GAMES[y]))))
                 age = int(num(r, 'age', 27)) or 27
-                lines.append(f"{r['name_display']}|{p1}{'/' + p2 if p2 else ''}|{rate(whole, y)}|{age}|{archetype(whole, p1)}|{dur}")
+                ovr = rate(whole, y)
+                lines.append(f"{r['name_display']}|{p1}{'/' + p2 if p2 else ''}|{ovr}|{age}|{archetype(whole, p1)}|{dur}")
+                season_lines.append([lines, len(lines) - 1, ovr, contract(y, r['pid'])])
                 names.add(n)
             team = {'franchise': fr, 'city': cur['city'] if cur else city, 'name': cur['name'] if cur else nick,
                     'colors': cur['colors'] if cur else colors.get((fr, nick)) or colors.get((fr, '*')) or ['#334155', '#94a3b8'],
@@ -268,10 +351,27 @@ def main():
             teams.append(team)
             stats['teams'] += 1
             stats['players'] += len(lines)
+        if TEAM_CACHE:
+            # The season's market: what players of each rating were really paid (veteran deals), never decreasing.
+            by_ovr = defaultdict(list)
+            for _, _, o, c in season_lines:
+                if c and c[1] not in ('rookie', 'twoWay'): by_ovr[o].append(c[0])
+            curve, floor = {}, 0.5
+            for o in range(MIN_OVR, MAX_OVR + 1):
+                win = [v for k in range(o - 2, o + 3) for v in by_ovr.get(k, [])]
+                if len(win) >= 5: floor = max(floor, sorted(win)[len(win) // 2])
+                curve[o] = floor
+            for lines_ref, i, o, c in season_lines:
+                if c: stats['real'] += 1
+                else: stats['est'] += 1; c = (curve[o], 'est')
+                lines_ref[i] += f"|${c[0]:g}:{TYPE_CODE[c[1]]}"
         write_year(y, teams)
         index.append(y)
     write_index(index)
     print(f"{stats['teams']} team-seasons, {stats['players']} players ({stats['kept']} hand-rated kept)", file=sys.stderr)
+    if TEAM_CACHE:
+        n = stats['real'] + stats['est']
+        print(f"contracts: {stats['real']} real ({100 * stats['real'] / max(1, n):.1f}%), {stats['est']} estimated from that season's market", file=sys.stderr)
     json.dump({'coef': coef.tolist(), 'mae': mae, 'n': len(Y)}, open(os.path.join(OUT, '..', 'full-model.json'), 'w'), indent=1)
 
 
