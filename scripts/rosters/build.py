@@ -297,10 +297,17 @@ def main():
     caps, pay = load_pay(set(data)) if TEAM_CACHE else ({}, {})
 
     def contract(y, pid):
-        """(game $M, type) from his real salary that season, or None when there's none on record."""
-        if not TEAM_CACHE or not pid or pid not in pay.get(y, {}) or y not in caps: return None
-        sal, exp, tw = pay[y][pid]
-        return game_dollars(caps[y], sal), classify(y, caps[y], sal, exp, tw)
+        """
+        (game $M, type) from his real salary that season. When the records skip that season (1983-84, 1986-87 and
+        1989-90 list only a few players), his deal the season before or after, as a share of that season's cap:
+        contracts run several years. None when there's nothing within two seasons.
+        """
+        if not TEAM_CACHE or not pid: return None
+        for yy in (y, y - 1, y + 1, y - 2, y + 2):
+            if pid in pay.get(yy, {}) and yy in caps and (yy == y or len(pay[yy]) > 200):
+                sal, exp, tw = pay[yy][pid]
+                return game_dollars(caps[yy], sal), classify(yy, caps[yy], sal, exp, tw)
+        return None
     index = []
     for y, (rows, total) in data.items():
         pid_of = {norm(r['name_display']): r['pid'] for r in list(rows) + list(total.values())}

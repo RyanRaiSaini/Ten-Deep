@@ -50,6 +50,22 @@ describe('modes', () => {
     expect(bulls96.players.map((p) => p.name)).toEqual(expect.arrayContaining(['Michael Jordan', 'Scottie Pippen', 'Dennis Rodman', 'Toni Kukoč', 'Steve Kerr', 'Luc Longley']));
   });
 
+  it('era players cost their real contract that season (cap share), not a price by rating', async () => {
+    const { payOf, contractType } = await import('../engine/cap');
+    const bulls96 = MODE_BY_ID['era-jordan'].pool.teams.find((t) => t.id === 'chi-1996')!;
+    const pay = (n: string) => payOf(bulls96.players.find((p) => p.name === n)!);
+    // 1995-96: Jordan $3.85M and Kukoč $4.38M of a $23M cap; Kukoč out-earned Pippen.
+    expect(pay('Michael Jordan')).toBeCloseTo(28.7, 0);
+    expect(pay('Toni Kukoč')).toBeGreaterThan(pay('Scottie Pippen'));
+    expect(pay('Steve Kerr')).toBeLessThan(10);
+    // Players of the same rating are paid what they really were: no single price per rating.
+    const players79 = MODE_BY_ID['era-steph'].pool.teams.flatMap((t) => t.players).filter((p) => p.ovr === 79);
+    expect(new Set(players79.map(payOf)).size).toBeGreaterThan(15);
+    const typed = MODE_BY_ID['era-steph'].pool.teams.flatMap((t) => t.players).map(contractType);
+    expect(typed.filter((t) => t === 'rookie').length).toBeGreaterThan(50);
+    expect(typed.filter((t) => t === 'max' || t === 'supermax').length).toBeGreaterThan(20);
+  });
+
   it('every franchise pool has at least 40 players', () => {
     for (const m of MODES.filter((x) => x.kind === 'franchise'))
       expect(m.pool.teams.flatMap((t) => t.players).length, m.id).toBeGreaterThanOrEqual(40);
