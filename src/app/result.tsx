@@ -6,8 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
-import { champion, seriesFor, seriesWinner } from '../engine/playoffs';
-import { standings } from '../engine/season';
+import { CONFERENCES } from '../engine/conference';
+import { champion, outInPlayIn, seriesFor, seriesWinner } from '../engine/playoffs';
+import { seedOf } from '../engine/season';
 import { ALL_SLOTS } from '../engine/types';
 import { useCareer } from '../store/career';
 import { useCollection } from '../store/collection';
@@ -48,13 +49,14 @@ export default function Result() {
 
   const season = ps.season;
   const rec = season.records[0];
-  const seed = standings(season).findIndex((r) => r.team === 0) + 1;
+  const { seed, conf } = seedOf(season, 0);
   const mine = seriesFor(ps, 0);
+  const playIn = outInPlayIn(ps, 0);
   const outcome = won
     ? t('result.champions')
     : mine && seriesWinner(mine.series) !== 0
       ? t('result.lostIn', { round: t(`playoffs.round${mine.round}`) })
-      : t('result.missed');
+      : playIn ? t('result.playIn') : t('result.missed');
 
   const user = season.teams[0];
   const top = ALL_SLOTS.map((s) => user.slots[s])
@@ -96,7 +98,7 @@ export default function Result() {
           <CountUp to={rec.w} format={(n) => `${n}-${rec.l}`} style={[styles.value, won && { color: C.gold }]} testID="result-record" />
           <Text style={styles.sub}>{t('result.record')}</Text>
         </View>
-        <Stat label={t('result.seed')} value={`#${seed}`} />
+        <Stat label={conf === null ? t('result.seed') : t(`conf.${CONFERENCES[conf]}`)} value={`#${seed}`} />
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
       <RarityBadge wins={rec.w} />
@@ -132,7 +134,7 @@ export default function Result() {
         <Button label={shared ? t(`challenge.${shared}`) : t('challenge.share')} variant="dark" icon={<Icon name="swap" size={22} />} testID="share"
           onPress={async () => {
             const text = runShareText({
-              wins: rec.w, losses: rec.l, result: won ? 'champion' : mine ? `round${mine.round}` : 'missed', resultLabel: outcome,
+              wins: rec.w, losses: rec.l, result: won ? 'champion' : mine ? `round${mine.round}` : playIn ? 'playin' : 'missed', resultLabel: outcome,
               mode: MODE_BY_ID[g.poolId]?.title ?? 'Ten Deep', ovrs: ALL_SLOTS.map((k) => user.slots[k].ovr), seed: season.seed,
               poolId: g.poolId, name: profileName || t('home.player'), url: CONFIG.webUrl,
               pin: useFriends.getState().pin, depth: won ? 4 : mine ? mine.round + 1 : 0,

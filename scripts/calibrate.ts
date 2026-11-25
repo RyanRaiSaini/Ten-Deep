@@ -3,6 +3,7 @@
  *   npx tsx scripts/calibrate.ts [seasons] [k=0.012 star=0.05 scoreSd=10 ...]
  */
 import { draftLeague, fairLeague } from '../src/engine/aiDraft';
+import { alignLeague, defaultDivision } from '../src/engine/conference';
 import { affordableSlots, fallbackPick, isComplete, options, pick, pickFallback, spin, startDraft, type DraftState } from '../src/engine/draft';
 import { champion, simPlayoffsToEnd, startPlayoffs } from '../src/engine/playoffs';
 import { createRng } from '../src/engine/rng';
@@ -67,7 +68,10 @@ export function runSeasons(user: Roster | ((i: number) => Roster), pool: Pool, n
     const u = typeof user === 'function' ? user(i) : user;
     // The league the game builds for a run: drafted from the seed alone, your players swapped out.
     const league = fairLeague(pool, ALL_SLOTS.map((s) => u.slots[s]), createRng(`${tag}-league-${i}`));
-    let season = createSeason(u, league, `${tag}-season-${i}`);
+    // Laid out in conferences like a real run (your division picked by the seed).
+    const seed = `${tag}-season-${i}`;
+    const { teams, divs } = alignLeague([u, ...league], defaultDivision(seed), seed, pool.teams, current2026.teams);
+    let season = createSeason(teams[0], teams.slice(1), seed, divs);
     season = advance(advance(season, 82), 82);
     wins.push(season.records[0].w);
     if (champion(simPlayoffsToEnd(startPlayoffs(season))) === 0) titles++;

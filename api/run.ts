@@ -31,8 +31,8 @@ function loadFonts() {
 }
 
 const RESULT: Record<string, string> = {
-  champion: 'Champions', round0: 'Out in the first round', round1: 'Out in the quarterfinals', round2: 'Out in the semifinals',
-  round3: 'Lost in the Finals', missed: 'Missed the playoffs',
+  champion: 'Champions', round0: 'Out in the first round', round1: 'Out in the second round', round2: 'Out in the conference finals',
+  round3: 'Lost in the Finals', playin: 'Out in the play-in', missed: 'Missed the playoffs',
 };
 
 export interface RunInfo {

@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
-import { champion, seriesFor, seriesOver, seriesWinner, type Series } from '../engine/playoffs';
+import { CONFERENCES } from '../engine/conference';
+import { champion, outInPlayIn, playInFor, seriesFor, seriesOver, seriesWinner, winnerOf, type PlayInGame, type Series } from '../engine/playoffs';
 import { useGame } from '../store/game';
 import { Button, Card, Display, Header, Label, Screen } from '../ui/components';
 import { C, F, S } from '../ui/theme';
@@ -58,7 +59,15 @@ export default function Playoffs() {
     <Screen tint={runColors[0]}>
       <Header title={t('playoffs.title')} />
 
-      {!mine && <Text style={styles.big}>{t('playoffs.missed')}</Text>}
+      {!mine && <Text style={styles.big}>{outInPlayIn(ps, 0) ? t('playoffs.outPlayIn') : t('playoffs.missed')}</Text>}
+
+      {playInFor(ps, 0).length > 0 && (
+        <Card style={{ gap: S.sm }} testID="play-in">
+          <Label color={C.hardwood}>{t('playoffs.playIn')}</Label>
+          {playInFor(ps, 0).map((gm) => <PlayInLine key={gm.stage + gm.conf} g={gm} name={name} me={0} />)}
+          {mine && <Text style={styles.status}>{t('playoffs.inVia', { n: mine.series.hi === 0 ? mine.series.seedHi : mine.series.seedLo })}</Text>}
+        </Card>
+      )}
 
       {mine && g.stake === null && mine.round === 0 && mine.series.games.length === 0 && (
         <Card style={styles.stake} testID="stake">
@@ -118,17 +127,65 @@ export default function Playoffs() {
         <Button label={t('playoffs.seeResult')} variant="gold" onPress={() => { g.finish(); router.replace('/result'); }} testID="see-result" />
       )}
 
-      {ps.rounds.map((round, r) => (
-        <View key={r} style={{ gap: 4 }}>
-          <Label>{t(`playoffs.round${r}`)}</Label>
-          {round.map((s, i) => (
-            <Text key={i} style={[styles.bracket, (s.hi === 0 || s.lo === 0) && { color: C.text }]}>
-              ({s.seedHi}) {name(s.hi)} {s.winsHi}–{s.winsLo} {name(s.lo)} ({s.seedLo})
-            </Text>
+      {[...ps.rounds].reverse().map((round, ri) => {
+        const r = ps.rounds.length - 1 - ri;
+        const line = (s: Series, i: number) => (
+          <Text key={i} style={[styles.bracket, (s.hi === 0 || s.lo === 0) && { color: C.text, fontWeight: '900' }]}>
+            ({s.seedHi}) {name(s.hi)} {s.winsHi}–{s.winsLo} {name(s.lo)} ({s.seedLo})
+          </Text>
+        );
+        const confs = [0, 1].filter((c) => round.some((s) => s.conf === c));
+        return (
+          <View key={r} style={{ gap: 4 }}>
+            <Label>{t(`playoffs.round${r}`)}</Label>
+            {confs.length === 0 ? round.map(line) : confs.map((c) => (
+              <View key={c} style={{ gap: 2 }}>
+                <Text style={styles.confTag}>{t(`conf.${CONFERENCES[c]}`)}</Text>
+                {round.filter((s) => s.conf === c).map(line)}
+              </View>
+            ))}
+          </View>
+        );
+      })}
+      {ps.playIn && (
+        <View style={{ gap: 4 }}>
+          <Label>{t('playoffs.playIn')}</Label>
+          {[0, 1].map((c) => (
+            <View key={c} style={{ gap: 2 }}>
+              <Text style={styles.confTag}>{t(`conf.${CONFERENCES[c]}`)}</Text>
+              {ps.playIn!.filter((g) => g.conf === c).map((gm) => <PlayInLine key={gm.stage} g={gm} name={name} />)}
+            </View>
           ))}
         </View>
-      ))}
+      )}
     </Screen>
+  );
+}
+
+/** One play-in game: "(7) Home 112–104 Away (8)", winner in bold; from your side (W/L) when `me` is given. */
+function PlayInLine({ g, name, me }: { g: PlayInGame; name: (i: number) => string; me?: number }) {
+  const { t } = useTranslation();
+  const ot = g.result.ot ? ` (${g.result.ot}OT)` : '';
+  if (me !== undefined) {
+    const home = g.home === me;
+    const won = winnerOf(g) === me;
+    const us = home ? g.result.homeScore : g.result.awayScore;
+    const them = home ? g.result.awayScore : g.result.homeScore;
+    return (
+      <View>
+        <Text style={styles.stage}>{t(`playoffs.stage_${g.stage}`)}</Text>
+        <Text style={[styles.gameLine, { color: won ? C.neon : C.danger }]}>
+          {won ? 'W' : 'L'} {us}-{them}{ot}  {home ? t('season.vs') : t('season.at')} {name(home ? g.away : g.home)}
+        </Text>
+      </View>
+    );
+  }
+  const homeWon = winnerOf(g) === g.home;
+  return (
+    <Text style={[styles.bracket, (g.home === 0 || g.away === 0) && { color: C.text }]}>
+      <Text style={homeWon ? styles.win : undefined}>({g.seedHome}) {name(g.home)}</Text> {g.result.homeScore}–{g.result.awayScore}{ot}{' '}
+      <Text style={!homeWon ? styles.win : undefined}>{name(g.away)} ({g.seedAway})</Text>
+    </Text>
   );
 }
 
@@ -160,5 +217,8 @@ const styles = StyleSheet.create({
   status: { color: C.text, textAlign: 'center', fontWeight: '700' },
   gameLine: { fontWeight: '700' },
   bracket: { color: C.muted, fontSize: 13 },
+  confTag: { color: C.hardwood, fontSize: 11, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  stage: { color: C.muted, fontSize: 11, fontWeight: '800' },
+  win: { fontWeight: '900' },
   recap: { gap: S.sm, borderTopWidth: 1, borderTopColor: C.line, paddingTop: S.md },
 });

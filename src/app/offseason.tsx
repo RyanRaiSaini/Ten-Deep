@@ -1,3 +1,4 @@
+import { DivisionPicker } from '../ui/DivisionPicker';
 import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -155,6 +156,7 @@ export default function Offseason() {
           )}
         </View>
       )}
+      {open === 0 && <DivisionPicker seed={`${c.seed}:s${st.season}`} />}
       {open === 0 && (
         <Button
           label={t('career.startSeason', { label: seasonLabel(st.season) })}
