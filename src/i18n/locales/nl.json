@@ -59,6 +59,10 @@
     "collection": {
       "title": "Collectie",
       "desc": "Spelerskeuzes"
+    },
+    "weekly": {
+      "title": "Weekchallenge",
+      "desc": "Eén draft per week, dezelfde spins voor iedereen. Klim op de ranglijst."
     }
   },
   "settings": {
@@ -1035,7 +1039,8 @@
     "yours": "Jouw divisie",
     "pick": "Kies je divisie",
     "hint": "Je speelt hoe dan ook tegen de hele competitie. Je divisie bepaalt je conference, en de play-offs worden per conference geplaatst.",
-    "seed": "{{conf}} #{{n}}"
+    "seed": "{{conf}} #{{n}}",
+    "fixed": "In deze challenge speelt iedereen in dezelfde divisie."
   },
   "squad": {
     "rating": "Selectiescore",
@@ -1051,5 +1056,33 @@
     "goal_sweep": "Win de Finals met 4-0 voor een Sweep-kampioenskeuze",
     "goal_ultimate": "Ga 82-0 en daarna 16-0 in de play-offs voor de Ultieme keuze (alleen 98+)",
     "maxed": "De Ultieme keuze. Hoger bestaat niet."
+  },
+  "weekly": {
+    "title": "Weekchallenge",
+    "ends": "eindigt over {{time}}",
+    "rules": "Eén poging. Dezelfde spins en dezelfde competitie voor iedereen. Meeste zeges staat bovenaan; je play-offrun beslist bij gelijkspel.",
+    "play": "Speel deze week",
+    "playAnyway": "Toch starten",
+    "replace": "Je lopende run wordt even opzijgezet.",
+    "resume": "Ga verder met je run",
+    "missed": "Je bent aan de run van deze week begonnen maar hebt hem niet afgemaakt.",
+    "sending": "Wordt naar de ranglijst gestuurd…",
+    "rankOf": "#{{rank}} van {{total}}",
+    "lastWeek": "Vorige week",
+    "prizes": "Prijzen aan het eind van de week",
+    "prize_1": "#1",
+    "prize_top10": "Top 10",
+    "prize_top25": "Top 25%",
+    "prizeNote": "Prijzen komen in je packs de eerste keer dat je deze pagina opent na afloop van de week.",
+    "board": "Ranglijst",
+    "offline": "De ranglijst is nu offline. Je run is bewaard en wordt verstuurd.",
+    "empty": "Nog geen runs deze week. Wees de eerste.",
+    "seeBoard": "Wekelijkse ranglijst",
+    "depth0": "Geen play-offs",
+    "depth1": "Eerste ronde",
+    "depth2": "Tweede ronde",
+    "depth3": "Conference-finale",
+    "depth4": "Finals verloren",
+    "depth5": "Kampioen"
   }
 }

@@ -60,6 +60,10 @@
     "collection": {
       "title": "Coleção",
       "desc": "Escolhas de jogador"
+    },
+    "weekly": {
+      "title": "Desafio semanal",
+      "desc": "Um draft por semana, os mesmos giros para todos. Suba no ranking."
     }
   },
   "settings": {
@@ -1040,7 +1044,8 @@
     "yours": "Sua divisão",
     "pick": "Escolha sua divisão",
     "hint": "Você enfrenta a liga inteira de qualquer jeito. Sua divisão define sua conferência, e os playoffs são classificados dentro de cada conferência.",
-    "seed": "{{conf}} nº {{n}}"
+    "seed": "{{conf}} nº {{n}}",
+    "fixed": "Neste desafio todos jogam na mesma divisão."
   },
   "squad": {
     "rating": "Nota do elenco",
@@ -1056,5 +1061,33 @@
     "goal_sweep": "Vença as Finais por 4-0 para uma Escolha do campeão invicto nas Finais",
     "goal_ultimate": "Faça 82-0 e depois 16-0 nos playoffs para a Escolha suprema (só 98+)",
     "maxed": "A Escolha suprema. Não há nada acima."
+  },
+  "weekly": {
+    "title": "Desafio semanal",
+    "ends": "termina em {{time}}",
+    "rules": "Uma tentativa. Os mesmos giros e a mesma liga para todos. Mais vitórias lidera; sua campanha nos playoffs desempata.",
+    "play": "Jogar esta semana",
+    "playAnyway": "Começar mesmo assim",
+    "replace": "Isso deixa de lado a partida em andamento.",
+    "resume": "Continuar sua partida",
+    "missed": "Você começou a partida desta semana mas não terminou.",
+    "sending": "Enviando para o ranking…",
+    "rankOf": "#{{rank}} de {{total}}",
+    "lastWeek": "Semana passada",
+    "prizes": "Prêmios no fim da semana",
+    "prize_1": "#1",
+    "prize_top10": "Top 10",
+    "prize_top25": "Top 25%",
+    "prizeNote": "Os prêmios chegam aos seus pacotes na primeira vez que você abrir esta página depois que a semana acabar.",
+    "board": "Ranking",
+    "offline": "O ranking está fora do ar agora. Sua partida está salva e será enviada.",
+    "empty": "Nenhuma partida nesta semana ainda. Seja o primeiro.",
+    "seeBoard": "Ranking semanal",
+    "depth0": "Fora dos playoffs",
+    "depth1": "Primeira rodada",
+    "depth2": "Segunda rodada",
+    "depth3": "Final de conferência",
+    "depth4": "Perdeu as Finais",
+    "depth5": "Campeões"
   }
 }

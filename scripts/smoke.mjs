@@ -72,6 +72,19 @@ await step('how it works: reachable from the draft screen, every rule shown', as
   if (await page.getByTestId('how-play').count()) throw new Error('start button shown while a draft is in progress');
 });
 
+await step('weekly challenge: from home, one shot, starts a draft with a locked division', async () => {
+  await page.goto(base);
+  await page.getByTestId('mode-weekly').click();
+  await page.getByTestId('weekly-hero').waitFor();
+  await page.getByTestId('weekly-board').waitFor();
+  await shot('39-weekly');
+  await page.getByTestId('weekly-play').click();
+  if (await page.getByTestId('weekly-play').count()) await page.getByTestId('weekly-play').click(); // "start it anyway"
+  await page.getByTestId('spin').waitFor({ timeout: 15000 });
+  await page.goto(`${base}/weekly`);
+  await page.getByText(/Resume your run/).waitFor();
+});
+
 await step('arabic is right-to-left', async () => {
   await page.goto(`${base}/settings`);
   await page.getByText('Language').click();

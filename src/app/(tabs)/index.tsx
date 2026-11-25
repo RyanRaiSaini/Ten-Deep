@@ -25,11 +25,12 @@ import { TierBadge, tierName } from '../../ui/TierBadge';
 import { Text } from '../../ui/Text';
 import { C, FONT, R, S } from '../../ui/theme';
 
-type ModeKey = 'franchise' | 'era' | 'crisis' | 'daily';
+type ModeKey = 'weekly' | 'franchise' | 'era' | 'crisis' | 'daily';
 /** Each mode is a court banner in its own colors (court tint, light streak). */
 const MODE_H = 128;
 
 const MODES: { key: ModeKey; icon: IconName; accent: string; court: string; streak: string; go: () => void; badge?: string }[] = [
+  { key: 'weekly', icon: 'trophy', accent: C.purple, court: '#5B21B6', streak: '#FFC53D', go: () => router.push('/weekly'), badge: 'NEW' },
   { key: 'franchise', icon: 'history', accent: C.purple, court: '#4B2BC2', streak: '#F5C451', go: () => router.push('/modes/franchise') },
   { key: 'era', icon: 'clock', accent: C.teal, court: '#0B7A86', streak: '#7CF5E3', go: () => router.push('/modes/era') },
   { key: 'crisis', icon: 'siren', accent: C.danger, court: '#B3202E', streak: '#FF9A3D', go: () => router.push('/modes/crisis'), badge: 'HOT' },

@@ -60,6 +60,10 @@
     "collection": {
       "title": "Colección",
       "desc": "Elecciones de jugador"
+    },
+    "weekly": {
+      "title": "Reto semanal",
+      "desc": "Un draft por semana, los mismos giros para todos. Sube en la clasificación."
     }
   },
   "settings": {
@@ -1040,7 +1044,8 @@
     "yours": "Tu división",
     "pick": "Elige tu división",
     "hint": "Juegas contra toda la liga igualmente. Tu división define tu conferencia, y los playoffs se ordenan dentro de cada conferencia.",
-    "seed": "{{conf}} n.º {{n}}"
+    "seed": "{{conf}} n.º {{n}}",
+    "fixed": "En este reto todos juegan en la misma división."
   },
   "squad": {
     "rating": "Valoración del equipo",
@@ -1056,5 +1061,33 @@
     "goal_sweep": "Barre las Finales 4-0 para una Elección de campeón por barrida",
     "goal_ultimate": "Ve 82-0 y luego 16-0 en playoffs para la Elección definitiva (solo 98+)",
     "maxed": "La Elección definitiva. No hay nada más alto."
+  },
+  "weekly": {
+    "title": "Reto semanal",
+    "ends": "termina en {{time}}",
+    "rules": "Un solo intento. Los mismos giros y la misma liga para todos. Más victorias lidera; tu camino en playoffs desempata.",
+    "play": "Jugar esta semana",
+    "playAnyway": "Empezar igualmente",
+    "replace": "Esto aparta la partida que tienes en curso.",
+    "resume": "Seguir tu partida",
+    "missed": "Empezaste la partida de esta semana pero no la terminaste.",
+    "sending": "Enviando a la clasificación…",
+    "rankOf": "#{{rank}} de {{total}}",
+    "lastWeek": "La semana pasada",
+    "prizes": "Premios al terminar la semana",
+    "prize_1": "#1",
+    "prize_top10": "Top 10",
+    "prize_top25": "Top 25 %",
+    "prizeNote": "Los premios llegan a tus sobres la primera vez que abras esta página tras acabar la semana.",
+    "board": "Clasificación",
+    "offline": "La clasificación no está disponible ahora. Tu partida está guardada y se enviará.",
+    "empty": "Aún no hay partidas esta semana. Sé el primero.",
+    "seeBoard": "Clasificación semanal",
+    "depth0": "Fuera de playoffs",
+    "depth1": "Primera ronda",
+    "depth2": "Segunda ronda",
+    "depth3": "Final de conferencia",
+    "depth4": "Perdió las Finales",
+    "depth5": "Campeones"
   }
 }

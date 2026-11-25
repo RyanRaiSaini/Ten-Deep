@@ -23,6 +23,12 @@ function draftAll(poolId = 'current-2026') {
   const pool = POOLS[poolId];
   // Fixed seed: newRun's random seed would make any failure unreproducible.
   useGame.setState({ draft: startDraft(pool, `test-${poolId}`) });
+  fillDraft(poolId);
+}
+
+/** Pick the first affordable option each round (or the fallback), then start the season. */
+function fillDraft(poolId = 'current-2026') {
+  const pool = POOLS[poolId];
   while (!isComplete(useGame.getState().draft!)) {
     useGame.getState().doSpin();
     const d = useGame.getState().draft!;
@@ -35,6 +41,39 @@ function draftAll(poolId = 'current-2026') {
 
 describe('game store', () => {
   beforeEach(() => useGame.getState().quit());
+
+  it('weekly challenge: one attempt, the same division for everyone, the result recorded and sent', async () => {
+    const { useWeekly } = await import('./weekly');
+    const { defaultDivision } = await import('../engine/conference');
+    const { advance } = await import('../engine/season');
+    const sent: unknown[] = [];
+    vi.stubGlobal('fetch', vi.fn(async (_u: string, init?: RequestInit) => {
+      if (init?.method === 'POST') sent.push(JSON.parse(String(init.body)));
+      return new Response(JSON.stringify({ ok: true, rank: 3, total: 10 }), { headers: { 'content-type': 'application/json' } });
+    }));
+    const week = '2026-11-23';
+    useGame.getState().setDivision(5);
+    expect(useGame.getState().newWeekly(week)).toBe('started');
+    expect(useGame.getState().draft!.seed).toBe(`weekly-${week}`);
+    fillDraft();
+    expect(useGame.getState().newWeekly(week)).toBe('resumed');
+    const s = useGame.getState().season!;
+    expect(s.divs![0]).toBe(defaultDivision(`weekly-${week}`));
+    expect(useGame.getState().division).toBe(5); // your own pick is untouched
+    useGame.setState({ season: advance(advance({ ...s, deadlineUsed: true, stops: [] }, 82), 82), phase: 'season' });
+    useGame.getState().beginPlayoffs();
+    useGame.getState().simPlayoffs();
+    useGame.getState().finish();
+    await vi.waitFor(() => expect(useWeekly.getState().weeks[week]?.submitted).toBe(true));
+    const run = useWeekly.getState().weeks[week];
+    expect(run.result!.w + run.result!.l).toBe(82);
+    expect(run.rank).toBe(3);
+    expect(sent).toHaveLength(1);
+    expect(sent[0]).toMatchObject({ week, w: run.result!.w, l: run.result!.l });
+    useGame.getState().quit();
+    expect(useGame.getState().newWeekly(week)).toBe('locked');
+    vi.unstubAllGlobals();
+  });
 
   it('your division: the seed picks one until you choose, then your pick is used and kept; AI teams are the real franchises', async () => {
     const { DIVISIONS, confOfDiv } = await import('../engine/conference');
