@@ -6,7 +6,7 @@ import { assignDivisions, defaultDivision, franchiseOf, leagueFranchises } from 
 import { realLeague } from '../engine/realLeague';
 import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, reroll, respin, spin, startDraft, type DraftState,
-  legacyDraft,
+  legacyDraft, RESPINS_PER_DRAFT,
 } from '../engine/draft';
 import { champion, playNextGame, runOutcome, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
 import { createRng } from '../engine/rng';
@@ -319,7 +319,17 @@ export const useGame = create<GameStore>()(
     },
     {
       name: 'tendeep-run',
-      version: 1,
+      version: 2,
+      // v2: one respin per draft; a draft saved with more keeps only one.
+      migrate: (persisted, from) => {
+        const st = persisted as Partial<GameStore>;
+        if (from < 2) {
+          const cap = (d: DraftState | null | undefined) => (d ? { ...d, respinsLeft: Math.min(d.respinsLeft, RESPINS_PER_DRAFT) } : d);
+          if (st.draft) st.draft = cap(st.draft)!;
+          if (st.parked?.draft) st.parked = { ...st.parked, draft: cap(st.parked.draft)! };
+        }
+        return st as GameStore;
+      },
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (s) => ({ division: s.division, parked: s.parked, phase: s.phase, poolId: s.poolId, challenge: s.challenge, stake: s.stake, leagueGain: s.leagueGain, daily: s.daily, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
     },
