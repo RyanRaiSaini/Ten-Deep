@@ -840,7 +840,7 @@
     "title": "Tienda",
     "rerolls": "Repeticiones",
     "have": "Tienes",
-    "what": "Una repetición vuelve a girar la ruleta cuando no te gusta dónde cayó, una vez gastados tus 2 giros gratis.",
+    "what": "Una repetición vuelve a girar la ruleta cuando no te gusta dónde cayó, una vez gastado tu giro gratis.",
     "free": "Repetición diaria gratis",
     "freeClaim": "Reclamar",
     "freeDone": "Vuelve mañana",
@@ -1013,7 +1013,7 @@
     "capT": "No pases de 200 M$",
     "capB": "Cada jugador cuesta su contrato real, escalado al tope de esa temporada. Los contratos de novato son baratos; los máximos y supermáximos, no. El juego siempre deja espacio para llenar todos los puestos.",
     "rulesT": "La letra pequeña",
-    "rulesB": "Como mucho dos jugadores de 95 o más. Dos giros extra gratis por draft. Si en un giro no cabe nadie, te dan el jugador más barato que sí cabe.",
+    "rulesB": "Como mucho dos jugadores de 95 o más. Un giro extra gratis por draft. Si en un giro no cabe nadie, te dan el jugador más barato que sí cabe.",
     "seasonT": "Juega 82 partidos",
     "seasonB": "Las lesiones cuestan los partidos que indican. En el partido 50 tienes un traspaso en la fecha límite. Míralo partido a partido o adelanta.",
     "playoffsT": "Sobrevive a los playoffs",
@@ -1022,7 +1022,11 @@
     "challengeB": "Después de una partida, comparte tu enlace. Quien lo abra tendrá los mismos giros y la misma liga: los equipos reales. Si alguien elige a un jugador de un equipo, ese equipo juega sin él y su banquillo da un paso al frente, así que tus elecciones son la única diferencia.",
     "play": "Empezar un draft",
     "divT": "Elige tu división",
-    "divB": "Elige conferencia y división antes del salto inicial. Juegas contra toda la liga igualmente; los playoffs se ordenan dentro de cada conferencia."
+    "divB": "Elige conferencia y división antes del salto inicial. Juegas contra toda la liga igualmente; los playoffs se ordenan dentro de cada conferencia.",
+    "squadT": "Valoración del equipo",
+    "squadB": "Tus diez jugadores en un solo número. Los titulares cuentan más, un 15 % cada uno; el banquillo cuenta 9, 6, 5, 3 y 2 % del sexto al décimo hombre. Cuanto más alta, más ganas: unas 66 victorias con 87 y unas 75 con 91. Solo un equipo de élite puede ir 82-0.",
+    "packsT": "Gana sobres",
+    "packsB": "Cada temporada terminada da un sobre, uno mejor con 60+ victorias. Llega a la final de conferencia o más lejos para un segundo sobre que mejora cuanto más avanzas, hasta el Sobre definitivo (solo cartas 98+) con 82-0 y 16-0. Tienes una mejora al día."
   },
   "conf": {
     "east": "Este",
@@ -1041,5 +1045,16 @@
   "squad": {
     "rating": "Valoración del equipo",
     "short": "Equipo"
+  },
+  "rewards": {
+    "title": "Has ganado",
+    "next": "La próxima vez",
+    "goal_good": "Gana 60+ partidos para una Elección buena",
+    "goal_confFinals": "Llega a la final de conferencia para una Elección de final de conferencia",
+    "goal_finals": "Gana tu conferencia para una Elección de las Finales",
+    "goal_champion": "Gana las Finales para una Elección de campeón",
+    "goal_sweep": "Barre las Finales 4-0 para una Elección de campeón por barrida",
+    "goal_ultimate": "Ve 82-0 y luego 16-0 en playoffs para la Elección definitiva (solo 98+)",
+    "maxed": "La Elección definitiva. No hay nada más alto."
   }
 }

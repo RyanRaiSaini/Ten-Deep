@@ -103,20 +103,7 @@ export default function Draft() {
       )}
       {landed && d.spin && (
         <View style={{ gap: S.sm }}>
-          {opts.map((o) => (
-            <PlayerCard
-              key={o.player.id}
-              testID={o.affordable ? 'option' : undefined}
-              player={o.player}
-              accent={teamGradient(d.spin!.colors)[0]}
-              disabled={!o.affordable}
-              selected={chosen === o.player.id}
-              slots={o.slots}
-              onSlot={(slot) => place(o.player.id, slot)}
-              note={!o.affordable ? (o.slots.length ? (o.player.ovr >= 95 && superstarCount(d.roster) >= MAX_SUPERSTARS ? t('draft.superstarLimit') : t('draft.overCap')) : t('draft.noSlot')) : undefined}
-              onPress={() => (o.slots.length === 1 ? place(o.player.id, o.slots[0]) : setChosen(o.player.id))}
-            />
-          ))}
+          {/* Respin / re-roll first, so it's the first thing you see when the wheel lands. */}
           {usable.length === 0 && <Text style={styles.warn}>{t('draft.nothingFits')}</Text>}
           {d.respinsLeft > 0 && (
             <Button label={t('draft.respin', { n: d.respinsLeft })} variant="secondary" icon={<Die size={26} color="purple" faces={[3, 5, 1]} />} onPress={() => doSpin(true)} testID="respin" />
@@ -137,6 +124,20 @@ export default function Draft() {
               testID="fallback"
             />
           )}
+          {opts.map((o) => (
+            <PlayerCard
+              key={o.player.id}
+              testID={o.affordable ? 'option' : undefined}
+              player={o.player}
+              accent={teamGradient(d.spin!.colors)[0]}
+              disabled={!o.affordable}
+              selected={chosen === o.player.id}
+              slots={o.slots}
+              onSlot={(slot) => place(o.player.id, slot)}
+              note={!o.affordable ? (o.slots.length ? (o.player.ovr >= 95 && superstarCount(d.roster) >= MAX_SUPERSTARS ? t('draft.superstarLimit') : t('draft.overCap')) : t('draft.noSlot')) : undefined}
+              onPress={() => (o.slots.length === 1 ? place(o.player.id, o.slots[0]) : setChosen(o.player.id))}
+            />
+          ))}
         </View>
       )}
     </View>

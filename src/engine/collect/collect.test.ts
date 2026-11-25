@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ALL_CARDS } from '../../data/cards';
-import { PICK_TYPES, generatePick, runRewards, type PickType, type RunOutcome } from './picks';
+import { PICK_TYPES, generatePick, nextGoals, runRewards, type PickType, type RunOutcome } from './picks';
 import { advanceStreak, streakRewards } from './streak';
 import { TIERS, tierOf } from './tiers';
 
@@ -63,6 +63,16 @@ describe('picks', () => {
     expect(runRewards(run({ wins: 70, losses: 12, madePlayoffs: true, round: 3, champion: true, finalsSweep: true, playoffLosses: 3 }))).toEqual(['good', 'sweep']);
     expect(runRewards(run({ wins: 82, losses: 0, madePlayoffs: true, round: 3, champion: true, finalsSweep: true, playoffLosses: 1 }))).toEqual(['legendary', 'sweep']);
     expect(runRewards(run({ wins: 82, losses: 0, madePlayoffs: true, round: 3, champion: true, finalsSweep: true, playoffLosses: 0 }))).toEqual(['legendary', 'ultimate']);
+  });
+
+  it('next-time goals: 60 wins if short of it, then the next playoff pick up', () => {
+    const run = (o: Partial<RunOutcome>): RunOutcome => ({ wins: 45, losses: 37, champion: false, madePlayoffs: false, round: -1, finalsSweep: false, playoffLosses: 0, ...o });
+    expect(nextGoals(run({}))).toEqual(['good', 'confFinals']);
+    expect(nextGoals(run({ wins: 64, losses: 18, round: 2 }))).toEqual(['finals']);
+    expect(nextGoals(run({ wins: 64, losses: 18, round: 3 }))).toEqual(['champion']);
+    expect(nextGoals(run({ wins: 64, losses: 18, round: 3, champion: true }))).toEqual(['sweep']);
+    expect(nextGoals(run({ wins: 64, losses: 18, round: 3, champion: true, finalsSweep: true }))).toEqual(['ultimate']);
+    expect(nextGoals(run({ wins: 82, losses: 0, round: 3, champion: true, finalsSweep: true }))).toEqual([]);
   });
 
   it('the Ultimate pick is 98+ only; Sweep and Champion picks have their floors', () => {

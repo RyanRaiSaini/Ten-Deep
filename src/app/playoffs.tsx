@@ -13,6 +13,7 @@ import { RecapCard } from '../ui/story';
 import { Icon } from '../ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PlayoffBackdrop } from '../ui/SparkleBackdrop';
+import { Bracket } from '../ui/Bracket';
 
 export default function Playoffs() {
   const { t } = useTranslation();
@@ -126,26 +127,30 @@ export default function Playoffs() {
         <Button label={t('playoffs.seeResult')} variant="gold" onPress={() => { g.finish(); router.replace('/result'); }} testID="see-result" />
       )}
 
+      {ps.playIn ? <Bracket ps={ps} /> : (
+        <View style={{ gap: S.md }}>
       {[...ps.rounds].reverse().map((round, ri) => {
-        const r = ps.rounds.length - 1 - ri;
-        const line = (s: Series, i: number) => (
-          <Text key={i} style={[styles.bracket, (s.hi === 0 || s.lo === 0) && { color: '#FFFFFF', fontWeight: '900' }]}>
-            ({s.seedHi}) {name(s.hi)} {s.winsHi}–{s.winsLo} {name(s.lo)} ({s.seedLo})
-          </Text>
-        );
-        const confs = [0, 1].filter((c) => round.some((s) => s.conf === c));
-        return (
-          <View key={r} style={{ gap: 4 }}>
-            <Label color="#FFC53D">{t(`playoffs.round${r}`)}</Label>
-            {confs.length === 0 ? round.map(line) : confs.map((c) => (
-              <View key={c} style={{ gap: 2 }}>
-                <Text style={styles.confTag}>{t(`conf.${CONFERENCES[c]}`)}</Text>
-                {round.filter((s) => s.conf === c).map(line)}
+            const r = ps.rounds.length - 1 - ri;
+            const line = (s: Series, i: number) => (
+              <Text key={i} style={[styles.bracket, (s.hi === 0 || s.lo === 0) && { color: '#FFFFFF', fontWeight: '900' }]}>
+                ({s.seedHi}) {name(s.hi)} {s.winsHi}–{s.winsLo} {name(s.lo)} ({s.seedLo})
+              </Text>
+            );
+            const confs = [0, 1].filter((c) => round.some((s) => s.conf === c));
+            return (
+              <View key={r} style={{ gap: 4 }}>
+                <Label color="#FFC53D">{t(`playoffs.round${r}`)}</Label>
+                {confs.length === 0 ? round.map(line) : confs.map((c) => (
+                  <View key={c} style={{ gap: 2 }}>
+                    <Text style={styles.confTag}>{t(`conf.${CONFERENCES[c]}`)}</Text>
+                    {round.filter((s) => s.conf === c).map(line)}
+                  </View>
+                ))}
               </View>
-            ))}
-          </View>
-        );
-      })}
+            );
+          })}
+        </View>
+      )}
       {ps.playIn && (
         <View style={{ gap: 4 }}>
           <Label color="#FFC53D">{t('playoffs.playIn')}</Label>

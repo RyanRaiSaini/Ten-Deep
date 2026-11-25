@@ -835,7 +835,7 @@
     "title": "Shop",
     "rerolls": "Rerolls",
     "have": "Du hast",
-    "what": "Ein Reroll dreht das Rad erneut, wenn dir das Ergebnis nicht gefällt – sobald deine 2 Gratis-Drehungen verbraucht sind.",
+    "what": "Ein Reroll dreht das Rad erneut, wenn dir das Ergebnis nicht gefällt – sobald deine Gratis-Drehung verbraucht ist.",
     "free": "Gratis-Reroll des Tages",
     "freeClaim": "Abholen",
     "freeDone": "Morgen wieder",
@@ -1008,7 +1008,7 @@
     "capT": "Bleib unter 200 Mio. $",
     "capB": "Jeder Spieler kostet seinen echten Vertrag, umgerechnet auf den Cap seiner Saison. Rookie-Verträge sind billig, Max- und Supermax-Verträge nicht. Das Spiel lässt immer genug Platz, um alle Plätze zu füllen.",
     "rulesT": "Das Kleingedruckte",
-    "rulesB": "Höchstens zwei Spieler mit 95 oder mehr. Zwei freie Respins pro Draft. Passt auf einem Spin niemand, bekommst du den günstigsten Spieler, der passt.",
+    "rulesB": "Höchstens zwei Spieler mit 95 oder mehr. Ein freier Respin pro Draft. Passt auf einem Spin niemand, bekommst du den günstigsten Spieler, der passt.",
     "seasonT": "Spiel 82 Partien",
     "seasonB": "Verletzungen kosten genau die angegebenen Spiele. Bei Spiel 50 hast du einen Trade zur Deadline. Schau Spiel für Spiel zu oder spring vor.",
     "playoffsT": "Überleb die Playoffs",
@@ -1017,7 +1017,11 @@
     "challengeB": "Teile nach einem Durchgang deinen Link. Wer ihn öffnet, bekommt dieselben Spins und dieselbe Liga: die echten Teams. Draftet jemand einen Spieler eines Teams, spielt dieses Team ohne ihn und seine Bank rückt auf. So sind deine Picks der einzige Unterschied.",
     "play": "Draft starten",
     "divT": "Wähle deine Division",
-    "divB": "Wähle Conference und Division vor dem Tip-off. Du spielst so oder so gegen die ganze Liga; die Playoffs werden innerhalb jeder Conference gesetzt."
+    "divB": "Wähle Conference und Division vor dem Tip-off. Du spielst so oder so gegen die ganze Liga; die Playoffs werden innerhalb jeder Conference gesetzt.",
+    "squadT": "Kader-Rating",
+    "squadB": "Deine zehn Spieler in einer Zahl. Starter zählen am meisten, je 15 %; die Bank zählt 9, 6, 5, 3 und 2 % vom 6. bis zum 10. Mann. Je höher, desto mehr Siege: etwa 66 bei 87, etwa 75 bei 91. Nur ein Elite-Kader kann 82-0 schaffen.",
+    "packsT": "Packs verdienen",
+    "packsB": "Jede beendete Saison bringt ein Pack, ab 60 Siegen ein besseres. Erreiche die Conference Finals oder mehr für ein zweites Pack, das mit jeder Runde besser wird, bis zum Ultimate-Pack (nur 98+) für 82-0 und 16-0. Du hast ein Power-up pro Tag."
   },
   "conf": {
     "east": "Osten",
@@ -1036,5 +1040,16 @@
   "squad": {
     "rating": "Kader-Rating",
     "short": "Kader"
+  },
+  "rewards": {
+    "title": "Verdient",
+    "next": "Nächstes Mal",
+    "goal_good": "Gewinne 60+ Spiele für einen Guten Pick",
+    "goal_confFinals": "Erreiche die Conference Finals für einen Conference-Finals-Pick",
+    "goal_finals": "Gewinne deine Conference für einen Finals-Pick",
+    "goal_champion": "Gewinne die Finals für einen Meister-Pick",
+    "goal_sweep": "Gewinne die Finals 4-0 für einen Sweep-Meister-Pick",
+    "goal_ultimate": "Spiele 82-0 und dann 16-0 in den Playoffs für den Ultimate-Pick (nur 98+)",
+    "maxed": "Der Ultimate-Pick. Höher geht es nicht."
   }
 }

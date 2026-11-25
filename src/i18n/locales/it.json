@@ -840,7 +840,7 @@
     "title": "Negozio",
     "rerolls": "Rigiri",
     "have": "Hai",
-    "what": "Un rigiro fa girare di nuovo la ruota quando il risultato non ti piace, dopo aver usato i tuoi 2 giri gratuiti.",
+    "what": "Un rigiro fa girare di nuovo la ruota quando il risultato non ti piace, dopo aver usato il tuo giro gratuito.",
     "free": "Rigiro giornaliero gratis",
     "freeClaim": "Riscatta",
     "freeDone": "Torna domani",
@@ -1013,7 +1013,7 @@
     "capT": "Resta sotto 200 mln $",
     "capB": "Ogni giocatore costa il suo vero contratto, rapportato al tetto di quella stagione. I contratti da rookie costano poco, i massimi e supermassimi no. Il gioco lascia sempre spazio per riempire tutti i posti.",
     "rulesT": "Le regole minori",
-    "rulesB": "Al massimo due giocatori con 95 o più. Due giri extra gratis per draft. Se in un giro non entra nessuno, ricevi il giocatore più economico che entra.",
+    "rulesB": "Al massimo due giocatori con 95 o più. Un giro extra gratis per draft. Se in un giro non entra nessuno, ricevi il giocatore più economico che entra.",
     "seasonT": "Gioca 82 partite",
     "seasonB": "Gli infortuni costano le partite indicate. Alla partita 50 hai uno scambio alla scadenza. Guarda partita per partita o vai avanti.",
     "playoffsT": "Sopravvivi ai playoff",
@@ -1022,7 +1022,11 @@
     "challengeB": "Dopo una partita, condividi il tuo link. Chi lo apre ha gli stessi giri e la stessa lega: le squadre vere. Se qualcuno sceglie un giocatore di una squadra, quella squadra gioca senza di lui e la sua panchina sale di un gradino, così le tue scelte sono l'unica differenza.",
     "play": "Inizia un draft",
     "divT": "Scegli la tua division",
-    "divB": "Scegli conference e division prima della palla a due. Affronti comunque tutta la lega; i playoff sono ordinati dentro ogni conference."
+    "divB": "Scegli conference e division prima della palla a due. Affronti comunque tutta la lega; i playoff sono ordinati dentro ogni conference.",
+    "squadT": "Valutazione squadra",
+    "squadB": "I tuoi dieci giocatori in un solo numero. I titolari contano di più, il 15% ciascuno; la panchina conta 9, 6, 5, 3 e 2% dal sesto al decimo uomo. Più è alta, più vinci: circa 66 vittorie a 87, circa 75 a 91. Solo una squadra d'élite può fare 82-0.",
+    "packsT": "Guadagna pacchetti",
+    "packsB": "Ogni stagione conclusa ti dà un pacchetto, uno migliore con 60+ vittorie. Raggiungi la finale di conference o oltre per un secondo pacchetto che migliora a ogni turno, fino al Pacchetto definitivo (solo carte 98+) per 82-0 e 16-0. Hai un potenziamento al giorno."
   },
   "conf": {
     "east": "Est",
@@ -1041,5 +1045,16 @@
   "squad": {
     "rating": "Valutazione squadra",
     "short": "Squadra"
+  },
+  "rewards": {
+    "title": "Hai guadagnato",
+    "next": "La prossima volta",
+    "goal_good": "Vinci 60+ partite per una Scelta buona",
+    "goal_confFinals": "Raggiungi la finale di conference per una Scelta finale di conference",
+    "goal_finals": "Vinci la tua conference per una Scelta delle Finali",
+    "goal_champion": "Vinci le Finali per una Scelta campione",
+    "goal_sweep": "Vinci le Finali 4-0 per una Scelta campione con sweep",
+    "goal_ultimate": "Fai 82-0 e poi 16-0 nei playoff per la Scelta definitiva (solo 98+)",
+    "maxed": "La Scelta definitiva. Non c’è niente di più alto."
   }
 }

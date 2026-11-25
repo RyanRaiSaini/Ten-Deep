@@ -835,7 +835,7 @@
     "title": "Mağaza",
     "rerolls": "Yeniden çevirmeler",
     "have": "Sende",
-    "what": "2 ücretsiz yeniden çevirmen bittiğinde, sonucu beğenmezsen çarkı yeniden çevirmeni sağlar.",
+    "what": "Ücretsiz yeniden çevirmen bittiğinde, sonucu beğenmezsen çarkı yeniden çevirmeni sağlar.",
     "free": "Ücretsiz günlük çevirme",
     "freeClaim": "Al",
     "freeDone": "Yarın tekrar gel",
@@ -1008,7 +1008,7 @@
     "capT": "200 milyon doların altında kal",
     "capB": "Her oyuncu, o sezonun tavanına göre ölçeklenmiş gerçek sözleşmesine mal olur. Çaylak sözleşmeleri ucuz, maksimum ve süper maksimum sözleşmeler değil. Oyun her yeri doldurman için her zaman yer bırakır.",
     "rulesT": "Ayrıntılar",
-    "rulesB": "95 ve üzeri en fazla iki oyuncu. Her draftta iki ücretsiz yeniden çevirme. Bir çevirmede sığan kimse yoksa, sığan en ucuz oyuncuyu alırsın.",
+    "rulesB": "95 ve üzeri en fazla iki oyuncu. Her draftta bir ücretsiz yeniden çevirme. Bir çevirmede sığan kimse yoksa, sığan en ucuz oyuncuyu alırsın.",
     "seasonT": "82 maç oyna",
     "seasonB": "Sakatlıklar yazan maç sayısı kadar sürer. 50. maçta takas tarihinde bir takas hakkın olur. Maç maç izle ya da ileri sar.",
     "playoffsT": "Playofflarda hayatta kal",
@@ -1017,7 +1017,11 @@
     "challengeB": "Bir oyundan sonra bağlantını paylaş. Açan kişi aynı çevirmeleri ve aynı ligi alır: gerçek takımlar. Biri bir takımdan oyuncu seçerse o takım onsuz oynar ve yedekleri bir basamak yükselir; tek fark senin seçimlerindir.",
     "play": "Draft başlat",
     "divT": "Divizyonunu seç",
-    "divB": "Başlangıçtan önce konferansını ve divizyonunu seç. Her durumda tüm ligle oynarsın; playoff sıralaması her konferansın içinde yapılır."
+    "divB": "Başlangıçtan önce konferansını ve divizyonunu seç. Her durumda tüm ligle oynarsın; playoff sıralaması her konferansın içinde yapılır.",
+    "squadT": "Kadro puanı",
+    "squadB": "On oyuncun tek bir sayıda. İlk beş en çok sayılır, her biri %15; yedekler 6. adamdan 10. adama %9, 6, 5, 3 ve 2. Ne kadar yüksekse o kadar kazanırsın: 87'de yaklaşık 66, 91'de yaklaşık 75 galibiyet. 82-0'ı yalnızca elit bir kadro yapabilir.",
+    "packsT": "Paket kazan",
+    "packsB": "Bitirdiğin her sezon bir paket kazandırır, 60+ galibiyette daha iyisini. Konferans finaline ya da daha ileriye çıkarsan ikinci bir paket alırsın; ne kadar ilerlersen o kadar iyi olur, 82-0 ve 16-0 için Nihai pakete (sadece 98+ kartlar) kadar. Günde bir güçlendirmen var."
   },
   "conf": {
     "east": "Doğu",
@@ -1036,5 +1040,16 @@
   "squad": {
     "rating": "Kadro puanı",
     "short": "Kadro"
+  },
+  "rewards": {
+    "title": "Kazandıkların",
+    "next": "Bir dahaki sefere",
+    "goal_good": "İyi seçim için 60+ maç kazan",
+    "goal_confFinals": "Konferans finali seçimi için konferans finaline çık",
+    "goal_finals": "Final seçimi için konferansını kazan",
+    "goal_champion": "Şampiyon seçimi için Finalleri kazan",
+    "goal_sweep": "Süpürme şampiyonu seçimi için Finalleri 4-0 kazan",
+    "goal_ultimate": "Nihai seçim için 82-0, ardından playofflarda 16-0 yap (sadece 98+)",
+    "maxed": "Nihai seçim. Daha yükseği yok."
   }
 }

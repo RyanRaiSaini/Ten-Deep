@@ -1,5 +1,6 @@
 import type { GameResult } from './game';
 import { createRng } from './rng';
+import type { RunOutcome } from './collect/picks';
 import type { Conf } from './conference';
 import { confStandings, injuredIds, playGame, serveGame, standings, type SeasonState } from './season';
 
@@ -160,4 +161,17 @@ export function seriesFor(ps: PlayoffState, team: number): { round: number; seri
     if (s) return { round: r, series: s };
   }
   return null;
+}
+
+/** How the run went for the user's team (team 0), for its rewards (see runRewards). */
+export function runOutcome(ps: PlayoffState): RunOutcome {
+  const rec = ps.season.records[0];
+  const mine = ps.rounds.flat().filter((x) => x.hi === 0 || x.lo === 0);
+  const final = ps.rounds[3]?.[0];
+  const champ = champion(ps) === 0;
+  return {
+    wins: rec.w, losses: rec.l, champion: champ, madePlayoffs: mine.length > 0, round: seriesFor(ps, 0)?.round ?? -1,
+    finalsSweep: champ && !!final && Math.min(final.winsHi, final.winsLo) === 0,
+    playoffLosses: mine.reduce((n, x) => n + (x.hi === 0 ? x.winsLo : x.winsHi), 0),
+  };
 }

@@ -7,7 +7,8 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { CONFERENCES } from '../engine/conference';
-import { champion, outInPlayIn, seriesFor, seriesWinner } from '../engine/playoffs';
+import { champion, outInPlayIn, runOutcome, seriesFor, seriesWinner } from '../engine/playoffs';
+import { RunRewards } from '../ui/RunRewards';
 import { seedOf } from '../engine/season';
 import { ALL_SLOTS } from '../engine/types';
 import { useCareer } from '../store/career';
@@ -122,6 +123,7 @@ export default function Result() {
         })}
       </Card>
       <RosterBoard roster={user.slots} />
+      <RunRewards outcome={runOutcome(ps)} />
       {pendingPicks > 0 && (
         <Button label={t('collect.claim')} icon={<Icon name="gift" size={22} />} variant="gold" onPress={() => router.push('/packs')} testID="claim-pick" />
       )}

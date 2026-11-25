@@ -84,3 +84,20 @@ export function runRewards(r: RunOutcome): PickType[] {
 }
 /** Regular-season wins for a Good Pick instead of a Run Pick. */
 export const GOOD_WINS = 60;
+
+/** A better pick to aim for next time. */
+export type Goal = 'good' | 'confFinals' | 'finals' | 'champion' | 'sweep' | 'ultimate';
+
+/**
+ * What would have earned more: a Good Pick if you won under 60, and the next playoff pick up from where you
+ * finished. Empty once you've earned the Ultimate Pick.
+ */
+export function nextGoals(r: RunOutcome): Goal[] {
+  const out: Goal[] = [];
+  if (r.wins < GOOD_WINS) out.push('good');
+  const got = runRewards(r)[1];
+  const next: Goal | null = !got ? 'confFinals' : got === 'confFinals' ? 'finals' : got === 'finals' ? 'champion'
+    : got === 'champion' ? 'sweep' : got === 'sweep' ? 'ultimate' : null;
+  if (next) out.push(next);
+  return out;
+}

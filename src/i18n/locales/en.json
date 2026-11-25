@@ -835,7 +835,7 @@
     "title": "Shop",
     "rerolls": "Rerolls",
     "have": "You have",
-    "what": "A reroll spins the wheel again when you don't like where it landed, once your 2 free respins are used.",
+    "what": "A reroll spins the wheel again when you don't like where it landed, once your free respin is used.",
     "free": "Free daily reroll",
     "freeClaim": "Claim",
     "freeDone": "Back tomorrow",
@@ -1008,7 +1008,7 @@
     "capT": "Stay under $200M",
     "capB": "Every player costs his real contract, scaled to that season's cap. Rookie deals are cheap; max and supermax deals aren't. The game always keeps enough room for you to fill every spot.",
     "rulesT": "The fine print",
-    "rulesB": "At most two players rated 95 or higher. Two free respins per draft. If a spin has nobody you can fit, you get the cheapest player who does.",
+    "rulesB": "At most two players rated 95 or higher. One free respin per draft. If a spin has nobody you can fit, you get the cheapest player who does.",
     "seasonT": "Play 82 games",
     "seasonB": "Injuries cost the games they say. At game 50 you get one trade at the deadline. Watch it game by game or skip ahead.",
     "playoffsT": "Survive the playoffs",
@@ -1017,7 +1017,11 @@
     "challengeB": "After a run, share your link. Whoever opens it gets the same spins and the same league: the real teams. If someone drafts a player off a team, that team plays without him and its bench steps up, so your picks are the only difference.",
     "play": "Start a draft",
     "divT": "Pick your division",
-    "divB": "Choose your conference and division before tip-off. You play the whole league either way; the playoffs are seeded inside each conference."
+    "divB": "Choose your conference and division before tip-off. You play the whole league either way; the playoffs are seeded inside each conference.",
+    "squadT": "Squad Rating",
+    "squadB": "Your ten players as one number. Starters count most, 15% each; the bench counts 9, 6, 5, 3 and 2% from your 6th man to your 10th. The higher it is, the more you win: about 66 wins at 87, about 75 at 91. Only an elite squad can go 82-0.",
+    "packsT": "Earn packs",
+    "packsB": "Every finished season earns a pack, a better one at 60+ wins. Reach the conference finals or further for a second pack that gets better the deeper you go, up to the Ultimate Pick (98+ cards only) for 82-0 and 16-0. You get one power-up a day."
   },
   "conf": {
     "east": "East",
@@ -1036,5 +1040,16 @@
   "squad": {
     "rating": "Squad Rating",
     "short": "Squad"
+  },
+  "rewards": {
+    "title": "You earned",
+    "next": "Next time",
+    "goal_good": "Win 60+ games for a Good Pick",
+    "goal_confFinals": "Reach the conference finals for a Conference Finals Pick",
+    "goal_finals": "Win your conference for a Finals Pick",
+    "goal_champion": "Win the Finals for a Champion Pick",
+    "goal_sweep": "Sweep the Finals 4-0 for a Sweep Champion Pick",
+    "goal_ultimate": "Go 82-0, then 16-0 in the playoffs, for the Ultimate Pick (98+ only)",
+    "maxed": "The Ultimate Pick. There is nothing higher."
   }
 }

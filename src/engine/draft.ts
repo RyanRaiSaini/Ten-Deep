@@ -6,7 +6,7 @@ import {
 
 export { MAX_SUPERSTARS } from './cap';
 
-export const RESPINS_PER_DRAFT = 2;
+export const RESPINS_PER_DRAFT = 1;
 export const ROUNDS = 10;
 
 export interface DraftState {
