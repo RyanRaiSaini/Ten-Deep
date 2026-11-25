@@ -11,6 +11,7 @@ import { C, F, R, S } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
 import { Choice, Pips, ScoreCard } from '../../ui/dailyKit';
 import { Confetti } from '../../ui/fx';
+import { Icon } from '../../ui/icons';
 
 export default function Trivia() {
   const { t } = useTranslation();
@@ -46,10 +47,10 @@ export default function Trivia() {
   };
 
   const q = questions[Math.min(i, questions.length - 1)];
-  const prompt = q.kind === 'highest' ? t('daily.highest') : t('daily.teamQ', { name: q.players[0].name, season: q.season });
+  const prompt = q.kind === 'nba' ? q.prompt : q.kind === 'highest' ? t('daily.highest') : t('daily.teamQ', { name: q.players[0].name, season: q.season });
 
   return (
-    <Screen tint={C.pink} overlay={finished && (already ?? score) >= 4 ? <Confetti /> : null}>
+    <Screen tint={C.teal} overlay={finished && (already ?? score) >= 4 ? <Confetti /> : null}>
       <Header title={t('daily.trivia')} left={<BackButton onPress={() => goBack()} />} />
       {finished ? (
         <ScoreCard score={already ?? score} total={questions.length} onDone={() => goBack()} testID="trivia-score" doneTestID="trivia-done" />
@@ -74,6 +75,12 @@ export default function Trivia() {
               <Text style={[styles.verdict, { color: picked === q.answer ? C.neon : C.danger }]}>
                 {picked === q.answer ? t('daily.correct') : t('daily.wrong', { answer: q.answer })}
               </Text>
+              {q.kind === 'nba' && (
+                <View style={styles.fact} testID="trivia-fact">
+                  <Icon name="brain" size={28} />
+                  <Text style={styles.factText}>{q.fact}</Text>
+                </View>
+              )}
               <Button label={t('daily.next')} onPress={next} testID="trivia-next" />
             </>
           )}
@@ -88,6 +95,8 @@ const styles = StyleSheet.create({
   choice: { padding: S.lg, borderRadius: R.md },
   choiceText: { color: C.text, fontSize: 16, fontWeight: '800' },
   verdict: { fontSize: 16, fontWeight: '800', textAlign: 'center' },
+  fact: { flexDirection: 'row', alignItems: 'center', gap: S.sm, padding: S.md, borderRadius: R.md, backgroundColor: '#FFFFFF', borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge },
+  factText: { flex: 1, color: C.text, fontSize: 14, lineHeight: 20, fontWeight: '700' },
   big: { color: C.text, fontSize: 30, ...F.display },
   muted: { color: C.muted },
 });

@@ -1,6 +1,7 @@
 /**
  * Daily challenges: everyone gets the same content on the same calendar day (seeded by date).
  */
+import { NBA_TRIVIA } from '../data/nbaTrivia';
 import { createRng, shuffle } from './rng';
 import { bestOf7 } from './series';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Pos, type Rng, type Roster, type RosterSlots, type TeamSeason } from './types';
@@ -15,7 +16,12 @@ export const dailySeed = (key: string) => `daily-${key}`;
 
 export type TriviaQuestion =
   | { kind: 'highest'; prompt: string; players: Player[]; choices: string[]; answer: string }
-  | { kind: 'team'; prompt: string; players: Player[]; season: string; choices: string[]; answer: string };
+  | { kind: 'team'; prompt: string; players: Player[]; season: string; choices: string[]; answer: string }
+  /** Real NBA trivia (src/data/nbaTrivia.ts), with a short fact shown after answering. */
+  | { kind: 'nba'; prompt: string; players: Player[]; choices: string[]; answer: string; fact: string };
+
+/** First day whose quiz mixes in real NBA trivia (earlier days keep their original five, so saved answers match). */
+export const NBA_TRIVIA_FROM = '2026-11-25';
 
 const teamName = (t: TeamSeason) => `${t.city} ${t.name}`;
 
@@ -51,13 +57,28 @@ function teamQ(pool: Pool, rng: Rng): TriviaQuestion {
   return { kind: 'team', prompt: `Which team did ${p.name} play for in ${t.season}?`, players: [p], season: t.season, choices, answer };
 }
 
-/** Five questions, alternating kinds, no player asked about twice. */
+/** Three real NBA questions a day, never the same one twice in a day. */
+function nbaQs(key: string, n: number): TriviaQuestion[] {
+  const rng = createRng(`${dailySeed(key)}:nba-trivia`);
+  return shuffle(NBA_TRIVIA, rng).slice(0, n).map((x) => ({
+    kind: 'nba' as const, prompt: x.q, players: [], choices: shuffle([x.a, ...x.wrong], rng), answer: x.a, fact: x.fact,
+  }));
+}
+
+/**
+ * Five questions. From NBA_TRIVIA_FROM: real NBA trivia at 1, 3 and 5, Ten Deep questions at 2 and 4.
+ * Before that: the original alternating Ten Deep questions. No player asked about twice.
+ */
 export function dailyTrivia(pool: Pool, key: string): TriviaQuestion[] {
   const rng = createRng(`${dailySeed(key)}:trivia`);
   const out: TriviaQuestion[] = [];
   const asked = new Set<string>();
+  const real = key >= NBA_TRIVIA_FROM ? nbaQs(key, 3) : [];
   for (let tries = 0; out.length < 5; tries++) {
-    const q = out.length % 2 === 0 ? teamQ(pool, rng) : highestQ(pool, rng);
+    if (real.length && out.length % 2 === 0) { out.push(real[out.length / 2]); continue; }
+    const q = real.length
+      ? (out.length === 1 ? teamQ(pool, rng) : highestQ(pool, rng))
+      : (out.length % 2 === 0 ? teamQ(pool, rng) : highestQ(pool, rng));
     if (q.players.some((p) => asked.has(p.name)) && tries < MAX_TRIES) continue;
     q.players.forEach((p) => asked.add(p.name));
     out.push(q);
