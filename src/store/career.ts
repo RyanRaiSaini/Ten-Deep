@@ -76,7 +76,7 @@ export interface CareerStore {
 }
 
 const fresh = { active: false, ended: false, seed: '', season: 1, security: START_SECURITY, history: [], contracts: {}, freeAgents: [], teams: null, lastWins: [], lastPlayoff: [], offseason: null, step: null, morale: MORALE_START, stats: {} };
-const stripMod = (t: Roster): Roster => ({ id: t.id, name: t.name, colors: t.colors, slots: t.slots });
+const stripMod = (t: Roster): Roster => ({ id: t.id, name: t.name, colors: t.colors, slots: t.slots, ...(t.franchise ? { franchise: t.franchise } : {}) });
 
 export const useCareer = create<CareerStore>()(
   persist(

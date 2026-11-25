@@ -36,6 +36,26 @@ function draftAll(poolId = 'current-2026') {
 describe('game store', () => {
   beforeEach(() => useGame.getState().quit());
 
+  it('your division: the seed picks one until you choose, then your pick is used and kept; AI teams are the real franchises', async () => {
+    const { DIVISIONS, confOfDiv } = await import('../engine/conference');
+    useGame.setState({ division: null });
+    draftAll();
+    const first = useGame.getState().division!;
+    expect(first).toBeGreaterThanOrEqual(0);
+    expect(useGame.getState().season!.divs![0]).toBe(first);
+    useGame.getState().quit();
+    useGame.getState().setDivision(4);
+    draftAll('all-time');
+    const s = useGame.getState().season!;
+    expect(useGame.getState().division).toBe(4);
+    expect(s.divs![0]).toBe(4);
+    expect(DIVISIONS.map((_, d) => s.divs!.filter((x) => x === d).length)).toEqual([5, 5, 5, 5, 5, 5]);
+    expect(new Set(s.teams.slice(1).map((t) => t.name)).size).toBe(29);
+    // Every AI team sits in its franchise's division and conference.
+    s.teams.slice(1).forEach((t, i) => expect(DIVISIONS[s.divs![i + 1]].franchises).toContain(t.franchise));
+    expect(confOfDiv(s.divs![0])).toBe(1);
+  });
+
   it('signing at the deadline twice (double tap) does not throw', async () => {
     draftAll();
     const { advance } = await import('../engine/season');
