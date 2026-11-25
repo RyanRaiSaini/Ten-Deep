@@ -101,6 +101,10 @@ def season(y):
     return rows, total
 
 
+def by_year_name_keys(curated, y):
+    return {norm(p['name']) for (cy, _), t in curated.items() if cy == y for p in t['players']}
+
+
 def features(r, y):
     g = max(1.0, num(r, 'games'))
     mpg = num(r, 'mp_per_g')
@@ -192,6 +196,24 @@ def main():
     print(f'fit on {len(Y)} rated players: mean error {mae:.2f} points', file=sys.stderr)
 
     rate = lambda r, y: int(round(min(MAX_OVR, max(MIN_OVR, float(np.array(features(r, y)) @ coef)))))
+
+    # One person, one name: when a hand-rated player goes by another name in the stats (Penny / Anfernee
+    # Hardaway), the stats name maps to the game's in every season, so he's never two people.
+    # Players who changed their names (the stats list them by the later one).
+    alias = {'mettaworldpeace': 'Ron Artest', 'mettasandifordartest': 'Ron Artest', 'enesfreedom': 'Enes Kanter', 'bisondele': 'Brian Williams'}
+    last = lambda n: norm(n.split(' ')[-1]) if n.split(' ')[-1].lower().rstrip('.') not in ('jr', 'sr', 'ii', 'iii', 'iv') else norm(n.split(' ')[-2])
+    for (y, fr), t in curated.items():
+        if y not in data: continue
+        rows = [r for r in data[y][0] if TEAMS.get(r['team_name_abbr'], ('',))[0] == fr]
+        stat_names = {norm(r['name_display']): r['name_display'] for r in rows}
+        for p in t['players']:
+            if norm(p['name']) in stat_names: continue
+            same = [nm for k, nm in stat_names.items() if last(nm) == last(p['name']) and k not in by_year_name_keys(curated, y)]
+            if len(same) == 1: alias[norm(same[0])] = p['name']
+    if alias: print(f'{len(alias)} name variants matched, e.g. ' + ', '.join(f'{k} -> {v}' for k, v in list(alias.items())[:6]), file=sys.stderr)
+    for y, (rows, total) in data.items():
+        for r in list(rows) + list(total.values()):
+            if norm(r['name_display']) in alias: r['name_display'] = alias[norm(r['name_display'])]
 
     # Team colors: the game's own for that franchise and nickname when it has them, else today's.
     colors = {}
