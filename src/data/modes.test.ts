@@ -6,9 +6,13 @@ import { POSITIONS } from '../engine/types';
 import { MODES, MODE_BY_ID, leaguePoolFor } from './modes';
 
 describe('modes', () => {
-  it('registers current day, 8 eras and 30 franchises', () => {
+  it('registers current day, All-Time plus the six eras (older eras kept hidden), and 30 franchises', () => {
     expect(MODES.filter((m) => m.kind === 'current')).toHaveLength(1);
-    expect(MODES.filter((m) => m.kind === 'era')).toHaveLength(8);
+    expect(MODES.filter((m) => m.kind === 'era' && !m.hidden).map((m) => `${m.title} ${m.subtitle}`)).toEqual([
+      'All-Time Every era', 'Magic vs. Bird 1984–1991', 'Jordan Era 1991–2003', 'Kobe Era 2003–2010',
+      'LeBron Era 2010–2016', 'Steph Era 2016–2020', 'Modern Era 2020–2026',
+    ]);
+    expect(MODES.filter((m) => m.kind === 'era' && m.hidden).map((m) => m.id)).toEqual(['era-shaq-kobe-duncan', 'era-1980s', 'era-1990s', 'era-2010s']);
     expect(MODES.filter((m) => m.kind === 'franchise')).toHaveLength(30);
   });
 

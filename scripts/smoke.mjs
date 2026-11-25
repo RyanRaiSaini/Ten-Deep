@@ -72,6 +72,18 @@ await step('how it works: reachable from the draft screen, every rule shown', as
   if (await page.getByTestId('how-play').count()) throw new Error('start button shown while a draft is in progress');
 });
 
+await step('time machine: big banner on home, every era a banner, an era draft starts', async () => {
+  await page.goto(base);
+  await page.getByTestId('mode-era').waitFor();
+  await shot('40-home-modes');
+  await page.getByTestId('mode-era').click();
+  for (const id of ['all-time', 'era-magic-bird', 'era-jordan', 'era-kobe', 'era-lebron', 'era-steph', 'era-modern']) await page.getByTestId(`mode-${id}`).waitFor();
+  if (await page.getByTestId('mode-era-1980s').count()) throw new Error('retired era still offered');
+  await shot('41-eras');
+  await page.getByTestId('mode-era-jordan').click();
+  await page.getByTestId('spin').waitFor({ timeout: 15000 });
+});
+
 await step('weekly challenge: from home, one shot, starts a draft with a locked division', async () => {
   await page.goto(base);
   await page.getByTestId('mode-weekly').click();

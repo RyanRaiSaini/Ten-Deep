@@ -25,14 +25,15 @@ import { TierBadge, tierName } from '../../ui/TierBadge';
 import { Text } from '../../ui/Text';
 import { C, FONT, R, S } from '../../ui/theme';
 
-type ModeKey = 'weekly' | 'franchise' | 'era' | 'crisis' | 'daily';
+type ModeKey = 'weekly' | 'franchise' | 'crisis' | 'daily';
+/** Magic vs. Bird → Jordan → Kobe → LeBron → Steph → Modern, left to right across the Time Machine banner. */
+const ERA_COLORS = ['#552583', '#CE1141', '#FDB927', '#860038', '#1D428A', '#0E7C86'];
 /** Each mode is a court banner in its own colors (court tint, light streak). */
 const MODE_H = 128;
 
 const MODES: { key: ModeKey; icon: IconName; accent: string; court: string; streak: string; go: () => void; badge?: string }[] = [
   { key: 'weekly', icon: 'trophy', accent: C.purple, court: '#5B21B6', streak: '#FFC53D', go: () => router.push('/weekly'), badge: 'NEW' },
   { key: 'franchise', icon: 'history', accent: C.purple, court: '#4B2BC2', streak: '#F5C451', go: () => router.push('/modes/franchise') },
-  { key: 'era', icon: 'clock', accent: C.teal, court: '#0B7A86', streak: '#7CF5E3', go: () => router.push('/modes/era') },
   { key: 'crisis', icon: 'siren', accent: C.danger, court: '#B3202E', streak: '#FF9A3D', go: () => router.push('/modes/crisis'), badge: 'HOT' },
   { key: 'daily', icon: 'calendar', accent: C.blue, court: '#1F4FD1', streak: '#5BD7FF', go: () => router.navigate('/daily') },
 ];
@@ -203,6 +204,19 @@ export default function Home() {
       </Pressable>
 
       <Label>{t('home.modes')}</Label>
+      {/* The eras: the second-biggest banner on Home, first among the modes. */}
+      <Pressable onPress={() => router.push('/modes/era')} testID="mode-era" accessibilityRole="button" accessibilityLabel={t('mode.era.title')}
+        style={({ pressed }) => [styles.hero, { marginTop: 0 }, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 4 }]}>
+        <View style={StyleSheet.absoluteFill}><CourtArt width={heroW} height={190} color="#2B1B6B" color2="#FFC53D" /></View>
+        <LinearGradient colors={ERA_COLORS.map((c) => `${c}C8`) as unknown as [string, string, ...string[]]} start={{ x: 0, y: 0.2 }} end={{ x: 1, y: 0.8 }} style={StyleSheet.absoluteFill} />
+        <LinearGradient colors={['rgba(8,10,30,0)', 'rgba(8,10,30,0.45)']} style={StyleSheet.absoluteFill} />
+        <View style={styles.heroBody}>
+          <Text style={styles.heroKicker}>1984 – 2026</Text>
+          <Display size={38} align="left">{t('mode.era.title')}</Display>
+          <Text style={styles.heroDesc}>{t('mode.era.desc')}</Text>
+        </View>
+        <View style={styles.heroPlay}><Text style={styles.heroPlayText}>{t('home.play').toUpperCase()}</Text></View>
+      </Pressable>
       {MODES.map((m) => (
         <Pressable key={m.key} onPress={m.go} testID={`mode-${m.key}`} accessibilityRole="button" accessibilityLabel={t(`mode.${m.key}.title`)}
           style={({ pressed }) => [styles.mode, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 4 }]}>
