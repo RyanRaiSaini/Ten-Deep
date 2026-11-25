@@ -25,6 +25,8 @@ import { shareText } from '../ui/share';
 import { useProfile } from '../store/profile';
 import { runShareText } from '../engine/share';
 import { RarityBadge } from '../ui/RarityBadge';
+import { SquadBadge } from '../ui/SquadBadge';
+import { squadRating } from '../engine/rotation';
 import { useFriends } from '../store/friends';
 import { MODE_BY_ID } from '../data/modes';
 import { CONFIG } from '../config';
@@ -101,6 +103,7 @@ export default function Result() {
         <Stat label={conf === null ? t('result.seed') : t(`conf.${CONFERENCES[conf]}`)} value={`#${seed}`} />
         {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
       </Card>
+      <View style={{ alignItems: 'center' }}><SquadBadge value={squadRating(season.teams[0])} /></View>
       <RarityBadge wins={rec.w} />
       <LeagueGain gained={g.leagueGain} stake={g.stake} />
       <Card style={{ gap: S.sm }} testID="awards">

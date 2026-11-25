@@ -1013,7 +1013,7 @@
     "playoffsT": "Sopravvivi ai playoff",
     "playoffsB": "Le prime 6 di ogni conference sono dentro; dalla 7 alla 10 giocano il play-in. Serie al meglio delle 7, partita per partita. 70 vittorie sono rare. L'82-0 è un mito.",
     "challengeT": "Sfida un amico",
-    "challengeB": "Dopo una partita, condividi il tuo link. Chi lo apre ha gli stessi giri e gli stessi 29 avversari. Se qualcuno drafta un giocatore di una squadra IA, quella squadra ingaggia un sostituto simile, quindi l'unica differenza sono le vostre scelte.",
+    "challengeB": "Dopo una partita, condividi il tuo link. Chi lo apre ha gli stessi giri e la stessa lega: le squadre vere. Se qualcuno sceglie un giocatore di una squadra, quella squadra gioca senza di lui e la sua panchina sale di un gradino, così le tue scelte sono l'unica differenza.",
     "play": "Inizia un draft",
     "divT": "Scegli la tua division",
     "divB": "Scegli conference e division prima della palla a due. Affronti comunque tutta la lega; i playoff sono ordinati dentro ogni conference."
@@ -1031,5 +1031,9 @@
     "pick": "Scegli la tua division",
     "hint": "Affronti comunque tutta la lega. La division decide la tua conference, e i playoff sono ordinati dentro ogni conference.",
     "seed": "{{conf}} n. {{n}}"
+  },
+  "squad": {
+    "rating": "Valutazione squadra",
+    "short": "Squadra"
   }
 }

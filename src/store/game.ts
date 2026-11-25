@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { MODE_BY_ID, POOLS, current2026, leaguePoolFor } from '../data';
-import { alignLeague, assignDivisions, defaultDivision, franchiseOf } from '../engine/conference';
-import { draftLeague, fairLeague } from '../engine/aiDraft';
+import { assignDivisions, defaultDivision, franchiseOf, leagueFranchises } from '../engine/conference';
+import { realLeague } from '../engine/realLeague';
 import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, reroll, respin, spin, startDraft, type DraftState,
   legacyDraft,
@@ -184,23 +184,16 @@ export const useGame = create<GameStore>()(
         const mode = MODE_BY_ID[poolId];
         const lp = pool(mode ? leaguePoolFor(mode) : poolId);
         const user = { id: 'user', name: 'You', colors: ['#E8833A', '#3DF2C2'] as [string, string], slots: draft.roster as Required<RosterSlots> };
-        const rng = createRng(`${draft.seed}:league`);
-        let league;
-        if (draft.scheme === 2) {
-          // Fair league: picked from the seed before the draft, so everyone on this seed faces the same teams
-          // (players you took are swapped for fixed replacements).
-          league = fairLeague(lp, Object.values(draft.roster) as Player[], rng);
-        } else {
-          // Older saved drafts: exclude your picks by name (the league pool may hold another season of the same player).
-          const mine = new Set(Object.values(draft.roster).map((x) => x!.name));
-          const exclude = new Set(lp.teams.flatMap((t) => t.players).filter((x) => mine.has(x.name)).map((x) => x.id));
-          league = draftLeague(lp, exclude, 29, rng);
-        }
-        // The AI teams take the real franchises' names and divisions around the division you chose.
-        // Not chosen yet: the seed picks, and that pick sticks for later runs (a career keeps its division).
+        // Not chosen yet: the seed picks your division, and that pick sticks for later runs (a career keeps it).
         const division = get().division ?? defaultDivision(draft.seed);
         if (get().division === null) set({ division });
-        const { teams, divs } = alignLeague([user, ...league], division, draft.seed, lp.teams, current2026.teams);
+        // The 29 AI teams are real teams of the other franchises (Current Day: their actual 2026-27 rosters;
+        // eras: a season of theirs from that era), minus anyone you drafted. Same picks and seed, same league.
+        const franchises = leagueFranchises(division, draft.seed);
+        const seasons = mode && mode.kind !== 'franchise' ? mode.pool.teams : lp.teams;
+        const league = realLeague(franchises, Object.values(draft.roster) as Player[], draft.seed, seasons, pool('all-time').teams, current2026.teams);
+        const teams = [user, ...league];
+        const divs = assignDivisions([undefined, ...franchises], division);
         // Career mode locks every salary in at signing so payrolls carry over between seasons.
         const [u, ...rest] = get().career ? withSignedSalaries(teams) : teams;
         const season = createSeason(u, rest, draft.seed, divs);

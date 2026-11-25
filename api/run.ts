@@ -10,6 +10,8 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { ImageResponse as OgImageResponse } from '@vercel/og';
 import { parseChallenge } from '../src/engine/share';
+import { squadRatingOf } from '../src/engine/rotation';
+import { squadColor } from '../src/ui/squadColor';
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]!);
 type El = { type: string; props: { style?: Record<string, unknown>; children?: unknown } };
@@ -38,6 +40,8 @@ const RESULT: Record<string, string> = {
 export interface RunInfo {
   name: string; w: number; l: number; fair: boolean;
   ratings: number[]; result: string | null; mode: string | null;
+  /** Squad Rating from the ten ratings (null without them). */
+  squad: number | null;
 }
 
 /** Everything the card shows, validated from the query (null if it isn't a valid challenge link). */
@@ -47,7 +51,8 @@ export function runInfo(q: URLSearchParams): RunInfo | null {
   const ratings = (q.get('r') ?? '').split('.').map(Number).filter((n) => Number.isInteger(n) && n >= 40 && n <= 99).slice(0, 10);
   const res = q.get('res') ?? '';
   const mode = (q.get('mt') ?? '').replace(/[^\p{L}\p{N} '’.&-]/gu, '').trim().slice(0, 28) || null;
-  return { name: c.name, w: c.w, l: c.l, fair: c.fair, ratings: ratings.length === 10 ? ratings : [], result: RESULT[res] ?? null, mode };
+  const ten = ratings.length === 10 ? ratings : [];
+  return { name: c.name, w: c.w, l: c.l, fair: c.fair, ratings: ten, result: RESULT[res] ?? null, mode, squad: ten.length ? Math.round(squadRatingOf(ten)) : null };
 }
 
 export const tileColor = (o: number) => (o >= 95 ? '#FFC53D' : o >= 88 ? '#2BC07A' : o >= 80 ? '#3B6CF0' : '#5A6378');
@@ -71,6 +76,9 @@ async function image(r: RunInfo) {
         r.result ? h({ marginTop: 12, alignSelf: 'flex-start', padding: '8px 22px', borderRadius: 999, backgroundColor: champ ? '#FFC53D' : 'rgba(255,255,255,0.14)', fontSize: 28, color: champ ? '#17121E' : '#FFFFFF' }, r.result) : h({})),
       r.ratings.length
         ? h({ flexDirection: 'column', gap: 18, alignItems: 'flex-end' },
+          h({ alignItems: 'center', gap: 12, padding: '6px 20px', borderRadius: 999, backgroundColor: squadColor(r.squad ?? 0) },
+            h({ fontSize: 20, color: 'rgba(255,255,255,0.85)', letterSpacing: 2 }, 'SQUAD RATING'),
+            h({ fontFamily: 'Display', fontSize: 40, color: '#FFFFFF' }, String(r.squad ?? ''))),
           h({ gap: 14 }, ...r.ratings.slice(0, 5).map((o) => tile(o, 104))),
           h({ gap: 14 }, ...r.ratings.slice(5).map((o) => tile(o, 80))))
         : h({})),
