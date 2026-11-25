@@ -165,4 +165,8 @@ export const OWNER_RATED: readonly string[] = [
   'Dyson Daniels',
   'Jalen Johnson',
   'Rudy Gobert',
+  // Confirmed 2026-11-25 (names unclear in the first list).
+  'Mikal Bridges',
+  'Jalen Williams',
+  'Brayden Burries',
 ];

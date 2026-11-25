@@ -268,7 +268,7 @@ export const current2026: Pool = {
       Gary Trent Jr.|SG|74|27|shooter
       AJ Green|SG|74|27|shooter
       Nate Ament|SF/PF|74|19|scorer|80
-      Brayden Burries|SG|73|21|twoway
+      Brayden Burries|SG|78|21|twoway
       Kasparas Jakučionis|PG|74|20|playmaker
       Ousmane Dieng|PF/SF|70|23|stretch
     `),
@@ -305,7 +305,7 @@ export const current2026: Pool = {
     team('nyk', 'New York', 'Knicks', S, ['#006BB6', '#F58426'], `
       Jalen Brunson|PG|94|30|scorer
       Karl-Anthony Towns|C/PF|93|30|stretch
-      Mikal Bridges|SF/SG|84|30|twoway
+      Mikal Bridges|SF/SG|81|30|twoway
       OG Anunoby|SF/PF|84|29|defender
       Josh Hart|SG/SF|81|31|twoway
       Miles McBride|PG|76|26|defender
@@ -319,7 +319,7 @@ export const current2026: Pool = {
     `),
     team('okc', 'Oklahoma City', 'Thunder', S, ['#007AC1', '#EF3B24'], `
       Shai Gilgeous-Alexander|PG|98|28|scorer
-      Jalen Williams|SF/SG|88|25|twoway
+      Jalen Williams|SF/SG|84|25|twoway
       Chet Holmgren|C/PF|85|24|unicorn|55
       Isaiah Hartenstein|C|81|28|big
       Cason Wallace|PG/SG|79|22|defender

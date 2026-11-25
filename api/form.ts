@@ -17,7 +17,7 @@ const RECENT_DAYS = 7;
 const MAX_GAMES_PER_RUN = 320;
 const HOUR = 3600_000;
 /** Bump when the rating model changes so the next request re-rates from stored box scores. */
-const MODEL = 5; // 4+: owner-rated players measured only on games after their update (src/data/ownerRated.ts); 5: earlier owner calls added
+const MODEL = 6; // 4+: owner-rated players measured only on games after their update (src/data/ownerRated.ts); 5: earlier owner calls added; 6: Bridges, J. Williams, Burries added
 const DAY = 24 * HOUR;
 
 interface State {
