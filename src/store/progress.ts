@@ -113,7 +113,7 @@ export const useProgress = create<ProgressStore>()(
         if (!m || s.claimed.includes(key)) return false;
         if (missionProgress(m, s.stats, isWeekly ? s.weekBase : s.dayBase) < m.target) return false;
         set({ claimed: [...s.claimed, key] });
-        useCollection.getState().grant(m.reward, `mission:${key}`);
+        if (m.reward) useCollection.getState().grant(m.reward, `mission:${key}`);
         return true;
       },
 

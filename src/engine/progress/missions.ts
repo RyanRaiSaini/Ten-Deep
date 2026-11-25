@@ -1,4 +1,4 @@
-/** Daily and weekly missions: three each, seeded by the date, paid in Player Picks. */
+/** Daily and weekly missions: three each, seeded by the date. Weekly missions pay a Run Pick; daily ones are for the streak and stats. */
 import type { PickType } from '../collect/picks';
 import { createRng, shuffle } from '../rng';
 import type { StatKey, Stats } from './stats';
@@ -7,11 +7,12 @@ export interface Mission {
   id: string;
   stat: StatKey;
   target: number;
-  reward: PickType;
+  /** The pick it pays (none for daily missions: packs are meant to be earned by playing runs). */
+  reward: PickType | null;
 }
 
-const daily = (stat: StatKey, target: number): Mission => ({ id: `d-${stat}`, stat, target, reward: 'run' });
-const weekly = (stat: StatKey, target: number): Mission => ({ id: `w-${stat}`, stat, target, reward: 'weekly' });
+const daily = (stat: StatKey, target: number): Mission => ({ id: `d-${stat}`, stat, target, reward: null });
+const weekly = (stat: StatKey, target: number): Mission => ({ id: `w-${stat}`, stat, target, reward: 'run' });
 
 export const DAILY_POOL: Mission[] = [
   daily('runs', 1), daily('win40', 1), daily('playoffRuns', 1), daily('dailyGames', 2), daily('packs', 1),
@@ -21,7 +22,7 @@ export const DAILY_POOL: Mission[] = [
 
 export const WEEKLY_POOL: Mission[] = [
   weekly('runs', 5), weekly('titles', 1), weekly('seasonWins', 300), weekly('dailyGames', 10), weekly('gauntletSeries', 5),
-  weekly('crisisRuns', 2), weekly('win55', 1), weekly('packs', 7), weekly('careerSeasons', 2),
+  weekly('crisisRuns', 2), weekly('win55', 1), weekly('packs', 3), weekly('careerSeasons', 2),
 ];
 
 const pick3 = (pool: Mission[], seed: string) => shuffle(pool, createRng(seed)).slice(0, 3);

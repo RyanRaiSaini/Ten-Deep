@@ -32,9 +32,9 @@ export function advanceStreak(last: string | null, today: string, streak: number
   return gap === 1 ? streak + 1 : 1;
 }
 
-/** Picks earned on a given streak day: a daily pick, plus a weekly (every 7th) or mythic (every 31st) pick. */
+/** Picks earned on a given streak day: nothing most days; a Weekly Pick every 7th day, a Mythic every 31st. */
 export function streakRewards(day: number): PickType[] {
-  if (day > 0 && day % 31 === 0) return ['daily', 'mythic'];
-  if (day > 0 && day % 7 === 0) return ['daily', 'weekly'];
-  return ['daily'];
+  if (day > 0 && day % 31 === 0) return ['mythic'];
+  if (day > 0 && day % 7 === 0) return ['weekly'];
+  return [];
 }

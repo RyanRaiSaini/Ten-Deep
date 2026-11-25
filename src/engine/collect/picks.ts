@@ -3,26 +3,32 @@ import { createRng, shuffle } from '../rng';
 import type { Rng } from '../types';
 import { TIERS, type Card, type Tier } from './tiers';
 
-export const PICK_TYPES = ['daily', 'run', 'playoffs', 'weekly', 'champion', 'mythic', 'legendary'] as const;
+export const PICK_TYPES = [
+  'daily', 'run', 'good', 'playoffs', 'weekly', 'confFinals', 'finals', 'champion', 'sweep', 'mythic', 'legendary', 'ultimate',
+] as const;
 export type PickType = (typeof PICK_TYPES)[number];
 
 type Odds = Record<Tier, number>;
 const BASE: Odds = { common: 50, uncommon: 28, rare: 15, epic: 5.5, mythic: 1.3, ultra: 0.2 };
 const PLAYOFFS: Odds = { common: 35, uncommon: 30, rare: 22, epic: 9, mythic: 3.3, ultra: 0.7 };
 const WEEKLY: Odds = { common: 15, uncommon: 25, rare: 39, epic: 15.5, mythic: 4.5, ultra: 1 };
+const FINALS: Odds = { common: 0, uncommon: 10, rare: 45, epic: 32, mythic: 10, ultra: 3 };
 const CHAMPION: Odds = { common: 0, uncommon: 0, rare: 40, epic: 40, mythic: 16, ultra: 4 };
+const ULTIMATE: Odds = { common: 0, uncommon: 0, rare: 0, epic: 0, mythic: 0, ultra: 100 };
 
 /** Per-card tier odds (percent) shown in the UI, plus each pick type's guarantee. */
 export const PICK_ODDS: Record<PickType, Odds> = {
-  daily: BASE, run: BASE, playoffs: PLAYOFFS, weekly: WEEKLY, champion: CHAMPION, mythic: WEEKLY, legendary: WEEKLY,
+  daily: BASE, run: BASE, good: PLAYOFFS, playoffs: PLAYOFFS, weekly: WEEKLY, confFinals: WEEKLY, finals: FINALS,
+  champion: CHAMPION, sweep: CHAMPION, mythic: WEEKLY, legendary: WEEKLY, ultimate: ULTIMATE,
 };
 /** One card in these picks is forced into these tiers. */
 const GUARANTEE: Partial<Record<PickType, Partial<Odds>>> = {
+  sweep: { mythic: 70, ultra: 30 },
   mythic: { mythic: 85, ultra: 15 },
   legendary: { ultra: 100 },
 };
-/** Champion picks only contain 83+ cards. */
-const MIN_OVR: Partial<Record<PickType, number>> = { champion: 83 };
+/** Floors: Finals picks 80+, Champion 83+, Sweep 85+, and the Ultimate pick only the 98+ greats. */
+const MIN_OVR: Partial<Record<PickType, number>> = { finals: 80, champion: 83, sweep: 85, ultimate: 98 };
 
 function rollTier(odds: Partial<Odds>, rng: Rng): Tier {
   const entries = TIERS.map((t) => [t, odds[t] ?? 0] as const).filter(([, w]) => w > 0);
@@ -50,9 +56,31 @@ export function generatePick(cards: Card[], type: PickType, seed: string): Card[
   return shuffle(chosen, rng);
 }
 
-/** Which pick a finished draft run earns. */
-export function runPickType(r: { wins: number; champion: boolean; madePlayoffs: boolean }): PickType {
-  if (r.wins >= 82) return 'legendary';
-  if (r.champion) return 'champion';
-  return r.madePlayoffs ? 'playoffs' : 'run';
+/** How a finished draft run went, for its rewards. */
+export interface RunOutcome {
+  wins: number;
+  losses: number;
+  champion: boolean;
+  madePlayoffs: boolean;
+  /** Deepest playoff round reached: 0 first round … 3 Finals; -1 if you never made a series. */
+  round: number;
+  /** Won the Finals 4-0. */
+  finalsSweep: boolean;
+  /** Playoff games lost (0 with a title = 16-0). */
+  playoffLosses: number;
 }
+
+/**
+ * The picks a finished run earns. Every run: a Run Pick, a Good Pick for 60+ wins, a Legendary Pick for 82-0.
+ * A deep playoff run stacks a second pick that grows with how far you went: lost in the conference finals,
+ * lost in the Finals, champions, champions with a Finals sweep, and for 82-0 plus 16-0 the Ultimate (98+ only).
+ */
+export function runRewards(r: RunOutcome): PickType[] {
+  const season: PickType = r.wins >= 82 && r.losses === 0 ? 'legendary' : r.wins >= GOOD_WINS ? 'good' : 'run';
+  const playoff: PickType | null = r.champion
+    ? (r.wins >= 82 && r.losses === 0 && r.playoffLosses === 0 ? 'ultimate' : r.finalsSweep ? 'sweep' : 'champion')
+    : r.round === 3 ? 'finals' : r.round === 2 ? 'confFinals' : null;
+  return playoff ? [season, playoff] : [season];
+}
+/** Regular-season wins for a Good Pick instead of a Run Pick. */
+export const GOOD_WINS = 60;

@@ -6,7 +6,7 @@ vi.mock('@react-native-async-storage/async-storage', () => ({
 
 const { useProgress, track } = await import('./progress');
 const { useCollection } = await import('./collection');
-const { dailyMissions } = await import('../engine/progress/missions');
+const { dailyMissions, weeklyMissions } = await import('../engine/progress/missions');
 
 const run = { type: 'run' as const, wins: 50, losses: 32, champion: false, madePlayoffs: true, seed: 4, playoffLosses: 4, kind: 'current' as const, verdict: null };
 
@@ -16,7 +16,7 @@ describe('progress store', () => {
     useCollection.setState(useCollection.getInitialState(), true);
   });
 
-  it('missions count from the start of the day and pay a pick once when claimed', () => {
+  it('missions count from the start of the day; daily ones pay no pick, weekly ones pay once', () => {
     const day = '2026-11-23';
     track({ type: 'duel' }); // before the day starts: doesn't count
     useProgress.getState().rollover(day);
@@ -33,6 +33,9 @@ describe('progress store', () => {
     }
     expect(useProgress.getState().claim(m.id)).toBe(true);
     expect(useProgress.getState().claim(m.id)).toBe(false);
+    expect(useCollection.getState().pending.filter((p) => p.source.startsWith('mission:'))).toHaveLength(0);
+    const w = weeklyMissions(day).find((x) => useProgress.getState().claim(x.id));
+    expect(w).toBeDefined();
     expect(useCollection.getState().pending.filter((p) => p.source.startsWith('mission:'))).toHaveLength(1);
   });
 

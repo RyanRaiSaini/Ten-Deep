@@ -9,12 +9,20 @@ const { useCollection } = await import('./collection');
 describe('collection store', () => {
   beforeEach(() => useCollection.setState(useCollection.getInitialState(), true));
 
-  it('daily check-in grants one Daily pick per day, never twice', () => {
+  it('logging in alone grants no pick (packs come from playing)', () => {
     useCollection.getState().checkIn('2026-11-22');
-    useCollection.getState().checkIn('2026-11-22');
-    const p = useCollection.getState().pending;
-    expect(p.map((x) => x.type)).toEqual(['daily']);
-    expect(p[0].cards).toHaveLength(5);
+    useCollection.getState().checkIn('2026-11-23');
+    expect(useCollection.getState().pending).toEqual([]);
+  });
+
+  it('one power-up a day, on any pick', () => {
+    useCollection.getState().awardRun('run-p', { wins: 40, losses: 42, champion: false, madePlayoffs: false, round: -1, finalsSweep: false, playoffLosses: 0 });
+    useCollection.getState().awardRun('run-q', { wins: 41, losses: 41, champion: false, madePlayoffs: false, round: -1, finalsSweep: false, playoffLosses: 0 });
+    const [a, b] = useCollection.getState().pending;
+    expect(useCollection.getState().powerUp(a.id, '2026-11-25')).not.toBeNull();
+    expect(useCollection.getState().powerUp(b.id, '2026-11-25')).toBeNull();
+    expect(useCollection.getState().powerUp(a.id, '2026-11-25')).toBeNull();
+    expect(useCollection.getState().powerUp(b.id, '2026-11-26')).not.toBeNull();
   });
 
   it('first check-in grants a 10-card starter squad and a full lineup, once', () => {
@@ -33,12 +41,13 @@ describe('collection store', () => {
     expect(useCollection.getState().streak).toBe(1);
   });
 
-  it('a finished run earns one pick per run, scaled by result', () => {
-    useCollection.getState().awardRun('run-a', { wins: 60, champion: true, madePlayoffs: true });
-    useCollection.getState().awardRun('run-a', { wins: 60, champion: true, madePlayoffs: true });
+  it('a finished run pays once: a season pick, plus a playoff pick for a title', () => {
+    const won = { wins: 60, losses: 22, champion: true, madePlayoffs: true, round: 3, finalsSweep: false, playoffLosses: 4 };
+    useCollection.getState().awardRun('run-a', won);
+    useCollection.getState().awardRun('run-a', won);
     const p = useCollection.getState().pending;
-    expect(p).toHaveLength(1);
-    expect(p[0].type).toBe('champion');
+    expect(p.map((x) => x.type)).toEqual(['good', 'champion']);
+    expect(new Set(p.map((x) => x.id)).size).toBe(2);
   });
 
   it('lineup only accepts owned cards in legal slots; autoFill uses the collection', () => {
@@ -83,14 +92,16 @@ describe('collection store', () => {
     expect(p[0].source).toContain('set:chi-1996');
   });
 
+  const loss = (k: string) => useCollection.getState().awardRun(k, { wins: 30, losses: 52, champion: false, madePlayoffs: false, round: -1, finalsSweep: false, playoffLosses: 0 });
+
   it('keeping a card adds it to the collection and consumes the pick', () => {
-    useCollection.getState().checkIn('2026-11-22');
+    loss('run-k1');
     const pick = useCollection.getState().pending[0];
     useCollection.getState().keep(pick.id, pick.cards[2]);
     expect(useCollection.getState().pending).toHaveLength(0);
     expect(useCollection.getState().owned[pick.cards[2]].count).toBe(1);
     // can't keep a card that wasn't in the pick
-    useCollection.getState().checkIn('2026-11-23');
+    loss('run-k2');
     const next = useCollection.getState().pending[0];
     useCollection.getState().keep(next.id, 'not-in-pick');
     expect(useCollection.getState().pending).toHaveLength(1);
@@ -109,21 +120,18 @@ describe('streak freezes', () => {
   });
 });
 
-describe('power-up taps', () => {
-  it('three taps at most; an upgrade changes the pick type and its cards, the same way every time', () => {
-    useCollection.setState(useCollection.getInitialState(), true);
-    useCollection.getState().checkIn('2026-11-22');
-    const id = useCollection.getState().pending[0].id;
-    const results = [useCollection.getState().powerUp(id), useCollection.getState().powerUp(id), useCollection.getState().powerUp(id)];
-    expect(useCollection.getState().powerUp(id)).toBeNull();
-    const p = useCollection.getState().pending[0];
-    expect(p.taps).toBe(3);
-    const ups = results.filter((r) => r === 'up').length;
-    expect(p.type).toBe((['daily', 'run', 'playoffs', 'weekly'] as const)[ups]);
-    // Replaying the same pick gives the same outcome.
-    useCollection.setState(useCollection.getInitialState(), true);
-    useCollection.getState().checkIn('2026-11-22');
-    const again = [0, 1, 2].map(() => useCollection.getState().powerUp(id));
-    expect(again).toEqual(results);
+describe('power-up', () => {
+  it('an upgrade changes the pick type and its cards, the same way every time', () => {
+    const outcome = { wins: 30, losses: 52, champion: false, madePlayoffs: false, round: -1, finalsSweep: false, playoffLosses: 0 };
+    const roll = () => {
+      useCollection.setState(useCollection.getInitialState(), true);
+      useCollection.getState().awardRun('run-u', outcome);
+      const id = useCollection.getState().pending[0].id;
+      return [useCollection.getState().powerUp(id, '2026-11-25'), useCollection.getState().pending[0]] as const;
+    };
+    const [r, p] = roll();
+    expect(p.taps).toBe(1);
+    expect(p.type).toBe(r === 'up' ? 'good' : 'run');
+    expect(roll()).toEqual([r, p]);
   });
 });
