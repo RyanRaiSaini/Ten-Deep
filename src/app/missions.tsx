@@ -32,7 +32,7 @@ export default function Missions() {
         <View style={{ flex: 1, gap: 6 }}>
           <Text style={styles.mTitle}>{t(`stat.${m.stat}`)}</Text>
           <View style={styles.bar}><View style={[styles.fill, { width: `${(n / m.target) * 100}%`, backgroundColor: claimed ? C.muted : C.neon }]} /></View>
-          <View style={styles.subRow}><Text style={styles.mSub}>{n}/{m.target} ·</Text><Icon name="gift" size={16} /><Text style={styles.mSub}>{t(`collect.t_${m.reward}`)}</Text></View>
+          <View style={styles.subRow}><Text style={styles.mSub}>{n}/{m.target}{m.reward ? ' ·' : ''}</Text>{m.reward && <><Icon name="gift" size={16} /><Text style={styles.mSub}>{t(`collect.t_${m.reward}`)}</Text></>}</View>
         </View>
         {claimed
           ? <Text style={styles.claimed}>✓ {t('missions.claimed')}</Text>

@@ -18,11 +18,16 @@ type FX = 'none' | 'glints' | 'embers' | 'holo';
 export const PACK_STYLE: Record<PickType, { colors: [string, string]; pattern: Pattern; emblem: IconName; pips: number; fx: FX }> = {
   daily: { colors: ['#4F8BFF', '#123A8A'], pattern: 'stripes', emblem: 'calendar', pips: 1, fx: 'none' },
   run: { colors: ['#C9D0DE', '#3A4256'], pattern: 'planks', emblem: 'ball', pips: 1, fx: 'none' },
+  good: { colors: ['#2BC0E4', '#0E5A78'], pattern: 'stripes', emblem: 'hoop', pips: 2, fx: 'none' },
   playoffs: { colors: ['#3DDC84', '#0F6B3E'], pattern: 'bracket', emblem: 'medal', pips: 2, fx: 'none' },
   weekly: { colors: ['#B26BFF', '#4B1A7A'], pattern: 'halftone', emblem: 'star', pips: 3, fx: 'none' },
+  confFinals: { colors: ['#FF7A45', '#7A2A0A'], pattern: 'bracket', emblem: 'medal', pips: 3, fx: 'none' },
+  finals: { colors: ['#C0C8D8', '#3A4466'], pattern: 'rays', emblem: 'medal', pips: 4, fx: 'glints' },
   champion: { colors: ['#F5C451', '#8A5A00'], pattern: 'rays', emblem: 'trophy', pips: 4, fx: 'glints' },
+  sweep: { colors: ['#FFD86B', '#B02A2A'], pattern: 'flames', emblem: 'trophy', pips: 5, fx: 'embers' },
   mythic: { colors: ['#FF5A36', '#7A1405'], pattern: 'flames', emblem: 'flame', pips: 5, fx: 'embers' },
   legendary: { colors: ['#FF5AC8', '#4F8BFF'], pattern: 'stars', emblem: 'crown', pips: 6, fx: 'holo' },
+  ultimate: { colors: ['#FFFFFF', '#141414'], pattern: 'stars', emblem: 'crown', pips: 7, fx: 'holo' },
 };
 
 /** The printed pattern on the foil (white, low opacity, drawn in pack coordinates). */
