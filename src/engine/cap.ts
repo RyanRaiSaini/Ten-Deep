@@ -60,20 +60,31 @@ export function rookieScale(pick: number): number {
 
 const filled = (roster: RosterSlots) => ALL_SLOTS.filter((s) => roster[s]);
 
+/** Real contracts of every player-season in the full rosters (src/data/fullHistory.ts registers them as it loads). */
+const SEASON_CONTRACTS: Record<string, [number, ContractType]> = {};
+export function registerContracts(entries: Iterable<[string, [number, ContractType]]>) {
+  for (const [id, c] of entries) SEASON_CONTRACTS[id] = c;
+}
+/** His real deal that season: the hand-built list, unless that's only an estimate and the full rosters have the real one. */
+const contractOf = (id: string) => {
+  const a = CONTRACTS[id];
+  return a && a[1] !== 'est' ? a : SEASON_CONTRACTS[id] ?? a;
+};
+
 /**
  * What a player costs: his signed contract in Career mode, else his real contract for that season,
  * else the market rate for his rating.
  */
 export function payOf(p: Player): number {
   if (p.salary !== undefined) return p.salary;
-  return (!p.released && CONTRACTS[p.id]?.[0]) || salaryFor(p.ovr);
+  return (!p.released && contractOf(p.id)?.[0]) || salaryFor(p.ovr);
 }
 
 /** The kind of deal a player is on (supermax, max, rookie scale, two-way, minimum…); null when it's an estimate. */
 export function contractType(p: Player): Exclude<ContractType, 'est'> | null {
   if (p.contractType) return p.contractType;
   if (p.released) return null;
-  const t = CONTRACTS[p.id]?.[1];
+  const t = contractOf(p.id)?.[1];
   return t && t !== 'est' ? t : null;
 }
 
