@@ -1013,7 +1013,7 @@
     "playoffsT": "Sobrevive a los playoffs",
     "playoffsB": "Los 6 primeros de cada conferencia entran; del 7 al 10 juegan el play-in. Series al mejor de 7, partido a partido. 70 victorias es raro. El 82-0 es un mito.",
     "challengeT": "Reta a un amigo",
-    "challengeB": "Después de una partida, comparte tu enlace. Quien lo abra tiene los mismos giros y los mismos 29 rivales. Si alguien draftea a un jugador que tenía un equipo de la IA, ese equipo ficha a un sustituto parecido, así que la única diferencia son tus elecciones.",
+    "challengeB": "Después de una partida, comparte tu enlace. Quien lo abra tendrá los mismos giros y la misma liga: los equipos reales. Si alguien elige a un jugador de un equipo, ese equipo juega sin él y su banquillo da un paso al frente, así que tus elecciones son la única diferencia.",
     "play": "Empezar un draft",
     "divT": "Elige tu división",
     "divB": "Elige conferencia y división antes del salto inicial. Juegas contra toda la liga igualmente; los playoffs se ordenan dentro de cada conferencia."
@@ -1031,5 +1031,9 @@
     "pick": "Elige tu división",
     "hint": "Juegas contra toda la liga igualmente. Tu división define tu conferencia, y los playoffs se ordenan dentro de cada conferencia.",
     "seed": "{{conf}} n.º {{n}}"
+  },
+  "squad": {
+    "rating": "Valoración del equipo",
+    "short": "Equipo"
   }
 }

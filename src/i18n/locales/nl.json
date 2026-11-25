@@ -1008,7 +1008,7 @@
     "playoffsT": "Overleef de play-offs",
     "playoffsB": "De top 6 van elke conference is door; 7 tot en met 10 spelen de play-in. Best-of-7, wedstrijd voor wedstrijd. 70 zeges is zeldzaam. 82-0 is een mythe.",
     "challengeT": "Daag een vriend uit",
-    "challengeB": "Deel na een run je link. Wie hem opent krijgt dezelfde draaien en dezelfde 29 tegenstanders. Draft iemand een speler van een AI-team, dan haalt dat team een vergelijkbare vervanger, dus alleen jullie keuzes maken het verschil.",
+    "challengeB": "Deel na een run je link. Wie hem opent krijgt dezelfde spins en dezelfde competitie: de echte teams. Draft iemand een speler van een team, dan speelt dat team zonder hem en schuift de bank door, dus jouw keuzes zijn het enige verschil.",
     "play": "Start een draft",
     "divT": "Kies je divisie",
     "divB": "Kies je conference en divisie voor de tip-off. Je speelt hoe dan ook tegen de hele competitie; de play-offs worden per conference geplaatst."
@@ -1026,5 +1026,9 @@
     "pick": "Kies je divisie",
     "hint": "Je speelt hoe dan ook tegen de hele competitie. Je divisie bepaalt je conference, en de play-offs worden per conference geplaatst.",
     "seed": "{{conf}} #{{n}}"
+  },
+  "squad": {
+    "rating": "Selectiescore",
+    "short": "Selectie"
   }
 }

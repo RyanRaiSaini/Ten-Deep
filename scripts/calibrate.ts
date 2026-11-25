@@ -3,11 +3,12 @@
  *   npx tsx scripts/calibrate.ts [seasons] [k=0.012 star=0.05 scoreSd=10 ...]
  */
 import { draftLeague, fairLeague } from '../src/engine/aiDraft';
-import { alignLeague, defaultDivision } from '../src/engine/conference';
+import { assignDivisions, defaultDivision, leagueFranchises } from '../src/engine/conference';
+import { realLeague } from '../src/engine/realLeague';
 import { affordableSlots, fallbackPick, isComplete, options, pick, pickFallback, spin, startDraft, type DraftState } from '../src/engine/draft';
 import { champion, simPlayoffsToEnd, startPlayoffs } from '../src/engine/playoffs';
 import { createRng } from '../src/engine/rng';
-import { lineupMinutes, teamStrength } from '../src/engine/rotation';
+import { lineupMinutes, squadRating, teamStrength } from '../src/engine/rotation';
 import { advance, createSeason } from '../src/engine/season';
 import { SIM } from '../src/engine/simConfig';
 import { ALL_SLOTS, type Pool, type Roster, type RosterSlots } from '../src/engine/types';
@@ -61,17 +62,24 @@ export function goodDraft(pool: Pool, seed: string): Roster {
   return Array.from({ length: 6 }, (_, i) => spinDraft(pool, `${seed}-${i}`)).sort((a, b) => net(b) - net(a))[0];
 }
 
+/** The same roster moved up or down so its Squad Rating lands on `target` (ratings clamped to 40–99). */
+export function atSquadRating(r: Roster, target: number): Roster {
+  const d = Math.round(target - squadRating(r));
+  const c = (x: number) => Math.max(40, Math.min(99, x + d));
+  return { ...r, slots: Object.fromEntries(ALL_SLOTS.map((k) => [k, { ...r.slots[k], ovr: c(r.slots[k].ovr), off: c(r.slots[k].off), def: c(r.slots[k].def) }])) as Roster['slots'] };
+}
+
 export function runSeasons(user: Roster | ((i: number) => Roster), pool: Pool, n: number, tag: string) {
   const wins: number[] = [];
   let titles = 0;
   for (let i = 0; i < n; i++) {
     const u = typeof user === 'function' ? user(i) : user;
-    // The league the game builds for a run: drafted from the seed alone, your players swapped out.
-    const league = fairLeague(pool, ALL_SLOTS.map((s) => u.slots[s]), createRng(`${tag}-league-${i}`));
-    // Laid out in conferences like a real run (your division picked by the seed).
+    // The league the game builds for a run: the real teams of the other franchises, minus your players.
     const seed = `${tag}-season-${i}`;
-    const { teams, divs } = alignLeague([u, ...league], defaultDivision(seed), seed, pool.teams, current2026.teams);
-    let season = createSeason(teams[0], teams.slice(1), seed, divs);
+    const div = defaultDivision(seed);
+    const franchises = leagueFranchises(div, seed);
+    const league = realLeague(franchises, ALL_SLOTS.map((s) => u.slots[s]), seed, pool.teams, pool.teams, current2026.teams);
+    let season = createSeason(u, league, seed, assignDivisions([undefined, ...franchises], div));
     season = advance(advance(season, 82), 82);
     wins.push(season.records[0].w);
     if (champion(simPlayoffsToEnd(startPlayoffs(season))) === 0) titles++;

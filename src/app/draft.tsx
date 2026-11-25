@@ -15,6 +15,8 @@ import { Icon } from '../ui/icons';
 import { Confetti, Pulse } from '../ui/fx';
 import { PlayerCard } from '../ui/PlayerCard';
 import { DivisionPicker } from '../ui/DivisionPicker';
+import { SquadBadge } from '../ui/SquadBadge';
+import { partialSquadRating } from '../engine/rotation';
 import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner, teamGradient } from '../ui/Spinner';
 import { C, FONT, R, S, money } from '../ui/theme';
@@ -67,6 +69,10 @@ export default function Draft() {
 
   const capCard = (
     <Card style={{ gap: S.sm }} testID="cap">
+      <View style={styles.capRow}>
+        <Text style={styles.capLabel}>{t('squad.rating')}</Text>
+        <SquadBadge value={partialSquadRating(d.roster)} size="sm" />
+      </View>
       <View style={styles.capRow}>
         <Text style={styles.capLabel}>{t('draft.capSpace')}</Text>
         <Text style={styles.capNum}>{money(room)} <Text style={styles.capOf}>/ {money(CAP)}</Text></Text>

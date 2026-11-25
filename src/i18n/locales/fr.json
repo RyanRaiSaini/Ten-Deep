@@ -1013,7 +1013,7 @@
     "playoffsT": "Survis aux playoffs",
     "playoffsB": "Les 6 premiers de chaque conférence sont qualifiés ; du 7e au 10e, play-in. Séries au meilleur des 7, match par match. 70 victoires, c'est rare. Le 82-0 est un mythe.",
     "challengeT": "Défie un ami",
-    "challengeB": "Après une partie, partage ton lien. Celui qui l'ouvre a les mêmes tirages et les mêmes 29 adversaires. Si quelqu'un drafte un joueur d'une équipe IA, cette équipe recrute un remplaçant proche, donc seuls vos choix font la différence.",
+    "challengeB": "Après une partie, partage ton lien. Qui l'ouvre a les mêmes tirages et la même ligue : les vraies équipes. Si quelqu'un drafte un joueur d'une équipe, elle joue sans lui et son banc monte d'un cran : tes choix sont la seule différence.",
     "play": "Lancer un draft",
     "divT": "Choisis ta division",
     "divB": "Choisis ta conférence et ta division avant l'entre-deux. Tu affrontes toute la ligue de toute façon ; les playoffs sont classés au sein de chaque conférence."
@@ -1031,5 +1031,9 @@
     "pick": "Choisis ta division",
     "hint": "Tu affrontes toute la ligue de toute façon. Ta division fixe ta conférence, et les playoffs sont classés au sein de chaque conférence.",
     "seed": "{{conf}} n°{{n}}"
+  },
+  "squad": {
+    "rating": "Note d'équipe",
+    "short": "Équipe"
   }
 }

@@ -1008,7 +1008,7 @@
     "playoffsT": "Survive the playoffs",
     "playoffsB": "The top 6 in each conference are in; 7 to 10 play in. Best-of-7 series, game by game. 70 wins is rare. 82-0 is a myth.",
     "challengeT": "Challenge a friend",
-    "challengeB": "After a run, share your link. Whoever opens it gets the same spins and the same 29 opponents. If someone drafts a player an AI team had, that team signs a similar replacement, so your picks are the only difference.",
+    "challengeB": "After a run, share your link. Whoever opens it gets the same spins and the same league: the real teams. If someone drafts a player off a team, that team plays without him and its bench steps up, so your picks are the only difference.",
     "play": "Start a draft",
     "divT": "Pick your division",
     "divB": "Choose your conference and division before tip-off. You play the whole league either way; the playoffs are seeded inside each conference."
@@ -1026,5 +1026,9 @@
     "pick": "Choose your division",
     "hint": "You play the whole league either way. Your division sets your conference, and the playoffs are seeded inside each conference.",
     "seed": "{{conf}} #{{n}}"
+  },
+  "squad": {
+    "rating": "Squad Rating",
+    "short": "Squad"
   }
 }
