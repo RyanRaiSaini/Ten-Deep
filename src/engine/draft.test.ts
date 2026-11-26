@@ -180,6 +180,21 @@ describe('draft on the All-Time pool (every season since 1957-58)', async () => 
 
 describe('players with three or four positions', async () => {
   const { current2026 } = await import('../data/current2026');
+  it('legends play their approved positions in every season (Pippen at the point, Garnett at center)', async () => {
+    const { MODE_BY_ID } = await import('../data/modes');
+    const { CARD_BY_ID } = await import('../data/cards');
+    const { positionsOf } = await import('./types');
+    const all = MODE_BY_ID['all-time'].pool.teams.flatMap((t) => t.players);
+    const seasonsOf = (n: string) => all.filter((p) => p.name === n);
+    expect(seasonsOf('Scottie Pippen').length).toBeGreaterThan(10);
+    for (const p of seasonsOf('Scottie Pippen')) expect(positionsOf(p)).toEqual(['SF', 'PG', 'PF']);
+    for (const p of seasonsOf('Kevin Garnett')) expect(positionsOf(p)).toEqual(['PF', 'C']);
+    for (const p of seasonsOf('Magic Johnson')) expect(positionsOf(p)).toEqual(['PG', 'SF', 'PF']);
+    for (const p of seasonsOf('Shaquille O\'Neal')) expect(positionsOf(p)).toEqual(['C']); // centers stay centers
+    const magicCard = Object.values(CARD_BY_ID).find((c) => c.name === 'Magic Johnson')!;
+    expect(positionsOf(magicCard)).toEqual(['PG', 'SF', 'PF']);
+  });
+
   it('Scottie Barnes can start at PG, SF, PF or C; Giannis at PF or C; Jokić only at C', () => {
     const find = (n: string) => current2026.teams.flatMap((t) => t.players).find((p) => p.name === n)!;
     const empty = startDraft(current2026, 'positions');

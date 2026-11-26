@@ -3,6 +3,7 @@ import type { LayoutId } from '../engine/conference';
 import { current2026 } from './current2026';
 import { buildPool } from './history/build';
 import { fullSeasons } from './fullHistory';
+import { LEGEND_POSITIONS, withLegendPositions } from './positions';
 import { bulls } from './history/bulls';
 import { celtics } from './history/celtics';
 import { classics } from './history/classics';
@@ -96,7 +97,9 @@ export function allSeasons(): TeamSeason[] {
     const ids = new Set(full.map((t) => t.id));
     // A hand-built season the full rosters don't cover (or name differently) is kept as it is.
     const preferred = new Set(HISTORY.flatMap((t) => t.players.map((p) => p.name)));
-    seasonsCache = unifyNames([...HISTORY.filter((t) => t.season.includes('-') || !ids.has(t.id)), ...full], preferred);
+    // One name per person, then the legends' extra positions (data/positions.ts) in every season of theirs.
+    seasonsCache = unifyNames([...HISTORY.filter((t) => t.season.includes('-') || !ids.has(t.id)), ...full], preferred)
+      .map((t) => (t.players.some((p) => LEGEND_POSITIONS[p.name]) ? { ...t, players: t.players.map(withLegendPositions) } : t));
   }
   return seasonsCache;
 }
