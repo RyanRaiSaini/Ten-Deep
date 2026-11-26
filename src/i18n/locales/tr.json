@@ -134,7 +134,8 @@
     "chooseOut": "Kimi göndereceğini seç",
     "spin": "Yedek için çevir",
     "skip": "Kadroyu koru",
-    "done": "Takas tamam"
+    "done": "Takas tamam",
+    "budget": "Takas bütçesi: {{budget}} (boş {{room}} + {{name}} için {{out}})"
   },
   "playoffs": {
     "title": "Playofflar",
@@ -1041,7 +1042,9 @@
     "pick": "Divizyonunu seç",
     "hint": "Her durumda tüm ligle oynarsın. Divizyonun konferansını belirler; playoff sıralaması her konferansın içinde yapılır.",
     "seed": "{{conf}} {{n}}. sıra",
-    "fixed": "Bu meydan okumada herkes aynı divizyonda oynar."
+    "fixed": "Bu meydan okumada herkes aynı divizyonda oynar.",
+    "pickFirst": "Başlamak için divizyonunu seç",
+    "midwest": "Orta Batı"
   },
   "squad": {
     "rating": "Kadro puanı",
@@ -1111,5 +1114,29 @@
     "worse": "En iyinin gerisinde",
     "vs": "Önceki en iyi: {{best}} · Bu deneme: {{now}}",
     "noRewards": "Tekrarlar paket ya da lig puanı vermez."
+  },
+  "switch": {
+    "button": "Yedek değişikliği (1)",
+    "title": "Yedek değişikliği",
+    "desc": "Bir yedeği ilk beşe al. Her oyunda bir değişiklik hakkın var ve tavandan {{fee}} (tavanın %5'i) tutar.",
+    "room": "Değişiklikten sonra boş alan: {{room}}",
+    "noRoom": "Yeterli alan yok: değişiklik {{fee}} tutar.",
+    "pickBench": "Yedekten kim giriyor?",
+    "pickStarter": "{{name}} kimin yerine geçiyor?",
+    "used": "Bu oyundaki değişiklik hakkını kullandın.",
+    "back": "Başkasını seç"
+  },
+  "franchise": {
+    "allTime": "Tüm zamanlar"
+  },
+  "intro": {
+    "title": "Nasıl oynanır",
+    "lead": "On oyuncu seç, maaş tavanının altında kal ve takımının ne kadar ileri gideceğini gör.",
+    "s1": "Gerçek bir NBA takımı çevir ve ondan bir oyuncu seç. On çevirme, on oyuncu.",
+    "s2": "İlk beşini ve yedeklerini tavanın altında kur. Her oyuncu gerçek sözleşmesine mal olur.",
+    "s3": "82 maçlık bir sezon oyna. Kadro Reytingin ne kadar iyi olduğunu belirler; ilk beş en çok sayılır.",
+    "s4": "Playofflara kal ve şampiyonluğa git. Büyük kazan, Player Pick kazan.",
+    "go": "Hadi başlayalım",
+    "rules": "Tüm kuralları gör"
   }
 }

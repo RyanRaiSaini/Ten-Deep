@@ -3,6 +3,13 @@ export async function runFlow({ page, base, step, shot }) {
   await step('draft ten players', async () => {
     await page.goto(base);
     await page.getByTestId('mode-current').click();
+    // A first-time player gets the how-to-play card over their first draft.
+    await page.getByTestId('intro').waitFor();
+    await page.waitForTimeout(800); // let it fade in
+    await shot('02a-intro');
+    await page.getByTestId('intro-go').click();
+    // If it shows again later (after Delete account wipes everything), dismiss it whenever it's in the way.
+    await page.addLocatorHandler(page.getByTestId('intro-go'), async () => { await page.getByTestId('intro-go').click(); });
     await page.getByTestId('spin').waitFor();
     await shot('02-draft-empty');
     for (let pick = 0; pick < 10; pick++) {
@@ -34,8 +41,8 @@ export async function runFlow({ page, base, step, shot }) {
     }
     await page.getByTestId('start-season').waitFor();
     await shot('04-draft-complete');
-    // Choose a division: the Pacific, in the West.
-    await page.getByTestId('division-toggle').click();
+    // The season can't start until you choose a division (the picker opens by itself): the Pacific, in the West.
+    if (!(await page.getByTestId('start-season').isDisabled())) throw new Error('season started without a division');
     await page.getByTestId('division-pacific').click();
     await shot('04b-division');
     const current = await page.getByTestId('division-current').textContent();
@@ -56,11 +63,23 @@ export async function runFlow({ page, base, step, shot }) {
   await step('season runs to the deadline', async () => {
     await page.getByTestId('skip-deadline').click();
     await page.getByTestId('deadline-skip').waitFor({ timeout: 30000 });
+    // Picking who goes shows the budget: cap room plus his salary.
+    await page.getByTestId('out-SF').click();
+    await page.getByTestId('deadline-budget').waitFor();
     await shot('05-deadline');
   });
 
   await step('stand pat at the deadline', async () => {
     await page.getByTestId('deadline-skip').click();
+    await page.getByTestId('skip-playoffs').waitFor();
+  });
+
+  await step('bench switch: one per run, 5% of the cap', async () => {
+    await page.getByTestId('bench-switch').click();
+    await page.getByTestId('switch-room').waitFor();
+    await page.getByTestId('switch-bench-B1').waitFor();
+    await shot('05b-switch');
+    await page.getByTestId('back').last().click(); // the season screen's own back button stays mounted underneath
     await page.getByTestId('skip-playoffs').waitFor();
   });
 
@@ -182,8 +201,11 @@ export async function runFlow({ page, base, step, shot }) {
   await step('management crisis: 4 cards, deadline, playoffs, board verdict', async () => {
     await page.goto(base);
     await page.getByTestId('mode-crisis').click();
+    await page.getByTestId('crisis-head').waitFor();
+    await shot('18b-crisis-picker');
     await page.getByTestId('mode-current-2026').click();
     await draftTen(page);
+    await page.getByTestId('division-atlantic').click();
     await page.getByTestId('start-season').click();
     const cards = await playCrisisSeason(page, shot);
     if (cards !== 4) throw new Error(`expected 4 crisis cards, saw ${cards}`);
@@ -200,6 +222,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('tab-career').click();
     await page.getByTestId('career-start').click();
     await draftTen(page);
+    await page.getByTestId('division-atlantic').click();
     await page.getByTestId('start-season').click();
     await playCrisisSeason(page);
     await page.getByTestId('to-playoffs').click();
@@ -380,6 +403,8 @@ export async function runFlow({ page, base, step, shot }) {
   await step('all-time lakers run starts and drafts', async () => {
     await page.goto(base);
     await page.getByTestId('mode-franchise').click();
+    await page.getByTestId('mode-franchise-lal').waitFor();
+    await shot('42b-franchises');
     await page.getByTestId('mode-franchise-lal').click();
     await page.getByTestId('spin').click();
     await page.locator('[data-testid="option"], [data-testid="respin"]').first().waitFor({ timeout: 15000 });

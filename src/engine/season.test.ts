@@ -1,9 +1,10 @@
+import { ALL_SLOTS } from './types';
 import { describe, expect, it } from 'vitest';
 import { draftLeague } from './aiDraft';
 import { rollInjury } from './injuries';
 import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs } from './playoffs';
 import { createRng } from './rng';
-import { DEADLINE_GAME, LOG_BOX_GAMES, SEASON_GAMES, advance, createSeason, modAt, standings, tradeSwap } from './season';
+import { DEADLINE_GAME, LOG_BOX_GAMES, SEASON_GAMES, advance, createSeason, modAt, standings, benchSwitch, roomAfterFees, SWITCH_FEE, tradeBudget, tradeSwap } from './season';
 import type { Player } from './types';
 import { makePool } from './__fixtures__/pool';
 
@@ -153,6 +154,46 @@ describe('season', () => {
       if (standings(tied)[0].team === 0) userFirst++;
     }
     expect(userFirst).toBeLessThan(5);
+  });
+
+  it('the deadline budget is your cap room plus the outgoing salary', () => {
+    const s = advance(fresh(), 100);
+    // Salaries summing to $195M: $5M of room. The SF makes $30M.
+    const pay: Record<string, number> = { PG: 30, SG: 25, SF: 30, PF: 25, C: 25, B1: 20, B2: 15, B3: 10, B4: 10, B5: 5 };
+    const slots = Object.fromEntries(ALL_SLOTS.map((k) => [k, { ...s.teams[0].slots[k], salary: pay[k] }])) as typeof s.teams[0]['slots'];
+    const st = { ...s, teams: [{ ...s.teams[0], slots }, ...s.teams.slice(1)] };
+    expect(tradeBudget(slots, 'SF')).toBe(35);
+    const sf = (salary: number) => ({ ...pool.teams[29].players[12], id: `in-${salary}`, name: `Free Agent ${salary}`, pos: 'SF' as const, ovr: 70, salary });
+    expect(tradeSwap(st, slots.SF.id, sf(35)).teams[0].slots.SF.salary).toBe(35);
+    expect(() => tradeSwap(st, slots.SF.id, sf(35.1))).toThrow(/cap/i);
+    // A team over the cap (a career payroll) can still take back 125% of what goes out.
+    const over = { ...slots, B5: { ...slots.B5, salary: 15 } };
+    expect(tradeBudget(over, 'SF')).toBe(37.5);
+  });
+
+  it('one bench switch per run: a bench player starts, for 5% of the cap, and the rating follows', async () => {
+    const { squadRating } = await import('./rotation');
+    const s = advance(fresh(), 100);
+    const pay: Record<string, number> = { PG: 30, SG: 25, SF: 30, PF: 25, C: 25, B1: 20, B2: 15, B3: 10, B4: 5, B5: 5 };
+    const slots = Object.fromEntries(ALL_SLOTS.map((k) => [k, { ...s.teams[0].slots[k], salary: pay[k] }])) as typeof s.teams[0]['slots'];
+    // A strong sixth man who plays SF, and a weak starting SF.
+    slots.B1 = { ...slots.B1, pos: 'SF', pos2: undefined, ovr: 90, off: 90, def: 90 };
+    slots.SF = { ...slots.SF, ovr: 70, off: 70, def: 70 };
+    const st = { ...s, teams: [{ ...s.teams[0], slots }, ...s.teams.slice(1)] }; // $10M of room
+    expect(SWITCH_FEE).toBe(10);
+    expect(() => benchSwitch(st, 'B1', 'PG')).toThrow(/can't play/);
+    const after = benchSwitch(st, 'B1', 'SF');
+    expect(after.teams[0].slots.SF.ovr).toBe(90);
+    expect(after.teams[0].slots.B1.ovr).toBe(70);
+    expect(squadRating(after.teams[0])).toBeGreaterThan(squadRating(st.teams[0]));
+    expect(after.fees).toBe(10);
+    expect(roomAfterFees(after)).toBe(0);
+    expect(() => benchSwitch(after, 'B2', 'PG')).toThrow(/already/);
+    // The fee comes out of the deadline budget too.
+    expect(tradeBudget(after.teams[0].slots, 'SF', after.fees)).toBe(20); // $0 room left + his $20M
+    // Not enough room: no switch.
+    const tight = { ...st, fees: 5 };
+    expect(() => benchSwitch(tight, 'B1', 'SF')).toThrow(/cap/i);
   });
 
   it('tradeSwap rejects a player who is already on a roster', () => {

@@ -6,7 +6,7 @@ export const SIM = {
   /** League-average points per possession. */
   basePpp: 1.13,
   /** Points per possession gained per rating point of (offense − opposing defense). */
-  k: 0.0105,
+  k: 0.0115,
   /** Star premium: effective rating += star × (rating − starFrom)² above starFrom. */
   star: 0.012,
   starFrom: 80,
@@ -35,6 +35,11 @@ export const SIM = {
   /** Each season the strongest AI rosters get +contenderBoost. Off: the AI teams are real rosters, so the real contenders already are. */
   contenders: 0,
   contenderBoost: 4,
+  /**
+   * Every AI league plays at the same strength: its average Squad Rating is levelled to this (a little above the 2026-27 league's 82, because a drafted squad plays slightly above its number),
+   * so an 84 means the same thing in every era. Older eras' real teams rate a little lower (about 78-79).
+   */
+  leagueSr: 82.7,
 };
 
 /** Effective rating used by the sim: stars bend games more than linearly. */

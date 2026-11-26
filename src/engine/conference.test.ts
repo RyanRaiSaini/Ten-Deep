@@ -9,7 +9,8 @@ import { makePool } from './__fixtures__/pool';
 
 const pool = makePool();
 const teams = draftLeague(pool, new Set(), 30, createRng('conf'));
-const count = (divs: number[]) => DIVISIONS.map((_, d) => divs.filter((x) => x === d).length);
+// Today's six divisions (the list also holds older leagues' divisions after them).
+const count = (divs: number[]) => DIVISIONS.slice(0, 6).map((_, d) => divs.filter((x) => x === d).length);
 
 describe('league layout', () => {
   it('29 real franchises around you: one left out of your division, none repeated', () => {
@@ -18,7 +19,7 @@ describe('league layout', () => {
       expect(f).toHaveLength(29);
       expect(new Set(f).size).toBe(29);
       expect(DIVISIONS[d].franchises.filter((x) => f.includes(x))).toHaveLength(4);
-      for (const other of DIVISIONS.filter((_, i) => i !== d)) expect(other.franchises.every((x) => f.includes(x))).toBe(true);
+      for (const other of DIVISIONS.slice(0, 6).filter((_, i) => i !== d)) expect(other.franchises.every((x) => f.includes(x))).toBe(true);
     }
     expect(leagueFranchises(2, 'x')).toEqual(leagueFranchises(2, 'x'));
   });
@@ -112,5 +113,33 @@ describe('conference playoffs', () => {
     expect(ps.playIn).toBeUndefined();
     expect(ps.rounds[0].map((s) => [s.seedHi, s.seedLo])).toEqual([[1, 16], [8, 9], [5, 12], [4, 13], [3, 14], [6, 11], [7, 10], [2, 15]]);
     expect(seedOf(plain, 0).conf).toBeNull();
+  });
+
+  it('older eras play their own league: 1987-88 has 23 real teams in four divisions, and you make 24', async () => {
+    const { MODE_BY_ID } = await import('../data/modes');
+    const { current2026 } = await import('../data/current2026');
+    const { realLeague } = await import('./realLeague');
+    const { advance, createSeason } = await import('./season');
+    const { champion, simPlayoffsToEnd, startPlayoffs } = await import('./playoffs');
+    const { LAYOUTS, layoutOf } = await import('./conference');
+    const m = MODE_BY_ID['era-magic-bird'];
+    expect(m.layout).toBe('y1988');
+    const div = defaultDivision('old-league', 'y1988');
+    expect(layoutOf(div)).toBe('y1988');
+    const fr = leagueFranchises(div, 'old-league');
+    expect(fr).toHaveLength(23); // every 1987-88 franchise; you join as the 24th
+    for (const f of ['mia', 'orl', 'min', 'tor', 'mem', 'nop', 'cha']) expect(fr).not.toContain(f);
+    const league = realLeague(fr, [], 'old-league', m.pool.teams, MODE_BY_ID['all-time'].pool.teams, current2026.teams);
+    const divs = assignDivisions([undefined, ...fr], div);
+    for (const d of divs) expect(LAYOUTS.y1988).toContain(d);
+    const user = { ...league[0], id: 'user', name: 'You', franchise: undefined };
+    let s = createSeason(user, league, 'old-league', divs);
+    s = advance(advance(s, 82), 82);
+    expect(s.records.every((r) => r.w + r.l === 82)).toBe(true);
+    expect(champion(simPlayoffsToEnd(startPlayoffs(s)))).toBeGreaterThanOrEqual(0);
+    // The Jordan era: 29 real teams and you.
+    expect(leagueFranchises(defaultDivision('j', 'y1997'), 'j')).toHaveLength(29);
+    // Today's league is unchanged: 29 and you.
+    expect(leagueFranchises(defaultDivision('m'), 'm')).toHaveLength(29);
   });
 });

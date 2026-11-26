@@ -6,6 +6,8 @@
  */
 import { createRng } from './rng';
 import { franchiseOf } from './conference';
+import { squadRating } from './rotation';
+import { SIM } from './simConfig';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type RosterSlots, type TeamSeason,
 } from './types';
@@ -63,7 +65,7 @@ export function realLeague(
   const years = pool.map((t) => parseInt(t.season, 10)).filter((y) => !Number.isNaN(y));
   const mid = years.length ? years.reduce((a, b) => a + b, 0) / years.length : 2026;
   const used = new Set(mine.map((p) => p.name));
-  return franchises.map((f, i) => {
+  const league = franchises.map((f, i) => {
     const own = pool.filter((t) => franchiseOf(t) === f);
     const back = fallback.filter((t) => franchiseOf(t) === f).sort((a, b) => Math.abs(parseInt(a.season, 10) - mid) - Math.abs(parseInt(b.season, 10) - mid));
     // Several seasons to choose from (eras, All-Time): one of the franchise's three best, so it's a team to fear.
@@ -82,4 +84,16 @@ export function realLeague(
     for (const s of ALL_SLOTS) used.add(slots[s]!.name);
     return { id: `ai-${i}`, name: `${t.city} ${t.name}`, colors: t.colors, franchise: f, slots: slots as Required<RosterSlots> };
   });
+  return levelLeague(league);
+}
+
+/**
+ * Lift (or lower) every AI team by the same amount so the league's average Squad Rating is SIM.leagueSr: real
+ * teams of older eras rate a few points lower than today's, and without this the same squad won far more there.
+ */
+export function levelLeague(league: Roster[]): Roster[] {
+  if (!league.length) return league;
+  const avg = league.reduce((n, r) => n + squadRating({ ...r, mod: 0 }), 0) / league.length;
+  const mod = Math.round((SIM.leagueSr - avg) * 10) / 10;
+  return mod ? league.map((r) => ({ ...r, mod: (r.mod ?? 0) + mod })) : league;
 }

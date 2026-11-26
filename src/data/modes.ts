@@ -1,4 +1,5 @@
 import type { Pool, TeamSeason } from '../engine/types';
+import type { LayoutId } from '../engine/conference';
 import { current2026 } from './current2026';
 import { buildPool } from './history/build';
 import { fullSeasons } from './fullHistory';
@@ -31,6 +32,59 @@ export const HISTORY: TeamSeason[] = [
   ...others, ...classics, ...west, ...east, ...currentAsHistory,
 ];
 
+/** Same spelling once accents, dots, capitals and spaces are ignored: "J.J. Redick" = "JJ Redick", "Dëmin" = "Demin". */
+export const nameKey = (name: string) =>
+  name.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z]/g, '');
+const SUFFIX = /\s+(jr\.?|sr\.?|ii|iii|iv)$/i;
+
+/**
+ * One person, one name everywhere: the data spells some players two ways (J.J. / JJ Redick, Jabari Smith / Jabari
+ * Smith Jr.), and the draft keeps the same person off your team by name. Spellings that differ only in accents,
+ * dots or spaces are the same person; a Jr./Sr./II/III suffix is the same person only when the careers overlap
+ * (Gary Payton and Gary Payton II never played in the same season, so they stay two people). The hand-built
+ * spelling wins, then the one used most.
+ */
+export function unifyNames(seasons: TeamSeason[], preferred: ReadonlySet<string>): TeamSeason[] {
+  const uses = new Map<string, { count: number; years: number[] }>();
+  for (const t of seasons) for (const p of t.players) {
+    const u = uses.get(p.name) ?? { count: 0, years: [] };
+    u.count++; u.years.push(yearOf(t));
+    uses.set(p.name, u);
+  }
+  const rank = (n: string) => (preferred.has(n) ? 1e6 : 0) + (uses.get(n)?.count ?? 0);
+  const canonical = new Map<string, string>();
+  // Spelling variants.
+  const byKey = new Map<string, string[]>();
+  for (const n of uses.keys()) byKey.set(nameKey(n), [...(byKey.get(nameKey(n)) ?? []), n]);
+  for (const names of byKey.values()) {
+    if (names.length < 2) continue;
+    const best = [...names].sort((a, b) => rank(b) - rank(a) || a.localeCompare(b))[0];
+    for (const n of names) if (n !== best) canonical.set(n, best);
+  }
+  // Suffix variants whose careers overlap.
+  const span = (n: string) => { const y = uses.get(n)!.years; return [Math.min(...y), Math.max(...y)]; };
+  const base = new Map<string, string[]>();
+  for (const n of uses.keys()) if (!canonical.has(n)) { const k = nameKey(n.replace(SUFFIX, '')); base.set(k, [...(base.get(k) ?? []), n]); }
+  for (const names of base.values()) {
+    if (names.length < 2) continue;
+    const plain = names.filter((n) => !SUFFIX.test(n));
+    for (const suffixed of names.filter((n) => SUFFIX.test(n))) {
+      const [a0, a1] = span(suffixed);
+      for (const p of plain) {
+        const [b0, b1] = span(p);
+        if (a0 <= b1 + 1 && b0 <= a1 + 1) {
+          const best = rank(suffixed) >= rank(p) ? suffixed : p;
+          canonical.set(best === p ? suffixed : p, best);
+        }
+      }
+    }
+  }
+  if (!canonical.size) return seasons;
+  return seasons.map((t) => (t.players.some((p) => canonical.has(p.name))
+    ? { ...t, players: t.players.map((p) => (canonical.has(p.name) ? { ...p, name: canonical.get(p.name)! } : p)) }
+    : t));
+}
+
 let seasonsCache: TeamSeason[] | null = null;
 /**
  * Every team-season the draft modes use: every team of every season the full rosters cover (src/data/fullHistory.ts,
@@ -41,7 +95,8 @@ export function allSeasons(): TeamSeason[] {
     const full = fullSeasons();
     const ids = new Set(full.map((t) => t.id));
     // A hand-built season the full rosters don't cover (or name differently) is kept as it is.
-    seasonsCache = [...HISTORY.filter((t) => t.season.includes('-') || !ids.has(t.id)), ...full];
+    const preferred = new Set(HISTORY.flatMap((t) => t.players.map((p) => p.name)));
+    seasonsCache = unifyNames([...HISTORY.filter((t) => t.season.includes('-') || !ids.has(t.id)), ...full], preferred);
   }
   return seasonsCache;
 }
@@ -66,6 +121,8 @@ export interface Mode {
    * Prices are each player's real share of his own season's cap, so only the dollar figures change.
    */
   cap?: { season: string; real: number };
+  /** The league of that era (its teams, conferences and divisions); today's when unset. */
+  layout?: LayoutId;
 }
 
 /** Pools are built the first time a mode is opened (39 of them at launch cost real time on phones). */
@@ -74,7 +131,7 @@ function lazyPool(m: Omit<Mode, 'pool'>, build: () => Pool): Mode {
   return Object.defineProperty(m, 'pool', { get: () => (cache ??= build()), enumerable: true }) as Mode;
 }
 
-const era = (id: string, title: string, from: number, to: number, colors: [string, string], extra: Pick<Mode, 'tagline' | 'hidden' | 'cap'> = {}): Mode =>
+const era = (id: string, title: string, from: number, to: number, colors: [string, string], extra: Pick<Mode, 'tagline' | 'hidden' | 'cap' | 'layout'> = {}): Mode =>
   lazyPool({ id, kind: 'era', title, subtitle: from === 0 ? 'Every era' : `${from}–${to}`, colors, leaguePoolId: id, ...extra },
     () => buildPool(id, title, allSeasons(), (t) => yearOf(t) >= from && yearOf(t) <= to));
 
@@ -119,16 +176,16 @@ export const MODES: Mode[] = [
   { id: 'current-2026', kind: 'current', title: 'Current Day', subtitle: '2026-27', pool: current2026, leaguePoolId: 'current-2026', colors: ['#E8833A', '#3DF2C2'] },
   era('all-time', 'All-Time', 0, 9999, ['#F5C451', '#0B1020'], { tagline: 'Every legend, every season, one draft.' }),
   // The owner's eras (season years, the year a season ends; each era includes its first and last year).
-  era('era-magic-bird', 'Magic vs. Bird', 1984, 1991, ['#552583', '#007A33'], { tagline: 'Showtime against the Garden.', cap: { season: '1987-88', real: 6.164 } }),
-  era('era-jordan', 'Jordan Era', 1991, 2003, ['#CE1141', '#000000'], { tagline: 'Two three-peats in Chicago.', cap: { season: '1996-97', real: 24.363 } }),
+  era('era-magic-bird', 'Magic vs. Bird', 1984, 1991, ['#552583', '#007A33'], { tagline: 'Showtime against the Garden.', cap: { season: '1987-88', real: 6.164 }, layout: 'y1988' }),
+  era('era-jordan', 'Jordan Era', 1991, 2003, ['#CE1141', '#000000'], { tagline: 'Two three-peats in Chicago.', cap: { season: '1996-97', real: 24.363 }, layout: 'y1997' }),
   era('era-kobe', 'Kobe Era', 2003, 2010, ['#552583', '#FDB927'], { tagline: 'Mamba mentality, back-to-back titles.', cap: { season: '2006-07', real: 53.135 } }),
   era('era-lebron', 'LeBron Era', 2010, 2016, ['#860038', '#FDBB30'], { tagline: 'The Heatles, then the comeback in Cleveland.', cap: { season: '2012-13', real: 58.044 } }),
   era('era-steph', 'Steph Era', 2016, 2020, ['#1D428A', '#FFC72C'], { tagline: 'Splash Brothers and the 73-win season.', cap: { season: '2017-18', real: 99.093 } }),
   era('era-modern', 'Modern Era', 2020, 2026, ['#0E7C86', '#FF7417'], { tagline: 'Giannis, Jokić, SGA and Wemby.', cap: { season: '2022-23', real: 123.655 } }),
   // Retired from the pickers (older saves and links still open them).
   era('era-shaq-kobe-duncan', 'Shaq, Kobe & Duncan Era', 1999, 2010, ['#552583', '#C4CED4'], { hidden: true, cap: { season: '2004-05', real: 43.87 } }),
-  era('era-1980s', 'NBA 1980s', 1980, 1989, ['#E8833A', '#5A2D81'], { hidden: true, cap: { season: '1986-87', real: 4.945 } }),
-  era('era-1990s', 'NBA 1990s', 1990, 1999, ['#00788C', '#1D1160'], { hidden: true, cap: { season: '1994-95', real: 15.964 } }),
+  era('era-1980s', 'NBA 1980s', 1980, 1989, ['#E8833A', '#5A2D81'], { hidden: true, cap: { season: '1986-87', real: 4.945 }, layout: 'y1988' }),
+  era('era-1990s', 'NBA 1990s', 1990, 1999, ['#00788C', '#1D1160'], { hidden: true, cap: { season: '1994-95', real: 15.964 }, layout: 'y1997' }),
   era('era-2010s', 'NBA 2010s', 2010, 2019, ['#3DF2C2', '#141B2E'], { hidden: true, cap: { season: '2014-15', real: 63.065 } }),
   ...FRANCHISES.map(franchise),
 ];

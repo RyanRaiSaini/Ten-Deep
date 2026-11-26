@@ -134,7 +134,8 @@
     "chooseOut": "Wähle, wer geht",
     "spin": "Für einen Ersatz drehen",
     "skip": "Nichts ändern",
-    "done": "Deal fix"
+    "done": "Deal fix",
+    "budget": "Trade-Budget: {{budget}} ({{room}} Cap-Platz + {{out}} von {{name}})"
   },
   "playoffs": {
     "title": "Playoffs",
@@ -1041,7 +1042,9 @@
     "pick": "Wähle deine Division",
     "hint": "Du spielst so oder so gegen die ganze Liga. Deine Division bestimmt deine Conference, und die Playoffs werden innerhalb jeder Conference gesetzt.",
     "seed": "{{conf}} #{{n}}",
-    "fixed": "In dieser Challenge spielen alle in derselben Division."
+    "fixed": "In dieser Challenge spielen alle in derselben Division.",
+    "pickFirst": "Wähle deine Division, um zu starten",
+    "midwest": "Midwest"
   },
   "squad": {
     "rating": "Kader-Rating",
@@ -1111,5 +1114,29 @@
     "worse": "Unter deinem Bestwert",
     "vs": "Bisher bester: {{best}} · Dieser Versuch: {{now}}",
     "noRewards": "Wiederholungen bringen keine Packs und keine Ligapunkte."
+  },
+  "switch": {
+    "button": "Bankwechsel (1 übrig)",
+    "title": "Bankwechsel",
+    "desc": "Hol einen Bankspieler in deine Starting Five. Ein Wechsel pro Run, er kostet {{fee}} Cap-Platz (5 % der Cap).",
+    "room": "Cap-Platz nach dem Wechsel: {{room}}",
+    "noRoom": "Nicht genug Cap-Platz: der Wechsel kostet {{fee}}.",
+    "pickBench": "Wer kommt von der Bank?",
+    "pickStarter": "Wen ersetzt {{name}}?",
+    "used": "Du hast deinen Bankwechsel in diesem Run genutzt.",
+    "back": "Jemand anderen wählen"
+  },
+  "franchise": {
+    "allTime": "Aller Zeiten"
+  },
+  "intro": {
+    "title": "So wird gespielt",
+    "lead": "Drafte zehn Spieler, bleib unter der Gehaltsobergrenze und sieh, wie weit dein Team kommt.",
+    "s1": "Dreh ein echtes NBA-Team und wähle einen Spieler daraus. Zehn Drehungen, zehn Spieler.",
+    "s2": "Fülle Starting Five und Bank unter der Cap. Jeder Spieler kostet seinen echten Vertrag.",
+    "s3": "Spiel eine Saison mit 82 Spielen. Dein Squad Rating entscheidet; Starter zählen am meisten.",
+    "s4": "Erreiche die Playoffs und hol den Titel. Große Siege bringen Player Picks.",
+    "go": "Los geht's",
+    "rules": "Alle Regeln ansehen"
   }
 }

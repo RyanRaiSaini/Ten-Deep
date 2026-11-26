@@ -136,6 +136,9 @@ export default function Season() {
           <Button label={t('season.skipPlayoffs')} variant="secondary" onPress={() => skipTo('playoffs')} style={{ flex: 1 }} testID="skip-playoffs" />
         </View>
       )}
+      {!over && !season.switchUsed && (
+        <Button label={t('switch.button')} icon={<Icon name="swap" size={22} />} variant="blue" onPress={() => router.push('/switch')} testID="bench-switch" />
+      )}
       {over && (
         <Button label={t('playoffs.title')} icon={<Icon name="trophy" size={22} />} variant="gold" onPress={() => { g.beginPlayoffs(); router.replace('/playoffs'); }} testID="to-playoffs" />
       )}

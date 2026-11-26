@@ -1,4 +1,4 @@
-import { canAfford, payOf, superstarBlocked } from './cap';
+import { CAP, capRoom, payOf, superstarBlocked } from './cap';
 import { simGame, type GameResult } from './game';
 import { rollInjury, type InjuryLabel } from './injuries';
 import { lineupMinutes } from './rotation';
@@ -6,7 +6,7 @@ import { addNews, leading, roundNews, type Headline } from './story/news';
 import { SIM } from './simConfig';
 import { confOfDiv, type Conf } from './conference';
 import { createRng, shuffle } from './rng';
-import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pos, type Rng, type Roster, type RosterSlots } from './types';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Rng, type Roster, type RosterSlots, type SlotId } from './types';
 
 export const SEASON_GAMES = 82;
 export const DEADLINE_GAME = 50;
@@ -45,6 +45,10 @@ export interface SeasonState {
   log: LogEvent[];
   totals: { [playerId: string]: PlayerTotals };
   deadlineUsed: boolean;
+  /** The one bench switch of the run has been made (see benchSwitch). */
+  switchUsed?: boolean;
+  /** Fees paid this season ($M game dollars), taken from your cap room: the bench switch. */
+  fees?: number;
   /** Extra pause points (e.g. Management Crisis cards), as round numbers. */
   stops?: number[];
   /** Temporary rating modifiers for the user's team (Management Crisis). */
@@ -265,6 +269,39 @@ export function seedOf(state: SeasonState, team: number): { seed: number; conf: 
 }
 
 /** Trade deadline: swap one user player for `incoming` in the same slot, under the cap. Once per season. */
+/** The bench switch costs 5% of the cap: $10M of the $200M (an era's 5% in its own dollars). */
+export const SWITCH_FEE = CAP * 0.05;
+
+/** Cap room left once this season's fees are paid. */
+export const roomAfterFees = (state: SeasonState) => Math.round((capRoom(state.teams[0].slots) - (state.fees ?? 0)) * 10) / 10;
+
+/**
+ * Your one bench switch of the run: a bench player moves into the starting five (he has to play that position),
+ * and the starter takes his bench spot. It costs SWITCH_FEE of cap room, which also shrinks the deadline budget.
+ */
+export function benchSwitch(state: SeasonState, benchSlot: SlotId, starterSlot: SlotId): SeasonState {
+  if (state.switchUsed) throw new Error('Bench switch already used');
+  if (!BENCH_SLOTS.includes(benchSlot) || !STARTER_SLOTS.includes(starterSlot)) throw new Error('Pick a bench player and a starter');
+  const user = state.teams[0];
+  const incoming = user.slots[benchSlot];
+  if (incoming.pos !== (starterSlot as Pos) && incoming.pos2 !== (starterSlot as Pos)) throw new Error(`${incoming.name} can't play ${starterSlot}`);
+  if (roomAfterFees(state) < SWITCH_FEE - 1e-9) throw new Error('Over the cap');
+  const teams = [...state.teams];
+  teams[0] = { ...user, slots: { ...user.slots, [starterSlot]: incoming, [benchSlot]: user.slots[starterSlot] } };
+  return { ...state, teams, switchUsed: true, fees: Math.round(((state.fees ?? 0) + SWITCH_FEE) * 10) / 10 };
+}
+
+/**
+ * What you can take on at the deadline for the player in `slot`: your cap room left over plus his salary
+ * ($5M room + a $30M player out = up to $35M in). A team already over the cap (career payrolls can be) uses the
+ * NBA's salary-matching rule instead: up to 125% of what goes out.
+ */
+export function tradeBudget(slots: RosterSlots, slot: SlotId, fees = 0): number {
+  const out = payOf(slots[slot]!);
+  const room = capRoom(slots) - fees;
+  return room >= 0 ? Math.round((room + out) * 10) / 10 : Math.round(out * 1.25 * 10) / 10;
+}
+
 export function tradeSwap(state: SeasonState, outId: string, incoming: Player): SeasonState {
   if (state.deadlineUsed) throw new Error('Deadline swap already used');
   const user = state.teams[0];
@@ -277,8 +314,7 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
   const without: RosterSlots = { ...user.slots };
   delete without[slot];
   if (superstarBlocked(without, incoming)) throw new Error('Superstar limit reached (max 2 players rated 95+)');
-  // Under the cap, any deal that fits; over it, the NBA's salary-matching rule (take back up to 125% of what goes out).
-  if (!canAfford(without, incoming) && payOf(incoming) > payOf(user.slots[slot]) * 1.25 + 0.1) throw new Error('Over the cap');
+  if (payOf(incoming) > tradeBudget(user.slots, slot, state.fees) + 1e-9) throw new Error('Over the cap');
   const teams = [...state.teams];
   teams[0] = { ...user, slots: { ...user.slots, [slot]: incoming } };
   return { ...recordStint(state, user.slots[slot], incoming), teams, deadlineUsed: true };

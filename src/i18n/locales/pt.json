@@ -136,7 +136,8 @@
     "chooseOut": "Escolha quem trocar",
     "spin": "Girar por um substituto",
     "skip": "Manter o elenco",
-    "done": "Troca feita"
+    "done": "Troca feita",
+    "budget": "Orçamento de troca: {{budget}} (seus {{room}} livres + os {{out}} de {{name}})"
   },
   "playoffs": {
     "title": "Playoffs",
@@ -1046,7 +1047,9 @@
     "pick": "Escolha sua divisão",
     "hint": "Você enfrenta a liga inteira de qualquer jeito. Sua divisão define sua conferência, e os playoffs são classificados dentro de cada conferência.",
     "seed": "{{conf}} nº {{n}}",
-    "fixed": "Neste desafio todos jogam na mesma divisão."
+    "fixed": "Neste desafio todos jogam na mesma divisão.",
+    "pickFirst": "Escolha sua divisão para começar",
+    "midwest": "Meio-Oeste"
   },
   "squad": {
     "rating": "Nota do elenco",
@@ -1116,5 +1119,29 @@
     "worse": "Abaixo do seu melhor",
     "vs": "Melhor antes: {{best}} · Esta tentativa: {{now}}",
     "noRewards": "Repetições não dão pacotes nem pontos de liga."
+  },
+  "switch": {
+    "button": "Troca do banco (1)",
+    "title": "Troca do banco",
+    "desc": "Coloque um reserva no seu quinteto titular. Uma troca por partida, e custa {{fee}} de espaço no teto (5% do teto).",
+    "room": "Espaço depois da troca: {{room}}",
+    "noRoom": "Espaço insuficiente: a troca custa {{fee}}.",
+    "pickBench": "Quem sai do banco?",
+    "pickStarter": "Quem {{name}} substitui?",
+    "used": "Você já usou sua troca nesta partida.",
+    "back": "Escolher outro"
+  },
+  "franchise": {
+    "allTime": "De todos os tempos"
+  },
+  "intro": {
+    "title": "Como jogar",
+    "lead": "Escolha dez jogadores, fique abaixo do teto salarial e veja até onde seu time vai.",
+    "s1": "Gire um time real da NBA e escolha um jogador dele. Dez giros, dez jogadores.",
+    "s2": "Monte seu quinteto e seu banco dentro do teto. Cada jogador custa o contrato real.",
+    "s3": "Jogue uma temporada de 82 jogos. Sua nota de elenco decide seu nível; os titulares contam mais.",
+    "s4": "Chegue aos playoffs e busque o título. Vença muito para ganhar Player Picks.",
+    "go": "Vamos lá",
+    "rules": "Ver todas as regras"
   }
 }

@@ -134,7 +134,8 @@
     "chooseOut": "Choose who to move",
     "spin": "Spin for a replacement",
     "skip": "Stand pat",
-    "done": "Deal done"
+    "done": "Deal done",
+    "budget": "Trade budget: {{budget}} (your {{room}} cap room + {{name}}'s {{out}})"
   },
   "playoffs": {
     "title": "Playoffs",
@@ -1041,7 +1042,9 @@
     "pick": "Choose your division",
     "hint": "You play the whole league either way. Your division sets your conference, and the playoffs are seeded inside each conference.",
     "seed": "{{conf}} #{{n}}",
-    "fixed": "Same division for everyone in this challenge."
+    "fixed": "Same division for everyone in this challenge.",
+    "pickFirst": "Pick your division to start",
+    "midwest": "Midwest"
   },
   "squad": {
     "rating": "Squad Rating",
@@ -1111,5 +1114,29 @@
     "worse": "Short of your best",
     "vs": "Best before: {{best}} · This try: {{now}}",
     "noRewards": "Replays don't pay packs or league points."
+  },
+  "switch": {
+    "button": "Bench switch (1 left)",
+    "title": "Bench switch",
+    "desc": "Move one bench player into your starting five. You get one switch per run, and it costs {{fee}} of cap room (5% of the cap).",
+    "room": "Cap room after the switch: {{room}}",
+    "noRoom": "Not enough cap room: the switch costs {{fee}}.",
+    "pickBench": "Who comes off the bench?",
+    "pickStarter": "Who does {{name}} replace?",
+    "used": "You've used your bench switch this run.",
+    "back": "Pick someone else"
+  },
+  "franchise": {
+    "allTime": "All-Time"
+  },
+  "intro": {
+    "title": "How to play",
+    "lead": "Draft ten players, stay under the salary cap, then see how far your team goes.",
+    "s1": "Spin a real NBA team and pick one player from it. Ten spins, ten players.",
+    "s2": "Fill your starting five and bench under the cap. Every player costs his real contract.",
+    "s3": "Play an 82-game season. Your Squad Rating decides how good you are; starters count most.",
+    "s4": "Make the playoffs and go for the title. Win big to earn Player Picks.",
+    "go": "Let's go",
+    "rules": "See all the rules"
   }
 }
