@@ -50,6 +50,30 @@ describe('modes', () => {
     expect(bulls96.players.map((p) => p.name)).toEqual(expect.arrayContaining(['Michael Jordan', 'Scottie Pippen', 'Dennis Rodman', 'Toni Kukoč', 'Steve Kerr', 'Luc Longley']));
   });
 
+  it('All-Time and the franchises cover every team of every season back to 1957-58', async () => {
+    const { payOf } = await import('../engine/cap');
+    const all = MODE_BY_ID['all-time'].pool.teams;
+    // 8 teams in 1957-58, 23 by 1980-81.
+    const LEAGUE: Record<number, number> = { 1958: 8, 1962: 9, 1967: 10, 1968: 12, 1969: 14, 1971: 17, 1975: 18, 1977: 22, 1981: 23 };
+    let size = 8;
+    for (let y = 1958; y <= 1983; y++) {
+      size = LEAGUE[y] ?? size;
+      const teams = all.filter((t) => !t.season.includes('-') && Number(t.season) === y);
+      expect(teams.length, `${y}`).toBe(size);
+      for (const t of teams) expect(t.players.length, t.id).toBeGreaterThanOrEqual(10);
+    }
+    const wilt = all.flatMap((t) => t.players).filter((p) => p.name === 'Wilt Chamberlain');
+    expect(wilt.length).toBeGreaterThanOrEqual(14); // 1959-60 to 1972-73
+    expect(all.find((t) => t.id === 'bos-1965')?.players.map((p) => p.name)).toEqual(expect.arrayContaining(['Bill Russell', 'Sam Jones', 'Tom Heinsohn']));
+    // The franchises reach back too: the Lakers from Minneapolis, the Kings from Cincinnati.
+    for (const [mode, from] of [['franchise-lal', 1958], ['franchise-sac', 1958], ['franchise-atl', 1958]] as const) {
+      expect(Math.min(...MODE_BY_ID[mode].pool.teams.map((t) => Number.parseInt(t.season, 10))), mode).toBe(from);
+    }
+    // No salary records before 1984: a player costs the usual price for his rating, so old stars are no bargain.
+    const oldStars = all.filter((t) => Number(t.season) < 1984).flatMap((t) => t.players).filter((p) => p.ovr >= 95);
+    for (const p of oldStars) expect(payOf(p), p.name).toBeGreaterThan(45);
+  });
+
   it('era players cost their real contract that season (cap share), not a price by rating', async () => {
     const { payOf, contractType } = await import('../engine/cap');
     const bulls96 = MODE_BY_ID['era-jordan'].pool.teams.find((t) => t.id === 'chi-1996')!;

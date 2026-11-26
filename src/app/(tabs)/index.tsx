@@ -211,7 +211,7 @@ export default function Home() {
         <LinearGradient colors={ERA_COLORS.map((c) => `${c}C8`) as unknown as [string, string, ...string[]]} start={{ x: 0, y: 0.2 }} end={{ x: 1, y: 0.8 }} style={StyleSheet.absoluteFill} />
         <LinearGradient colors={['rgba(8,10,30,0)', 'rgba(8,10,30,0.45)']} style={StyleSheet.absoluteFill} />
         <View style={styles.heroBody}>
-          <Text style={styles.heroKicker}>1984 – 2026</Text>
+          <Text style={styles.heroKicker}>1958 – 2026</Text>
           <Display size={38} align="left">{t('mode.era.title')}</Display>
           <Text style={styles.heroDesc}>{t('mode.era.desc')}</Text>
         </View>

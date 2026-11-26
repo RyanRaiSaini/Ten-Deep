@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Full rosters for every NBA team in every season, 1984 through 2025-26 ("2026" in the game's history years).
+Full rosters for every NBA team in every season, 1957-58 through 2025-26 ("2026" in the game's history years).
 
 Input:  Basketball Reference per-game and advanced season pages (scripts/rosters/fetch.mts) and the ratings the
         game already has (scripts/rosters/export-known.mts: curated history + the 2026-27 rosters).
@@ -11,12 +11,17 @@ Ratings:
   - Everyone else gets an overall from our own formula on their season stats (box plus-minus, minutes, efficiency,
     usage, win shares) and honors (All-Star, All-NBA, All-Defense, MVP voting), fitted to the game's existing ratings: last season's stats against the hand-checked 2026-27
     ratings (stars to end of bench), plus the historical stars already rated.
+  - Before 1983-84 the league didn't track what that formula needs (box plus-minus, usage, assist and rebound rates),
+    so those seasons use a classic formula on what was kept: PER, win shares per 48, true shooting against that
+    season's league average, minutes, games and the same honors. It's fitted on every rated player, with the
+    hand-rated stars of 1958-1983 counted double. 1984 onward is unchanged.
   - Archetype from how they played (3-point rate, assist, rebound and block rates, usage, defense);
     durability from games played.
 
   - Contracts: each player's real salary that season (the team pages' salary tables), as a share of that
     season's cap in game dollars (salary / cap x 171.4, the same rule as src/data/contracts.ts), with the deal type.
     A player with no salary on record gets what players of his rating were really paid that season.
+    Before 1984 there are no salary records: everyone gets the typical price for his rating across 1985-2026.
 
     python3 scripts/rosters/build.py <bbrefCacheDir> <known.json> [outDir] [teamPagesDir]
 """
@@ -34,7 +39,9 @@ CACHE, KNOWN = sys.argv[1], sys.argv[2]
 OUT = sys.argv[3] if len(sys.argv) > 3 else 'src/data/history/full'
 # Team-season pages (roster + salary table, scripts/rosters/fetch_teams.py) and the salary-cap history page.
 TEAM_CACHE = sys.argv[4] if len(sys.argv) > 4 else None
-FIRST, LAST = 1984, 2026
+FIRST, LAST = 1958, 2026
+# The first season with box plus-minus and usage for every player (the modern formula's inputs).
+MODERN = 1984
 ROSTER = 13
 MIN_OVR, MAX_OVR = 64, 99
 
@@ -54,9 +61,16 @@ TEAMS = {
     'PHO': ('phx', 'Phoenix', 'Suns'), 'POR': ('por', 'Portland', 'Trail Blazers'), 'SAS': ('sas', 'San Antonio', 'Spurs'),
     'TOR': ('tor', 'Toronto', 'Raptors'), 'UTA': ('uta', 'Utah', 'Jazz'), 'WSB': ('was', 'Washington', 'Bullets'),
     'WAS': ('was', 'Washington', 'Wizards'),
+    # 1957-58 to 1982-83: the franchises' earlier homes and names.
+    'STL': ('atl', 'St. Louis', 'Hawks'), 'MNL': ('lal', 'Minneapolis', 'Lakers'), 'SYR': ('phi', 'Syracuse', 'Nationals'),
+    'PHW': ('gsw', 'Philadelphia', 'Warriors'), 'SFW': ('gsw', 'San Francisco', 'Warriors'), 'CIN': ('sac', 'Cincinnati', 'Royals'),
+    'KCO': ('sac', 'Kansas City-Omaha', 'Kings'), 'CHP': ('was', 'Chicago', 'Packers'), 'CHZ': ('was', 'Chicago', 'Zephyrs'),
+    'BAL': ('was', 'Baltimore', 'Bullets'), 'CAP': ('was', 'Capital', 'Bullets'), 'SDR': ('hou', 'San Diego', 'Rockets'),
+    'BUF': ('lac', 'Buffalo', 'Braves'), 'NOJ': ('uta', 'New Orleans', 'Jazz'), 'NYN': ('bkn', 'New York', 'Nets'),
 }
 # Games in a team's regular season (lockouts and the 2020 bubble were short).
-SEASON_GAMES = defaultdict(lambda: 82, {1999: 50, 2012: 66, 2020: 72, 2021: 72})
+SEASON_GAMES = defaultdict(lambda: 82, {1999: 50, 2012: 66, 2020: 72, 2021: 72, 1958: 72, 1959: 72, 1960: 75, 1961: 79,
+                                         1962: 80, 1963: 80, 1964: 80, 1965: 80, 1966: 80, 1967: 81})
 
 
 def norm(name):
@@ -198,6 +212,47 @@ def features(r, y):
     return [1.0, bpm, max(bpm, 0) ** 2, obpm, dbpm, ws48 * 10, per, mpg, mpg ** 2 / 36, usg, ts * 10, share, star, allnba, alldef, mvp]
 
 
+def classic_features(r, y, league_ts):
+    """The classic formula's inputs: only stats kept in every season since 1957-58."""
+    g = max(1.0, num(r, 'games'))
+    mpg = num(r, 'mp_per_g')
+    mp = g * mpg
+    shrink = lambda v, prior, k=400: (v * mp + prior * k) / (mp + k)
+    ws48 = shrink(num(r, 'ws_per_48', 0.05), 0.04)
+    per = shrink(num(r, 'per', 11), 10)
+    ts = shrink(num(r, 'ts_pct', league_ts) - league_ts, -0.02)
+    share = min(1.0, g / SEASON_GAMES[y])
+    aw = [a.strip() for a in (r.get('awards') or '').split(',')]
+    star = 1.0 if 'AS' in aw else 0.0
+    allnba = 3.0 if 'NBA1' in aw else 2.0 if 'NBA2' in aw else 1.0 if 'NBA3' in aw else 0.0
+    alldef = 2.0 if 'DEF1' in aw else 1.0 if 'DEF2' in aw else 0.0
+    mvp = next((max(0.0, (11 - int(a[4:])) / 10) for a in aw if re.fullmatch(r'MVP-\d+', a)), 0.0)
+    return [1.0, ws48 * 10, max(ws48 * 10 - 1, 0) ** 2, per, max(per - 15, 0) ** 2 / 10, ts * 100, mpg, mpg ** 2 / 36, share,
+            star, allnba, alldef, mvp]
+
+
+def league_ts(rows):
+    """The season's league-wide true shooting (minutes-weighted), so a 1960 shooter is judged against 1960."""
+    w = [(num(r, 'ts_pct'), num(r, 'games') * num(r, 'mp_per_g')) for r in rows if r.get('ts_pct')]
+    return sum(t * m for t, m in w) / max(1.0, sum(m for _, m in w))
+
+
+def classic_archetype(r, pos):
+    """No assist, rebound or usage rates before the 1970s: the per-36 box score instead."""
+    per36 = lambda k: num(r, k) * 36 / max(1.0, num(r, 'mp_per_g'))
+    pts, ast, trb = per36('pts_per_g'), per36('ast_per_g'), per36('trb_per_g')
+    three = num(r, 'fg3a_per_g') / max(0.1, num(r, 'fga_per_g'))
+    fta = num(r, 'fta_per_g') / max(0.1, num(r, 'fga_per_g'))
+    if pos in ('C', 'PF'):
+        if ast >= 5 and trb >= 12: return 'point'
+        if pos == 'C' or trb >= 12: return 'big'
+    if ast >= 7: return 'playmaker'
+    if pts >= 24: return 'scorer'
+    if three >= 0.3: return 'shooter'
+    if fta >= 0.4: return 'slasher'
+    return 'twoway'
+
+
 def archetype(r, pos):
     three = num(r, 'fg3a_per_fga_pct', 0.0)
     ast = num(r, 'ast_pct', 10)
@@ -224,7 +279,10 @@ def archetype(r, pos):
 
 def positions(r):
     ps = [p for p in re.split(r'[-,/ ]+', r.get('pos', '') or '') if p in ('PG', 'SG', 'SF', 'PF', 'C')]
-    if not ps: ps = ['SF']
+    if not ps:
+        # No position on record (a few early players): from his box score.
+        per36 = lambda k: num(r, k) * 36 / max(1.0, num(r, 'mp_per_g'))
+        ps = ['C' if per36('trb_per_g') >= 12 else 'PG' if per36('ast_per_g') >= 6 else 'PF' if per36('trb_per_g') >= 9 else 'SF']
     if ps[0] == 'G': ps[0] = 'SG'
     if ps[0] == 'F': ps[0] = 'SF'
     return ps[0], (ps[1] if len(ps) > 1 and ps[1] != ps[0] else None)
@@ -251,6 +309,7 @@ def main():
     # Training pairs: historical curated players, and last season's stats against the 2026-27 ratings.
     X, Y, W = [], [], []
     for y, (rows, total) in data.items():
+        if y < MODERN: continue
         for pid, r in total.items():
             n = norm(r['name_display'])
             if (y, n) in by_year_name:
@@ -266,25 +325,54 @@ def main():
     mae = float(np.mean(np.abs(pred - Y)))
     print(f'fit on {len(Y)} rated players: mean error {mae:.2f} points', file=sys.stderr)
 
-    rate = lambda r, y: int(round(min(MAX_OVR, max(MIN_OVR, float(np.array(features(r, y)) @ coef)))))
+    # The classic formula for the seasons before box plus-minus: every rated player, 1958-1983 stars counted double.
+    lts = {y: league_ts(rows) for y, (rows, _) in data.items()}
+    Xc, Yc, Wc = [], [], []
+    for y, (rows, total) in data.items():
+        for pid, r in total.items():
+            n = norm(r['name_display'])
+            if (y, n) in by_year_name:
+                Xc.append(classic_features(r, y, lts[y])); Yc.append(by_year_name[(y, n)]['ovr']); Wc.append(2.0 if y < MODERN else 1.0)
+            elif y == 2026 and current and n in current and num(r, 'games') >= 15:
+                Xc.append(classic_features(r, y, lts[y])); Yc.append(current[n]['ovr']); Wc.append(1.0)
+    coef_c = None
+    if any(y < MODERN for y in data):
+        Xc, Yc, Wc = np.array(Xc), np.array(Yc), np.array(Wc)
+        lam_c = np.eye(Xc.shape[1]) * 2.0
+        lam_c[0, 0] = 0
+        swc = np.sqrt(Wc)[:, None]
+        coef_c = np.linalg.solve((Xc * swc).T @ (Xc * swc) + lam_c, (Xc * swc).T @ (Yc * swc[:, 0]))
+        old = Wc > 1
+        err = np.abs(Xc @ coef_c - Yc)
+        print(f'classic fit on {len(Yc)} rated players: mean error {err.mean():.2f}, {err[old].mean():.2f} on the {int(old.sum())} rated before 1984', file=sys.stderr)
+
+    def rate(r, y):
+        v = float(np.array(features(r, y)) @ coef) if y >= MODERN else float(np.array(classic_features(r, y, lts[y])) @ coef_c)
+        return int(round(min(MAX_OVR, max(MIN_OVR, v))))
 
     # One person, one name: when a hand-rated player goes by another name in the stats (Penny / Anfernee
     # Hardaway), the stats name maps to the game's in every season, so he's never two people.
     # Players who changed their names (the stats list them by the later one).
     alias = {'mettaworldpeace': 'Ron Artest', 'mettasandifordartest': 'Ron Artest', 'enesfreedom': 'Enes Kanter', 'bisondele': 'Brian Williams'}
     last = lambda n: norm(n.split(' ')[-1]) if n.split(' ')[-1].lower().rstrip('.') not in ('jr', 'sr', 'ii', 'iii', 'iv') else norm(n.split(' ')[-2])
+    # Name variants found in the seasons before 1984 rename only those seasons (a later namesake keeps his name).
+    alias_old = {}
     for (y, fr), t in curated.items():
         if y not in data: continue
+        target = alias if y >= MODERN else alias_old
         rows = [r for r in data[y][0] if TEAMS.get(r['team_name_abbr'], ('',))[0] == fr]
         stat_names = {norm(r['name_display']): r['name_display'] for r in rows}
         for p in t['players']:
             if norm(p['name']) in stat_names: continue
             same = [nm for k, nm in stat_names.items() if last(nm) == last(p['name']) and k not in by_year_name_keys(curated, y)]
-            if len(same) == 1: alias[norm(same[0])] = p['name']
+            if len(same) == 1: target[norm(same[0])] = p['name']
     if alias: print(f'{len(alias)} name variants matched, e.g. ' + ', '.join(f'{k} -> {v}' for k, v in list(alias.items())[:6]), file=sys.stderr)
+    if alias_old: print(f'{len(alias_old)} name variants before 1984: ' + ', '.join(f'{k} -> {v}' for k, v in alias_old.items()), file=sys.stderr)
     for y, (rows, total) in data.items():
         for r in list(rows) + list(total.values()):
-            if norm(r['name_display']) in alias: r['name_display'] = alias[norm(r['name_display'])]
+            k = norm(r['name_display'])
+            if y < MODERN and k in alias_old: r['name_display'] = alias_old[k]
+            elif k in alias: r['name_display'] = alias[k]
 
     # Team colors: the game's own for that franchise and nickname when it has them, else today's.
     colors = {}
@@ -304,12 +392,20 @@ def main():
         """
         if not TEAM_CACHE or not pid: return None
         for yy in (y, y - 1, y + 1, y - 2, y + 2):
-            if pid in pay.get(yy, {}) and yy in caps and (yy == y or len(pay[yy]) > 200):
+            # Before 1984 a season lists a salary or two at most, too few to set its market, so only a fully
+            # recorded season nearby counts.
+            if pid in pay.get(yy, {}) and yy in caps and ((yy == y and y >= MODERN) or len(pay[yy]) > 200):
                 sal, exp, tw = pay[yy][pid]
                 return game_dollars(caps[yy], sal), classify(yy, caps[yy], sal, exp, tw)
         return None
     index = []
-    for y, (rows, total) in data.items():
+    # The seasons before 1984 have no salary records (and no cap): a player there costs the typical price for his
+    # rating across every capped season, 1984-85 to now, so no era is a bargain in All-Time. Modern seasons go
+    # first so that market is known when the old ones are built.
+    curves = {}
+    REF = range(MODERN + 1, LAST + 1)
+    for y in sorted(data, key=lambda y: (y < MODERN, y)):
+        rows, total = data[y]
         pid_of = {norm(r['name_display']): r['pid'] for r in list(rows) + list(total.values())}
         season_lines = []  # [team lines list, index, ovr, contract or None] to fill in once the season's market is known
         by_team = defaultdict(list)
@@ -321,6 +417,18 @@ def main():
         for r in rows:
             if best_team[r['pid']][0] == r['team_name_abbr'] and num(r, 'games') >= 5:
                 by_team[r['team_name_abbr']].append(r)
+        # A thin early roster (nine regulars) takes its short-stint players too, then the ones traded in or out
+        # that season (they also stay on their main team; the draft takes each person once), so every team has ten.
+        held = {norm(p['name']) for (cy, _), t in curated.items() if cy == y for p in t['players']}
+        for code, members in by_team.items():
+            # Count who will be listed: the hand-built team's players, and the rest minus anyone hand-rated elsewhere.
+            cur = curated.get((y, TEAMS[code][0])) if code in TEAMS else None
+            own = {norm(p['name']) for p in cur['players']} if cur else set()
+            short = 10 - len(own) - sum(norm(r['name_display']) not in held | own for r in members)
+            if short > 0:
+                extra = [r for r in rows if r['team_name_abbr'] == code and r not in members and norm(r['name_display']) not in held]
+                extra.sort(key=lambda r: (best_team[r['pid']][0] != code, -num(r, 'games') * num(r, 'mp_per_g')))
+                members += extra[:short]
         teams = []
         # A hand-rated player is on his hand-built team that season and nowhere else (traded players included).
         curated_names = {norm(p['name']) for (cy, _), t in curated.items() if cy == y for p in t['players']}
@@ -349,7 +457,8 @@ def main():
                 dur = int(round(min(95, max(40, 45 + 50 * g / SEASON_GAMES[y]))))
                 age = int(num(r, 'age', 27)) or 27
                 ovr = rate(whole, y)
-                lines.append(f"{r['name_display']}|{p1}{'/' + p2 if p2 else ''}|{ovr}|{age}|{archetype(whole, p1)}|{dur}")
+                tag = archetype(whole, p1) if y >= MODERN else classic_archetype(whole, p1)
+                lines.append(f"{r['name_display']}|{p1}{'/' + p2 if p2 else ''}|{ovr}|{age}|{tag}|{dur}")
                 season_lines.append([lines, len(lines) - 1, ovr, contract(y, r['pid'])])
                 names.add(n)
             team = {'franchise': fr, 'city': cur['city'] if cur else city, 'name': cur['name'] if cur else nick,
@@ -368,18 +477,22 @@ def main():
                 win = [v for k in range(o - 2, o + 3) for v in by_ovr.get(k, [])]
                 if len(win) >= 5: floor = max(floor, sorted(win)[len(win) // 2])
                 curve[o] = floor
+            if y < MODERN:
+                ref = [curves[r] for r in REF if r in curves]
+                curve = {o: round(sorted(c[o] for c in ref)[len(ref) // 2], 1) for o in curve} if ref else curve
+            curves[y] = curve
             for lines_ref, i, o, c in season_lines:
                 if c: stats['real'] += 1
                 else: stats['est'] += 1; c = (curve[o], 'est')
                 lines_ref[i] += f"|${c[0]:g}:{TYPE_CODE[c[1]]}"
         write_year(y, teams)
         index.append(y)
-    write_index(index)
+    write_index(sorted(index))
     print(f"{stats['teams']} team-seasons, {stats['players']} players ({stats['kept']} hand-rated kept)", file=sys.stderr)
     if TEAM_CACHE:
         n = stats['real'] + stats['est']
         print(f"contracts: {stats['real']} real ({100 * stats['real'] / max(1, n):.1f}%), {stats['est']} estimated from that season's market", file=sys.stderr)
-    json.dump({'coef': coef.tolist(), 'mae': mae, 'n': len(Y)}, open(os.path.join(OUT, '..', 'full-model.json'), 'w'), indent=1)
+    json.dump({'coef': coef.tolist(), 'mae': mae, 'n': len(Y), 'classic': coef_c.tolist() if coef_c is not None else None}, open(os.path.join(OUT, '..', 'full-model.json'), 'w'), indent=1)
 
 
 def write_year(y, teams):
