@@ -1,3 +1,5 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
 import { track } from '../net/campaign';
 import { useForm } from '../store/form';
 import { Redirect, router } from 'expo-router';
@@ -37,7 +39,7 @@ import { canRunItBack, compareFinish, finishOf } from '../engine/replay';
 
 const VERDICT_ICON = { legend: 'crown', extended: 'medal', survived: 'clock', fired: 'flame' } as const;
 
-export default function Result() {
+function ResultScreen() {
   const { t } = useTranslation();
   const g = useGame();
   const ps = g.playoffs;
@@ -189,6 +191,13 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
       <Text style={styles.sub}>{label}</Text>
     </View>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function Result() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><ResultScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

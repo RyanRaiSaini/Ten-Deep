@@ -1156,5 +1156,10 @@
     "privacy": "Conserviamo solo un ID privato del tuo accesso, mai la tua email o password.",
     "cta": "Accedi per salvare i progressi",
     "ctaSub": "Le tue carte e i record su ogni dispositivo"
+  },
+  "history": {
+    "loading": "Apriamo i libri di storia…",
+    "failed": "Impossibile caricare la storia. Controlla la connessione.",
+    "retry": "Riprova"
   }
 }

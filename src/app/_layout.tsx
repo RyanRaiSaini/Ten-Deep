@@ -16,6 +16,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { applyLanguage, deviceLanguage } from '../i18n';
 import { useNotificationSync } from '../notifications';
 import { STORES, startDay } from '../store/all';
+import { ensureHistory } from '../data/historyReady';
 import { useCollection } from '../store/collection';
 import { useSettings } from '../store/settings';
 import { C } from '../ui/theme';
@@ -52,7 +53,10 @@ export default function RootLayout() {
     const app = AppState.addEventListener('change', (st) => { if (st === 'active') startDay(); });
     // Collection milestones (cards, sets, Gauntlet, streak) unlock achievements as they happen.
     const unsub = useCollection.subscribe((s, prev) => { if (s.owned !== prev.owned || s.gauntlet !== prev.gauntlet || s.streak !== prev.streak) useProgress.getState().check(); });
-    return () => { app.remove(); unsub(); };
+    // The full history (20,000+ player-seasons) isn't part of the first load: fetch it once Home is up, so the eras
+    // are usually ready by the time you tap one (data/historyReady.ts; screens that need it wait if it isn't yet).
+    const preload = setTimeout(() => { void ensureHistory(); }, 2500);
+    return () => { app.remove(); unsub(); clearTimeout(preload); };
   }, [ready]);
   useEffect(() => applyLanguage(language ?? deviceLanguage()), [language]);
   useEffect(() => { if (ready) SplashScreen.hideAsync().catch(() => {}); }, [ready]);

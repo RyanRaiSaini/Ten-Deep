@@ -1,3 +1,5 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
 import { Redirect, router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +20,7 @@ import { C, S, money } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
 import { Icon } from '../ui/icons';
 
-export default function Deadline() {
+function DeadlineScreen() {
   const { t } = useTranslation();
   const runColors = useRunColors();
   const g = useGame();
@@ -103,6 +105,13 @@ export default function Deadline() {
     </Screen>
     </MoneyScale.Provider>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function Deadline() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><DeadlineScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

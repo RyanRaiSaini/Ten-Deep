@@ -1,3 +1,4 @@
+import { HistoryGate } from '../../ui/HistoryGate';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
@@ -74,7 +75,7 @@ function FranchiseGrid({ list, start }: { list: Mode[]; start: (m: Mode) => void
 }
 
 /** Pick a franchise, an era, or (Management Crisis) any mode, then start a draft in it. */
-export default function ModePicker() {
+function ModePickerScreen() {
   const { kind } = useLocalSearchParams<{ kind: 'franchise' | 'era' | 'crisis' }>();
   const { t } = useTranslation();
   const newRun = useGame((s) => s.newRun);
@@ -126,6 +127,12 @@ export default function ModePicker() {
 }
 
 const shadowText = { textShadowColor: 'rgba(0,0,0,0.45)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } };
+
+/** Every mode here (and every career season) draws on the full history: wait for it. */
+export default function ModePicker() {
+  return <HistoryGate><ModePickerScreen /></HistoryGate>;
+}
+
 const styles = StyleSheet.create({
   lead: { color: C.muted, fontWeight: '800', textAlign: 'center', marginTop: -S.sm },
   pressed: { transform: [{ translateY: 3 }], borderBottomWidth: 4 },

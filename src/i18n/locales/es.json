@@ -1156,5 +1156,10 @@
     "privacy": "Solo guardamos un identificador privado de tu inicio de sesión, nunca tu correo ni tu contraseña.",
     "cta": "Inicia sesión para guardar tu progreso",
     "ctaSub": "Tus cartas y récords en todos tus dispositivos"
+  },
+  "history": {
+    "loading": "Abriendo los libros de historia…",
+    "failed": "No se pudo cargar la historia. Revisa tu conexión.",
+    "retry": "Reintentar"
   }
 }

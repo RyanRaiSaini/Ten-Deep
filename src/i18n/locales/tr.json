@@ -1151,5 +1151,10 @@
     "privacy": "Girişinden yalnızca gizli bir kimlik tutarız; e-postanı ya da şifreni asla.",
     "cta": "İlerlemeni kaydetmek için giriş yap",
     "ctaSub": "Kartların ve rekorların tüm cihazlarında"
+  },
+  "history": {
+    "loading": "Tarih kitapları açılıyor…",
+    "failed": "Tarih yüklenemedi. Bağlantını kontrol et.",
+    "retry": "Tekrar dene"
   }
 }

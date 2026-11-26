@@ -1,3 +1,5 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
 import { Redirect, router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +26,7 @@ import { CRISIS_ICON } from '../ui/gameIcons';
 
 const BASE_TICK_MS = 120;
 
-export default function Season() {
+function SeasonScreen() {
   const { t, i18n } = useTranslation();
   const runColors = useRunColors();
   const g = useGame();
@@ -191,6 +193,13 @@ function GameLine({ e, name, t }: { e: Extract<SeasonState['log'][number], { kin
       <Text style={styles.gnum}>G{e.round + 1}</Text>
     </View>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function Season() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><SeasonScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

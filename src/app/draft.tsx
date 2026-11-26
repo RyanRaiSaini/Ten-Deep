@@ -1,3 +1,5 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
 import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +29,7 @@ import { useRunColors } from '../ui/runColors';
 import { Die } from '../ui/Dice';
 import { useShop } from '../store/shop';
 
-export default function Draft() {
+function DraftScreen() {
   const { t } = useTranslation();
   const runColors = useRunColors();
   const { width } = useWindowDimensions();
@@ -218,6 +220,13 @@ export default function Draft() {
     </Screen>
     </MoneyScale.Provider>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function Draft() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><DraftScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

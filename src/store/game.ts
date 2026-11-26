@@ -231,7 +231,10 @@ export const useGame = create<GameStore>()(
         // eras: a season of theirs from that era), minus anyone you drafted. Same picks and seed, same league.
         const franchises = leagueFranchises(division, draft.seed);
         const seasons = mode && mode.kind !== 'franchise' ? mode.pool.teams : lp.teams;
-        const league = realLeague(franchises, Object.values(draft.roster) as Player[], draft.seed, seasons, pool('all-time').teams, current2026.teams);
+        // Current Day never reaches into the history (it may not be loaded, and shared runs must build the same
+        // league on every device): a short roster is topped up with reserves instead.
+        const fallback = mode?.kind === 'current' ? current2026.teams : pool('all-time').teams;
+        const league = realLeague(franchises, Object.values(draft.roster) as Player[], draft.seed, seasons, fallback, current2026.teams);
         const teams = [user, ...league];
         const divs = assignDivisions([undefined, ...franchises], division);
         // Career mode locks every salary in at signing so payrolls carry over between seasons.

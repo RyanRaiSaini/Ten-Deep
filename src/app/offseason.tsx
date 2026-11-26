@@ -1,3 +1,6 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
+import { useGame } from '../store/game';
 import { DivisionPicker } from '../ui/DivisionPicker';
 import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
@@ -17,7 +20,7 @@ import { LotteryReveal } from '../ui/Lottery';
 import { Icon } from '../ui/icons';
 
 /** The offseason, one step at a time: development and contracts → rookie draft → free agency → next season. */
-export default function Offseason() {
+function OffseasonScreen() {
   const { t } = useTranslation();
   const c = useCareer();
   const st = c.offseason;
@@ -167,6 +170,13 @@ export default function Offseason() {
       )}
     </Screen>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function Offseason() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><OffseasonScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({
