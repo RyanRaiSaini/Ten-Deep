@@ -39,11 +39,9 @@ describe('sets', () => {
     expect(newlyCompleted(after, after)).toEqual([]);
   });
 
-  it('elite sets pay a Mythic pick, others a Weekly pick', () => {
+  it('every completed set pays one Good Pick', () => {
     const strongest = [...SETS].sort((a, b) => b.strength - a.strength)[0];
-    expect(setReward(strongest)).toBe('mythic');
-    const weakest = [...SETS].sort((a, b) => a.strength - b.strength)[0];
-    expect(setReward(weakest)).toBe('weekly');
+    for (const set of SETS) expect(setReward(set)).toBe('good');
     expect(strongest.strength).toBeCloseTo(teamStrengthScore(HISTORY.find((t) => t.id === strongest.id)!), 5);
   });
 

@@ -20,7 +20,8 @@ export interface Achievement {
   reward: PickType | null;
 }
 
-const REWARD: Record<Medal, PickType | null> = { bronze: null, silver: 'weekly', gold: 'mythic' };
+/** Packs come from drafting well: only gold medals (the hardest) pay one, a Good Pick. */
+const REWARD: Record<Medal, PickType | null> = { bronze: null, silver: null, gold: 'good' };
 const a = (id: string, icon: string, stat: ProgressKey, target: number, tier: Medal): Achievement =>
   ({ id, icon, stat, target, tier, reward: REWARD[tier] });
 

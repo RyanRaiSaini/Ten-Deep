@@ -15,7 +15,7 @@ describe('collection store', () => {
     expect(useCollection.getState().pending).toEqual([]);
   });
 
-  it('one power-up a day, on any pick', () => {
+  it('one power-up a day, and never twice on the same pick', () => {
     useCollection.getState().awardRun('run-p', { wins: 40, losses: 42, champion: false, madePlayoffs: false, round: -1, finalsSweep: false, playoffLosses: 0 });
     useCollection.getState().awardRun('run-q', { wins: 41, losses: 41, champion: false, madePlayoffs: false, round: -1, finalsSweep: false, playoffLosses: 0 });
     const [a, b] = useCollection.getState().pending;
@@ -23,6 +23,9 @@ describe('collection store', () => {
     expect(useCollection.getState().powerUp(b.id, '2026-11-25')).toBeNull();
     expect(useCollection.getState().powerUp(a.id, '2026-11-25')).toBeNull();
     expect(useCollection.getState().powerUp(b.id, '2026-11-26')).not.toBeNull();
+    // A pick that's been powered up once can't be powered up again, even on a new day.
+    expect(useCollection.getState().powerUp(a.id, '2026-11-27')).toBeNull();
+    expect(useCollection.getState().powerUp(b.id, '2026-11-28')).toBeNull();
   });
 
   it('first check-in grants a 10-card starter squad and a full lineup, once', () => {

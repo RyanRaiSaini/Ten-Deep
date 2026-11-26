@@ -26,8 +26,9 @@ for (const s of SETS) for (const c of s.cards) BY_CARD.set(c, [...(BY_CARD.get(c
 export const setsFor = (cardId: string) => BY_CARD.get(cardId) ?? [];
 
 /** Elite teams (top-8 average 83+) pay a Mythic pick; everything else a Weekly pick. */
-export function setReward(s: CardSet): PickType {
-  return s.strength >= 83 ? 'mythic' : 'weekly';
+/** Completing a set pays one Good Pick (packs are mostly earned by drafting well). */
+export function setReward(_s: CardSet): PickType {
+  return 'good';
 }
 
 /** Sets that are complete in `after` but weren't in `before`. */
