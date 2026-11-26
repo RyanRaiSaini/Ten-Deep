@@ -90,6 +90,14 @@ await step('time machine: big banner on home, every era a banner, an era draft s
   await shot('41b-era-draft');
 });
 
+await step('sign in: from the Home banner, Continue with Google (coming soon until configured)', async () => {
+  await page.goto(base);
+  await page.getByTestId('home-signin').click();
+  await page.getByTestId('signin').waitFor();
+  await page.locator('[data-testid="google-signin"], [data-testid="google-soon"]').first().waitFor();
+  await shot('43-signin');
+});
+
 await step('weekly challenge: from home, one shot, starts a draft with a locked division', async () => {
   await page.goto(base);
   await page.getByTestId('mode-weekly').click();

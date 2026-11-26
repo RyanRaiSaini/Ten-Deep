@@ -36,7 +36,8 @@ export async function backup(force = false): Promise<string | null> {
     const { pin, key } = useFriends.getState();
     const { ok, j } = await post({ op: 'save', pin, key, data: JSON.stringify(Object.fromEntries(pairs.filter(([, v]) => v !== null))) });
     if (!ok) return null;
-    await AsyncStorage.setItem(LAST, String(Date.now()));
+    // The server's clock, not this device's: sync compares it with the cloud copy's time (net/sync.ts).
+    await AsyncStorage.setItem(LAST, String(Date.parse(String(j.at)) || Date.now()));
     return j.at as string;
   } catch {
     return null;
@@ -44,6 +45,18 @@ export async function backup(force = false): Promise<string | null> {
 }
 
 export const lastBackup = async (): Promise<number> => Number((await AsyncStorage.getItem(LAST)) ?? 0);
+
+/** When the cloud copy was last saved (ms), null if there isn't one, undefined if the server can't be reached. */
+export async function remoteSavedAt(): Promise<number | null | undefined> {
+  try {
+    const { pin, key } = useFriends.getState();
+    const { ok, j } = await post({ op: 'stat', pin, key });
+    if (!ok) return j.error === 'not-found' ? null : undefined;
+    return Date.parse(String(j.at));
+  } catch {
+    return undefined;
+  }
+}
 
 /** Restore from a recovery code: writes the saved stores back and reloads them. */
 export async function restore(code: string): Promise<'ok' | 'bad-code' | 'not-found' | 'wrong-code' | 'offline'> {
@@ -56,7 +69,7 @@ export async function restore(code: string): Promise<'ok' | 'bad-code' | 'not-fo
     await Promise.all(Object.entries(saved).filter(([k]) => SAVE_KEYS.includes(k)).map(([k, v]) => AsyncStorage.setItem(k, v)));
     const { STORES } = await import('../store/all');
     for (const s of STORES) await (s as unknown as { persist: { rehydrate: () => Promise<void> } }).persist.rehydrate();
-    await AsyncStorage.setItem(LAST, String(Date.now()));
+    await AsyncStorage.setItem(LAST, String(Date.parse(String(j.at)) || Date.now()));
     return 'ok';
   } catch {
     return 'offline';

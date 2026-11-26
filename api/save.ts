@@ -2,6 +2,8 @@
  * Cloud save: a private backup of a player's progress under their PIN, protected by their device key.
  *   POST /api/save { op: 'save', pin, key, data }  → { ok, at }
  *   POST /api/save { op: 'load', pin, key }        → { data, at } (key must match the one that saved it)
+ *   POST /api/save { op: 'stat', pin, key }        → { at } (when the cloud copy was saved: devices check this before
+ *                                                    pulling, so syncing doesn't download the whole save every time)
  * The recovery code shown in Settings is PIN + key, so it restores progress on any device.
  *   GET  /api/save?selftest=1 → runs save → load → wrong-code checks → delete against the real store,
  *                               under a reserved test PIN, and reports each step.
@@ -39,6 +41,9 @@ export async function POST(req: Request) {
   const existing = await read(pin);
   if (existing && existing.keyHash !== keyHash) return json({ error: 'wrong-code' }, 403);
 
+  if (b.op === 'stat') {
+    return existing ? json({ at: existing.at }) : json({ error: 'not-found' }, 404);
+  }
   if (b.op === 'load') {
     return existing ? json({ data: existing.data, at: existing.at }) : json({ error: 'not-found' }, 404);
   }

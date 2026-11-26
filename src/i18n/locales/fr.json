@@ -1143,5 +1143,18 @@
     "s4": "Va en playoffs et vise le titre. Gagne gros pour obtenir des Player Picks.",
     "go": "C'est parti",
     "rules": "Voir toutes les règles"
+  },
+  "signin": {
+    "title": "Connexion",
+    "doneTitle": "Tu es connecté",
+    "lead": "Sauvegarde ta progression et reprends là où tu t'es arrêté, sur téléphone, tablette ou ordinateur.",
+    "p1": "Tes cartes et tes packs, tous ceux que tu as ouverts",
+    "p2": "Tes records, titres, carrière et missions",
+    "p3": "Tes amis et ton code ami",
+    "p4": "Joue sur ton téléphone, continue sur ton ordinateur : tout se synchronise tout seul",
+    "soon": "La connexion Google est en préparation et arrive bientôt.",
+    "privacy": "Nous ne gardons qu'un identifiant privé de ta connexion, jamais ton e-mail ni ton mot de passe.",
+    "cta": "Connecte-toi pour sauvegarder",
+    "ctaSub": "Tes cartes et records sur tous tes appareils"
   }
 }

@@ -1,3 +1,4 @@
+import { useAccount } from '../../store/account';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
@@ -49,6 +50,7 @@ const shiftDay = (day: string, n: number) => {
 };
 
 export default function Home() {
+  const signedIn = useAccount((s) => !!s.provider);
   const { t, i18n } = useTranslation();
   const profile = useProfile();
   const flag = useSettings((s) => s.nationality);
@@ -141,6 +143,18 @@ export default function Home() {
           })}
         </View>
       </View>
+
+      {!signedIn && (
+        <Pressable onPress={() => router.push('/signin')} style={({ pressed }) => [styles.signin, pressed && { transform: [{ translateY: 2 }] }]}
+          testID="home-signin" accessibilityRole="button" accessibilityLabel={t('signin.cta')}>
+          <Icon name="globe" size={30} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.signinTitle}>{t('signin.cta')}</Text>
+            <Text style={styles.signinSub}>{t('signin.ctaSub')}</Text>
+          </View>
+          <Text style={styles.signinGo}>›</Text>
+        </Pressable>
+      )}
 
       {freezesUsed > 0 && (
         <View style={styles.saved} testID="streak-saved">
@@ -238,6 +252,10 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+  signin: { flexDirection: 'row', alignItems: 'center', gap: S.md, backgroundColor: '#FFFFFF', borderRadius: 20, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6, padding: S.md },
+  signinTitle: { color: C.ink, fontWeight: '900', fontSize: 15 },
+  signinSub: { color: C.muted, fontWeight: '700', fontSize: 12 },
+  signinGo: { color: C.muted, fontSize: 24, fontWeight: '900' },
   freeDot: { position: 'absolute', top: -3, right: -3, width: 14, height: 14, borderRadius: 7, backgroundColor: C.danger, borderWidth: 2, borderColor: '#FFFFFF' },
   top: { flexDirection: 'row', alignItems: 'center', gap: S.sm, paddingTop: S.md, justifyContent: 'space-between' },
   chipNum: { fontFamily: FONT.display, fontSize: 22, color: C.ink },

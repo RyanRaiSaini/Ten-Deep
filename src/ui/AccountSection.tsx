@@ -15,7 +15,11 @@ import { GoogleButton } from './GoogleButton';
 import { Text } from './Text';
 import { C, S } from './theme';
 
-export function AccountSection() {
+/**
+ * `page`: the Sign in screen. It always shows, with a "coming soon" Google button until sign-in is configured, and
+ * without its own heading.
+ */
+export function AccountSection({ page = false }: { page?: boolean }) {
   const { t } = useTranslation();
   const provider = useAccount((s) => s.provider);
   const [apple, setApple] = useState(false);
@@ -27,7 +31,7 @@ export function AccountSection() {
     void appleAvailable().then(setApple);
     void googleAvailable().then(setGoogle);
   }, []);
-  if (!apple && !google && !provider) return null;
+  if (!apple && !google && !provider && !page) return null;
 
   const withToken = async (p: Provider, token: string | null) => {
     if (!token) return; // cancelled
@@ -49,7 +53,7 @@ export function AccountSection() {
 
   return (
     <>
-      <Label>{t('account.title')}</Label>
+      {!page && <Label>{t('account.title')}</Label>}
       <Card style={{ gap: S.sm }}>
         {provider ? (
           <>
@@ -69,6 +73,12 @@ export function AccountSection() {
             <Text style={styles.sub}>{t('account.body')}</Text>
             {apple && <AppleButton onPress={async () => withToken('apple', await appleToken())} />}
             {google && <GoogleButton onPress={async () => withToken('google', await googleToken())} onToken={(tok) => withToken('google', tok)} />}
+            {!apple && !google && (
+              <>
+                <Button label={t('account.google')} variant="secondary" disabled onPress={() => {}} testID="google-soon" />
+                <Text style={styles.small}>{t('signin.soon')}</Text>
+              </>
+            )}
           </>
         )}
         {busy && <Text style={styles.small}>{t('account.working')}</Text>}

@@ -35,6 +35,7 @@ export function startDay() {
   void import('../net/pins').then((m) => m.publishMe());
   // Real-life form: today's rating nudges from NBA box scores.
   void syncForm();
-  // Cloud save (at most every 30 minutes).
+  // Cloud save (at most every 30 minutes), and for signed-in players, live sync between their devices.
   void import('../net/save').then((m) => m.backup());
+  void import('../net/sync').then((m) => m.startSync(STORES.filter((s) => s !== useAccount)));
 }
