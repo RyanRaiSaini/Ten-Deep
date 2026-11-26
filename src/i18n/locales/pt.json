@@ -111,7 +111,8 @@
     "empty": "Livre",
     "benchSlot": "Banco {{n}}",
     "hot": "Em chamas: +{{n}} pela fase real",
-    "cold": "Frio: −{{n}} pela fase real"
+    "cold": "Frio: −{{n}} pela fase real",
+    "eraCap": "Teto {{season}} · dólares da época"
   },
   "season": {
     "title": "Temporada regular",
@@ -503,7 +504,7 @@
   },
   "welcome": {
     "t1": "Monte seus dez",
-    "b1": "Gire a roleta, escolha um jogador e encaixe dez abaixo do teto de US$200 mi. Só duas estrelas 95+.",
+    "b1": "Gire a roleta, escolha um jogador e encaixe dez abaixo do teto de US$200 mi. Só duas estrelas 95+. Nas eras da Máquina do Tempo, o teto e cada salário estão em dólares daquela época.",
     "t2": "Sobreviva a 82 jogos",
     "b2": "Lesões, prazo de trocas e playoffs em sete jogos. 70 vitórias é raro. 82-0 é um mito.",
     "t3": "Colecione lendas",
@@ -1014,8 +1015,8 @@
     "spinB": "Cada rodada cai numa temporada aleatória de um time da NBA. Escolha um jogador dela.",
     "rosterT": "Monte seus dez",
     "rosterB": "Preencha PG, SG, SF, PF e C, mais cinco vagas no banco. Alguns jogadores atuam em duas posições.",
-    "capT": "Fique abaixo de US$ 200 mi",
-    "capB": "Cada jogador custa o contrato real, ajustado ao teto daquela temporada. Contratos de novato são baratos; máximos e supermáximos, não. O jogo sempre deixa espaço para preencher todas as vagas.",
+    "capT": "Fique abaixo do teto",
+    "capB": "Cada jogador custa o contrato real, ajustado ao teto daquela temporada. Contratos de novato são baratos; máximos e supermáximos, não. O jogo sempre deixa espaço para preencher todas as vagas. Os modos atuais usam um teto de US$ 200 mi. Cada era da Máquina do Tempo usa seu teto real e os dólares da época (Magic vs. Bird: o teto de 1987-88, US$ 6,2 mi), então uma estrela custa a parte do teto que realmente recebia.",
     "rulesT": "As letras miúdas",
     "rulesB": "No máximo dois jogadores com 95 ou mais. Um giro extra grátis por draft. Se ninguém couber num giro, você recebe o jogador mais barato que cabe.",
     "seasonT": "Jogue 82 partidas",

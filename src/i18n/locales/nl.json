@@ -110,7 +110,8 @@
     "empty": "Vrij",
     "benchSlot": "Bank {{n}}",
     "hot": "On fire: +{{n}} door echte vorm",
-    "cold": "Koud: −{{n}} door echte vorm"
+    "cold": "Koud: −{{n}} door echte vorm",
+    "eraCap": "Salarisplafond {{season}} · dollars van toen"
   },
   "season": {
     "title": "Reguliere competitie",
@@ -498,7 +499,7 @@
   },
   "welcome": {
     "t1": "Draft tien diep",
-    "b1": "Draai aan het rad, kies een speler en krijg er tien onder een salarisplafond van $200M. Maximaal twee 95+-sterren.",
+    "b1": "Draai aan het rad, kies een speler en krijg er tien onder een salarisplafond van $200M. Maximaal twee 95+-sterren. In de tijdperken van de Tijdmachine zijn het plafond en elk salaris in dollars van toen.",
     "t2": "Overleef 82 wedstrijden",
     "b2": "Blessures, een transferdeadline en play-offs over zeven wedstrijden. 70 zeges is zeldzaam. 82-0 is een mythe.",
     "t3": "Verzamel de legendes",
@@ -1009,8 +1010,8 @@
     "spinB": "Elke ronde landt op een willekeurig NBA-teamseizoen. Kies daar één speler uit.",
     "rosterT": "Tien diep",
     "rosterB": "Vul PG, SG, SF, PF en C, plus vijf bankplekken. Sommige spelers kunnen op twee posities spelen.",
-    "capT": "Blijf onder $200 mln",
-    "capB": "Elke speler kost zijn echte contract, omgerekend naar het plafond van dat seizoen. Rookiecontracten zijn goedkoop, max- en supermaxcontracten niet. Het spel houdt altijd genoeg ruimte om elke plek te vullen.",
+    "capT": "Blijf onder het plafond",
+    "capB": "Elke speler kost zijn echte contract, omgerekend naar het plafond van dat seizoen. Rookiecontracten zijn goedkoop, max- en supermaxcontracten niet. Het spel houdt altijd genoeg ruimte om elke plek te vullen. De huidige modi hebben een plafond van $200M. Elk tijdperk van de Tijdmachine gebruikt zijn echte plafond en de dollars van toen (Magic vs. Bird: het plafond van 1987-88, $6,2M), dus een ster kost het deel van het plafond dat hij toen echt kreeg.",
     "rulesT": "De kleine lettertjes",
     "rulesB": "Hoogstens twee spelers van 95 of hoger. Eén gratis respin per draft. Past er bij een draai niemand, dan krijg je de goedkoopste speler die wel past.",
     "seasonT": "Speel 82 wedstrijden",

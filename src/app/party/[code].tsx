@@ -18,6 +18,7 @@ import { joinRoom, leaveRoom, startRoom, submitPick, useRoom, useRoomPool, useSe
 import { useFriends } from '../../store/friends';
 import { Avatar } from '../../ui/Avatar';
 import { FinishChip } from '../../ui/CardFinish';
+import { moneyScaleFor } from '../../data/modes';
 import { CARD_BY_ID } from '../../data/cards';
 import { BackButton, Button, Card, Display, Header, Screen } from '../../ui/components';
 import { Confetti } from '../../ui/fx';
@@ -194,13 +195,13 @@ function Draft({ room, members, mySeat, pool, state, now, code, refresh }: {
         <View style={{ gap: S.sm }}>
           <Text style={styles.hint}>{t('party.autoNote')}</Text>
           {fallback && (
-            <Button label={t('draft.signFallback', { name: fallback.player.name, salary: money(payOf(fallback.player)) })} variant="dark"
+            <Button label={t('draft.signFallback', { name: fallback.player.name, salary: money(payOf(fallback.player), moneyScaleFor(room?.meta?.poolId)) })} variant="dark"
               disabled={sending} onPress={() => send(fallback.player.id, fallback.slot)} testID="party-fallback" />
           )}
           {opts.map((o) => {
             const gone = state.taken.has(o.player.id);
             return (
-              <PlayerCard key={o.player.id} player={o.player} accent={c1} disabled={!o.affordable || gone || sending}
+              <PlayerCard key={o.player.id} player={o.player} moneyScale={moneyScaleFor(room?.meta?.poolId)} accent={c1} disabled={!o.affordable || gone || sending}
                 selected={chosen === o.player.id} slots={o.slots} onSlot={(slot) => send(o.player.id, slot)}
                 note={gone ? t('party.taken') : !o.affordable ? t('draft.overCap') : undefined} testID={o.affordable && !gone ? 'party-option' : undefined}
                 onPress={() => (o.slots.length === 1 ? send(o.player.id, o.slots[0]) : setChosen(o.player.id))} />

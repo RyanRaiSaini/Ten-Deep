@@ -4,7 +4,8 @@ import { contractType, payOf } from '../engine/cap';
 import type { Player, SlotId } from '../engine/types';
 import { Icon } from './icons';
 import { Text } from './Text';
-import { C, FONT, R, S, money } from './theme';
+import { C, FONT, R, S } from './theme';
+import { useMoney } from './MoneyScale';
 
 /** Rating badge colors: gold superstar, green great, blue good, ink role player, gray deep bench. */
 export function ovrBadge(ovr: number): string {
@@ -20,12 +21,15 @@ export function ovrBadge(ovr: number): string {
  * options and the card is selected, the slot choices appear right on the card (no scrolling to the board).
  */
 export function PlayerCard({
-  player, onPress, disabled, note, selected, testID, accent, slots, onSlot,
+  player, onPress, disabled, note, selected, testID, accent, slots, onSlot, moneyScale,
 }: {
   player: Player; onPress?: () => void; disabled?: boolean; note?: string; selected?: boolean; testID?: string;
   accent?: string; slots?: SlotId[]; onSlot?: (s: SlotId) => void;
+  /** Show the price in these dollars instead of the screen's (MoneyScale). */
+  moneyScale?: number;
 }) {
   const { t } = useTranslation();
+  const money = useMoney(moneyScale);
   // Max and rookie-scale deals are worth calling out; plain veteran deals aren't.
   const deal = (() => { const d = contractType(player); return d && d !== 'standard' ? d : null; })();
   // Real-life form nudge (from NBA box scores), if this player has one today.

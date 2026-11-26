@@ -110,7 +110,8 @@
     "empty": "Frei",
     "benchSlot": "Bank {{n}}",
     "hot": "Heiß: +{{n}} durch echte Form",
-    "cold": "Kalt: −{{n}} durch echte Form"
+    "cold": "Kalt: −{{n}} durch echte Form",
+    "eraCap": "Cap {{season}} · Dollar von damals"
   },
   "season": {
     "title": "Hauptrunde",
@@ -498,7 +499,7 @@
   },
   "welcome": {
     "t1": "Draft zehn tief",
-    "b1": "Dreh am Rad, wähl einen Spieler und bring zehn unter eine Gehaltsgrenze von 200 Mio. $. Höchstens zwei 95+-Stars.",
+    "b1": "Dreh am Rad, wähl einen Spieler und bring zehn unter eine Gehaltsgrenze von 200 Mio. $. Höchstens zwei 95+-Stars. In den Zeitmaschine-Ären sind Cap und alle Gehälter in Dollar von damals.",
     "t2": "Überstehe 82 Spiele",
     "b2": "Verletzungen, eine Trade-Deadline und Playoffs über sieben Spiele. 70 Siege sind selten. 82-0 ist ein Mythos.",
     "t3": "Sammle die Legenden",
@@ -1009,8 +1010,8 @@
     "spinB": "Jede Runde landet auf einer zufälligen NBA-Team-Saison. Wähle daraus einen Spieler.",
     "rosterT": "Zehn tief",
     "rosterB": "Besetze PG, SG, SF, PF und C plus fünf Bankplätze. Manche Spieler können zwei Positionen spielen.",
-    "capT": "Bleib unter 200 Mio. $",
-    "capB": "Jeder Spieler kostet seinen echten Vertrag, umgerechnet auf den Cap seiner Saison. Rookie-Verträge sind billig, Max- und Supermax-Verträge nicht. Das Spiel lässt immer genug Platz, um alle Plätze zu füllen.",
+    "capT": "Bleib unter der Cap",
+    "capB": "Jeder Spieler kostet seinen echten Vertrag, umgerechnet auf den Cap seiner Saison. Rookie-Verträge sind billig, Max- und Supermax-Verträge nicht. Das Spiel lässt immer genug Platz, um alle Plätze zu füllen. Die heutigen Modi haben eine Cap von 200 Mio. $. Jede Zeitmaschine-Ära hat ihre echte Cap und Dollar von damals (Magic vs. Bird: die Cap 1987-88 von 6,2 Mio. $), ein Star kostet also den Anteil der Cap, den er damals wirklich bekam.",
     "rulesT": "Das Kleingedruckte",
     "rulesB": "Höchstens zwei Spieler mit 95 oder mehr. Ein freier Respin pro Draft. Passt auf einem Spin niemand, bekommst du den günstigsten Spieler, der passt.",
     "seasonT": "Spiel 82 Partien",

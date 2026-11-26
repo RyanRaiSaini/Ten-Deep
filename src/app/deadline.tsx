@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
+import { MoneyScale } from '../ui/MoneyScale';
+import { moneyScaleFor } from '../data/modes';
 import { feel } from '../audio/feel';
 import { POOLS } from '../data';
 import { tradeSwap } from '../engine/season';
@@ -43,6 +45,7 @@ export default function Deadline() {
     : [];
 
   return (
+    <MoneyScale.Provider value={moneyScaleFor(g.poolId)}>
     <Screen tint={runColors[0]}>
       <Header title={t('deadline.title')} />
       <Text style={styles.desc}>{t('deadline.desc')}</Text>
@@ -83,6 +86,7 @@ export default function Deadline() {
       <Button label={t('deadline.skip')} variant="ghost" onPress={() => done(g.skipDeadline)} testID="deadline-skip" />
       <Text style={[styles.desc, { color: C.muted }]}>{season.records[0].w}-{season.records[0].l}</Text>
     </Screen>
+    </MoneyScale.Provider>
   );
 }
 

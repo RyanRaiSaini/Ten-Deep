@@ -110,7 +110,8 @@
     "empty": "Boş",
     "benchSlot": "Yedek {{n}}",
     "hot": "Alev alev: gerçek formdan +{{n}}",
-    "cold": "Soğuk: gerçek formdan −{{n}}"
+    "cold": "Soğuk: gerçek formdan −{{n}}",
+    "eraCap": "{{season}} tavanı · dönemin dolarıyla"
   },
   "season": {
     "title": "Normal sezon",
@@ -498,7 +499,7 @@
   },
   "welcome": {
     "t1": "On kişilik draft",
-    "b1": "Çarkı çevir, oyuncu seç ve on kişiyi 200 M$ tavanın altına sığdır. En fazla iki 95+ yıldız.",
+    "b1": "Çarkı çevir, oyuncu seç ve on kişiyi 200 M$ tavanın altına sığdır. En fazla iki 95+ yıldız. Zaman Makinesi dönemlerinde tavan ve tüm maaşlar o dönemin dolarıyladır.",
     "t2": "82 maçı atlat",
     "b2": "Sakatlıklar, takas son tarihi ve yedi maçlık playofflar. 70 galibiyet nadirdir. 82-0 bir efsanedir.",
     "t3": "Efsaneleri topla",
@@ -1009,8 +1010,8 @@
     "spinB": "Her tur rastgele bir NBA takım sezonuna denk gelir. Oradan bir oyuncu seç.",
     "rosterT": "On kişilik kadro",
     "rosterB": "PG, SG, SF, PF ve C ile beş yedek yerini doldur. Bazı oyuncular iki pozisyonda oynayabilir.",
-    "capT": "200 milyon doların altında kal",
-    "capB": "Her oyuncu, o sezonun tavanına göre ölçeklenmiş gerçek sözleşmesine mal olur. Çaylak sözleşmeleri ucuz, maksimum ve süper maksimum sözleşmeler değil. Oyun her yeri doldurman için her zaman yer bırakır.",
+    "capT": "Tavanın altında kal",
+    "capB": "Her oyuncu, o sezonun tavanına göre ölçeklenmiş gerçek sözleşmesine mal olur. Çaylak sözleşmeleri ucuz, maksimum ve süper maksimum sözleşmeler değil. Oyun her yeri doldurman için her zaman yer bırakır. Günümüz modlarında tavan 200 milyon $. Her Zaman Makinesi dönemi kendi gerçek tavanını ve o dönemin dolarını kullanır (Magic vs. Bird: 1987-88 tavanı 6,2 milyon $), yani bir yıldız o zaman tavandan gerçekten aldığı payı tutar.",
     "rulesT": "Ayrıntılar",
     "rulesB": "95 ve üzeri en fazla iki oyuncu. Her draftta bir ücretsiz yeniden çevirme. Bir çevirmede sığan kimse yoksa, sığan en ucuz oyuncuyu alırsın.",
     "seasonT": "82 maç oyna",

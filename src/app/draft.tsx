@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Text } from '../ui/Text';
+import { MoneyScale } from '../ui/MoneyScale';
+import { MODE_BY_ID, moneyScaleFor } from '../data/modes';
 import { feel } from '../audio/feel';
 import { POOLS } from '../data';
 import { CAP, MAX_SUPERSTARS, capRoom, payOf, superstarCount } from '../engine/cap';
@@ -30,6 +32,10 @@ export default function Draft() {
   const { width } = useWindowDimensions();
   const wide = width >= 900;
   const g = useGame();
+  // An era shows its own cap and dollars (data/modes); the cap check itself is the same everywhere.
+  const scale = moneyScaleFor(g.poolId);
+  const eraCap = MODE_BY_ID[g.poolId]?.cap;
+  const $ = (m: number) => money(m, scale);
   const [spinKey, setSpinKey] = useState(0);
   const [landed, setLanded] = useState(true);
   const [chosen, setChosen] = useState<string | null>(null);
@@ -85,11 +91,12 @@ export default function Draft() {
       </View>
       <View style={styles.capRow}>
         <Text style={styles.capLabel}>{t('draft.capSpace')}</Text>
-        <Text style={styles.capNum}>{money(room)} <Text style={styles.capOf}>/ {money(CAP)}</Text></Text>
+        <Text style={styles.capNum}>{$(room)} <Text style={styles.capOf}>/ {$(CAP)}</Text></Text>
       </View>
+      {eraCap && <Text style={styles.eraCap} testID="era-cap">{t('draft.eraCap', { season: eraCap.season })}</Text>}
       <View style={styles.bar}><View style={[styles.barFill, { width: `${Math.max(0, (room / CAP) * 100)}%` }]} /></View>
       <View style={styles.capRow}>
-        <Text style={styles.spendable}>{t('draft.spendable', { amount: money(Math.max(0, spendable)) })}</Text>
+        <Text style={styles.spendable}>{t('draft.spendable', { amount: $(Math.max(0, spendable)) })}</Text>
         <View style={styles.stars} accessibilityLabel={t('draft.superstars', { n: superstarCount(d.roster) })}>
           {Array.from({ length: MAX_SUPERSTARS }, (_, i) => (
             <View key={i} style={{ opacity: i < superstarCount(d.roster) ? 1 : 0.25 }}><Icon name="star" size={20} /></View>
@@ -128,7 +135,7 @@ export default function Draft() {
           )}
           {fallback && d.respinsLeft === 0 && (
             <Button
-              label={t('draft.signFallback', { name: fallback.name, salary: money(payOf(fallback)) })}
+              label={t('draft.signFallback', { name: fallback.name, salary: $(payOf(fallback)) })}
               variant="dark"
               onPress={() => { g.doFallback(); feel('pickChime'); }}
               testID="fallback"
@@ -173,6 +180,7 @@ export default function Draft() {
   );
 
   return (
+    <MoneyScale.Provider value={moneyScaleFor(g.poolId)}>
     <Screen tint={runColors[0]} wide={wide} overlay={burst ? <Confetti key={burst} count={36} colors={['#FFC53D', runColors[0], '#FFFFFF']} /> : null}>
       <Header
         title={complete ? t('draft.starters') : t('draft.pick', { n: d.round + 1 })}
@@ -202,6 +210,7 @@ export default function Draft() {
         </>
       )}
     </Screen>
+    </MoneyScale.Provider>
   );
 }
 
@@ -218,6 +227,7 @@ const styles = StyleSheet.create({
   bar: { height: 14, borderRadius: R.pill, backgroundColor: C.surface2, overflow: 'hidden', borderWidth: 2, borderColor: C.ink },
   barFill: { height: '100%', backgroundColor: '#18C08A' },
   spendable: { color: C.muted, fontSize: 13, fontWeight: '700' },
+  eraCap: { color: C.muted, fontSize: 12, fontWeight: '800', textAlign: 'right', marginTop: -4 },
   warn: { color: C.danger, fontSize: 13, fontWeight: '800' },
   choose: { color: C.neon, fontWeight: '900', textAlign: 'center' },
   spinBtn: {

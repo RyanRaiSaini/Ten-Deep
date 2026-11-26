@@ -111,7 +111,8 @@
     "empty": "Libre",
     "benchSlot": "Banco {{n}}",
     "hot": "Encendido: +{{n}} por su forma real",
-    "cold": "Frío: −{{n}} por su forma real"
+    "cold": "Frío: −{{n}} por su forma real",
+    "eraCap": "Tope {{season}} · dólares de la época"
   },
   "season": {
     "title": "Temporada regular",
@@ -503,7 +504,7 @@
   },
   "welcome": {
     "t1": "Draftea a diez",
-    "b1": "Gira la ruleta, elige un jugador y mete a diez bajo un tope de 200 M$. Solo dos estrellas 95+.",
+    "b1": "Gira la ruleta, elige un jugador y mete a diez bajo un tope de 200 M$. Solo dos estrellas 95+. En las épocas de la Máquina del tiempo, el tope y cada salario están en dólares de esa época.",
     "t2": "Sobrevive 82 partidos",
     "b2": "Lesiones, fecha límite de traspasos y playoffs a siete partidos. 70 victorias es raro. 82-0 es un mito.",
     "t3": "Colecciona leyendas",
@@ -1014,8 +1015,8 @@
     "spinB": "Cada ronda cae en una temporada al azar de un equipo NBA. Elige un jugador de ahí.",
     "rosterT": "Arma tus diez",
     "rosterB": "Cubre PG, SG, SF, PF y C, más cinco puestos de banca. Algunos jugadores pueden jugar dos posiciones.",
-    "capT": "No pases de 200 M$",
-    "capB": "Cada jugador cuesta su contrato real, escalado al tope de esa temporada. Los contratos de novato son baratos; los máximos y supermáximos, no. El juego siempre deja espacio para llenar todos los puestos.",
+    "capT": "No pases el tope",
+    "capB": "Cada jugador cuesta su contrato real, escalado al tope de esa temporada. Los contratos de novato son baratos; los máximos y supermáximos, no. El juego siempre deja espacio para llenar todos los puestos. Los modos actuales usan un tope de 200 M$. Cada época de la Máquina del tiempo usa su tope real y los dólares de esa época (Magic vs. Bird: el tope 1987-88 de 6,2 M$), así que una estrella cuesta la parte del tope que de verdad cobraba.",
     "rulesT": "La letra pequeña",
     "rulesB": "Como mucho dos jugadores de 95 o más. Un giro extra gratis por draft. Si en un giro no cabe nadie, te dan el jugador más barato que sí cabe.",
     "seasonT": "Juega 82 partidos",

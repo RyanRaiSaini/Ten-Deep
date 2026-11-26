@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
+import { MoneyScale } from '../ui/MoneyScale';
+import { moneyScaleFor } from '../data/modes';
 import { feel } from '../audio/feel';
 import { CARD_ROUNDS, cardDef, type Rarity } from '../engine/crisis/deck';
 import type { SlotId } from '../engine/types';
@@ -83,6 +85,7 @@ export default function Crisis() {
   );
 
   return (
+    <MoneyScale.Provider value={moneyScaleFor(g.poolId)}>
     <Screen>
       <View style={styles.top}>
         <Label color={color}>{t('crisis.title')} · {month}</Label>
@@ -137,6 +140,7 @@ export default function Crisis() {
 
       {pickOut && actions}
     </Screen>
+    </MoneyScale.Provider>
   );
 }
 
