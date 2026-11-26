@@ -5,8 +5,9 @@ import { current2026 } from '../data/current2026';
 /**
  * Difficulty guardrails (owner's targets, against the real 2026-27 rosters), by Squad Rating. Every AI league is
  * levelled to the same strength (SIM.leagueSr), so the eras follow the same curve:
- *   93 → about 78 wins, the likeliest 82-0 (still rare) · 91 → 74–76, 82-0 possible · 89 → about 70
- *   87 → about 65 · 85 → about 55 · 83 → about 45 · 82-0 never below about 90.
+ *   93 → about 80 wins (out of reach under the cap) · 91 → about 76 · 88 → about 70 · 86 → about 65
+ *   84 → about 55 · 80 → about 33. The owner's middle ground: harder than "84 goes 74-8", easier than 84 → 49.
+ *   The best squad the cap allows is about 90 (Current Day) to 92 (eras), so 82-0 stays nearly impossible.
  * Measured over 150 seasons per level when tuned (see SIM in simConfig.ts); these seeded checks keep the shape.
  * If a change breaks them, retune src/engine/simConfig.ts.
  */
@@ -22,23 +23,23 @@ describe('calibration (2026 pool, real rosters)', () => {
     expect(r.p70).toBeGreaterThan(0.85);
   }, 120_000);
 
-  it('Squad Rating 91: 74–76 wins on average', () => {
+  it('Squad Rating 91: about 76 wins on average', () => {
     const r = at(91);
-    expect(r.avg).toBeGreaterThanOrEqual(72);
-    expect(r.avg).toBeLessThanOrEqual(78);
+    expect(r.avg).toBeGreaterThanOrEqual(73);
+    expect(r.avg).toBeLessThanOrEqual(80);
   }, 120_000);
 
-  it('Squad Rating 87: about 65 wins, never 82-0', () => {
+  it('Squad Rating 87: about 68 wins, never 82-0', () => {
     const r = at(87);
-    expect(r.avg).toBeGreaterThanOrEqual(61);
-    expect(r.avg).toBeLessThanOrEqual(70);
+    expect(r.avg).toBeGreaterThanOrEqual(63);
+    expect(r.avg).toBeLessThanOrEqual(73);
     expect(r.perfect).toBe(0);
   }, 120_000);
 
-  it('Squad Rating 83: below .500 to about even, never 82-0, rarely a title', () => {
+  it('Squad Rating 83: about 50 wins, never 82-0, rarely a title', () => {
     const r = at(83);
-    expect(r.avg).toBeGreaterThanOrEqual(40);
-    expect(r.avg).toBeLessThanOrEqual(52);
+    expect(r.avg).toBeGreaterThanOrEqual(44);
+    expect(r.avg).toBeLessThanOrEqual(56);
     expect(r.perfect).toBe(0);
     expect(r.titleRate).toBeLessThanOrEqual(0.1);
   }, 120_000);
@@ -49,8 +50,8 @@ describe('calibration (2026 pool, real rosters)', () => {
       const pool = MODE_BY_ID[id].pool;
       const eraBases = Array.from({ length: 12 }, (_, i) => goodDraft(pool, `cal-${id}-${i}`));
       const r = runSeasons((i) => atSquadRating(eraBases[i % 12], 84), pool, 24, `cal-${id}`);
-      expect(r.avg, id).toBeGreaterThanOrEqual(38);
-      expect(r.avg, id).toBeLessThanOrEqual(58); // it went 74-8 before the leagues were levelled
+      expect(r.avg, id).toBeGreaterThanOrEqual(46);
+      expect(r.avg, id).toBeLessThanOrEqual(62); // it went 74-8 before the leagues were levelled
       expect(r.perfect, id).toBe(0);
     }
   }, 240_000);

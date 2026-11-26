@@ -1,7 +1,7 @@
 import { capRoom, payOf, superstarBlocked } from './cap';
 import { createRng } from './rng';
 import {
-  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type RosterSlots, type SlotId, type TeamSeason,
+  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type RosterSlots, type SlotId, type TeamSeason, playsPos,
 } from './types';
 
 export { MAX_SUPERSTARS } from './cap';
@@ -58,7 +58,7 @@ export function eligibleSlots(state: DraftState, p: Player): SlotId[] {
   return ALL_SLOTS.filter((slot) => {
     if (state.roster[slot]) return false;
     if (BENCH_SLOTS.includes(slot)) return true;
-    return slot === p.pos || slot === p.pos2;
+    return playsPos(p, slot);
   });
 }
 
@@ -145,7 +145,7 @@ export function jointReserve(rosters: RosterSlots[], used: Set<string>, pool: Po
       rosters.forEach((roster, i) => {
         if (roster[slot] || costs[i] === Infinity) return;
         const bench = BENCH_SLOTS.includes(slot);
-        const p = bySalary(pool).find((x) => !taken.has(x.id) && !names.has(x.name) && (bench || x.pos === slot || x.pos2 === slot));
+        const p = bySalary(pool).find((x) => !taken.has(x.id) && !names.has(x.name) && (bench || playsPos(x, slot)));
         if (!p) {
           costs[i] = Infinity;
           return;

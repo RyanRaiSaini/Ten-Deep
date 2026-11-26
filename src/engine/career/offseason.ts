@@ -5,7 +5,7 @@
 import { APRON, MIN_CONTRACT, capRoom, payOf, rookieScale, salaryFor } from '../cap';
 import { affordableSlots, startDraft } from '../draft';
 import { createRng } from '../rng';
-import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../types';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Roster, type RosterSlots, type SlotId, type TeamSeason, playsPos } from '../types';
 import { progressPlayer, retires } from './aging';
 import { ROOKIE_YEARS, type Contracts } from './contracts';
 import { draftOrder } from './lottery';
@@ -149,7 +149,7 @@ export function resolveExpiring(st: OffseasonState, keep: string[]): OffseasonSt
 
 /** Best open slot for a player: an eligible open starter spot, else any open bench spot, else any open spot. */
 function slotFor(t: OffTeam, p: Player): SlotId | undefined {
-  return STARTER_SLOTS.find((k) => !t.slots[k] && (p.pos === k || p.pos2 === k))
+  return STARTER_SLOTS.find((k) => !t.slots[k] && playsPos(p, k))
     ?? BENCH_SLOTS.find((k) => !t.slots[k])
     ?? ALL_SLOTS.find((k) => !t.slots[k]);
 }

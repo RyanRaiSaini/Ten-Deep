@@ -18,6 +18,7 @@ export interface Card {
   team: string;
   pos: Pos;
   pos2?: Pos;
+  more?: Pos[];
   ovr: number;
   tier: Tier;
   colors: [string, string];

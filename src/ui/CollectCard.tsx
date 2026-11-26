@@ -8,6 +8,7 @@ import { FINISH_STYLE, FinishChip, FinishOverlay } from './CardFinish';
 import type { Finish } from '../engine/collect/finishes';
 import { C, F, FONT, R } from './theme';
 import { TIER_STYLE } from './tierStyle';
+import { posLabel } from '../engine/types';
 
 /** Tier look: frame gradient, accent and glow. */
 export { TIER_STYLE } from './tierStyle';
@@ -36,7 +37,7 @@ export function CollectCard({ card, width = 150, tierLabel, level = 0, finish = 
           <FinishOverlay finish={finish} animate={animate} />
           <View style={styles.top}>
             <Text style={[styles.ovr, { fontSize: 32 * big }]}>{Math.min(99, card.ovr + level)}</Text>
-            <Text style={[styles.pos, { fontSize: 11 * big }]}>{card.pos}{card.pos2 ? `/${card.pos2}` : ''}</Text>
+            <Text style={[styles.pos, { fontSize: 11 * big }]}>{posLabel(card)}</Text>
           </View>
           <Jersey size={78 * big} main={card.colors[0]} trim={card.colors[1]} text={initials(card.name)} />
           {card.tier === 'ultra' && <Text style={[styles.sparkle, { fontSize: 14 * big }]}>✦ ✧ ✦</Text>}

@@ -4,7 +4,7 @@ import { HISTORY } from '../../data/modes';
 import { rosterFromTeam, teamStrengthScore } from '../daily';
 import { createRng } from '../rng';
 import { bestOf, type SeriesResult } from '../series';
-import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../types';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type RosterSlots, type SlotId, type TeamSeason, playsPos } from '../types';
 import type { PickType } from './picks';
 import type { Card } from './tiers';
 
@@ -17,7 +17,7 @@ export function cardPlayer(id: string): Player {
   return PLAYER_BY_ID[id];
 }
 
-const fits = (c: Card, slot: SlotId) => BENCH_SLOTS.includes(slot) || c.pos === slot || c.pos2 === slot;
+const fits = (c: Card, slot: SlotId) => BENCH_SLOTS.includes(slot) || playsPos(c, slot);
 
 /** Can `cardId` go in `slot`? Starters must fit the position; each player (by name) only once. */
 export function canPlace(lineup: Lineup, cardId: string, slot: SlotId): boolean {

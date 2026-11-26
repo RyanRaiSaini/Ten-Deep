@@ -9,10 +9,10 @@ import { franchiseOf } from './conference';
 import { squadRating } from './rotation';
 import { SIM } from './simConfig';
 import {
-  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type RosterSlots, type TeamSeason,
+  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type RosterSlots, type TeamSeason, playsPos,
 } from './types';
 
-const fits = (p: Player, pos: Pos) => p.pos === pos || p.pos2 === pos;
+const fits = (p: Player, pos: Pos) => playsPos(p, pos);
 /** Rating of a reserve who fills a short roster's empty spot. */
 export const RESERVE_OVR = 72;
 

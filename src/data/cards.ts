@@ -4,7 +4,7 @@ import { HISTORY } from './modes';
 /** Every player-season in the database is a collectible card (2013 LeBron and 2016 LeBron are different cards). */
 export const ALL_CARDS: Card[] = HISTORY.flatMap((t) =>
   t.players.map((p) => ({
-    id: p.id, name: p.name, season: t.season, team: t.label, pos: p.pos, pos2: p.pos2,
+    id: p.id, name: p.name, season: t.season, team: t.label, pos: p.pos, pos2: p.pos2, more: p.more,
     ovr: p.ovr, tier: tierOf(p.ovr), colors: t.colors, tag: p.tag,
   })),
 );

@@ -145,7 +145,7 @@ export default function FriendPage() {
 
 const cardAsPlayer = (id: string) => {
   const c = CARD_BY_ID[id];
-  return { id, name: c.name, pos: c.pos, pos2: c.pos2, ovr: c.ovr, off: c.ovr, def: c.ovr, reb: c.ovr, ast: c.ovr, three: c.ovr, dur: 90 };
+  return { id, name: c.name, pos: c.pos, pos2: c.pos2, more: c.more, ovr: c.ovr, off: c.ovr, def: c.ovr, reb: c.ovr, ast: c.ovr, three: c.ovr, dur: 90 };
 };
 
 function Stat({ icon, value, label }: { icon: IconName; value: number; label: string }) {

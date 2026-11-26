@@ -2,9 +2,9 @@
  * After a roster change (crisis swap, rookie draft), put players back where they can play: every starter at a
  * position he plays when the roster allows it, keeping current spots whenever they're already legal.
  */
-import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type RosterSlots, type SlotId } from './types';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type RosterSlots, type SlotId, playsPos } from './types';
 
-const plays = (p: Player, slot: SlotId) => p.pos === slot || p.pos2 === slot;
+const plays = (p: Player, slot: SlotId) => playsPos(p, slot);
 
 export function startersLegal(slots: RosterSlots): boolean {
   return STARTER_SLOTS.every((k) => { const p = slots[k]; return !p || plays(p, k); });

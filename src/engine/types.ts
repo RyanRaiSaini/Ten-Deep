@@ -1,11 +1,22 @@
 export type Pos = 'PG' | 'SG' | 'SF' | 'PF' | 'C';
 export const POSITIONS: Pos[] = ['PG', 'SG', 'SF', 'PF', 'C'];
 
+/** Every position a player (or card) can start at: his main one, then up to three more. */
+export const positionsOf = (p: { pos: Pos; pos2?: Pos; more?: Pos[] }): Pos[] =>
+  [p.pos, ...(p.pos2 ? [p.pos2] : []), ...(p.more ?? [])];
+/** True if he can start at this position (bench slots take anyone; check those separately). */
+export const playsPos = (p: { pos: Pos; pos2?: Pos; more?: Pos[] }, pos: string): boolean =>
+  p.pos === pos || p.pos2 === pos || (p.more?.includes(pos as Pos) ?? false);
+/** "SF/PF/PG/C". */
+export const posLabel = (p: { pos: Pos; pos2?: Pos; more?: Pos[] }): string => positionsOf(p).join('/');
+
 export interface Player {
   id: string;
   name: string;
   pos: Pos;
   pos2?: Pos;
+  /** Third and fourth positions for the most versatile (Scottie Barnes: SF/PF/PG/C). */
+  more?: Pos[];
   /** Overall rating, 64–99. */
   ovr: number;
   off: number;

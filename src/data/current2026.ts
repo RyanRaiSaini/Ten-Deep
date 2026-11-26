@@ -19,7 +19,7 @@ export const current2026: Pool = {
   teams: [
     team('atl', 'Atlanta', 'Hawks', S, ['#C8102E', '#FDB927'], `
       Jalen Johnson|SF/PF|87|24|twoway|70
-      Dyson Daniels|SG/PG|86|23|defender
+      Dyson Daniels|SG/PG/SF|86|23|defender
       Onyeka Okongwu|C/PF|82|25|rim
       Nickeil Alexander-Walker|SG/SF|86|28|wing3d
       CJ McCollum|SG/PG|82|35|scorer|70
@@ -33,7 +33,7 @@ export const current2026: Pool = {
       Mouhamed Gueye|PF/C|70|23|rim
     `),
     team('bos', 'Boston', 'Celtics', S, ['#007A33', '#BA9653'], `
-      Jayson Tatum|SF/PF|93|28|twoway|60
+      Jayson Tatum|SF/PF/SG|93|28|twoway|60
       Derrick White|PG/SG|85|32|wing3d
       Payton Pritchard|PG|82|28|shooter
       Paul George|SF/PF|86|36|twoway|45
@@ -48,7 +48,7 @@ export const current2026: Pool = {
       Luka Garza|C|69|27|big
     `),
     team('bkn', 'Brooklyn', 'Nets', S, ['#000000', '#FFFFFF'], `
-      Julius Randle|PF|85|31|scorer
+      Julius Randle|PF/C|85|31|scorer
       Michael Porter Jr.|SF/PF|84|28|scorer|55
       Keon Ellis|SG|78|26|defender
       Egor Demin|PG|82|20|playmaker
@@ -63,7 +63,7 @@ export const current2026: Pool = {
       Josh Minott|PF/SF|70|24|defender
     `),
     team('cha', 'Charlotte', 'Hornets', S, ['#1D1160', '#00788C'], `
-      Brandon Miller|SF/SG|86|24|scorer
+      Brandon Miller|SF/SG/PF|86|24|scorer
       Coby White|PG/SG|82|26|scorer
       Naz Reid|C/PF|84|27|stretch
       Kon Knueppel|SG/SF|86|21|shooter
@@ -78,7 +78,7 @@ export const current2026: Pool = {
       Sion James|SG|69|23|defender
     `),
     team('chi', 'Chicago', 'Bulls', S, ['#CE1141', '#000000'], `
-      Josh Giddey|PG|85|24|playmaker
+      Josh Giddey|PG/SG/SF|85|24|playmaker
       Norman Powell|SG/SF|82|33|scorer
       Matas Buzelis|SF/PF|80|22|unicorn
       Nic Claxton|C|79|27|rim
@@ -93,7 +93,7 @@ export const current2026: Pool = {
       Dailyn Swain|SF/SG|69|21|twoway
     `),
     team('cle', 'Cleveland', 'Cavaliers', S, ['#860038', '#FDBB30'], `
-      Donovan Mitchell|SG|92|30|scorer
+      Donovan Mitchell|SG/PG|92|30|scorer
       Evan Mobley|PF/C|89|25|unicorn
       James Harden|PG|86|37|playmaker|70
       Jarrett Allen|C|84|28|rim
@@ -108,7 +108,7 @@ export const current2026: Pool = {
       Nae'Qwan Tomlin|PF|66|25|defender|?
     `),
     team('dal', 'Dallas', 'Mavericks', S, ['#00538C', '#B8C4CA'], `
-      Cooper Flagg|SF/PF|91|19|twoway
+      Cooper Flagg|SF/PF/SG|91|19|twoway
       Kyrie Irving|PG/SG|87|34|scorer|50
       Dereck Lively II|C|80|22|rim|50
       P.J. Washington|PF|80|28|defender
@@ -125,7 +125,7 @@ export const current2026: Pool = {
     team('den', 'Denver', 'Nuggets', S, ['#0E2240', '#FEC524'], `
       Nikola Jokić|C|97|31|point
       Jamal Murray|PG|89|29|scorer|60
-      Aaron Gordon|PF|82|31|twoway|60
+      Aaron Gordon|PF/SF|82|31|twoway|60
       DeMar DeRozan|SF|82|37|scorer
       Christian Braun|SG/SF|80|25|defender
       Cameron Johnson|SF/PF|80|30|shooter
@@ -138,9 +138,9 @@ export const current2026: Pool = {
       Alpha Diallo|SF|69|28|defender|?
     `),
     team('det', 'Detroit', 'Pistons', S, ['#C8102E', '#1D42BA'], `
-      Cade Cunningham|PG|92|25|playmaker
+      Cade Cunningham|PG/SG|92|25|playmaker
       Jalen Duren|C|86|23|rim
-      Ausar Thompson|SF/SG|85|23|defender
+      Ausar Thompson|SF/SG/PF|85|23|defender
       John Collins|PF|79|29|slasher
       Duncan Robinson|SF|83|32|shooter
       Isaiah Joe|SG|74|27|shooter
@@ -154,7 +154,7 @@ export const current2026: Pool = {
     `),
     team('gsw', 'Golden State', 'Warriors', S, ['#1D428A', '#FFC72C'], `
       Stephen Curry|PG|93|38|shooter|65
-      Jimmy Butler|SF/PF|85|37|twoway|45
+      Jimmy Butler|SF/PF/SG|85|37|twoway|45
       Kristaps Porziņģis|C/PF|81|31|stretch|40
       Draymond Green|PF/C|79|36|defender|68
       Brandin Podziemski|SG|79|23|twoway
@@ -168,9 +168,9 @@ export const current2026: Pool = {
       Charles Bassey|C|73|26|rim
     `),
     team('hou', 'Houston', 'Rockets', S, ['#CE1141', '#000000'], `
-      Kevin Durant|SF/PF|91|38|scorer|65
+      Kevin Durant|SF/PF/SG|91|38|scorer|65
       Alperen Şengün|C|90|24|point
-      Amen Thompson|SG/SF|87|23|slasher
+      Amen Thompson|SG/SF/PG|87|23|slasher
       Fred VanVleet|PG|81|32|playmaker|50
       Jabari Smith Jr.|PF|82|23|stretch
       Tari Eason|PF/SF|79|25|defender
@@ -213,7 +213,7 @@ export const current2026: Pool = {
       Jordan Miller|SF|69|26|slasher
     `),
     team('lal', 'Los Angeles', 'Lakers', S, ['#552583', '#FDB927'], `
-      Luka Dončić|PG|98|27|scorer
+      Luka Dončić|PG/SG|98|27|scorer
       Austin Reaves|SG/PG|87|28|playmaker
       Walker Kessler|C|84|25|rim|50
       Quentin Grimes|SG|79|26|twoway
@@ -243,7 +243,7 @@ export const current2026: Pool = {
       Cam Spencer|SG|78|26|shooter
     `),
     team('mia', 'Miami', 'Heat', S, ['#98002E', '#F9A01B'], `
-      Giannis Antetokounmpo|PF|98|31|slasher
+      Giannis Antetokounmpo|PF/C|98|31|slasher
       Bam Adebayo|C/PF|87|29|twoway
       Andrew Wiggins|SF|82|31|twoway
       Bobby Portis|PF/C|77|31|stretch
@@ -273,7 +273,7 @@ export const current2026: Pool = {
       Ousmane Dieng|PF/SF|70|23|stretch
     `),
     team('min', 'Minnesota', 'Timberwolves', S, ['#0C2340', '#78BE20'], `
-      Anthony Edwards|SG|94|25|scorer
+      Anthony Edwards|SG/SF|94|25|scorer
       LaMelo Ball|PG|87|25|playmaker|50
       Rudy Gobert|C|84|34|rim
       Jaden McDaniels|SF/PF|87|26|defender
@@ -288,9 +288,9 @@ export const current2026: Pool = {
       Isaiah Evans|SG/SF|67|20|shooter
     `),
     team('nop', 'New Orleans', 'Pelicans', S, ['#0C2340', '#C8102E'], `
-      Zion Williamson|PF|85|26|slasher|35
+      Zion Williamson|PF/C|85|26|slasher|35
       Trey Murphy III|SF|84|26|shooter
-      Herbert Jones|SF/SG|81|28|defender|60
+      Herbert Jones|SF/SG/PF|81|28|defender|60
       Dejounte Murray|PG|80|30|twoway|45|?
       Bennedict Mathurin|SG/SF|80|24|scorer
       Jordan Poole|SG|78|27|scorer
@@ -305,9 +305,9 @@ export const current2026: Pool = {
     team('nyk', 'New York', 'Knicks', S, ['#006BB6', '#F58426'], `
       Jalen Brunson|PG|94|30|scorer
       Karl-Anthony Towns|C/PF|93|30|stretch
-      Mikal Bridges|SF/SG|81|30|twoway
-      OG Anunoby|SF/PF|84|29|defender
-      Josh Hart|SG/SF|81|31|twoway
+      Mikal Bridges|SF/SG/PF|81|30|twoway
+      OG Anunoby|SF/PF/SG|84|29|defender
+      Josh Hart|SG/SF/PF|81|31|twoway
       Miles McBride|PG|76|26|defender
       Jordan Clarkson|SG|74|34|scorer
       Jose Alvarado|PG|73|28|defender
@@ -318,8 +318,8 @@ export const current2026: Pool = {
       Mohamed Diawara|SF|66|21|defender
     `),
     team('okc', 'Oklahoma City', 'Thunder', S, ['#007AC1', '#EF3B24'], `
-      Shai Gilgeous-Alexander|PG|98|28|scorer
-      Jalen Williams|SF/SG|84|25|twoway
+      Shai Gilgeous-Alexander|PG/SG|98|28|scorer
+      Jalen Williams|SF/SG/PG|84|25|twoway
       Chet Holmgren|C/PF|85|24|unicorn|55
       Isaiah Hartenstein|C|81|28|big
       Cason Wallace|PG/SG|79|22|defender
@@ -334,8 +334,8 @@ export const current2026: Pool = {
       Nique Clifford|SG|73|24|twoway
     `),
     team('orl', 'Orlando', 'Magic', S, ['#0077C0', '#C4CED4'], `
-      Paolo Banchero|PF|86|23|scorer
-      Franz Wagner|SF|89|25|twoway
+      Paolo Banchero|PF/SF|86|23|scorer
+      Franz Wagner|SF/PF/SG|89|25|twoway
       Desmond Bane|SG|82|28|shooter
       Jalen Suggs|PG|80|25|defender|45
       Wendell Carter Jr.|C|79|27|big
@@ -351,7 +351,7 @@ export const current2026: Pool = {
     team('phi', 'Philadelphia', '76ers', S, ['#006BB6', '#ED174C'], `
       Tyrese Maxey|PG|92|25|scorer
       Jaylen Brown|SG/SF|90|30|slasher
-      LeBron James|SF/PF|88|41|point|60
+      LeBron James|SF/PF/PG|88|41|point|60
       Joel Embiid|C|87|32|scorer|25
       VJ Edgecombe|SG|83|21|slasher
       Anfernee Simons|SG/PG|78|27|scorer
@@ -364,7 +364,7 @@ export const current2026: Pool = {
       Jabari Walker|PF|68|24|defender
     `),
     team('phx', 'Phoenix', 'Suns', S, ['#1D1160', '#E56020'], `
-      Devin Booker|SG|91|29|scorer
+      Devin Booker|SG/PG|91|29|scorer
       Jalen Green|SG|82|24|scorer
       Miles Bridges|PF/SF|81|28|slasher
       Mark Williams|C|79|24|rim|35
@@ -379,7 +379,7 @@ export const current2026: Pool = {
       Rasheer Fleming|PF|69|22|stretch
     `),
     team('por', 'Portland', 'Trail Blazers', S, ['#E03A3E', '#000000'], `
-      Deni Avdija|SF/PF|89|25|point
+      Deni Avdija|SF/PF/SG|89|25|point
       Ja Morant|PG|84|27|slasher|40
       Shaedon Sharpe|SG|82|23|slasher
       Damian Lillard|PG|85|36|scorer|55
@@ -423,8 +423,8 @@ export const current2026: Pool = {
       Jordan McLaughlin|PG|68|30|playmaker
     `),
     team('tor', 'Toronto', 'Raptors', S, ['#CE1141', '#000000'], `
-      Scottie Barnes|SF/PF|89|25|twoway
-      Kawhi Leonard|SF|92|35|twoway|35
+      Scottie Barnes|SF/PF/PG/C|89|25|twoway
+      Kawhi Leonard|SF/PF|92|35|twoway|35
       RJ Barrett|SF/SG|83|26|slasher
       Immanuel Quickley|PG|82|27|scorer
       Jakob Pöltl|C|80|30|rim
@@ -439,7 +439,7 @@ export const current2026: Pool = {
     `),
     team('uta', 'Utah', 'Jazz', S, ['#002B5C', '#F9A01B'], `
       Jaren Jackson Jr.|PF/C|86|27|unicorn|80
-      Lauri Markkanen|PF/SF|86|29|shooter
+      Lauri Markkanen|PF/SF/C|86|29|shooter
       Keyonte George|PG|86|23|scorer
       Darryn Peterson|SG/PG|83|19|scorer|80
       Ace Bailey|SF|82|20|scorer
