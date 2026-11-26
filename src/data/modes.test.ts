@@ -90,6 +90,29 @@ describe('modes', () => {
     expect(typed.filter((t) => t === 'max' || t === 'supermax').length).toBeGreaterThan(20);
   });
 
+  it('each era shows its own cap and dollars; today\'s modes stay in today\'s', async () => {
+    const { payOf, CAP } = await import('../engine/cap');
+    const { money } = await import('../ui/theme');
+    const { moneyScaleFor } = await import('./modes');
+    expect(moneyScaleFor('current-2026')).toBe(1);
+    expect(moneyScaleFor('all-time')).toBe(1);
+    expect(moneyScaleFor('franchise-lal')).toBe(1);
+    // Magic vs. Bird plays under the real 1987-88 cap.
+    const mb = moneyScaleFor('era-magic-bird');
+    expect(money(CAP, mb)).toBe('$6.16M');
+    const bird = MODE_BY_ID['era-magic-bird'].pool.teams.find((t) => t.id === 'bos-1986')!.players.find((p) => p.name === 'Larry Bird')!;
+    const birdPay = payOf(bird) * mb;
+    expect(birdPay).toBeGreaterThan(1.5); // 1985-86: about $1.8M of a $4.2M cap
+    expect(birdPay).toBeLessThan(2.5);
+    // Jordan era: 1995-96 Jordan made $3.85M of a $23M cap.
+    const js = moneyScaleFor('era-jordan');
+    const mj = MODE_BY_ID['era-jordan'].pool.teams.find((t) => t.id === 'chi-1996')!.players.find((p) => p.name === 'Michael Jordan')!;
+    expect(payOf(mj) * js).toBeGreaterThan(3);
+    expect(payOf(mj) * js).toBeLessThan(4.2);
+    expect(money(0.5, mb)).toBe('$15K');
+    expect(money(28.7, 1)).toBe('$28.7M'); // today's dollars read exactly as before
+  });
+
   it('every franchise pool has at least 40 players', () => {
     for (const m of MODES.filter((x) => x.kind === 'franchise'))
       expect(m.pool.teams.flatMap((t) => t.players).length, m.id).toBeGreaterThanOrEqual(40);

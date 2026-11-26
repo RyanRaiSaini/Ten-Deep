@@ -82,6 +82,12 @@ await step('time machine: big banner on home, every era a banner, an era draft s
   await shot('41-eras');
   await page.getByTestId('mode-era-jordan').click();
   await page.getByTestId('spin').waitFor({ timeout: 15000 });
+  // The Jordan era plays under the real 1996-97 cap, in that era's dollars.
+  await page.getByTestId('era-cap').waitFor();
+  if (!(await page.getByTestId('cap').innerText()).includes('$24.4M')) throw new Error('era cap not in era dollars');
+  await page.getByTestId('spin').click();
+  await page.getByTestId('option').first().waitFor({ timeout: 15000 });
+  await shot('41b-era-draft');
 });
 
 await step('weekly challenge: from home, one shot, starts a draft with a locked division', async () => {

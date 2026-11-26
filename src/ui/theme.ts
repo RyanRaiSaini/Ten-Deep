@@ -51,7 +51,16 @@ export function ovrColor(ovr: number): string {
   return C.muted;
 }
 
-export const money = (m: number) => `$${m % 1 === 0 ? m : m.toFixed(1)}M`;
+/**
+ * Game dollars as text. `scale` shows them in an era's own dollars (see moneyScaleFor in data/modes): small
+ * figures get more precision ($1.85M) and under a million show as thousands ($750K).
+ */
+export const money = (m: number, scale = 1) => {
+  if (scale === 1) return `$${m % 1 === 0 ? m : m.toFixed(1)}M`;
+  const v = m * scale;
+  if (v < 1) return `$${Math.round(v * 1000)}K`;
+  return `$${Number(v.toFixed(v < 10 ? 2 : 1))}M`;
+};
 
 /** "#E8833A" + 0.4 → "#E8833A66" */
 export function alpha(hex: string, a: number): string {

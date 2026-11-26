@@ -61,6 +61,11 @@ export interface Mode {
   tagline?: string;
   /** Kept so saved runs and shared links still open, but no longer offered in the pickers. */
   hidden?: boolean;
+  /**
+   * An era plays in its own dollars: that season's real salary cap ($M), and every price scaled to it.
+   * Prices are each player's real share of his own season's cap, so only the dollar figures change.
+   */
+  cap?: { season: string; real: number };
 }
 
 /** Pools are built the first time a mode is opened (39 of them at launch cost real time on phones). */
@@ -69,7 +74,7 @@ function lazyPool(m: Omit<Mode, 'pool'>, build: () => Pool): Mode {
   return Object.defineProperty(m, 'pool', { get: () => (cache ??= build()), enumerable: true }) as Mode;
 }
 
-const era = (id: string, title: string, from: number, to: number, colors: [string, string], extra: Pick<Mode, 'tagline' | 'hidden'> = {}): Mode =>
+const era = (id: string, title: string, from: number, to: number, colors: [string, string], extra: Pick<Mode, 'tagline' | 'hidden' | 'cap'> = {}): Mode =>
   lazyPool({ id, kind: 'era', title, subtitle: from === 0 ? 'Every era' : `${from}–${to}`, colors, leaguePoolId: id, ...extra },
     () => buildPool(id, title, allSeasons(), (t) => yearOf(t) >= from && yearOf(t) <= to));
 
@@ -114,17 +119,17 @@ export const MODES: Mode[] = [
   { id: 'current-2026', kind: 'current', title: 'Current Day', subtitle: '2026-27', pool: current2026, leaguePoolId: 'current-2026', colors: ['#E8833A', '#3DF2C2'] },
   era('all-time', 'All-Time', 0, 9999, ['#F5C451', '#0B1020'], { tagline: 'Every legend, every season, one draft.' }),
   // The owner's eras (season years, the year a season ends; each era includes its first and last year).
-  era('era-magic-bird', 'Magic vs. Bird', 1984, 1991, ['#552583', '#007A33'], { tagline: 'Showtime against the Garden.' }),
-  era('era-jordan', 'Jordan Era', 1991, 2003, ['#CE1141', '#000000'], { tagline: 'Two three-peats in Chicago.' }),
-  era('era-kobe', 'Kobe Era', 2003, 2010, ['#552583', '#FDB927'], { tagline: 'Mamba mentality, back-to-back titles.' }),
-  era('era-lebron', 'LeBron Era', 2010, 2016, ['#860038', '#FDBB30'], { tagline: 'The Heatles, then the comeback in Cleveland.' }),
-  era('era-steph', 'Steph Era', 2016, 2020, ['#1D428A', '#FFC72C'], { tagline: 'Splash Brothers and the 73-win season.' }),
-  era('era-modern', 'Modern Era', 2020, 2026, ['#0E7C86', '#FF7417'], { tagline: 'Giannis, Jokić, SGA and Wemby.' }),
+  era('era-magic-bird', 'Magic vs. Bird', 1984, 1991, ['#552583', '#007A33'], { tagline: 'Showtime against the Garden.', cap: { season: '1987-88', real: 6.164 } }),
+  era('era-jordan', 'Jordan Era', 1991, 2003, ['#CE1141', '#000000'], { tagline: 'Two three-peats in Chicago.', cap: { season: '1996-97', real: 24.363 } }),
+  era('era-kobe', 'Kobe Era', 2003, 2010, ['#552583', '#FDB927'], { tagline: 'Mamba mentality, back-to-back titles.', cap: { season: '2006-07', real: 53.135 } }),
+  era('era-lebron', 'LeBron Era', 2010, 2016, ['#860038', '#FDBB30'], { tagline: 'The Heatles, then the comeback in Cleveland.', cap: { season: '2012-13', real: 58.044 } }),
+  era('era-steph', 'Steph Era', 2016, 2020, ['#1D428A', '#FFC72C'], { tagline: 'Splash Brothers and the 73-win season.', cap: { season: '2017-18', real: 99.093 } }),
+  era('era-modern', 'Modern Era', 2020, 2026, ['#0E7C86', '#FF7417'], { tagline: 'Giannis, Jokić, SGA and Wemby.', cap: { season: '2022-23', real: 123.655 } }),
   // Retired from the pickers (older saves and links still open them).
-  era('era-shaq-kobe-duncan', 'Shaq, Kobe & Duncan Era', 1999, 2010, ['#552583', '#C4CED4'], { hidden: true }),
-  era('era-1980s', 'NBA 1980s', 1980, 1989, ['#E8833A', '#5A2D81'], { hidden: true }),
-  era('era-1990s', 'NBA 1990s', 1990, 1999, ['#00788C', '#1D1160'], { hidden: true }),
-  era('era-2010s', 'NBA 2010s', 2010, 2019, ['#3DF2C2', '#141B2E'], { hidden: true }),
+  era('era-shaq-kobe-duncan', 'Shaq, Kobe & Duncan Era', 1999, 2010, ['#552583', '#C4CED4'], { hidden: true, cap: { season: '2004-05', real: 43.87 } }),
+  era('era-1980s', 'NBA 1980s', 1980, 1989, ['#E8833A', '#5A2D81'], { hidden: true, cap: { season: '1986-87', real: 4.945 } }),
+  era('era-1990s', 'NBA 1990s', 1990, 1999, ['#00788C', '#1D1160'], { hidden: true, cap: { season: '1994-95', real: 15.964 } }),
+  era('era-2010s', 'NBA 2010s', 2010, 2019, ['#3DF2C2', '#141B2E'], { hidden: true, cap: { season: '2014-15', real: 63.065 } }),
   ...FRANCHISES.map(franchise),
 ];
 
@@ -145,6 +150,14 @@ export function classicAllTime(): Pool {
 }
 
 export const MODE_BY_ID: Record<string, Mode> = Object.fromEntries(MODES.map((m) => [m.id, m]));
+
+/** The game's cap ($M) that an era's real cap stands for. */
+const GAME_CAP = 200;
+/** Multiply game dollars by this to show a mode's own dollars (1 outside the eras). */
+export const moneyScaleFor = (poolId: string | undefined): number => {
+  const cap = poolId ? MODE_BY_ID[poolId]?.cap : undefined;
+  return cap ? cap.real / GAME_CAP : 1;
+};
 
 /** 29 AI rosters × 10 plus headroom for the user's picks and cap-friendly benches. */
 const MIN_LEAGUE_POOL = 360;

@@ -110,7 +110,8 @@
     "empty": "Open",
     "benchSlot": "Bench {{n}}",
     "hot": "On fire: +{{n}} from real-life form",
-    "cold": "Cold: −{{n}} from real-life form"
+    "cold": "Cold: −{{n}} from real-life form",
+    "eraCap": "{{season}} cap · that era's dollars"
   },
   "season": {
     "title": "Regular season",
@@ -498,7 +499,7 @@
   },
   "welcome": {
     "t1": "Draft ten deep",
-    "b1": "Spin for a team, pick a player, and fit ten under a $200M cap. Only two 95+ stars allowed.",
+    "b1": "Spin for a team, pick a player, and fit ten under a $200M cap. Only two 95+ stars allowed. In the Time Machine eras, the cap and every salary are in that era's dollars.",
     "t2": "Survive 82 games",
     "b2": "Injuries, a trade deadline and a seven-game playoff run. 70 wins is rare. 82-0 is a myth.",
     "t3": "Collect the legends",
@@ -1009,8 +1010,8 @@
     "spinB": "Each round lands on a random NBA team-season. Pick one player from it.",
     "rosterT": "Build ten deep",
     "rosterB": "Fill PG, SG, SF, PF and C, plus five bench spots. Some players can play two positions.",
-    "capT": "Stay under $200M",
-    "capB": "Every player costs his real contract, scaled to that season's cap. Rookie deals are cheap; max and supermax deals aren't. The game always keeps enough room for you to fill every spot.",
+    "capT": "Stay under the cap",
+    "capB": "Every player costs his real contract, scaled to that season's cap. Rookie deals are cheap; max and supermax deals aren't. The game always keeps enough room for you to fill every spot. Today's modes use a $200M cap. Each Time Machine era uses its own real cap and that era's dollars (Magic vs. Bird: the 1987-88 cap of $6.2M), so a star costs what he really took of the cap then.",
     "rulesT": "The fine print",
     "rulesB": "At most two players rated 95 or higher. One free respin per draft. If a spin has nobody you can fit, you get the cheapest player who does.",
     "seasonT": "Play 82 games",

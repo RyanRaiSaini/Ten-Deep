@@ -111,7 +111,8 @@
     "empty": "Libero",
     "benchSlot": "Panchina {{n}}",
     "hot": "In fiamme: +{{n}} per la forma reale",
-    "cold": "Freddo: −{{n}} per la forma reale"
+    "cold": "Freddo: −{{n}} per la forma reale",
+    "eraCap": "Tetto {{season}} · dollari dell'epoca"
   },
   "season": {
     "title": "Stagione regolare",
@@ -503,7 +504,7 @@
   },
   "welcome": {
     "t1": "Drafta in dieci",
-    "b1": "Gira la ruota, scegli un giocatore e fai stare dieci sotto un tetto di 200 M$. Al massimo due stelle 95+.",
+    "b1": "Gira la ruota, scegli un giocatore e fai stare dieci sotto un tetto di 200 M$. Al massimo due stelle 95+. Nelle epoche della Macchina del tempo, il tetto e ogni stipendio sono in dollari dell'epoca.",
     "t2": "Sopravvivi a 82 partite",
     "b2": "Infortuni, scadenza del mercato e playoff al meglio delle sette. 70 vittorie è raro. 82-0 è un mito.",
     "t3": "Colleziona le leggende",
@@ -1014,8 +1015,8 @@
     "spinB": "Ogni turno cade su una stagione NBA casuale di una squadra. Scegli un giocatore da lì.",
     "rosterT": "Costruisci i tuoi dieci",
     "rosterB": "Copri PG, SG, SF, PF e C, più cinque posti in panchina. Alcuni giocatori possono giocare in due ruoli.",
-    "capT": "Resta sotto 200 mln $",
-    "capB": "Ogni giocatore costa il suo vero contratto, rapportato al tetto di quella stagione. I contratti da rookie costano poco, i massimi e supermassimi no. Il gioco lascia sempre spazio per riempire tutti i posti.",
+    "capT": "Resta sotto il tetto",
+    "capB": "Ogni giocatore costa il suo vero contratto, rapportato al tetto di quella stagione. I contratti da rookie costano poco, i massimi e supermassimi no. Il gioco lascia sempre spazio per riempire tutti i posti. Le modalità attuali usano un tetto di 200 M$. Ogni epoca della Macchina del tempo usa il suo tetto reale e i dollari dell'epoca (Magic vs. Bird: il tetto 1987-88 di 6,2 M$), quindi una stella costa la quota del tetto che prendeva davvero.",
     "rulesT": "Le regole minori",
     "rulesB": "Al massimo due giocatori con 95 o più. Un giro extra gratis per draft. Se in un giro non entra nessuno, ricevi il giocatore più economico che entra.",
     "seasonT": "Gioca 82 partite",
