@@ -1104,5 +1104,16 @@
     "formUp": "Seu time jogou acima das notas nesta temporada (+{{n}}).",
     "formDown": "Seu time jogou abaixo das notas nesta temporada (−{{n}}).",
     "streak": "Maior sequência de vitórias: {{n}} jogos."
+  },
+  "replay": {
+    "button": "De novo",
+    "hint": "Mesmos giros, novas escolhas. Só pelo recorde: sem pacotes nem pontos de liga.",
+    "banner": "De novo · tentativa {{n}}",
+    "best": "Seu melhor com estes giros: {{rec}}",
+    "better": "Novo recorde com estes giros!",
+    "same": "Você igualou seu melhor",
+    "worse": "Abaixo do seu melhor",
+    "vs": "Melhor antes: {{best}} · Esta tentativa: {{now}}",
+    "noRewards": "Repetições não dão pacotes nem pontos de liga."
   }
 }

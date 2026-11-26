@@ -261,4 +261,51 @@ describe('fair challenges', () => {
     useGame.getState().newDaily(FAIR_DAILY_FROM);
     expect(useGame.getState().draft!.scheme).toBe(2);
   });
+
+  it('runs it back: the same spins again, for the record only (no packs, no league points)', async () => {
+    const { advance } = await import('../engine/season');
+    const { useCollection } = await import('./collection');
+    const { useLeague } = await import('./league');
+    const finishRun = () => {
+      const s = useGame.getState().season!;
+      useGame.setState({ season: advance(advance({ ...s, deadlineUsed: true, stops: [] }, 82), 82), phase: 'season' });
+      useGame.getState().beginPlayoffs();
+      useGame.getState().simPlayoffs();
+      useGame.getState().finish();
+    };
+    useGame.getState().quit();
+    expect(useGame.getState().runItBack()).toBe(false); // nothing to run back
+    draftAll();
+    const seed = useGame.getState().draft!.seed;
+    finishRun();
+    const first = useGame.getState().playoffs!.season.records[0];
+    const pending = useCollection.getState().pending.length;
+    const points = useLeague.getState().points;
+
+    expect(useGame.getState().runItBack()).toBe(true);
+    const g = useGame.getState();
+    expect(g.phase).toBe('draft');
+    expect(g.draft!.seed).toBe(seed);
+    expect(g.poolId).toBe('current-2026');
+    expect(g.replay).toMatchObject({ w: first.w, l: first.l, tries: 2 });
+    // Fair spins: round one lands the same team as before.
+    useGame.getState().doSpin();
+    const { spin } = await import('../engine/draft');
+    expect(useGame.getState().draft!.spin!.id).toBe(spin(startDraft(POOLS['current-2026'], seed), POOLS['current-2026']).spin!.id);
+
+    useGame.setState({ draft: { ...useGame.getState().draft!, spin: null } });
+    fillDraft();
+    finishRun();
+    expect(useGame.getState().phase).toBe('result');
+    expect(useGame.getState().leagueGain).toBe(0);
+    expect(useCollection.getState().pending.length).toBe(pending);
+    expect(useLeague.getState().points).toBe(points);
+    // A third try still compares against the best so far.
+    expect(useGame.getState().runItBack()).toBe(true);
+    expect(useGame.getState().replay!.tries).toBe(3);
+    // Starting anything else clears it.
+    useGame.getState().newRun('current-2026');
+    expect(useGame.getState().replay).toBeNull();
+    useGame.getState().quit();
+  });
 });

@@ -67,6 +67,16 @@ export default function Draft() {
     if (star) setBurst((b) => b + 1);
   };
 
+  const replayBanner = g.replay && (
+    <View style={styles.replay} testID="replay-banner">
+      <Icon name="reroll" size={28} />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.replayTitle}>{t('replay.banner', { n: g.replay.tries })}</Text>
+        <Text style={styles.replaySub}>{t('replay.best', { rec: `${g.replay.w}-${g.replay.l}` })}</Text>
+      </View>
+    </View>
+  );
+
   const capCard = (
     <Card style={{ gap: S.sm }} testID="cap">
       <View style={styles.capRow}>
@@ -179,11 +189,12 @@ export default function Draft() {
       />
       {wide ? (
         <View style={styles.columns}>
-          <View style={styles.colLeft}>{capCard}{board}{start}</View>
+          <View style={styles.colLeft}>{replayBanner}{capCard}{board}{start}</View>
           <View style={styles.colRight}>{spinPanel}{complete && <Text style={styles.done}>{t('draft.starters')}</Text>}</View>
         </View>
       ) : (
         <>
+          {replayBanner}
           {capCard}
           {spinPanel}
           {start}
@@ -218,4 +229,7 @@ const styles = StyleSheet.create({
   colLeft: { flex: 1, gap: S.md, maxWidth: 520 },
   colRight: { flex: 1, gap: S.md },
   done: { fontFamily: FONT.display, fontSize: 28, color: C.ink, textAlign: 'center' },
+  replay: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: R.md, backgroundColor: '#2F6BFF', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6 },
+  replayTitle: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 18 },
+  replaySub: { color: '#DCE6FF', fontWeight: '800', fontSize: 13 },
 });

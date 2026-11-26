@@ -109,7 +109,12 @@ export async function runFlow({ page, base, step, shot }) {
     await page.waitForTimeout(1200); // let the record count-up finish
     await shot('08b-breakdown');
     await shot('08-result');
-    await page.getByTestId('go-home').click();
+    // Run it back: the same spins again, for the record only.
+    await page.getByTestId('run-it-back').click();
+    await page.getByTestId('replay-banner').waitFor();
+    await page.getByTestId('spin').waitFor();
+    await shot('08c-replay');
+    await page.getByTestId('back').click();
     await page.getByTestId('tab-bar').waitFor();
     await page.goto(`${base}/profile`);
     const drafts = (await page.getByTestId('stat-drafts').textContent())?.trim() === '1';

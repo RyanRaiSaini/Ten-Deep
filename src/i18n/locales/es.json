@@ -1104,5 +1104,16 @@
     "formUp": "Tu equipo jugó por encima de sus valoraciones esta temporada (+{{n}}).",
     "formDown": "Tu equipo jugó por debajo de sus valoraciones esta temporada (−{{n}}).",
     "streak": "Racha de victorias más larga: {{n}} partidos."
+  },
+  "replay": {
+    "button": "Otra vez",
+    "hint": "Mismos giros, nuevas elecciones. Solo por la marca: sin sobres ni puntos de liga.",
+    "banner": "Otra vez · intento {{n}}",
+    "best": "Tu mejor marca con estos giros: {{rec}}",
+    "better": "¡Nuevo récord con estos giros!",
+    "same": "Igualaste tu mejor marca",
+    "worse": "Por debajo de tu mejor marca",
+    "vs": "Mejor antes: {{best}} · Este intento: {{now}}",
+    "noRewards": "Las repeticiones no dan sobres ni puntos de liga."
   }
 }

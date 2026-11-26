@@ -1099,5 +1099,16 @@
     "formUp": "Takımın bu sezon puanlarının üzerinde oynadı (+{{n}}).",
     "formDown": "Takımın bu sezon puanlarının altında oynadı (−{{n}}).",
     "streak": "En uzun galibiyet serisi: {{n}} maç."
+  },
+  "replay": {
+    "button": "Bir daha",
+    "hint": "Aynı çarklar, yeni seçimler. Sadece rekor için: paket ya da lig puanı yok.",
+    "banner": "Bir daha · deneme {{n}}",
+    "best": "Bu çarklardaki en iyin: {{rec}}",
+    "better": "Bu çarklarda yeni rekor!",
+    "same": "En iyine eşitlendin",
+    "worse": "En iyinin gerisinde",
+    "vs": "Önceki en iyi: {{best}} · Bu deneme: {{now}}",
+    "noRewards": "Tekrarlar paket ya da lig puanı vermez."
   }
 }

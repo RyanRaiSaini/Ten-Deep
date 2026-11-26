@@ -30,6 +30,7 @@ import { useProfile } from './profile';
 import { useFriends } from './friends';
 import { useShop } from './shop';
 import { raceOutcome } from '../engine/friends/match';
+import { canRunItBack, finishOf, nextMark, type ReplayMark } from '../engine/replay';
 
 /** First Daily Draft played on fair spins (dailies before it keep the original sequence). */
 export const FAIR_DAILY_FROM = '2026-11-25';
@@ -67,6 +68,10 @@ export interface GameStore {
 
   /** A fresh draft; pass a seed for a race (friends replay the same spins). */
   newRun: (poolId: string, seed?: string) => void;
+  /** Set while this run is a "Run it back": your best finish on these spins so far (see engine/replay.ts). */
+  replay: ReplayMark | null;
+  /** From the result screen: draft the same spins again. False when this run can't be run back. */
+  runItBack: () => boolean;
   /** A career season set aside because another run started; "Continue career" brings it back. */
   parked: Pick<GameStore, 'phase' | 'poolId' | 'draft' | 'season' | 'playoffs' | 'deadline' | 'crisis' | 'stake'> | null;
   resumeCareer: () => boolean;
@@ -135,6 +140,7 @@ export const useGame = create<GameStore>()(
       challenge: null,
       stake: null,
       leagueGain: 0,
+      replay: null,
       daily: null,
       weekly: null,
       crisis: null,
@@ -150,13 +156,21 @@ export const useGame = create<GameStore>()(
       resumeCareer: () => {
         const p = get().parked;
         if (!p) return false;
-        set({ ...p, career: true, challenge: null, daily: null, weekly: null, parked: null, leagueGain: 0 });
+        set({ ...p, career: true, challenge: null, daily: null, weekly: null, parked: null, leagueGain: 0, replay: null });
         return true;
       },
       newChallenge: (poolId, seed, from) =>
         // Links made before fair rules (no v=2) replay the original spin sequence, so the spins still match theirs.
-        park() || set({ phase: 'draft', poolId, challenge: from, daily: null, weekly: null, crisis: null, career: false, draft: from.fair ? startDraft(pool(poolId), seed) : legacyDraft(startDraft(pool(poolId), seed)), season: null, playoffs: null, deadline: null }),
-      newRun: (poolId, seed) => park() || set({ phase: 'draft', poolId, challenge: null, daily: null, weekly: null, crisis: null, career: false, draft: startDraft(pool(poolId), seed ?? newSeed()), season: null, playoffs: null, deadline: null }),
+        park() || set({ phase: 'draft', poolId, replay: null, challenge: from, daily: null, weekly: null, crisis: null, career: false, draft: from.fair ? startDraft(pool(poolId), seed) : legacyDraft(startDraft(pool(poolId), seed)), season: null, playoffs: null, deadline: null }),
+      newRun: (poolId, seed) => park() || set({ phase: 'draft', poolId, replay: null, challenge: null, daily: null, weekly: null, crisis: null, career: false, draft: startDraft(pool(poolId), seed ?? newSeed()), season: null, playoffs: null, deadline: null }),
+      runItBack: () => {
+        const s = get();
+        if (s.phase !== 'result' || !s.playoffs || !canRunItBack(s)) return false;
+        const mark = nextMark(s.replay, finishOf(runOutcome(s.playoffs)));
+        get().newRun(s.poolId, s.draft!.seed);
+        set({ replay: mark });
+        return true;
+      },
       // One shot per day: begin once, resume while that run is alive, locked after it's abandoned or finished.
       newDaily: (key) => {
         const { daily, phase } = get();
@@ -167,7 +181,7 @@ export const useGame = create<GameStore>()(
         park();
         // Fair spins start with the next day's Daily, so everyone playing the same day gets the same spins.
         const fresh = startDraft(pool('current-2026'), dailySeed(key));
-        set({ phase: 'draft', poolId: 'current-2026', challenge: null, daily: key, weekly: null, crisis: null, career: false, draft: key >= FAIR_DAILY_FROM ? fresh : legacyDraft(fresh), season: null, playoffs: null, deadline: null });
+        set({ phase: 'draft', poolId: 'current-2026', replay: null, challenge: null, daily: key, weekly: null, crisis: null, career: false, draft: key >= FAIR_DAILY_FROM ? fresh : legacyDraft(fresh), season: null, playoffs: null, deadline: null });
         return 'started';
       },
       newWeekly: (week) => {
@@ -177,7 +191,7 @@ export const useGame = create<GameStore>()(
         if (run?.started || run?.result) return 'locked';
         useWeekly.getState().update(week, { started: true });
         park();
-        set({ phase: 'draft', poolId: 'current-2026', challenge: null, daily: null, weekly: week, crisis: null, career: false, draft: startDraft(pool('current-2026'), weeklySeed(week)), season: null, playoffs: null, deadline: null });
+        set({ phase: 'draft', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: week, crisis: null, career: false, draft: startDraft(pool('current-2026'), weeklySeed(week)), season: null, playoffs: null, deadline: null });
         return 'started';
       },
       doSpin: () => set((s) => ({ draft: spin(s.draft!, pool(s.poolId)) })),
@@ -236,7 +250,7 @@ export const useGame = create<GameStore>()(
           ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
         };
         set({
-          phase: 'season', poolId: 'current-2026', challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null,
+          phase: 'season', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null,
           season, crisis: { objective: boardObjective(season), drawn: [], resolved: 0, pending: null, verdict: null },
         });
         get().openCrisis(season);
@@ -295,9 +309,14 @@ export const useGame = create<GameStore>()(
         const rec = playoffs.season.records[0];
         const result = { wins: rec.w, losses: rec.l, champion: champion(playoffs) === 0 };
         useProfile.getState().recordDraft(result);
+        const { daily, weekly, crisis, career, poolId, replay } = get();
         // Every finished run earns a pick; a deep playoff run stacks a playoff pick on top (see runRewards).
+        // A replay knows its spins, so it pays nothing: no pick, no league points, no missions (engine/replay.ts).
+        if (replay) {
+          set({ phase: 'result', leagueGain: 0 });
+          return;
+        }
         useCollection.getState().awardRun(playoffs.season.seed, runOutcome(playoffs));
-        const { daily, weekly, crisis, career, poolId } = get();
         if (daily) useDaily.getState().record(daily, 'draft', result);
         if (weekly) {
           const o = runOutcome(playoffs);
@@ -339,7 +358,7 @@ export const useGame = create<GameStore>()(
         }
       },
       setStake: (stake) => set({ stake }),
-      quit: () => set({ phase: 'idle', challenge: null, daily: null, weekly: null, crisis: null, career: false, draft: null, season: null, playoffs: null, deadline: null }),
+      quit: () => set({ phase: 'idle', replay: null, challenge: null, daily: null, weekly: null, crisis: null, career: false, draft: null, season: null, playoffs: null, deadline: null }),
     });
     },
     {
@@ -356,7 +375,7 @@ export const useGame = create<GameStore>()(
         return st as GameStore;
       },
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (s) => ({ division: s.division, parked: s.parked, phase: s.phase, poolId: s.poolId, challenge: s.challenge, stake: s.stake, leagueGain: s.leagueGain, daily: s.daily, weekly: s.weekly, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
+      partialize: (s) => ({ replay: s.replay, division: s.division, parked: s.parked, phase: s.phase, poolId: s.poolId, challenge: s.challenge, stake: s.stake, leagueGain: s.leagueGain, daily: s.daily, weekly: s.weekly, crisis: s.crisis, career: s.career, draft: s.draft, season: s.season, playoffs: s.playoffs, deadline: s.deadline }),
     },
   ),
 );
