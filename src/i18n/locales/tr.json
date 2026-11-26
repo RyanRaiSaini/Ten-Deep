@@ -1138,5 +1138,18 @@
     "s4": "Playofflara kal ve şampiyonluğa git. Büyük kazan, Player Pick kazan.",
     "go": "Hadi başlayalım",
     "rules": "Tüm kuralları gör"
+  },
+  "signin": {
+    "title": "Giriş yap",
+    "doneTitle": "Giriş yaptın",
+    "lead": "İlerlemeni kaydet ve herhangi bir telefon, tablet ya da bilgisayarda kaldığın yerden devam et.",
+    "p1": "Açtığın tüm kartların ve paketlerin",
+    "p2": "Rekorların, şampiyonlukların, kariyerin ve görevlerin",
+    "p3": "Arkadaşların ve arkadaş kodun",
+    "p4": "Telefonda oyna, bilgisayarda devam et: kendiliğinden eşitlenir",
+    "soon": "Google ile giriş hazırlanıyor, yakında açılacak.",
+    "privacy": "Girişinden yalnızca gizli bir kimlik tutarız; e-postanı ya da şifreni asla.",
+    "cta": "İlerlemeni kaydetmek için giriş yap",
+    "ctaSub": "Kartların ve rekorların tüm cihazlarında"
   }
 }

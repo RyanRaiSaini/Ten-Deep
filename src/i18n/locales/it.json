@@ -1143,5 +1143,18 @@
     "s4": "Arriva ai playoff e punta al titolo. Vinci tanto per guadagnare Player Pick.",
     "go": "Si parte",
     "rules": "Vedi tutte le regole"
+  },
+  "signin": {
+    "title": "Accedi",
+    "doneTitle": "Hai effettuato l'accesso",
+    "lead": "Salva i tuoi progressi e riprendi da dove eri rimasto su qualsiasi telefono, tablet o computer.",
+    "p1": "Le tue carte e i tuoi pacchetti, tutti quelli che hai aperto",
+    "p2": "I tuoi record, titoli, carriera e missioni",
+    "p3": "I tuoi amici e il tuo codice amico",
+    "p4": "Gioca sul telefono, continua sul computer: si sincronizza da solo",
+    "soon": "L'accesso con Google è in preparazione e arriverà presto.",
+    "privacy": "Conserviamo solo un ID privato del tuo accesso, mai la tua email o password.",
+    "cta": "Accedi per salvare i progressi",
+    "ctaSub": "Le tue carte e i record su ogni dispositivo"
   }
 }

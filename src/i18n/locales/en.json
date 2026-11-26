@@ -1138,5 +1138,18 @@
     "s4": "Make the playoffs and go for the title. Win big to earn Player Picks.",
     "go": "Let's go",
     "rules": "See all the rules"
+  },
+  "signin": {
+    "title": "Sign in",
+    "doneTitle": "You're signed in",
+    "lead": "Save your progress and pick up where you left off on any phone, tablet or laptop.",
+    "p1": "Your cards and packs, every one you've pulled",
+    "p2": "Your records, titles, career and missions",
+    "p3": "Your friends and friend code",
+    "p4": "Play on your phone, carry on on your laptop: it syncs by itself",
+    "soon": "Google sign-in is being set up and will be on soon.",
+    "privacy": "We only keep a private ID from your sign-in, never your email or password.",
+    "cta": "Sign in to save your progress",
+    "ctaSub": "Your cards and records on every device"
   }
 }

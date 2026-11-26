@@ -1138,5 +1138,18 @@
     "s4": "Haal de play-offs en ga voor de titel. Win groot voor Player Picks.",
     "go": "Aan de slag",
     "rules": "Alle regels bekijken"
+  },
+  "signin": {
+    "title": "Inloggen",
+    "doneTitle": "Je bent ingelogd",
+    "lead": "Bewaar je voortgang en ga verder waar je was, op elke telefoon, tablet of laptop.",
+    "p1": "Je kaarten en pakjes, alles wat je hebt getrokken",
+    "p2": "Je records, titels, carrière en missies",
+    "p3": "Je vrienden en je vriendcode",
+    "p4": "Speel op je telefoon, ga verder op je laptop: het synchroniseert vanzelf",
+    "soon": "Inloggen met Google wordt ingericht en komt binnenkort.",
+    "privacy": "We bewaren alleen een privé-ID van je login, nooit je e-mail of wachtwoord.",
+    "cta": "Log in om je voortgang te bewaren",
+    "ctaSub": "Je kaarten en records op elk apparaat"
   }
 }

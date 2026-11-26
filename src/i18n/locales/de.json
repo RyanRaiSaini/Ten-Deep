@@ -1138,5 +1138,18 @@
     "s4": "Erreiche die Playoffs und hol den Titel. Große Siege bringen Player Picks.",
     "go": "Los geht's",
     "rules": "Alle Regeln ansehen"
+  },
+  "signin": {
+    "title": "Anmelden",
+    "doneTitle": "Du bist angemeldet",
+    "lead": "Speichere deinen Fortschritt und mach auf jedem Handy, Tablet oder Laptop weiter.",
+    "p1": "Deine Karten und Packs, alle, die du gezogen hast",
+    "p2": "Deine Rekorde, Titel, Karriere und Missionen",
+    "p3": "Deine Freunde und dein Freundescode",
+    "p4": "Am Handy spielen, am Laptop weitermachen: es synchronisiert sich von selbst",
+    "soon": "Die Google-Anmeldung wird gerade eingerichtet und kommt bald.",
+    "privacy": "Wir speichern nur eine private ID deiner Anmeldung, nie deine E-Mail oder dein Passwort.",
+    "cta": "Melde dich an, um deinen Fortschritt zu sichern",
+    "ctaSub": "Deine Karten und Rekorde auf jedem Gerät"
   }
 }

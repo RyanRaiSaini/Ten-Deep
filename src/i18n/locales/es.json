@@ -1143,5 +1143,18 @@
     "s4": "Llega a playoffs y ve por el título. Gana en grande para conseguir Player Picks.",
     "go": "¡Vamos!",
     "rules": "Ver todas las reglas"
+  },
+  "signin": {
+    "title": "Iniciar sesión",
+    "doneTitle": "Sesión iniciada",
+    "lead": "Guarda tu progreso y sigue donde lo dejaste en cualquier teléfono, tableta o portátil.",
+    "p1": "Tus cartas y sobres, todos los que has abierto",
+    "p2": "Tus récords, títulos, carrera y misiones",
+    "p3": "Tus amigos y tu código de amigo",
+    "p4": "Juega en el móvil y sigue en el portátil: se sincroniza solo",
+    "soon": "El inicio de sesión con Google se está configurando y llegará pronto.",
+    "privacy": "Solo guardamos un identificador privado de tu inicio de sesión, nunca tu correo ni tu contraseña.",
+    "cta": "Inicia sesión para guardar tu progreso",
+    "ctaSub": "Tus cartas y récords en todos tus dispositivos"
   }
 }
