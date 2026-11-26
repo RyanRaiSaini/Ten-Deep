@@ -2,7 +2,10 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { salaryFor } from '../src/engine/cap';
 import { POOLS } from '../src/data';
+import { posLabel } from '../src/engine/types';
+import { loadFullHistory } from '../src/data/fullHistory';
 
+function writeSheets() {
 mkdirSync('docs/ratings-review', { recursive: true });
 for (const pool of Object.values(POOLS)) {
   const all = pool.teams.flatMap((t) => t.players);
@@ -21,10 +24,14 @@ for (const pool of Object.values(POOLS)) {
     lines.push(`## ${t.city} ${t.name}`, '', '| Player | Pos | OVR | Age | Type | Salary | Dur |', '|---|---|---|---|---|---|---|');
     for (const p of [...t.players].sort((a, b) => b.ovr - a.ovr))
       lines.push(
-        `| ${p.name}${p.verify ? ' ⚠️' : ''} | ${p.pos}${p.pos2 ? '/' + p.pos2 : ''} | **${p.ovr}** | ${p.age ?? ''} | ${p.tag ?? ''} | $${salaryFor(p.ovr)}M | ${p.dur} |`,
+        `| ${p.name}${p.verify ? ' ⚠️' : ''} | ${posLabel(p)} | **${p.ovr}** | ${p.age ?? ''} | ${p.tag ?? ''} | $${salaryFor(p.ovr)}M | ${p.dur} |`,
       );
     lines.push('');
   }
   writeFileSync(`docs/ratings-review/${pool.id}.md`, lines.join('\n'));
   console.log(`wrote docs/ratings-review/${pool.id}.md (${all.length} players, ${flagged.length} flagged)`);
 }
+}
+
+// The app loads the full history on demand; the sheets need it up front.
+void loadFullHistory().then(writeSheets);

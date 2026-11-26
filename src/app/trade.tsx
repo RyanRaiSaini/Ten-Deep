@@ -1,3 +1,6 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
+import { useGame } from '../store/game';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -12,7 +15,7 @@ import { payOf } from '../engine/cap';
 import { goBack } from '../ui/nav';
 
 /** Offseason trades: pick one of yours, a partner, and one of theirs. Their GM only says yes to a deal that helps them. */
-export default function Trade() {
+function TradeScreen() {
   const { t } = useTranslation();
   const st = useCareer((s) => s.offseason);
   const [give, setGive] = useState<string | null>(null);
@@ -81,6 +84,13 @@ export default function Trade() {
       </Card>
     </Screen>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function Trade() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><TradeScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

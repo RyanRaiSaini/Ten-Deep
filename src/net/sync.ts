@@ -6,7 +6,6 @@
  *     device) and this device has nothing unsaved, it's loaded here.
  * Not signed in: nothing changes (the usual backup at most every 30 minutes).
  */
-import { AppState } from 'react-native';
 import { useAccount } from '../store/account';
 import { backup, lastBackup, recoveryCode, remoteSavedAt, restore } from './save';
 
@@ -56,10 +55,11 @@ export function startSync(stores: readonly { subscribe: (fn: () => void) => () =
   if (started) return;
   started = true;
   for (const s of stores) s.subscribe(markChanged);
-  AppState.addEventListener('change', (state) => {
+  // Phones: save when the app goes to the background, check for newer progress when it comes back.
+  void import('react-native').then(({ AppState }) => AppState.addEventListener('change', (state) => {
     if (state === 'active') void pullIfNewer();
     else void flush();
-  });
+  })).catch(() => {});
   if (typeof document !== 'undefined' && typeof window !== 'undefined') {
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') void flush();

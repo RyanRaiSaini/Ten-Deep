@@ -13,6 +13,7 @@ import { advance, createSeason } from '../src/engine/season';
 import { SIM } from '../src/engine/simConfig';
 import { ALL_SLOTS, type Pool, type Roster, type RosterSlots } from '../src/engine/types';
 import { current2026 } from '../src/data';
+import { loadFullHistory } from '../src/data/fullHistory';
 
 const net = (r: Roster) => teamStrength(lineupMinutes(r, new Set())).net;
 const asRoster = (slots: RosterSlots, name: string): Roster => ({
@@ -97,7 +98,8 @@ export function averageUser(pool: Pool, i: number): Roster {
   return { ...lg[15], id: 'user' };
 }
 
-if (process.argv[1]?.endsWith('calibrate.ts')) {
+// The app loads the full history on demand; this report needs it up front.
+if (process.argv[1]?.endsWith('calibrate.ts')) void loadFullHistory().then(() => {
   const n = Number(process.argv[2] ?? 40);
   for (const arg of process.argv.slice(3)) {
     const [k, v] = arg.split('=');
@@ -112,4 +114,4 @@ if (process.argv[1]?.endsWith('calibrate.ts')) {
   console.log('SPIN   ', JSON.stringify(runSeasons((i) => spinDraft(current2026, `spin-${i}`), current2026, n, 'spin')));
   console.log('AVERAGE', JSON.stringify(runSeasons((i) => averageUser(current2026, i), current2026, n, 'avg')));
   console.log(`${((Date.now() - t0) / 1000).toFixed(1)}s`);
-}
+});

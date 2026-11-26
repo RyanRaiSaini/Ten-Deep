@@ -1151,5 +1151,10 @@
     "privacy": "Wir speichern nur eine private ID deiner Anmeldung, nie deine E-Mail oder dein Passwort.",
     "cta": "Melde dich an, um deinen Fortschritt zu sichern",
     "ctaSub": "Deine Karten und Rekorde auf jedem Gerät"
+  },
+  "history": {
+    "loading": "Die Geschichtsbücher werden geöffnet…",
+    "failed": "Die Geschichte konnte nicht geladen werden. Prüfe deine Verbindung.",
+    "retry": "Erneut versuchen"
   }
 }

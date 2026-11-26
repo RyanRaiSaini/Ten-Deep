@@ -1,3 +1,4 @@
+import { HistoryGate } from '../../ui/HistoryGate';
 import { useState } from 'react';
 import { CourtBackdrop } from '../../ui/SparkleBackdrop';
 import { router } from 'expo-router';
@@ -19,7 +20,7 @@ const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/p
 };
 
 /** Career hub: season, job security, history, and the next thing to do. */
-export default function Career() {
+function CareerScreen() {
   const [bannerW, setBannerW] = useState(320);
   const { t } = useTranslation();
   const c = useCareer();
@@ -125,6 +126,12 @@ export default function Career() {
       ))}
     </Screen>
   );
+}
+
+
+/** Every mode here (and every career season) draws on the full history: wait for it. */
+export default function Career() {
+  return <HistoryGate><CareerScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

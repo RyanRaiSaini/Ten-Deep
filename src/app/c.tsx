@@ -1,3 +1,5 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { modeNeedsHistory } from '../data/historyReady';
 import { useEffect } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +18,7 @@ import { Text } from '../ui/Text';
 import { C, FONT, S } from '../ui/theme';
 
 /** A friend's "beat my draft" link: same spins, their record to beat. */
-export default function Challenge() {
+function ChallengeScreen() {
   const { t } = useTranslation();
   const formDay = useForm((s) => s.day);
   const params = useLocalSearchParams();
@@ -83,6 +85,12 @@ export default function Challenge() {
       </View>
     </Screen>
   );
+}
+
+/** A link to an era, All-Time or a franchise waits for the full history first. */
+export default function Challenge() {
+  const c = parseChallenge(useLocalSearchParams());
+  return <HistoryGate when={modeNeedsHistory(c?.poolId)}><ChallengeScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

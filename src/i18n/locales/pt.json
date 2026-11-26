@@ -1156,5 +1156,10 @@
     "privacy": "Guardamos só um ID privado do seu login, nunca seu e-mail ou senha.",
     "cta": "Entre para salvar seu progresso",
     "ctaSub": "Suas cartas e recordes em todos os aparelhos"
+  },
+  "history": {
+    "loading": "Abrindo os livros de história…",
+    "failed": "Não deu para carregar a história. Verifique sua conexão.",
+    "retry": "Tentar de novo"
   }
 }

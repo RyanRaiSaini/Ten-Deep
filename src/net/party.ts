@@ -1,4 +1,5 @@
 /** Live Party client: talks to api/party.ts and keeps a room in sync (polling, with a server-clock offset). */
+import { ensureHistory, modeNeedsHistory, useHistory } from '../data/historyReady';
 import { bestFinish, finishRank } from '../engine/collect/finishes';
 import { useCollection } from '../store/collection';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -106,10 +107,15 @@ export function useServerNow(offset: number, hz = 4): number {
 
 /** The room's player pool, with the form frozen at creation (identical on every device). */
 export function useRoomPool(meta: PartyMeta | undefined): Pool | null {
+  // A room in an era (or All-Time, a franchise) waits for the full history to load (data/historyReady.ts).
+  const ready = useHistory((s) => s.ready);
+  const waiting = !!meta && modeNeedsHistory(meta.poolId) && !ready;
+  useEffect(() => { if (waiting) void ensureHistory(); }, [waiting]);
   return useMemo(() => {
+    if (waiting) return null;
     const mode = meta && MODE_BY_ID[meta.poolId];
     return mode ? formPool(mode.pool, meta.form ?? {}, baseOf) : null;
     // The pool depends only on the room's identity and frozen form.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [meta?.code, meta?.poolId]);
+  }, [meta?.code, meta?.poolId, waiting]);
 }

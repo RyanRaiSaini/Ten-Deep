@@ -1,3 +1,5 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
 import { Redirect, router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +22,7 @@ const RARITY_COLOR: Record<Rarity, string> = { good: C.neon, bad: C.danger, lege
 const native = Platform.OS !== 'web';
 
 /** A Management Crisis card: flip-in reveal, then accept / choose / pick a swap. */
-export default function Crisis() {
+function CrisisScreen() {
   const { t } = useTranslation();
   const g = useGame();
   const card = g.crisis?.pending;
@@ -142,6 +144,13 @@ export default function Crisis() {
     </Screen>
     </MoneyScale.Provider>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function Crisis() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><CrisisScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

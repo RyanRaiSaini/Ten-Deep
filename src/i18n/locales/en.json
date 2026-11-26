@@ -1151,5 +1151,10 @@
     "privacy": "We only keep a private ID from your sign-in, never your email or password.",
     "cta": "Sign in to save your progress",
     "ctaSub": "Your cards and records on every device"
+  },
+  "history": {
+    "loading": "Opening the history books…",
+    "failed": "Couldn't load the history. Check your connection.",
+    "retry": "Try again"
   }
 }

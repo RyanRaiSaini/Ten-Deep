@@ -1,3 +1,5 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -14,7 +16,7 @@ import { goBack } from '../ui/nav';
 const STATS: LeaderStat[] = ['pts', 'reb', 'ast'];
 
 /** League leaders and the award races, live during the season and final afterwards. */
-export default function League() {
+function LeagueScreen() {
   const { t } = useTranslation();
   const runColors = useRunColors();
   const [tab, setTab] = useState<'standings' | 'leaders' | 'awards'>('standings');
@@ -83,6 +85,13 @@ function Standings({ season, team }: { season: SeasonState; team: (i: number) =>
       ))}
     </>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function League() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><LeagueScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

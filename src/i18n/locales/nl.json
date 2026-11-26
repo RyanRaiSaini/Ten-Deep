@@ -1151,5 +1151,10 @@
     "privacy": "We bewaren alleen een privé-ID van je login, nooit je e-mail of wachtwoord.",
     "cta": "Log in om je voortgang te bewaren",
     "ctaSub": "Je kaarten en records op elk apparaat"
+  },
+  "history": {
+    "loading": "De geschiedenisboeken gaan open…",
+    "failed": "De geschiedenis kon niet laden. Controleer je verbinding.",
+    "retry": "Opnieuw"
   }
 }

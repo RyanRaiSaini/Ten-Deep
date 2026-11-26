@@ -1,3 +1,5 @@
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
 import { Redirect, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -15,7 +17,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { PlayoffBackdrop } from '../ui/SparkleBackdrop';
 import { Bracket } from '../ui/Bracket';
 
-export default function Playoffs() {
+function PlayoffsScreen() {
   const { t } = useTranslation();
   const g = useGame();
   const ps = g.playoffs;
@@ -202,6 +204,13 @@ function Team({ name, seed, wins, me, color }: { name: string; seed: number; win
       <View style={styles.seedPill}><Text style={styles.seed}>#{seed}</Text></View>
     </View>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function Playoffs() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><PlayoffsScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

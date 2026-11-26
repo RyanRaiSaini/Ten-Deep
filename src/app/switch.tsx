@@ -2,6 +2,8 @@
  * The bench switch: once per run, move a bench player into the starting five for 5% of the cap (engine/season.ts
  * benchSwitch). Pick who comes off the bench, then the starter he replaces (only positions he can play).
  */
+import { HistoryGate } from '../ui/HistoryGate';
+import { runNeedsHistory } from '../data/historyReady';
 import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +24,7 @@ import { Text } from '../ui/Text';
 import { C, S, money } from '../ui/theme';
 import { goBack } from '../ui/nav';
 
-export default function BenchSwitch() {
+function BenchSwitchScreen() {
   const { t } = useTranslation();
   const g = useGame();
   const runColors = useRunColors();
@@ -78,6 +80,13 @@ export default function BenchSwitch() {
       </Screen>
     </MoneyScale.Provider>
   );
+}
+
+
+/** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
+export default function BenchSwitch() {
+  const needs = useGame((s) => runNeedsHistory(s));
+  return <HistoryGate when={needs}><BenchSwitchScreen /></HistoryGate>;
 }
 
 const styles = StyleSheet.create({

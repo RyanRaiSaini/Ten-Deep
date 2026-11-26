@@ -1156,5 +1156,10 @@
     "privacy": "Nous ne gardons qu'un identifiant privé de ta connexion, jamais ton e-mail ni ton mot de passe.",
     "cta": "Connecte-toi pour sauvegarder",
     "ctaSub": "Tes cartes et records sur tous tes appareils"
+  },
+  "history": {
+    "loading": "Ouverture des livres d'histoire…",
+    "failed": "Impossible de charger l'histoire. Vérifie ta connexion.",
+    "retry": "Réessayer"
   }
 }
