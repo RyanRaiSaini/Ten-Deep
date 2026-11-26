@@ -106,6 +106,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('run-rewards').waitFor();
     await page.getByTestId('season-breakdown').waitFor();
     await page.getByTestId('season-breakdown').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1200); // let the record count-up finish
     await shot('08b-breakdown');
     await shot('08-result');
     await page.getByTestId('go-home').click();
