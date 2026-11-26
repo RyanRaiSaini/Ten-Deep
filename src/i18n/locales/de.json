@@ -1025,7 +1025,7 @@
     "squadT": "Kader-Rating",
     "squadB": "Deine zehn Spieler in einer Zahl. Starter zählen am meisten, je 15 %; die Bank zählt 9, 6, 5, 3 und 2 % vom 6. bis zum 10. Mann. Je höher, desto mehr Siege: etwa 66 bei 87, etwa 75 bei 91. Nur ein Elite-Kader kann 82-0 schaffen.",
     "packsT": "Packs verdienen",
-    "packsB": "Jede beendete Saison bringt ein Pack, ab 60 Siegen ein besseres. Erreiche die Conference Finals oder mehr für ein zweites Pack, das mit jeder Runde besser wird, bis zum Ultimate-Pack (nur 98+) für 82-0 und 16-0. Du hast ein Power-up pro Tag."
+    "packsB": "Jede beendete Saison bringt ein Pack, ab 60 Siegen ein besseres. Erreiche die Conference Finals oder mehr für ein zweites Pack, das mit jeder Runde besser wird, bis zum Ultimate-Pack (nur 98+) für 82-0 und 16-0. Ein Power-up pro Tag, und nie mehr als eines auf demselben Pack."
   },
   "conf": {
     "east": "Osten",

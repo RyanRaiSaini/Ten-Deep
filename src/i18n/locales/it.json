@@ -1030,7 +1030,7 @@
     "squadT": "Valutazione squadra",
     "squadB": "I tuoi dieci giocatori in un solo numero. I titolari contano di più, il 15% ciascuno; la panchina conta 9, 6, 5, 3 e 2% dal sesto al decimo uomo. Più è alta, più vinci: circa 66 vittorie a 87, circa 75 a 91. Solo una squadra d'élite può fare 82-0.",
     "packsT": "Guadagna pacchetti",
-    "packsB": "Ogni stagione conclusa ti dà un pacchetto, uno migliore con 60+ vittorie. Raggiungi la finale di conference o oltre per un secondo pacchetto che migliora a ogni turno, fino al Pacchetto definitivo (solo carte 98+) per 82-0 e 16-0. Hai un potenziamento al giorno."
+    "packsB": "Ogni stagione conclusa ti dà un pacchetto, uno migliore con 60+ vittorie. Raggiungi la finale di conference o oltre per un secondo pacchetto che migliora a ogni turno, fino al Pacchetto definitivo (solo carte 98+) per 82-0 e 16-0. Un potenziamento al giorno, e mai più di uno sullo stesso pacchetto."
   },
   "conf": {
     "east": "Est",

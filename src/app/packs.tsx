@@ -372,7 +372,7 @@ function PackOpening() {
           </Animated.View>
 
           <View style={styles.controls}>
-            {phase === 'sealed' && nextType(pick.type) && !upgraded && (col.powerDay !== dailyKey() ? (
+            {phase === 'sealed' && nextType(pick.type) && !upgraded && (pick.taps ?? 0) === 0 && (col.powerDay !== dailyKey() ? (
               <View style={{ gap: 4 }}>
                 <Button
                   label={t('collect.powerUp', { n: 1 })}

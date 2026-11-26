@@ -1025,7 +1025,7 @@
     "squadT": "Squad Rating",
     "squadB": "Your ten players as one number. Starters count most, 15% each; the bench counts 9, 6, 5, 3 and 2% from your 6th man to your 10th. The higher it is, the more you win: about 66 wins at 87, about 75 at 91. Only an elite squad can go 82-0.",
     "packsT": "Earn packs",
-    "packsB": "Every finished season earns a pack, a better one at 60+ wins. Reach the conference finals or further for a second pack that gets better the deeper you go, up to the Ultimate Pick (98+ cards only) for 82-0 and 16-0. You get one power-up a day."
+    "packsB": "Every finished season earns a pack, a better one at 60+ wins. Reach the conference finals or further for a second pack that gets better the deeper you go, up to the Ultimate Pick (98+ cards only) for 82-0 and 16-0. One power-up a day, and never more than one on the same pack."
   },
   "conf": {
     "east": "East",

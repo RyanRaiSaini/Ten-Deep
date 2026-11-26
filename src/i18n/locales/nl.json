@@ -1025,7 +1025,7 @@
     "squadT": "Selectiescore",
     "squadB": "Je tien spelers in één getal. Basisspelers tellen het zwaarst, 15% elk; de bank telt 9, 6, 5, 3 en 2% van je 6e tot je 10e man. Hoe hoger, hoe meer je wint: zo'n 66 zeges bij 87, zo'n 75 bij 91. Alleen een topselectie kan 82-0 gaan.",
     "packsT": "Verdien packs",
-    "packsB": "Elk afgerond seizoen levert een pack op, een betere bij 60+ zeges. Haal de conference-finale of verder voor een tweede pack dat beter wordt hoe verder je komt, tot het Ultieme pack (alleen 98+) voor 82-0 en 16-0. Je hebt één power-up per dag."
+    "packsB": "Elk afgerond seizoen levert een pack op, een betere bij 60+ zeges. Haal de conference-finale of verder voor een tweede pack dat beter wordt hoe verder je komt, tot het Ultieme pack (alleen 98+) voor 82-0 en 16-0. Eén power-up per dag, en nooit meer dan één op hetzelfde pack."
   },
   "conf": {
     "east": "Oost",

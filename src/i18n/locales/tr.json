@@ -1025,7 +1025,7 @@
     "squadT": "Kadro puanı",
     "squadB": "On oyuncun tek bir sayıda. İlk beş en çok sayılır, her biri %15; yedekler 6. adamdan 10. adama %9, 6, 5, 3 ve 2. Ne kadar yüksekse o kadar kazanırsın: 87'de yaklaşık 66, 91'de yaklaşık 75 galibiyet. 82-0'ı yalnızca elit bir kadro yapabilir.",
     "packsT": "Paket kazan",
-    "packsB": "Bitirdiğin her sezon bir paket kazandırır, 60+ galibiyette daha iyisini. Konferans finaline ya da daha ileriye çıkarsan ikinci bir paket alırsın; ne kadar ilerlersen o kadar iyi olur, 82-0 ve 16-0 için Nihai pakete (sadece 98+ kartlar) kadar. Günde bir güçlendirmen var."
+    "packsB": "Bitirdiğin her sezon bir paket kazandırır, 60+ galibiyette daha iyisini. Konferans finaline ya da daha ileriye çıkarsan ikinci bir paket alırsın; ne kadar ilerlersen o kadar iyi olur, 82-0 ve 16-0 için Nihai pakete (sadece 98+ kartlar) kadar. Günde bir güçlendirme, aynı pakete en fazla bir tane."
   },
   "conf": {
     "east": "Doğu",

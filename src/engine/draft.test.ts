@@ -88,6 +88,22 @@ describe('draft', () => {
     expect(() => pick(s, twin.id, 'B5', pool)).toThrow(/already/);
   });
 
+  it('a saved draft that ends up over the cap (prices changed) can still be finished', () => {
+    let s = spin(startDraft(pool, 'overcap'), pool);
+    const pricey = { ...pool.teams[0].players[0], ovr: 90, salary: 60 };
+    s = {
+      ...s,
+      roster: { PG: { ...pricey, id: 'o1', name: 'Over One', pos: 'PG' }, SG: { ...pricey, id: 'o2', name: 'Over Two', pos: 'SG' }, SF: { ...pricey, id: 'o3', name: 'Over Three', pos: 'SF' }, PF: { ...pricey, id: 'o4', name: 'Over Four', pos: 'PF' } },
+      used: ['o1', 'o2', 'o3', 'o4'], round: 4,
+    };
+    expect(options(s, pool).some((o) => o.affordable)).toBe(false);
+    while (!isComplete(s)) {
+      s = pickFallback(s, fallbackPick(s, pool), undefined, pool);
+      if (!isComplete(s)) s = spin(s, pool);
+    }
+    expect(Object.keys(s.roster)).toHaveLength(10);
+  });
+
   it('one respin per draft, then respinning throws', () => {
     let s = spin(startDraft(pool, 'respin'), pool);
     expect(s.respinsLeft).toBe(1);

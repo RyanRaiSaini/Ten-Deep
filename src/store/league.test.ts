@@ -26,7 +26,7 @@ describe('league store', () => {
     useLeague.getState().add(50_000);
     useLeague.getState().rollover('2026-11-30');
     expect(useLeague.getState()).toMatchObject({ tier: 1, points: 0, week: '2026-11-30' });
-    expect(useLeague.getState().result).toMatchObject({ rank: 1, reward: 'mythic' });
+    expect(useLeague.getState().result).toMatchObject({ rank: 1, reward: 'weekly' });
     expect(useCollection.getState().pending.filter((p) => p.source === 'league:2026-11-23')).toHaveLength(1);
     useLeague.getState().rollover('2026-11-30');
     expect(useCollection.getState().pending.filter((p) => p.source.startsWith('league:'))).toHaveLength(1);

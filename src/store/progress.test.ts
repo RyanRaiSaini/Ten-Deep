@@ -50,16 +50,19 @@ describe('progress store', () => {
     expect(useProgress.getState().weekBase.runs).toBe(1);
   });
 
-  it('achievements unlock from events, pay their reward once, and queue a toast', () => {
+  it('achievements unlock from events, pay their reward once, and queue a toast', async () => {
     useProgress.getState().rollover('2026-11-23');
     track({ ...run, champion: true });
     const s = useProgress.getState();
     expect(s.unlocked.ring).toBe('2026-11-23');
     expect(s.toasts).toContain('ring');
+    // Only gold medals pay a pack; whatever this one pays, it pays once.
+    const { ACHIEVEMENTS } = await import('../engine/progress/achievements');
+    const pays = ACHIEVEMENTS.find((a) => a.id === 'ring')!.reward ? 1 : 0;
     const ringPicks = () => useCollection.getState().pending.filter((p) => p.source === 'ach:ring');
-    expect(ringPicks()).toHaveLength(1);
+    expect(ringPicks()).toHaveLength(pays);
     track({ ...run, champion: true });
-    expect(ringPicks()).toHaveLength(1);
+    expect(ringPicks()).toHaveLength(pays);
   });
 
   it('collection milestones unlock on check()', () => {

@@ -1030,7 +1030,7 @@
     "squadT": "Note d'équipe",
     "squadB": "Tes dix joueurs en un seul chiffre. Les titulaires comptent le plus, 15 % chacun ; le banc compte 9, 6, 5, 3 et 2 % du 6e au 10e homme. Plus elle est haute, plus tu gagnes : environ 66 victoires à 87, environ 75 à 91. Seule une équipe d'élite peut faire 82-0.",
     "packsT": "Gagne des paquets",
-    "packsB": "Chaque saison terminée rapporte un paquet, un meilleur à partir de 60 victoires. Atteins la finale de conférence ou plus loin pour un second paquet qui s'améliore à chaque tour, jusqu'au Paquet ultime (cartes 98+ seulement) pour 82-0 et 16-0. Tu as un boost par jour."
+    "packsB": "Chaque saison terminée rapporte un paquet, un meilleur à partir de 60 victoires. Atteins la finale de conférence ou plus loin pour un second paquet qui s'améliore à chaque tour, jusqu'au Paquet ultime (cartes 98+ seulement) pour 82-0 et 16-0. Un boost par jour, et jamais plus d’un sur le même paquet."
   },
   "conf": {
     "east": "Est",

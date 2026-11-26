@@ -76,7 +76,8 @@ export interface Settlement { week: string; from: number; tier: number; rank: nu
 export function settle(week: string, tier: number, myPoints: number): Settlement {
   const me = standings(week, tier, myPoints, 1).find((r) => r.you)!;
   const next = me.zone === 'promote' ? Math.min(TOP, tier + 1) : me.zone === 'relegate' ? Math.max(0, tier - 1) : tier;
-  const reward: PickType | null = me.rank === 1 ? 'mythic' : me.rank <= PROMOTE ? 'weekly' : null;
+  // Winning your league's week earns one Weekly Pick; promotion is its own reward.
+  const reward: PickType | null = me.rank === 1 ? 'weekly' : null;
   return { week, from: tier, tier: next, rank: me.rank, reward };
 }
 

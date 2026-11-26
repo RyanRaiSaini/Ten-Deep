@@ -47,7 +47,7 @@ export interface CollectionStore {
   setSlot: (slot: SlotId, cardId: string | null) => void;
   autoFillLineup: () => void;
   recordStage: (stage: number, won: boolean) => void;
-  /** Today's power-up on an unopened pick: 'up' if it upgraded, 'miss' if not, null if already used today. */
+  /** Today's power-up on an unopened pick: 'up' if it upgraded, 'miss' if not, null if used today or on this pick. */
   powerUp: (pickId: string, today: string) => 'up' | 'miss' | null;
   /** Add a pick from elsewhere (missions, achievements). Idempotent per source. */
   grant: (type: PickType, source: string) => void;
@@ -119,7 +119,8 @@ export const useCollection = create<CollectionStore>()(
       powerUp: (pickId, today) => {
         const s = get();
         const p = s.pending.find((x) => x.id === pickId);
-        if (!p || s.powerDay === today) return null;
+        // One a day, and never twice on the same pick.
+        if (!p || s.powerDay === today || (p.taps ?? 0) >= 1) return null;
         const taps = p.taps ?? 0;
         const next = nextType(p.type);
         if (!next) return null;

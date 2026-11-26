@@ -79,10 +79,10 @@ describe('achievements', () => {
     stats: EMPTY_STATS, owned: 0, hasEpic: 0, hasMythic: 0, hasUltra: 0, sets: 0, maxLevel: 0, gauntlet: 0, streak: 0, friends: 0, leagueBest: 0, foils: 0, hasGold: 0, hasViolet: 0, hasRainbow: 0, hasCosmic: 0, ...p,
   });
 
-  it('there are 40+ with unique ids, and gold ones pay the best reward', () => {
+  it('there are 40+ with unique ids, and only gold ones pay a pack (a Good Pick)', () => {
     expect(ACHIEVEMENTS.length).toBeGreaterThanOrEqual(40);
     expect(new Set(ACHIEVEMENTS.map((a) => a.id)).size).toBe(ACHIEVEMENTS.length);
-    for (const a of ACHIEVEMENTS) expect(a.reward).toBe({ bronze: null, silver: 'weekly', gold: 'mythic' }[a.tier]);
+    for (const a of ACHIEVEMENTS) expect(a.reward).toBe({ bronze: null, silver: null, gold: 'good' }[a.tier]);
   });
 
   it('unlocks when the stat reaches the target, and only once', () => {

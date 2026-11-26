@@ -37,7 +37,7 @@ describe('weekly league ladder', () => {
   });
 
   it('settling a week moves you up, down, or keeps you, with a reward for a top finish', () => {
-    expect(settle('2026-11-23', 3, 100_000)).toMatchObject({ rank: 1, tier: 4, reward: 'mythic' });
+    expect(settle('2026-11-23', 3, 100_000)).toMatchObject({ rank: 1, tier: 4, reward: 'weekly' });
     expect(settle('2026-11-23', 3, 0)).toMatchObject({ tier: 2, reward: null });
     expect(settle('2026-11-23', 0, 0).tier).toBe(0);
   });
