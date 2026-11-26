@@ -1104,5 +1104,16 @@
     "formUp": "Ton équipe a joué au-dessus de ses notes cette saison (+{{n}}).",
     "formDown": "Ton équipe a joué en dessous de ses notes cette saison (−{{n}}).",
     "streak": "Plus longue série de victoires : {{n}} matchs."
+  },
+  "replay": {
+    "button": "On la rejoue",
+    "hint": "Mêmes tirages, nouveaux choix. Pour le record : pas de packs ni de points de ligue.",
+    "banner": "On la rejoue · essai {{n}}",
+    "best": "Ton record sur ces tirages : {{rec}}",
+    "better": "Nouveau record sur ces tirages !",
+    "same": "Tu égales ton record",
+    "worse": "En dessous de ton record",
+    "vs": "Record : {{best}} · Cet essai : {{now}}",
+    "noRewards": "Les rejouées ne rapportent ni packs ni points de ligue."
   }
 }

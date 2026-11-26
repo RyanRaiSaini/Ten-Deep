@@ -1099,5 +1099,16 @@
     "formUp": "Je team speelde dit seizoen boven zijn ratings (+{{n}}).",
     "formDown": "Je team speelde dit seizoen onder zijn ratings (−{{n}}).",
     "streak": "Langste zegereeks: {{n}} wedstrijden."
+  },
+  "replay": {
+    "button": "Nog een keer",
+    "hint": "Dezelfde draaien, nieuwe keuzes. Alleen voor het record: geen pakjes of competitiepunten.",
+    "banner": "Nog een keer · poging {{n}}",
+    "best": "Je beste met deze draaien: {{rec}}",
+    "better": "Nieuw record met deze draaien!",
+    "same": "Je evenaarde je beste",
+    "worse": "Onder je beste",
+    "vs": "Beste eerder: {{best}} · Deze poging: {{now}}",
+    "noRewards": "Herhalingen geven geen pakjes of competitiepunten."
   }
 }

@@ -1099,5 +1099,16 @@
     "formUp": "Your team played above its ratings this season (+{{n}}).",
     "formDown": "Your team played below its ratings this season (−{{n}}).",
     "streak": "Longest win streak: {{n}} games."
+  },
+  "replay": {
+    "button": "Run it back",
+    "hint": "Same spins, new picks. For the record only: no packs or league points.",
+    "banner": "Run it back · try {{n}}",
+    "best": "Your best on these spins: {{rec}}",
+    "better": "New best on these spins!",
+    "same": "You matched your best",
+    "worse": "Short of your best",
+    "vs": "Best before: {{best}} · This try: {{now}}",
+    "noRewards": "Replays don't pay packs or league points."
   }
 }

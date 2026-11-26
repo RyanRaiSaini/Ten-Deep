@@ -33,6 +33,7 @@ import { useFriends } from '../store/friends';
 import { MODE_BY_ID } from '../data/modes';
 import { CONFIG } from '../config';
 import { LeagueGain } from '../ui/LeagueGain';
+import { canRunItBack, compareFinish, finishOf } from '../engine/replay';
 
 const VERDICT_ICON = { legend: 'crown', extended: 'medal', survived: 'clock', fired: 'flame' } as const;
 
@@ -62,6 +63,10 @@ export default function Result() {
       ? t('result.lostIn', { round: t(`playoffs.round${mine.round}`) })
       : playIn ? t('result.playIn') : t('result.missed');
 
+  // "Run it back": how this try compares with your best on the same spins.
+  const replayCmp = g.replay ? compareFinish(finishOf(runOutcome(ps)), g.replay) : 0;
+  const replayable = canRunItBack(g);
+
   const user = season.teams[0];
   const top = ALL_SLOTS.map((s) => user.slots[s])
     .map((p) => ({ p, tot: season.totals[p.id] }))
@@ -78,6 +83,15 @@ export default function Result() {
               {rec.w > g.challenge.w ? t('challenge.won', { name: g.challenge.name }) : rec.w === g.challenge.w ? t('challenge.tied', { name: g.challenge.name }) : t('challenge.lost', { name: g.challenge.name })}
             </Text>
             <Text style={styles.challengeSub}>{rec.w}-{rec.l} vs {g.challenge.w}-{g.challenge.l}</Text>
+          </View>
+        </View>
+      )}
+      {g.replay && (
+        <View style={[styles.challenge, { borderColor: replayCmp > 0 ? '#14A86B' : replayCmp === 0 ? C.gold : C.danger }]} testID="replay-result">
+          <Icon name={replayCmp > 0 ? 'crown' : 'reroll'} size={40} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.challengeTitle}>{t(replayCmp > 0 ? 'replay.better' : replayCmp === 0 ? 'replay.same' : 'replay.worse')}</Text>
+            <Text style={styles.challengeSub}>{t('replay.vs', { best: `${g.replay.w}-${g.replay.l}`, now: `${rec.w}-${rec.l}` })}</Text>
           </View>
         </View>
       )}
@@ -108,7 +122,7 @@ export default function Result() {
       <View style={{ alignItems: 'center' }}><SquadBadge value={squadRating(season.teams[0])} /></View>
       <SeasonBreakdown season={season} />
       <RarityBadge wins={rec.w} />
-      <LeagueGain gained={g.leagueGain} stake={g.stake} />
+      {!g.replay && <LeagueGain gained={g.leagueGain} stake={g.stake} />}
       <Card style={{ gap: S.sm }} testID="awards">
         <View style={styles.awardsHead}><Icon name="medal" size={26} /><Text style={styles.awardsTitle}>{t('result.awards')}</Text></View>
         {AWARDS.map((a) => {
@@ -125,7 +139,7 @@ export default function Result() {
         })}
       </Card>
       <RosterBoard roster={user.slots} />
-      <RunRewards outcome={runOutcome(ps)} />
+      <RunRewards outcome={runOutcome(ps)} replay={!!g.replay} />
       {g.weekly && (
         <Button label={t('weekly.seeBoard')} variant="gold" icon={<Icon name="trophy" size={22} />} onPress={() => router.push('/weekly')} testID="weekly-board-link" />
       )}
@@ -153,6 +167,13 @@ export default function Result() {
             const r = await shareText(text);
             if (r !== 'failed') { setShared(r); track('shared'); }
           }} />
+      )}
+      {replayable && (
+        <View style={{ gap: 4 }}>
+          <Button label={t('replay.button')} variant="blue" icon={<Icon name="reroll" size={22} />} testID="run-it-back"
+            onPress={() => { if (g.runItBack()) router.replace('/draft'); }} />
+          <Text style={styles.replayHint}>{t('replay.hint')}</Text>
+        </View>
       )}
       {!g.career && <Button label={t('result.playAgain')} onPress={() => { if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />}
       <Button label={t('result.home')} variant="ghost" onPress={() => { g.quit(); goHome(); }} testID="go-home" />
@@ -184,6 +205,7 @@ const styles = StyleSheet.create({
   challenge: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, borderWidth: 3, backgroundColor: '#FFFFFF', marginTop: S.md },
   challengeTitle: { fontWeight: '900', fontSize: 17, color: C.ink },
   challengeSub: { color: C.muted, fontWeight: '800' },
+  replayHint: { color: C.muted, fontSize: 12, fontWeight: '700', textAlign: 'center' },
   awardsTitle: { color: C.text, fontWeight: '900', fontSize: 15 },
   awardRow: { flexDirection: 'row', alignItems: 'center', gap: S.md },
   awardName: { color: C.muted, fontSize: 12, flex: 1 },

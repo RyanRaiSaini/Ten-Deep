@@ -26,8 +26,17 @@ function MiniPack({ type }: { type: PickType }) {
   );
 }
 
-export function RunRewards({ outcome }: { outcome: RunOutcome }) {
+/** `replay`: a "Run it back" try, which pays no packs (see engine/replay.ts). */
+export function RunRewards({ outcome, replay = false }: { outcome: RunOutcome; replay?: boolean }) {
   const { t } = useTranslation();
+  if (replay) {
+    return (
+      <View style={styles.card} testID="run-rewards">
+        <Label color={C.hardwood}>{t('rewards.title')}</Label>
+        <Text style={styles.goalText} testID="replay-no-rewards">{t('replay.noRewards')}</Text>
+      </View>
+    );
+  }
   const earned = runRewards(outcome);
   const goals = nextGoals(outcome);
   return (

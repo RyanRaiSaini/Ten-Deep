@@ -12,6 +12,7 @@
 - **Squad Rating:** your starting five count 15% each, the bench 9/6/5/3/2%. That one number drives the season: about 74–76 wins at 91, and an 82-0 season is possible with a 93 (see `src/engine/calibration.test.ts`).
 - **Season:** pick your conference and division, then play 82 games at your chosen sim speed (with skip buttons). Injuries cost exactly the games they say, and you get one swap at the game-50 trade deadline. Every other team plays with its **real roster** for that season.
 - **Playoffs:** a play-in (7 v 8, 9 v 10, last chance), then East and West brackets of best-of-7 series, played game by game in a bracket colored by team. The Finals go to the better record for home court.
+- **Run it back:** after a normal run, draft the same spins again and try to beat your best on them. Replays are for the record only: no packs, league points or missions.
 - **"Why 47 wins?":** the result screen explains your record: Squad Rating against the league, point differential and the wins it usually means, close games, injuries, form and your longest streak.
 - **Modes:**
   - **Current Day** (2026-27 rosters)

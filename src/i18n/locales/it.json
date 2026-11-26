@@ -1104,5 +1104,16 @@
     "formUp": "La tua squadra ha giocato sopra le sue valutazioni quest’anno (+{{n}}).",
     "formDown": "La tua squadra ha giocato sotto le sue valutazioni quest’anno (−{{n}}).",
     "streak": "Striscia di vittorie più lunga: {{n}} partite."
+  },
+  "replay": {
+    "button": "Rigiocala",
+    "hint": "Stesse estrazioni, nuove scelte. Solo per il record: niente pacchetti né punti lega.",
+    "banner": "Rigiocala · tentativo {{n}}",
+    "best": "Il tuo record con queste estrazioni: {{rec}}",
+    "better": "Nuovo record con queste estrazioni!",
+    "same": "Hai eguagliato il tuo record",
+    "worse": "Sotto il tuo record",
+    "vs": "Record: {{best}} · Questo tentativo: {{now}}",
+    "noRewards": "Le rigiocate non danno pacchetti né punti lega."
   }
 }

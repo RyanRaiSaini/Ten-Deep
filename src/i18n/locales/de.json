@@ -1099,5 +1099,16 @@
     "formUp": "Dein Team spielte diese Saison über seinen Ratings (+{{n}}).",
     "formDown": "Dein Team spielte diese Saison unter seinen Ratings (−{{n}}).",
     "streak": "Längste Siegesserie: {{n}} Spiele."
+  },
+  "replay": {
+    "button": "Nochmal",
+    "hint": "Gleiche Drehungen, neue Picks. Nur für den Rekord: keine Packs, keine Ligapunkte.",
+    "banner": "Nochmal · Versuch {{n}}",
+    "best": "Dein Bestwert mit diesen Drehungen: {{rec}}",
+    "better": "Neuer Bestwert mit diesen Drehungen!",
+    "same": "Bestwert eingestellt",
+    "worse": "Unter deinem Bestwert",
+    "vs": "Bisher bester: {{best}} · Dieser Versuch: {{now}}",
+    "noRewards": "Wiederholungen bringen keine Packs und keine Ligapunkte."
   }
 }
