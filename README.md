@@ -15,8 +15,8 @@
 - **"Why 47 wins?":** the result screen explains your record: Squad Rating against the league, point differential and the wins it usually means, close games, injuries, form and your longest streak.
 - **Modes:**
   - **Current Day** (2026-27 rosters)
-  - **Time Machine:** All-Time, Magic vs. Bird (1984–1991), Jordan (1991–2003), Kobe (2003–2010), LeBron (2010–2016), Steph (2016–2020) and Modern (2020–2026). Every team and every player of every season from 1984 to 2026 is in, with real contracts.
-  - **All-Time Franchises:** all 30 franchises
+  - **Time Machine:** All-Time, Magic vs. Bird (1984–1991), Jordan (1991–2003), Kobe (2003–2010), LeBron (2010–2016), Steph (2016–2020) and Modern (2020–2026). Every team and every player of every season since 1957-58 is in: real contracts from 1984-85 on, and before that (no salary records exist) the usual price for the player's rating.
+  - **All-Time Franchises:** all 30 franchises, back to 1957-58 (the Minneapolis Lakers, the Syracuse Nationals, the Cincinnati Royals...)
   - **Management Crisis:** the board sets a goal, and a crisis card lands every two months
   - **Career:** one franchise across seasons, with aging, contracts, a draft lottery, free agency, offseason trades, morale, franchise records and a Hall of Fame, until the board fires you
 - **Daily and weekly:** Daily Draft (the same spins for everyone), Trivia, Player Rank, Team Rank, 1v1 Derby and Team Duel, one shot each per day. The **Weekly Challenge** is one shared draft a week with a leaderboard and end-of-week prizes.
@@ -59,7 +59,7 @@ Phone: install **Expo Go**, run `npm start`, and scan the QR code. Notifications
 src/app/          screens (Expo Router)
 src/engine/       pure, seeded game engine: cap, draft, duel, AI league, game sim, season, playoffs, daily challenges,
                   crisis cards, career, collectibles, missions/achievements, stats and story
-src/data/         2026 pool, every team-season 1984-2026 (history/full), mode definitions
+src/data/         2026 pool, every team-season 1958-2026 (history/full), mode definitions
 src/store/        persisted state (run, profile, settings, daily, duel, career, collection, progress)
 src/ui/           design system, portraits, logo, cards, effects, spinner, roster board
 src/audio/        synthesized sound effects (rendered to files for iOS/Android)

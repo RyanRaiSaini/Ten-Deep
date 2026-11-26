@@ -150,6 +150,34 @@ describe('draft on the real 2026 pool', async () => {
   });
 });
 
+describe('draft on the All-Time pool (every season since 1957-58)', async () => {
+  const { MODE_BY_ID } = await import('../data/modes');
+  const { createRng } = await import('./rng');
+
+  it('random affordable picks never dead-end across 60 drafts', () => {
+    const pool = MODE_BY_ID['all-time'].pool;
+    let old = 0;
+    for (let d = 0; d < 60; d++) {
+      const rng = createRng(`alltime-${d}`);
+      let s = spin(startDraft(pool, `alltime-${d}`), pool);
+      while (!isComplete(s)) {
+        const ok = options(s, pool).filter((o) => o.affordable);
+        if (ok.length) {
+          const o = d % 2 === 0 ? ok[0] : rng.pick(ok);
+          s = pick(s, o.player.id, rng.pick(o.slots), pool);
+        } else {
+          const p = fallbackPick(s, pool);
+          s = pickFallback(s, p, affordableSlots(s, p, pool)[0], pool);
+        }
+        if (!isComplete(s)) s = spin(s, pool);
+      }
+      expect(isComplete(s)).toBe(true);
+      old += Object.values(s.roster).filter((p) => p && Number(p.id.split('-').find((x) => /^\d{4}$/.test(x))) < 1984).length;
+    }
+    expect(old).toBeGreaterThan(30); // the early seasons do come up
+  }, 60_000);
+});
+
 describe('superstar limit', () => {
   it('blocks a third player rated 95+ even when the cap would allow it', () => {
     let s = spin(startDraft(pool, 'stars'), pool);
