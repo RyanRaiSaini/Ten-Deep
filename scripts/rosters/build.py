@@ -172,12 +172,18 @@ def load_pay(years):
     return caps, pay
 
 
-def classify(y, cap, sal, exp, tw):
+# Rookie-scale deals go to drafted players in their first four seasons: never a veteran who arrived late
+# (Arvydas Sabonis was an NBA third-year at 33).
+ROOKIE_MAX_AGE = 26
+
+
+def classify(y, cap, sal, exp, tw, age=None):
     pct = sal / cap
     if tw: return 'twoWay'
     if y >= 2000 and pct >= 0.34: return 'supermax'
     if y >= 2000 and pct >= 0.245: return 'max'
-    if y >= 1996 and exp is not None and exp <= 3 and 0.012 < pct <= 0.115 and pct > VET_MIN_SHARE * 0.6: return 'rookie'
+    if (y >= 1996 and exp is not None and exp <= 3 and 0.012 < pct <= 0.115 and pct > VET_MIN_SHARE * 0.6
+            and (age is None or age <= ROOKIE_MAX_AGE)): return 'rookie'
     if y >= 1985 and pct <= VET_MIN_SHARE: return 'min'
     return 'standard'
 
@@ -384,7 +390,7 @@ def main():
     stats = {'teams': 0, 'players': 0, 'kept': 0, 'real': 0, 'est': 0}
     caps, pay = load_pay(set(data)) if TEAM_CACHE else ({}, {})
 
-    def contract(y, pid):
+    def contract(y, pid, age=None):
         """
         (game $M, type) from his real salary that season. When the records skip that season (1983-84, 1986-87 and
         1989-90 list only a few players), his deal the season before or after, as a share of that season's cap:
@@ -396,7 +402,7 @@ def main():
             # recorded season nearby counts.
             if pid in pay.get(yy, {}) and yy in caps and ((yy == y and y >= MODERN) or len(pay[yy]) > 200):
                 sal, exp, tw = pay[yy][pid]
-                return game_dollars(caps[yy], sal), classify(yy, caps[yy], sal, exp, tw)
+                return game_dollars(caps[yy], sal), classify(yy, caps[yy], sal, exp, tw, None if age is None else age + yy - y)
         return None
     index = []
     # The seasons before 1984 have no salary records (and no cap): a player there costs the typical price for his
@@ -444,7 +450,7 @@ def main():
                 for p in cur['players']:
                     pos = p['pos'] + (f"/{p['pos2']}" if p['pos2'] else '')
                     lines.append(f"{p['name']}|{pos}|{p['ovr']}|{p['age'] or 27}|{p['tag'] or 'twoway'}|{p['dur']}")
-                    season_lines.append([lines, len(lines) - 1, p['ovr'], contract(y, pid_of.get(norm(p['name'])))])
+                    season_lines.append([lines, len(lines) - 1, p['ovr'], contract(y, pid_of.get(norm(p['name'])), p['age'])])
                     names.add(norm(p['name']))
                     stats['kept'] += 1
             for r in members:
@@ -459,7 +465,7 @@ def main():
                 ovr = rate(whole, y)
                 tag = archetype(whole, p1) if y >= MODERN else classic_archetype(whole, p1)
                 lines.append(f"{r['name_display']}|{p1}{'/' + p2 if p2 else ''}|{ovr}|{age}|{tag}|{dur}")
-                season_lines.append([lines, len(lines) - 1, ovr, contract(y, r['pid'])])
+                season_lines.append([lines, len(lines) - 1, ovr, contract(y, r['pid'], age)])
                 names.add(n)
             team = {'franchise': fr, 'city': cur['city'] if cur else city, 'name': cur['name'] if cur else nick,
                     'colors': cur['colors'] if cur else colors.get((fr, nick)) or colors.get((fr, '*')) or ['#334155', '#94a3b8'],

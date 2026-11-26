@@ -113,6 +113,25 @@ describe('modes', () => {
     expect(money(28.7, 1)).toBe('$28.7M'); // today's dollars read exactly as before
   });
 
+  it('one person has one name everywhere, so the draft can never give you the same player twice', async () => {
+    const { nameKey } = await import('./modes');
+    const { available, startDraft } = await import('../engine/draft');
+    const all = MODE_BY_ID['all-time'].pool.teams.flatMap((t) => t.players);
+    const spellings = new Map<string, Set<string>>();
+    for (const p of all) spellings.set(nameKey(p.name), (spellings.get(nameKey(p.name)) ?? new Set()).add(p.name));
+    expect([...spellings.values()].filter((v) => v.size > 1).map((v) => [...v])).toEqual([]);
+    const lebron = MODE_BY_ID['era-lebron'].pool;
+    const redicks = lebron.teams.flatMap((t) => t.players).filter((p) => /redick/i.test(p.name));
+    expect(new Set(redicks.map((p) => p.name))).toEqual(new Set(['JJ Redick']));
+    // Drafting one JJ Redick season blocks all his others.
+    const d = startDraft(lebron, 'redick');
+    const taken = { ...d, roster: { B1: redicks[0] }, used: [redicks[0].id] };
+    for (const r of redicks) expect(available(taken, r)).toBe(false);
+    // Fathers and sons stay two people.
+    const names = new Set(all.map((p) => p.name));
+    for (const n of ['Gary Payton', 'Gary Payton II', 'Tim Hardaway', 'Tim Hardaway Jr.']) expect(names.has(n), n).toBe(true);
+  });
+
   it('every franchise pool has at least 40 players', () => {
     for (const m of MODES.filter((x) => x.kind === 'franchise'))
       expect(m.pool.teams.flatMap((t) => t.players).length, m.id).toBeGreaterThanOrEqual(40);

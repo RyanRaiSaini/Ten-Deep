@@ -61,8 +61,9 @@ export function lineupMinutes(roster: Roster, out: Set<string>): LineupEntry[] {
  * Squad Rating: the players' overalls weighted by their role's share of the minutes (a starter out of position
  * counts OOP_PENALTY less). One number for how good the ten-man rotation is, healthy.
  */
+/** Includes the team's rating nudge (`mod`: an AI league's levelling, career morale), as the sim does. */
 export function squadRating(roster: Roster): number {
-  return lineupMinutes(roster, new Set()).reduce((n, e) => n + (e.minutes / 240) * (e.player.ovr - (e.outOfPosition ? OOP_PENALTY : 0)), 0);
+  return (roster.mod ?? 0) + lineupMinutes(roster, new Set()).reduce((n, e) => n + (e.minutes / 240) * (e.player.ovr - (e.outOfPosition ? OOP_PENALTY : 0)), 0);
 }
 
 /** Squad Rating so far, while drafting: the filled spots only, each weighted by its role's share. Null when empty. */

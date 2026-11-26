@@ -136,7 +136,8 @@
     "chooseOut": "Choisis qui transférer",
     "spin": "Tourner pour un remplaçant",
     "skip": "Ne rien changer",
-    "done": "Échange conclu"
+    "done": "Échange conclu",
+    "budget": "Budget d'échange : {{budget}} (tes {{room}} sous le plafond + les {{out}} de {{name}})"
   },
   "playoffs": {
     "title": "Playoffs",
@@ -1046,7 +1047,9 @@
     "pick": "Choisis ta division",
     "hint": "Tu affrontes toute la ligue de toute façon. Ta division fixe ta conférence, et les playoffs sont classés au sein de chaque conférence.",
     "seed": "{{conf}} n°{{n}}",
-    "fixed": "Dans ce défi, tout le monde joue dans la même division."
+    "fixed": "Dans ce défi, tout le monde joue dans la même division.",
+    "pickFirst": "Choisis ta division pour commencer",
+    "midwest": "Midwest"
   },
   "squad": {
     "rating": "Note d'équipe",
@@ -1116,5 +1119,29 @@
     "worse": "En dessous de ton record",
     "vs": "Record : {{best}} · Cet essai : {{now}}",
     "noRewards": "Les rejouées ne rapportent ni packs ni points de ligue."
+  },
+  "switch": {
+    "button": "Changement (1 restant)",
+    "title": "Changement",
+    "desc": "Fais entrer un remplaçant dans ton cinq de départ. Un seul changement par partie, et il coûte {{fee}} sous le plafond (5 % du plafond).",
+    "room": "Marge après le changement : {{room}}",
+    "noRoom": "Pas assez de marge : le changement coûte {{fee}}.",
+    "pickBench": "Quel remplaçant entre ?",
+    "pickStarter": "Qui {{name}} remplace-t-il ?",
+    "used": "Tu as utilisé ton changement pour cette partie.",
+    "back": "Choisir quelqu'un d'autre"
+  },
+  "franchise": {
+    "allTime": "De tous les temps"
+  },
+  "intro": {
+    "title": "Comment jouer",
+    "lead": "Drafte dix joueurs, reste sous le plafond salarial, puis vois jusqu'où va ton équipe.",
+    "s1": "Fais tourner une vraie équipe NBA et choisis-y un joueur. Dix tours, dix joueurs.",
+    "s2": "Remplis ton cinq de départ et ton banc sous le plafond. Chaque joueur coûte son vrai contrat.",
+    "s3": "Joue une saison de 82 matchs. Ta note d'équipe décide de ton niveau ; les titulaires comptent le plus.",
+    "s4": "Va en playoffs et vise le titre. Gagne gros pour obtenir des Player Picks.",
+    "go": "C'est parti",
+    "rules": "Voir toutes les règles"
   }
 }

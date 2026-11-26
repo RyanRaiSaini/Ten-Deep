@@ -134,7 +134,8 @@
     "chooseOut": "Kies wie vertrekt",
     "spin": "Draai voor een vervanger",
     "skip": "Niets veranderen",
-    "done": "Ruil rond"
+    "done": "Ruil rond",
+    "budget": "Ruilbudget: {{budget}} (je {{room}} ruimte + {{out}} van {{name}})"
   },
   "playoffs": {
     "title": "Play-offs",
@@ -1041,7 +1042,9 @@
     "pick": "Kies je divisie",
     "hint": "Je speelt hoe dan ook tegen de hele competitie. Je divisie bepaalt je conference, en de play-offs worden per conference geplaatst.",
     "seed": "{{conf}} #{{n}}",
-    "fixed": "In deze challenge speelt iedereen in dezelfde divisie."
+    "fixed": "In deze challenge speelt iedereen in dezelfde divisie.",
+    "pickFirst": "Kies je divisie om te beginnen",
+    "midwest": "Midwest"
   },
   "squad": {
     "rating": "Selectiescore",
@@ -1111,5 +1114,29 @@
     "worse": "Onder je beste",
     "vs": "Beste eerder: {{best}} · Deze poging: {{now}}",
     "noRewards": "Herhalingen geven geen pakjes of competitiepunten."
+  },
+  "switch": {
+    "button": "Bankwissel (1 over)",
+    "title": "Bankwissel",
+    "desc": "Zet één bankspeler in je basisvijf. Eén wissel per run, en die kost {{fee}} aan salarisruimte (5% van het plafond).",
+    "room": "Ruimte na de wissel: {{room}}",
+    "noRoom": "Niet genoeg ruimte: de wissel kost {{fee}}.",
+    "pickBench": "Wie komt van de bank?",
+    "pickStarter": "Wie vervangt {{name}}?",
+    "used": "Je hebt je wissel voor deze run gebruikt.",
+    "back": "Iemand anders kiezen"
+  },
+  "franchise": {
+    "allTime": "Aller tijden"
+  },
+  "intro": {
+    "title": "Zo speel je",
+    "lead": "Kies tien spelers, blijf onder het salarisplafond en kijk hoe ver je team komt.",
+    "s1": "Draai een echt NBA-team en kies er één speler uit. Tien draaien, tien spelers.",
+    "s2": "Vul je basisvijf en bank onder het plafond. Elke speler kost zijn echte contract.",
+    "s3": "Speel een seizoen van 82 wedstrijden. Je teamrating bepaalt hoe goed je bent; basisspelers tellen het zwaarst.",
+    "s4": "Haal de play-offs en ga voor de titel. Win groot voor Player Picks.",
+    "go": "Aan de slag",
+    "rules": "Alle regels bekijken"
   }
 }

@@ -88,7 +88,7 @@ describe('game store', () => {
     const s = useGame.getState().season!;
     expect(useGame.getState().division).toBe(4);
     expect(s.divs![0]).toBe(4);
-    expect(DIVISIONS.map((_, d) => s.divs!.filter((x) => x === d).length)).toEqual([5, 5, 5, 5, 5, 5]);
+    expect(DIVISIONS.slice(0, 6).map((_, d) => s.divs!.filter((x) => x === d).length)).toEqual([5, 5, 5, 5, 5, 5]);
     expect(new Set(s.teams.slice(1).map((t) => t.name)).size).toBe(29);
     // Every AI team sits in its franchise's division and conference.
     s.teams.slice(1).forEach((t, i) => expect(DIVISIONS[s.divs![i + 1]].franchises).toContain(t.franchise));

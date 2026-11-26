@@ -21,6 +21,8 @@ export interface Settings {
   language: Language | null;
   /** Seen the first-launch welcome slides. */
   onboarded: boolean;
+  /** Seen the how-to-play card that pops up the first time you open a game mode. */
+  introSeen: boolean;
   set: (patch: Partial<Omit<Settings, 'set'>>) => void;
 }
 
@@ -37,6 +39,7 @@ export const useSettings = create<Settings>()(
       nationality: '🇨🇦',
       language: null,
       onboarded: false,
+      introSeen: false,
       set: (patch) => set(patch),
     }),
     { name: 'tendeep-settings', storage: createJSONStorage(() => AsyncStorage) },

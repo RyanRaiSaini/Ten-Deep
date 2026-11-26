@@ -6,8 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { current2026 } from '../data';
-import { CONFERENCES, DIVISIONS, confOfDiv, defaultDivision, franchiseOf } from '../engine/conference';
+import { MODE_BY_ID, current2026 } from '../data';
+import { CONFERENCES, DIVISIONS, LAYOUTS, confOfDiv, defaultDivision, franchiseOf, layoutOf } from '../engine/conference';
 import { useGame } from '../store/game';
 import { feel } from '../audio/feel';
 import { Icon } from './icons';
@@ -15,14 +15,34 @@ import { Text } from './Text';
 import { F, R, S } from './theme';
 
 const NICK = new Map(current2026.teams.map((t) => [franchiseOf(t), t.name]));
+/** An era's team names (its cap season's): the Bullets, the SuperSonics, the Vancouver Grizzlies. */
+function eraNames(poolId: string | undefined): Map<string, string> {
+  const mode = poolId ? MODE_BY_ID[poolId] : undefined;
+  if (!mode?.layout || !mode.cap) return NICK;
+  const year = Number(mode.cap.season.slice(0, 4)) + 1;
+  const out = new Map(NICK);
+  const best = new Map<string, number>();
+  for (const t of mode.pool.teams) {
+    const d = Math.abs(Number.parseInt(t.season, 10) - year);
+    const f = franchiseOf(t);
+    if (d < (best.get(f) ?? Infinity)) { best.set(f, d); out.set(f, t.name); }
+  }
+  return out;
+}
 const CONF_COLOR = ['#2F6BFF', '#EE3B4F'] as const;
 
-/** `fixed`: a shared challenge (Daily, Weekly, a friend's link) where everyone plays the same division. */
-export function DivisionPicker({ seed, fixed = false }: { seed: string; fixed?: boolean }) {
+/**
+ * `fixed`: a shared challenge (Daily, Weekly, a friend's link) where everyone plays the same division.
+ * `startOpen` + `onPick`: the draft screen opens it and waits for a tap before the season can start.
+ */
+export function DivisionPicker({ seed, fixed = false, startOpen = false, onPick, poolId }: { seed: string; fixed?: boolean; startOpen?: boolean; onPick?: () => void; poolId?: string }) {
   const { t } = useTranslation();
   const chosen = useGame((s) => s.division);
-  const div = fixed ? defaultDivision(seed) : chosen ?? defaultDivision(seed);
-  const [open, setOpen] = useState(false);
+  // The run's era decides the league (1987-88: four divisions); a choice made for another league doesn't apply.
+  const layout = (poolId && MODE_BY_ID[poolId]?.layout) || 'modern';
+  const names = eraNames(poolId);
+  const div = fixed || chosen === null || layoutOf(chosen) !== layout ? defaultDivision(seed, layout) : chosen;
+  const [open, setOpen] = useState(startOpen && !fixed);
   const conf = confOfDiv(div);
 
   return (
@@ -45,16 +65,16 @@ export function DivisionPicker({ seed, fixed = false }: { seed: string; fixed?: 
             {CONFERENCES.map((c, ci) => (
               <View key={c} style={styles.col}>
                 <Text style={[styles.confName, { color: ci === 0 ? '#8FB0FF' : '#FF9AA6' }]}>{t(`conf.${c}`)}</Text>
-                {DIVISIONS.map((d, di) => d.conf !== ci ? null : (
+                {LAYOUTS[layout].map((di) => { const d = DIVISIONS[di]; return d.conf !== ci ? null : (
                   <Pressable key={d.id} testID={`division-${d.id}`} accessibilityRole="button" accessibilityState={{ selected: di === div }}
-                    onPress={() => { useGame.getState().setDivision(di); feel('tick'); }}
+                    onPress={() => { useGame.getState().setDivision(di); feel('tick'); onPick?.(); }}
                     style={({ pressed }) => [styles.tile, di === div && styles.tileOn, pressed && { transform: [{ translateY: 2 }] }]}>
                     <Text style={[styles.tileName, di === div && { color: '#17121E' }]}>{t(`conf.${d.id}`)}</Text>
                     <Text style={[styles.tileTeams, di === div && { color: '#3A2A00' }]} numberOfLines={2}>
-                      {d.franchises.map((f) => NICK.get(f)).join(' · ')}
+                      {d.franchises.map((f) => names.get(f)).join(' · ')}
                     </Text>
                   </Pressable>
-                ))}
+                ); })}
               </View>
             ))}
           </View>

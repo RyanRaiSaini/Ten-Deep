@@ -1,7 +1,8 @@
 /**
- * Conferences and divisions. Every 30-team league is laid out like the real one: East and West, three divisions
- * of five each. You choose your division; the 29 AI teams take the real franchises' places, minus one from your
- * division (picked by the seed) so you have a spot.
+ * Conferences and divisions, laid out like the real league of the run's era: today's 30 teams in six divisions,
+ * or an older league (1987-88: 23 teams; 1996-97: 29) in its four (Atlantic, Central, Midwest, Pacific). You choose
+ * your division; the AI teams are that league's real franchises. With an even number of them, one from your
+ * division (picked by the seed) makes room for you; with an odd number, you join as an extra team.
  *
  * Divisions don't change the schedule (everyone still plays the same seeded 82); they decide who you're seeded
  * against. Playoff seeding is by record inside each conference, with a play-in for seeds 7 to 10.
@@ -18,33 +19,61 @@ export interface Division {
 export type Conf = 0 | 1;
 export const CONFERENCES = ['east', 'west'] as const;
 
+/** Every division of every layout; a team's division is an index into this list (0–5 are today's). */
 export const DIVISIONS: readonly Division[] = [
+  // Today's league (2004-05 on).
   { id: 'atlantic', conf: 0, franchises: ['bos', 'bkn', 'nyk', 'phi', 'tor'] },
   { id: 'central', conf: 0, franchises: ['chi', 'cle', 'det', 'ind', 'mil'] },
   { id: 'southeast', conf: 0, franchises: ['atl', 'cha', 'mia', 'orl', 'was'] },
   { id: 'northwest', conf: 1, franchises: ['den', 'min', 'okc', 'por', 'uta'] },
   { id: 'pacific', conf: 1, franchises: ['gsw', 'lac', 'lal', 'phx', 'sac'] },
   { id: 'southwest', conf: 1, franchises: ['dal', 'hou', 'mem', 'nop', 'sas'] },
+  // 1987-88: 23 teams (the Bullets were in the Atlantic; the Kings, Rockets and Spurs in the Midwest).
+  { id: 'atlantic', conf: 0, franchises: ['bos', 'bkn', 'nyk', 'phi', 'was'] },
+  { id: 'central', conf: 0, franchises: ['atl', 'chi', 'cle', 'det', 'ind', 'mil'] },
+  { id: 'midwest', conf: 1, franchises: ['dal', 'den', 'hou', 'sac', 'sas', 'uta'] },
+  { id: 'pacific', conf: 1, franchises: ['gsw', 'lac', 'lal', 'phx', 'por', 'okc'] },
+  // 1996-97: 29 teams (Heat and Magic in the Atlantic; Hornets, Hawks and Raptors in the Central; Grizzlies in Vancouver).
+  { id: 'atlantic', conf: 0, franchises: ['bos', 'mia', 'bkn', 'nyk', 'orl', 'phi', 'was'] },
+  { id: 'central', conf: 0, franchises: ['atl', 'cha', 'chi', 'cle', 'det', 'ind', 'mil', 'tor'] },
+  { id: 'midwest', conf: 1, franchises: ['dal', 'den', 'hou', 'min', 'sas', 'uta', 'mem'] },
+  { id: 'pacific', conf: 1, franchises: ['gsw', 'lac', 'lal', 'phx', 'por', 'sac', 'okc'] },
 ];
 
+/** A league's layout: which of the divisions above it uses. */
+export type LayoutId = 'modern' | 'y1988' | 'y1997';
+export const LAYOUTS: Record<LayoutId, readonly number[]> = { modern: [0, 1, 2, 3, 4, 5], y1988: [6, 7, 8, 9], y1997: [10, 11, 12, 13] };
+/** The layout a division belongs to (so a run's division also tells which league it plays in). */
+export const layoutOf = (div: number): LayoutId => (LAYOUTS.y1988.includes(div) ? 'y1988' : LAYOUTS.y1997.includes(div) ? 'y1997' : 'modern');
+
 export const confOfDiv = (div: number): Conf => DIVISIONS[div]?.conf ?? 0;
-const DIV_OF = new Map(DIVISIONS.flatMap((d, i) => d.franchises.map((f) => [f, i] as const)));
-export const divOfFranchise = (f: string | undefined) => (f ? DIV_OF.get(f) : undefined);
+const divMaps = new Map<LayoutId, Map<string, number>>();
+const divMap = (layout: LayoutId) => {
+  let m = divMaps.get(layout);
+  if (!m) { m = new Map(LAYOUTS[layout].flatMap((i) => DIVISIONS[i].franchises.map((f) => [f, i] as const))); divMaps.set(layout, m); }
+  return m;
+};
+export const divOfFranchise = (f: string | undefined, layout: LayoutId = 'modern') => (f ? divMap(layout).get(f) : undefined);
 
 /** A team season's franchise key: history carries it, Current Day encodes it in the id (`atl-2026-27`). */
 export const franchiseOf = (t: TeamSeason) => t.franchise ?? t.id.split('-')[0];
 
-/** A default division for someone who hasn't chosen one yet: any of the six, fixed by the seed. */
-export const defaultDivision = (seed: string) => createRng(`${seed}:division`).int(0, DIVISIONS.length - 1);
+/** A default division for someone who hasn't chosen one yet (and for shared runs): one of the layout's, fixed by the seed. */
+export const defaultDivision = (seed: string, layout: LayoutId = 'modern') => {
+  const divs = LAYOUTS[layout];
+  return divs[createRng(`${seed}:division`).int(0, divs.length - 1)];
+};
 
 /**
- * Which franchise each AI team represents, for a standard 30-team league: the 29 real franchises other than one
- * left out of your division, in a seeded order. (Doesn't touch the rosters: only names and seeding follow.)
+ * Which franchise each AI team represents, in a seeded order: the league's real franchises (your division's
+ * layout), minus one from your division when that leaves an even league with you in it (30 → 29 + you), or all of
+ * them when there's an odd number (1987-88: 23 + you = 24).
  */
 export function leagueFranchises(userDiv: number, seed: string): string[] {
   const rng = createRng(`${seed}:franchises`);
-  const dropped = rng.pick(DIVISIONS[userDiv].franchises);
-  return shuffle(DIVISIONS.flatMap((d) => d.franchises).filter((f) => f !== dropped), rng);
+  const all = LAYOUTS[layoutOf(userDiv)].flatMap((i) => DIVISIONS[i].franchises);
+  const dropped = all.length % 2 === 0 ? rng.pick(DIVISIONS[userDiv].franchises) : null;
+  return shuffle(all.filter((f) => f !== dropped), rng);
 }
 
 /**
@@ -53,24 +82,28 @@ export function leagueFranchises(userDiv: number, seed: string): string[] {
  * same conference first. Works for any even league size.
  */
 export function assignDivisions(franchises: readonly (string | undefined)[], userDiv: number): number[] {
+  const layout = layoutOf(userDiv);
+  const own = LAYOUTS[layout];
   const n = franchises.length;
-  const cap = Math.ceil(n / DIVISIONS.length);
-  const count = DIVISIONS.map(() => 0);
+  // Today's league splits evenly (five a division); an older one keeps its real, uneven divisions, plus you.
+  const even = Math.ceil(n / own.length);
+  const capOf = (d: number) => (layout === 'modern' ? even : Math.max(even, DIVISIONS[d].franchises.length + 1));
+  const count = DIVISIONS.map((_, d) => (own.includes(d) ? 0 : Infinity));
   const divs: number[] = Array(n).fill(-1);
   divs[0] = userDiv;
   count[userDiv]++;
   const left: number[] = [];
   for (let i = 1; i < n; i++) {
-    const d = divOfFranchise(franchises[i]);
-    if (d !== undefined && count[d] < cap) {
+    const d = divOfFranchise(franchises[i], layout);
+    if (d !== undefined && count[d] < capOf(d)) {
       divs[i] = d;
       count[d]++;
     } else left.push(i);
   }
   for (const i of left) {
-    const home = divOfFranchise(franchises[i]);
+    const home = divOfFranchise(franchises[i], layout) ?? divOfFranchise(franchises[i]);
     const near = (d: number) => Number(home !== undefined && confOfDiv(d) === confOfDiv(home));
-    const open = DIVISIONS.map((_, d) => d).filter((d) => count[d] < cap);
+    const open = own.filter((d) => count[d] < capOf(d));
     const pick = open.sort((a, b) => near(b) - near(a) || count[a] - count[b] || a - b)[0];
     divs[i] = pick;
     count[pick]++;

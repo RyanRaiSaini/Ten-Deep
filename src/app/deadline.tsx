@@ -7,13 +7,14 @@ import { MoneyScale } from '../ui/MoneyScale';
 import { moneyScaleFor } from '../data/modes';
 import { feel } from '../audio/feel';
 import { POOLS } from '../data';
-import { tradeSwap } from '../engine/season';
+import { roomAfterFees, tradeBudget, tradeSwap } from '../engine/season';
+import { payOf } from '../engine/cap';
 import { ALL_SLOTS } from '../engine/types';
 import { useGame } from '../store/game';
 import { Button, Card, Header, Label, Screen } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
 import { Spinner } from '../ui/Spinner';
-import { C, S } from '../ui/theme';
+import { C, S, money } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
 import { Icon } from '../ui/icons';
 
@@ -32,6 +33,17 @@ export default function Deadline() {
   const taken = new Set(season.teams.flatMap((tm) => ALL_SLOTS.map((k) => tm.slots[k].name)));
 
   const done = (fn: () => void) => { fn(); router.replace('/season'); };
+  // What you can take on: your cap room plus the outgoing player's salary (engine/season.ts tradeBudget).
+  const scale = moneyScaleFor(g.poolId);
+  const outSlot = ALL_SLOTS.find((k) => user.slots[k].id === deadline.outId);
+  const budget = outSlot && (
+    <Text style={styles.budget} testID="deadline-budget">
+      {t('deadline.budget', {
+        budget: money(tradeBudget(user.slots, outSlot, season.fees), scale), room: money(Math.max(0, roomAfterFees(season)), scale),
+        name: user.slots[outSlot].name, out: money(payOf(user.slots[outSlot]), scale),
+      })}
+    </Text>
+  );
   const candidates = deadline.spin && landed && deadline.outId
     ? deadline.spin.players.filter((p) => !taken.has(p.name)).map((p) => {
         // Show the real reason a signing is blocked (position, superstar limit, or cap).
@@ -59,11 +71,13 @@ export default function Deadline() {
                 key={slot}
                 player={user.slots[slot]}
                 note={slot}
+                testID={`out-${slot}`}
                 selected={deadline.outId === user.slots[slot].id}
                 onPress={() => g.chooseDeadlineOut(user.slots[slot].id)}
               />
             ))}
           </View>
+          {budget}
           <Button
             label={t('deadline.spin')} icon={<Icon name="ball" size={22} />}
             disabled={!deadline.outId}
@@ -76,6 +90,7 @@ export default function Deadline() {
       {deadline.spun && (
         <Card style={{ gap: S.md }}>
           <Spinner target={deadline.spin ?? null} decoys={decoys} spinKey={spinKey} onLanded={() => setLanded(true)} />
+          {budget}
           {candidates.map(({ p, ok, why }) => (
             <PlayerCard key={p.id} player={p} disabled={!ok} note={why ?? undefined}
               onPress={() => done(() => { g.signDeadline(p); feel('pickChime'); })} />
@@ -92,4 +107,5 @@ export default function Deadline() {
 
 const styles = StyleSheet.create({
   desc: { color: C.text, fontSize: 14, lineHeight: 20, textAlign: 'center' },
+  budget: { color: C.ink, fontSize: 14, fontWeight: '900', textAlign: 'center' },
 });

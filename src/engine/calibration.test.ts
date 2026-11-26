@@ -3,7 +3,8 @@ import { atSquadRating, bestRoster, goodDraft, runSeasons } from '../../scripts/
 import { current2026 } from '../data/current2026';
 
 /**
- * Difficulty guardrails (owner's targets, against the real 2026-27 rosters), by Squad Rating:
+ * Difficulty guardrails (owner's targets, against the real 2026-27 rosters), by Squad Rating. Every AI league is
+ * levelled to the same strength (SIM.leagueSr), so the eras follow the same curve:
  *   93 → about 78 wins, the likeliest 82-0 (still rare) · 91 → 74–76, 82-0 possible · 89 → about 70
  *   87 → about 65 · 85 → about 55 · 83 → about 45 · 82-0 never below about 90.
  * Measured over 150 seasons per level when tuned (see SIM in simConfig.ts); these seeded checks keep the shape.
@@ -41,6 +42,18 @@ describe('calibration (2026 pool, real rosters)', () => {
     expect(r.perfect).toBe(0);
     expect(r.titleRate).toBeLessThanOrEqual(0.1);
   }, 120_000);
+
+  it('eras are no easier: every AI league plays at the same strength, so an 84 is about .500-plus anywhere', async () => {
+    const { MODE_BY_ID } = await import('../data/modes');
+    for (const id of ['era-lebron', 'era-magic-bird']) {
+      const pool = MODE_BY_ID[id].pool;
+      const eraBases = Array.from({ length: 12 }, (_, i) => goodDraft(pool, `cal-${id}-${i}`));
+      const r = runSeasons((i) => atSquadRating(eraBases[i % 12], 84), pool, 24, `cal-${id}`);
+      expect(r.avg, id).toBeGreaterThanOrEqual(38);
+      expect(r.avg, id).toBeLessThanOrEqual(58); // it went 74-8 before the leagues were levelled
+      expect(r.perfect, id).toBe(0);
+    }
+  }, 240_000);
 
   it('All-Time pool: the best roster of legends is a heavy favourite, not a lock on 82-0', async () => {
     const { MODE_BY_ID } = await import('../data/modes');

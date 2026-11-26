@@ -136,7 +136,8 @@
     "chooseOut": "Scegli chi cedere",
     "spin": "Gira per un sostituto",
     "skip": "Resta così",
-    "done": "Scambio fatto"
+    "done": "Scambio fatto",
+    "budget": "Budget di scambio: {{budget}} ({{room}} di spazio + i {{out}} di {{name}})"
   },
   "playoffs": {
     "title": "Playoff",
@@ -1046,7 +1047,9 @@
     "pick": "Scegli la tua division",
     "hint": "Affronti comunque tutta la lega. La division decide la tua conference, e i playoff sono ordinati dentro ogni conference.",
     "seed": "{{conf}} n. {{n}}",
-    "fixed": "In questa sfida tutti giocano nella stessa division."
+    "fixed": "In questa sfida tutti giocano nella stessa division.",
+    "pickFirst": "Scegli la tua division per iniziare",
+    "midwest": "Midwest"
   },
   "squad": {
     "rating": "Valutazione squadra",
@@ -1116,5 +1119,29 @@
     "worse": "Sotto il tuo record",
     "vs": "Record: {{best}} · Questo tentativo: {{now}}",
     "noRewards": "Le rigiocate non danno pacchetti né punti lega."
+  },
+  "switch": {
+    "button": "Cambio panchina (1)",
+    "title": "Cambio panchina",
+    "desc": "Porta un giocatore dalla panchina al quintetto. Un solo cambio per partita, e costa {{fee}} di spazio salariale (5% del tetto).",
+    "room": "Spazio dopo il cambio: {{room}}",
+    "noRoom": "Spazio insufficiente: il cambio costa {{fee}}.",
+    "pickBench": "Chi entra dalla panchina?",
+    "pickStarter": "Chi sostituisce {{name}}?",
+    "used": "Hai già usato il cambio in questa partita.",
+    "back": "Scegli un altro"
+  },
+  "franchise": {
+    "allTime": "Di sempre"
+  },
+  "intro": {
+    "title": "Come si gioca",
+    "lead": "Scegli dieci giocatori, resta sotto il tetto salariale e guarda fin dove arriva la tua squadra.",
+    "s1": "Gira una vera squadra NBA e scegli un giocatore. Dieci giri, dieci giocatori.",
+    "s2": "Completa quintetto e panchina sotto il tetto. Ogni giocatore costa il suo vero contratto.",
+    "s3": "Gioca una stagione da 82 partite. Il voto della squadra decide il tuo livello; i titolari contano di più.",
+    "s4": "Arriva ai playoff e punta al titolo. Vinci tanto per guadagnare Player Pick.",
+    "go": "Si parte",
+    "rules": "Vedi tutte le regole"
   }
 }

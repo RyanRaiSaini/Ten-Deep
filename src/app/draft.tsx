@@ -17,6 +17,7 @@ import { Icon } from '../ui/icons';
 import { Confetti, Pulse } from '../ui/fx';
 import { PlayerCard } from '../ui/PlayerCard';
 import { DivisionPicker } from '../ui/DivisionPicker';
+import { FirstRunIntro } from '../ui/FirstRunIntro';
 import { SquadBadge } from '../ui/SquadBadge';
 import { partialSquadRating } from '../engine/rotation';
 import { RosterBoard } from '../ui/RosterBoard';
@@ -32,6 +33,10 @@ export default function Draft() {
   const { width } = useWindowDimensions();
   const wide = width >= 900;
   const g = useGame();
+  // Your division and conference: chosen on this screen before every season (a shared run's is fixed).
+  const [picked, setPicked] = useState(false);
+  const shared = !!(g.daily || g.weekly || g.challenge);
+  const mustPick = !shared && !picked;
   // An era shows its own cap and dollars (data/modes); the cap check itself is the same everywhere.
   const scale = moneyScaleFor(g.poolId);
   const eraCap = MODE_BY_ID[g.poolId]?.cap;
@@ -174,8 +179,8 @@ export default function Draft() {
 
   const start = complete && (
     <View style={{ gap: S.md }}>
-    <DivisionPicker seed={d.seed} fixed={!!(g.daily || g.weekly || g.challenge)} />
-    <Button label={t('draft.startSeason')} variant="gold" icon={<Icon name="play" size={22} />} onPress={() => { g.startSeason(); router.replace(useGame.getState().phase === 'crisis' ? '/crisis' : '/season'); }} testID="start-season" />
+    <DivisionPicker seed={d.seed} fixed={shared} startOpen onPick={() => setPicked(true)} poolId={g.poolId} />
+    <Button label={mustPick ? t('conf.pickFirst') : t('draft.startSeason')} variant="gold" disabled={mustPick} icon={<Icon name="play" size={22} />} onPress={() => { g.startSeason(); router.replace(useGame.getState().phase === 'crisis' ? '/crisis' : '/season'); }} testID="start-season" />
     </View>
   );
 
@@ -195,6 +200,7 @@ export default function Draft() {
           </View>
         )}
       />
+      <FirstRunIntro />
       {wide ? (
         <View style={styles.columns}>
           <View style={styles.colLeft}>{replayBanner}{capCard}{board}{start}</View>

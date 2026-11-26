@@ -136,7 +136,8 @@
     "chooseOut": "Elige a quién traspasar",
     "spin": "Girar por un reemplazo",
     "skip": "No hacer nada",
-    "done": "Traspaso cerrado"
+    "done": "Traspaso cerrado",
+    "budget": "Presupuesto de traspaso: {{budget}} (tus {{room}} libres + los {{out}} de {{name}})"
   },
   "playoffs": {
     "title": "Playoffs",
@@ -1046,7 +1047,9 @@
     "pick": "Elige tu división",
     "hint": "Juegas contra toda la liga igualmente. Tu división define tu conferencia, y los playoffs se ordenan dentro de cada conferencia.",
     "seed": "{{conf}} n.º {{n}}",
-    "fixed": "En este reto todos juegan en la misma división."
+    "fixed": "En este reto todos juegan en la misma división.",
+    "pickFirst": "Elige tu división para empezar",
+    "midwest": "Medio Oeste"
   },
   "squad": {
     "rating": "Valoración del equipo",
@@ -1116,5 +1119,29 @@
     "worse": "Por debajo de tu mejor marca",
     "vs": "Mejor antes: {{best}} · Este intento: {{now}}",
     "noRewards": "Las repeticiones no dan sobres ni puntos de liga."
+  },
+  "switch": {
+    "button": "Cambio de banca (1)",
+    "title": "Cambio de banca",
+    "desc": "Sube a un suplente a tu quinteto titular. Un solo cambio por partida y cuesta {{fee}} de espacio salarial (5% del tope).",
+    "room": "Espacio tras el cambio: {{room}}",
+    "noRoom": "No hay espacio suficiente: el cambio cuesta {{fee}}.",
+    "pickBench": "¿Quién sale del banquillo?",
+    "pickStarter": "¿A quién reemplaza {{name}}?",
+    "used": "Ya usaste tu cambio en esta partida.",
+    "back": "Elegir a otro"
+  },
+  "franchise": {
+    "allTime": "Histórico"
+  },
+  "intro": {
+    "title": "Cómo jugar",
+    "lead": "Elige diez jugadores, no pases el tope salarial y mira hasta dónde llega tu equipo.",
+    "s1": "Gira un equipo real de la NBA y elige a un jugador. Diez giros, diez jugadores.",
+    "s2": "Completa tu quinteto y tu banca bajo el tope. Cada jugador cuesta su contrato real.",
+    "s3": "Juega una temporada de 82 partidos. Tu valoración de plantilla decide tu nivel; los titulares cuentan más.",
+    "s4": "Llega a playoffs y ve por el título. Gana en grande para conseguir Player Picks.",
+    "go": "¡Vamos!",
+    "rules": "Ver todas las reglas"
   }
 }

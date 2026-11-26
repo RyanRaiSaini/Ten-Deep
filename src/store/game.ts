@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { MODE_BY_ID, POOLS, current2026, leaguePoolFor } from '../data';
-import { assignDivisions, defaultDivision, franchiseOf, leagueFranchises } from '../engine/conference';
+import { assignDivisions, defaultDivision, franchiseOf, layoutOf, leagueFranchises } from '../engine/conference';
 import { realLeague } from '../engine/realLeague';
 import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, reroll, respin, spin, startDraft, type DraftState,
@@ -10,7 +10,7 @@ import {
 } from '../engine/draft';
 import { champion, playNextGame, runOutcome, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
 import { createRng } from '../engine/rng';
-import { SEASON_GAMES, advance, createSeason, tradeSwap, type SeasonState } from '../engine/season';
+import { SEASON_GAMES, advance, benchSwitch, createSeason, tradeSwap, type SeasonState } from '../engine/season';
 import { ALL_SLOTS, type Player, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
 import { withSignedSalaries } from '../engine/career/simulate';
 import { applyCard, type Decision } from '../engine/crisis/apply';
@@ -104,6 +104,8 @@ export interface GameStore {
   division: number | null;
   setDivision: (d: number) => void;
   setSeason: (s: SeasonState) => void;
+  /** The run's one bench switch (engine/season.ts benchSwitch): false if it isn't allowed. */
+  doBenchSwitch: (bench: SlotId, starter: SlotId) => boolean;
   openDeadline: (season: SeasonState) => void;
   chooseDeadlineOut: (playerId: string) => void;
   spinDeadline: () => void;
@@ -219,8 +221,12 @@ export const useGame = create<GameStore>()(
         // Shared runs (Daily, Weekly, a friend's link) put everyone in the same division, so everyone plays the same
         // schedule; otherwise yours. Not chosen yet: the seed picks, and that pick sticks (a career keeps it).
         const shared = !!(get().daily || get().weekly || get().challenge);
-        const division = shared ? defaultDivision(draft.seed) : get().division ?? defaultDivision(draft.seed);
-        if (!shared && get().division === null) set({ division });
+        // The mode's era decides the league's layout (1987-88: 23 teams in four divisions); a division you chose
+        // for another layout doesn't carry over.
+        const layout = mode?.layout ?? 'modern';
+        const chosen = get().division;
+        const division = shared || chosen === null || layoutOf(chosen) !== layout ? defaultDivision(draft.seed, layout) : chosen;
+        if (!shared && chosen === null) set({ division });
         // The 29 AI teams are real teams of the other franchises (Current Day: their actual 2026-27 rosters;
         // eras: a season of theirs from that era), minus anyone you drafted. Same picks and seed, same league.
         const franchises = leagueFranchises(division, draft.seed);
@@ -244,7 +250,9 @@ export const useGame = create<GameStore>()(
       },
       startCareerSeason: (teams, seed, mod = 0) => {
         // Morale's rating nudge is set on the team up front so the board's objective accounts for it.
-        const divs = assignDivisions(teams.map((t) => t.franchise ?? franchiseByName(t.name)), get().division ?? defaultDivision(seed));
+        // A career plays today's league: a division picked for an older era's league doesn't apply.
+        const chosen = get().division;
+        const divs = assignDivisions(teams.map((t) => t.franchise ?? franchiseByName(t.name)), chosen !== null && layoutOf(chosen) === 'modern' ? chosen : defaultDivision(seed));
         const season = {
           ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), stops: CARD_ROUNDS.slice(1),
           ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
@@ -274,6 +282,11 @@ export const useGame = create<GameStore>()(
         }),
 
       setSeason: (season) => set({ season }),
+      doBenchSwitch: (bench, starter) => {
+        const { season, phase } = get();
+        if (!season || (phase !== 'season' && phase !== 'deadline')) return false;
+        try { set({ season: benchSwitch(season, bench, starter) }); return true; } catch { return false; }
+      },
 
       openDeadline: (season) => set({ season, phase: 'deadline', deadline: { outId: null, spin: null, spun: false } }),
       chooseDeadlineOut: (outId) => set((s) => ({ deadline: { ...(s.deadline ?? { spin: null, spun: false }), outId } })),
