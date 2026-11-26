@@ -6,7 +6,7 @@ import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { CARD_BY_ID } from '../data/cards';
 import { canPlace, chemistry, lineupRoster } from '../engine/collect/lineup';
-import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type SlotId } from '../engine/types';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type SlotId, posLabel } from '../engine/types';
 import { levelsOf, useCollection } from '../store/collection';
 import { CollectCard, TIER_STYLE } from '../ui/CollectCard';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
@@ -72,7 +72,7 @@ export default function LineupScreen() {
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={styles.optName}>{c.name}</Text>
-                <Text style={styles.note}>{c.pos}{c.pos2 ? `/${c.pos2}` : ''} · {c.team}</Text>
+                <Text style={styles.note}>{posLabel(c)} · {c.team}</Text>
               </View>
             </Pressable>
           ))}

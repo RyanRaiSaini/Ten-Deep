@@ -6,7 +6,7 @@ import { addNews, leading, roundNews, type Headline } from './story/news';
 import { SIM } from './simConfig';
 import { confOfDiv, type Conf } from './conference';
 import { createRng, shuffle } from './rng';
-import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Rng, type Roster, type RosterSlots, type SlotId } from './types';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Rng, type Roster, type RosterSlots, type SlotId, playsPos } from './types';
 
 export const SEASON_GAMES = 82;
 export const DEADLINE_GAME = 50;
@@ -284,7 +284,7 @@ export function benchSwitch(state: SeasonState, benchSlot: SlotId, starterSlot: 
   if (!BENCH_SLOTS.includes(benchSlot) || !STARTER_SLOTS.includes(starterSlot)) throw new Error('Pick a bench player and a starter');
   const user = state.teams[0];
   const incoming = user.slots[benchSlot];
-  if (incoming.pos !== (starterSlot as Pos) && incoming.pos2 !== (starterSlot as Pos)) throw new Error(`${incoming.name} can't play ${starterSlot}`);
+  if (!playsPos(incoming, starterSlot)) throw new Error(`${incoming.name} can't play ${starterSlot}`);
   if (roomAfterFees(state) < SWITCH_FEE - 1e-9) throw new Error('Over the cap');
   const teams = [...state.teams];
   teams[0] = { ...user, slots: { ...user.slots, [starterSlot]: incoming, [benchSlot]: user.slots[starterSlot] } };
@@ -309,7 +309,7 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
   if (!slot) throw new Error('Player not on your roster');
   if (state.teams.some((t) => ALL_SLOTS.some((k) => t.slots[k].id === incoming.id || t.slots[k].name === incoming.name)))
     throw new Error(`${incoming.name} is already on a roster`);
-  if (STARTER_SLOTS.includes(slot) && incoming.pos !== (slot as Pos) && incoming.pos2 !== (slot as Pos))
+  if (STARTER_SLOTS.includes(slot) && !playsPos(incoming, slot))
     throw new Error(`${incoming.name} can't play ${slot}`);
   const without: RosterSlots = { ...user.slots };
   delete without[slot];

@@ -10,7 +10,7 @@ import { feel } from '../audio/feel';
 import { moneyScaleFor } from '../data/modes';
 import { squadRating } from '../engine/rotation';
 import { SWITCH_FEE, roomAfterFees } from '../engine/season';
-import { BENCH_SLOTS, STARTER_SLOTS, type Pos, type SlotId } from '../engine/types';
+import { BENCH_SLOTS, STARTER_SLOTS, type SlotId, playsPos } from '../engine/types';
 import { useGame } from '../store/game';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
 import { Icon } from '../ui/icons';
@@ -35,7 +35,7 @@ export default function BenchSwitch() {
   const room = roomAfterFees(season);
   const canPay = room >= SWITCH_FEE - 1e-9;
   const p = bench ? user.slots[bench] : null;
-  const targets = p ? STARTER_SLOTS.filter((s) => p.pos === (s as Pos) || p.pos2 === (s as Pos)) : [];
+  const targets = p ? STARTER_SLOTS.filter((s) => playsPos(p, s)) : [];
 
   const doSwitch = (starter: SlotId) => {
     if (bench && g.doBenchSwitch(bench, starter)) { feel('pickChime'); router.replace('/season'); }

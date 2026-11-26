@@ -42,7 +42,7 @@ export function parseRoster(idSuffix: string, text: string): Player[] {
       if (!(ovr >= 64 && ovr <= 99)) throw new Error(`${name}: overall ${ovrStr} outside 64–99`);
       const a = ARCH[arch as Archetype];
       if (!a) throw new Error(`${name}: unknown archetype ${arch}`);
-      const [pos, pos2] = posStr.split('/') as [Pos, Pos | undefined];
+      const [pos, pos2, ...more] = posStr.split('/') as [Pos, Pos | undefined, ...Pos[]];
       const age = Number(ageStr);
       const dur = durStr ? Number(durStr) : age >= 35 ? 68 : 80;
       const p: Player = {
@@ -52,6 +52,7 @@ export function parseRoster(idSuffix: string, text: string): Player[] {
         ast: clamp(ovr + a[3]), three: clamp(ovr + a[4]),
       };
       if (pos2) p.pos2 = pos2;
+      if (more.length) p.more = more;
       if (verify) p.verify = true;
       return p;
     });

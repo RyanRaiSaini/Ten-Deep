@@ -1,6 +1,6 @@
 /** Offseason trades: one of yours for one of theirs. The AI says yes only when it comes out ahead. */
 import { capRoom, payOf, salaryFor, superstarBlocked } from '../cap';
-import { STARTER_SLOTS, type Player, type SlotId } from '../types';
+import { STARTER_SLOTS, type Player, type SlotId, playsPos } from '../types';
 import type { OffseasonState } from './offseason';
 
 /** What a player is worth to a GM: rating, adjusted for age and for how fair the contract is. */
@@ -20,7 +20,7 @@ export type TradeVerdict = { ok: true } | { ok: false; reason: 'value' | 'cap' |
 
 const slotOf = (slots: OffseasonState['teams'][number]['slots'], id: string) =>
   (Object.keys(slots) as SlotId[]).find((k) => slots[k]?.id === id);
-const fits = (p: Player, slot: SlotId) => !STARTER_SLOTS.includes(slot) || p.pos === slot || p.pos2 === slot;
+const fits = (p: Player, slot: SlotId) => !STARTER_SLOTS.includes(slot) || playsPos(p, slot);
 
 export function evaluateTrade(st: OffseasonState, give: string, team: number, get: string): TradeVerdict {
   const mine = st.teams[0].slots;

@@ -1,6 +1,6 @@
 import { effective } from './simConfig';
 import {
-  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type SlotId,
+  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type SlotId, playsPos,
 } from './types';
 
 export interface LineupEntry {
@@ -19,7 +19,7 @@ export const OOP_PENALTY = 4;
 export const STARTER_SHARE = 0.15;
 export const BENCH_SHARES = [0.09, 0.06, 0.05, 0.03, 0.02] as const;
 
-const fits = (p: Player, pos: Pos) => p.pos === pos || p.pos2 === pos;
+const fits = (p: Player, pos: Pos) => playsPos(p, pos);
 
 /** Emergency call-up when injuries leave fewer than five healthy players. */
 function replacement(slot: SlotId): Player {

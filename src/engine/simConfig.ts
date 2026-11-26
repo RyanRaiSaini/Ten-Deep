@@ -23,7 +23,7 @@ export const SIM = {
    * Season-to-season swing: every team draws a rating offset ~ N(0, formSd) once per season. Roster quality
    * sets the average; this gives the long tail (a great draft that also has a great year can run the table).
    */
-  formSd: 2.5,
+  formSd: 1.8,
   /**
    * A rare "historic season": this chance per team-season of an extra +hotBoost rating. Off: 82-0 should take an
    * elite squad (about 91+ Squad Rating), never luck.
@@ -39,7 +39,7 @@ export const SIM = {
    * Every AI league plays at the same strength: its average Squad Rating is levelled to this (a little above the 2026-27 league's 82, because a drafted squad plays slightly above its number),
    * so an 84 means the same thing in every era. Older eras' real teams rate a little lower (about 78-79).
    */
-  leagueSr: 82.7,
+  leagueSr: 81.5,
 };
 
 /** Effective rating used by the sim: stars bend games more than linearly. */

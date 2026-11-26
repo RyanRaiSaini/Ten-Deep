@@ -6,6 +6,7 @@ import { Icon } from './icons';
 import { Text } from './Text';
 import { C, FONT, R, S } from './theme';
 import { useMoney } from './MoneyScale';
+import { posLabel } from '../engine/types';
 
 /** Rating badge colors: gold superstar, green great, blue good, ink role player, gray deep bench. */
 export function ovrBadge(ovr: number): string {
@@ -62,7 +63,7 @@ export function PlayerCard({
         <View style={{ flex: 1, gap: 1 }}>
           <Text style={styles.name} numberOfLines={1}>{player.name}</Text>
           <Text style={styles.meta} numberOfLines={1}>
-            {player.pos}{player.pos2 ? `/${player.pos2}` : ''}{player.age ? ` · ${player.age}y` : ''}
+            {posLabel(player)}{player.age ? ` · ${player.age}y` : ''}
           </Text>
           {note && <Text style={styles.note} numberOfLines={1}>{note}</Text>}
         </View>

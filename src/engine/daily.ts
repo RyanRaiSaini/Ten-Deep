@@ -4,7 +4,7 @@
 import { NBA_TRIVIA } from '../data/nbaTrivia';
 import { createRng, shuffle } from './rng';
 import { bestOf7 } from './series';
-import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Pos, type Rng, type Roster, type RosterSlots, type TeamSeason } from './types';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Pos, type Rng, type Roster, type RosterSlots, type TeamSeason, playsPos } from './types';
 
 /** Local calendar day, YYYY-MM-DD. */
 export function dailyKey(d: Date = new Date()): string {
@@ -167,7 +167,7 @@ export function rosterFromTeam(t: TeamSeason): Roster {
   const left = [...t.players].sort((a, b) => b.ovr - a.ovr);
   const slots: RosterSlots = {};
   for (const s of STARTER_SLOTS) {
-    const i = left.findIndex((p) => p.pos === s || p.pos2 === s);
+    const i = left.findIndex((p) => playsPos(p, s));
     const idx = i >= 0 ? i : 0;
     if (left.length) slots[s] = left.splice(idx, 1)[0];
   }

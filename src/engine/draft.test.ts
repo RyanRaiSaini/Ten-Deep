@@ -178,6 +178,20 @@ describe('draft on the All-Time pool (every season since 1957-58)', async () => 
   }, 60_000);
 });
 
+describe('players with three or four positions', async () => {
+  const { current2026 } = await import('../data/current2026');
+  it('Scottie Barnes can start at PG, SF, PF or C; Giannis at PF or C; Jokić only at C', () => {
+    const find = (n: string) => current2026.teams.flatMap((t) => t.players).find((p) => p.name === n)!;
+    const empty = startDraft(current2026, 'positions');
+    const starters = (n: string) => eligibleSlots(empty, find(n)).filter((s) => !s.startsWith('B'));
+    expect(starters('Scottie Barnes').sort()).toEqual(['C', 'PF', 'PG', 'SF']);
+    expect(starters('Giannis Antetokounmpo').sort()).toEqual(['C', 'PF']);
+    expect(starters('Nikola Jokić')).toEqual(['C']);
+    expect(starters('Victor Wembanyama')).toEqual(['C']);
+    expect(eligibleSlots(empty, find('Scottie Barnes'))).toContain('B1'); // the bench takes anyone
+  });
+});
+
 describe('superstar limit', () => {
   it('blocks a third player rated 95+ even when the cap would allow it', () => {
     let s = spin(startDraft(pool, 'stars'), pool);

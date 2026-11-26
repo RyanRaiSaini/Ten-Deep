@@ -2,7 +2,7 @@
 import { payOf, superstarBlocked } from '../cap';
 import { createRng, shuffle } from '../rng';
 import type { SeasonState } from '../season';
-import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type SlotId } from '../types';
+import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type SlotId, playsPos } from '../types';
 import type { CardId } from './deck';
 
 export interface CrisisCard {
@@ -60,7 +60,7 @@ export function prepareCard(season: SeasonState, id: CardId, slot: number, pool:
     case 'trade-demand': {
       const target = rng.pick(STARTER_SLOTS);
       const t = user.slots[target];
-      const fits = (p: Player) => p.pos === target || p.pos2 === target;
+      const fits = (p: Player) => playsPos(p, target);
       let offer = others.filter((p) => fits(p) && p.ovr <= t.ovr - 4 && p.ovr >= t.ovr - 10);
       if (offer.length < 3) offer = others.filter((p) => fits(p) && p.ovr < t.ovr).sort(byOvr).slice(0, 6);
       return { ...base, offer: pickN(offer, 3), outSlots: [target], target };

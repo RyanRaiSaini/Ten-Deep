@@ -1,6 +1,6 @@
 import { canAfford, capRoom, payOf, superstarBlocked } from './cap';
 import {
-  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Rng, type Roster, type RosterSlots, type SlotId,
+  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Rng, type Roster, type RosterSlots, type SlotId, playsPos,
 } from './types';
 
 type Style = 'stars' | 'balanced' | 'rebuild';
@@ -13,7 +13,7 @@ interface AiTeam {
 }
 
 function openSlotFor(slots: RosterSlots, p: Player, startersOnly: boolean): SlotId | null {
-  for (const s of STARTER_SLOTS) if (!slots[s] && (p.pos === s || p.pos2 === s)) return s;
+  for (const s of STARTER_SLOTS) if (!slots[s] && playsPos(p, s)) return s;
   if (startersOnly) return null;
   for (const s of BENCH_SLOTS) if (!slots[s]) return s;
   return null;
@@ -108,7 +108,7 @@ export function fairLeague(pool: Pool, mine: Player[], rng: Rng, count = 29): Ro
     for (const slot of ALL_SLOTS) {
       const p = r.slots[slot];
       if (!p || !myNames.has(p.name)) continue;
-      const fits = (x: Player) => BENCH_SLOTS.includes(slot) || x.pos === slot || x.pos2 === slot;
+      const fits = (x: Player) => BENCH_SLOTS.includes(slot) || playsPos(x, slot);
       const rep = all
         .filter((x) => !taken.has(x.name) && fits(x))
         .sort((a, b) => Math.abs(a.ovr - p.ovr) - Math.abs(b.ovr - p.ovr) || b.ovr - a.ovr || a.id.localeCompare(b.id))[0];
