@@ -110,7 +110,8 @@
     "benchSlot": "벤치 {{n}}",
     "hot": "불붙음: 실제 폼으로 +{{n}}",
     "cold": "부진: 실제 폼으로 −{{n}}",
-    "eraCap": "{{season}} 샐러리캡 · 당시 달러"
+    "eraCap": "{{season}} 샐러리캡 · 당시 달러",
+    "lowCap": "캡이 부족한가요? 스핀에 맞는 선수가 없어도, 맞는 가장 싼 선수는 언제든 영입할 수 있어요."
   },
   "season": {
     "title": "정규 시즌",
@@ -124,16 +125,19 @@
     "seasonEnding": "{{name}} 시즌 아웃",
     "standing": "{{n}}번 시드",
     "injury_other": "{{name}} {{count}}경기 결장 — {{label}}",
-    "play": "재생"
+    "play": "재생",
+    "pauseSeason": "시즌 일시정지",
+    "resumeSeason": "시즌 재개"
   },
   "deadline": {
     "title": "트레이드 마감",
     "desc": "교체는 한 번. 내보낼 선수를 고르고 한 번 스핀해 캡 안에서 대체 선수와 계약하세요.",
     "chooseOut": "내보낼 선수 선택",
     "spin": "대체 선수 스핀",
-    "skip": "그대로 가기",
+    "skip": "시즌 재개",
     "done": "트레이드 완료",
-    "budget": "트레이드 예산: {{budget}} (남은 캡 {{room}} + {{name}}의 {{out}})"
+    "budget": "트레이드 예산: {{budget}} (남은 캡 {{room}} + {{name}}의 {{out}})",
+    "room": "남은 캡: {{room}}. 선수를 트레이드하면 그 연봉이 더해져요."
   },
   "playoffs": {
     "title": "플레이오프",

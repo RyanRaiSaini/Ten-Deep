@@ -1,4 +1,4 @@
-import { effective } from './simConfig';
+import { SIM, effective } from './simConfig';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type SlotId, playsPos,
 } from './types';
@@ -90,14 +90,19 @@ export interface Strength {
 export function teamStrength(lineup: LineupEntry[], mod = 0): Strength {
   let off = 0;
   let def = 0;
+  let rating = 0;
   for (const e of lineup) {
     const w = e.minutes / 240;
     const pen = e.outOfPosition ? OOP_PENALTY : 0;
     off += w * (effective(0.5 * e.player.off + 0.5 * e.player.ovr) - pen);
     def += w * (effective(0.5 * e.player.def + 0.5 * e.player.ovr) - pen);
+    rating += w * (e.player.ovr - pen);
   }
-  off += mod;
-  def += mod;
+  // Elite teams pull away (an 82-0 needs a 96), judged on the whole team's rating (its Squad Rating), so a squad
+  // plays like its number whether it's built on two stars or on depth.
+  const elite = SIM.elite * Math.max(0, rating + mod - SIM.eliteFrom) ** 2;
+  off += mod + elite;
+  def += mod + elite;
   return { off, def, net: off + def };
 }
 

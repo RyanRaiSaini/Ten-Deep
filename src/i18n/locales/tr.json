@@ -111,7 +111,8 @@
     "benchSlot": "Yedek {{n}}",
     "hot": "Alev alev: gerçek formdan +{{n}}",
     "cold": "Soğuk: gerçek formdan −{{n}}",
-    "eraCap": "{{season}} tavanı · dönemin dolarıyla"
+    "eraCap": "{{season}} tavanı · dönemin dolarıyla",
+    "lowCap": "Tavan dar mı? Çarkta uyan kimse yoksa, uyan en ucuz oyuncuyu her zaman alabilirsin."
   },
   "season": {
     "title": "Normal sezon",
@@ -126,16 +127,19 @@
     "standing": "{{n}}. sıra",
     "injury_one": "{{name}} {{count}} maç yok — {{label}}",
     "injury_other": "{{name}} {{count}} maç yok — {{label}}",
-    "play": "Oynat"
+    "play": "Oynat",
+    "pauseSeason": "Sezonu duraklat",
+    "resumeSeason": "Sezona devam et"
   },
   "deadline": {
     "title": "Takas son günü",
     "desc": "Tek bir takas. Göndereceğin oyuncuyu seç, bir kez çevir ve tavanın altında yerine birini al.",
     "chooseOut": "Kimi göndereceğini seç",
     "spin": "Yedek için çevir",
-    "skip": "Kadroyu koru",
+    "skip": "Sezona devam et",
     "done": "Takas tamam",
-    "budget": "Takas bütçesi: {{budget}} (boş {{room}} + {{name}} için {{out}})"
+    "budget": "Takas bütçesi: {{budget}} (boş {{room}} + {{name}} için {{out}})",
+    "room": "Kalan tavan alanı: {{room}}. Bir oyuncuyu takas edersen maaşı buna eklenir."
   },
   "playoffs": {
     "title": "Playofflar",

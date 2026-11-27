@@ -111,7 +111,8 @@
     "benchSlot": "Bench {{n}}",
     "hot": "On fire: +{{n}} from real-life form",
     "cold": "Cold: −{{n}} from real-life form",
-    "eraCap": "{{season}} cap · that era's dollars"
+    "eraCap": "{{season}} cap · that era's dollars",
+    "lowCap": "Low on cap? If nobody on a spin fits, you can always sign the cheapest player who does."
   },
   "season": {
     "title": "Regular season",
@@ -126,16 +127,19 @@
     "standing": "Seed #{{n}}",
     "injury_one": "{{name}} out {{count}} game — {{label}}",
     "injury_other": "{{name}} out {{count}} games — {{label}}",
-    "play": "Play"
+    "play": "Play",
+    "pauseSeason": "Pause season",
+    "resumeSeason": "Resume season"
   },
   "deadline": {
     "title": "Trade deadline",
     "desc": "One swap. Pick a player to move, spin once, and sign a replacement under the cap.",
     "chooseOut": "Choose who to move",
     "spin": "Spin for a replacement",
-    "skip": "Stand pat",
+    "skip": "Resume season",
     "done": "Deal done",
-    "budget": "Trade budget: {{budget}} (your {{room}} cap room + {{name}}'s {{out}})"
+    "budget": "Trade budget: {{budget}} (your {{room}} cap room + {{name}}'s {{out}})",
+    "room": "Cap room left: {{room}}. Trade a player and his salary is added to it."
   },
   "playoffs": {
     "title": "Playoffs",

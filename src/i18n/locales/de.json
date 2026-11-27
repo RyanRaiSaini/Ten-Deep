@@ -111,7 +111,8 @@
     "benchSlot": "Bank {{n}}",
     "hot": "Heiß: +{{n}} durch echte Form",
     "cold": "Kalt: −{{n}} durch echte Form",
-    "eraCap": "Cap {{season}} · Dollar von damals"
+    "eraCap": "Cap {{season}} · Dollar von damals",
+    "lowCap": "Wenig Cap-Platz? Passt niemand vom Dreh, kannst du immer den günstigsten passenden Spieler holen."
   },
   "season": {
     "title": "Hauptrunde",
@@ -126,16 +127,19 @@
     "standing": "Platz {{n}}",
     "injury_one": "{{name}} fällt {{count}} Spiel aus — {{label}}",
     "injury_other": "{{name}} fällt {{count}} Spiele aus — {{label}}",
-    "play": "Weiter"
+    "play": "Weiter",
+    "pauseSeason": "Saison pausieren",
+    "resumeSeason": "Saison fortsetzen"
   },
   "deadline": {
     "title": "Trade Deadline",
     "desc": "Ein Tausch. Wähle einen Spieler aus, dreh einmal und verpflichte einen Ersatz unter dem Cap.",
     "chooseOut": "Wähle, wer geht",
     "spin": "Für einen Ersatz drehen",
-    "skip": "Nichts ändern",
+    "skip": "Saison fortsetzen",
     "done": "Deal fix",
-    "budget": "Trade-Budget: {{budget}} ({{room}} Cap-Platz + {{out}} von {{name}})"
+    "budget": "Trade-Budget: {{budget}} ({{room}} Cap-Platz + {{out}} von {{name}})",
+    "room": "Cap-Platz übrig: {{room}}. Gib einen Spieler ab und sein Gehalt kommt dazu."
   },
   "playoffs": {
     "title": "Playoffs",

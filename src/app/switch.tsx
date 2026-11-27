@@ -4,7 +4,7 @@
  */
 import { HistoryGate } from '../ui/HistoryGate';
 import { runNeedsHistory } from '../data/historyReady';
-import { Redirect, router } from 'expo-router';
+import { Redirect } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -40,7 +40,7 @@ function BenchSwitchScreen() {
   const targets = p ? STARTER_SLOTS.filter((s) => playsPos(p, s)) : [];
 
   const doSwitch = (starter: SlotId) => {
-    if (bench && g.doBenchSwitch(bench, starter)) { feel('pickChime'); router.replace('/season'); }
+    if (bench && g.doBenchSwitch(bench, starter)) { feel('pickChime'); goBack(); }
   };
 
   return (

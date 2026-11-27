@@ -112,7 +112,8 @@
     "benchSlot": "Banco {{n}}",
     "hot": "Em chamas: +{{n}} pela fase real",
     "cold": "Frio: −{{n}} pela fase real",
-    "eraCap": "Teto {{season}} · dólares da época"
+    "eraCap": "Teto {{season}} · dólares da época",
+    "lowCap": "Pouco espaço? Se ninguém do giro couber, você sempre pode contratar o mais barato que caiba."
   },
   "season": {
     "title": "Temporada regular",
@@ -128,16 +129,19 @@
     "injury_many": "{{name}} fora por {{count}} jogos — {{label}}",
     "injury_one": "{{name}} fora por {{count}} jogo — {{label}}",
     "injury_other": "{{name}} fora por {{count}} jogos — {{label}}",
-    "play": "Continuar"
+    "play": "Continuar",
+    "pauseSeason": "Pausar a temporada",
+    "resumeSeason": "Retomar a temporada"
   },
   "deadline": {
     "title": "Prazo de trocas",
     "desc": "Uma troca. Escolha um jogador para trocar, gire uma vez e contrate um substituto abaixo do teto.",
     "chooseOut": "Escolha quem trocar",
     "spin": "Girar por um substituto",
-    "skip": "Manter o elenco",
+    "skip": "Retomar a temporada",
     "done": "Troca feita",
-    "budget": "Orçamento de troca: {{budget}} (seus {{room}} livres + os {{out}} de {{name}})"
+    "budget": "Orçamento de troca: {{budget}} (seus {{room}} livres + os {{out}} de {{name}})",
+    "room": "Espaço livre: {{room}}. Troque um jogador e o salário dele é somado."
   },
   "playoffs": {
     "title": "Playoffs",

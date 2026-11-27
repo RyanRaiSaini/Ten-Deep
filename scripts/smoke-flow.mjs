@@ -64,6 +64,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('skip-deadline').click();
     await page.getByTestId('deadline-skip').waitFor({ timeout: 30000 });
     // Picking who goes shows the budget: cap room plus his salary.
+    await page.getByTestId('deadline-room').waitFor(); // your cap room shows the moment the deadline opens
     await page.getByTestId('out-SF').click();
     await page.getByTestId('deadline-budget').waitFor();
     await shot('05-deadline');
@@ -81,6 +82,9 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('05b-switch');
     await page.getByTestId('back').last().click(); // the season screen's own back button stays mounted underneath
     await page.getByTestId('skip-playoffs').waitFor();
+    // Opening the bench switch paused the season: it waits for Resume.
+    if (!(await page.getByTestId('season-pause').innerText()).includes('Resume')) throw new Error('season did not pause for the bench switch');
+    await page.getByTestId('season-pause').click();
   });
 
   await step('news, a box score, league leaders and award races mid-season', async () => {
