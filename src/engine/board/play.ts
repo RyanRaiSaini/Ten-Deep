@@ -112,14 +112,14 @@ export function prepareOffer(id: string, b: BoardState, ctx: PlayCtx): Offer {
     }
     case 'bench-option': {
       const ok = fa.filter((p) => p.ovr >= 76 && p.ovr <= 84).filter(legalFor(ALL_SLOTS));
-      return { players: sample(ok, 3), outSlots: [...ALL_SLOTS] };
+      return { players: sample(ok, 3).map((p) => ({ ...p, salary: MIN_SALARY })), outSlots: [...ALL_SLOTS] };
     }
     case 'legend-comeback': {
       const names = new Set(s.teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k].name)));
       const seen = new Set<string>();
       const legends = ctx.allTime.teams.flatMap((t) => t.players)
         .filter((p) => p.ovr >= 88 && p.ovr < 95 && !names.has(p.name) && !seen.has(p.name) && (seen.add(p.name), true));
-      return { players: sample(legends, 3), outSlots: [...BENCH_SLOTS] };
+      return { players: sample(legends, 3).map((p) => ({ ...p, salary: MIN_SALARY })), outSlots: [...BENCH_SLOTS] };
     }
     case 'player-coach': {
       const vet = [...ms].filter((x) => (x.p.age ?? 0) >= 33).sort((a, c) => c.p.ovr - a.p.ovr)[0];

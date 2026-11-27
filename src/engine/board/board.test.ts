@@ -128,6 +128,19 @@ describe('board confidence', () => {
     expect(blocked(s, b, 'C', opts[3])).toBe(null);
   });
 
+  it('the agent friend takes 25% off one priced signing, and the bench option signs for the minimum', () => {
+    const s = fresh('agent');
+    const b = { ...newBoard('sac'), perks: ['agent-friend'] };
+    const mid = marketOptions(s, b, 'B5', pool).find((o) => o.tier === 'mid')!;
+    const full = marketOptions(s, newBoard('sac'), 'B5', pool).find((o) => o.player.name === mid.player.name);
+    if (full) expect(mid.pay).toBeCloseTo(full.pay * 0.75, 0);
+    const signed = signOption(s, b, 'B5', mid);
+    expect(signed.board.perks).not.toContain('agent-friend');
+    expect(signed.season.teams[0].slots.B5.salary).toBe(mid.pay);
+    const bench = marketOptions(s, newBoard('sac'), 'B4', pool).find((o) => o.tier === 'bench')!;
+    expect(signOption(s, newBoard('sac'), 'B4', bench).season.teams[0].slots.B4.salary).toBe(1);
+  });
+
   it('finance cards move cap room', () => {
     const s = fresh('cash');
     const plus = resolveCard('owner-all-in', prepareOffer('owner-all-in', newBoard('x'), ctxFor(s)), {}, newBoard('x'), ctxFor(s));

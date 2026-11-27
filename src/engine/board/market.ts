@@ -51,10 +51,11 @@ export function marketOptions(s: SeasonState, b: BoardState, slot: SlotId, pool:
     (!STARTER_SLOTS.includes(slot) || playsPos(p, slot)) && !superstarBlocked(without, p));
   const discount = b.perks.includes('agent-friend') ? 0.75 : 1;
   const pick = (tier: Tier, list: typeof fits): MarketOption | null => {
-    const best = [...list].sort((a, c) => c.p.ovr - a.p.ovr).slice(0, 8);
+    const best = [...list].sort((a, c) => c.p.ovr - a.p.ovr).slice(0, 20);
     if (!best.length) return null;
     const { p, team } = rng.pick(shuffle(best, rng));
-    return { tier, player: p, pay: Math.round(payOf(p) * discount * 10) / 10, ...(team !== undefined ? { fromTeam: team } : {}) };
+    const pay = Math.round(payOf(p) * discount * 10) / 10;
+    return { tier, player: pay !== payOf(p) ? { ...p, salary: pay } : p, pay, ...(team !== undefined ? { fromTeam: team } : {}) };
   };
   const out: MarketOption[] = [];
   for (const tier of ['low', 'mid', 'top'] as Tier[]) {
@@ -65,7 +66,7 @@ export function marketOptions(s: SeasonState, b: BoardState, slot: SlotId, pool:
   const cheap = fits.filter(({ p }) => p.ovr <= 76 && !out.some((o) => o.player.name === p.name));
   if (cheap.length) {
     const { p, team } = rng.pick(cheap);
-    out.push({ tier: 'bench', player: p, pay: MIN_SALARY, ...(team !== undefined ? { fromTeam: team } : {}) });
+    out.push({ tier: 'bench', player: { ...p, salary: MIN_SALARY }, pay: MIN_SALARY, ...(team !== undefined ? { fromTeam: team } : {}) });
   }
   return out;
 }
@@ -85,7 +86,8 @@ export function signOption(s: SeasonState, b: BoardState, slot: SlotId, o: Marke
     round: s.round, inId: incoming.id, inName: incoming.name, outName: out.name, outPay: payOf(out), pay: o.pay, tier,
     pos: incoming.pos, ...(incoming.age !== undefined ? { age: incoming.age } : {}), ...(o.fromTeam !== undefined ? { fromTeam: o.fromTeam } : {}),
   };
-  const perks = o.pay !== payOf(o.player) && o.tier !== 'bench' && tier !== 'perk' ? b.perks.filter((x) => x !== 'agent-friend') : b.perks;
+  // The agent's discount is priced into every market option while you hold it; any priced signing uses it up.
+  const perks = o.tier !== 'bench' && tier !== 'perk' ? b.perks.filter((x) => x !== 'agent-friend') : b.perks;
   return { season, board: { ...b, signings: [...b.signings, signing], perks, crunch: false } };
 }
 
