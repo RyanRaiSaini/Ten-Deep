@@ -9,6 +9,7 @@
  * Records live in the private Blob store, keyed by a hash of provider + subject (no email or name is stored).
  */
 import { del, get, put } from '@vercel/blob';
+import { rateLimit, withLimit, OPEN } from './_ratelimit';
 import { JWKS_URLS, loadJose, makeVerifier, PROVIDERS, type Provider, type Verifier } from './_auth';
 
 const PIN = /^[A-HJKMNP-Z2-9]{6}$/;
@@ -107,7 +108,7 @@ export function makeHandler(store: Store, verify: Verifier) {
   };
 }
 
-export const POST = makeHandler(blobStore, makeVerifier());
+export const POST = withLimit('account', makeHandler(blobStore, makeVerifier()));
 
 /**
  * GET /api/account?selftest=1: proves the deployed function works end to end. Loads jose, fetches Apple's and
@@ -150,5 +151,5 @@ async function selfTest() {
 
 export async function GET(req: Request) {
   if (new URL(req.url).searchParams.get('selftest') !== '1') return json({ error: 'post-only' }, 405);
-  return json(await selfTest());
+  return (await rateLimit(req, 'selftest', OPEN)) ?? json(await selfTest());
 }

@@ -14,6 +14,7 @@ import { get } from '@vercel/blob';
 import { Redis } from '@upstash/redis';
 import type { Store } from './_memstore';
 import { runtimeStore, sharedCache } from './_runtimestore';
+import { OPEN, rateLimit } from './_ratelimit';
 import { autoPick } from '../src/engine/party';
 import { MODE_BY_ID } from '../src/data/modes';
 import { affordableSlots, fallbackPick, options } from '../src/engine/draft';
@@ -78,7 +79,7 @@ export function OPTIONS() {
 
 export async function GET(req: Request) {
   if (!configured) return json({ error: 'unavailable' }, 503);
-  if (new URL(req.url).searchParams.get('selftest') === '1') return json(await selfTest(req.url));
+  if (new URL(req.url).searchParams.get('selftest') === '1') return (await rateLimit(req, 'selftest', OPEN)) ?? json(await selfTest());
   const code = parseRoomCode(new URL(req.url).searchParams.get('code') ?? '');
   if (!code) return json({ error: 'bad-code' }, 400);
   const room = await load(code);
@@ -93,6 +94,12 @@ export async function POST(req: Request) {
   if (!configured) return json({ error: 'unavailable' }, 503);
   let b: Record<string, unknown>;
   try { b = await req.json(); } catch { return json({ error: 'bad-json' }, 400); }
+  const limited = await rateLimit(req, b.op === 'create' ? 'partyCreate' : 'partyWrite', OPEN);
+  if (limited) return limited;
+  return handle(b);
+}
+
+async function handle(b: Record<string, unknown>) {
   const pin = String(b.pin ?? '');
   const key = String(b.key ?? '');
   if (!PIN.test(pin) || key.length < 16 || key.length > 128) return json({ error: 'bad-identity' }, 400);
@@ -197,13 +204,13 @@ export async function POST(req: Request) {
  * Live self-test on the real storage: two simulated players create and join a room, start, and draft the first
  * two rounds through this same API; reports every step. Rooms it makes expire like any other.
  */
-async function selfTest(base: string) {
+async function selfTest() {
   const steps: { step: string; ok: boolean; detail?: unknown }[] = [];
   const hex = () => Array.from(crypto.getRandomValues(new Uint8Array(20)), (b) => b.toString(16).padStart(2, '0')).join('');
   const pinOf = () => Array.from(crypto.getRandomValues(new Uint8Array(6)), (b) => 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[b % 31]).join('');
   const players = [{ pin: pinOf(), key: hex(), name: 'Test A' }, { pin: pinOf(), key: hex(), name: 'Test B' }];
   const post = async (body: Record<string, unknown>) => {
-    const r = await POST(new Request(base, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }));
+    const r = await handle(body);
     return { status: r.status, body: await r.json() };
   };
   const t0 = Date.now();

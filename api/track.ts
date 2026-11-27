@@ -5,6 +5,7 @@
  * The visitor id is random and made on the device; no IP, email or name is stored. Unknown codes are ignored.
  */
 import { blobStore, type OutreachStore } from './_outreachstore';
+import { withLimit } from './_ratelimit';
 import { allCodes } from '../src/outreach/metrics';
 import { EVENT_KINDS, LINK_CODE } from '../src/outreach/types';
 
@@ -37,4 +38,4 @@ export function OPTIONS() {
   return new Response(null, { status: 204, headers: { ...headers, 'access-control-allow-methods': 'POST, OPTIONS' } });
 }
 
-export const POST = makeTrack(blobStore());
+export const POST = withLimit('track', makeTrack(blobStore()));

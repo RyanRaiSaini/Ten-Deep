@@ -6,6 +6,7 @@
  * Stored privately in Vercel Blob (BLOB_READ_WRITE_TOKEN is set on the project by the store connection).
  */
 import { get, put } from '@vercel/blob';
+import { rateLimit } from './_ratelimit';
 
 const PIN = /^[A-HJKMNP-Z2-9]{6}$/;
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET, POST, OPTIONS', 'access-control-allow-headers': 'content-type' };
@@ -28,6 +29,8 @@ export function OPTIONS() {
 }
 
 export async function GET(req: Request) {
+  const limited = await rateLimit(req, 'pinRead', CORS);
+  if (limited) return limited;
   const pin = (new URL(req.url).searchParams.get('pin') ?? '').toUpperCase();
   if (!PIN.test(pin)) return json({ error: 'bad-pin' }, 400);
   const rec = await read(pin);
@@ -35,6 +38,8 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, 'pinWrite', CORS);
+  if (limited) return limited;
   let body: { pin?: unknown; code?: unknown; key?: unknown };
   try { body = await req.json(); } catch { return json({ error: 'bad-json' }, 400); }
   const { pin, code, key } = body;

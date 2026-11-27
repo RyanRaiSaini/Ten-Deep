@@ -9,6 +9,7 @@
  *                               under a reserved test PIN, and reports each step.
  */
 import { del, get, put } from '@vercel/blob';
+import { OPEN, rateLimit } from './_ratelimit';
 
 const PIN = /^[A-HJKMNP-Z2-9]{6}$/;
 const MAX = 1_500_000;
@@ -32,6 +33,12 @@ export function OPTIONS() {
 }
 
 export async function POST(req: Request) {
+  const limited = await rateLimit(req, 'save', OPEN);
+  if (limited) return limited;
+  return handle(req);
+}
+
+async function handle(req: Request) {
   let b: { op?: unknown; pin?: unknown; key?: unknown; data?: unknown };
   try { b = await req.json(); } catch { return json({ error: 'bad-json' }, 400); }
   const pin = String(b.pin ?? '');
@@ -68,7 +75,7 @@ async function selfTest(base: string) {
   const other = hex();
   const data = JSON.stringify({ probe: hex(), stores: { 'tendeep-collection': { owned: { x: { count: 2 } } } } });
   const post = async (body: Record<string, unknown>) => {
-    const r = await POST(new Request(base, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }));
+    const r = await handle(new Request(base, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }));
     return { status: r.status, body: (await r.json()) as Record<string, unknown> };
   };
   const path = `saves/${TEST_PIN}.json`;
@@ -93,5 +100,5 @@ async function selfTest(base: string) {
 
 export async function GET(req: Request) {
   if (new URL(req.url).searchParams.get('selftest') !== '1') return json({ error: 'post-only' }, 405);
-  return json(await selfTest(req.url));
+  return (await rateLimit(req, 'selftest', OPEN)) ?? json(await selfTest(req.url));
 }

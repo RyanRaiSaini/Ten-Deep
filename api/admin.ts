@@ -12,6 +12,7 @@
  * block it is told not to take instructions from.
  */
 import { blobStore, type OutreachStore } from './_outreachstore';
+import { overLimit, rateLimit } from './_ratelimit';
 import { landingUrl } from '../src/outreach/links';
 import { buildPrompt, parseDraftJson, PRESETS, type Preset } from '../src/outreach/prompt';
 import { EVENT_KINDS, GAME_URL, type Db, type DraftKind, type EventKind } from '../src/outreach/types';
@@ -91,8 +92,16 @@ export function makeHandler(deps: Deps) {
   return async function POST(req: Request): Promise<Response> {
     const want = deps.adminKey();
     if (!want || want.length < 24) return json({ error: 'admin-not-configured' }, 503);
+    // Locked out after too many wrong keys from this IP; only wrong keys count toward it.
+    const locked = await overLimit(req, 'adminFail');
+    if (locked) return locked;
     const got = req.headers.get('x-admin-key') ?? '';
-    if (!got || !(await sameSecret(got, want))) return json({ error: 'unauthorized' }, 401);
+    if (!got || !(await sameSecret(got, want))) {
+      await rateLimit(req, 'adminFail');
+      return json({ error: 'unauthorized' }, 401);
+    }
+    const busy = await rateLimit(req, 'admin');
+    if (busy) return busy;
 
     let b: Record<string, unknown>;
     try { b = (await req.json()) as Record<string, unknown>; } catch { return json({ error: 'bad-json' }, 400); }
