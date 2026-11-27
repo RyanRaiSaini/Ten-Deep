@@ -2,6 +2,7 @@
 import { MODE_BY_ID, POOLS, current2026 } from '../data';
 import { franchiseOf } from '../engine/conference';
 import { originIndex } from '../engine/board/origin';
+import { nationOf } from '../data/nation';
 import type { PlayCtx } from '../engine/board/play';
 import type { SeasonState } from '../engine/season';
 
@@ -20,7 +21,7 @@ export function boardCtx(poolId: string, season: SeasonState): PlayCtx {
     origins.set(poolId, origin);
   }
   return {
-    season, origin, pool, allTime, teamName,
+    season, origin, pool, allTime, teamName, nation: nationOf,
     history: !!mode && mode.kind !== 'current',
     allTimeMode: poolId === 'all-time' || mode?.kind === 'franchise',
   };

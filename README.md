@@ -9,7 +9,7 @@
 ## What's in the game
 
 - **Draft:** spin a team-season and pick one player from it, ten times, for a 10-man rotation (PG, SG, SF, PF, C and five bench) under a $200M cap. Every player costs his **real contract for that season** (salary ÷ that season's cap × $171M, so a 35% supermax is $60M), labeled rookie scale, max, supermax, two-way or minimum. At most two players rated 95+. One respin per draft, at the top of the board. The cap reserve knows the player pool, so a draft can never dead-end.
-- **Squad Rating:** your starting five count 15% each, the bench 9/6/5/3/2%. That one number drives the season, and it's hard: an 85 wins about 50, a 90 about 62, a 93 about 70, and only a 96 can go 82-0. Titles take a 95+ squad: about half the time at 96, a third at 95, one in ten at 93 (see `src/engine/calibration.test.ts`).
+- **Squad Rating:** your starting five count 15% each, the bench 9/6/5/3/2%. That one number drives the season, and it's hard: an 85 wins about 50, a 90 about 60, a 93 about 70, a 95 about 78, and a 96 about 80 (82-0 is possible). Titles: about 15% at 93, 35% at 94, 50% at 95 and 70% at 96 (see `src/engine/calibration.test.ts`).
 - **Season:** pick your conference and division, then play 82 games at your chosen sim speed (with skip buttons). Injuries cost exactly the games they say, and you get one swap at the game-50 trade deadline. Every other team plays with its **real roster** for that season.
 - **Playoffs:** a play-in (7 v 8, 9 v 10, last chance), then East and West brackets of best-of-7 series, played game by game in a bracket colored by team. The Finals go to the better record for home court.
 - **Run it back:** after a normal run, draft the same spins again and try to beat your best on them. Replays are for the record only: no packs, league points or missions.
@@ -26,6 +26,7 @@
 - **Card lineups and the Gauntlet:** field your cards as a 10-man lineup with chemistry bonuses, then beat 10 historic teams from good to all-time great.
 - **Missions and achievements:** 3 daily and 3 weekly missions, and bronze, silver and gold achievements.
 - **Stats and story:** league leaders, live MVP, DPOY, ROY and Sixth Man races, a season news feed, box scores, playoff game recaps and season awards.
+- **Player countries:** every card shows the player's flag (the country he's identified with, from Basketball-Reference birth countries plus hand calls; Puerto Rico and the Virgin Islands get their own).
 - **Profile and cloud save:** drafts played, titles, best record, original illustrated portraits (no real likenesses), and a recovery code (or Apple/Google sign-in) to move your progress to a new device.
 - **Feel:** synthesized sound effects with a volume control, no music, haptics on phones, team-color washes, confetti.
 - **Notifications** (phones): daily challenge ready at 9:00, and a streak reminder at 19:00 if you haven't drafted.
