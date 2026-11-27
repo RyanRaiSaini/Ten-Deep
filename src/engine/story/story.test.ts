@@ -130,4 +130,22 @@ describe('box-score realism', () => {
     expect(top.ppg).toBeGreaterThanOrEqual(28);
     expect(top.ppg).toBeLessThan(36);
   });
+
+  it('steals and blocks look like real basketball: leaders around 2 steals and 3 blocks a game', async () => {
+    const { POOLS } = await import('../../data');
+    const { teamLeaders } = await import('./leaders');
+    const lg = draftLeague(POOLS['current-2026'], new Set(), 30, createRng('realism-defense'));
+    const s = advance(advance({ ...createSeason(lg[0], lg.slice(1), 'realism-defense'), deadlineUsed: true }, SEASON_GAMES), SEASON_GAMES);
+    const [stl] = leaders(s, 'stl', 1);
+    const [blk] = leaders(s, 'blk', 1);
+    expect(stl.spg).toBeGreaterThan(1.5);
+    expect(stl.spg).toBeLessThan(3.2);
+    expect(blk.bpg).toBeGreaterThan(2);
+    expect(blk.bpg).toBeLessThan(4.2);
+    // A rim protector leads blocks, not a guard.
+    expect(['C', 'PF']).toContain(blk.player.pos);
+    // Your team's leaders: one per stat.
+    expect(teamLeaders(s).map((l) => l.stat)).toEqual(['pts', 'reb', 'ast', 'stl', 'blk']);
+  });
 });
+

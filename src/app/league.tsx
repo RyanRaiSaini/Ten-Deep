@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
-import { AWARDS, awardRace, leaders, type LeaderStat, type Ranked } from '../engine/story/leaders';
+import { AWARDS, awardRace, leaders, perGame, type LeaderStat, type Ranked } from '../engine/story/leaders';
 import { CONFERENCES } from '../engine/conference';
 import { confStandings, divisionLeaders, standings, type SeasonState } from '../engine/season';
 import { useGame } from '../store/game';
@@ -13,7 +13,7 @@ import { useRunColors } from '../ui/runColors';
 import { C, F, S } from '../ui/theme';
 import { goBack } from '../ui/nav';
 
-const STATS: LeaderStat[] = ['pts', 'reb', 'ast'];
+const STATS: LeaderStat[] = ['pts', 'reb', 'ast', 'stl', 'blk'];
 
 /** League leaders and the award races, live during the season and final afterwards. */
 function LeagueScreen() {
@@ -46,7 +46,7 @@ function LeagueScreen() {
       {tab === 'leaders' && STATS.map((st) => (
         <Card key={st} style={{ gap: S.sm }} testID={`leaders-${st}`}>
           <Label color={C.hardwood}>{t(`league.${st}`)}</Label>
-          {list(leaders(season, st, 5), (r) => (st === 'pts' ? r.ppg : st === 'reb' ? r.rpg : r.apg).toFixed(1))}
+          {list(leaders(season, st, 5), (r) => perGame(r, st).toFixed(1))}
         </Card>
       ))}
       {tab === 'awards' && AWARDS.map((a) => (

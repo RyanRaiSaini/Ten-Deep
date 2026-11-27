@@ -37,7 +37,7 @@ export function BoxScore({ result, mine, theirs, names, userHome }: { result: Ga
     <View style={{ gap: 2 }}>
       <View style={styles.boxRow}>
         <Text style={[styles.boxName, styles.boxHead]} numberOfLines={1}>{title}</Text>
-        {(['min', 'pts', 'reb', 'ast'] as const).map((k) => <Text key={k} style={[styles.boxNum, styles.boxHead]}>{t(`box.${k}`)}</Text>)}
+        {(['min', 'pts', 'reb', 'ast', 'stl', 'blk'] as const).map((k) => <Text key={k} style={[styles.boxNum, styles.boxHead]}>{t(`box.${k}`)}</Text>)}
       </View>
       {rows.map((b) => (
         <View key={`${b.home}-${b.playerId}`} style={styles.boxRow}>
@@ -46,6 +46,8 @@ export function BoxScore({ result, mine, theirs, names, userHome }: { result: Ga
           <Text style={[styles.boxNum, { color: C.text, fontWeight: '800' }]}>{b.pts}</Text>
           <Text style={styles.boxNum}>{b.reb}</Text>
           <Text style={styles.boxNum}>{b.ast}</Text>
+          <Text style={styles.boxNum}>{b.stl ?? '–'}</Text>
+          <Text style={styles.boxNum}>{b.blk ?? '–'}</Text>
         </View>
       ))}
     </View>

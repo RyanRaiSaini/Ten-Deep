@@ -29,6 +29,9 @@ export interface PlayerTotals {
   pts: number;
   reb: number;
   ast: number;
+  /** Steals and blocks (seasons saved before they were tracked count from zero). */
+  stl?: number;
+  blk?: number;
 }
 
 export interface SeasonState {
@@ -159,6 +162,8 @@ export function playGame(
     t.pts += b.pts;
     t.reb += b.reb;
     t.ast += b.ast;
+    t.stl = (t.stl ?? 0) + (b.stl ?? 0);
+    t.blk = (t.blk ?? 0) + (b.blk ?? 0);
   }
   for (const [ti, out] of [[home, outHome], [away, outAway]] as const) {
     for (const e of lineupMinutes(teams[ti], out)) {
@@ -320,8 +325,10 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
   return { ...recordStint(state, user.slots[slot], incoming), teams, deadlineUsed: true };
 }
 
-const ZERO: PlayerTotals = { gp: 0, pts: 0, reb: 0, ast: 0 };
-const minus = (a: PlayerTotals = ZERO, b: PlayerTotals = ZERO): PlayerTotals => ({ gp: a.gp - b.gp, pts: a.pts - b.pts, reb: a.reb - b.reb, ast: a.ast - b.ast });
+const ZERO: PlayerTotals = { gp: 0, pts: 0, reb: 0, ast: 0, stl: 0, blk: 0 };
+const minus = (a: PlayerTotals = ZERO, b: PlayerTotals = ZERO): PlayerTotals => ({
+  gp: a.gp - b.gp, pts: a.pts - b.pts, reb: a.reb - b.reb, ast: a.ast - b.ast, stl: (a.stl ?? 0) - (b.stl ?? 0), blk: (a.blk ?? 0) - (b.blk ?? 0),
+});
 
 /** Note a mid-season move so stats can be credited to the team a player actually played for. */
 export function recordStint(state: SeasonState, outgoing: Player, incoming: Player): SeasonState {

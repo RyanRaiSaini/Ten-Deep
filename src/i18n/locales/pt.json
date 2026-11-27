@@ -174,7 +174,8 @@
     "playAgain": "Novo draft",
     "home": "Início",
     "awards": "Prêmios da temporada",
-    "playIn": "Eliminado no play-in"
+    "playIn": "Eliminado no play-in",
+    "teamLeaders": "Líderes do time"
   },
   "injury": {
     "Day-to-day": "Dia a dia",
@@ -660,7 +661,9 @@
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
     "you": "Você",
     "standings": "Classificação",
-    "legend": "Os 6 primeiros estão dentro. Do 7º ao 10º jogam o play-in. ★ lidera a divisão."
+    "legend": "Os 6 primeiros estão dentro. Do 7º ao 10º jogam o play-in. ★ lidera a divisão.",
+    "stl": "Roubos por jogo",
+    "blk": "Tocos por jogo"
   },
   "news": {
     "title": "Notícias",
@@ -691,7 +694,9 @@
     "pts": "PTS",
     "reb": "REB",
     "ast": "AST",
-    "tap": "Toque num jogo recente para ver as estatísticas"
+    "tap": "Toque num jogo recente para ver as estatísticas",
+    "stl": "ROB",
+    "blk": "TOC"
   },
   "trade": {
     "title": "Troca",

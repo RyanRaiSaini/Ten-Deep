@@ -172,7 +172,8 @@
     "playAgain": "Neu draften",
     "home": "Start",
     "awards": "Saison-Awards",
-    "playIn": "Im Play-In ausgeschieden"
+    "playIn": "Im Play-In ausgeschieden",
+    "teamLeaders": "Team-Bestwerte"
   },
   "injury": {
     "Day-to-day": "Fraglich",
@@ -655,7 +656,9 @@
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
     "you": "Du",
     "standings": "Tabelle",
-    "legend": "Top 6 sind drin. 7 bis 10 spielen das Play-In. ★ führt die Division an."
+    "legend": "Top 6 sind drin. 7 bis 10 spielen das Play-In. ★ führt die Division an.",
+    "stl": "Steals pro Spiel",
+    "blk": "Blocks pro Spiel"
   },
   "news": {
     "title": "News",
@@ -686,7 +689,9 @@
     "pts": "PTS",
     "reb": "REB",
     "ast": "AST",
-    "tap": "Tippe auf ein aktuelles Spiel für den Boxscore"
+    "tap": "Tippe auf ein aktuelles Spiel für den Boxscore",
+    "stl": "STL",
+    "blk": "BLK"
   },
   "trade": {
     "title": "Trade",

@@ -172,7 +172,8 @@
     "playAgain": "Opnieuw drafen",
     "home": "Home",
     "awards": "Seizoensprijzen",
-    "playIn": "Uitgeschakeld in de play-in"
+    "playIn": "Uitgeschakeld in de play-in",
+    "teamLeaders": "Teamleiders"
   },
   "injury": {
     "Day-to-day": "Twijfelachtig",
@@ -655,7 +656,9 @@
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
     "you": "Jij",
     "standings": "Stand",
-    "legend": "Top 6 is door. 7 tot en met 10 spelen de play-in. ★ leidt de divisie."
+    "legend": "Top 6 is door. 7 tot en met 10 spelen de play-in. ★ leidt de divisie.",
+    "stl": "Steals per wedstrijd",
+    "blk": "Blocks per wedstrijd"
   },
   "news": {
     "title": "Nieuws",
@@ -686,7 +689,9 @@
     "pts": "PTS",
     "reb": "REB",
     "ast": "AST",
-    "tap": "Tik op een recente wedstrijd voor de boxscore"
+    "tap": "Tik op een recente wedstrijd voor de boxscore",
+    "stl": "STL",
+    "blk": "BLK"
   },
   "trade": {
     "title": "Ruil",
