@@ -50,7 +50,7 @@
     },
     "crisis": {
       "title": "Yönetim krizi",
-      "desc": "Takımını kur. Yönetim bir hedef koyar. Her iki ayda bir kriz kartı her şeyi değiştirir."
+      "desc": "Bir takım kur ve yönetimden sağ çık. Sezonda yedi kez, kapalı 6 karttan 1'ini seç: talepler, para, avantajlar ve sürprizler. Yönetim Güveni 0'a düşerse kovulursun."
     },
     "career": {
       "title": "Kariyer",
@@ -244,7 +244,7 @@
   },
   "crisis": {
     "title": "Yönetim krizi",
-    "desc": "Takımını kur. Yönetim bir hedef koyar. Her iki ayda bir kriz kartı her şeyi değiştirir.",
+    "desc": "Bir takım kur ve yönetimden sağ çık. Sezonda yedi kez, kapalı 6 karttan 1'ini seç: talepler, para, avantajlar ve sürprizler. Yönetim Güveni 0'a düşerse kovulursun.",
     "m0": "Hazırlık dönemi",
     "m1": "Aralık",
     "m2": "Şubat",
@@ -1165,5 +1165,474 @@
     "loading": "Tarih kitapları açılıyor…",
     "failed": "Tarih yüklenemedi. Bağlantını kontrol et.",
     "retry": "Tekrar dene"
+  },
+  "board": {
+    "title": "Yönetim krizi",
+    "pick": "Bir kart seç",
+    "pickHint": "Altı kapalı kart. Birine dokun: talepler, para, avantajlar ve sürprizler hepsi içinde.",
+    "stopOf": "Durak {{n}} / {{total}}",
+    "months": {
+      "preseason": "Hazırlık dönemi",
+      "nov": "Kasım",
+      "dec": "Aralık",
+      "jan": "Ocak",
+      "feb": "Şubat",
+      "mar": "Mart",
+      "apr": "Nisan"
+    },
+    "lead0": "Hazırlık dönemi. Salon uğulduyor, yönetim izliyor.",
+    "lead": "{{g}} maç sonunda {{w}}-{{l}}.",
+    "kinds": {
+      "demand": "Yönetim talebi",
+      "finance": "Finans",
+      "perk": "Avantaj",
+      "event": "Haber"
+    },
+    "voices": {
+      "owner": "Patron {{name}}",
+      "gm": "GM {{name}}",
+      "reporter": "{{name}}, takım muhabiri",
+      "coach": "{{name}}",
+      "fans": "Taraftarlar"
+    },
+    "rule": "Kural",
+    "due": {
+      "next": "Sonraki karta kadar",
+      "deadline": "Takas son gününe kadar",
+      "end": "Normal sezon sonuna kadar",
+      "now": "Hemen şimdi",
+      "games": "Sonraki {{n}} maç boyunca"
+    },
+    "fail": "Başarısız olursan: −{{n}} Yönetim Güveni",
+    "noFail": "Güven riske girmiyor",
+    "reward": "Başarırsan: +1 Yönetim Güveni",
+    "accept": "Tamam",
+    "confirm": "Onayla",
+    "continue": "Sezona dön",
+    "missed": "Kaçırdıkların",
+    "peek": "Gözlemci ipucu: iki kart açık",
+    "secondLook": "İkinci bakış kullan (yeniden seç)",
+    "pickIn": "Birini seç",
+    "pickOut": "Kim yer açıyor?",
+    "heads": "Yazı! +{{amount}}",
+    "tails": "Tura. −{{amount}}",
+    "options": {
+      "offense": "Hücum gurusu: 20 maç +3, sonra +1 ({{fee}})",
+      "defense": "Savunma beyni: sezon boyunca +2 ({{fee}})",
+      "players": "Oyuncuların koçu: sezon boyunca +1, +1 güven ({{fee}})",
+      "interim": "Geçici koçu tut: bedava, 10 maç −2",
+      "bench": "{{name}} yedeğe",
+      "ride": "Sineye çek: 10 maç −2",
+      "pay": "Zammı ver ({{fee}})",
+      "sit": "5 maç dışarıda otursun"
+    },
+    "confidence": "Yönetim Güveni",
+    "confidenceShort": "Güven",
+    "demands": "Yönetim talepleri",
+    "noDemands": "Açık talep yok. Tadını çıkar.",
+    "dueRound": "{{n}}. maça kadar",
+    "dueEnd": "Sezon sonuna kadar",
+    "progress": "{{have}}/{{need}}",
+    "status": {
+      "active": "Açık",
+      "done": "Tamam",
+      "failed": "Başarısız",
+      "vetoed": "Veto edildi"
+    },
+    "veto": "Veto",
+    "perksHeld": "Elindeki avantajlar",
+    "respins": "Yeniden çevirme: {{n}}",
+    "office": "Kulüp ofisi",
+    "officeDesc": "Bir oyuncuyu sözleşmesi karşılığında sat ve yerine birini al: fiyatlı üç seçenek ya da asgari ücretli bir yedek seçeneği.",
+    "officeRoom": "Tavan alanı: {{room}}",
+    "officePick": "Kimi satıyorsun?",
+    "officeBudget": "Bu yer için bütçe: {{budget}} (alan + onun {{pay}} maaşı)",
+    "officeRespin": "Seçenekleri yeniden çevir ({{n}} kaldı)",
+    "officeSign": "{{pay}} karşılığında imzala",
+    "officeBack": "Başkasını seç",
+    "tiers": {
+      "low": "Kelepir",
+      "mid": "Orta segment",
+      "top": "Üst seçenek",
+      "bench": "Yedek seçeneği",
+      "perk": "Avantaj"
+    },
+    "overBudget": "Bütçeyi aşıyor",
+    "crunch": "Kadro sıkışıklığı: bu hamlede yalnızca yedek seçeneği",
+    "agent": "Menajer dostu: bu transferde %25 indirim",
+    "events": {
+      "done": "Talep karşılandı: {{title}} (+1)",
+      "failed": "Talep başarısız: {{title}} (−{{n}})",
+      "hot": "Sıcak seri: yönetim bayılıyor (+1)",
+      "cold": "Soğuk seri: yönetim huzursuz (−1)",
+      "fired": "Kovuldun.",
+      "refund": "Fon serbest: patron bloke edilen parayı iade ediyor"
+    },
+    "fired": "{{g}} maç sonra kovuldun",
+    "firedSub": "{{owner}} yeterince gördü. Sezonu geçici GM bitirecek.",
+    "recap": "Kartlarla sezon",
+    "finalConfidence": "Final Yönetim Güveni: {{n}}/10",
+    "c": {
+      "break-core": {
+        "title": "Çekirdeği dağıt",
+        "story": "{{owner}} bu grubun zirveyi gördüğüne karar verdi. “İlk beşte yeni yüzler istiyorum. Seneye değil. Şimdi.”",
+        "rule": "Mevcut ilk beşten en az 3 oyuncuyu değiştir."
+      },
+      "every-phase": {
+        "title": "Sahanın her bölgesi",
+        "story": "{{coach}} her yerde takviye istiyor, {{owner}} da aynı fikirde.",
+        "rule": "Bir guard (PG ya da SG), bir small forward ve bir uzun (PF ya da C) transfer et."
+      },
+      "statement-signing": {
+        "title": "Gövde gösterisi transferi",
+        "story": "{{owner}} taraftara afişe çıkacak büyük bir isim vaat etti.",
+        "rule": "Kulüp ofisinde bir üst seçenek imzala."
+      },
+      "prove-it": {
+        "title": "Piyasada kanıtla",
+        "story": "“Sonuna kadar gidiyoruz diyoruz,” diyor {{owner}}, {{gm}}'e. “Göster.”",
+        "rule": "{{amount}} ya da daha fazlasına bir transfer yap."
+      },
+      "hometown-hero": {
+        "title": "Şehrin kahramanı",
+        "story": "{{owner}} {{city}} taraftarı olarak büyüdü ve bu tarihin sahada olmasını istiyor.",
+        "rule": "{{city}} formasını giymiş (herhangi bir sezon) 2 oyuncun olsun."
+      },
+      "championship-dna": {
+        "title": "Şampiyonluk DNA'sı",
+        "story": "Yönetim, haziranın nasıl hissettirdiğini bilen oyuncular istiyor.",
+        "rule": "Şampiyon takım sezonlarından 2 oyuncun olsun."
+      },
+      "all-star-pedigree": {
+        "title": "All-Star soyu",
+        "story": "Sponsorlar reklam panolarına basabilecekleri isimler istiyor.",
+        "rule": "Reytingi 88 ve üstü 3 oyuncun olsun."
+      },
+      "youth-movement": {
+        "title": "Gençlik hamlesi",
+        "story": "Analitik bölümü, şampiyonluk penceresinin üç yıl sonra açıldığını söylüyor.",
+        "rule": "23 yaş ve altı 3 oyuncun olsun."
+      },
+      "veteran-leadership": {
+        "title": "Veteran liderliği",
+        "story": "“Soyunma odasının büyük bir ağabeye ihtiyacı var,” diyor {{coach}}.",
+        "rule": "32 yaş ve üstü bir oyuncu transfer et."
+      },
+      "finals-experience": {
+        "title": "Final tecrübesi",
+        "story": "{{owner}} playoff heyecanından bıktı.",
+        "rule": "O sezon takımı Finale çıkmış bir oyuncun olsun."
+      },
+      "defense-wins": {
+        "title": "Savunma şampiyon yapar",
+        "story": "{{coach}} savunma kimliği istiyor, daha bu akşamdan.",
+        "rule": "2 savunmacıyı ilk beşe koy: lockdown, 3-and-D ya da pota koruyucu, veya 90+ savunma."
+      },
+      "space-floor": {
+        "title": "Sahayı genişlet",
+        "story": "{{gm}}'in analitik ekibi üçlük istiyor. Hem de bolca.",
+        "rule": "3 şutörü ilk beşe koy: şutör, stretch uzun ya da 3-and-D, veya üçlükte 90+."
+      },
+      "budget-discipline": {
+        "title": "Bütçe disiplini",
+        "story": "{{owner}} azınlık hissesi satıyor ve defterlerin düzgün olmasını istiyor.",
+        "rule": "Sezonu en az {{amount}} tavan alanıyla bitir."
+      },
+      "big-spenders": {
+        "title": "Büyük harcamacılar",
+        "story": "{{owner}} diğer takımlara gövde gösterisi yapmak istiyor.",
+        "rule": "Sonraki karta kadar her transfer {{amount}} ya da daha fazlasına mal olmalı."
+      },
+      "bargain-bin": {
+        "title": "Kelepir sepeti",
+        "story": "Harcama dondu. Notu {{gm}} aldı.",
+        "rule": "Sonraki karta kadar her transfer en fazla {{amount}} olmalı."
+      },
+      "untouchable": {
+        "title": "Dokunulmaz",
+        "story": "Taraftarlar {{name}} için çıldırıyor. Formalar, duvar resimleri, adına çıkan bir sandviç.",
+        "rule": "{{name}} bütün sezon ilk beşinde kalmalı."
+      },
+      "draft-wave": {
+        "title": "Draft dalgası",
+        "story": "Gözlemciler bu çaylak sınıfına nesil yeteneği diyor, yönetim de dalgaya binmek istiyor.",
+        "rule": "En düşük reytingli oyuncun {{name}} yerine 3 genç oyuncudan 1'ini seç."
+      },
+      "positionless": {
+        "title": "Pozisyonsuz basketbol",
+        "story": "{{coach}} herkesin herkesi savunduğu bir sistem kuruyor.",
+        "rule": "2 ya da daha fazla pozisyonda oynayabilen 3 oyuncuyu ilk beşe koy."
+      },
+      "rivalry-signing": {
+        "title": "Rakipten transfer",
+        "story": "“Rakibe en çok adamını kapmak dokunur,” diye sırıtıyor {{owner}}.",
+        "rule": "Bir grup rakibinden bir oyuncu transfer et."
+      },
+      "win-now": {
+        "title": "Şimdi kazan",
+        "story": "{{owner}}'ın sabrı tükendi.",
+        "rule": "Sonraki 10 maçın 8'ini kazan."
+      },
+      "streak-breaker": {
+        "title": "Seriyi kır",
+        "story": "Kaybetmek sesini yükseltiyor. Yönetim cevap bekliyor.",
+        "rule": "Sonraki 3 maçı kazan."
+      },
+      "sell-high": {
+        "title": "Tepedeyken sat",
+        "story": "Şampiyonluk adayı bir takım {{name}} için {{gm}}'i arıyor.",
+        "rule": "{{name}} oyuncusunu daha ucuz sözleşmeli bir oyuncuyla takas et."
+      },
+      "payroll-purge": {
+        "title": "Maaş temizliği",
+        "story": "Yeni patron bugün daha zayıf bir maaş bordrosu istiyor.",
+        "rule": "En pahalı 3 sözleşmen daha ucuz oyuncularla takas edilir ve tavanın {{amount}} düşer."
+      },
+      "breakout-star": {
+        "title": "Fırlayan yıldız",
+        "story": "Yönetim yükselen yıldız hikâyesine bayılır.",
+        "rule": "25 yaş ve altı, reytingi 85 ve üstü bir oyuncun olsun."
+      },
+      "iron-man": {
+        "title": "Demir adam",
+        "story": "Yük yönetimi bilet satışlarını öldürüyor.",
+        "rule": "Sezon sonunda her ilk beş oyuncusu 70+ maç oynamış olmalı."
+      },
+      "rebound-battle": {
+        "title": "Ribaund savaşı",
+        "story": "“Potanın altında eziliyoruz,” diyor {{coach}}.",
+        "rule": "Konferansında maç başına ribaundda lider ol."
+      },
+      "scoring-title": {
+        "title": "Skor kralı",
+        "story": "Pazarlama kampanya için bir yüz arıyor.",
+        "rule": "Ligin skor liderini kadrona kat."
+      },
+      "dpoy": {
+        "title": "Yılın Savunmacısı",
+        "story": "{{coach}} özgeçmişine bir DPOY yazdırmak istiyor.",
+        "rule": "Yılın Savunma Oyuncusu sende olsun."
+      },
+      "sixth-man": {
+        "title": "Altıncı adam",
+        "story": "Yedek derinliği nisanda kazandırır.",
+        "rule": "Yılın Altıncı Adamı sende olsun."
+      },
+      "local-legend": {
+        "title": "Yerel efsane",
+        "story": "Kulüp yıl dönümünü kutluyor ve {{owner}} tanıdık bir yüz istiyor.",
+        "rule": "{{city}} formasını giymiş (herhangi bir sezon) bir oyuncun olsun."
+      },
+      "international-flavor": {
+        "title": "Uluslararası lezzet",
+        "story": "Lig denizaşırı büyüyor ve {{owner}} bu işin içinde olmak istiyor.",
+        "rule": "2 uluslararası oyuncun olsun."
+      },
+      "time-machine": {
+        "title": "Zaman makinesi",
+        "story": "{{owner}} nostalji düşkünü.",
+        "rule": "1990'dan önceki bir sezondan bir oyuncun olsun."
+      },
+      "no-superteams": {
+        "title": "Süper takım yok",
+        "story": "Lig ofisi izliyor.",
+        "rule": "Sonraki kartta reytingi 95+ olan en fazla bir oyuncun olsun."
+      },
+      "division-crown": {
+        "title": "Grup tacı",
+        "story": "Şampiyonluk bayrakları bilet satar.",
+        "rule": "Grubunu kazan."
+      },
+      "home-court": {
+        "title": "Ev sahası avantajı",
+        "story": "Salon yıllardır bir playoff maçını doldurmadı.",
+        "rule": "İlk 4 sırada bitir."
+      },
+      "upset-special": {
+        "title": "Sürpriz galibiyet",
+        "story": "{{owner}}, {{city}} sahibiyle bir biftek yemeğine iddiaya girdi.",
+        "rule": "Bu sezon {{city}} takımını iki kez yen."
+      },
+      "arena-revenue": {
+        "title": "Salon geliri",
+        "story": "Sonuç ne olursa olsun biletler tükeniyor.",
+        "rule": "+{{amount}} tavan alanı."
+      },
+      "concerts": {
+        "title": "Konserler ve etkinlikler",
+        "story": "Salon maçsız her akşam dolu.",
+        "rule": "+{{amount}} tavan alanı."
+      },
+      "jersey-sponsor": {
+        "title": "Yeni forma sponsoru",
+        "story": "Bir teknoloji şirketi forma göğsünü satın alıyor.",
+        "rule": "+{{amount}} tavan alanı."
+      },
+      "tv-deal": {
+        "title": "TV anlaşması zammı",
+        "story": "{{reporter}}: ulusal yayınlı maçlar şehre geliyor.",
+        "rule": "+{{amount}} tavan alanı."
+      },
+      "buyer-interest": {
+        "title": "Alıcı ilgisi",
+        "story": "{{reporter}}: bir milyarder ortak olmak istiyor ve kulüp değeri uçuşa geçti.",
+        "rule": "+{{amount}} tavan alanı."
+      },
+      "owner-all-in": {
+        "title": "Patron hepsini ortaya koyuyor",
+        "story": "{{owner}} çek defterini açıyor.",
+        "rule": "+{{amount}} tavan alanı."
+      },
+      "playoff-gate": {
+        "title": "Playoff hasılatı",
+        "story": "Evinde playoff maçları oynanması bekleniyor.",
+        "rule": "+{{amount}} tavan alanı."
+      },
+      "luxury-bill": {
+        "title": "Lüks vergisi faturası",
+        "story": "Muhasebe bir hata buldu. Hem de büyük bir tane.",
+        "rule": "−{{amount}} tavan alanı."
+      },
+      "owner-holds": {
+        "title": "Patron parayı tutuyor",
+        "story": "{{owner}} sonuçlar düzelene kadar harcamaları donduruyor.",
+        "rule": "−{{amount}} tavan alanı, sonraki 10 maçın 6'sını kazanırsan iade."
+      },
+      "sponsor-pulls": {
+        "title": "Sponsor çekiliyor",
+        "story": "{{reporter}}: kayıplar bir sponsoru ürküttü.",
+        "rule": "−{{amount}} tavan alanı."
+      },
+      "insurance": {
+        "title": "Sakatlık sigortası",
+        "story": "Geçen yıldan sonra primler arttı.",
+        "rule": "−{{amount}} tavan alanı."
+      },
+      "tampering": {
+        "title": "Tampering cezası",
+        "story": "{{reporter}}: lig, kulüp ofisini bir menajerle konuşurken yakaladı.",
+        "rule": "−{{amount}} tavan alanı ve bir yeniden çevirme hakkını kaybedersin."
+      },
+      "roster-crunch": {
+        "title": "Kadro sıkışıklığı",
+        "story": "Dakika için çok fazla oyuncu çekişiyor.",
+        "rule": "−{{amount}} tavan alanı ve kulüp ofisindeki sonraki hamlen yedek seçeneği olmalı."
+      },
+      "arena-repairs": {
+        "title": "Salon tamiratı",
+        "story": "{{reporter}}: ulusal yayın sırasında çatı aktı.",
+        "rule": "−{{amount}} tavan alanı."
+      },
+      "fans-demand": {
+        "title": "Taraftar hamle istiyor",
+        "story": "Taraftarlar bomba bir hamle istiyor ve {{owner}} dinliyor.",
+        "rule": "+{{amount}} tavan alanı, ama sonraki karta kadar bir üst seçenek imzala (yoksa −2)."
+      },
+      "double-nothing": {
+        "title": "Ya hep ya hiç",
+        "story": "{{owner}} bütçe için yazı tura atıyor.",
+        "rule": "Yazı: +{{amount}}. Tura: −{{amount}}."
+      },
+      "golden-ticket": {
+        "title": "Altın bilet",
+        "story": "{{gm}}'in kimsenin bilmediği bir serbest oyuncusu var.",
+        "rule": "Bu serbest oyunculardan 1'ini ({{amount}}'e kadar) istediğin yere imzala."
+      },
+      "bench-option": {
+        "title": "Yedek seçeneği",
+        "story": "Sağlam bir profesyonel, kazanan bir takımda oynamak için asgari ücrete imza atıyor.",
+        "rule": "3 oyuncudan 1'ini asgari maaşla imzala."
+      },
+      "veto": {
+        "title": "Veto",
+        "story": "{{owner}} sana bir iyilik borçlu.",
+        "rule": "Herhangi bir yönetim talebini şimdi ya da sonra iptal et."
+      },
+      "free-respin": {
+        "title": "Bedava yeniden çevirme",
+        "story": "{{gm}}'in telefon listesinde yeni isimler var.",
+        "rule": "Kulüp ofisinde +1 yeniden çevirme."
+      },
+      "agent-friend": {
+        "title": "Menajer dostu",
+        "story": "Eski bir dost ligin yarısını temsil ediyor.",
+        "rule": "Kulüp ofisindeki sonraki transferin %25 daha ucuz."
+      },
+      "scout-tip": {
+        "title": "Gözlemci ipucu",
+        "story": "Gözlemcin her şeyi ilk duyar.",
+        "rule": "Sonraki durakta altı kartın ikisi açık olur."
+      },
+      "player-coach": {
+        "title": "Oyuncu-koç",
+        "story": "{{name}} huddle'ları kendisi yönetmeye başladı.",
+        "rule": "{{name}} sezon sonuna kadar +2."
+      },
+      "second-look": {
+        "title": "İkinci bakış",
+        "story": "{{owner}} bir para kararına yeniden bakmana izin veriyor.",
+        "rule": "Bir finans kartı açtığında onun yerine başka bir kart seçebilirsin."
+      },
+      "injury-bug": {
+        "title": "Sakatlık salgını",
+        "story": "{{reporter}}: {{name}} arka adalesini zorladı.",
+        "rule": "{{name}} {{games}} maç yok."
+      },
+      "coach-fired": {
+        "title": "Koç kovuldu",
+        "story": "{{owner}} başantrenörü kovdu. Sıradakini seç.",
+        "rule": "Yeni bir koç seç ya da geçici koçu bedavaya tut."
+      },
+      "trade-demand": {
+        "title": "Takas talebi",
+        "story": "{{reporter}}: {{name}} gitmek istiyor.",
+        "rule": "{{name}} oyuncusunu takas son gününe kadar gönder, yoksa sezon boyunca 3 düşer."
+      },
+      "media-frenzy": {
+        "title": "Medya çılgınlığı",
+        "story": "{{reporter}}: viral bir paylaşım takımın çabasını sorguluyor.",
+        "rule": "10 maç −1 takım reytingi, sonraki 5 maçın 4'ünü kazanırsan kalkar."
+      },
+      "locker-drama": {
+        "title": "Soyunma odası kavgası",
+        "story": "{{reporter}}: {{name}} ve bir takım arkadaşı antrenmanda zor ayrıldı.",
+        "rule": "{{name}} yedeğe çekilsin (en iyi yedeğin yerine başlar) ya da 10 maç −2 al."
+      },
+      "hot-streak": {
+        "title": "Sıcak seri",
+        "story": "Takım alev alev.",
+        "rule": "10 maç +2 takım reytingi."
+      },
+      "legend-comeback": {
+        "title": "Efsane geri dönüyor",
+        "story": "{{reporter}}: emekli bir efsane bir yüzük daha istiyor.",
+        "rule": "3 efsaneden 1'ini asgari ücretle yedek yerine imzala."
+      },
+      "midseason-miracle": {
+        "title": "Sezon ortası mucizesi",
+        "story": "{{name}} spor salonunda bir şey buldu.",
+        "rule": "{{name}} sezon sonuna kadar +4."
+      },
+      "contract-year": {
+        "title": "Sözleşme yılı",
+        "story": "{{name}} bir sonraki sözleşmesi için oynuyor.",
+        "rule": "{{name}} sezon sonuna kadar +2."
+      },
+      "holdout": {
+        "title": "Zam grevi",
+        "story": "{{reporter}}: {{name}} zam istiyor.",
+        "rule": "Öde ({{amount}}) ya da 5 maç dışarıda otursun."
+      },
+      "rookie-wall": {
+        "title": "Çaylak duvarı",
+        "story": "{{name}} bitkin görünüyor.",
+        "rule": "10 maç −1 takım reytingi."
+      },
+      "superteam-rumor": {
+        "title": "Süper takım söylentisi",
+        "story": "{{reporter}}: {{city}} az önce bir yıldız aldı.",
+        "rule": "{{city}} sezon sonuna kadar +3 alır."
+      }
+    }
   }
 }

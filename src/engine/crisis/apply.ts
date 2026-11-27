@@ -19,7 +19,7 @@ export interface Decision {
  * Put `incoming` into the user's `slot`. If he was on an AI roster, the outgoing player takes his place there
  * (a straight swap), so every roster stays at 10 and nobody is on two teams.
  */
-function swapIn(s: SeasonState, slot: SlotId, incoming: Player): SeasonState {
+export function swapIn(s: SeasonState, slot: SlotId, incoming: Player): SeasonState {
   const teams = [...s.teams];
   const outgoing = teams[0].slots[slot];
   teams[0] = { ...teams[0], slots: reseat({ ...teams[0].slots, [slot]: incoming }) };

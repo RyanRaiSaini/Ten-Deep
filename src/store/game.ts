@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { MODE_BY_ID, POOLS, current2026, leaguePoolFor } from '../data';
-import { assignDivisions, defaultDivision, franchiseOf, layoutOf, leagueFranchises } from '../engine/conference';
+import { DIVISIONS, assignDivisions, defaultDivision, franchiseOf, layoutOf, leagueFranchises } from '../engine/conference';
 import { realLeague } from '../engine/realLeague';
 import {
   affordableSlots, fallbackPick, isComplete, pick, pickFallback, reroll, respin, spin, startDraft, type DraftState,
@@ -17,6 +17,12 @@ import { applyCard, type Decision } from '../engine/crisis/apply';
 import { boardObjective, verdict, type Objective, type Verdict } from '../engine/crisis/board';
 import { CARD_ROUNDS, drawCard, type CardId } from '../engine/crisis/deck';
 import { prepareCard, type CrisisCard } from '../engine/crisis/offers';
+import { STOPS, newBoard, type BoardEvent, type BoardState } from '../engine/board/state';
+import { arrive, resolve as resolveStop, reveal, secondLook } from '../engine/board/stop';
+import { checkDemands } from '../engine/board/rules';
+import { type Decision as BoardDecision, vetoDemand } from '../engine/board/play';
+import { respin as boardRespinOf, signOption, type MarketOption } from '../engine/board/market';
+import { boardCtx } from './boardCtx';
 import { dailySeed } from '../engine/daily';
 import { useDaily } from './daily';
 import { useWeekly } from './weekly';
@@ -45,6 +51,10 @@ export interface CrisisRun {
   resolved: number;
   pending: CrisisCard | null;
   verdict: Verdict | null;
+  /** The 72-card board (pick 1 of 6, Board Confidence, demands). Runs saved before it keep the old four cards. */
+  board?: BoardState;
+  /** What the last board move settled, for the toast on the next screen. */
+  news?: BoardEvent[];
 }
 
 export interface GameStore {
@@ -93,6 +103,16 @@ export interface GameStore {
   /** The season reached a card round: deal that card. */
   openCrisis: (season: SeasonState) => void;
   resolveCrisis: (d: Decision) => void;
+  /** Board runs: flip one of the six face-down cards. */
+  revealBoardCard: (index: number) => void;
+  /** Board runs: swap a revealed finance card (Second look perk). */
+  boardSecondLook: () => void;
+  /** Board runs: resolve the revealed card; true if it got you fired (the run jumps to the result). */
+  resolveBoard: (d: BoardDecision) => boolean;
+  /** Front office: sell the player in `slot` and sign an option; true if it got you fired. */
+  boardSign: (slot: SlotId, option: MarketOption) => boolean;
+  boardRespin: () => boolean;
+  boardVeto: (index: number) => void;
   doSpin: () => void;
   doRespin: () => void;
   /** Spend a shop reroll on this spin (not in the Daily Draft or a friend's race, where everyone gets the same spins). */
@@ -112,6 +132,8 @@ export interface GameStore {
   signDeadline: (player: Player) => void;
   skipDeadline: () => void;
   beginPlayoffs: () => void;
+  /** Board Confidence hit 0: the season and playoffs play out without you and the run ends fired. */
+  fireGm: () => void;
   playoffGame: () => void;
   simPlayoffs: () => void;
   finish: () => void;
@@ -123,6 +145,16 @@ const pool = (id: string) => POOLS[id];
 let byName: Map<string, string> | null = null;
 const franchiseByName = (name: string) =>
   (byName ??= new Map([...pool('all-time').teams, ...current2026.teams].map((t) => [`${t.city} ${t.name}`, franchiseOf(t)]))).get(name);
+/**
+ * The board has the last word: fired if confidence hit 0; a shaky board (3 or less) knocks the verdict down a step,
+ * except a title.
+ */
+function boardVerdict(v: Verdict, b?: BoardState): Verdict {
+  if (!b) return v;
+  if (b.firedAt !== undefined || b.confidence <= 0) return 'fired';
+  if (b.confidence <= 3 && v !== 'legend') return v === 'extended' ? 'survived' : 'fired';
+  return v;
+}
 const newSeed = () => `${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
 
 export const useGame = create<GameStore>()(
@@ -241,8 +273,10 @@ export const useGame = create<GameStore>()(
         const [u, ...rest] = get().career ? withSignedSalaries(teams) : teams;
         const season = createSeason(u, rest, draft.seed, divs);
         if (get().crisis) {
-          const withStops = { ...season, stops: CARD_ROUNDS.slice(1) };
-          set({ season: withStops, crisis: { ...get().crisis!, objective: boardObjective(withStops) } });
+          // Your team takes the place of the franchise your division left out (any of its teams in an odd league).
+          const home = DIVISIONS[division].franchises.find((f) => !franchises.includes(f)) ?? DIVISIONS[division].franchises[0];
+          const withStops = { ...season, stops: STOPS.slice(1) };
+          set({ season: withStops, crisis: { ...get().crisis!, objective: boardObjective(withStops), board: newBoard(home) } });
           get().openCrisis(withStops);
         } else set({ phase: 'season', season });
       },
@@ -257,17 +291,25 @@ export const useGame = create<GameStore>()(
         const chosen = get().division;
         const divs = assignDivisions(teams.map((t) => t.franchise ?? franchiseByName(t.name)), chosen !== null && layoutOf(chosen) === 'modern' ? chosen : defaultDivision(seed));
         const season = {
-          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), stops: CARD_ROUNDS.slice(1),
+          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), stops: STOPS.slice(1),
           ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
         };
         set({
           phase: 'season', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null,
-          season, crisis: { objective: boardObjective(season), drawn: [], resolved: 0, pending: null, verdict: null },
+          season, crisis: { objective: boardObjective(season), drawn: [], resolved: 0, pending: null, verdict: null, board: newBoard(teams[0].franchise ?? 'sac') },
         });
         get().openCrisis(season);
       },
       openCrisis: (season) => {
         const { crisis, poolId, draft } = get();
+        if (crisis?.board) {
+          const b = crisis.board;
+          if (b.stop >= STOPS.length || b.hand) return set({ season, ...(b.hand ? { phase: 'crisis' as const } : {}) });
+          const step = arrive(b, boardCtx(poolId, season));
+          set({ season: step.season, phase: 'crisis', crisis: { ...crisis, board: step.board, news: step.events } });
+          if (step.board.firedAt !== undefined) get().fireGm();
+          return;
+        }
         if (!crisis || crisis.resolved >= CARD_ROUNDS.length) return set({ season });
         const slot = crisis.resolved;
         const id = drawCard(draft?.seed ?? season.seed, slot, crisis.drawn);
@@ -283,6 +325,44 @@ export const useGame = create<GameStore>()(
             crisis: { ...s.crisis, pending: null, resolved: s.crisis.resolved + 1 },
           };
         }),
+
+      revealBoardCard: (index) =>
+        set((s) => (s.crisis?.board && s.season ? { crisis: { ...s.crisis, board: reveal(s.crisis.board, index, boardCtx(s.poolId, s.season)) } } : {})),
+      boardSecondLook: () =>
+        set((s) => (s.crisis?.board && s.season ? { crisis: { ...s.crisis, board: secondLook(s.crisis.board, boardCtx(s.poolId, s.season)) } } : {})),
+      resolveBoard: (d) => {
+        const { crisis, season, poolId } = get();
+        if (!crisis?.board?.picked || !season) return false;
+        const step = resolveStop(crisis.board, d, boardCtx(poolId, season));
+        set({ season: step.season, phase: 'season', crisis: { ...crisis, board: step.board, news: step.events } });
+        if (step.board.firedAt === undefined) return false;
+        get().fireGm();
+        return true;
+      },
+      boardSign: (slot, option) => {
+        const { crisis, season, poolId } = get();
+        if (!crisis?.board || !season) return false;
+        const signed = signOption(season, crisis.board, slot, option);
+        const step = checkDemands(signed.board, { ...boardCtx(poolId, signed.season) });
+        set({ season: step.season, crisis: { ...crisis, board: step.board, news: step.events } });
+        if (step.board.firedAt === undefined) return false;
+        get().fireGm();
+        return true;
+      },
+      boardRespin: () => {
+        const { crisis } = get();
+        const b = crisis?.board && boardRespinOf(crisis.board);
+        if (!b) return false;
+        set({ crisis: { ...crisis!, board: b } });
+        return true;
+      },
+      boardVeto: (index) => set((s) => (s.crisis?.board ? { crisis: { ...s.crisis, board: vetoDemand(s.crisis.board, index) } } : {})),
+      fireGm: () => {
+        // Fired mid-season: an interim GM plays out the year, then straight to the verdict.
+        get().beginPlayoffs();
+        get().simPlayoffs();
+        get().finish();
+      },
 
       setSeason: (season) => set({ season }),
       doBenchSwitch: (bench, starter) => {
@@ -314,8 +394,15 @@ export const useGame = create<GameStore>()(
       // Finish whatever is left of the season (advance pauses at the deadline, so step past it) and seed the bracket.
       beginPlayoffs: () =>
         set((s) => {
-          const done = advance(advance({ ...s.season!, deadlineUsed: true }, 82), 82);
-          return { phase: 'playoffs', season: done, playoffs: startPlayoffs(done), stake: null };
+          let done = advance(advance({ ...s.season!, deadlineUsed: true, stops: [] }, 82), 82);
+          // The regular season is over: every board demand left is settled now.
+          let crisis = s.crisis;
+          if (crisis?.board && crisis.board.firedAt === undefined) {
+            const step = checkDemands(crisis.board, boardCtx(s.poolId, done), true);
+            done = step.season;
+            crisis = { ...crisis, board: step.board, news: step.events };
+          }
+          return { phase: 'playoffs', season: done, playoffs: startPlayoffs(done), stake: null, crisis };
         }),
       playoffGame: () => set((s) => ({ playoffs: playNextGame(s.playoffs!) })),
       simPlayoffs: () => set((s) => ({ playoffs: simPlayoffsToEnd(s.playoffs!) })),
@@ -339,7 +426,7 @@ export const useGame = create<GameStore>()(
           useWeekly.getState().update(weekly, { result: { w: o.wins, l: o.losses, depth: depthOf(o), sr: Math.round(squadRating(playoffs.season.teams[0])) } });
           void useWeekly.getState().submit(weekly);
         }
-        const v = crisis?.objective ? verdict(crisis.objective, playoffs.season, playoffs) : null;
+        const v = crisis?.objective ? boardVerdict(verdict(crisis.objective, playoffs.season, playoffs), crisis.board) : null;
         if (crisis?.objective) set({ crisis: { ...crisis, verdict: v } });
         set({ phase: 'result' });
         const mine = playoffs.rounds.flat().filter((s) => s.hi === 0 || s.lo === 0);

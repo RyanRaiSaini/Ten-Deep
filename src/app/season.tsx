@@ -23,6 +23,12 @@ import { BoxScore, Expandable, NewsItem } from '../ui/story';
 import { Icon } from '../ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { CRISIS_ICON } from '../ui/gameIcons';
+import { STOPS } from '../engine/board/state';
+import { cardOf } from '../engine/board/cards';
+import { BoardPanel } from '../ui/board/BoardPanel';
+import { KIND_ICON } from '../ui/board/text';
+import { boardCtx } from '../store/boardCtx';
+import { moneyScaleFor } from '../data/modes';
 
 const BASE_TICK_MS = 120;
 
@@ -38,7 +44,11 @@ function SeasonScreen() {
 
   const atDeadline = !!season && season.round === DEADLINE_GAME && !season.deadlineUsed;
   const crisis = g.crisis;
-  const atCard = !!season && !!crisis && crisis.resolved > 0 && season.round === CARD_ROUNDS[crisis.resolved];
+  const board = crisis?.board;
+  // Board runs stop at STOPS (the preseason one is dealt before the first game); older runs at the four card rounds.
+  const atCard = !!season && !!crisis && (board
+    ? board.stop > 0 && board.stop < STOPS.length && season.round === STOPS[board.stop] && board.firedAt === undefined
+    : crisis.resolved > 0 && season.round === CARD_ROUNDS[crisis.resolved]);
   const over = !!season && season.round >= SEASON_GAMES;
 
   // Tick one game at a time at the chosen sim speed.
@@ -123,7 +133,19 @@ function SeasonScreen() {
           <View style={[styles.progressFill, { width: `${(season.round / SEASON_GAMES) * 100}%` }]} />
           <View style={[styles.deadlineMark, { [isRTL(i18n.language) ? "right" : "left"]: `${(DEADLINE_GAME / SEASON_GAMES) * 100}%` }]} />
         </View>
-        {crisis?.objective && (
+        {crisis?.objective && board && (
+          <View style={styles.crisisRow}>
+            <Text style={styles.crisisGoal}>{t(`crisis.obj_${crisis.objective.tier}`)}</Text>
+            <View style={styles.crisisIcons}>
+              {STOPS.map((_, i) => (
+                <View key={i} style={[styles.crisisSlot, i >= board.stop && { opacity: 0.35 }]}>
+                  <Icon name={board.played[i] ? KIND_ICON[cardOf(board.played[i].id).kind] : 'lock'} size={18} />
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+        {crisis?.objective && !board && (
           <View style={styles.crisisRow}>
             <Text style={styles.crisisGoal}>{t(`crisis.obj_${crisis.objective.tier}`)}</Text>
             <View style={styles.crisisIcons}>
@@ -157,6 +179,11 @@ function SeasonScreen() {
         <Button label={t('playoffs.title')} icon={<Icon name="trophy" size={22} />} variant="gold" onPress={() => { g.beginPlayoffs(); router.replace('/playoffs'); }} testID="to-playoffs" />
       )}
 
+      {board && (
+        <BoardPanel board={board} ctx={boardCtx(g.poolId, season)} scale={moneyScaleFor(g.poolId)} news={crisis?.news}
+          onVeto={(i) => g.boardVeto(i)}
+          onOffice={() => { setPlaying(false); if (live.current) useGame.getState().setSeason(live.current); router.push('/office'); }} />
+      )}
       {(season.news?.length ?? 0) > 0 && (
         <Card style={{ gap: 8 }} testID="news">
           <Label color={C.hardwood}>{t('news.title')}</Label>

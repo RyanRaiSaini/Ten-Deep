@@ -25,6 +25,7 @@ import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, S } from '../ui/theme';
 import { AWARDS, awardRace, teamLeaders } from '../engine/story/leaders';
 import { Icon } from '../ui/icons';
+import { CAST } from '../engine/board/cards';
 import { shareText } from '../ui/share';
 import { useProfile } from '../store/profile';
 import { runShareText } from '../engine/share';
@@ -109,7 +110,19 @@ function ResultScreen() {
               {t(`crisis.v_${g.crisis.verdict}`)}
             </Text>
             <Text style={styles.verdictSub}>{t('crisis.objective')}: {t(`crisis.obj_${g.crisis.objective.tier}`)}</Text>
-            <Text style={styles.verdictSub}>{g.crisis.drawn.map((id) => t(`crisis.cards.${id}.title`)).join('  ·  ')}</Text>
+            {g.crisis.board ? (
+              <>
+                {g.crisis.board.firedAt !== undefined && (
+                  <Text style={styles.verdictSub} testID="board-fired">
+                    {t('board.fired', { g: g.crisis.board.firedAt })}. {t('board.firedSub', { owner: CAST.owner })}
+                  </Text>
+                )}
+                <Text style={styles.verdictSub} testID="board-final">{t('board.finalConfidence', { n: g.crisis.board.confidence })}</Text>
+                <Text style={styles.verdictSub}>{t('board.recap')}: {g.crisis.board.played.map((p) => t(`board.c.${p.id}.title`)).join('  ·  ')}</Text>
+              </>
+            ) : (
+              <Text style={styles.verdictSub}>{g.crisis.drawn.map((id) => t(`crisis.cards.${id}.title`)).join('  ·  ')}</Text>
+            )}
           </View>
         )}
       </View>

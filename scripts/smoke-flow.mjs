@@ -203,7 +203,7 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('13-daily-hub');
   });
 
-  await step('management crisis: 4 cards, deadline, playoffs, board verdict', async () => {
+  await step('management crisis: 7 board stops, front office, deadline, playoffs, verdict', async () => {
     await page.goto(base);
     await page.getByTestId('mode-crisis').click();
     await page.getByTestId('crisis-head').waitFor();
@@ -212,13 +212,16 @@ export async function runFlow({ page, base, step, shot }) {
     await draftTen(page);
     await page.getByTestId('division-atlantic').click();
     await page.getByTestId('start-season').click();
-    const cards = await playCrisisSeason(page, shot);
-    if (cards !== 4) throw new Error(`expected 4 crisis cards, saw ${cards}`);
-    await shot('19-crisis-season');
-    await page.getByTestId('to-playoffs').click();
-    await page.getByTestId('playoff-sim').click();
-    await page.getByTestId('see-result').click();
+    const { cards, fired } = await playCrisisSeason(page, shot);
+    if (!fired && cards !== 7) throw new Error(`expected 7 board stops, saw ${cards}`);
+    if (!fired) {
+      await shot('19-crisis-season');
+      await page.getByTestId('to-playoffs').click();
+      await page.getByTestId('playoff-sim').click();
+      await page.getByTestId('see-result').click();
+    }
     await page.getByTestId('crisis-verdict').waitFor({ timeout: 10000 });
+    await page.getByTestId('board-final').waitFor();
     await shot('20-crisis-verdict');
   });
 
@@ -229,10 +232,12 @@ export async function runFlow({ page, base, step, shot }) {
     await draftTen(page);
     await page.getByTestId('division-atlantic').click();
     await page.getByTestId('start-season').click();
-    await playCrisisSeason(page);
-    await page.getByTestId('to-playoffs').click();
-    await page.getByTestId('playoff-sim').click();
-    await page.getByTestId('see-result').click();
+    const career = await playCrisisSeason(page);
+    if (!career.fired) {
+      await page.getByTestId('to-playoffs').click();
+      await page.getByTestId('playoff-sim').click();
+      await page.getByTestId('see-result').click();
+    }
     await page.getByTestId('career-continue').click();
     if (await page.getByTestId('career-over').count()) return; // fired in year one is a legit ending
     await page.getByTestId('off-contracts').waitFor();
@@ -269,7 +274,7 @@ export async function runFlow({ page, base, step, shot }) {
     }
     await shot('23-offseason-fa');
     await page.getByTestId('off-start').click();
-    await page.getByTestId('crisis-card').waitFor({ timeout: 10000 });
+    await page.getByTestId('board-hand').waitFor({ timeout: 10000 });
     await page.goto(`${base}/career`);
     await page.getByText('Season 2').waitFor({ timeout: 5000 });
     await page.getByText('2026-27').first().waitFor();
@@ -441,28 +446,55 @@ async function draftTen(page) {
   }
 }
 
-/** From the first crisis card to the end of the regular season; returns how many cards were played. */
+/**
+ * From the first board stop to the end of the regular season: pick a face-down card at each stop and make its call.
+ * Returns how many cards were played, and whether the board fired you (the run jumps to the verdict).
+ */
 async function playCrisisSeason(page, shot) {
   let cards = 0;
-  for (let guard = 0; guard < 40; guard++) {
-    await page.locator('[data-testid="crisis-card"], [data-testid="skip-deadline"], [data-testid="skip-playoffs"], [data-testid="deadline-skip"], [data-testid="to-playoffs"]').first().waitFor({ timeout: 15000 });
-    if (await page.getByTestId('crisis-card').count()) {
+  let office = false;
+  for (let guard = 0; guard < 60; guard++) {
+    await page.locator('[data-testid="board-hand"], [data-testid="board-reveal"], [data-testid="skip-deadline"], [data-testid="skip-playoffs"], [data-testid="deadline-skip"], [data-testid="to-playoffs"], [data-testid="crisis-verdict"]').first().waitFor({ timeout: 15000 });
+    if (await page.getByTestId('crisis-verdict').count()) return { cards, fired: true };
+    if (await page.getByTestId('board-hand').count()) {
+      if (cards === 0 && shot) await shot('18-board-hand');
+      await page.getByTestId(`board-card-${cards % 6}`).click();
+      await page.getByTestId('board-reveal').waitFor();
       cards++;
-      if (cards === 1 && shot) { await page.waitForTimeout(600); await shot('18-crisis-card'); }
-      if (await page.getByTestId('crisis-option-a').count()) { await page.getByTestId('crisis-option-a').click(); continue; }
-      const offers = page.getByTestId('crisis-offer');
+      if (cards === 1 && shot) { await page.waitForTimeout(1200); await shot('18-crisis-card'); }
+      const option = page.locator('[data-testid^="board-option-"]');
+      if (await option.count()) { await option.first().click(); continue; }
+      const offers = page.getByTestId('board-offer');
       if (await offers.count()) await offers.first().click();
-      const accept = page.getByTestId('crisis-accept');
+      const confirm = page.getByTestId('board-confirm');
       for (const slot of SLOTS) {
-        if (await accept.isEnabled()) break;
+        if (await confirm.isEnabled()) break;
         await page.getByTestId(`slot-${slot}`).last().click();
       }
-      await accept.click();
-    } else if (await page.getByTestId('deadline-skip').count()) await page.getByTestId('deadline-skip').click();
+      await confirm.click();
+      continue;
+    }
+    if (!office && (await page.getByTestId('board-office').count())) {
+      // The front office: sell the last bench player and sign the minimum bench option.
+      office = true;
+      await page.getByTestId('board-office').click();
+      await page.getByTestId('office-room').waitFor();
+      await page.getByTestId('office-sell-B5').click();
+      await page.getByTestId('office-budget').waitFor();
+      if (shot) await shot('19b-front-office');
+      const bench = page.getByTestId('office-sign-bench');
+      if ((await bench.count()) && (await bench.isEnabled())) await bench.click();
+      if (await page.getByTestId('crisis-verdict').count()) return { cards, fired: true };
+      await page.locator('[data-testid="back"]:visible').last().click();
+      await page.getByTestId('board-panel').waitFor();
+      await page.getByTestId('season-pause').click();
+      continue;
+    }
+    if (await page.getByTestId('deadline-skip').count()) await page.getByTestId('deadline-skip').click();
     else if (await page.getByTestId('to-playoffs').count()) break;
     else if (await page.getByTestId('skip-deadline').count()) await page.getByTestId('skip-deadline').click();
     else await page.getByTestId('skip-playoffs').click();
     await page.waitForTimeout(200);
   }
-  return cards;
+  return { cards, fired: false };
 }

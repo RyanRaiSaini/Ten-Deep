@@ -17,6 +17,7 @@ import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, R, S } from '../ui/theme';
 import { CRISIS_ICON } from '../ui/gameIcons';
 import { Icon } from '../ui/icons';
+import { BoardStop } from '../ui/board/BoardStop';
 
 const RARITY_COLOR: Record<Rarity, string> = { good: C.neon, bad: C.danger, legendary: C.gold };
 const native = Platform.OS !== 'web';
@@ -150,7 +151,8 @@ function CrisisScreen() {
 /** Waits for the full history when this run needs it (an era, All-Time, a franchise, Crisis, Career). */
 export default function Crisis() {
   const needs = useGame((s) => runNeedsHistory(s));
-  return <HistoryGate when={needs}><CrisisScreen /></HistoryGate>;
+  const board = useGame((s) => !!s.crisis?.board);
+  return <HistoryGate when={needs}>{board ? <BoardStop /> : <CrisisScreen />}</HistoryGate>;
 }
 
 const styles = StyleSheet.create({
