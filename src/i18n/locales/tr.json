@@ -1722,5 +1722,30 @@
     "auto": "Kalanını otomatik draft et",
     "doneTitle": "Draft bitti",
     "startSeason": "1. sezonu başlat"
+  },
+  "partyTk": {
+    "create": "Devralma odası oluştur",
+    "createHint": "Herkes aynı gerçek takımı devralır ve aynı anda yeniden kurar: aynı seçenekler, 3-2-1 açılışlar, teklif savaşları.",
+    "lobby": "Herkes devralıyor",
+    "lobbyDesc": "Aynı kadro, aynı bütçe. Pozisyon pozisyon yeniden kurun; en iyi kuran sezonu kazanır.",
+    "position": "{{slot}} · pozisyon {{n}} / {{total}}",
+    "rebuilding": "Hepiniz yeniden kuruyorsunuz",
+    "budget": "Bütçe {{budget}} · bu pozisyon için en fazla {{max}}",
+    "yourPlayer": "Senin {{slot}}",
+    "keep": "Tut",
+    "go": "Peşine düş · {{pay}}",
+    "locked": "Kilitlendi. {{n}} kişi bekleniyor…",
+    "choices": "Herkesin kararı",
+    "kept": "Oyuncusunu tuttu",
+    "bidIn": "Teklif verildi. Diğerleri bekleniyor…",
+    "war": "{{name}} için teklif savaşı!",
+    "warHint": "Kör teklif ver: en az {{min}}, en fazla {{max}}. En yüksek teklif onu bu fiyata imzalar.",
+    "placeBid": "Teklifimi ver",
+    "watchWar": "Bir teklif savaşı sürüyor…",
+    "lastSpot": "Son pozisyon: {{slot}}",
+    "signed": "{{name}} oyuncusunu {{pay}} karşılığında imzaladı",
+    "outbid": "{{bid}} ile geride kaldı",
+    "payroll": "Maaş listesi {{pay}}",
+    "err": "Olmadı. Tekrar dene."
   }
 }

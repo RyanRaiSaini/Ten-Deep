@@ -1727,5 +1727,30 @@
     "auto": "Draft automatico per il resto",
     "doneTitle": "Il draft è finito",
     "startSeason": "Inizia la stagione 1"
+  },
+  "partyTk": {
+    "create": "Crea una stanza Acquisizione",
+    "createHint": "Tutti rilevano la stessa vera squadra e la ricostruiscono insieme: stesse opzioni, rivelazioni 3-2-1, guerre d'asta.",
+    "lobby": "Tutti rilevano",
+    "lobbyDesc": "Stesso roster, stesso budget. Ricostruitelo ruolo per ruolo: chi costruisce meglio vince la stagione.",
+    "position": "{{slot}} · ruolo {{n}} di {{total}}",
+    "rebuilding": "State ricostruendo tutti",
+    "budget": "Budget {{budget}} · fino a {{max}} per questo ruolo",
+    "yourPlayer": "Il tuo {{slot}}",
+    "keep": "Tienilo",
+    "go": "Vai su di lui · {{pay}}",
+    "locked": "Confermato. In attesa di {{n}}…",
+    "choices": "La scelta di tutti",
+    "kept": "Ha tenuto il suo giocatore",
+    "bidIn": "Offerta inviata. In attesa degli altri…",
+    "war": "Guerra d'asta per {{name}}!",
+    "warHint": "Offri alla cieca: minimo {{min}}, massimo {{max}}. L'offerta più alta lo firma a quel prezzo.",
+    "placeBid": "Fai la mia offerta",
+    "watchWar": "È in corso una guerra d'asta…",
+    "lastSpot": "Ultimo ruolo: {{slot}}",
+    "signed": "ha firmato {{name}} per {{pay}}",
+    "outbid": "superato con {{bid}}",
+    "payroll": "Monte ingaggi {{pay}}",
+    "err": "Non è andata. Riprova."
   }
 }

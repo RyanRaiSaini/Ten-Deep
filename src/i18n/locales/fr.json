@@ -1727,5 +1727,30 @@
     "auto": "Drafter le reste automatiquement",
     "doneTitle": "La draft est terminée",
     "startSeason": "Lancer la saison 1"
+  },
+  "partyTk": {
+    "create": "Créer une salle Rachat",
+    "createHint": "Tout le monde rachète la même vraie équipe et la reconstruit en même temps : mêmes options, révélations 3-2-1, guerres d'enchères.",
+    "lobby": "Tout le monde rachète",
+    "lobbyDesc": "Même effectif, même budget. Reconstruisez-le poste par poste ; le meilleur bâtisseur gagne la saison.",
+    "position": "{{slot}} · poste {{n}} sur {{total}}",
+    "rebuilding": "Vous reconstruisez tous",
+    "budget": "Budget {{budget}} · jusqu'à {{max}} pour ce poste",
+    "yourPlayer": "Ton {{slot}}",
+    "keep": "Le garder",
+    "go": "Foncer · {{pay}}",
+    "locked": "Validé. En attente de {{n}}…",
+    "choices": "Les choix de tous",
+    "kept": "A gardé son joueur",
+    "bidIn": "Enchère placée. On attend les autres…",
+    "war": "Guerre d'enchères pour {{name}} !",
+    "warHint": "Enchérissez à l'aveugle : au moins {{min}}, au plus {{max}}. La plus haute enchère le signe à ce prix.",
+    "placeBid": "Placer mon enchère",
+    "watchWar": "Une guerre d'enchères est en cours…",
+    "lastSpot": "Dernier poste : {{slot}}",
+    "signed": "a signé {{name}} pour {{pay}}",
+    "outbid": "surenchéri à {{bid}}",
+    "payroll": "Masse salariale {{pay}}",
+    "err": "Ça n'a pas marché. Réessaie."
   }
 }
