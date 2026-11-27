@@ -81,8 +81,6 @@ export const ACHIEVEMENTS: Achievement[] = [
   a('bragging-rights', '🗣️', 'friendWins', 10, 'silver'),
   a('nemesis', '😈', 'friendWins', 50, 'gold'),
   a('clean-sweep', '🧹', 'friendSweeps', 1, 'silver'),
-  a('all-in', '🎲', 'allInTitles', 1, 'silver'),
-  a('high-roller', '💰', 'allInTitles', 5, 'gold'),
   a('climber', '🧗', 'promotions', 1, 'bronze'),
   a('legend-tier', '🏆', 'leagueBest', 9, 'gold'),
   a('lucky-tap', '🍀', 'pickUpgrades', 1, 'bronze'),
