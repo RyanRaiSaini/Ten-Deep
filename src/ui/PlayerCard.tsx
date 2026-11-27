@@ -4,6 +4,7 @@ import { contractType, payOf } from '../engine/cap';
 import type { Player, SlotId } from '../engine/types';
 import { Icon } from './icons';
 import { Text } from './Text';
+import { flagOf, nationOf } from '../data/nation';
 import { C, FONT, R, S } from './theme';
 import { useMoney } from './MoneyScale';
 import { posLabel } from '../engine/types';
@@ -62,8 +63,8 @@ export function PlayerCard({
         </View>
         <View style={{ flex: 1, gap: 1 }}>
           <Text style={styles.name} numberOfLines={1}>{player.name}</Text>
-          <Text style={styles.meta} numberOfLines={1}>
-            {posLabel(player)}{player.age ? ` · ${player.age}y` : ''}
+          <Text style={styles.meta} numberOfLines={1} testID="player-meta">
+            <Text accessibilityLabel={nationOf(player)}>{flagOf(nationOf(player))}</Text> {posLabel(player)}{player.age ? ` · ${player.age}y` : ''}
           </Text>
           {note && <Text style={styles.note} numberOfLines={1}>{note}</Text>}
         </View>

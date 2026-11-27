@@ -5,39 +5,48 @@ import { squadRating } from './rotation';
 
 /**
  * Difficulty guardrails (owner's targets, against the real 2026-27 rosters), by Squad Rating:
- *   96 → about 77 wins and the only level where 82-0 happens · 93 → about 70 · 90 → about 62 · 88 → about 55
- *   85 → about 50. Titles take a 95+ squad: about half the time at 96, a third at 95, one in ten at 93, almost
- *   never below 92.
- * Checked two ways: the same drafted squads moved to each level, and real star-heavy drafts as they come (a squad
- * of two stars and a cheap bench must play like its number). Every AI league is levelled to the same strength
- * (SIM.leagueSr), so the eras follow the same curve. If a change breaks these, retune src/engine/simConfig.ts.
+ *   96 → about 80 wins and a ~70% title · 95 → about 78, ~50% · 94 → about 75, ~35% · 93 → about 70, ~15%
+ *   92 → about 67, ~9% · 90 → about 60 · 85 → about 50, almost never a title. The very top pulls away: few players
+ *   are rated that high, so a 95 is a different animal from a 93.
+ * Checked two ways: the same drafted squads moved to each level (ratings stop at 99, so the last of a 95+ is a team
+ * rating), and real star-heavy drafts as they come (a squad of two stars and a cheap bench must play like its
+ * number). Every AI league is levelled to the same strength (SIM.leagueSr), so the eras follow the same curve. If a
+ * change breaks these, retune src/engine/simConfig.ts.
  */
 const N = 40;
 const bases = Array.from({ length: N }, (_, i) => goodDraft(current2026, `cal-${i}`));
 const at = (sr: number) => runSeasons((i) => atSquadRating(bases[i % N], sr), current2026, N, `cal-sr${sr}`);
 
 describe('calibration (2026 pool, real rosters)', () => {
-  it('Squad Rating 96: about 77 wins, and 82-0 is possible', () => {
+  it('Squad Rating 96: about 80 wins, a title most of the time, and 82-0 is possible', () => {
     const r = at(96);
-    expect(r.avg).toBeGreaterThanOrEqual(73);
+    expect(r.avg).toBeGreaterThanOrEqual(76);
+    expect(r.avg).toBeLessThanOrEqual(82);
+    expect(r.titleRate).toBeGreaterThanOrEqual(0.55);
+    expect(r.perfect).toBeGreaterThan(0);
+  }, 120_000);
+
+  it('Squad Rating 95: about 78 wins, a coin flip for the title', () => {
+    const r = at(95);
+    expect(r.avg).toBeGreaterThanOrEqual(74);
     expect(r.avg).toBeLessThanOrEqual(81);
-    expect(r.titleRate).toBeGreaterThan(0.35);
+    expect(r.titleRate).toBeGreaterThanOrEqual(0.3);
+    expect(r.titleRate).toBeLessThanOrEqual(0.7);
   }, 120_000);
 
-  it('Squad Rating 93: about 70 wins, never 82-0', () => {
+  it('Squad Rating 93: about 70 wins, titles about one in seven', () => {
     const r = at(93);
-    expect(r.avg).toBeGreaterThanOrEqual(65);
-    expect(r.avg).toBeLessThanOrEqual(74);
-    expect(r.perfect).toBe(0);
-    expect(r.titleRate).toBeLessThanOrEqual(0.2);
+    expect(r.avg).toBeGreaterThanOrEqual(67);
+    expect(r.avg).toBeLessThanOrEqual(75);
+    expect(r.titleRate).toBeLessThanOrEqual(0.3);
   }, 120_000);
 
-  it('Squad Rating 90: about 62 wins, titles rare', () => {
+  it('Squad Rating 90: about 60 wins, titles rare', () => {
     const r = at(90);
-    expect(r.avg).toBeGreaterThanOrEqual(57);
-    expect(r.avg).toBeLessThanOrEqual(65);
+    expect(r.avg).toBeGreaterThanOrEqual(56);
+    expect(r.avg).toBeLessThanOrEqual(64);
     expect(r.perfect).toBe(0);
-    expect(r.titleRate).toBeLessThanOrEqual(0.05);
+    expect(r.titleRate).toBeLessThanOrEqual(0.08);
   }, 120_000);
 
   it('Squad Rating 85: about 50 wins, almost never a title', () => {
@@ -78,7 +87,7 @@ describe('calibration (2026 pool, real rosters)', () => {
     const { MODE_BY_ID } = await import('../data/modes');
     const allTime = MODE_BY_ID['all-time'].pool;
     const r = runSeasons(bestRoster(allTime, 40), allTime, 20, 'cal-alltime');
-    expect(r.avg).toBeGreaterThanOrEqual(66);
+    expect(r.avg).toBeGreaterThanOrEqual(60); // the AI's legend contenders get the top-end bonus too
     expect(r.perfect).toBeLessThanOrEqual(3);
   }, 180_000);
 });
