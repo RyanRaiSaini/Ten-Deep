@@ -414,7 +414,8 @@
     "end": "Terminer la carrière",
     "endSure": "Touche encore : cette carrière sera définitivement terminée",
     "payroll": "Masse salariale après prolongations : {{pay}} (plafond {{cap}} · apron {{apron}})",
-    "overApron": "Au-dessus de l’apron : impossible"
+    "overApron": "Au-dessus de l’apron : impossible",
+    "retiredLeague": "Retraites dans la ligue"
   },
   "collect": {
     "title": "Collection",

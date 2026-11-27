@@ -33,6 +33,8 @@ function OffseasonScreen() {
   const user = st.teams[0];
   const mineIds = new Set(st.changes.map((x) => x.id));
   const retiredMine = st.retired.filter((p) => mineIds.has(p.id));
+  // The league's notable retirements this offseason (the best players to hang it up), so you see the old guard go.
+  const retiredLeague = st.retired.filter((p) => !mineIds.has(p.id) && p.ovr >= 78).sort((a, b) => b.ovr - a.ovr).slice(0, 8);
 
   // --- Step 1: development + contracts ------------------------------------------------------------
   if (c.step === 'expiring') {
@@ -61,6 +63,11 @@ function OffseasonScreen() {
         </Card>
         {retiredMine.length > 0 && (
           <Text style={styles.retired}>{t('career.retired')}: {retiredMine.map((p) => p.name).join(', ')}</Text>
+        )}
+        {retiredLeague.length > 0 && (
+          <Text style={styles.retiredLeague} testID="retired-league">
+            {t('career.retiredLeague')}: {retiredLeague.map((p) => `${p.name} (${p.age})`).join(', ')}
+          </Text>
         )}
         {expiring.length > 0 && (
           <>
@@ -186,4 +193,5 @@ const styles = StyleSheet.create({
   changeName: { color: C.text, flex: 1, fontWeight: '700' },
   delta: { fontWeight: '900', width: 96, textAlign: 'right' },
   retired: { color: C.gold, fontWeight: '700' },
+  retiredLeague: { color: C.muted, fontWeight: '700', fontSize: 13 },
 });

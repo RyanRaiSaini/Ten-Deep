@@ -411,7 +411,8 @@
     "end": "Carrière beëindigen",
     "endSure": "Tik nog eens: deze carrière stopt voorgoed",
     "payroll": "Salarissom na verlengen: {{pay}} (cap {{cap}} · apron {{apron}})",
-    "overApron": "Boven de apron: kan niet verlengen"
+    "overApron": "Boven de apron: kan niet verlengen",
+    "retiredLeague": "Gestopt in de competitie"
   },
   "collect": {
     "title": "Collectie",

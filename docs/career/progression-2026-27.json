@@ -23,19 +23,13 @@
    "38": -2.8,
    "39": -3,
    "40": -3.2
-  },
-  "sd": {
-   "19-22": 3.2,
-   "23-24": 2.7,
-   "25-29": 2.2,
-   "30-32": 2.4,
-   "33+": 2.8
   }
  },
  "players": [
   {
    "name": "Giannis Antetokounmpo",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "PF/C",
    "age": 31,
    "ovr": 98,
@@ -62,6 +56,7 @@
   {
    "name": "Luka Dončić",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 27,
    "ovr": 98,
@@ -88,6 +83,7 @@
   {
    "name": "Shai Gilgeous-Alexander",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 28,
    "ovr": 98,
@@ -114,29 +110,30 @@
   {
    "name": "Victor Wembanyama",
    "team": "San Antonio Spurs",
+   "outlook": "elite",
    "pos": "C",
    "age": 22,
    "ovr": 98,
    "rookie": false,
    "dur": 70,
-   "improveChance": 58,
+   "improveChance": 94,
    "progression": {
     "low": 1,
     "avg": 1,
     "max": 1
    },
    "regression": {
-    "low": -1,
-    "avg": -2.8,
-    "max": -7
+    "low": -2,
+    "avg": -3.5,
+    "max": -6
    },
    "nextSeason": {
-    "worst": 95,
+    "worst": 99,
     "typical": 99,
     "best": 99
    },
    "peak": {
-    "low": 98,
+    "low": 99,
     "avg": 99,
     "high": 99
    }
@@ -144,6 +141,7 @@
   {
    "name": "Nikola Jokić",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "C",
    "age": 31,
    "ovr": 97,
@@ -170,36 +168,38 @@
   {
    "name": "Anthony Edwards",
    "team": "Minnesota Timberwolves",
+   "outlook": "elite",
    "pos": "SG/SF",
    "age": 25,
    "ovr": 94,
    "rookie": false,
    "dur": 80,
-   "improveChance": 46,
+   "improveChance": 95,
    "progression": {
     "low": 1,
-    "avg": 2.2,
-    "max": 5
+    "avg": 1.7,
+    "max": 4
    },
    "regression": {
-    "low": -1,
-    "avg": -2.3,
+    "low": -2,
+    "avg": -3.5,
     "max": -6
    },
    "nextSeason": {
-    "worst": 91,
-    "typical": 94,
+    "worst": 95,
+    "typical": 95,
     "best": 97
    },
    "peak": {
-    "low": 94,
-    "avg": 95,
+    "low": 95,
+    "avg": 96,
     "high": 99
    }
   },
   {
    "name": "Jalen Brunson",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "PG",
    "age": 30,
    "ovr": 94,
@@ -226,6 +226,7 @@
   {
    "name": "Jayson Tatum",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "SF/PF/SG",
    "age": 28,
    "ovr": 93,
@@ -252,6 +253,7 @@
   {
    "name": "Karl-Anthony Towns",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "C/PF",
    "age": 30,
    "ovr": 93,
@@ -278,6 +280,7 @@
   {
    "name": "Stephen Curry",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 38,
    "ovr": 93,
@@ -304,15 +307,16 @@
   {
    "name": "Cade Cunningham",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 25,
    "ovr": 92,
    "rookie": false,
    "dur": 80,
-   "improveChance": 46,
+   "improveChance": 42,
    "progression": {
     "low": 1,
-    "avg": 2.2,
+    "avg": 2.1,
     "max": 5
    },
    "regression": {
@@ -328,12 +332,13 @@
    "peak": {
     "low": 92,
     "avg": 93,
-    "high": 97
+    "high": 96
    }
   },
   {
    "name": "Donovan Mitchell",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 30,
    "ovr": 92,
@@ -360,6 +365,7 @@
   {
    "name": "Kawhi Leonard",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 35,
    "ovr": 92,
@@ -386,15 +392,16 @@
   {
    "name": "Tyrese Maxey",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "PG",
    "age": 25,
    "ovr": 92,
    "rookie": false,
    "dur": 80,
-   "improveChance": 46,
+   "improveChance": 42,
    "progression": {
     "low": 1,
-    "avg": 2.2,
+    "avg": 2.1,
     "max": 5
    },
    "regression": {
@@ -410,35 +417,36 @@
    "peak": {
     "low": 92,
     "avg": 93,
-    "high": 97
+    "high": 96
    }
   },
   {
    "name": "Cooper Flagg",
    "team": "Dallas Mavericks",
+   "outlook": "elite",
    "pos": "SF/PF/SG",
    "age": 19,
    "ovr": 91,
    "rookie": false,
    "dur": 80,
-   "improveChance": 69,
+   "improveChance": 95,
    "progression": {
     "low": 1,
-    "avg": 3,
-    "max": 6
+    "avg": 2.6,
+    "max": 7
    },
    "regression": {
     "low": -1,
-    "avg": -2.6,
+    "avg": -3.3,
     "max": -6
    },
    "nextSeason": {
-    "worst": 89,
-    "typical": 93,
-    "best": 96
+    "worst": 92,
+    "typical": 92,
+    "best": 97
    },
    "peak": {
-    "low": 93,
+    "low": 98,
     "avg": 99,
     "high": 99
    }
@@ -446,6 +454,7 @@
   {
    "name": "Devin Booker",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 29,
    "ovr": 91,
@@ -472,6 +481,7 @@
   {
    "name": "Kevin Durant",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "SF/PF/SG",
    "age": 38,
    "ovr": 91,
@@ -498,36 +508,38 @@
   {
    "name": "Alperen Şengün",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "C",
    "age": 24,
    "ovr": 90,
    "rookie": false,
    "dur": 80,
-   "improveChance": 48,
+   "improveChance": 45,
    "progression": {
     "low": 1,
-    "avg": 2.1,
-    "max": 4
+    "avg": 2.6,
+    "max": 6
    },
    "regression": {
     "low": -1,
     "avg": -2.7,
-    "max": -6
+    "max": -7
    },
    "nextSeason": {
-    "worst": 87,
+    "worst": 86,
     "typical": 90,
-    "best": 93
+    "best": 94
    },
    "peak": {
     "low": 90,
-    "avg": 92,
-    "high": 96
+    "avg": 91,
+    "high": 97
    }
   },
   {
    "name": "Jaylen Brown",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 30,
    "ovr": 90,
@@ -554,6 +566,7 @@
   {
    "name": "Anthony Davis",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "PF/C",
    "age": 33,
    "ovr": 89,
@@ -580,12 +593,13 @@
   {
    "name": "Deni Avdija",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "SF/PF/SG",
    "age": 25,
    "ovr": 89,
    "rookie": false,
    "dur": 80,
-   "improveChance": 46,
+   "improveChance": 43,
    "progression": {
     "low": 1,
     "avg": 2.2,
@@ -604,18 +618,19 @@
    "peak": {
     "low": 89,
     "avg": 90,
-    "high": 94
+    "high": 93
    }
   },
   {
    "name": "Evan Mobley",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "PF/C",
    "age": 25,
    "ovr": 89,
    "rookie": false,
    "dur": 80,
-   "improveChance": 46,
+   "improveChance": 43,
    "progression": {
     "low": 1,
     "avg": 2.2,
@@ -634,18 +649,19 @@
    "peak": {
     "low": 89,
     "avg": 90,
-    "high": 94
+    "high": 93
    }
   },
   {
    "name": "Franz Wagner",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "SF/PF/SG",
    "age": 25,
    "ovr": 89,
    "rookie": false,
    "dur": 80,
-   "improveChance": 46,
+   "improveChance": 43,
    "progression": {
     "low": 1,
     "avg": 2.2,
@@ -670,6 +686,7 @@
   {
    "name": "Jamal Murray",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "PG",
    "age": 29,
    "ovr": 89,
@@ -696,12 +713,13 @@
   {
    "name": "Scottie Barnes",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "SF/PF/PG/C",
    "age": 25,
    "ovr": 89,
    "rookie": false,
    "dur": 80,
-   "improveChance": 46,
+   "improveChance": 43,
    "progression": {
     "low": 1,
     "avg": 2.2,
@@ -709,7 +727,7 @@
    },
    "regression": {
     "low": -1,
-    "avg": -2.3,
+    "avg": -2.4,
     "max": -6
    },
    "nextSeason": {
@@ -720,12 +738,13 @@
    "peak": {
     "low": 89,
     "avg": 90,
-    "high": 94
+    "high": 93
    }
   },
   {
    "name": "LeBron James",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "SF/PF/PG",
    "age": 41,
    "ovr": 88,
@@ -752,16 +771,17 @@
   {
    "name": "Amen Thompson",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "SG/SF/PG",
    "age": 23,
    "ovr": 87,
    "rookie": false,
    "dur": 80,
-   "improveChance": 54,
+   "improveChance": 51,
    "progression": {
     "low": 1,
-    "avg": 2.2,
-    "max": 5
+    "avg": 2.7,
+    "max": 6
    },
    "regression": {
     "low": -1,
@@ -771,17 +791,18 @@
    "nextSeason": {
     "worst": 84,
     "typical": 88,
-    "best": 90
+    "best": 91
    },
    "peak": {
     "low": 87,
-    "avg": 89,
-    "high": 94
+    "avg": 90,
+    "high": 96
    }
   },
   {
    "name": "Austin Reaves",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 28,
    "ovr": 87,
@@ -808,6 +829,7 @@
   {
    "name": "Bam Adebayo",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "C/PF",
    "age": 29,
    "ovr": 87,
@@ -834,12 +856,13 @@
   {
    "name": "Jaden McDaniels",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 26,
    "ovr": 87,
    "rookie": false,
    "dur": 80,
-   "improveChance": 43,
+   "improveChance": 41,
    "progression": {
     "low": 1,
     "avg": 2.1,
@@ -864,26 +887,27 @@
   {
    "name": "Jalen Johnson",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 24,
    "ovr": 87,
    "rookie": false,
    "dur": 70,
-   "improveChance": 47,
+   "improveChance": 46,
    "progression": {
     "low": 1,
-    "avg": 2.1,
-    "max": 5
+    "avg": 2.6,
+    "max": 6
    },
    "regression": {
     "low": -1,
-    "avg": -2.7,
-    "max": -6
+    "avg": -2.8,
+    "max": -7
    },
    "nextSeason": {
     "worst": 83,
     "typical": 87,
-    "best": 90
+    "best": 91
    },
    "peak": {
     "low": 87,
@@ -894,6 +918,7 @@
   {
    "name": "Joel Embiid",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "C",
    "age": 32,
    "ovr": 87,
@@ -920,6 +945,7 @@
   {
    "name": "Kyrie Irving",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 34,
    "ovr": 87,
@@ -946,12 +972,13 @@
   {
    "name": "LaMelo Ball",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "PG",
    "age": 25,
    "ovr": 87,
    "rookie": false,
    "dur": 50,
-   "improveChance": 44,
+   "improveChance": 42,
    "progression": {
     "low": 1,
     "avg": 2.2,
@@ -963,19 +990,20 @@
     "max": -7
    },
    "nextSeason": {
-    "worst": 84,
+    "worst": 83,
     "typical": 87,
     "best": 90
    },
    "peak": {
     "low": 87,
     "avg": 88,
-    "high": 92
+    "high": 91
    }
   },
   {
    "name": "Pascal Siakam",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 32,
    "ovr": 87,
@@ -1002,6 +1030,7 @@
   {
    "name": "Ty Jerome",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 29,
    "ovr": 87,
@@ -1028,12 +1057,13 @@
   {
    "name": "Tyrese Haliburton",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "PG",
    "age": 26,
    "ovr": 87,
    "rookie": false,
    "dur": 60,
-   "improveChance": 42,
+   "improveChance": 41,
    "progression": {
     "low": 1,
     "avg": 2.1,
@@ -1045,7 +1075,7 @@
     "max": -6
    },
    "nextSeason": {
-    "worst": 84,
+    "worst": 83,
     "typical": 87,
     "best": 90
    },
@@ -1058,6 +1088,7 @@
   {
    "name": "Brandon Miller",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "SF/SG/PF",
    "age": 24,
    "ovr": 86,
@@ -1066,18 +1097,18 @@
    "improveChance": 48,
    "progression": {
     "low": 1,
-    "avg": 2.1,
-    "max": 4
+    "avg": 2.6,
+    "max": 6
    },
    "regression": {
     "low": -1,
-    "avg": -2.6,
+    "avg": -2.7,
     "max": -6
    },
    "nextSeason": {
     "worst": 83,
     "typical": 86,
-    "best": 89
+    "best": 90
    },
    "peak": {
     "low": 86,
@@ -1088,42 +1119,44 @@
   {
    "name": "Cameron Boozer",
    "team": "Memphis Grizzlies",
+   "outlook": "top",
    "pos": "PF",
    "age": 19,
    "ovr": 86,
    "rookie": true,
    "dur": 80,
-   "improveChance": 73,
+   "improveChance": 96,
    "progression": {
     "low": 1,
-    "avg": 3.2,
-    "max": 7
+    "avg": 4,
+    "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
-    "max": -6
+    "avg": -2.9,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 84,
-    "typical": 88,
-    "best": 91
+    "worst": 87,
+    "typical": 89,
+    "best": 94
    },
    "peak": {
-    "low": 90,
-    "avg": 97,
+    "low": 96,
+    "avg": 99,
     "high": 99
    }
   },
   {
    "name": "Darius Garland",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "PG",
    "age": 26,
    "ovr": 86,
    "rookie": false,
    "dur": 60,
-   "improveChance": 41,
+   "improveChance": 40,
    "progression": {
     "low": 1,
     "avg": 2.1,
@@ -1148,15 +1181,47 @@
   {
    "name": "Dylan Harper",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 20,
    "ovr": 86,
    "rookie": false,
    "dur": 80,
-   "improveChance": 68,
+   "improveChance": 63,
    "progression": {
     "low": 1,
-    "avg": 3,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 88,
+    "best": 92
+   },
+   "peak": {
+    "low": 87,
+    "avg": 94,
+    "high": 99
+   }
+  },
+  {
+   "name": "Dyson Daniels",
+   "team": "Atlanta Hawks",
+   "outlook": null,
+   "pos": "SG/PG/SF",
+   "age": 23,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 52,
+   "progression": {
+    "low": 1,
+    "avg": 2.8,
     "max": 6
    },
    "regression": {
@@ -1165,59 +1230,30 @@
     "max": -6
    },
    "nextSeason": {
-    "worst": 84,
-    "typical": 88,
-    "best": 91
-   },
-   "peak": {
-    "low": 87,
-    "avg": 93,
-    "high": 99
-   }
-  },
-  {
-   "name": "Dyson Daniels",
-   "team": "Atlanta Hawks",
-   "pos": "SG/PG/SF",
-   "age": 23,
-   "ovr": 86,
-   "rookie": false,
-   "dur": 80,
-   "improveChance": 54,
-   "progression": {
-    "low": 1,
-    "avg": 2.2,
-    "max": 5
-   },
-   "regression": {
-    "low": -1,
-    "avg": -2.6,
-    "max": -6
-   },
-   "nextSeason": {
     "worst": 83,
     "typical": 87,
-    "best": 89
+    "best": 90
    },
    "peak": {
     "low": 86,
     "avg": 89,
-    "high": 93
+    "high": 95
    }
   },
   {
    "name": "Jalen Duren",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "C",
    "age": 23,
    "ovr": 86,
    "rookie": false,
    "dur": 80,
-   "improveChance": 53,
+   "improveChance": 51,
    "progression": {
     "low": 1,
-    "avg": 2.2,
-    "max": 5
+    "avg": 2.8,
+    "max": 6
    },
    "regression": {
     "low": -1,
@@ -1227,17 +1263,18 @@
    "nextSeason": {
     "worst": 83,
     "typical": 87,
-    "best": 89
+    "best": 90
    },
    "peak": {
     "low": 86,
     "avg": 89,
-    "high": 93
+    "high": 94
    }
   },
   {
    "name": "James Harden",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "PG",
    "age": 37,
    "ovr": 86,
@@ -1264,6 +1301,7 @@
   {
    "name": "Jaren Jackson Jr.",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "PF/C",
    "age": 27,
    "ovr": 86,
@@ -1290,42 +1328,13 @@
   {
    "name": "Keyonte George",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "PG",
    "age": 23,
    "ovr": 86,
    "rookie": false,
    "dur": 80,
-   "improveChance": 54,
-   "progression": {
-    "low": 1,
-    "avg": 2.2,
-    "max": 5
-   },
-   "regression": {
-    "low": -1,
-    "avg": -2.5,
-    "max": -6
-   },
-   "nextSeason": {
-    "worst": 83,
-    "typical": 87,
-    "best": 89
-   },
-   "peak": {
-    "low": 86,
-    "avg": 89,
-    "high": 93
-   }
-  },
-  {
-   "name": "Kon Knueppel",
-   "team": "Charlotte Hornets",
-   "pos": "SG/SF",
-   "age": 21,
-   "ovr": 86,
-   "rookie": false,
-   "dur": 80,
-   "improveChance": 63,
+   "improveChance": 52,
    "progression": {
     "low": 1,
     "avg": 2.8,
@@ -1333,8 +1342,8 @@
    },
    "regression": {
     "low": -1,
-    "avg": -2.7,
-    "max": -7
+    "avg": -2.6,
+    "max": -6
    },
    "nextSeason": {
     "worst": 83,
@@ -1343,13 +1352,45 @@
    },
    "peak": {
     "low": 86,
+    "avg": 89,
+    "high": 95
+   }
+  },
+  {
+   "name": "Kon Knueppel",
+   "team": "Charlotte Hornets",
+   "outlook": null,
+   "pos": "SG/SF",
+   "age": 21,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 59,
+   "progression": {
+    "low": 1,
+    "avg": 3.4,
+    "max": 7
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 91
+   },
+   "peak": {
+    "low": 86,
     "avg": 91,
-    "high": 97
+    "high": 99
    }
   },
   {
    "name": "Lauri Markkanen",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "PF/SF/C",
    "age": 29,
    "ovr": 86,
@@ -1376,6 +1417,7 @@
   {
    "name": "Nickeil Alexander-Walker",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 28,
    "ovr": 86,
@@ -1402,16 +1444,17 @@
   {
    "name": "Paolo Banchero",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 23,
    "ovr": 86,
    "rookie": false,
    "dur": 80,
-   "improveChance": 52,
+   "improveChance": 51,
    "progression": {
     "low": 1,
-    "avg": 2.2,
-    "max": 5
+    "avg": 2.8,
+    "max": 6
    },
    "regression": {
     "low": -1,
@@ -1421,17 +1464,18 @@
    "nextSeason": {
     "worst": 83,
     "typical": 87,
-    "best": 89
+    "best": 90
    },
    "peak": {
     "low": 86,
     "avg": 89,
-    "high": 93
+    "high": 94
    }
   },
   {
    "name": "Paul George",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 36,
    "ovr": 86,
@@ -1458,36 +1502,38 @@
   {
    "name": "Stephon Castle",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 21,
    "ovr": 86,
    "rookie": false,
    "dur": 80,
-   "improveChance": 63,
+   "improveChance": 59,
    "progression": {
     "low": 1,
-    "avg": 2.8,
-    "max": 6
+    "avg": 3.4,
+    "max": 7
    },
    "regression": {
     "low": -1,
-    "avg": -2.7,
+    "avg": -2.8,
     "max": -7
    },
    "nextSeason": {
     "worst": 83,
     "typical": 87,
-    "best": 90
+    "best": 91
    },
    "peak": {
     "low": 86,
     "avg": 91,
-    "high": 97
+    "high": 99
    }
   },
   {
    "name": "Trae Young",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "PG",
    "age": 28,
    "ovr": 86,
@@ -1514,15 +1560,16 @@
   {
    "name": "Tyler Herro",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 26,
    "ovr": 86,
    "rookie": false,
    "dur": 80,
-   "improveChance": 42,
+   "improveChance": 41,
    "progression": {
     "low": 1,
-    "avg": 2.2,
+    "avg": 2.1,
     "max": 5
    },
    "regression": {
@@ -1544,36 +1591,38 @@
   {
    "name": "Yaxel Lendeborg",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 24,
    "ovr": 86,
    "rookie": true,
    "dur": 80,
-   "improveChance": 55,
+   "improveChance": 53,
    "progression": {
     "low": 1,
-    "avg": 2.3,
-    "max": 5
+    "avg": 2.8,
+    "max": 6
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
+    "avg": -2.6,
     "max": -6
    },
    "nextSeason": {
     "worst": 83,
     "typical": 87,
-    "best": 89
+    "best": 90
    },
    "peak": {
     "low": 86,
-    "avg": 89,
+    "avg": 88,
     "high": 93
    }
   },
   {
    "name": "Ausar Thompson",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "SF/SG/PF",
    "age": 23,
    "ovr": 85,
@@ -1582,8 +1631,8 @@
    "improveChance": 53,
    "progression": {
     "low": 1,
-    "avg": 2.2,
-    "max": 5
+    "avg": 2.8,
+    "max": 6
    },
    "regression": {
     "low": -1,
@@ -1593,17 +1642,18 @@
    "nextSeason": {
     "worst": 82,
     "typical": 86,
-    "best": 88
+    "best": 89
    },
    "peak": {
     "low": 85,
     "avg": 88,
-    "high": 92
+    "high": 93
    }
   },
   {
    "name": "Brandon Ingram",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "SF",
    "age": 29,
    "ovr": 85,
@@ -1630,16 +1680,17 @@
   {
    "name": "Chet Holmgren",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "C/PF",
    "age": 24,
    "ovr": 85,
    "rookie": false,
    "dur": 55,
-   "improveChance": 46,
+   "improveChance": 47,
    "progression": {
     "low": 1,
-    "avg": 2.1,
-    "max": 5
+    "avg": 2.7,
+    "max": 6
    },
    "regression": {
     "low": -1,
@@ -1649,7 +1700,7 @@
    "nextSeason": {
     "worst": 81,
     "typical": 85,
-    "best": 88
+    "best": 89
    },
    "peak": {
     "low": 85,
@@ -1660,6 +1711,7 @@
   {
    "name": "Damian Lillard",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "PG",
    "age": 36,
    "ovr": 85,
@@ -1686,36 +1738,38 @@
   {
    "name": "Darius Acuff Jr.",
    "team": "Sacramento Kings",
+   "outlook": "top",
    "pos": "PG",
    "age": 19,
    "ovr": 85,
    "rookie": true,
    "dur": 80,
-   "improveChance": 74,
+   "improveChance": 96,
    "progression": {
     "low": 1,
-    "avg": 3.2,
-    "max": 7
+    "avg": 4.1,
+    "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
-    "max": -6
+    "avg": -3,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 83,
-    "typical": 87,
-    "best": 90
+    "worst": 86,
+    "typical": 89,
+    "best": 93
    },
    "peak": {
-    "low": 89,
-    "avg": 96,
+    "low": 95,
+    "avg": 99,
     "high": 99
    }
   },
   {
    "name": "Derrick White",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 32,
    "ovr": 85,
@@ -1742,6 +1796,7 @@
   {
    "name": "Domantas Sabonis",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "C",
    "age": 30,
    "ovr": 85,
@@ -1768,6 +1823,7 @@
   {
    "name": "Jimmy Butler",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "SF/PF/SG",
    "age": 37,
    "ovr": 85,
@@ -1794,26 +1850,27 @@
   {
    "name": "Josh Giddey",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "PG/SG/SF",
    "age": 24,
    "ovr": 85,
    "rookie": false,
    "dur": 80,
-   "improveChance": 48,
+   "improveChance": 49,
    "progression": {
     "low": 1,
-    "avg": 2.1,
-    "max": 4
+    "avg": 2.6,
+    "max": 6
    },
    "regression": {
     "low": -1,
     "avg": -2.7,
-    "max": -6
+    "max": -7
    },
    "nextSeason": {
     "worst": 82,
     "typical": 85,
-    "best": 88
+    "best": 89
    },
    "peak": {
     "low": 85,
@@ -1824,6 +1881,7 @@
   {
    "name": "Julius Randle",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "PF",
    "age": 31,
    "ovr": 85,
@@ -1850,12 +1908,13 @@
   {
    "name": "Zion Williamson",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "PF",
    "age": 26,
    "ovr": 85,
    "rookie": false,
    "dur": 35,
-   "improveChance": 41,
+   "improveChance": 40,
    "progression": {
     "low": 1,
     "avg": 2.1,
@@ -1880,66 +1939,69 @@
   {
    "name": "AJ Dybantsa",
    "team": "Washington Wizards",
+   "outlook": "top",
    "pos": "SF",
    "age": 19,
    "ovr": 84,
    "rookie": true,
    "dur": 80,
-   "improveChance": 76,
+   "improveChance": 96,
    "progression": {
     "low": 1,
-    "avg": 4.2,
+    "avg": 4.3,
     "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
-    "max": -6
+    "avg": -2.9,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 82,
-    "typical": 87,
-    "best": 91
+    "worst": 85,
+    "typical": 88,
+    "best": 92
    },
    "peak": {
-    "low": 89,
-    "avg": 96,
+    "low": 93,
+    "avg": 99,
     "high": 99
    }
   },
   {
    "name": "Ajay Mitchell",
    "team": "Oklahoma City Thunder",
+   "outlook": "promising",
    "pos": "PG",
    "age": 24,
    "ovr": 84,
    "rookie": false,
    "dur": 80,
-   "improveChance": 51,
+   "improveChance": 62,
    "progression": {
     "low": 1,
-    "avg": 2.7,
+    "avg": 2.9,
     "max": 6
    },
    "regression": {
     "low": -1,
-    "avg": -2.6,
-    "max": -6
+    "avg": -3.8,
+    "max": -7
    },
    "nextSeason": {
-    "worst": 81,
+    "worst": 84,
     "typical": 85,
     "best": 88
    },
    "peak": {
     "low": 84,
-    "avg": 86,
+    "avg": 87,
     "high": 91
    }
   },
   {
    "name": "Davion Mitchell",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "PG",
    "age": 28,
    "ovr": 84,
@@ -1966,36 +2028,38 @@
   {
    "name": "Donovan Clingan",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "C",
    "age": 22,
    "ovr": 84,
    "rookie": false,
    "dur": 80,
-   "improveChance": 61,
+   "improveChance": 58,
    "progression": {
     "low": 1,
-    "avg": 3.5,
+    "avg": 3.4,
     "max": 7
    },
    "regression": {
     "low": -1,
-    "avg": -2.7,
+    "avg": -2.8,
     "max": -7
    },
    "nextSeason": {
     "worst": 81,
     "typical": 85,
-    "best": 90
+    "best": 89
    },
    "peak": {
     "low": 84,
     "avg": 88,
-    "high": 94
+    "high": 95
    }
   },
   {
    "name": "Ja Morant",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "PG",
    "age": 27,
    "ovr": 84,
@@ -2022,12 +2086,13 @@
   {
    "name": "Jalen Williams",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "SF/SG/PG",
    "age": 25,
    "ovr": 84,
    "rookie": false,
    "dur": 80,
-   "improveChance": 46,
+   "improveChance": 45,
    "progression": {
     "low": 1,
     "avg": 2.2,
@@ -2046,12 +2111,13 @@
    "peak": {
     "low": 84,
     "avg": 85,
-    "high": 89
+    "high": 88
    }
   },
   {
    "name": "Jarrett Allen",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "C",
    "age": 28,
    "ovr": 84,
@@ -2078,6 +2144,7 @@
   {
    "name": "Michael Porter Jr.",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 28,
    "ovr": 84,
@@ -2104,6 +2171,7 @@
   {
    "name": "Naz Reid",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "C/PF",
    "age": 27,
    "ovr": 84,
@@ -2130,6 +2198,7 @@
   {
    "name": "OG Anunoby",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "SF/PF/SG",
    "age": 29,
    "ovr": 84,
@@ -2156,6 +2225,7 @@
   {
    "name": "Rudy Gobert",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "C",
    "age": 34,
    "ovr": 84,
@@ -2182,15 +2252,16 @@
   {
    "name": "Trey Murphy III",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "SF",
    "age": 26,
    "ovr": 84,
    "rookie": false,
    "dur": 80,
-   "improveChance": 43,
+   "improveChance": 42,
    "progression": {
     "low": 1,
-    "avg": 2.2,
+    "avg": 2.1,
     "max": 5
    },
    "regression": {
@@ -2212,12 +2283,13 @@
   {
    "name": "Walker Kessler",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "C",
    "age": 25,
    "ovr": 84,
    "rookie": false,
    "dur": 50,
-   "improveChance": 45,
+   "improveChance": 43,
    "progression": {
     "low": 1,
     "avg": 2.2,
@@ -2236,18 +2308,19 @@
    "peak": {
     "low": 84,
     "avg": 85,
-    "high": 89
+    "high": 88
    }
   },
   {
    "name": "Cedric Coward",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 23,
    "ovr": 83,
    "rookie": false,
    "dur": 80,
-   "improveChance": 55,
+   "improveChance": 54,
    "progression": {
     "low": 1,
     "avg": 2.9,
@@ -2261,7 +2334,7 @@
    "nextSeason": {
     "worst": 80,
     "typical": 84,
-    "best": 88
+    "best": 87
    },
    "peak": {
     "low": 83,
@@ -2272,36 +2345,38 @@
   {
    "name": "Darryn Peterson",
    "team": "Utah Jazz",
+   "outlook": "top",
    "pos": "SG/PG",
    "age": 19,
    "ovr": 83,
    "rookie": true,
    "dur": 80,
-   "improveChance": 76,
+   "improveChance": 96,
    "progression": {
     "low": 1,
-    "avg": 4.2,
+    "avg": 4.4,
     "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
-    "max": -6
+    "avg": -2.8,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 81,
-    "typical": 86,
-    "best": 90
+    "worst": 84,
+    "typical": 87,
+    "best": 91
    },
    "peak": {
-    "low": 88,
-    "avg": 95,
+    "low": 92,
+    "avg": 99,
     "high": 99
    }
   },
   {
    "name": "De'Aaron Fox",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "PG",
    "age": 28,
    "ovr": 83,
@@ -2328,6 +2403,7 @@
   {
    "name": "Duncan Robinson",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "SF",
    "age": 32,
    "ovr": 83,
@@ -2354,6 +2430,7 @@
   {
    "name": "Ivica Zubac",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "C",
    "age": 29,
    "ovr": 83,
@@ -2380,36 +2457,38 @@
   {
    "name": "Kyshawn George",
    "team": "Washington Wizards",
+   "outlook": "promising",
    "pos": "SF",
    "age": 22,
    "ovr": 83,
    "rookie": false,
    "dur": 80,
-   "improveChance": 60,
+   "improveChance": 69,
    "progression": {
     "low": 1,
-    "avg": 3.5,
-    "max": 8
+    "avg": 3.6,
+    "max": 7
    },
    "regression": {
     "low": -1,
-    "avg": -2.8,
-    "max": -7
+    "avg": -3.6,
+    "max": -6
    },
    "nextSeason": {
-    "worst": 80,
-    "typical": 84,
-    "best": 89
+    "worst": 83,
+    "typical": 85,
+    "best": 88
    },
    "peak": {
-    "low": 83,
-    "avg": 88,
-    "high": 94
+    "low": 85,
+    "avg": 89,
+    "high": 95
    }
   },
   {
    "name": "RJ Barrett",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "SF/SG",
    "age": 26,
    "ovr": 83,
@@ -2418,12 +2497,12 @@
    "improveChance": 42,
    "progression": {
     "low": 1,
-    "avg": 2.2,
+    "avg": 2.1,
     "max": 5
    },
    "regression": {
     "low": -1,
-    "avg": -2.4,
+    "avg": -2.5,
     "max": -6
    },
    "nextSeason": {
@@ -2440,20 +2519,21 @@
   {
    "name": "VJ Edgecombe",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "SG",
    "age": 21,
    "ovr": 83,
    "rookie": false,
    "dur": 80,
-   "improveChance": 65,
+   "improveChance": 62,
    "progression": {
     "low": 1,
-    "avg": 3.6,
+    "avg": 3.5,
     "max": 8
    },
    "regression": {
     "low": -1,
-    "avg": -2.7,
+    "avg": -2.8,
     "max": -7
    },
    "nextSeason": {
@@ -2464,12 +2544,13 @@
    "peak": {
     "low": 83,
     "avg": 89,
-    "high": 96
+    "high": 98
    }
   },
   {
    "name": "Zach LaVine",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "SG",
    "age": 31,
    "ovr": 83,
@@ -2496,6 +2577,7 @@
   {
    "name": "Aaron Gordon",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 31,
    "ovr": 82,
@@ -2522,12 +2604,13 @@
   {
    "name": "Ace Bailey",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "SF",
    "age": 20,
    "ovr": 82,
    "rookie": false,
    "dur": 80,
-   "improveChance": 69,
+   "improveChance": 67,
    "progression": {
     "low": 1,
     "avg": 3.8,
@@ -2546,18 +2629,19 @@
    "peak": {
     "low": 84,
     "avg": 90,
-    "high": 97
+    "high": 99
    }
   },
   {
    "name": "Alex Sarr",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "C",
    "age": 21,
    "ovr": 82,
    "rookie": false,
    "dur": 80,
-   "improveChance": 65,
+   "improveChance": 64,
    "progression": {
     "low": 1,
     "avg": 3.6,
@@ -2575,19 +2659,20 @@
    },
    "peak": {
     "low": 82,
-    "avg": 89,
-    "high": 95
+    "avg": 88,
+    "high": 97
    }
   },
   {
    "name": "Andrew Nembhard",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 26,
    "ovr": 82,
    "rookie": false,
    "dur": 80,
-   "improveChance": 43,
+   "improveChance": 42,
    "progression": {
     "low": 1,
     "avg": 2.1,
@@ -2612,6 +2697,7 @@
   {
    "name": "Andrew Wiggins",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "SF",
    "age": 31,
    "ovr": 82,
@@ -2638,6 +2724,7 @@
   {
    "name": "CJ McCollum",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 35,
    "ovr": 82,
@@ -2664,12 +2751,13 @@
   {
    "name": "Coby White",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 26,
    "ovr": 82,
    "rookie": false,
    "dur": 80,
-   "improveChance": 43,
+   "improveChance": 42,
    "progression": {
     "low": 1,
     "avg": 2.2,
@@ -2694,6 +2782,7 @@
   {
    "name": "DeMar DeRozan",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "SF",
    "age": 37,
    "ovr": 82,
@@ -2720,6 +2809,7 @@
   {
    "name": "Desmond Bane",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "SG",
    "age": 28,
    "ovr": 82,
@@ -2746,15 +2836,16 @@
   {
    "name": "Egor Demin",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "PG",
    "age": 20,
    "ovr": 82,
    "rookie": false,
    "dur": 80,
-   "improveChance": 69,
+   "improveChance": 68,
    "progression": {
     "low": 1,
-    "avg": 3.9,
+    "avg": 3.8,
     "max": 8
    },
    "regression": {
@@ -2768,14 +2859,15 @@
     "best": 88
    },
    "peak": {
-    "low": 84,
+    "low": 83,
     "avg": 90,
-    "high": 97
+    "high": 99
    }
   },
   {
    "name": "Grayson Allen",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "SG",
    "age": 30,
    "ovr": 82,
@@ -2802,6 +2894,7 @@
   {
    "name": "Immanuel Quickley",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "PG",
    "age": 27,
    "ovr": 82,
@@ -2828,12 +2921,13 @@
   {
    "name": "Jabari Smith Jr.",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "PF",
    "age": 23,
    "ovr": 82,
    "rookie": false,
    "dur": 80,
-   "improveChance": 56,
+   "improveChance": 55,
    "progression": {
     "low": 1,
     "avg": 2.9,
@@ -2852,12 +2946,13 @@
    "peak": {
     "low": 82,
     "avg": 85,
-    "high": 91
+    "high": 90
    }
   },
   {
    "name": "Jalen Green",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "SG",
    "age": 24,
    "ovr": 82,
@@ -2871,7 +2966,7 @@
    },
    "regression": {
     "low": -1,
-    "avg": -2.6,
+    "avg": -2.7,
     "max": -7
    },
    "nextSeason": {
@@ -2888,6 +2983,7 @@
   {
    "name": "Jrue Holiday",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 36,
    "ovr": 82,
@@ -2914,6 +3010,7 @@
   {
    "name": "Norman Powell",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 33,
    "ovr": 82,
@@ -2940,6 +3037,7 @@
   {
    "name": "Onyeka Okongwu",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "C/PF",
    "age": 25,
    "ovr": 82,
@@ -2970,6 +3068,7 @@
   {
    "name": "Payton Pritchard",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "PG",
    "age": 28,
    "ovr": 82,
@@ -2996,12 +3095,13 @@
   {
    "name": "Shaedon Sharpe",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "SG",
    "age": 23,
    "ovr": 82,
    "rookie": false,
    "dur": 80,
-   "improveChance": 56,
+   "improveChance": 55,
    "progression": {
     "low": 1,
     "avg": 2.9,
@@ -3009,13 +3109,13 @@
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
+    "avg": -2.6,
     "max": -6
    },
    "nextSeason": {
     "worst": 79,
     "typical": 83,
-    "best": 87
+    "best": 86
    },
    "peak": {
     "low": 82,
@@ -3026,6 +3126,7 @@
   {
    "name": "Zach Edey",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "C",
    "age": 24,
    "ovr": 82,
@@ -3050,12 +3151,13 @@
    "peak": {
     "low": 82,
     "avg": 84,
-    "high": 89
+    "high": 88
    }
   },
   {
    "name": "Anthony Black",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "PG",
    "age": 22,
    "ovr": 81,
@@ -3086,36 +3188,38 @@
   {
    "name": "Caleb Wilson",
    "team": "Chicago Bulls",
+   "outlook": "top",
    "pos": "PF/SF",
    "age": 20,
    "ovr": 81,
    "rookie": true,
    "dur": 80,
-   "improveChance": 75,
+   "improveChance": 97,
    "progression": {
     "low": 1,
-    "avg": 4.1,
-    "max": 9
+    "avg": 4.6,
+    "max": 10
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
-    "max": -6
+    "avg": -2.7,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 79,
-    "typical": 84,
-    "best": 88
+    "worst": 82,
+    "typical": 85,
+    "best": 89
    },
    "peak": {
-    "low": 84,
-    "avg": 92,
+    "low": 88,
+    "avg": 96,
     "high": 99
    }
   },
   {
    "name": "De'Andre Hunter",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 28,
    "ovr": 81,
@@ -3142,6 +3246,7 @@
   {
    "name": "Fred VanVleet",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "PG",
    "age": 32,
    "ovr": 81,
@@ -3168,6 +3273,7 @@
   {
    "name": "Herbert Jones",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "SF/SG/PF",
    "age": 28,
    "ovr": 81,
@@ -3194,6 +3300,7 @@
   {
    "name": "Isaiah Hartenstein",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "C",
    "age": 28,
    "ovr": 81,
@@ -3220,6 +3327,7 @@
   {
    "name": "Josh Hart",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "SG/SF/PF",
    "age": 31,
    "ovr": 81,
@@ -3246,6 +3354,7 @@
   {
    "name": "Klay Thompson",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "SG",
    "age": 36,
    "ovr": 81,
@@ -3272,6 +3381,7 @@
   {
    "name": "Kristaps Porziņģis",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "C/PF",
    "age": 31,
    "ovr": 81,
@@ -3298,6 +3408,7 @@
   {
    "name": "Mikal Bridges",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "SF/SG/PF",
    "age": 30,
    "ovr": 81,
@@ -3324,6 +3435,7 @@
   {
    "name": "Miles Bridges",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 28,
    "ovr": 81,
@@ -3350,6 +3462,7 @@
   {
    "name": "Myles Turner",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "C",
    "age": 30,
    "ovr": 81,
@@ -3376,6 +3489,7 @@
   {
    "name": "Toumani Camara",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 26,
    "ovr": 81,
@@ -3406,6 +3520,7 @@
   {
    "name": "Aaron Wiggins",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 27,
    "ovr": 80,
@@ -3432,6 +3547,7 @@
   {
    "name": "Ayo Dosunmu",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 26,
    "ovr": 80,
@@ -3462,6 +3578,7 @@
   {
    "name": "Bennedict Mathurin",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 24,
    "ovr": 80,
@@ -3492,6 +3609,7 @@
   {
    "name": "Cameron Johnson",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 30,
    "ovr": 80,
@@ -3518,6 +3636,7 @@
   {
    "name": "Christian Braun",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 25,
    "ovr": 80,
@@ -3548,6 +3667,7 @@
   {
    "name": "Dejounte Murray",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "PG",
    "age": 30,
    "ovr": 80,
@@ -3574,6 +3694,7 @@
   {
    "name": "Dereck Lively II",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "C",
    "age": 22,
    "ovr": 80,
@@ -3597,13 +3718,14 @@
    },
    "peak": {
     "low": 80,
-    "avg": 85,
+    "avg": 84,
     "high": 91
    }
   },
   {
    "name": "Jakob Pöltl",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "C",
    "age": 30,
    "ovr": 80,
@@ -3630,6 +3752,7 @@
   {
    "name": "Jalen Suggs",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "PG",
    "age": 25,
    "ovr": 80,
@@ -3654,12 +3777,13 @@
    "peak": {
     "low": 80,
     "avg": 81,
-    "high": 85
+    "high": 84
    }
   },
   {
    "name": "Jonathan Kuminga",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 24,
    "ovr": 80,
@@ -3690,6 +3814,7 @@
   {
    "name": "Keegan Murray",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 26,
    "ovr": 80,
@@ -3720,6 +3845,7 @@
   {
    "name": "Kel'el Ware",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "C",
    "age": 22,
    "ovr": 80,
@@ -3750,6 +3876,7 @@
   {
    "name": "Matas Buzelis",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 22,
    "ovr": 80,
@@ -3780,6 +3907,7 @@
   {
    "name": "Mitchell Robinson",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "C",
    "age": 28,
    "ovr": 80,
@@ -3806,6 +3934,7 @@
   {
    "name": "P.J. Washington",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "PF",
    "age": 28,
    "ovr": 80,
@@ -3832,6 +3961,7 @@
   {
    "name": "Aaron Nesmith",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "SF",
    "age": 26,
    "ovr": 79,
@@ -3862,6 +3992,7 @@
   {
    "name": "Bilal Coulibaly",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "SF/SG",
    "age": 22,
    "ovr": 79,
@@ -3892,6 +4023,7 @@
   {
    "name": "Brandin Podziemski",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "SG",
    "age": 23,
    "ovr": 79,
@@ -3922,6 +4054,7 @@
   {
    "name": "Brook Lopez",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "C",
    "age": 38,
    "ovr": 79,
@@ -3948,6 +4081,7 @@
   {
    "name": "Cason Wallace",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 22,
    "ovr": 79,
@@ -3978,6 +4112,7 @@
   {
    "name": "Collin Murray-Boyles",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "PF",
    "age": 21,
    "ovr": 79,
@@ -4008,6 +4143,7 @@
   {
    "name": "DeAndre Ayton",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "C",
    "age": 28,
    "ovr": 79,
@@ -4034,6 +4170,7 @@
   {
    "name": "Derik Queen",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "C/PF",
    "age": 21,
    "ovr": 79,
@@ -4064,6 +4201,7 @@
   {
    "name": "Devin Vassell",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "SG",
    "age": 26,
    "ovr": 79,
@@ -4094,6 +4232,7 @@
   {
    "name": "Draymond Green",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "PF/C",
    "age": 36,
    "ovr": 79,
@@ -4120,6 +4259,7 @@
   {
    "name": "Jaime Jaquez Jr.",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "SF/SG",
    "age": 25,
    "ovr": 79,
@@ -4150,6 +4290,7 @@
   {
    "name": "Jalen Smith",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "C/PF",
    "age": 26,
    "ovr": 79,
@@ -4180,6 +4321,7 @@
   {
    "name": "Jared McCain",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 22,
    "ovr": 79,
@@ -4210,36 +4352,38 @@
   {
    "name": "Jaylen Wells",
    "team": "Memphis Grizzlies",
+   "outlook": "promising",
    "pos": "SF/SG",
    "age": 23,
    "ovr": 79,
    "rookie": false,
    "dur": 80,
-   "improveChance": 56,
+   "improveChance": 69,
    "progression": {
     "low": 1,
-    "avg": 2.9,
-    "max": 6
+    "avg": 3.3,
+    "max": 7
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
+    "avg": -3.4,
     "max": -6
    },
    "nextSeason": {
-    "worst": 76,
-    "typical": 80,
-    "best": 84
+    "worst": 79,
+    "typical": 81,
+    "best": 85
    },
    "peak": {
-    "low": 79,
-    "avg": 82,
-    "high": 88
+    "low": 80,
+    "avg": 85,
+    "high": 90
    }
   },
   {
    "name": "Jerami Grant",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "PF",
    "age": 32,
    "ovr": 79,
@@ -4266,6 +4410,7 @@
   {
    "name": "John Collins",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "PF",
    "age": 29,
    "ovr": 79,
@@ -4292,6 +4437,7 @@
   {
    "name": "Luguentz Dort",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 27,
    "ovr": 79,
@@ -4318,6 +4464,7 @@
   {
    "name": "Mark Williams",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "C",
    "age": 24,
    "ovr": 79,
@@ -4348,6 +4495,7 @@
   {
    "name": "Nic Claxton",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "C",
    "age": 27,
    "ovr": 79,
@@ -4374,6 +4522,7 @@
   {
    "name": "Nikola Vučević",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "C",
    "age": 36,
    "ovr": 79,
@@ -4400,6 +4549,7 @@
   {
    "name": "Peyton Watson",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "SF",
    "age": 24,
    "ovr": 79,
@@ -4430,6 +4580,7 @@
   {
    "name": "Quentin Grimes",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "SG",
    "age": 26,
    "ovr": 79,
@@ -4460,6 +4611,7 @@
   {
    "name": "Tari Eason",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 25,
    "ovr": 79,
@@ -4490,6 +4642,7 @@
   {
    "name": "Wendell Carter Jr.",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "C",
    "age": 27,
    "ovr": 79,
@@ -4516,6 +4669,7 @@
   {
    "name": "Alex Caruso",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 32,
    "ovr": 78,
@@ -4542,6 +4696,7 @@
   {
    "name": "Anfernee Simons",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 27,
    "ovr": 78,
@@ -4568,36 +4723,38 @@
   {
    "name": "Brayden Burries",
    "team": "Milwaukee Bucks",
+   "outlook": "top",
    "pos": "SG",
    "age": 21,
    "ovr": 78,
    "rookie": true,
    "dur": 80,
-   "improveChance": 71,
+   "improveChance": 96,
    "progression": {
     "low": 1,
-    "avg": 3.9,
-    "max": 8
+    "avg": 4.3,
+    "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.6,
-    "max": -6
+    "avg": -3,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 76,
-    "typical": 80,
-    "best": 85
+    "worst": 79,
+    "typical": 82,
+    "best": 86
    },
    "peak": {
-    "low": 80,
-    "avg": 87,
-    "high": 94
+    "low": 83,
+    "avg": 89,
+    "high": 96
    }
   },
   {
    "name": "Cam Spencer",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "SG",
    "age": 26,
    "ovr": 78,
@@ -4628,6 +4785,7 @@
   {
    "name": "Collin Sexton",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 27,
    "ovr": 78,
@@ -4654,6 +4812,7 @@
   {
    "name": "Corey Kispert",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "SF/SG",
    "age": 27,
    "ovr": 78,
@@ -4680,6 +4839,7 @@
   {
    "name": "Daniel Gafford",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "C",
    "age": 28,
    "ovr": 78,
@@ -4706,6 +4866,7 @@
   {
    "name": "Dennis Schröder",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "PG",
    "age": 33,
    "ovr": 78,
@@ -4732,6 +4893,7 @@
   {
    "name": "Derrick Jones Jr.",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "SF",
    "age": 29,
    "ovr": 78,
@@ -4758,6 +4920,7 @@
   {
    "name": "Dillon Brooks",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "SF",
    "age": 30,
    "ovr": 78,
@@ -4784,6 +4947,7 @@
   {
    "name": "Jeremiah Fears",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "PG",
    "age": 20,
    "ovr": 78,
@@ -4808,12 +4972,13 @@
    "peak": {
     "low": 80,
     "avg": 87,
-    "high": 94
+    "high": 96
    }
   },
   {
    "name": "Jordan Poole",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "SG",
    "age": 27,
    "ovr": 78,
@@ -4840,6 +5005,7 @@
   {
    "name": "Keldon Johnson",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "SF",
    "age": 26,
    "ovr": 78,
@@ -4870,6 +5036,7 @@
   {
    "name": "Keon Ellis",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "SG",
    "age": 26,
    "ovr": 78,
@@ -4900,36 +5067,38 @@
   {
    "name": "Kingston Flemings",
    "team": "Atlanta Hawks",
+   "outlook": "top",
    "pos": "PG",
    "age": 19,
    "ovr": 78,
    "rookie": true,
    "dur": 80,
-   "improveChance": 76,
+   "improveChance": 97,
    "progression": {
     "low": 1,
-    "avg": 4.2,
-    "max": 9
+    "avg": 4.8,
+    "max": 10
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
-    "max": -6
+    "avg": -2.9,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 77,
-    "typical": 81,
-    "best": 85
+    "worst": 79,
+    "typical": 82,
+    "best": 87
    },
    "peak": {
-    "low": 84,
-    "avg": 91,
+    "low": 88,
+    "avg": 97,
     "high": 99
    }
   },
   {
    "name": "Malik Monk",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "SG",
    "age": 28,
    "ovr": 78,
@@ -4956,36 +5125,38 @@
   {
    "name": "Mikel Brown Jr.",
    "team": "Brooklyn Nets",
+   "outlook": "top",
    "pos": "PG",
    "age": 20,
    "ovr": 78,
    "rookie": true,
    "dur": 80,
-   "improveChance": 74,
+   "improveChance": 97,
    "progression": {
     "low": 1,
-    "avg": 4.1,
-    "max": 9
+    "avg": 4.6,
+    "max": 10
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
+    "avg": -2.8,
     "max": -6
    },
    "nextSeason": {
-    "worst": 76,
-    "typical": 81,
-    "best": 85
+    "worst": 79,
+    "typical": 82,
+    "best": 86
    },
    "peak": {
-    "low": 82,
-    "avg": 89,
-    "high": 97
+    "low": 86,
+    "avg": 92,
+    "high": 99
    }
   },
   {
    "name": "Nolan Traoré",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "PG",
    "age": 20,
    "ovr": 78,
@@ -5010,12 +5181,13 @@
    "peak": {
     "low": 80,
     "avg": 87,
-    "high": 94
+    "high": 96
    }
   },
   {
    "name": "Paul Reed",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "C",
    "age": 27,
    "ovr": 78,
@@ -5042,6 +5214,7 @@
   {
    "name": "Royce O'Neale",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 33,
    "ovr": 78,
@@ -5068,6 +5241,7 @@
   {
    "name": "Rui Hachimura",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 28,
    "ovr": 78,
@@ -5094,6 +5268,7 @@
   {
    "name": "Saddiq Bey",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 27,
    "ovr": 78,
@@ -5120,6 +5295,7 @@
   {
    "name": "Sam Hauser",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "SF",
    "age": 28,
    "ovr": 78,
@@ -5146,6 +5322,7 @@
   {
    "name": "Tobias Harris",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "PF",
    "age": 34,
    "ovr": 78,
@@ -5172,6 +5349,7 @@
   {
    "name": "Zaccharie Risacher",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "SF",
    "age": 21,
    "ovr": 78,
@@ -5202,6 +5380,7 @@
   {
    "name": "Ziaire Williams",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "SF",
    "age": 25,
    "ovr": 78,
@@ -5232,66 +5411,69 @@
   {
    "name": "Aday Mara",
    "team": "Oklahoma City Thunder",
+   "outlook": "top",
    "pos": "C",
    "age": 21,
    "ovr": 77,
    "rookie": true,
    "dur": 80,
-   "improveChance": 70,
+   "improveChance": 96,
    "progression": {
     "low": 1,
-    "avg": 3.9,
-    "max": 8
+    "avg": 4.2,
+    "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.6,
-    "max": -6
+    "avg": -3,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 75,
-    "typical": 79,
-    "best": 83
+    "worst": 78,
+    "typical": 81,
+    "best": 85
    },
    "peak": {
-    "low": 79,
-    "avg": 86,
-    "high": 93
+    "low": 82,
+    "avg": 88,
+    "high": 95
    }
   },
   {
    "name": "Bennett Stirtz",
    "team": "Oklahoma City Thunder",
+   "outlook": "promising",
    "pos": "PG",
    "age": 23,
    "ovr": 77,
    "rookie": true,
    "dur": 80,
-   "improveChance": 63,
+   "improveChance": 75,
    "progression": {
     "low": 1,
-    "avg": 3.1,
+    "avg": 3.6,
     "max": 7
    },
    "regression": {
     "low": -1,
-    "avg": -2.4,
+    "avg": -3.4,
     "max": -6
    },
    "nextSeason": {
-    "worst": 75,
-    "typical": 78,
-    "best": 82
+    "worst": 77,
+    "typical": 79,
+    "best": 83
    },
    "peak": {
-    "low": 77,
-    "avg": 82,
-    "high": 87
+    "low": 78,
+    "avg": 83,
+    "high": 88
    }
   },
   {
    "name": "Bobby Portis",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "PF/C",
    "age": 31,
    "ovr": 77,
@@ -5318,6 +5500,7 @@
   {
    "name": "Daniss Jenkins",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "PG",
    "age": 25,
    "ovr": 77,
@@ -5348,6 +5531,7 @@
   {
    "name": "Dean Wade",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "PF",
    "age": 29,
    "ovr": 77,
@@ -5374,6 +5558,7 @@
   {
    "name": "Isaiah Stewart",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "C/PF",
    "age": 25,
    "ovr": 77,
@@ -5404,6 +5589,7 @@
   {
    "name": "Jusuf Nurkić",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "C",
    "age": 32,
    "ovr": 77,
@@ -5430,36 +5616,38 @@
   {
    "name": "Keaton Wagler",
    "team": "Los Angeles Clippers",
+   "outlook": "top",
    "pos": "SG/PG",
    "age": 20,
    "ovr": 77,
    "rookie": true,
    "dur": 80,
-   "improveChance": 74,
+   "improveChance": 97,
    "progression": {
     "low": 1,
-    "avg": 4.1,
-    "max": 8
+    "avg": 4.6,
+    "max": 10
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
-    "max": -6
+    "avg": -2.8,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 75,
-    "typical": 80,
-    "best": 84
+    "worst": 78,
+    "typical": 81,
+    "best": 85
    },
    "peak": {
-    "low": 81,
-    "avg": 89,
-    "high": 96
+    "low": 85,
+    "avg": 91,
+    "high": 99
    }
   },
   {
    "name": "Kelly Oubre Jr.",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "SF",
    "age": 30,
    "ovr": 77,
@@ -5486,6 +5674,7 @@
   {
    "name": "Landry Shamet",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "SG",
    "age": 29,
    "ovr": 77,
@@ -5512,6 +5701,7 @@
   {
    "name": "Mario Hezonja",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 30,
    "ovr": 77,
@@ -5538,6 +5728,7 @@
   {
    "name": "Matisse Thybulle",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "SG",
    "age": 29,
    "ovr": 77,
@@ -5564,6 +5755,7 @@
   {
    "name": "Naji Marshall",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "SF",
    "age": 28,
    "ovr": 77,
@@ -5590,6 +5782,7 @@
   {
    "name": "Sam Merrill",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "SG",
    "age": 30,
    "ovr": 77,
@@ -5616,6 +5809,7 @@
   {
    "name": "Sandro Mamukelashvili",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "PF/C",
    "age": 27,
    "ovr": 77,
@@ -5642,6 +5836,7 @@
   {
    "name": "Santi Aldama",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "PF",
    "age": 25,
    "ovr": 77,
@@ -5672,6 +5867,7 @@
   {
    "name": "Andre Drummond",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "C",
    "age": 33,
    "ovr": 76,
@@ -5698,6 +5894,7 @@
   {
    "name": "Collin Gillespie",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "PG",
    "age": 27,
    "ovr": 76,
@@ -5724,36 +5921,38 @@
   {
    "name": "Dominick Barlow",
    "team": "Philadelphia 76ers",
+   "outlook": "promising",
    "pos": "PF",
    "age": 23,
    "ovr": 76,
    "rookie": false,
    "dur": 80,
-   "improveChance": 56,
+   "improveChance": 69,
    "progression": {
     "low": 1,
-    "avg": 2.9,
-    "max": 6
+    "avg": 3.3,
+    "max": 7
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
+    "avg": -3.5,
     "max": -6
    },
    "nextSeason": {
-    "worst": 73,
-    "typical": 77,
-    "best": 80
+    "worst": 76,
+    "typical": 78,
+    "best": 81
    },
    "peak": {
-    "low": 76,
-    "avg": 79,
-    "high": 85
+    "low": 77,
+    "avg": 82,
+    "high": 87
    }
   },
   {
    "name": "Ja'Kobe Walter",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "SG",
    "age": 22,
    "ovr": 76,
@@ -5778,12 +5977,13 @@
    "peak": {
     "low": 76,
     "avg": 81,
-    "high": 88
+    "high": 87
    }
   },
   {
    "name": "Jarace Walker",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "PF",
    "age": 23,
    "ovr": 76,
@@ -5814,36 +6014,38 @@
   {
    "name": "Jaylon Tyson",
    "team": "Cleveland Cavaliers",
+   "outlook": "promising",
    "pos": "SF",
    "age": 23,
    "ovr": 76,
    "rookie": false,
    "dur": 80,
-   "improveChance": 56,
+   "improveChance": 69,
    "progression": {
     "low": 1,
-    "avg": 2.9,
-    "max": 6
+    "avg": 3.3,
+    "max": 7
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
+    "avg": -3.5,
     "max": -6
    },
    "nextSeason": {
-    "worst": 73,
-    "typical": 77,
-    "best": 81
+    "worst": 76,
+    "typical": 78,
+    "best": 82
    },
    "peak": {
-    "low": 76,
-    "avg": 79,
-    "high": 85
+    "low": 77,
+    "avg": 81,
+    "high": 87
    }
   },
   {
    "name": "Jonathan Isaac",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "PF",
    "age": 28,
    "ovr": 76,
@@ -5870,6 +6072,7 @@
   {
    "name": "Kevin Huerter",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "SG",
    "age": 28,
    "ovr": 76,
@@ -5896,6 +6099,7 @@
   {
    "name": "Khris Middleton",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "SF",
    "age": 35,
    "ovr": 76,
@@ -5922,6 +6126,7 @@
   {
    "name": "Marcus Smart",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 32,
    "ovr": 76,
@@ -5948,6 +6153,7 @@
   {
    "name": "Max Christie",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "SG",
    "age": 23,
    "ovr": 76,
@@ -5978,6 +6184,7 @@
   {
    "name": "Max Strus",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "SF/SG",
    "age": 30,
    "ovr": 76,
@@ -6004,36 +6211,38 @@
   {
    "name": "Meleek Thomas",
    "team": "Cleveland Cavaliers",
+   "outlook": "promising",
    "pos": "SG",
    "age": 20,
    "ovr": 76,
    "rookie": true,
    "dur": 80,
-   "improveChance": 75,
+   "improveChance": 83,
    "progression": {
-    "low": 1,
-    "avg": 4.1,
+    "low": 2,
+    "avg": 4.7,
     "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
+    "avg": -3.1,
     "max": -6
    },
    "nextSeason": {
-    "worst": 74,
-    "typical": 79,
-    "best": 83
+    "worst": 76,
+    "typical": 80,
+    "best": 84
    },
    "peak": {
-    "low": 79,
-    "avg": 87,
-    "high": 95
+    "low": 83,
+    "avg": 89,
+    "high": 97
    }
   },
   {
    "name": "Miles McBride",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "PG",
    "age": 26,
    "ovr": 76,
@@ -6064,6 +6273,7 @@
   {
    "name": "Nikola Jović",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 23,
    "ovr": 76,
@@ -6094,6 +6304,7 @@
   {
    "name": "Obi Toppin",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "PF",
    "age": 28,
    "ovr": 76,
@@ -6120,6 +6331,7 @@
   {
    "name": "Reed Sheppard",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 22,
    "ovr": 76,
@@ -6150,6 +6362,7 @@
   {
    "name": "Ryan Rollins",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "PG",
    "age": 24,
    "ovr": 76,
@@ -6180,6 +6393,7 @@
   {
    "name": "Scoot Henderson",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "PG",
    "age": 22,
    "ovr": 76,
@@ -6210,6 +6424,7 @@
   {
    "name": "Tre Johnson",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "SG",
    "age": 20,
    "ovr": 76,
@@ -6240,6 +6455,7 @@
   {
    "name": "Al Horford",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "C/PF",
    "age": 40,
    "ovr": 75,
@@ -6266,6 +6482,7 @@
   {
    "name": "Allen Graves",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "PF",
    "age": 21,
    "ovr": 75,
@@ -6288,14 +6505,15 @@
     "best": 81
    },
    "peak": {
-    "low": 77,
-    "avg": 84,
-    "high": 92
+    "low": 76,
+    "avg": 82,
+    "high": 90
    }
   },
   {
    "name": "Bogdan Bogdanović",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "SG",
    "age": 34,
    "ovr": 75,
@@ -6322,6 +6540,7 @@
   {
    "name": "Bradley Beal",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "SG",
    "age": 33,
    "ovr": 75,
@@ -6348,6 +6567,7 @@
   {
    "name": "Brandon Williams",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "PG",
    "age": 27,
    "ovr": 75,
@@ -6374,6 +6594,7 @@
   {
    "name": "Bub Carrington",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "PG",
    "age": 21,
    "ovr": 75,
@@ -6398,12 +6619,13 @@
    "peak": {
     "low": 76,
     "avg": 82,
-    "high": 90
+    "high": 89
    }
   },
   {
    "name": "Buddy Hield",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "SG",
    "age": 33,
    "ovr": 75,
@@ -6430,6 +6652,7 @@
   {
    "name": "Carter Bryant",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "SF",
    "age": 20,
    "ovr": 75,
@@ -6460,6 +6683,7 @@
   {
    "name": "Drake Powell",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 21,
    "ovr": 75,
@@ -6490,6 +6714,7 @@
   {
    "name": "Goga Bitadze",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "C",
    "age": 27,
    "ovr": 75,
@@ -6516,6 +6741,7 @@
   {
    "name": "Gradey Dick",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "SG",
    "age": 22,
    "ovr": 75,
@@ -6546,6 +6772,7 @@
   {
    "name": "Harrison Barnes",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 34,
    "ovr": 75,
@@ -6572,36 +6799,38 @@
   {
    "name": "Hugo González",
    "team": "Boston Celtics",
+   "outlook": "promising",
    "pos": "SF",
    "age": 20,
    "ovr": 75,
    "rookie": false,
    "dur": 80,
-   "improveChance": 70,
+   "improveChance": 79,
    "progression": {
     "low": 1,
-    "avg": 3.9,
-    "max": 8
+    "avg": 4.4,
+    "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.6,
+    "avg": -3.3,
     "max": -6
    },
    "nextSeason": {
-    "worst": 73,
-    "typical": 77,
-    "best": 81
+    "worst": 75,
+    "typical": 78,
+    "best": 82
    },
    "peak": {
-    "low": 76,
-    "avg": 84,
-    "high": 92
+    "low": 82,
+    "avg": 88,
+    "high": 95
    }
   },
   {
    "name": "Isaiah Collier",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "PG",
    "age": 22,
    "ovr": 75,
@@ -6632,6 +6861,7 @@
   {
    "name": "Joan Beringer",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "C",
    "age": 20,
    "ovr": 75,
@@ -6662,6 +6892,7 @@
   {
    "name": "Julian Champagnie",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "SF",
    "age": 25,
    "ovr": 75,
@@ -6692,6 +6923,7 @@
   {
    "name": "Kentavious Caldwell-Pope",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "SG",
    "age": 33,
    "ovr": 75,
@@ -6718,6 +6950,7 @@
   {
    "name": "Kris Dunn",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 32,
    "ovr": 75,
@@ -6744,6 +6977,7 @@
   {
    "name": "Kyle Kuzma",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 31,
    "ovr": 75,
@@ -6770,6 +7004,7 @@
   {
    "name": "Luke Kennard",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "SG",
    "age": 30,
    "ovr": 75,
@@ -6796,6 +7031,7 @@
   {
    "name": "Neemias Queta",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "C",
    "age": 27,
    "ovr": 75,
@@ -6822,6 +7058,7 @@
   {
    "name": "Pelle Larsson",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "SG",
    "age": 25,
    "ovr": 75,
@@ -6852,6 +7089,7 @@
   {
    "name": "Robert Williams III",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "C",
    "age": 29,
    "ovr": 75,
@@ -6878,6 +7116,7 @@
   {
    "name": "Sidy Cissoko",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "SF",
    "age": 22,
    "ovr": 75,
@@ -6908,6 +7147,7 @@
   {
    "name": "Simone Fontecchio",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "SF",
    "age": 30,
    "ovr": 75,
@@ -6934,6 +7174,7 @@
   {
    "name": "Svi Mykhailiuk",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "SG",
    "age": 29,
    "ovr": 75,
@@ -6960,6 +7201,7 @@
   {
    "name": "T.J. McConnell",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "PG",
    "age": 34,
    "ovr": 75,
@@ -6986,6 +7228,7 @@
   {
    "name": "Terrence Shannon Jr.",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "SG",
    "age": 26,
    "ovr": 75,
@@ -7016,6 +7259,7 @@
   {
    "name": "Trey Lyles",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "PF/C",
    "age": 31,
    "ovr": 75,
@@ -7042,36 +7286,38 @@
   {
    "name": "Tyrese Proctor",
    "team": "Cleveland Cavaliers",
+   "outlook": "promising",
    "pos": "PG",
    "age": 22,
    "ovr": 75,
    "rookie": false,
    "dur": 80,
-   "improveChance": 61,
+   "improveChance": 72,
    "progression": {
     "low": 1,
-    "avg": 3.5,
+    "avg": 4,
     "max": 8
    },
    "regression": {
     "low": -1,
-    "avg": -2.7,
+    "avg": -3.5,
     "max": -6
    },
    "nextSeason": {
-    "worst": 72,
-    "typical": 76,
-    "best": 81
+    "worst": 75,
+    "typical": 77,
+    "best": 82
    },
    "peak": {
-    "low": 75,
-    "avg": 80,
-    "high": 87
+    "low": 78,
+    "avg": 83,
+    "high": 89
    }
   },
   {
    "name": "Yves Missi",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "C",
    "age": 22,
    "ovr": 75,
@@ -7102,6 +7348,7 @@
   {
    "name": "AJ Green",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "SG",
    "age": 27,
    "ovr": 74,
@@ -7128,6 +7375,7 @@
   {
    "name": "Brice Sensabaugh",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "SF",
    "age": 23,
    "ovr": 74,
@@ -7158,6 +7406,7 @@
   {
    "name": "Caris LeVert",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "SG",
    "age": 32,
    "ovr": 74,
@@ -7184,6 +7433,7 @@
   {
    "name": "De'Anthony Melton",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 28,
    "ovr": 74,
@@ -7210,6 +7460,7 @@
   {
    "name": "Dorian Finney-Smith",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 33,
    "ovr": 74,
@@ -7236,6 +7487,7 @@
   {
    "name": "Gary Trent Jr.",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "SG",
    "age": 27,
    "ovr": 74,
@@ -7262,6 +7514,7 @@
   {
    "name": "Isaiah Joe",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "SG",
    "age": 27,
    "ovr": 74,
@@ -7288,6 +7541,7 @@
   {
    "name": "Jake LaRavia",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "SF",
    "age": 24,
    "ovr": 74,
@@ -7318,6 +7572,7 @@
   {
    "name": "Jamal Shead",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "PG",
    "age": 24,
    "ovr": 74,
@@ -7348,6 +7603,7 @@
   {
    "name": "Jaylin Williams",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "PF/C",
    "age": 24,
    "ovr": 74,
@@ -7378,6 +7634,7 @@
   {
    "name": "Jordan Clarkson",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "SG",
    "age": 34,
    "ovr": 74,
@@ -7404,6 +7661,7 @@
   {
    "name": "Kasparas Jakučionis",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "PG",
    "age": 20,
    "ovr": 74,
@@ -7434,36 +7692,38 @@
   {
    "name": "Koa Peat",
    "team": "Phoenix Suns",
+   "outlook": "promising",
    "pos": "PF",
    "age": 19,
    "ovr": 74,
    "rookie": true,
    "dur": 80,
-   "improveChance": 76,
+   "improveChance": 84,
    "progression": {
-    "low": 1,
-    "avg": 4.2,
-    "max": 9
+    "low": 2,
+    "avg": 4.8,
+    "max": 10
    },
    "regression": {
     "low": -1,
-    "avg": -2.4,
+    "avg": -3.1,
     "max": -6
    },
    "nextSeason": {
-    "worst": 73,
-    "typical": 77,
-    "best": 81
+    "worst": 74,
+    "typical": 78,
+    "best": 82
    },
    "peak": {
-    "low": 80,
-    "avg": 88,
-    "high": 97
+    "low": 84,
+    "avg": 90,
+    "high": 99
    }
   },
   {
    "name": "Luke Kornet",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "C",
    "age": 31,
    "ovr": 74,
@@ -7490,36 +7750,38 @@
   {
    "name": "Morez Johnson Jr.",
    "team": "Dallas Mavericks",
+   "outlook": "top",
    "pos": "PF/C",
    "age": 20,
    "ovr": 74,
    "rookie": true,
    "dur": 80,
-   "improveChance": 74,
+   "improveChance": 97,
    "progression": {
     "low": 1,
-    "avg": 4.1,
-    "max": 9
+    "avg": 4.6,
+    "max": 10
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
+    "avg": -2.8,
     "max": -6
    },
    "nextSeason": {
-    "worst": 72,
-    "typical": 77,
-    "best": 81
+    "worst": 75,
+    "typical": 78,
+    "best": 82
    },
    "peak": {
-    "low": 78,
-    "avg": 86,
-    "high": 94
+    "low": 82,
+    "avg": 88,
+    "high": 96
    }
   },
   {
    "name": "Moussa Diabaté",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "C",
    "age": 24,
    "ovr": 74,
@@ -7550,36 +7812,38 @@
   {
    "name": "Nate Ament",
    "team": "Milwaukee Bucks",
+   "outlook": "top",
    "pos": "SF/PF",
    "age": 19,
    "ovr": 74,
    "rookie": true,
    "dur": 80,
-   "improveChance": 76,
+   "improveChance": 97,
    "progression": {
     "low": 1,
-    "avg": 4.2,
-    "max": 9
+    "avg": 4.8,
+    "max": 10
    },
    "regression": {
     "low": -1,
-    "avg": -2.5,
-    "max": -6
+    "avg": -2.7,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 72,
-    "typical": 77,
-    "best": 81
+    "worst": 75,
+    "typical": 78,
+    "best": 83
    },
    "peak": {
-    "low": 80,
-    "avg": 88,
-    "high": 97
+    "low": 85,
+    "avg": 91,
+    "high": 99
    }
   },
   {
    "name": "Noah Clowney",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "PF",
    "age": 22,
    "ovr": 74,
@@ -7610,6 +7874,7 @@
   {
    "name": "Patrick Williams",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "PF",
    "age": 25,
    "ovr": 74,
@@ -7640,6 +7905,7 @@
   {
    "name": "Ron Holland II",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "SF",
    "age": 21,
    "ovr": 74,
@@ -7670,6 +7936,7 @@
   {
    "name": "Ryan Dunn",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "SF",
    "age": 23,
    "ovr": 74,
@@ -7700,6 +7967,7 @@
   {
    "name": "Steven Adams",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "C",
    "age": 33,
    "ovr": 74,
@@ -7726,6 +7994,7 @@
   {
    "name": "Terance Mann",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 30,
    "ovr": 74,
@@ -7752,6 +8021,7 @@
   {
    "name": "Tim Hardaway Jr.",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "SG",
    "age": 34,
    "ovr": 74,
@@ -7778,6 +8048,7 @@
   {
    "name": "Tre Jones",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "PG",
    "age": 26,
    "ovr": 74,
@@ -7808,6 +8079,7 @@
   {
    "name": "Tristan da Silva",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "SF",
    "age": 25,
    "ovr": 74,
@@ -7838,6 +8110,7 @@
   {
    "name": "Caleb Martin",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "SF",
    "age": 30,
    "ovr": 73,
@@ -7864,6 +8137,7 @@
   {
    "name": "Charles Bassey",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "C",
    "age": 26,
    "ovr": 73,
@@ -7894,6 +8168,7 @@
   {
    "name": "Day'Ron Sharpe",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "C",
    "age": 25,
    "ovr": 73,
@@ -7924,6 +8199,7 @@
   {
    "name": "Isaiah Jackson",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "C",
    "age": 24,
    "ovr": 73,
@@ -7954,6 +8230,7 @@
   {
    "name": "Jaxson Hayes",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "C",
    "age": 26,
    "ovr": 73,
@@ -7984,6 +8261,7 @@
   {
    "name": "Jock Landale",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "C",
    "age": 31,
    "ovr": 73,
@@ -8010,6 +8288,7 @@
   {
    "name": "Jose Alvarado",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "PG",
    "age": 28,
    "ovr": 73,
@@ -8036,6 +8315,7 @@
   {
    "name": "Kyle Filipowski",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "C/PF",
    "age": 23,
    "ovr": 73,
@@ -8066,6 +8346,7 @@
   {
    "name": "Nique Clifford",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "SG",
    "age": 24,
    "ovr": 73,
@@ -8096,6 +8377,7 @@
   {
    "name": "Scotty Pippen Jr.",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "PG",
    "age": 26,
    "ovr": 73,
@@ -8126,6 +8408,7 @@
   {
    "name": "Tre Mann",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "PG",
    "age": 25,
    "ovr": 73,
@@ -8156,6 +8439,7 @@
   {
    "name": "Adem Bona",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "C",
    "age": 23,
    "ovr": 72,
@@ -8186,6 +8470,7 @@
   {
    "name": "Asa Newell",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "PF/C",
    "age": 20,
    "ovr": 72,
@@ -8216,6 +8501,7 @@
   {
    "name": "Ben Sheppard",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "SG",
    "age": 25,
    "ovr": 72,
@@ -8246,6 +8532,7 @@
   {
    "name": "Bones Hyland",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "PG",
    "age": 26,
    "ovr": 72,
@@ -8276,6 +8563,7 @@
   {
    "name": "Chris Cenac Jr.",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "C",
    "age": 19,
    "ovr": 72,
@@ -8298,14 +8586,15 @@
     "best": 79
    },
    "peak": {
-    "low": 77,
-    "avg": 86,
-    "high": 95
+    "low": 76,
+    "avg": 84,
+    "high": 92
    }
   },
   {
    "name": "Clint Capela",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "C",
    "age": 32,
    "ovr": 72,
@@ -8332,6 +8621,7 @@
   {
    "name": "Cody Williams",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "SF",
    "age": 21,
    "ovr": 72,
@@ -8362,6 +8652,7 @@
   {
    "name": "Gary Payton II",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 33,
    "ovr": 72,
@@ -8388,6 +8679,7 @@
   {
    "name": "Grant Williams",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "PF",
    "age": 27,
    "ovr": 72,
@@ -8414,6 +8706,7 @@
   {
    "name": "Isaac Okoro",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "SF",
    "age": 25,
    "ovr": 72,
@@ -8444,6 +8737,7 @@
   {
    "name": "Jarred Vanderbilt",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "PF",
    "age": 27,
    "ovr": 72,
@@ -8470,6 +8764,7 @@
   {
    "name": "Jay Huff",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "C",
    "age": 28,
    "ovr": 72,
@@ -8496,6 +8791,7 @@
   {
    "name": "Jayden Quaintance",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "C",
    "age": 19,
    "ovr": 72,
@@ -8518,14 +8814,15 @@
     "best": 79
    },
    "peak": {
-    "low": 77,
-    "avg": 86,
-    "high": 95
+    "low": 75,
+    "avg": 83,
+    "high": 92
    }
   },
   {
    "name": "Jordan Goodwin",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "SG/PG",
    "age": 27,
    "ovr": 72,
@@ -8552,6 +8849,7 @@
   {
    "name": "Jordan Walsh",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "SF/SG",
    "age": 22,
    "ovr": 72,
@@ -8582,6 +8880,7 @@
   {
    "name": "Josh Green",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "SG",
    "age": 25,
    "ovr": 72,
@@ -8612,6 +8911,7 @@
   {
    "name": "Justin Champagnie",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 25,
    "ovr": 72,
@@ -8642,6 +8942,7 @@
   {
    "name": "Khaman Maluach",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "C",
    "age": 19,
    "ovr": 72,
@@ -8672,6 +8973,7 @@
   {
    "name": "Kyle Anderson",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "PF",
    "age": 33,
    "ovr": 72,
@@ -8698,6 +9000,7 @@
   {
    "name": "Marcus Sasser",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "PG",
    "age": 26,
    "ovr": 72,
@@ -8728,6 +9031,7 @@
   {
    "name": "Marvin Bagley III",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "C/PF",
    "age": 27,
    "ovr": 72,
@@ -8754,6 +9058,7 @@
   {
    "name": "Mike Conley",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "PG",
    "age": 39,
    "ovr": 72,
@@ -8780,6 +9085,7 @@
   {
    "name": "Moritz Wagner",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "C",
    "age": 29,
    "ovr": 72,
@@ -8806,6 +9112,7 @@
   {
    "name": "Nick Richards",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "C",
    "age": 28,
    "ovr": 72,
@@ -8832,6 +9139,7 @@
   {
    "name": "Oso Ighodaro",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "PF/C",
    "age": 24,
    "ovr": 72,
@@ -8862,6 +9170,7 @@
   {
    "name": "Precious Achiuwa",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "PF/C",
    "age": 27,
    "ovr": 72,
@@ -8888,6 +9197,7 @@
   {
    "name": "Ryan Kalkbrenner",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "C",
    "age": 24,
    "ovr": 72,
@@ -8918,6 +9228,7 @@
   {
    "name": "Taurean Prince",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "SF",
    "age": 32,
    "ovr": 72,
@@ -8944,6 +9255,7 @@
   {
    "name": "Taylor Hendricks",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "PF",
    "age": 23,
    "ovr": 72,
@@ -8974,6 +9286,7 @@
   {
    "name": "Tyus Jones",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "PG",
    "age": 30,
    "ovr": 72,
@@ -9000,6 +9313,7 @@
   {
    "name": "Vít Krejčí",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 26,
    "ovr": 72,
@@ -9030,6 +9344,7 @@
   {
    "name": "GG Jackson",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "PF",
    "age": 22,
    "ovr": 71,
@@ -9060,6 +9375,7 @@
   {
    "name": "Gui Santos",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 24,
    "ovr": 71,
@@ -9090,6 +9406,7 @@
   {
    "name": "Josh Okogie",
    "team": "Utah Jazz",
+   "outlook": null,
    "pos": "SG",
    "age": 28,
    "ovr": 71,
@@ -9116,6 +9433,7 @@
   {
    "name": "Julian Strawther",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "SG",
    "age": 24,
    "ovr": 71,
@@ -9146,6 +9464,7 @@
   {
    "name": "Kenrich Williams",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "PF",
    "age": 31,
    "ovr": 71,
@@ -9172,6 +9491,7 @@
   {
    "name": "Larry Nance Jr.",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "PF/C",
    "age": 33,
    "ovr": 71,
@@ -9198,6 +9518,7 @@
   {
    "name": "Quinten Post",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "C",
    "age": 26,
    "ovr": 71,
@@ -9228,6 +9549,7 @@
   {
    "name": "Trendon Watford",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "PF",
    "age": 25,
    "ovr": 71,
@@ -9258,6 +9580,7 @@
   {
    "name": "Zach Collins",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "C",
    "age": 28,
    "ovr": 71,
@@ -9284,6 +9607,7 @@
   {
    "name": "Baylor Scheierman",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "SG",
    "age": 26,
    "ovr": 70,
@@ -9314,6 +9638,7 @@
   {
    "name": "Craig Porter Jr.",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "PG",
    "age": 26,
    "ovr": 70,
@@ -9344,6 +9669,7 @@
   {
    "name": "Danny Wolf",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "C/PF",
    "age": 22,
    "ovr": 70,
@@ -9374,6 +9700,7 @@
   {
    "name": "Dru Smith",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "PG",
    "age": 28,
    "ovr": 70,
@@ -9400,36 +9727,38 @@
   {
    "name": "Hannes Steinbach",
    "team": "Charlotte Hornets",
+   "outlook": "top",
    "pos": "PF/C",
    "age": 20,
    "ovr": 70,
    "rookie": true,
    "dur": 80,
-   "improveChance": 74,
+   "improveChance": 97,
    "progression": {
     "low": 1,
-    "avg": 4.1,
-    "max": 9
+    "avg": 4.6,
+    "max": 10
    },
    "regression": {
     "low": -1,
-    "avg": -2.4,
-    "max": -6
+    "avg": -2.7,
+    "max": -5
    },
    "nextSeason": {
-    "worst": 68,
-    "typical": 73,
-    "best": 77
+    "worst": 71,
+    "typical": 74,
+    "best": 78
    },
    "peak": {
-    "low": 73,
-    "avg": 82,
-    "high": 90
+    "low": 77,
+    "avg": 85,
+    "high": 92
    }
   },
   {
    "name": "Jae'Sean Tate",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "SF",
    "age": 31,
    "ovr": 70,
@@ -9456,6 +9785,7 @@
   {
    "name": "Jamison Battle",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "SF",
    "age": 25,
    "ovr": 70,
@@ -9486,6 +9816,7 @@
   {
    "name": "Jase Richardson",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "PG",
    "age": 20,
    "ovr": 70,
@@ -9516,6 +9847,7 @@
   {
    "name": "Javonte Green",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "SF",
    "age": 33,
    "ovr": 70,
@@ -9542,6 +9874,7 @@
   {
    "name": "Jaylen Clark",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "SG",
    "age": 25,
    "ovr": 70,
@@ -9572,6 +9905,7 @@
   {
    "name": "Jevon Carter",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "PG",
    "age": 31,
    "ovr": 70,
@@ -9598,6 +9932,7 @@
   {
    "name": "Josh Minott",
    "team": "Brooklyn Nets",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 24,
    "ovr": 70,
@@ -9628,6 +9963,7 @@
   {
    "name": "Justin Edwards",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "SF",
    "age": 22,
    "ovr": 70,
@@ -9658,6 +9994,7 @@
   {
    "name": "Kevon Looney",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "C",
    "age": 30,
    "ovr": 70,
@@ -9684,6 +10021,7 @@
   {
    "name": "Kobe Sanders",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "SG",
    "age": 24,
    "ovr": 70,
@@ -9714,6 +10052,7 @@
   {
    "name": "Kris Murray",
    "team": "Memphis Grizzlies",
+   "outlook": null,
    "pos": "PF",
    "age": 26,
    "ovr": 70,
@@ -9744,6 +10083,7 @@
   {
    "name": "Liam McNeeley",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "SF",
    "age": 20,
    "ovr": 70,
@@ -9774,6 +10114,7 @@
   {
    "name": "Maxime Raynaud",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "C",
    "age": 23,
    "ovr": 70,
@@ -9804,6 +10145,7 @@
   {
    "name": "Mouhamed Gueye",
    "team": "Atlanta Hawks",
+   "outlook": null,
    "pos": "PF/C",
    "age": 23,
    "ovr": 70,
@@ -9834,6 +10176,7 @@
   {
    "name": "Noa Essengue",
    "team": "Chicago Bulls",
+   "outlook": null,
    "pos": "PF",
    "age": 20,
    "ovr": 70,
@@ -9864,6 +10207,7 @@
   {
    "name": "Ousmane Dieng",
    "team": "Milwaukee Bucks",
+   "outlook": null,
    "pos": "PF/SF",
    "age": 23,
    "ovr": 70,
@@ -9894,6 +10238,7 @@
   {
    "name": "Spencer Jones",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 25,
    "ovr": 70,
@@ -9924,6 +10269,7 @@
   {
    "name": "Thomas Sorber",
    "team": "Oklahoma City Thunder",
+   "outlook": null,
    "pos": "C",
    "age": 20,
    "ovr": 70,
@@ -9954,6 +10300,7 @@
   {
    "name": "Tyler Kolek",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "PG",
    "age": 25,
    "ovr": 70,
@@ -9984,6 +10331,7 @@
   {
    "name": "Will Riley",
    "team": "Washington Wizards",
+   "outlook": null,
    "pos": "SF",
    "age": 20,
    "ovr": 70,
@@ -10014,6 +10362,7 @@
   {
    "name": "Yang Hansen",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "C",
    "age": 21,
    "ovr": 70,
@@ -10044,6 +10393,7 @@
   {
    "name": "Zeke Nnaji",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "PF/C",
    "age": 25,
    "ovr": 70,
@@ -10074,6 +10424,7 @@
   {
    "name": "Alpha Diallo",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "SF",
    "age": 28,
    "ovr": 69,
@@ -10100,36 +10451,38 @@
   {
    "name": "Dailyn Swain",
    "team": "Chicago Bulls",
+   "outlook": "top",
    "pos": "SF/SG",
    "age": 21,
    "ovr": 69,
    "rookie": true,
    "dur": 80,
-   "improveChance": 70,
+   "improveChance": 96,
    "progression": {
     "low": 1,
-    "avg": 3.9,
-    "max": 8
+    "avg": 4.3,
+    "max": 9
    },
    "regression": {
     "low": -1,
-    "avg": -2.4,
+    "avg": -2.8,
     "max": -5
    },
    "nextSeason": {
-    "worst": 67,
-    "typical": 71,
-    "best": 76
+    "worst": 70,
+    "typical": 73,
+    "best": 77
    },
    "peak": {
-    "low": 71,
-    "avg": 78,
-    "high": 87
+    "low": 74,
+    "avg": 80,
+    "high": 88
    }
   },
   {
    "name": "DaRon Holmes II",
    "team": "Denver Nuggets",
+   "outlook": null,
    "pos": "PF",
    "age": 24,
    "ovr": 69,
@@ -10160,6 +10513,7 @@
   {
    "name": "Ebuka Okorie",
    "team": "Detroit Pistons",
+   "outlook": null,
    "pos": "PG",
    "age": 19,
    "ovr": 69,
@@ -10182,14 +10536,15 @@
     "best": 76
    },
    "peak": {
-    "low": 75,
-    "avg": 84,
-    "high": 93
+    "low": 73,
+    "avg": 81,
+    "high": 90
    }
   },
   {
    "name": "Jaden Hardy",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "SG",
    "age": 24,
    "ovr": 69,
@@ -10220,6 +10575,7 @@
   {
    "name": "Johnny Furphy",
    "team": "Indiana Pacers",
+   "outlook": null,
    "pos": "SF",
    "age": 21,
    "ovr": 69,
@@ -10250,6 +10606,7 @@
   {
    "name": "Jordan Miller",
    "team": "Los Angeles Clippers",
+   "outlook": null,
    "pos": "SF",
    "age": 26,
    "ovr": 69,
@@ -10280,6 +10637,7 @@
   {
    "name": "Karlo Matković",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "PF",
    "age": 25,
    "ovr": 69,
@@ -10310,6 +10668,7 @@
   {
    "name": "Keshad Johnson",
    "team": "Miami Heat",
+   "outlook": null,
    "pos": "PF",
    "age": 25,
    "ovr": 69,
@@ -10340,6 +10699,7 @@
   {
    "name": "Labaron Philon Jr.",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "PG",
    "age": 21,
    "ovr": 69,
@@ -10362,14 +10722,15 @@
     "best": 76
    },
    "peak": {
-    "low": 71,
-    "avg": 78,
-    "high": 86
+    "low": 70,
+    "avg": 77,
+    "high": 84
    }
   },
   {
    "name": "Luka Garza",
    "team": "Boston Celtics",
+   "outlook": null,
    "pos": "C",
    "age": 27,
    "ovr": 69,
@@ -10396,6 +10757,7 @@
   {
    "name": "Noah Penda",
    "team": "Orlando Magic",
+   "outlook": null,
    "pos": "SF/PF",
    "age": 21,
    "ovr": 69,
@@ -10426,6 +10788,7 @@
   {
    "name": "Rasheer Fleming",
    "team": "Phoenix Suns",
+   "outlook": null,
    "pos": "PF",
    "age": 22,
    "ovr": 69,
@@ -10456,6 +10819,7 @@
   {
    "name": "Sion James",
    "team": "Charlotte Hornets",
+   "outlook": null,
    "pos": "SG",
    "age": 23,
    "ovr": 69,
@@ -10486,6 +10850,7 @@
   {
    "name": "Thomas Bryant",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "C",
    "age": 29,
    "ovr": 69,
@@ -10512,6 +10877,7 @@
   {
    "name": "Will Richard",
    "team": "Golden State Warriors",
+   "outlook": null,
    "pos": "SG",
    "age": 23,
    "ovr": 69,
@@ -10542,6 +10908,7 @@
   {
    "name": "Alex Karaban",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "PF",
    "age": 24,
    "ovr": 68,
@@ -10566,12 +10933,13 @@
    "peak": {
     "low": 68,
     "avg": 71,
-    "high": 76
+    "high": 75
    }
   },
   {
    "name": "Jabari Walker",
    "team": "Philadelphia 76ers",
+   "outlook": null,
    "pos": "PF",
    "age": 24,
    "ovr": 68,
@@ -10602,6 +10970,7 @@
   {
    "name": "Jordan McLaughlin",
    "team": "San Antonio Spurs",
+   "outlook": null,
    "pos": "PG",
    "age": 30,
    "ovr": 68,
@@ -10628,6 +10997,7 @@
   {
    "name": "Pacôme Dadiet",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "SF",
    "age": 21,
    "ovr": 68,
@@ -10658,6 +11028,7 @@
   {
    "name": "AJ Johnson",
    "team": "New Orleans Pelicans",
+   "outlook": null,
    "pos": "PG/SG",
    "age": 22,
    "ovr": 67,
@@ -10688,6 +11059,7 @@
   {
    "name": "Branden Carlson",
    "team": "Portland Trail Blazers",
+   "outlook": null,
    "pos": "C",
    "age": 27,
    "ovr": 67,
@@ -10714,6 +11086,7 @@
   {
    "name": "Isaiah Evans",
    "team": "Minnesota Timberwolves",
+   "outlook": null,
    "pos": "SG/SF",
    "age": 20,
    "ovr": 67,
@@ -10736,14 +11109,15 @@
     "best": 74
    },
    "peak": {
-    "low": 71,
-    "avg": 79,
-    "high": 88
+    "low": 70,
+    "avg": 77,
+    "high": 85
    }
   },
   {
    "name": "Jonathan Mogbo",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "PF",
    "age": 25,
    "ovr": 67,
@@ -10774,6 +11148,7 @@
   {
    "name": "Moussa Cissé",
    "team": "Dallas Mavericks",
+   "outlook": null,
    "pos": "C",
    "age": 24,
    "ovr": 67,
@@ -10804,6 +11179,7 @@
   {
    "name": "Alijah Martin",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "SG",
    "age": 25,
    "ovr": 66,
@@ -10834,6 +11210,7 @@
   {
    "name": "Dylan Cardwell",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "C",
    "age": 25,
    "ovr": 66,
@@ -10864,6 +11241,7 @@
   {
    "name": "Emanuel Sharp",
    "team": "Sacramento Kings",
+   "outlook": null,
    "pos": "SG",
    "age": 23,
    "ovr": 66,
@@ -10894,6 +11272,7 @@
   {
    "name": "Isaiah Crawford",
    "team": "Houston Rockets",
+   "outlook": null,
    "pos": "SF",
    "age": 24,
    "ovr": 66,
@@ -10924,6 +11303,7 @@
   {
    "name": "Mohamed Diawara",
    "team": "New York Knicks",
+   "outlook": null,
    "pos": "SF",
    "age": 21,
    "ovr": 66,
@@ -10954,6 +11334,7 @@
   {
    "name": "Nae'Qwan Tomlin",
    "team": "Cleveland Cavaliers",
+   "outlook": null,
    "pos": "PF",
    "age": 25,
    "ovr": 66,
@@ -10984,6 +11365,7 @@
   {
    "name": "Bronny James",
    "team": "Los Angeles Lakers",
+   "outlook": null,
    "pos": "PG",
    "age": 21,
    "ovr": 65,
@@ -11014,6 +11396,7 @@
   {
    "name": "Nate Bittle",
    "team": "Toronto Raptors",
+   "outlook": null,
    "pos": "C",
    "age": 24,
    "ovr": 65,

@@ -411,7 +411,8 @@
     "end": "End career",
     "endSure": "Tap again: this career ends for good",
     "payroll": "Payroll after re-signing: {{pay}} (cap {{cap}} · apron {{apron}})",
-    "overApron": "Over the apron: can’t re-sign"
+    "overApron": "Over the apron: can’t re-sign",
+    "retiredLeague": "Retired around the league"
   },
   "collect": {
     "title": "Collection",

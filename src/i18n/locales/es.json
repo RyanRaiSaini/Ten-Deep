@@ -414,7 +414,8 @@
     "end": "Terminar carrera",
     "endSure": "Toca otra vez: esta carrera terminará para siempre",
     "payroll": "Nómina tras renovar: {{pay}} (tope {{cap}} · apron {{apron}})",
-    "overApron": "Por encima del apron: no se puede renovar"
+    "overApron": "Por encima del apron: no se puede renovar",
+    "retiredLeague": "Retiradas en la liga"
   },
   "collect": {
     "title": "Colección",
