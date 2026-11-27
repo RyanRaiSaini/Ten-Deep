@@ -231,10 +231,10 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('mode-crisis').click();
     await page.getByTestId('crisis-rebuild').click();
     await page.getByTestId('rebuild-spin').waitFor();
-    await shot('25-rebuild-picker');
+    await shot('40-rebuild-picker');
     await page.getByTestId('rebuild-spin').click();
     await page.getByTestId('rebuild-start').waitFor({ timeout: 10000 });
-    await shot('26-rebuild-takeover');
+    await shot('41-rebuild-takeover');
     await page.getByTestId('rebuild-start').click();
     await page.getByTestId('rebuild-coach-defense').click();
     let sold = false;
@@ -262,7 +262,7 @@ export async function runFlow({ page, base, step, shot }) {
         sold = true;
         await page.getByTestId('rebuild-sell').click();
         await page.getByTestId('rebuild-sign-bench').waitFor();
-        await shot('27-rebuild-options');
+        await shot('42-rebuild-options');
         await page.getByTestId('rebuild-sign-bench').click();
         continue;
       }
@@ -270,7 +270,7 @@ export async function runFlow({ page, base, step, shot }) {
     }
     if (cards !== 3) throw new Error(`expected 3 rebuild card stops, saw ${cards}`);
     await page.getByTestId('rebuild-sr').waitFor();
-    await shot('28-rebuild-tipoff');
+    await shot('43-rebuild-tipoff');
     await page.getByTestId('rebuild-tipoff').click();
     await page.locator('[data-testid="board-panel"], [data-testid="crisis-verdict"]').first().waitFor({ timeout: 10000 });
   });
