@@ -36,6 +36,8 @@ export const SIM = {
   /** Playoffs: how much more team quality decides a playoff game than a regular-season one. 1: the same, so
    *  titles are hard (you need a mid-60s-win team to have a real chance). */
   playoffK: 1,
+  /** Playoffs: every AI team plays this much better (the league's contenders get serious in April). */
+  playoffBoost: 0,
   /**
    * Elite-team bonus: + elite × (Squad Rating − eliteFrom)² to both ends, for teams above eliteFrom (rotation.ts).
    * Judged on the whole team's rating, so it doesn't matter how the stars are spread. 96 is where 82-0 opens up.
