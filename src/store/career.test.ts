@@ -17,11 +17,13 @@ type SlotId = import('../engine/types').SlotId;
 
 /** Play the current career season through: resolve every card with defaults, finish the season and playoffs. */
 function playSeason() {
-  for (let guard = 0; guard < 10; guard++) {
+  for (let guard = 0; guard < 20; guard++) {
     const g = useGame.getState();
+    if (g.phase === 'result') return; // the board fired you mid-season
     if (g.phase === 'crisis') {
-      const c = g.crisis!.pending!;
-      g.resolveCrisis({ incomingId: c.offer?.[0]?.id, outSlot: c.outSlots?.[0], option: 'a' });
+      g.revealBoardCard(0);
+      const o = useGame.getState().crisis!.board!.offer!;
+      useGame.getState().resolveBoard({ incomingId: o.players?.[0]?.id, outSlot: o.outSlots?.[0], option: o.options?.[0] });
       continue;
     }
     const s = advance({ ...g.season!, deadlineUsed: true }, 82);

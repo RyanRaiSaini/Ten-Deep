@@ -50,7 +50,7 @@
     },
     "crisis": {
       "title": "Management Crisis",
-      "desc": "Draft a team. The board sets a goal. Every two months a crisis card changes everything."
+      "desc": "Draft a team, then survive the board. Seven times a season, pick 1 of 6 face-down cards: demands, money, perks and surprises. Let Board Confidence hit 0 and you're fired."
     },
     "career": {
       "title": "Career",
@@ -244,7 +244,7 @@
   },
   "crisis": {
     "title": "Management Crisis",
-    "desc": "Draft a team. The board sets a goal. Every two months a crisis card changes everything.",
+    "desc": "Draft a team, then survive the board. Seven times a season, pick 1 of 6 face-down cards: demands, money, perks and surprises. Let Board Confidence hit 0 and you're fired.",
     "m0": "Preseason",
     "m1": "December",
     "m2": "February",
@@ -1165,5 +1165,474 @@
     "loading": "Opening the history books…",
     "failed": "Couldn't load the history. Check your connection.",
     "retry": "Try again"
+  },
+  "board": {
+    "title": "Management Crisis",
+    "pick": "Pick a card",
+    "pickHint": "Six face-down cards. Tap one: demands, money, perks and surprises are all in there.",
+    "stopOf": "Stop {{n}} of {{total}}",
+    "months": {
+      "preseason": "Preseason",
+      "nov": "November",
+      "dec": "December",
+      "jan": "January",
+      "feb": "February",
+      "mar": "March",
+      "apr": "April"
+    },
+    "lead0": "Preseason. The building is buzzing and the board is watching.",
+    "lead": "{{w}}-{{l}} after {{g}} games.",
+    "kinds": {
+      "demand": "Board demand",
+      "finance": "Finance",
+      "perk": "Perk",
+      "event": "Story"
+    },
+    "voices": {
+      "owner": "Owner {{name}}",
+      "gm": "GM {{name}}",
+      "reporter": "{{name}}, beat reporter",
+      "coach": "{{name}}",
+      "fans": "The fans"
+    },
+    "rule": "Rule",
+    "due": {
+      "next": "By the next card",
+      "deadline": "By the trade deadline",
+      "end": "By the end of the regular season",
+      "now": "Right now",
+      "games": "Over the next {{n}} games"
+    },
+    "fail": "If you fail: −{{n}} Board Confidence",
+    "noFail": "No confidence at stake",
+    "reward": "Pass: +1 Board Confidence",
+    "accept": "Got it",
+    "confirm": "Confirm",
+    "continue": "Back to the season",
+    "missed": "What you passed on",
+    "peek": "Scout's tip: two cards are face up",
+    "secondLook": "Use Second look (pick again)",
+    "pickIn": "Pick one",
+    "pickOut": "Who makes room?",
+    "heads": "Heads! +{{amount}}",
+    "tails": "Tails. −{{amount}}",
+    "options": {
+      "offense": "Offense guru: +3 for 20 games, then +1 ({{fee}})",
+      "defense": "Defensive mind: +2 for the season ({{fee}})",
+      "players": "Players' coach: +1 for the season, +1 confidence ({{fee}})",
+      "interim": "Keep the interim coach: free, −2 for 10 games",
+      "bench": "Bench {{name}}",
+      "ride": "Ride it out: −2 for 10 games",
+      "pay": "Give him the raise ({{fee}})",
+      "sit": "Let him sit 5 games"
+    },
+    "confidence": "Board Confidence",
+    "confidenceShort": "Confidence",
+    "demands": "Board demands",
+    "noDemands": "No open demands. Enjoy it.",
+    "dueRound": "Due game {{n}}",
+    "dueEnd": "Due at season's end",
+    "progress": "{{have}}/{{need}}",
+    "status": {
+      "active": "Open",
+      "done": "Done",
+      "failed": "Failed",
+      "vetoed": "Vetoed"
+    },
+    "veto": "Veto",
+    "perksHeld": "Held perks",
+    "respins": "Respins: {{n}}",
+    "office": "Front office",
+    "officeDesc": "Sell a player for his contract and sign a replacement: three priced options or a minimum bench option.",
+    "officeRoom": "Cap room: {{room}}",
+    "officePick": "Who are you selling?",
+    "officeBudget": "Budget for this spot: {{budget}} (room + his {{pay}})",
+    "officeRespin": "Respin options ({{n}} left)",
+    "officeSign": "Sign for {{pay}}",
+    "officeBack": "Pick someone else",
+    "tiers": {
+      "low": "Bargain",
+      "mid": "Mid-market",
+      "top": "Top option",
+      "bench": "Bench option",
+      "perk": "Perk"
+    },
+    "overBudget": "Over budget",
+    "crunch": "Roster crunch: bench option only this move",
+    "agent": "Agent friend: 25% off this signing",
+    "events": {
+      "done": "Demand met: {{title}} (+1)",
+      "failed": "Demand failed: {{title}} (−{{n}})",
+      "hot": "Hot stretch: the board loves it (+1)",
+      "cold": "Cold stretch: the board is restless (−1)",
+      "fired": "You're fired.",
+      "refund": "Funds released: the owner refunds the hold"
+    },
+    "fired": "Fired after {{g}} games",
+    "firedSub": "{{owner}} has seen enough. The interim GM finishes the season.",
+    "recap": "The season in cards",
+    "finalConfidence": "Final Board Confidence: {{n}}/10",
+    "c": {
+      "break-core": {
+        "title": "Break up the core",
+        "story": "{{owner}} has decided this group has peaked. \"I want new faces in the starting five. Not next year. Now.\"",
+        "rule": "Replace at least 3 of your current starters."
+      },
+      "every-phase": {
+        "title": "Every phase of the floor",
+        "story": "{{coach}} wants upgrades everywhere, and {{owner}} agrees.",
+        "rule": "Sign a guard (PG or SG), a small forward and a big (PF or C)."
+      },
+      "statement-signing": {
+        "title": "Statement signing",
+        "story": "{{owner}} promised the fans a big name on the marquee.",
+        "rule": "Sign a top option in the front office."
+      },
+      "prove-it": {
+        "title": "Prove it in the market",
+        "story": "\"We say we're all in,\" {{owner}} tells {{gm}}. \"Show them.\"",
+        "rule": "Make one signing worth {{amount}} or more."
+      },
+      "hometown-hero": {
+        "title": "Hometown hero",
+        "story": "{{owner}} grew up a {{city}} fan and wants that history on the floor.",
+        "rule": "Have 2 players who played for the {{city}} (any season)."
+      },
+      "championship-dna": {
+        "title": "Championship DNA",
+        "story": "The board wants players who know what June feels like.",
+        "rule": "Have 2 players from title-winning team-seasons."
+      },
+      "all-star-pedigree": {
+        "title": "All-Star pedigree",
+        "story": "Sponsors want names they can put on billboards.",
+        "rule": "Have 3 players rated 88 or higher."
+      },
+      "youth-movement": {
+        "title": "Youth movement",
+        "story": "The analytics department says the window is three years out.",
+        "rule": "Have 3 players aged 23 or younger."
+      },
+      "veteran-leadership": {
+        "title": "Veteran leadership",
+        "story": "\"The locker room needs a grown-up,\" says {{coach}}.",
+        "rule": "Sign a player aged 32 or older."
+      },
+      "finals-experience": {
+        "title": "Finals experience",
+        "story": "{{owner}} is tired of playoff nerves.",
+        "rule": "Have a player whose team made the Finals that season."
+      },
+      "defense-wins": {
+        "title": "Defense wins championships",
+        "story": "{{coach}} wants a defensive identity, starting tonight.",
+        "rule": "Start 2 defenders: lockdown, 3-and-D or rim protector, or 90+ defense."
+      },
+      "space-floor": {
+        "title": "Space the floor",
+        "story": "{{gm}}'s analytics team wants threes. Lots of them.",
+        "rule": "Start 3 shooters: shooter, stretch big or 3-and-D, or 90+ from three."
+      },
+      "budget-discipline": {
+        "title": "Budget discipline",
+        "story": "{{owner}} is selling a minority stake and wants tidy books.",
+        "rule": "Finish the season with at least {{amount}} of cap room."
+      },
+      "big-spenders": {
+        "title": "Big spenders",
+        "story": "{{owner}} wants to flex on the rest of the division.",
+        "rule": "Every signing until the next card must cost {{amount}} or more."
+      },
+      "bargain-bin": {
+        "title": "Bargain bin",
+        "story": "Spending freeze. {{gm}} has the memo.",
+        "rule": "Every signing until the next card must cost {{amount}} or less."
+      },
+      "untouchable": {
+        "title": "Untouchable",
+        "story": "The fans adore {{name}}. Jerseys, murals, a sandwich named after him.",
+        "rule": "{{name}} must stay in your starting five all season."
+      },
+      "draft-wave": {
+        "title": "The draft wave",
+        "story": "Scouts call this rookie class generational, and the board wants to ride the wave.",
+        "rule": "Pick 1 of 3 young players to replace {{name}}, your lowest-rated player."
+      },
+      "positionless": {
+        "title": "Positionless basketball",
+        "story": "{{coach}} is installing a switch-everything system.",
+        "rule": "Start 3 players who can play 2 or more positions."
+      },
+      "rivalry-signing": {
+        "title": "Rivalry signing",
+        "story": "\"Nothing hurts a rival like taking their guy,\" grins {{owner}}.",
+        "rule": "Sign a player from a division rival."
+      },
+      "win-now": {
+        "title": "Win now",
+        "story": "{{owner}}'s patience is gone.",
+        "rule": "Win 8 of your next 10 games."
+      },
+      "streak-breaker": {
+        "title": "Streak breaker",
+        "story": "Losing is getting loud. The board wants answers.",
+        "rule": "Win your next 3 games."
+      },
+      "sell-high": {
+        "title": "Sell high",
+        "story": "A contender is calling {{gm}} about {{name}}.",
+        "rule": "Sell {{name}} for a player on a cheaper contract."
+      },
+      "payroll-purge": {
+        "title": "Payroll purge",
+        "story": "The new owner wants a leaner payroll, today.",
+        "rule": "Your 3 biggest contracts are swapped for cheaper players, and your cap drops {{amount}}."
+      },
+      "breakout-star": {
+        "title": "Breakout star",
+        "story": "The board loves a breakout story.",
+        "rule": "Have a player aged 25 or younger rated 85 or higher."
+      },
+      "iron-man": {
+        "title": "Iron man",
+        "story": "Load management is killing ticket sales.",
+        "rule": "Every starter at season's end must have played 70+ games."
+      },
+      "rebound-battle": {
+        "title": "Rebound battle",
+        "story": "\"We're getting killed on the glass,\" says {{coach}}.",
+        "rule": "Lead your conference in rebounds per game."
+      },
+      "scoring-title": {
+        "title": "Scoring title",
+        "story": "Marketing needs a face for the campaign.",
+        "rule": "Have the league's scoring leader."
+      },
+      "dpoy": {
+        "title": "Defensive Player of the Year",
+        "story": "{{coach}} wants a DPOY on his résumé.",
+        "rule": "Have the Defensive Player of the Year."
+      },
+      "sixth-man": {
+        "title": "Sixth Man",
+        "story": "Bench depth wins in April.",
+        "rule": "Have the Sixth Man of the Year."
+      },
+      "local-legend": {
+        "title": "Local legend",
+        "story": "The franchise is celebrating an anniversary, and {{owner}} wants a familiar face.",
+        "rule": "Have a player who played for the {{city}} (any season)."
+      },
+      "international-flavor": {
+        "title": "International flavor",
+        "story": "The league is expanding overseas, and {{owner}} wants in.",
+        "rule": "Have 2 international players."
+      },
+      "time-machine": {
+        "title": "Time machine",
+        "story": "{{owner}} is a nostalgia guy.",
+        "rule": "Have a player from a season before 1990."
+      },
+      "no-superteams": {
+        "title": "No superteams",
+        "story": "The league office is watching.",
+        "rule": "Have no more than one player rated 95+ at the next card."
+      },
+      "division-crown": {
+        "title": "Division crown",
+        "story": "Banners sell tickets.",
+        "rule": "Win your division."
+      },
+      "home-court": {
+        "title": "Home court",
+        "story": "The arena hasn't sold out a playoff game in years.",
+        "rule": "Finish with a top-4 seed."
+      },
+      "upset-special": {
+        "title": "Upset special",
+        "story": "{{owner}} bet the owner of the {{city}} a steak dinner.",
+        "rule": "Beat the {{city}} twice this season."
+      },
+      "arena-revenue": {
+        "title": "Arena revenue",
+        "story": "Sellouts, whatever the record.",
+        "rule": "+{{amount}} cap room."
+      },
+      "concerts": {
+        "title": "Concerts and events",
+        "story": "The building is booked every off-night.",
+        "rule": "+{{amount}} cap room."
+      },
+      "jersey-sponsor": {
+        "title": "New jersey sponsor",
+        "story": "A tech company buys the patch.",
+        "rule": "+{{amount}} cap room."
+      },
+      "tv-deal": {
+        "title": "TV deal bump",
+        "story": "{{reporter}}: national games are coming to town.",
+        "rule": "+{{amount}} cap room."
+      },
+      "buyer-interest": {
+        "title": "Buyer interest",
+        "story": "{{reporter}}: a billionaire wants in, and the valuation soars.",
+        "rule": "+{{amount}} cap room."
+      },
+      "owner-all-in": {
+        "title": "Owner goes all in",
+        "story": "{{owner}} opens the checkbook.",
+        "rule": "+{{amount}} cap room."
+      },
+      "playoff-gate": {
+        "title": "Playoff gate",
+        "story": "Home playoff games are projected.",
+        "rule": "+{{amount}} cap room."
+      },
+      "luxury-bill": {
+        "title": "Luxury tax bill",
+        "story": "Accounting found a mistake. A big one.",
+        "rule": "−{{amount}} cap room."
+      },
+      "owner-holds": {
+        "title": "Owner holds funds",
+        "story": "{{owner}} freezes spending until results improve.",
+        "rule": "−{{amount}} cap room, refunded if you win 6 of your next 10."
+      },
+      "sponsor-pulls": {
+        "title": "Sponsor pulls out",
+        "story": "{{reporter}}: the losing scared off a sponsor.",
+        "rule": "−{{amount}} cap room."
+      },
+      "insurance": {
+        "title": "Injury insurance",
+        "story": "Premiums are up after last year.",
+        "rule": "−{{amount}} cap room."
+      },
+      "tampering": {
+        "title": "Tampering fine",
+        "story": "{{reporter}}: the league caught your front office talking to an agent.",
+        "rule": "−{{amount}} cap room and you lose a respin."
+      },
+      "roster-crunch": {
+        "title": "Roster crunch",
+        "story": "Too many players fighting for minutes.",
+        "rule": "−{{amount}} cap room, and your next front office move must be a bench option."
+      },
+      "arena-repairs": {
+        "title": "Arena repairs",
+        "story": "{{reporter}}: the roof leaked during a national broadcast.",
+        "rule": "−{{amount}} cap room."
+      },
+      "fans-demand": {
+        "title": "Fans demand a move",
+        "story": "The fans want a splash, and {{owner}} is listening.",
+        "rule": "+{{amount}} cap room, but sign a top option before the next card (−2 if you don't)."
+      },
+      "double-nothing": {
+        "title": "Double or nothing",
+        "story": "{{owner}} flips a coin over the budget.",
+        "rule": "Heads: +{{amount}}. Tails: −{{amount}}."
+      },
+      "golden-ticket": {
+        "title": "Golden ticket",
+        "story": "{{gm}} has a free agent nobody else knows about.",
+        "rule": "Sign 1 of these free agents (up to {{amount}}) for any spot."
+      },
+      "bench-option": {
+        "title": "Bench option",
+        "story": "A solid pro will sign for the minimum to play for a winner.",
+        "rule": "Sign 1 of 3 at the minimum salary."
+      },
+      "veto": {
+        "title": "Veto",
+        "story": "{{owner}} owes you a favor.",
+        "rule": "Cancel any one board demand, now or later."
+      },
+      "free-respin": {
+        "title": "Free respin",
+        "story": "{{gm}} has new names on the phone list.",
+        "rule": "+1 respin in the front office."
+      },
+      "agent-friend": {
+        "title": "Agent friend",
+        "story": "An old friend represents half the league.",
+        "rule": "Your next front office signing costs 25% less."
+      },
+      "scout-tip": {
+        "title": "Scout's tip",
+        "story": "Your scout hears everything first.",
+        "rule": "At the next stop, two of the six cards are face up."
+      },
+      "player-coach": {
+        "title": "Player-coach",
+        "story": "{{name}} has started running the huddles himself.",
+        "rule": "{{name}} is +2 for the rest of the season."
+      },
+      "second-look": {
+        "title": "Second look",
+        "story": "{{owner}} lets you revisit a money call.",
+        "rule": "When you reveal a finance card, you can pick another card instead."
+      },
+      "injury-bug": {
+        "title": "Injury bug",
+        "story": "{{reporter}}: {{name}} tweaked a hamstring.",
+        "rule": "{{name}} is out for {{games}} games."
+      },
+      "coach-fired": {
+        "title": "Coach fired",
+        "story": "{{owner}} fires the head coach. Pick the next one.",
+        "rule": "Choose a new coach, or keep the interim for free."
+      },
+      "trade-demand": {
+        "title": "Trade demand",
+        "story": "{{reporter}}: {{name}} wants out.",
+        "rule": "Move {{name}} by the trade deadline, or he drops 3 for the season."
+      },
+      "media-frenzy": {
+        "title": "Media frenzy",
+        "story": "{{reporter}}: a viral post questions the team's effort.",
+        "rule": "−1 team rating for 10 games, lifted if you win 4 of the next 5."
+      },
+      "locker-drama": {
+        "title": "Locker room drama",
+        "story": "{{reporter}}: {{name}} and a teammate had to be separated at practice.",
+        "rule": "Bench {{name}} (your best bench player starts instead), or take −2 for 10 games."
+      },
+      "hot-streak": {
+        "title": "Hot streak",
+        "story": "The team is on fire.",
+        "rule": "+2 team rating for 10 games."
+      },
+      "legend-comeback": {
+        "title": "Legend comeback",
+        "story": "{{reporter}}: a retired legend wants one more ring.",
+        "rule": "Sign 1 of 3 legends at the minimum, for a bench spot."
+      },
+      "midseason-miracle": {
+        "title": "Midseason miracle",
+        "story": "{{name}} found something in the gym.",
+        "rule": "{{name}} is +4 for the rest of the season."
+      },
+      "contract-year": {
+        "title": "Contract year",
+        "story": "{{name}} is playing for his next deal.",
+        "rule": "{{name}} is +2 for the rest of the season."
+      },
+      "holdout": {
+        "title": "Holdout",
+        "story": "{{reporter}}: {{name}} wants a raise.",
+        "rule": "Pay him ({{amount}}) or he sits 5 games."
+      },
+      "rookie-wall": {
+        "title": "Rookie wall",
+        "story": "{{name}} looks gassed.",
+        "rule": "−1 team rating for 10 games."
+      },
+      "superteam-rumor": {
+        "title": "Superteam rumor",
+        "story": "{{reporter}}: the {{city}} just landed a star.",
+        "rule": "The {{city}} get +3 for the rest of the season."
+      }
+    }
   }
 }

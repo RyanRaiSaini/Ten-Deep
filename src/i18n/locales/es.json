@@ -51,7 +51,7 @@
     },
     "crisis": {
       "title": "Crisis de gestión",
-      "desc": "Draftea un equipo. La directiva fija un objetivo. Cada dos meses, una carta de crisis lo cambia todo."
+      "desc": "Draftea un equipo y sobrevive a la directiva. Siete veces por temporada, elige 1 de 6 cartas boca abajo: exigencias, dinero, ventajas y sorpresas. Si la Confianza de la directiva llega a 0, estás despedido."
     },
     "career": {
       "title": "Carrera",
@@ -246,7 +246,7 @@
   },
   "crisis": {
     "title": "Crisis de gestión",
-    "desc": "Draftea un equipo. La directiva fija un objetivo. Cada dos meses, una carta de crisis lo cambia todo.",
+    "desc": "Draftea un equipo y sobrevive a la directiva. Siete veces por temporada, elige 1 de 6 cartas boca abajo: exigencias, dinero, ventajas y sorpresas. Si la Confianza de la directiva llega a 0, estás despedido.",
     "m0": "Pretemporada",
     "m1": "Diciembre",
     "m2": "Febrero",
@@ -1170,5 +1170,474 @@
     "loading": "Abriendo los libros de historia…",
     "failed": "No se pudo cargar la historia. Revisa tu conexión.",
     "retry": "Reintentar"
+  },
+  "board": {
+    "title": "Crisis de gestión",
+    "pick": "Elige una carta",
+    "pickHint": "Seis cartas boca abajo. Toca una: exigencias, dinero, ventajas y sorpresas, todo está ahí dentro.",
+    "stopOf": "Parada {{n}} de {{total}}",
+    "months": {
+      "preseason": "Pretemporada",
+      "nov": "Noviembre",
+      "dec": "Diciembre",
+      "jan": "Enero",
+      "feb": "Febrero",
+      "mar": "Marzo",
+      "apr": "Abril"
+    },
+    "lead0": "Pretemporada. El pabellón vibra y la directiva vigila.",
+    "lead": "{{w}}-{{l}} tras {{g}} partidos.",
+    "kinds": {
+      "demand": "Exigencia de la directiva",
+      "finance": "Finanzas",
+      "perk": "Ventaja",
+      "event": "Historia"
+    },
+    "voices": {
+      "owner": "El dueño {{name}}",
+      "gm": "El GM {{name}}",
+      "reporter": "{{name}}, periodista del equipo",
+      "coach": "{{name}}",
+      "fans": "La afición"
+    },
+    "rule": "Regla",
+    "due": {
+      "next": "Antes de la próxima carta",
+      "deadline": "Antes de la fecha límite de traspasos",
+      "end": "Antes del final de la temporada regular",
+      "now": "Ahora mismo",
+      "games": "En los próximos {{n}} partidos"
+    },
+    "fail": "Si fallas: −{{n}} de Confianza de la directiva",
+    "noFail": "Sin confianza en juego",
+    "reward": "Si cumples: +1 de Confianza de la directiva",
+    "accept": "Entendido",
+    "confirm": "Confirmar",
+    "continue": "Volver a la temporada",
+    "missed": "Lo que dejaste pasar",
+    "peek": "Chivatazo del ojeador: dos cartas están boca arriba",
+    "secondLook": "Usar Segunda mirada (elegir otra vez)",
+    "pickIn": "Elige uno",
+    "pickOut": "¿Quién deja sitio?",
+    "heads": "¡Cara! +{{amount}}",
+    "tails": "Cruz. −{{amount}}",
+    "options": {
+      "offense": "Gurú del ataque: +3 durante 20 partidos, luego +1 ({{fee}})",
+      "defense": "Mente defensiva: +2 toda la temporada ({{fee}})",
+      "players": "Entrenador de vestuario: +1 toda la temporada, +1 de confianza ({{fee}})",
+      "interim": "Mantener al entrenador interino: gratis, −2 durante 10 partidos",
+      "bench": "Al banquillo con {{name}}",
+      "ride": "Aguantar el chaparrón: −2 durante 10 partidos",
+      "pay": "Darle la subida ({{fee}})",
+      "sit": "Que se siente 5 partidos"
+    },
+    "confidence": "Confianza de la directiva",
+    "confidenceShort": "Confianza",
+    "demands": "Exigencias de la directiva",
+    "noDemands": "Sin exigencias abiertas. Disfrútalo.",
+    "dueRound": "Para el partido {{n}}",
+    "dueEnd": "Para el final de temporada",
+    "progress": "{{have}}/{{need}}",
+    "status": {
+      "active": "Abierta",
+      "done": "Cumplida",
+      "failed": "Fallida",
+      "vetoed": "Vetada"
+    },
+    "veto": "Veto",
+    "perksHeld": "Ventajas en mano",
+    "respins": "Repeticiones: {{n}}",
+    "office": "Dirección deportiva",
+    "officeDesc": "Vende a un jugador por su contrato y ficha a un reemplazo: tres opciones con precio o una opción mínima de banquillo.",
+    "officeRoom": "Espacio salarial: {{room}}",
+    "officePick": "¿A quién vendes?",
+    "officeBudget": "Presupuesto para este puesto: {{budget}} (espacio + sus {{pay}})",
+    "officeRespin": "Volver a girar opciones ({{n}} restantes)",
+    "officeSign": "Fichar por {{pay}}",
+    "officeBack": "Elegir a otro",
+    "tiers": {
+      "low": "Ganga",
+      "mid": "Gama media",
+      "top": "Opción top",
+      "bench": "Opción de banquillo",
+      "perk": "Ventaja"
+    },
+    "overBudget": "Fuera de presupuesto",
+    "crunch": "Plantilla saturada: solo opción de banquillo en este movimiento",
+    "agent": "Agente amigo: 25 % de descuento en este fichaje",
+    "events": {
+      "done": "Exigencia cumplida: {{title}} (+1)",
+      "failed": "Exigencia fallida: {{title}} (−{{n}})",
+      "hot": "Racha caliente: la directiva está encantada (+1)",
+      "cold": "Racha fría: la directiva se inquieta (−1)",
+      "fired": "Estás despedido.",
+      "refund": "Fondos liberados: el dueño devuelve lo retenido"
+    },
+    "fired": "Despedido tras {{g}} partidos",
+    "firedSub": "{{owner}} ya ha visto suficiente. El GM interino termina la temporada.",
+    "recap": "La temporada en cartas",
+    "finalConfidence": "Confianza final de la directiva: {{n}}/10",
+    "c": {
+      "break-core": {
+        "title": "Romper el núcleo",
+        "story": "{{owner}} ha decidido que este grupo ya dio todo lo que tenía. «Quiero caras nuevas en el quinteto. No el año que viene. Ya.»",
+        "rule": "Sustituye al menos a 3 de tus titulares actuales."
+      },
+      "every-phase": {
+        "title": "Mejoras en todas las líneas",
+        "story": "{{coach}} quiere mejoras en todas partes, y {{owner}} está de acuerdo.",
+        "rule": "Ficha a un base o escolta (PG o SG), un alero (SF) y un pívot o ala-pívot (PF o C)."
+      },
+      "statement-signing": {
+        "title": "Fichaje de impacto",
+        "story": "{{owner}} prometió a la afición un gran nombre en el cartel.",
+        "rule": "Ficha una opción top en la dirección deportiva."
+      },
+      "prove-it": {
+        "title": "Demuéstralo en el mercado",
+        "story": "«Decimos que vamos a por todas», le dice {{owner}} a {{gm}}. «Demuéstralo.»",
+        "rule": "Haz un fichaje de {{amount}} o más."
+      },
+      "hometown-hero": {
+        "title": "Héroe local",
+        "story": "{{owner}} creció siendo aficionado de {{city}} y quiere esa historia en la pista.",
+        "rule": "Ten 2 jugadores que hayan jugado en {{city}} (cualquier temporada)."
+      },
+      "championship-dna": {
+        "title": "ADN de campeón",
+        "story": "La directiva quiere jugadores que saben lo que se siente en junio.",
+        "rule": "Ten 2 jugadores de equipos campeones (temporada del título)."
+      },
+      "all-star-pedigree": {
+        "title": "Pedigrí All-Star",
+        "story": "Los patrocinadores quieren nombres para ponerlos en las vallas.",
+        "rule": "Ten 3 jugadores con valoración de 88 o más."
+      },
+      "youth-movement": {
+        "title": "Revolución joven",
+        "story": "Analítica dice que la ventana se abre dentro de tres años.",
+        "rule": "Ten 3 jugadores de 23 años o menos."
+      },
+      "veteran-leadership": {
+        "title": "Liderazgo veterano",
+        "story": "«El vestuario necesita a un adulto», dice {{coach}}.",
+        "rule": "Ficha a un jugador de 32 años o más."
+      },
+      "finals-experience": {
+        "title": "Experiencia en Finales",
+        "story": "{{owner}} está harto de los nervios de playoffs.",
+        "rule": "Ten un jugador cuyo equipo llegó a las Finales esa temporada."
+      },
+      "defense-wins": {
+        "title": "La defensa gana títulos",
+        "story": "{{coach}} quiere una identidad defensiva, desde esta noche.",
+        "rule": "Pon de titulares a 2 defensores: lockdown, 3-and-D o protector del aro, o 90+ en defensa."
+      },
+      "space-floor": {
+        "title": "Abrir la pista",
+        "story": "El equipo de analítica de {{gm}} quiere triples. Muchos.",
+        "rule": "Pon de titulares a 3 tiradores: tirador, pívot abierto o 3-and-D, o 90+ en triples."
+      },
+      "budget-discipline": {
+        "title": "Disciplina presupuestaria",
+        "story": "{{owner}} vende una participación minoritaria y quiere las cuentas limpias.",
+        "rule": "Termina la temporada con al menos {{amount}} de espacio salarial."
+      },
+      "big-spenders": {
+        "title": "Grandes gastadores",
+        "story": "{{owner}} quiere presumir ante el resto de la división.",
+        "rule": "Cada fichaje hasta la próxima carta debe costar {{amount}} o más."
+      },
+      "bargain-bin": {
+        "title": "Rebajas",
+        "story": "Congelación de gasto. {{gm}} tiene el memorándum.",
+        "rule": "Cada fichaje hasta la próxima carta debe costar {{amount}} o menos."
+      },
+      "untouchable": {
+        "title": "Intocable",
+        "story": "La afición adora a {{name}}. Camisetas, murales, hasta un bocadillo con su nombre.",
+        "rule": "{{name}} debe seguir en tu quinteto titular toda la temporada."
+      },
+      "draft-wave": {
+        "title": "La ola del draft",
+        "story": "Los ojeadores dicen que esta clase de rookies es generacional, y la directiva quiere subirse a la ola.",
+        "rule": "Elige 1 de 3 jóvenes para reemplazar a {{name}}, tu jugador peor valorado."
+      },
+      "positionless": {
+        "title": "Baloncesto sin posiciones",
+        "story": "{{coach}} está instalando un sistema de cambiarlo todo.",
+        "rule": "Pon de titulares a 3 jugadores que puedan jugar 2 o más posiciones."
+      },
+      "rivalry-signing": {
+        "title": "Fichaje de rivalidad",
+        "story": "«Nada fastidia más a un rival que quitarle a su hombre», sonríe {{owner}}.",
+        "rule": "Ficha a un jugador de un rival de división."
+      },
+      "win-now": {
+        "title": "Ganar ya",
+        "story": "A {{owner}} se le acabó la paciencia.",
+        "rule": "Gana 8 de tus próximos 10 partidos."
+      },
+      "streak-breaker": {
+        "title": "Cortar la racha",
+        "story": "Perder ya se oye. La directiva quiere respuestas.",
+        "rule": "Gana tus próximos 3 partidos."
+      },
+      "sell-high": {
+        "title": "Vender en lo alto",
+        "story": "Un aspirante llama a {{gm}} por {{name}}.",
+        "rule": "Vende a {{name}} por un jugador con contrato más barato."
+      },
+      "payroll-purge": {
+        "title": "Purga salarial",
+        "story": "El nuevo dueño quiere una nómina más ligera, hoy.",
+        "rule": "Tus 3 contratos más altos se cambian por jugadores más baratos y tu tope baja {{amount}}."
+      },
+      "breakout-star": {
+        "title": "Estrella emergente",
+        "story": "A la directiva le encanta una historia de irrupción.",
+        "rule": "Ten un jugador de 25 años o menos con valoración de 85 o más."
+      },
+      "iron-man": {
+        "title": "Hombre de hierro",
+        "story": "La gestión de cargas está hundiendo la venta de entradas.",
+        "rule": "Cada titular al final de la temporada debe haber jugado 70+ partidos."
+      },
+      "rebound-battle": {
+        "title": "Batalla del rebote",
+        "story": "«Nos están matando en el rebote», dice {{coach}}.",
+        "rule": "Lidera tu conferencia en rebotes por partido."
+      },
+      "scoring-title": {
+        "title": "Título de anotador",
+        "story": "Marketing necesita una cara para la campaña.",
+        "rule": "Ten al máximo anotador de la liga."
+      },
+      "dpoy": {
+        "title": "Mejor Defensor del Año",
+        "story": "{{coach}} quiere un DPOY en su currículum.",
+        "rule": "Ten al Mejor Defensor del Año."
+      },
+      "sixth-man": {
+        "title": "Sexto hombre",
+        "story": "El fondo de banquillo gana en abril.",
+        "rule": "Ten al Sexto hombre del año."
+      },
+      "local-legend": {
+        "title": "Leyenda local",
+        "story": "La franquicia celebra un aniversario y {{owner}} quiere una cara conocida.",
+        "rule": "Ten un jugador que haya jugado en {{city}} (cualquier temporada)."
+      },
+      "international-flavor": {
+        "title": "Sabor internacional",
+        "story": "La liga se expande al extranjero y {{owner}} quiere entrar.",
+        "rule": "Ten 2 jugadores internacionales."
+      },
+      "time-machine": {
+        "title": "Máquina del tiempo",
+        "story": "{{owner}} es un nostálgico.",
+        "rule": "Ten un jugador de una temporada anterior a 1990."
+      },
+      "no-superteams": {
+        "title": "Sin superequipos",
+        "story": "La oficina de la liga está mirando.",
+        "rule": "No tengas más de un jugador con valoración de 95+ en la próxima carta."
+      },
+      "division-crown": {
+        "title": "Corona de división",
+        "story": "Los banderines venden entradas.",
+        "rule": "Gana tu división."
+      },
+      "home-court": {
+        "title": "Ventaja de campo",
+        "story": "El pabellón lleva años sin llenarse en un partido de playoffs.",
+        "rule": "Termina entre los 4 primeros cabezas de serie."
+      },
+      "upset-special": {
+        "title": "Sorpresón",
+        "story": "{{owner}} apostó una cena de filetes con el dueño de {{city}}.",
+        "rule": "Gana a {{city}} dos veces esta temporada."
+      },
+      "arena-revenue": {
+        "title": "Ingresos del pabellón",
+        "story": "Llenos, sea cual sea el balance.",
+        "rule": "+{{amount}} de espacio salarial."
+      },
+      "concerts": {
+        "title": "Conciertos y eventos",
+        "story": "El recinto está reservado cada noche libre.",
+        "rule": "+{{amount}} de espacio salarial."
+      },
+      "jersey-sponsor": {
+        "title": "Nuevo patrocinador de camiseta",
+        "story": "Una tecnológica compra el parche.",
+        "rule": "+{{amount}} de espacio salarial."
+      },
+      "tv-deal": {
+        "title": "Subida del contrato de TV",
+        "story": "{{reporter}}: llegan partidos de ámbito nacional.",
+        "rule": "+{{amount}} de espacio salarial."
+      },
+      "buyer-interest": {
+        "title": "Interés comprador",
+        "story": "{{reporter}}: un multimillonario quiere entrar y la valoración se dispara.",
+        "rule": "+{{amount}} de espacio salarial."
+      },
+      "owner-all-in": {
+        "title": "El dueño va con todo",
+        "story": "{{owner}} abre la chequera.",
+        "rule": "+{{amount}} de espacio salarial."
+      },
+      "playoff-gate": {
+        "title": "Taquilla de playoffs",
+        "story": "Se prevén partidos de playoffs en casa.",
+        "rule": "+{{amount}} de espacio salarial."
+      },
+      "luxury-bill": {
+        "title": "Factura del impuesto de lujo",
+        "story": "Contabilidad encontró un error. Uno gordo.",
+        "rule": "−{{amount}} de espacio salarial."
+      },
+      "owner-holds": {
+        "title": "El dueño retiene fondos",
+        "story": "{{owner}} congela el gasto hasta que mejoren los resultados.",
+        "rule": "−{{amount}} de espacio salarial, se devuelve si ganas 6 de tus próximos 10."
+      },
+      "sponsor-pulls": {
+        "title": "Un patrocinador se marcha",
+        "story": "{{reporter}}: las derrotas asustaron a un patrocinador.",
+        "rule": "−{{amount}} de espacio salarial."
+      },
+      "insurance": {
+        "title": "Seguro de lesiones",
+        "story": "Las primas suben tras el año pasado.",
+        "rule": "−{{amount}} de espacio salarial."
+      },
+      "tampering": {
+        "title": "Multa por tampering",
+        "story": "{{reporter}}: la liga pilló a tu dirección deportiva hablando con un agente.",
+        "rule": "−{{amount}} de espacio salarial y pierdes una repetición."
+      },
+      "roster-crunch": {
+        "title": "Plantilla saturada",
+        "story": "Demasiados jugadores peleando por minutos.",
+        "rule": "−{{amount}} de espacio salarial, y tu próximo movimiento en la dirección deportiva debe ser una opción de banquillo."
+      },
+      "arena-repairs": {
+        "title": "Reparaciones en el pabellón",
+        "story": "{{reporter}}: el techo tuvo goteras en plena retransmisión nacional.",
+        "rule": "−{{amount}} de espacio salarial."
+      },
+      "fans-demand": {
+        "title": "La afición exige un movimiento",
+        "story": "La afición quiere un bombazo y {{owner}} escucha.",
+        "rule": "+{{amount}} de espacio salarial, pero ficha una opción top antes de la próxima carta (−2 si no)."
+      },
+      "double-nothing": {
+        "title": "Doble o nada",
+        "story": "{{owner}} echa una moneda al aire con el presupuesto.",
+        "rule": "Cara: +{{amount}}. Cruz: −{{amount}}."
+      },
+      "golden-ticket": {
+        "title": "Billete dorado",
+        "story": "{{gm}} tiene un agente libre que nadie más conoce.",
+        "rule": "Ficha a 1 de estos agentes libres (hasta {{amount}}) para cualquier puesto."
+      },
+      "bench-option": {
+        "title": "Opción de banquillo",
+        "story": "Un profesional sólido firmará por el mínimo para jugar en un ganador.",
+        "rule": "Ficha a 1 de 3 por el salario mínimo."
+      },
+      "veto": {
+        "title": "Veto",
+        "story": "{{owner}} te debe un favor.",
+        "rule": "Cancela cualquier exigencia de la directiva, ahora o más tarde."
+      },
+      "free-respin": {
+        "title": "Repetición gratis",
+        "story": "{{gm}} tiene nombres nuevos en la agenda.",
+        "rule": "+1 repetición en la dirección deportiva."
+      },
+      "agent-friend": {
+        "title": "Agente amigo",
+        "story": "Un viejo amigo representa a media liga.",
+        "rule": "Tu próximo fichaje en la dirección deportiva cuesta un 25 % menos."
+      },
+      "scout-tip": {
+        "title": "Chivatazo del ojeador",
+        "story": "Tu ojeador se entera de todo el primero.",
+        "rule": "En la próxima parada, dos de las seis cartas estarán boca arriba."
+      },
+      "player-coach": {
+        "title": "Jugador-entrenador",
+        "story": "{{name}} ha empezado a dirigir los corrillos él mismo.",
+        "rule": "{{name}} tiene +2 el resto de la temporada."
+      },
+      "second-look": {
+        "title": "Segunda mirada",
+        "story": "{{owner}} te deja revisar una decisión de dinero.",
+        "rule": "Al revelar una carta de finanzas, puedes elegir otra carta en su lugar."
+      },
+      "injury-bug": {
+        "title": "Epidemia de lesiones",
+        "story": "{{reporter}}: {{name}} se resiente de un isquio.",
+        "rule": "{{name}} está de baja {{games}} partidos."
+      },
+      "coach-fired": {
+        "title": "Entrenador despedido",
+        "story": "{{owner}} despide al entrenador. Elige al siguiente.",
+        "rule": "Elige un nuevo entrenador o mantén al interino gratis."
+      },
+      "trade-demand": {
+        "title": "Petición de traspaso",
+        "story": "{{reporter}}: {{name}} quiere irse.",
+        "rule": "Traspasa a {{name}} antes de la fecha límite o baja 3 puntos toda la temporada."
+      },
+      "media-frenzy": {
+        "title": "Locura mediática",
+        "story": "{{reporter}}: una publicación viral cuestiona el esfuerzo del equipo.",
+        "rule": "−1 de valoración de equipo durante 10 partidos, se levanta si ganas 4 de los próximos 5."
+      },
+      "locker-drama": {
+        "title": "Drama en el vestuario",
+        "story": "{{reporter}}: {{name}} y un compañero tuvieron que ser separados en el entrenamiento.",
+        "rule": "Manda a {{name}} al banquillo (entra de titular tu mejor suplente) o asume −2 durante 10 partidos."
+      },
+      "hot-streak": {
+        "title": "Racha caliente",
+        "story": "El equipo está que arde.",
+        "rule": "+2 de valoración de equipo durante 10 partidos."
+      },
+      "legend-comeback": {
+        "title": "Regreso de una leyenda",
+        "story": "{{reporter}}: una leyenda retirada quiere un anillo más.",
+        "rule": "Ficha a 1 de 3 leyendas por el mínimo, para un puesto de banquillo."
+      },
+      "midseason-miracle": {
+        "title": "Milagro de mitad de temporada",
+        "story": "{{name}} encontró algo en el gimnasio.",
+        "rule": "{{name}} tiene +4 el resto de la temporada."
+      },
+      "contract-year": {
+        "title": "Año de contrato",
+        "story": "{{name}} juega por su próximo contrato.",
+        "rule": "{{name}} tiene +2 el resto de la temporada."
+      },
+      "holdout": {
+        "title": "Plante",
+        "story": "{{reporter}}: {{name}} quiere una subida.",
+        "rule": "Págale ({{amount}}) o se sienta 5 partidos."
+      },
+      "rookie-wall": {
+        "title": "El muro del rookie",
+        "story": "{{name}} parece agotado.",
+        "rule": "−1 de valoración de equipo durante 10 partidos."
+      },
+      "superteam-rumor": {
+        "title": "Rumor de superequipo",
+        "story": "{{reporter}}: {{city}} acaba de fichar a una estrella.",
+        "rule": "{{city}} gana +3 el resto de la temporada."
+      }
+    }
   }
 }

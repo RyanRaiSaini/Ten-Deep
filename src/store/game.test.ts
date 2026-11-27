@@ -164,9 +164,9 @@ describe('game store', () => {
     expect(useDaily.getState().days[key].progress!.trivia!.i).toBe(1);
   });
 
-  it('management crisis: preseason card, cards at Dec/Feb/Apr, then a board verdict', async () => {
+  it('management crisis: six face-down cards at each of 7 stops, Board Confidence, then a verdict', async () => {
     const { advance } = await import('../engine/season');
-    const { CARD_ROUNDS } = await import('../engine/crisis/deck');
+    const { STOPS } = await import('../engine/board/state');
     useGame.getState().newCrisis('current-2026');
     const pool = POOLS['current-2026'];
     useGame.setState({ draft: startDraft(pool, 'test-crisis') });
@@ -181,26 +181,34 @@ describe('game store', () => {
     useGame.getState().startSeason();
     expect(useGame.getState().phase).toBe('crisis');
     expect(useGame.getState().crisis!.objective).toBeTruthy();
-    expect(useGame.getState().crisis!.pending!.slot).toBe(0);
+    const b0 = useGame.getState().crisis!.board!;
+    expect(b0.confidence).toBe(10);
+    expect(b0.hand).toHaveLength(6);
 
-    for (let slot = 0; slot < 4; slot++) {
+    for (let i = 0; i < STOPS.length; i++) {
       const g = useGame.getState();
+      if (g.phase === 'result') break; // fired
       expect(g.phase).toBe('crisis');
-      const c = g.crisis!.pending!;
-      g.resolveCrisis({ incomingId: c.offer?.[0]?.id, outSlot: c.outSlots?.[0], option: 'a' });
+      g.revealBoardCard(i % 6);
+      const o = useGame.getState().crisis!.board!.offer!;
+      const fired = useGame.getState().resolveBoard({ incomingId: o.players?.[0]?.id, outSlot: o.outSlots?.[0], option: o.options?.[0] });
+      if (fired) break;
       expect(useGame.getState().phase).toBe('season');
-      // play to the next pause (deadline is skipped)
+      expect(useGame.getState().crisis!.board!.stop).toBe(i + 1);
       let s = { ...useGame.getState().season!, deadlineUsed: true };
       s = advance(s, 82);
-      if (slot < 3) {
-        expect(s.round).toBe(CARD_ROUNDS[slot + 1]);
+      if (i < STOPS.length - 1) {
+        expect(s.round).toBe(STOPS[i + 1]);
         useGame.getState().openCrisis(s);
       } else useGame.getState().setSeason(advance(s, 82));
     }
-    expect(useGame.getState().crisis!.drawn).toHaveLength(4);
-    useGame.getState().beginPlayoffs();
-    useGame.getState().simPlayoffs();
-    useGame.getState().finish();
+    if (useGame.getState().phase !== 'result') {
+      expect(useGame.getState().crisis!.board!.played).toHaveLength(7);
+      useGame.getState().beginPlayoffs();
+      expect(useGame.getState().crisis!.board!.demands.every((d) => d.status !== 'active')).toBe(true);
+      useGame.getState().simPlayoffs();
+      useGame.getState().finish();
+    }
     expect(['legend', 'extended', 'survived', 'fired']).toContain(useGame.getState().crisis!.verdict);
   });
 

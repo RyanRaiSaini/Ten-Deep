@@ -50,7 +50,7 @@
     },
     "crisis": {
       "title": "Managementcrisis",
-      "desc": "Stel een team samen. De directie zet een doel. Elke twee maanden verandert een crisiskaart alles."
+      "desc": "Draft een team en overleef het bestuur. Zeven keer per seizoen kies je 1 van 6 omgedraaide kaarten: eisen, geld, voordelen en verrassingen. Zakt het Vertrouwen van het bestuur naar 0, dan ben je ontslagen."
     },
     "career": {
       "title": "Carrière",
@@ -244,7 +244,7 @@
   },
   "crisis": {
     "title": "Managementcrisis",
-    "desc": "Stel een team samen. De directie zet een doel. Elke twee maanden verandert een crisiskaart alles.",
+    "desc": "Draft een team en overleef het bestuur. Zeven keer per seizoen kies je 1 van 6 omgedraaide kaarten: eisen, geld, voordelen en verrassingen. Zakt het Vertrouwen van het bestuur naar 0, dan ben je ontslagen.",
     "m0": "Voorbereiding",
     "m1": "December",
     "m2": "Februari",
@@ -1165,5 +1165,474 @@
     "loading": "De geschiedenisboeken gaan open…",
     "failed": "De geschiedenis kon niet laden. Controleer je verbinding.",
     "retry": "Opnieuw"
+  },
+  "board": {
+    "title": "Managementcrisis",
+    "pick": "Kies een kaart",
+    "pickHint": "Zes kaarten met de rug naar boven. Tik er een aan: eisen, geld, voordelen en verrassingen zitten er allemaal tussen.",
+    "stopOf": "Halte {{n}} van {{total}}",
+    "months": {
+      "preseason": "Voorbereiding",
+      "nov": "November",
+      "dec": "December",
+      "jan": "Januari",
+      "feb": "Februari",
+      "mar": "Maart",
+      "apr": "April"
+    },
+    "lead0": "Voorbereiding. De hal gonst en het bestuur kijkt mee.",
+    "lead": "{{w}}-{{l}} na {{g}} wedstrijden.",
+    "kinds": {
+      "demand": "Eis van het bestuur",
+      "finance": "Financiën",
+      "perk": "Voordeel",
+      "event": "Nieuws"
+    },
+    "voices": {
+      "owner": "Eigenaar {{name}}",
+      "gm": "GM {{name}}",
+      "reporter": "{{name}}, verslaggever",
+      "coach": "{{name}}",
+      "fans": "De fans"
+    },
+    "rule": "Regel",
+    "due": {
+      "next": "Voor de volgende kaart",
+      "deadline": "Voor de transferdeadline",
+      "end": "Voor het einde van de reguliere competitie",
+      "now": "Meteen",
+      "games": "In de komende {{n}} wedstrijden"
+    },
+    "fail": "Bij mislukken: −{{n}} Vertrouwen van het bestuur",
+    "noFail": "Geen vertrouwen op het spel",
+    "reward": "Gehaald: +1 Vertrouwen van het bestuur",
+    "accept": "Begrepen",
+    "confirm": "Bevestigen",
+    "continue": "Terug naar het seizoen",
+    "missed": "Wat je liet liggen",
+    "peek": "Tip van de scout: twee kaarten liggen open",
+    "secondLook": "Gebruik Tweede blik (kies opnieuw)",
+    "pickIn": "Kies er een",
+    "pickOut": "Wie maakt plaats?",
+    "heads": "Kop! +{{amount}}",
+    "tails": "Munt. −{{amount}}",
+    "options": {
+      "offense": "Aanvalsgoeroe: +3 voor 20 wedstrijden, daarna +1 ({{fee}})",
+      "defense": "Verdedigingsbrein: +2 voor het seizoen ({{fee}})",
+      "players": "Spelerscoach: +1 voor het seizoen, +1 vertrouwen ({{fee}})",
+      "interim": "Houd de interim-coach: gratis, −2 voor 10 wedstrijden",
+      "bench": "{{name}} naar de bank",
+      "ride": "Uitzitten: −2 voor 10 wedstrijden",
+      "pay": "Geef hem de opslag ({{fee}})",
+      "sit": "Laat hem 5 wedstrijden zitten"
+    },
+    "confidence": "Vertrouwen van het bestuur",
+    "confidenceShort": "Vertrouwen",
+    "demands": "Eisen van het bestuur",
+    "noDemands": "Geen openstaande eisen. Geniet ervan.",
+    "dueRound": "Uiterlijk wedstrijd {{n}}",
+    "dueEnd": "Uiterlijk aan het einde van het seizoen",
+    "progress": "{{have}}/{{need}}",
+    "status": {
+      "active": "Open",
+      "done": "Gehaald",
+      "failed": "Mislukt",
+      "vetoed": "Geblokkeerd"
+    },
+    "veto": "Veto",
+    "perksHeld": "Actieve voordelen",
+    "respins": "Herdraaien: {{n}}",
+    "office": "Front office",
+    "officeDesc": "Verkoop een speler voor zijn contract en teken een vervanger: drie opties met een prijs of een bankoptie op minimumsalaris.",
+    "officeRoom": "Salarisruimte: {{room}}",
+    "officePick": "Wie verkoop je?",
+    "officeBudget": "Budget voor deze plek: {{budget}} (ruimte + zijn {{pay}})",
+    "officeRespin": "Opties herdraaien ({{n}} over)",
+    "officeSign": "Tekenen voor {{pay}}",
+    "officeBack": "Kies iemand anders",
+    "tiers": {
+      "low": "Koopje",
+      "mid": "Middenklasse",
+      "top": "Topoptie",
+      "bench": "Bankoptie",
+      "perk": "Voordeel"
+    },
+    "overBudget": "Boven budget",
+    "crunch": "Selectiekrapte: bij deze zet alleen een bankoptie",
+    "agent": "Zaakwaarnemer-vriend: 25% korting op deze aanwinst",
+    "events": {
+      "done": "Eis gehaald: {{title}} (+1)",
+      "failed": "Eis mislukt: {{title}} (−{{n}})",
+      "hot": "Hete reeks: het bestuur is dolblij (+1)",
+      "cold": "Koude reeks: het bestuur wordt onrustig (−1)",
+      "fired": "Je bent ontslagen.",
+      "refund": "Geld vrijgegeven: de eigenaar betaalt de inhouding terug"
+    },
+    "fired": "Ontslagen na {{g}} wedstrijden",
+    "firedSub": "{{owner}} heeft genoeg gezien. De interim-GM maakt het seizoen af.",
+    "recap": "Het seizoen in kaarten",
+    "finalConfidence": "Eindstand Vertrouwen van het bestuur: {{n}}/10",
+    "c": {
+      "break-core": {
+        "title": "Breek de kern op",
+        "story": "{{owner}} vindt dat deze groep zijn piek heeft gehad. „Ik wil nieuwe gezichten in de basisvijf. Niet volgend jaar. Nu.”",
+        "rule": "Vervang minstens 3 van je huidige basisspelers."
+      },
+      "every-phase": {
+        "title": "Elke lijn van het veld",
+        "story": "{{coach}} wil overal upgrades en {{owner}} is het met hem eens.",
+        "rule": "Contracteer een guard (PG of SG), een small forward en een big (PF of C)."
+      },
+      "statement-signing": {
+        "title": "Statement-transfer",
+        "story": "{{owner}} beloofde de fans een grote naam op het affiche.",
+        "rule": "Teken een topoptie in de front office."
+      },
+      "prove-it": {
+        "title": "Bewijs het op de markt",
+        "story": "„We zeggen dat we all-in gaan”, zegt {{owner}} tegen {{gm}}. „Laat het zien.”",
+        "rule": "Doe één aanwinst van {{amount}} of meer."
+      },
+      "hometown-hero": {
+        "title": "Held van de stad",
+        "story": "{{owner}} groeide op als fan van {{city}} en wil die historie op het veld.",
+        "rule": "Heb 2 spelers die voor {{city}} speelden (in welk seizoen dan ook)."
+      },
+      "championship-dna": {
+        "title": "Kampioens-DNA",
+        "story": "Het bestuur wil spelers die weten hoe juni voelt.",
+        "rule": "Heb 2 spelers uit kampioensteams (team-seizoenen met de titel)."
+      },
+      "all-star-pedigree": {
+        "title": "All-Star-stamboom",
+        "story": "Sponsors willen namen die ze op billboards kunnen zetten.",
+        "rule": "Heb 3 spelers met een rating van 88 of hoger."
+      },
+      "youth-movement": {
+        "title": "Jeugdbeweging",
+        "story": "De analyseafdeling zegt dat het raam over drie jaar opengaat.",
+        "rule": "Heb 3 spelers van 23 jaar of jonger."
+      },
+      "veteran-leadership": {
+        "title": "Veteranenleiderschap",
+        "story": "„De kleedkamer heeft een volwassene nodig”, zegt {{coach}}.",
+        "rule": "Contracteer een speler van 32 jaar of ouder."
+      },
+      "finals-experience": {
+        "title": "Finale-ervaring",
+        "story": "{{owner}} is de play-offzenuwen beu.",
+        "rule": "Heb een speler wiens team dat seizoen de Finals haalde."
+      },
+      "defense-wins": {
+        "title": "Verdediging wint titels",
+        "story": "{{coach}} wil een verdedigende identiteit, vanaf vanavond.",
+        "rule": "Zet 2 verdedigers in de basis: lockdown, 3-and-D of rim protector, of 90+ verdediging."
+      },
+      "space-floor": {
+        "title": "Maak het veld groot",
+        "story": "Het analyseteam van {{gm}} wil driepunters. Veel driepunters.",
+        "rule": "Zet 3 schutters in de basis: shooter, stretch big of 3-and-D, of 90+ van achter de boog."
+      },
+      "budget-discipline": {
+        "title": "Budgetdiscipline",
+        "story": "{{owner}} verkoopt een minderheidsbelang en wil nette boeken.",
+        "rule": "Eindig het seizoen met minstens {{amount}} salarisruimte."
+      },
+      "big-spenders": {
+        "title": "Grootverdieners kopen",
+        "story": "{{owner}} wil indruk maken op de rest van de divisie.",
+        "rule": "Elke aanwinst tot de volgende kaart moet {{amount}} of meer kosten."
+      },
+      "bargain-bin": {
+        "title": "De koopjesbak",
+        "story": "Uitgavenstop. {{gm}} heeft de memo.",
+        "rule": "Elke aanwinst tot de volgende kaart mag maximaal {{amount}} kosten."
+      },
+      "untouchable": {
+        "title": "Onaantastbaar",
+        "story": "De fans aanbidden {{name}}. Shirts, muurschilderingen, een broodje naar hem genoemd.",
+        "rule": "{{name}} moet het hele seizoen in je basisvijf blijven."
+      },
+      "draft-wave": {
+        "title": "De draftgolf",
+        "story": "Scouts noemen deze rookieklas generatiebepalend en het bestuur wil op die golf mee.",
+        "rule": "Kies 1 van 3 jonge spelers ter vervanging van {{name}}, je laagst gewaardeerde speler."
+      },
+      "positionless": {
+        "title": "Positieloos basketbal",
+        "story": "{{coach}} voert een systeem in waarin alles wordt omgeschakeld.",
+        "rule": "Zet 3 spelers in de basis die 2 of meer posities kunnen spelen."
+      },
+      "rivalry-signing": {
+        "title": "Rivalen-transfer",
+        "story": "„Niets doet een rivaal meer pijn dan zijn man afpakken”, grijnst {{owner}}.",
+        "rule": "Contracteer een speler van een divisierivaal."
+      },
+      "win-now": {
+        "title": "Nu winnen",
+        "story": "{{owner}} heeft geen geduld meer.",
+        "rule": "Win 8 van je volgende 10 wedstrijden."
+      },
+      "streak-breaker": {
+        "title": "Reeks doorbreken",
+        "story": "Het verliezen wordt luid. Het bestuur wil antwoorden.",
+        "rule": "Win je volgende 3 wedstrijden."
+      },
+      "sell-high": {
+        "title": "Verkoop op de top",
+        "story": "Een titelkandidaat belt {{gm}} over {{name}}.",
+        "rule": "Verkoop {{name}} voor een speler met een goedkoper contract."
+      },
+      "payroll-purge": {
+        "title": "Salarisschoonmaak",
+        "story": "De nieuwe eigenaar wil vandaag nog een slankere salarislijst.",
+        "rule": "Je 3 duurste contracten worden geruild voor goedkopere spelers en je plafond zakt {{amount}}."
+      },
+      "breakout-star": {
+        "title": "Doorbraakster",
+        "story": "Het bestuur houdt van een doorbraakverhaal.",
+        "rule": "Heb een speler van 25 jaar of jonger met een rating van 85 of hoger."
+      },
+      "iron-man": {
+        "title": "IJzeren man",
+        "story": "Load management kost kaartverkoop.",
+        "rule": "Elke basisspeler moet aan het einde van het seizoen 70+ wedstrijden hebben gespeeld."
+      },
+      "rebound-battle": {
+        "title": "Rebound-strijd",
+        "story": "„We worden afgeslacht onder de basket”, zegt {{coach}}.",
+        "rule": "Leid je conference in rebounds per wedstrijd."
+      },
+      "scoring-title": {
+        "title": "Topscorerstitel",
+        "story": "Marketing zoekt een gezicht voor de campagne.",
+        "rule": "Heb de topscorer van de competitie."
+      },
+      "dpoy": {
+        "title": "Verdediger van het Jaar",
+        "story": "{{coach}} wil een DPOY op zijn cv.",
+        "rule": "Heb de Defensive Player of the Year."
+      },
+      "sixth-man": {
+        "title": "Zesde man",
+        "story": "Diepte op de bank wint in april.",
+        "rule": "Heb de Sixth Man of the Year."
+      },
+      "local-legend": {
+        "title": "Lokale legende",
+        "story": "De club viert een jubileum en {{owner}} wil een bekend gezicht.",
+        "rule": "Heb een speler die voor {{city}} speelde (in welk seizoen dan ook)."
+      },
+      "international-flavor": {
+        "title": "Internationale smaak",
+        "story": "De competitie breidt over zee uit en {{owner}} wil mee.",
+        "rule": "Heb 2 internationale spelers."
+      },
+      "time-machine": {
+        "title": "Tijdmachine",
+        "story": "{{owner}} is een nostalgiefan.",
+        "rule": "Heb een speler uit een seizoen van voor 1990."
+      },
+      "no-superteams": {
+        "title": "Geen superteams",
+        "story": "Het competitiebureau kijkt mee.",
+        "rule": "Heb bij de volgende kaart maximaal één speler met een rating van 95+."
+      },
+      "division-crown": {
+        "title": "Divisiekroon",
+        "story": "Banners verkopen kaartjes.",
+        "rule": "Win je divisie."
+      },
+      "home-court": {
+        "title": "Thuisvoordeel",
+        "story": "De arena was al jaren niet uitverkocht voor een play-offwedstrijd.",
+        "rule": "Eindig bij de top 4 van de plaatsing."
+      },
+      "upset-special": {
+        "title": "Verrassingsklapper",
+        "story": "{{owner}} wedde met de eigenaar van {{city}} om een biefstukdiner.",
+        "rule": "Versla {{city}} twee keer dit seizoen."
+      },
+      "arena-revenue": {
+        "title": "Arena-inkomsten",
+        "story": "Uitverkocht, wat het klassement ook zegt.",
+        "rule": "+{{amount}} salarisruimte."
+      },
+      "concerts": {
+        "title": "Concerten en evenementen",
+        "story": "De hal is elke vrije avond volgeboekt.",
+        "rule": "+{{amount}} salarisruimte."
+      },
+      "jersey-sponsor": {
+        "title": "Nieuwe shirtsponsor",
+        "story": "Een techbedrijf koopt de borstlap.",
+        "rule": "+{{amount}} salarisruimte."
+      },
+      "tv-deal": {
+        "title": "Hoger tv-contract",
+        "story": "{{reporter}}: landelijke wedstrijden komen naar de stad.",
+        "rule": "+{{amount}} salarisruimte."
+      },
+      "buyer-interest": {
+        "title": "Kopers staan klaar",
+        "story": "{{reporter}}: een miljardair wil instappen en de waardering schiet omhoog.",
+        "rule": "+{{amount}} salarisruimte."
+      },
+      "owner-all-in": {
+        "title": "Eigenaar gaat all-in",
+        "story": "{{owner}} pakt het chequeboek.",
+        "rule": "+{{amount}} salarisruimte."
+      },
+      "playoff-gate": {
+        "title": "Play-offrecette",
+        "story": "Er worden thuiswedstrijden in de play-offs verwacht.",
+        "rule": "+{{amount}} salarisruimte."
+      },
+      "luxury-bill": {
+        "title": "Luxebelastingrekening",
+        "story": "De boekhouding vond een fout. Een grote.",
+        "rule": "−{{amount}} salarisruimte."
+      },
+      "owner-holds": {
+        "title": "Eigenaar houdt geld vast",
+        "story": "{{owner}} bevriest de uitgaven tot de resultaten beter worden.",
+        "rule": "−{{amount}} salarisruimte, terug als je 6 van je volgende 10 wedstrijden wint."
+      },
+      "sponsor-pulls": {
+        "title": "Sponsor haakt af",
+        "story": "{{reporter}}: het verliezen joeg een sponsor weg.",
+        "rule": "−{{amount}} salarisruimte."
+      },
+      "insurance": {
+        "title": "Blessureverzekering",
+        "story": "De premies stijgen na vorig jaar.",
+        "rule": "−{{amount}} salarisruimte."
+      },
+      "tampering": {
+        "title": "Boete voor tampering",
+        "story": "{{reporter}}: de competitie betrapte je front office in gesprek met een zaakwaarnemer.",
+        "rule": "−{{amount}} salarisruimte en je verliest een herdraai."
+      },
+      "roster-crunch": {
+        "title": "Selectiekrapte",
+        "story": "Te veel spelers vechten om speeltijd.",
+        "rule": "−{{amount}} salarisruimte, en je volgende front-officezet moet een bankoptie zijn."
+      },
+      "arena-repairs": {
+        "title": "Arena-reparaties",
+        "story": "{{reporter}}: het dak lekte tijdens een landelijke uitzending.",
+        "rule": "−{{amount}} salarisruimte."
+      },
+      "fans-demand": {
+        "title": "Fans eisen een zet",
+        "story": "De fans willen een knaller en {{owner}} luistert.",
+        "rule": "+{{amount}} salarisruimte, maar teken een topoptie voor de volgende kaart (anders −2)."
+      },
+      "double-nothing": {
+        "title": "Dubbel of niets",
+        "story": "{{owner}} gooit een munt op over het budget.",
+        "rule": "Kop: +{{amount}}. Munt: −{{amount}}."
+      },
+      "golden-ticket": {
+        "title": "Gouden ticket",
+        "story": "{{gm}} kent een vrije speler waar niemand anders van weet.",
+        "rule": "Teken 1 van deze vrije spelers (tot {{amount}}) op elke plek."
+      },
+      "bench-option": {
+        "title": "Bankoptie",
+        "story": "Een degelijke prof tekent voor het minimum om voor een winnaar te spelen.",
+        "rule": "Teken 1 van 3 voor het minimumsalaris."
+      },
+      "veto": {
+        "title": "Veto",
+        "story": "{{owner}} is je een gunst verschuldigd.",
+        "rule": "Schrap één eis van het bestuur, nu of later."
+      },
+      "free-respin": {
+        "title": "Gratis herdraai",
+        "story": "{{gm}} heeft nieuwe namen op de belijst.",
+        "rule": "+1 herdraai in de front office."
+      },
+      "agent-friend": {
+        "title": "Zaakwaarnemer-vriend",
+        "story": "Een oude vriend vertegenwoordigt de halve competitie.",
+        "rule": "Je volgende front-officeaanwinst kost 25% minder."
+      },
+      "scout-tip": {
+        "title": "Tip van de scout",
+        "story": "Je scout hoort alles als eerste.",
+        "rule": "Bij de volgende halte liggen twee van de zes kaarten open."
+      },
+      "player-coach": {
+        "title": "Speler-coach",
+        "story": "{{name}} leidt de teamgesprekken nu zelf.",
+        "rule": "{{name}} is +2 voor de rest van het seizoen."
+      },
+      "second-look": {
+        "title": "Tweede blik",
+        "story": "{{owner}} laat je een geldbeslissing herzien.",
+        "rule": "Als je een financiënkaart onthult, mag je in plaats daarvan een andere kaart kiezen."
+      },
+      "injury-bug": {
+        "title": "Blessuregolf",
+        "story": "{{reporter}}: {{name}} voelde iets in de hamstring.",
+        "rule": "{{name}} mist {{games}} wedstrijden."
+      },
+      "coach-fired": {
+        "title": "Coach ontslagen",
+        "story": "{{owner}} ontslaat de hoofdcoach. Kies de volgende.",
+        "rule": "Kies een nieuwe coach, of houd de interim gratis."
+      },
+      "trade-demand": {
+        "title": "Transferverzoek",
+        "story": "{{reporter}}: {{name}} wil weg.",
+        "rule": "Verhandel {{name}} voor de transferdeadline, anders zakt hij 3 voor de rest van het seizoen."
+      },
+      "media-frenzy": {
+        "title": "Mediagekte",
+        "story": "{{reporter}}: een viraal bericht trekt de inzet van het team in twijfel.",
+        "rule": "−1 teamrating voor 10 wedstrijden, opgeheven als je 4 van de volgende 5 wint."
+      },
+      "locker-drama": {
+        "title": "Kleedkamerdrama",
+        "story": "{{reporter}}: {{name}} en een teamgenoot moesten op training uit elkaar gehaald worden.",
+        "rule": "Zet {{name}} op de bank (je beste bankspeler start in zijn plaats), of neem −2 voor 10 wedstrijden."
+      },
+      "hot-streak": {
+        "title": "Winstreeks",
+        "story": "Het team staat in brand.",
+        "rule": "+2 teamrating voor 10 wedstrijden."
+      },
+      "legend-comeback": {
+        "title": "Comeback van een legende",
+        "story": "{{reporter}}: een gepensioneerde legende wil nog één ring.",
+        "rule": "Teken 1 van 3 legendes voor het minimum, op een bankplek."
+      },
+      "midseason-miracle": {
+        "title": "Midseizoen-wonder",
+        "story": "{{name}} vond iets in de sportschool.",
+        "rule": "{{name}} is +4 voor de rest van het seizoen."
+      },
+      "contract-year": {
+        "title": "Contractjaar",
+        "story": "{{name}} speelt voor zijn volgende contract.",
+        "rule": "{{name}} is +2 voor de rest van het seizoen."
+      },
+      "holdout": {
+        "title": "Staking",
+        "story": "{{reporter}}: {{name}} wil opslag.",
+        "rule": "Betaal hem ({{amount}}) of hij zit 5 wedstrijden."
+      },
+      "rookie-wall": {
+        "title": "Rookie-muur",
+        "story": "{{name}} ziet er uitgeput uit.",
+        "rule": "−1 teamrating voor 10 wedstrijden."
+      },
+      "superteam-rumor": {
+        "title": "Superteam-gerucht",
+        "story": "{{reporter}}: {{city}} heeft zojuist een ster binnengehaald.",
+        "rule": "{{city}} krijgt +3 voor de rest van het seizoen."
+      }
+    }
   }
 }
