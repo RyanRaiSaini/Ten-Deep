@@ -74,21 +74,40 @@ function FranchiseGrid({ list, start }: { list: Mode[]; start: (m: Mode) => void
   );
 }
 
+/** A big Management Crisis choice: a gradient banner with an icon, a letter and what it is. */
+function HubBanner({ letter, title, desc, colors, icon, onPress, testID }: {
+  letter: string; title: string; desc: string; colors: [string, string, string]; icon: 'siren' | 'briefcase'; onPress: () => void; testID: string;
+}) {
+  const { t } = useTranslation();
+  return (
+    <Pressable onPress={onPress} testID={testID} accessibilityRole="button" accessibilityLabel={title} style={({ pressed }) => [styles.hub, pressed && styles.pressed]}>
+      <LinearGradient colors={colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+      <Text style={styles.hubLetter}>{letter}</Text>
+      <View style={styles.hubIcon}><Icon name={icon} size={44} /></View>
+      <View style={{ gap: 4 }}>
+        <Display size={34} align="left">{title}</Display>
+        <Text style={styles.hubDesc}>{desc}</Text>
+      </View>
+      <View style={styles.play}><Text style={styles.playText}>{t('home.play').toUpperCase()}</Text></View>
+    </Pressable>
+  );
+}
+
 /** Pick a franchise, an era, or (Management Crisis) any mode, then start a draft in it. */
 function ModePickerScreen() {
-  const { kind } = useLocalSearchParams<{ kind: 'franchise' | 'era' | 'crisis' }>();
+  const { kind } = useLocalSearchParams<{ kind: 'franchise' | 'era' | 'crisis' | 'crisis-season' }>();
   const { t } = useTranslation();
   const newRun = useGame((s) => s.newRun);
   const newCrisis = useGame((s) => s.newCrisis);
   // Retired modes stay playable from old saves but aren't offered.
   const shown = MODES.filter((m) => !m.hidden);
-  const start = (m: Mode) => { if (kind === 'crisis') newCrisis(m.id); else newRun(m.id); router.replace('/draft'); };
+  const start = (m: Mode) => { if (kind === 'crisis-season') newCrisis(m.id); else newRun(m.id); router.replace('/draft'); };
   const banners = (list: Mode[]) => list.map((m) => <ModeBanner key={m.id} m={m} onPress={() => start(m)} />);
 
   return (
     <Screen>
       <Header
-        title={kind === 'era' ? t('mode.era.title') : kind === 'crisis' ? t('crisis.title') : t('modes.pickFranchise')}
+        title={kind === 'era' ? t('mode.era.title') : kind === 'crisis' ? t('crisis.title') : kind === 'crisis-season' ? t('rebuild.hubA') : t('modes.pickFranchise')}
         left={<BackButton onPress={() => goBack()} />}
       />
       {kind === 'era' && (
@@ -105,7 +124,21 @@ function ModePickerScreen() {
       )}
       {kind === 'crisis' && (
         <>
-          <View style={styles.crisisHead} testID="crisis-head">
+          <View style={[styles.crisisHead, styles.crisisBig]} testID="crisis-head">
+            <LinearGradient colors={['#2A0E14', '#7A1424', '#E0452B']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+            <View style={styles.crisisIcon}><Icon name="siren" size={48} /></View>
+            <Display size={40}>{t('crisis.title')}</Display>
+            <Text style={[styles.crisisDesc, { textAlign: 'center' }]}>{t('crisis.desc')}</Text>
+          </View>
+          <HubBanner letter="A" title={t('rebuild.hubA')} desc={t('rebuild.hubADesc')} colors={['#3A0D16', '#A3182C', '#FF5A36']} icon="siren"
+            onPress={() => router.push('/modes/crisis-season')} testID="crisis-season" />
+          <HubBanner letter="B" title={t('rebuild.hubB')} desc={t('rebuild.hubBDesc')} colors={['#0E1A2B', '#1B3A63', '#2F6BFF']} icon="briefcase"
+            onPress={() => router.push('/rebuild')} testID="crisis-rebuild" />
+        </>
+      )}
+      {kind === 'crisis-season' && (
+        <>
+          <View style={styles.crisisHead}>
             <LinearGradient colors={['#2A0E14', '#7A1424', '#E0452B']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
             <View style={styles.crisisIcon}><Icon name="siren" size={40} /></View>
             <View style={{ flex: 1, gap: 4 }}>
@@ -154,6 +187,11 @@ const styles = StyleSheet.create({
   tileKicker: { color: 'rgba(255,255,255,0.85)', fontWeight: '900', letterSpacing: 1.6, fontSize: 10, textTransform: 'uppercase', ...shadowText },
   tileName: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 26, ...shadowText },
   tileMeta: { color: 'rgba(255,255,255,0.85)', fontWeight: '800', fontSize: 11, ...shadowText },
+  crisisBig: { flexDirection: 'column', paddingVertical: S.xl, gap: S.sm },
+  hub: { minHeight: 190, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 8, padding: S.xl, justifyContent: 'flex-end', gap: S.sm },
+  hubLetter: { position: 'absolute', right: 18, top: -6, fontFamily: FONT.display, fontSize: 110, color: 'rgba(255,255,255,0.16)' },
+  hubIcon: { width: 68, height: 68, borderRadius: 20, backgroundColor: 'rgba(255,255,255,0.18)', alignItems: 'center', justifyContent: 'center' },
+  hubDesc: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, maxWidth: '70%', ...shadowText },
   crisisHead: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.lg, borderRadius: 24, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7 },
   crisisIcon: { width: 64, height: 64, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.16)', alignItems: 'center', justifyContent: 'center' },
   crisisTitle: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 26 },

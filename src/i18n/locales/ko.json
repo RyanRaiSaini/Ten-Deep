@@ -1629,5 +1629,56 @@
         "rule": "{{city}}이(가) 시즌 종료까지 +3."
       }
     }
+  },
+  "rebuild": {
+    "title": "리빌드",
+    "desc": "실제 팀을 실제 연봉 총액과 리빌드 예산으로 인수하세요. 감독을 해임하거나 유임한 뒤 포지션별로 진행합니다. 유지하거나, 팔고 가격이 붙은 3개 옵션 또는 벤치 옵션 중 하나와 계약하세요. 포지션 사이사이에 구단 카드가 나옵니다.",
+    "pickTeam": "인수할 팀을 고르세요",
+    "spin": "팀 스핀: 현재 리그",
+    "spinHistory": "팀 스핀: 모든 시대",
+    "spinning": "스핀 중…",
+    "or": "또는 직접 선택",
+    "takeover": "{{team}}을(를) 인수했습니다",
+    "seasonLabel": "{{season}} 시즌",
+    "payroll": "실제 총연봉: {{pay}}",
+    "budget": "리빌드 예산: {{budget}}",
+    "budgetDesc": "선수를 팔면 그 계약 금액이 예산에 더해져요. 계약하면 예산이 줄어요.",
+    "start": "리빌드 시작",
+    "coachTitle": "감독",
+    "coachDesc": "감독을 유임하거나, 해임하고 세 명 중 한 명을 고용하세요.",
+    "coaches": {
+      "keep": {
+        "name": "감독 유임",
+        "desc": "무료. 변화 없음."
+      },
+      "offense": {
+        "name": "공격의 귀재",
+        "desc": "시즌 전반 팀 레이팅 +3, 이후 +1."
+      },
+      "defense": {
+        "name": "수비 전문가",
+        "desc": "시즌 내내 팀 레이팅 +2."
+      },
+      "development": {
+        "name": "육성 감독",
+        "desc": "24세 이하 선수 전원 +2."
+      }
+    },
+    "free": "무료",
+    "slotOf": "{{slot}} · {{total}}개 포지션 중 {{n}}번째",
+    "keep": "유지",
+    "sell": "{{pay}}에 팔기",
+    "sellTitle": "{{name}} 대체",
+    "budgetLeft": "예산: {{budget}}",
+    "cardStop": "리빌드 카드 {{n}}/{{total}}",
+    "tipoffTitle": "리빌드 완료",
+    "tipoff": "시즌 개막",
+    "srChange": "스쿼드 평점 {{from}} → {{to}}",
+    "coachPicked": "감독: {{name}}",
+    "openDemands": "팁오프부터 구단이 확인할 항목:",
+    "hubA": "크라이시스 시즌",
+    "hubADesc": "아무 모드에서나 10명을 드래프트하고, 구단 정거장 7곳을 버텨내세요.",
+    "hubB": "리빌드",
+    "hubBDesc": "실제 팀을 인수해 포지션별로 다시 세우세요."
   }
 }

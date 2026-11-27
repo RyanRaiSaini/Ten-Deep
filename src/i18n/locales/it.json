@@ -1639,5 +1639,56 @@
         "rule": "{{city}} ottiene +3 per il resto della stagione."
       }
     }
+  },
+  "rebuild": {
+    "title": "Ricostruzione",
+    "desc": "Prendi in mano una squadra reale con il suo monte ingaggi reale e un budget di ricostruzione. Licenzia l'allenatore o tienilo, poi vai ruolo per ruolo: tieni, oppure vendi e firma una di tre opzioni con prezzo o un'opzione dalla panchina. Tra un ruolo e l'altro arrivano le carte della dirigenza.",
+    "pickTeam": "Scegli una squadra da rilevare",
+    "spin": "Gira una squadra: lega di oggi",
+    "spinHistory": "Gira una squadra: qualsiasi era",
+    "spinning": "Giro in corso…",
+    "or": "oppure scegline una",
+    "takeover": "Hai rilevato i {{team}}",
+    "seasonLabel": "Stagione {{season}}",
+    "payroll": "Monte ingaggi reale: {{pay}}",
+    "budget": "Budget di ricostruzione: {{budget}}",
+    "budgetDesc": "Vendere un giocatore aggiunge il suo contratto al budget. Firmarne uno lo spende.",
+    "start": "Inizia la ricostruzione",
+    "coachTitle": "L'allenatore",
+    "coachDesc": "Tieni l'allenatore, oppure licenzialo e assumine uno su tre.",
+    "coaches": {
+      "keep": {
+        "name": "Tieni l'allenatore",
+        "desc": "Gratis. Nessun cambiamento."
+      },
+      "offense": {
+        "name": "Guru dell'attacco",
+        "desc": "+3 alla valutazione squadra per la prima metà di stagione, poi +1."
+      },
+      "defense": {
+        "name": "Mente difensiva",
+        "desc": "+2 alla valutazione squadra per tutta la stagione."
+      },
+      "development": {
+        "name": "Allenatore di sviluppo",
+        "desc": "Ogni giocatore fino a 24 anni prende +2."
+      }
+    },
+    "free": "Gratis",
+    "slotOf": "{{slot}} · ruolo {{n}} di {{total}}",
+    "keep": "Tienilo",
+    "sell": "Vendi per {{pay}}",
+    "sellTitle": "Sostituisci {{name}}",
+    "budgetLeft": "Budget: {{budget}}",
+    "cardStop": "Carta di ricostruzione {{n}} di {{total}}",
+    "tipoffTitle": "La ricostruzione è finita",
+    "tipoff": "Via alla stagione",
+    "srChange": "Valutazione squadra {{from}} → {{to}}",
+    "coachPicked": "Allenatore: {{name}}",
+    "openDemands": "La dirigenza controllerà questi punti dalla palla a due:",
+    "hubA": "Stagione di crisi",
+    "hubADesc": "Scegli dieci in qualsiasi modalità e sopravvivi a sette tappe della dirigenza.",
+    "hubB": "Ricostruzione",
+    "hubBDesc": "Prendi una squadra reale e ricostruiscila, ruolo per ruolo."
   }
 }

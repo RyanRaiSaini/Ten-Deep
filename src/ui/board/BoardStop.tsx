@@ -4,7 +4,7 @@
  */
 import { Redirect, router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Easing, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { feel } from '../../audio/feel';
@@ -25,6 +25,11 @@ import { ConfidenceMeter } from './BoardPanel';
 import { KIND_ICON, cardColor, cardTitle, cardVars } from './text';
 
 const native = Platform.OS !== 'web';
+
+/** A full screen, or a plain column when the stop sits inside another screen. */
+function Shell({ inline, children }: { inline: boolean; children: ReactNode }) {
+  return inline ? <View style={{ gap: S.md }}>{children}</View> : <Screen>{children}</Screen>;
+}
 
 function FaceDown({ n, peek, onPick, disabled }: { n: number; peek?: string; onPick: () => void; disabled: boolean }) {
   const { t } = useTranslation();
@@ -62,7 +67,11 @@ function FaceDown({ n, peek, onPick, disabled }: { n: number; peek?: string; onP
   );
 }
 
-export function BoardStop() {
+/**
+ * `inline`: shown inside another screen (Rebuild's cards between positions): its own label, no redirects, and the
+ * parent decides what happens once the card is resolved.
+ */
+export function BoardStop({ inline }: { inline?: { label: string; onResolved: (fired: boolean) => void } } = {}) {
   const { t } = useTranslation();
   const g = useGame();
   const board = g.crisis?.board;
@@ -88,21 +97,29 @@ export function BoardStop() {
     feel(def.tone === 'good' ? 'fanfare' : def.tone === 'gamble' ? 'rip' : 'buzzer');
   }, [picked, flip, shine]);
 
-  if (g.phase === 'result') return <Redirect href="/result" />;
-  if (!board || !g.season || (!board.hand && !picked)) return <Redirect href="/season" />;
+  if (g.phase === 'result') return inline ? null : <Redirect href="/result" />;
+  if (!board || !g.season || (!board.hand && !picked)) return inline ? null : <Redirect href="/season" />;
   const season = g.season;
   const scale = moneyScaleFor(g.poolId);
   const user = season.teams[0];
   const rec = season.records[0];
   const month = STOP_MONTHS[Math.min(board.stop, STOP_MONTHS.length - 1)];
 
-  const done = (fired: boolean) => { feel('thunk'); router.replace(fired ? '/result' : '/season'); };
+  const done = (fired: boolean) => {
+    feel('thunk');
+    if (inline) inline.onResolved(fired);
+    else router.replace(fired ? '/result' : '/season');
+  };
 
   const header = (
     <>
       <View style={styles.top}>
-        <Label color={C.hardwood}>{t('board.title')} · {t(`board.months.${month}`)}</Label>
-        <Text style={styles.count}>{t('board.stopOf', { n: board.stop + 1, total: STOPS.length })}</Text>
+        {inline ? <Label color={C.hardwood}>{inline.label}</Label> : (
+          <>
+            <Label color={C.hardwood}>{t('board.title')} · {t(`board.months.${month}`)}</Label>
+            <Text style={styles.count}>{t('board.stopOf', { n: board.stop + 1, total: STOPS.length })}</Text>
+          </>
+        )}
       </View>
       <ConfidenceMeter value={board.confidence} />
       <Text style={styles.lead}>{season.round === 0 ? t('board.lead0') : t('board.lead', { w: rec.w, l: rec.l, g: season.round })}</Text>
@@ -111,7 +128,7 @@ export function BoardStop() {
 
   if (!picked) {
     return (
-      <Screen>
+      <Shell inline={!!inline}>
         {header}
         <Text style={styles.pickTitle}>{t('board.pick')}</Text>
         <Text style={styles.hint}>{t('board.pickHint')}</Text>
@@ -121,7 +138,7 @@ export function BoardStop() {
             <FaceDown key={`${board.stop}-${i}`} n={i} peek={board.peek?.includes(i) ? id : undefined} disabled={false} onPick={() => g.revealBoardCard(i)} />
           ))}
         </View>
-      </Screen>
+      </Shell>
     );
   }
 
@@ -146,7 +163,7 @@ export function BoardStop() {
 
   return (
     <MoneyScale.Provider value={scale}>
-      <Screen>
+      <Shell inline={!!inline}>
         {header}
         <Animated.View testID="board-reveal" style={[styles.card, { borderColor: color, shadowColor: color, transform: [{ perspective: 900 }, { rotateY }, { scale: cardScale }] }]}>
           <Animated.View pointerEvents="none" style={[styles.shine, { transform: [{ translateX: shineX }, { rotate: '20deg' }] }]} />
@@ -215,7 +232,7 @@ export function BoardStop() {
             </View>
           ))}
         </View>
-      </Screen>
+      </Shell>
     </MoneyScale.Provider>
   );
 }

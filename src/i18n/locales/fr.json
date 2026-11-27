@@ -1639,5 +1639,56 @@
         "rule": "{{city}} gagne +3 jusqu'à la fin de la saison."
       }
     }
+  },
+  "rebuild": {
+    "title": "Reconstruction",
+    "desc": "Reprends une vraie équipe avec sa vraie masse salariale et un budget de reconstruction. Vire le coach ou garde-le, puis avance poste par poste : garde, ou vends et signe l'une des trois options chiffrées ou une option du banc. Des cartes du conseil s'intercalent entre les postes.",
+    "pickTeam": "Choisis une équipe à reprendre",
+    "spin": "Tourne une équipe : ligue actuelle",
+    "spinHistory": "Tourne une équipe : toutes les époques",
+    "spinning": "Tirage en cours…",
+    "or": "ou choisis-en une",
+    "takeover": "Tu as repris les {{team}}",
+    "seasonLabel": "Saison {{season}}",
+    "payroll": "Masse salariale réelle : {{pay}}",
+    "budget": "Budget de reconstruction : {{budget}}",
+    "budgetDesc": "Vendre un joueur ajoute son contrat au budget. En signer un le dépense.",
+    "start": "Lancer la reconstruction",
+    "coachTitle": "Le coach",
+    "coachDesc": "Garde le coach, ou vire-le et embauche l'un des trois.",
+    "coaches": {
+      "keep": {
+        "name": "Garder le coach",
+        "desc": "Gratuit. Aucun changement."
+      },
+      "offense": {
+        "name": "Gourou de l'attaque",
+        "desc": "+3 de note d'équipe en première moitié de saison, puis +1."
+      },
+      "defense": {
+        "name": "Cerveau défensif",
+        "desc": "+2 de note d'équipe toute la saison."
+      },
+      "development": {
+        "name": "Coach de développement",
+        "desc": "Chaque joueur de 24 ans ou moins gagne +2."
+      }
+    },
+    "free": "Gratuit",
+    "slotOf": "{{slot}} · poste {{n}} sur {{total}}",
+    "keep": "Le garder",
+    "sell": "Vendre pour {{pay}}",
+    "sellTitle": "Remplacer {{name}}",
+    "budgetLeft": "Budget : {{budget}}",
+    "cardStop": "Carte de reconstruction {{n}} sur {{total}}",
+    "tipoffTitle": "La reconstruction est terminée",
+    "tipoff": "Lancer la saison",
+    "srChange": "Note d'équipe {{from}} → {{to}}",
+    "coachPicked": "Coach : {{name}}",
+    "openDemands": "Le conseil vérifiera ces points dès le coup d'envoi :",
+    "hubA": "Saison de crise",
+    "hubADesc": "Draft dix joueurs dans n'importe quel mode, puis survis à sept étapes du conseil.",
+    "hubB": "Reconstruction",
+    "hubBDesc": "Reprends une vraie équipe et reconstruis-la, poste par poste."
   }
 }

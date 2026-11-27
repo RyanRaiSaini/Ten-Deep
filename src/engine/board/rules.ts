@@ -21,7 +21,7 @@ export interface BoardCtx {
 
 const roster = (s: SeasonState) => ALL_SLOTS.map((k) => s.teams[0].slots[k]);
 const starters = (s: SeasonState) => STARTER_SLOTS.map((k) => s.teams[0].slots[k]);
-const since = (b: BoardState, d: Demand): Signing[] => b.signings.filter((x) => x.round >= d.from);
+const since = (b: BoardState, d: Demand): Signing[] => b.signings.slice(d.sig ?? 0).filter((x) => x.round >= d.from);
 const real = (xs: Signing[]) => xs.filter((x) => x.tier !== 'perk');
 const count = <T>(xs: T[], f: (x: T) => boolean) => xs.filter(f).length;
 const winsSince = (s: SeasonState, d: Demand) => s.records[0].w - (d.wins ?? 0);

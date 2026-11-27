@@ -1634,5 +1634,56 @@
         "rule": "{{city}} sezon sonuna kadar +3 alır."
       }
     }
+  },
+  "rebuild": {
+    "title": "Yeniden Yapılanma",
+    "desc": "Gerçek bir takımı gerçek maaş listesi ve bir yeniden yapılanma bütçesiyle devral. Koçu kov ya da tut, sonra pozisyon pozisyon ilerle: tut, ya da sat ve fiyatlı üç seçenekten biriyle ya da bir yedek seçeneğiyle imzala. Pozisyonlar arasında yönetim kartları çıkar.",
+    "pickTeam": "Devralacağın takımı seç",
+    "spin": "Takım çevir: bugünün ligi",
+    "spinHistory": "Takım çevir: herhangi bir dönem",
+    "spinning": "Çevriliyor…",
+    "or": "ya da birini seç",
+    "takeover": "{{team}} takımını devraldın",
+    "seasonLabel": "{{season}} sezonu",
+    "payroll": "Gerçek maaş listesi: {{pay}}",
+    "budget": "Yeniden yapılanma bütçesi: {{budget}}",
+    "budgetDesc": "Bir oyuncuyu satmak sözleşmesini bütçeye ekler. Birini imzalamak bütçeden harcar.",
+    "start": "Yeniden yapılanmayı başlat",
+    "coachTitle": "Koç",
+    "coachDesc": "Koçu tut ya da kov ve üç adaydan birini işe al.",
+    "coaches": {
+      "keep": {
+        "name": "Koçu tut",
+        "desc": "Bedava. Değişiklik yok."
+      },
+      "offense": {
+        "name": "Hücum gurusu",
+        "desc": "Sezonun ilk yarısında +3 takım reytingi, sonra +1."
+      },
+      "defense": {
+        "name": "Savunma beyni",
+        "desc": "Tüm sezon +2 takım reytingi."
+      },
+      "development": {
+        "name": "Gelişim koçu",
+        "desc": "24 yaş ve altı her oyuncu +2 alır."
+      }
+    },
+    "free": "Bedava",
+    "slotOf": "{{slot}} · pozisyon {{n}} / {{total}}",
+    "keep": "Tut",
+    "sell": "{{pay}} karşılığında sat",
+    "sellTitle": "{{name}} yerine birini al",
+    "budgetLeft": "Bütçe: {{budget}}",
+    "cardStop": "Yeniden yapılanma kartı {{n}} / {{total}}",
+    "tipoffTitle": "Yeniden yapılanma tamam",
+    "tipoff": "Sezonu başlat",
+    "srChange": "Kadro puanı {{from}} → {{to}}",
+    "coachPicked": "Koç: {{name}}",
+    "openDemands": "Yönetim bunları açılış sıçramasından itibaren kontrol edecek:",
+    "hubA": "Kriz Sezonu",
+    "hubADesc": "Herhangi bir modda on kişilik kadro kur, sonra yedi yönetim durağından sağ çık.",
+    "hubB": "Yeniden Yapılanma",
+    "hubBDesc": "Gerçek bir takımı devral ve pozisyon pozisyon yeniden kur."
   }
 }

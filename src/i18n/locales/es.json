@@ -1639,5 +1639,56 @@
         "rule": "{{city}} gana +3 el resto de la temporada."
       }
     }
+  },
+  "rebuild": {
+    "title": "Reconstrucción",
+    "desc": "Toma las riendas de un equipo real con su nómina real y un presupuesto de reconstrucción. Despide al entrenador o mantenlo, y luego ve posición por posición: conserva, o vende y ficha a una de tres opciones con precio o una opción del banquillo. Entre posiciones salen cartas de la directiva.",
+    "pickTeam": "Elige un equipo para tomar el mando",
+    "spin": "Gira un equipo: liga actual",
+    "spinHistory": "Gira un equipo: cualquier era",
+    "spinning": "Girando…",
+    "or": "o elige uno",
+    "takeover": "Has tomado el mando de los {{team}}",
+    "seasonLabel": "Temporada {{season}}",
+    "payroll": "Nómina real: {{pay}}",
+    "budget": "Presupuesto de reconstrucción: {{budget}}",
+    "budgetDesc": "Vender a un jugador suma su contrato al presupuesto. Fichar a uno lo gasta.",
+    "start": "Empezar la reconstrucción",
+    "coachTitle": "El entrenador",
+    "coachDesc": "Mantén al entrenador, o despídelo y contrata a uno de tres.",
+    "coaches": {
+      "keep": {
+        "name": "Mantener al entrenador",
+        "desc": "Gratis. Sin cambios."
+      },
+      "offense": {
+        "name": "Gurú del ataque",
+        "desc": "+3 de valoración del equipo en la primera mitad de la temporada, luego +1."
+      },
+      "defense": {
+        "name": "Mente defensiva",
+        "desc": "+2 de valoración del equipo toda la temporada."
+      },
+      "development": {
+        "name": "Entrenador de desarrollo",
+        "desc": "Todo jugador de 24 años o menos recibe +2."
+      }
+    },
+    "free": "Gratis",
+    "slotOf": "{{slot}} · posición {{n}} de {{total}}",
+    "keep": "Conservarlo",
+    "sell": "Vender por {{pay}}",
+    "sellTitle": "Sustituir a {{name}}",
+    "budgetLeft": "Presupuesto: {{budget}}",
+    "cardStop": "Carta de reconstrucción {{n}} de {{total}}",
+    "tipoffTitle": "La reconstrucción ha terminado",
+    "tipoff": "Arrancar la temporada",
+    "srChange": "Valoración del equipo {{from}} → {{to}}",
+    "coachPicked": "Entrenador: {{name}}",
+    "openDemands": "La directiva lo comprobará desde el salto inicial:",
+    "hubA": "Temporada de crisis",
+    "hubADesc": "Draftea diez en cualquier modo y sobrevive a siete paradas de la directiva.",
+    "hubB": "Reconstrucción",
+    "hubBDesc": "Toma un equipo real y reconstrúyelo, posición por posición."
   }
 }
