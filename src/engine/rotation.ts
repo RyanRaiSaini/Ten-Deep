@@ -100,7 +100,8 @@ export function teamStrength(lineup: LineupEntry[], mod = 0): Strength {
   }
   // Elite teams pull away (an 82-0 needs a 96), judged on the whole team's rating (its Squad Rating), so a squad
   // plays like its number whether it's built on two stars or on depth.
-  const elite = SIM.elite * Math.max(0, rating + mod - SIM.eliteFrom) ** 2;
+  const sr = rating + mod;
+  const elite = SIM.elite * Math.max(0, sr - SIM.eliteFrom) ** 2 + SIM.eliteTop * Math.max(0, sr - SIM.eliteTopFrom) ** 2;
   off += mod + elite;
   def += mod + elite;
   return { off, def, net: off + def };

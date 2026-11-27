@@ -46,6 +46,12 @@ export const SIM = {
    */
   elite: 0.2,
   eliteFrom: 88,
+  /**
+   * The very top pulls away harder: + eliteTop × (Squad Rating − eliteTopFrom)² on top of the elite bonus. So few
+   * players are rated that high that a 95 is a different animal from a 93 (about 79 wins against 70).
+   */
+  eliteTop: 0,
+  eliteTopFrom: 93,
   /** Each season the strongest AI rosters get +contenderBoost: two or three real title favourites to get past. */
   contenders: 3,
   contenderBoost: 8,
