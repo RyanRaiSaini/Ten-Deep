@@ -172,7 +172,8 @@
     "playAgain": "Draft again",
     "home": "Home",
     "awards": "Season awards",
-    "playIn": "Out in the play-in"
+    "playIn": "Out in the play-in",
+    "teamLeaders": "Team leaders"
   },
   "injury": {
     "Day-to-day": "Day-to-day",
@@ -655,7 +656,9 @@
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
     "you": "You",
     "standings": "Standings",
-    "legend": "Top 6 are in. 7 to 10 play in. ★ leads its division."
+    "legend": "Top 6 are in. 7 to 10 play in. ★ leads its division.",
+    "stl": "Steals per game",
+    "blk": "Blocks per game"
   },
   "news": {
     "title": "News",
@@ -686,7 +689,9 @@
     "pts": "PTS",
     "reb": "REB",
     "ast": "AST",
-    "tap": "Tap a recent game for its box score"
+    "tap": "Tap a recent game for its box score",
+    "stl": "STL",
+    "blk": "BLK"
   },
   "trade": {
     "title": "Trade",

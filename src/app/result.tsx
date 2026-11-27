@@ -23,7 +23,7 @@ import { Confetti, CountUp } from '../ui/fx';
 import { useRunColors } from '../ui/runColors';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, F, S } from '../ui/theme';
-import { AWARDS, awardRace } from '../engine/story/leaders';
+import { AWARDS, awardRace, teamLeaders } from '../engine/story/leaders';
 import { Icon } from '../ui/icons';
 import { shareText } from '../ui/share';
 import { useProfile } from '../store/profile';
@@ -125,6 +125,15 @@ function ResultScreen() {
       <SeasonBreakdown season={season} />
       <RarityBadge wins={rec.w} />
       {!g.replay && <LeagueGain gained={g.leagueGain} stake={g.stake} />}
+      <Card style={{ gap: S.sm }} testID="team-leaders">
+        <View style={styles.awardsHead}><Icon name="chart" size={26} /><Text style={styles.awardsTitle}>{t('result.teamLeaders')}</Text></View>
+        {teamLeaders(season).map((l) => (
+          <View key={l.stat} style={styles.awardRow}>
+            <Text style={styles.awardName}>{t(`league.${l.stat}`)}</Text>
+            <Text style={styles.awardWinner} numberOfLines={1}>{l.player.name} · {l.value.toFixed(1)}</Text>
+          </View>
+        ))}
+      </Card>
       <Card style={{ gap: S.sm }} testID="awards">
         <View style={styles.awardsHead}><Icon name="medal" size={26} /><Text style={styles.awardsTitle}>{t('result.awards')}</Text></View>
         {AWARDS.map((a) => {

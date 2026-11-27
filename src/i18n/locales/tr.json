@@ -172,7 +172,8 @@
     "playAgain": "Yeniden draft yap",
     "home": "Ana sayfa",
     "awards": "Sezon ödülleri",
-    "playIn": "Play-in'de elendi"
+    "playIn": "Play-in'de elendi",
+    "teamLeaders": "Takım liderleri"
   },
   "injury": {
     "Day-to-day": "Günlük takip",
@@ -655,7 +656,9 @@
     "line": "{{p}} PTS · {{r}} REB · {{a}} AST",
     "you": "Sen",
     "standings": "Puan durumu",
-    "legend": "İlk 6 doğrudan girer. 7-10 arası play-in oynar. ★ divizyon lideri."
+    "legend": "İlk 6 doğrudan girer. 7-10 arası play-in oynar. ★ divizyon lideri.",
+    "stl": "Maç başı top çalma",
+    "blk": "Maç başı blok"
   },
   "news": {
     "title": "Haberler",
@@ -686,7 +689,9 @@
     "pts": "SY",
     "reb": "RB",
     "ast": "AS",
-    "tap": "İstatistikler için yakın tarihli bir maça dokun"
+    "tap": "İstatistikler için yakın tarihli bir maça dokun",
+    "stl": "TÇ",
+    "blk": "BLK"
   },
   "trade": {
     "title": "Takas",

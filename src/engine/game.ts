@@ -8,6 +8,9 @@ export interface BoxLine {
   pts: number;
   reb: number;
   ast: number;
+  /** Steals and blocks (older saves don't have them). */
+  stl?: number;
+  blk?: number;
   min: number;
   /** Which side the player played for (older saves don't have it). */
   home?: boolean;
@@ -50,11 +53,18 @@ function boxFor(lineup: LineupEntry[], pts: number, rng: Rng, home: boolean): Bo
   const ptsW = lineup.map((e) => e.minutes * (e.player.off / 80) ** SIM.ptsExp * noise());
   const rebW = lineup.map((e) => e.minutes * (e.player.reb / 80) ** 3 * noise());
   const astW = lineup.map((e) => e.minutes * (e.player.ast / 80) ** 4 * noise());
+  // Steals: defense, more for guards and wings. Blocks: defense and size (rebounding), most for rim protectors.
+  const guard = (e: LineupEntry) => (e.player.pos === 'PG' || e.player.pos === 'SG' ? 1.3 : e.player.pos === 'SF' ? 1.1 : 0.8);
+  const rim = (e: LineupEntry) => (e.player.tag === 'rim' || e.player.tag === 'unicorn' ? 1.8 : e.player.pos === 'C' ? 1.3 : e.player.pos === 'PF' ? 1.1 : 0.45);
+  const stlW = lineup.map((e) => e.minutes * guard(e) * (e.player.def / 80) ** 4 * noise());
+  const blkW = lineup.map((e) => e.minutes * rim(e) * (e.player.def / 80) ** 3 * (e.player.reb / 80) ** 2 * noise());
   const p = allocate(pts, ptsW);
   const r = allocate(Math.max(30, Math.round(rng.normal(44, 4))), rebW);
   const a = allocate(Math.max(12, Math.round(rng.normal(25, 3.5))), astW);
+  const st = allocate(Math.max(2, Math.round(rng.normal(7.6, 2.2))), stlW);
+  const bl = allocate(Math.max(1, Math.round(rng.normal(5, 1.9))), blkW);
   return lineup.map((e, i) => ({
-    playerId: e.player.id, name: e.player.name, pts: p[i], reb: r[i], ast: a[i], min: Math.round(e.minutes), home,
+    playerId: e.player.id, name: e.player.name, pts: p[i], reb: r[i], ast: a[i], stl: st[i], blk: bl[i], min: Math.round(e.minutes), home,
   }));
 }
 

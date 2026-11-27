@@ -124,6 +124,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('see-result').click();
     await page.getByTestId('play-again').waitFor({ timeout: 15000 });
     await page.getByTestId('awards').waitFor();
+    await page.getByTestId('team-leaders').waitFor(); // points, rebounds, assists, steals and blocks per game
     await page.getByTestId('share').waitFor();
     await page.getByTestId('league-gain').waitFor();
     await page.getByTestId('run-rewards').waitFor();

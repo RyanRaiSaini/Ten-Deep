@@ -2,7 +2,7 @@
 import type { SeasonState } from '../season';
 import { ALL_SLOTS, BENCH_SLOTS, type Player } from '../types';
 
-export type LeaderStat = 'pts' | 'reb' | 'ast';
+export type LeaderStat = 'pts' | 'reb' | 'ast' | 'stl' | 'blk';
 export type Award = 'mvp' | 'dpoy' | 'roy' | 'smoy';
 export const AWARDS: Award[] = ['mvp', 'dpoy', 'roy', 'smoy'];
 
@@ -14,6 +14,8 @@ export interface Ranked {
   ppg: number;
   rpg: number;
   apg: number;
+  spg: number;
+  bpg: number;
 }
 
 /** A player must have played 60% of the games so far to qualify (like the NBA's 65-game rule). */
@@ -27,7 +29,7 @@ function qualified(s: SeasonState, filter: (p: Player, slot: string) => boolean 
       const p = t.slots[slot];
       const tot = s.totals[p.id];
       if (!tot || tot.gp < need || !filter(p, slot)) continue;
-      out.push({ player: p, team, ppg: tot.pts / tot.gp, rpg: tot.reb / tot.gp, apg: tot.ast / tot.gp });
+      out.push({ player: p, team, ppg: tot.pts / tot.gp, rpg: tot.reb / tot.gp, apg: tot.ast / tot.gp, spg: (tot.stl ?? 0) / tot.gp, bpg: (tot.blk ?? 0) / tot.gp });
     }
   });
   return out;
@@ -37,7 +39,7 @@ const top = (xs: Ranked[], n: number) => xs.sort((a, b) => b.value - a.value || 
 
 export function leaders(s: SeasonState, stat: LeaderStat, n = 5): Ranked[] {
   if (s.round === 0) return [];
-  const key = { pts: 'ppg', reb: 'rpg', ast: 'apg' } as const;
+  const key = { pts: 'ppg', reb: 'rpg', ast: 'apg', stl: 'spg', blk: 'bpg' } as const;
   return top(qualified(s).map((x) => ({ ...x, value: x[key[stat]] })), n);
 }
 
@@ -69,3 +71,24 @@ export function awardRace(s: SeasonState, award: Award, n = 5): Ranked[] {
       return top(qualified(s, (_, slot) => (BENCH_SLOTS as string[]).includes(slot)).map((x) => ({ ...x, value: production(x) })), n);
   }
 }
+
+/** Per-game value of a stat for a ranked line. */
+export const perGame = (r: Pick<Ranked, 'ppg' | 'rpg' | 'apg' | 'spg' | 'bpg'>, stat: LeaderStat) =>
+  ({ pts: r.ppg, reb: r.rpg, ast: r.apg, stl: r.spg, blk: r.bpg })[stat];
+
+/**
+ * Your team's leader in each stat (per game, among your players with any games): the season recap's team leaders.
+ * Unlike the league leaders there's no games minimum, so a deadline pickup can still lead.
+ */
+export function teamLeaders(s: SeasonState, team = 0): { stat: LeaderStat; player: Player; value: number }[] {
+  const stats: LeaderStat[] = ['pts', 'reb', 'ast', 'stl', 'blk'];
+  const lines = ALL_SLOTS.map((k) => s.teams[team].slots[k]).flatMap((p) => {
+    const tot = s.totals[p.id];
+    return tot?.gp ? [{ p, ppg: tot.pts / tot.gp, rpg: tot.reb / tot.gp, apg: tot.ast / tot.gp, spg: (tot.stl ?? 0) / tot.gp, bpg: (tot.blk ?? 0) / tot.gp }] : [];
+  });
+  return lines.length ? stats.map((stat) => {
+    const best = lines.reduce((a, b) => (perGame(b, stat) > perGame(a, stat) ? b : a));
+    return { stat, player: best.p, value: perGame(best, stat) };
+  }) : [];
+}
+
