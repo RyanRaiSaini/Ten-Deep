@@ -411,7 +411,8 @@
     "end": "Karriere beenden",
     "endSure": "Nochmal tippen: Diese Karriere endet endgültig",
     "payroll": "Gehälter nach Verlängerungen: {{pay}} (Cap {{cap}} · Apron {{apron}})",
-    "overApron": "Über dem Apron: keine Verlängerung"
+    "overApron": "Über dem Apron: keine Verlängerung",
+    "retiredLeague": "Karriereende in der Liga"
   },
   "collect": {
     "title": "Sammlung",

@@ -411,7 +411,8 @@
     "end": "Kariyeri bitir",
     "endSure": "Tekrar dokun: bu kariyer kalıcı olarak biter",
     "payroll": "Yenilemeler sonrası maaş: {{pay}} (tavan {{cap}} · apron {{apron}})",
-    "overApron": "Apron aşılıyor: yenilenemez"
+    "overApron": "Apron aşılıyor: yenilenemez",
+    "retiredLeague": "Ligde emekli olanlar"
   },
   "collect": {
     "title": "Koleksiyon",

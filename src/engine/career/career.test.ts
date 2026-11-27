@@ -4,7 +4,8 @@ import { draftLeague } from '../aiDraft';
 import { capRoom } from '../cap';
 import { createRng } from '../rng';
 import { ALL_SLOTS, type Player, type Roster } from '../types';
-import { ageDelta, progressPlayer, retires } from './aging';
+import { progressPlayer, retires } from './aging';
+import { developDelta, outlookOf } from './development';
 import { initialContracts } from './contracts';
 import { draftOrder } from './lottery';
 import { generateRookieClass } from './rookies';
@@ -14,16 +15,32 @@ import { simulateCareer } from './simulate';
 const base: Player = { ...current2026.teams[0].players[0] };
 
 describe('aging', () => {
-  it('young players improve, prime players hold, veterans decline', () => {
+  it('young players improve, prime players hold, veterans decline (the aging curve)', () => {
     const rng = createRng('age');
-    const avg = (age: number) => {
+    const avg = (age: number, ovr = 78) => {
       let s = 0;
-      for (let i = 0; i < 400; i++) s += ageDelta(age, rng);
-      return s / 400;
+      for (let i = 0; i < 2000; i++) s += developDelta({ name: 'Test Player', age, ovr, dur: 80 }, rng);
+      return s / 2000;
     };
-    expect(avg(20)).toBeGreaterThan(2);
-    expect(Math.abs(avg(28))).toBeLessThan(1);
+    expect(avg(20)).toBeGreaterThan(1.5);
+    expect(Math.abs(avg(27))).toBeLessThan(0.8);
     expect(avg(35)).toBeLessThan(-2);
+  });
+
+  it('top prospects and elite young stars always improve unless injured; promising picks never stall', () => {
+    const rng = createRng('prospects');
+    const down = (p: Parameters<typeof developDelta>[0]) =>
+      Array.from({ length: 2000 }, () => developDelta(p, rng)).filter((d) => d < 0).length / 2000;
+    expect(outlookOf({ name: 'AJ Dybantsa', age: 19, ovr: 84 })).toBe('top');
+    expect(outlookOf({ name: 'Victor Wembanyama', age: 22, ovr: 98 })).toBe('elite');
+    expect(outlookOf({ name: 'Jaylen Wells', age: 23, ovr: 79 })).toBe('promising');
+    expect(outlookOf({ name: 'LeBron James', age: 41, ovr: 88 })).toBe(null);
+    // Only an injury can send them backwards (about 5% of seasons).
+    expect(down({ name: 'AJ Dybantsa', age: 19, ovr: 84, dur: 85 })).toBeLessThan(0.08);
+    expect(down({ name: 'Victor Wembanyama', age: 22, ovr: 98, dur: 85 })).toBeLessThan(0.08);
+    expect(down({ name: 'Jaylen Wells', age: 23, ovr: 79, dur: 85 })).toBeLessThan(0.08);
+    // An ordinary 23-year-old goes backwards much more often.
+    expect(down({ name: 'Ordinary Player', age: 23, ovr: 79, dur: 85 })).toBeGreaterThan(0.25);
   });
 
   it('progressPlayer ages by one, keeps 64–99, moves sub-ratings with overall', () => {
@@ -38,13 +55,16 @@ describe('aging', () => {
       }
   });
 
-  it('retirement: never under 36, sometimes at 37, always at 40+', () => {
+  it('retirement: never before 34, rare at 35, stars play on longer, everyone done by 41', () => {
     const rng = createRng('ret');
-    const rate = (age: number) => Array.from({ length: 2000 }, () => retires({ ...base, age, ovr: 80 }, false, rng)).filter(Boolean).length / 2000;
+    const rate = (age: number, ovr = 80) => Array.from({ length: 4000 }, () => retires({ ...base, age, ovr }, false, rng)).filter(Boolean).length / 4000;
     expect(rate(30)).toBe(0);
-    expect(rate(37)).toBeGreaterThan(0.1);
-    expect(rate(37)).toBeLessThan(0.4);
-    expect(rate(40)).toBe(1);
+    expect(rate(33)).toBe(0);
+    expect(rate(35)).toBeLessThan(0.15);
+    expect(rate(37)).toBeGreaterThan(0.15);
+    expect(rate(37)).toBeLessThan(0.35);
+    expect(rate(37, 92)).toBeLessThan(rate(37, 80));
+    expect(rate(41)).toBe(1);
     expect(retires({ ...base, age: 30, ovr: 64 }, true, rng)).toBe(true); // aged out at the floor
   });
 });

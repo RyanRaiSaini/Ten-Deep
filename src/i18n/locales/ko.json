@@ -408,7 +408,8 @@
     "end": "커리어 끝내기",
     "endSure": "한 번 더 탭: 이 커리어가 완전히 끝납니다",
     "payroll": "재계약 후 총연봉: {{pay}} (캡 {{cap}} · 에이프런 {{apron}})",
-    "overApron": "에이프런 초과: 재계약 불가"
+    "overApron": "에이프런 초과: 재계약 불가",
+    "retiredLeague": "리그 은퇴 선수"
   },
   "collect": {
     "title": "컬렉션",
