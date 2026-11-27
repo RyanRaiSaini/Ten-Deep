@@ -112,7 +112,8 @@
     "benchSlot": "Banc {{n}}",
     "hot": "En feu : +{{n}} grâce à sa forme réelle",
     "cold": "Froid : −{{n}} selon sa forme réelle",
-    "eraCap": "Plafond {{season}} · dollars de l'époque"
+    "eraCap": "Plafond {{season}} · dollars de l'époque",
+    "lowCap": "Peu de marge ? Si personne ne rentre sur un tirage, tu peux toujours signer le joueur le moins cher qui rentre."
   },
   "season": {
     "title": "Saison régulière",
@@ -128,16 +129,19 @@
     "injury_many": "{{name}} absent {{count}} matchs — {{label}}",
     "injury_one": "{{name}} absent {{count}} match — {{label}}",
     "injury_other": "{{name}} absent {{count}} matchs — {{label}}",
-    "play": "Lecture"
+    "play": "Lecture",
+    "pauseSeason": "Mettre la saison en pause",
+    "resumeSeason": "Reprendre la saison"
   },
   "deadline": {
     "title": "Date limite des transferts",
     "desc": "Un seul échange. Choisis un joueur à transférer, tourne une fois et signe un remplaçant sous le plafond.",
     "chooseOut": "Choisis qui transférer",
     "spin": "Tourner pour un remplaçant",
-    "skip": "Ne rien changer",
+    "skip": "Reprendre la saison",
     "done": "Échange conclu",
-    "budget": "Budget d'échange : {{budget}} (tes {{room}} sous le plafond + les {{out}} de {{name}})"
+    "budget": "Budget d'échange : {{budget}} (tes {{room}} sous le plafond + les {{out}} de {{name}})",
+    "room": "Marge restante : {{room}}. Échange un joueur et son salaire s'y ajoute."
   },
   "playoffs": {
     "title": "Playoffs",

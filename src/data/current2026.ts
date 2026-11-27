@@ -48,7 +48,7 @@ export const current2026: Pool = {
       Luka Garza|C|69|27|big
     `),
     team('bkn', 'Brooklyn', 'Nets', S, ['#000000', '#FFFFFF'], `
-      Julius Randle|PF/C|85|31|scorer
+      Julius Randle|PF|85|31|scorer
       Michael Porter Jr.|SF/PF|84|28|scorer|55
       Keon Ellis|SG|78|26|defender
       Egor Demin|PG|82|20|playmaker
@@ -153,7 +153,7 @@ export const current2026: Pool = {
       Daniss Jenkins|PG|77|25|scorer|?
     `),
     team('gsw', 'Golden State', 'Warriors', S, ['#1D428A', '#FFC72C'], `
-      Stephen Curry|PG|93|38|shooter|65
+      Stephen Curry|PG/SG|93|38|shooter|65
       Jimmy Butler|SF/PF/SG|85|37|twoway|45
       Kristaps Porziņģis|C/PF|81|31|stretch|40
       Draymond Green|PF/C|79|36|defender|68
@@ -288,7 +288,7 @@ export const current2026: Pool = {
       Isaiah Evans|SG/SF|67|20|shooter
     `),
     team('nop', 'New Orleans', 'Pelicans', S, ['#0C2340', '#C8102E'], `
-      Zion Williamson|PF/C|85|26|slasher|35
+      Zion Williamson|PF|85|26|slasher|35
       Trey Murphy III|SF|84|26|shooter
       Herbert Jones|SF/SG/PF|81|28|defender|60
       Dejounte Murray|PG|80|30|twoway|45|?

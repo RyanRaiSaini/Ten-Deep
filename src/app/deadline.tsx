@@ -63,6 +63,7 @@ function DeadlineScreen() {
     <Screen tint={runColors[0]}>
       <Header title={t('deadline.title')} />
       <Text style={styles.desc}>{t('deadline.desc')}</Text>
+      <Text style={styles.budget} testID="deadline-room">{t('deadline.room', { room: money(Math.max(0, roomAfterFees(season)), scale) })}</Text>
 
       {!deadline.spun && (
         <>

@@ -111,7 +111,8 @@
     "benchSlot": "Bank {{n}}",
     "hot": "On fire: +{{n}} door echte vorm",
     "cold": "Koud: −{{n}} door echte vorm",
-    "eraCap": "Salarisplafond {{season}} · dollars van toen"
+    "eraCap": "Salarisplafond {{season}} · dollars van toen",
+    "lowCap": "Weinig ruimte? Past niemand van de draai, dan kun je altijd de goedkoopste speler die past tekenen."
   },
   "season": {
     "title": "Reguliere competitie",
@@ -126,16 +127,19 @@
     "standing": "Plaatsing #{{n}}",
     "injury_one": "{{name}} mist {{count}} wedstrijd — {{label}}",
     "injury_other": "{{name}} mist {{count}} wedstrijden — {{label}}",
-    "play": "Afspelen"
+    "play": "Afspelen",
+    "pauseSeason": "Seizoen pauzeren",
+    "resumeSeason": "Seizoen hervatten"
   },
   "deadline": {
     "title": "Transferdeadline",
     "desc": "Eén ruil. Kies wie vertrekt, draai één keer en contracteer een vervanger onder het plafond.",
     "chooseOut": "Kies wie vertrekt",
     "spin": "Draai voor een vervanger",
-    "skip": "Niets veranderen",
+    "skip": "Seizoen hervatten",
     "done": "Ruil rond",
-    "budget": "Ruilbudget: {{budget}} (je {{room}} ruimte + {{out}} van {{name}})"
+    "budget": "Ruilbudget: {{budget}} (je {{room}} ruimte + {{out}} van {{name}})",
+    "room": "Ruimte over: {{room}}. Ruil een speler en zijn salaris komt erbij."
   },
   "playoffs": {
     "title": "Play-offs",

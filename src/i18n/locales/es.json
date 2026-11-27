@@ -112,7 +112,8 @@
     "benchSlot": "Banco {{n}}",
     "hot": "Encendido: +{{n}} por su forma real",
     "cold": "Frío: −{{n}} por su forma real",
-    "eraCap": "Tope {{season}} · dólares de la época"
+    "eraCap": "Tope {{season}} · dólares de la época",
+    "lowCap": "¿Poco margen? Si nadie del giro encaja, siempre puedes fichar al más barato que sí encaje."
   },
   "season": {
     "title": "Temporada regular",
@@ -128,16 +129,19 @@
     "injury_many": "{{name}} baja {{count}} partidos — {{label}}",
     "injury_one": "{{name}} baja {{count}} partido — {{label}}",
     "injury_other": "{{name}} baja {{count}} partidos — {{label}}",
-    "play": "Reanudar"
+    "play": "Reanudar",
+    "pauseSeason": "Pausar la temporada",
+    "resumeSeason": "Reanudar la temporada"
   },
   "deadline": {
     "title": "Cierre de traspasos",
     "desc": "Un cambio. Elige a un jugador para traspasar, gira una vez y ficha un reemplazo bajo el tope.",
     "chooseOut": "Elige a quién traspasar",
     "spin": "Girar por un reemplazo",
-    "skip": "No hacer nada",
+    "skip": "Reanudar la temporada",
     "done": "Traspaso cerrado",
-    "budget": "Presupuesto de traspaso: {{budget}} (tus {{room}} libres + los {{out}} de {{name}})"
+    "budget": "Presupuesto de traspaso: {{budget}} (tus {{room}} libres + los {{out}} de {{name}})",
+    "room": "Espacio libre: {{room}}. Si traspasas a un jugador, su salario se suma."
   },
   "playoffs": {
     "title": "Playoffs",

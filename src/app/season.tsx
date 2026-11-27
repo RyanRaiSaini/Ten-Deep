@@ -1,7 +1,7 @@
 import { HistoryGate } from '../ui/HistoryGate';
 import { runNeedsHistory } from '../data/historyReady';
-import { Redirect, router } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { Redirect, router, useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
@@ -51,6 +51,13 @@ function SeasonScreen() {
     }, BASE_TICK_MS / speed);
     return () => clearTimeout(id);
   }, [season, playing, atDeadline, atCard, over, speed]);
+
+  // Back from the bench switch (or any screen that changed the run): pick up the saved season, so a switch is
+  // never overwritten by this screen's copy. The season stays paused until you resume it.
+  useFocusEffect(useCallback(() => {
+    const saved = useGame.getState().season;
+    if (saved && saved !== live.current) setSeason(saved);
+  }, []));
 
   // Save progress when leaving the screen; open the deadline when we reach it.
   useEffect(() => () => { if (live.current) useGame.getState().setSeason(live.current); }, []);
@@ -131,6 +138,11 @@ function SeasonScreen() {
       </View>
 
       {!over && (
+        <Button label={playing ? t('season.pauseSeason') : t('season.resumeSeason')} variant={playing ? 'secondary' : 'gold'}
+          icon={playing ? <Text style={styles.pause}>❚❚</Text> : <Icon name="play" size={22} />}
+          onPress={() => setPlaying((p) => !p)} testID="season-pause" />
+      )}
+      {!over && (
         <View style={styles.row}>
           {season.round < DEADLINE_GAME && !season.deadlineUsed && (
             <Button label={t('season.skipDeadline')} variant="secondary" onPress={() => skipTo('deadline')} style={{ flex: 1 }} testID="skip-deadline" />
@@ -139,7 +151,7 @@ function SeasonScreen() {
         </View>
       )}
       {!over && !season.switchUsed && (
-        <Button label={t('switch.button')} icon={<Icon name="swap" size={22} />} variant="blue" onPress={() => router.push('/switch')} testID="bench-switch" />
+        <Button label={t('switch.button')} icon={<Icon name="swap" size={22} />} variant="blue" onPress={() => { setPlaying(false); if (live.current) useGame.getState().setSeason(live.current); router.push('/switch'); }} testID="bench-switch" />
       )}
       {over && (
         <Button label={t('playoffs.title')} icon={<Icon name="trophy" size={22} />} variant="gold" onPress={() => { g.beginPlayoffs(); router.replace('/playoffs'); }} testID="to-playoffs" />

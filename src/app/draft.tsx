@@ -29,6 +29,9 @@ import { useRunColors } from '../ui/runColors';
 import { Die } from '../ui/Dice';
 import { useShop } from '../store/shop';
 
+/** Spendable room (game $M) under which the draft reminds you that a minimum player always fits. */
+const LOW_CAP = 10;
+
 function DraftScreen() {
   const { t } = useTranslation();
   const runColors = useRunColors();
@@ -110,6 +113,12 @@ function DraftScreen() {
           ))}
         </View>
       </View>
+      {!complete && spendable < LOW_CAP && (
+        <View style={styles.lowCap} testID="low-cap">
+          <Icon name="coin" size={22} />
+          <Text style={styles.lowCapText}>{t('draft.lowCap')}</Text>
+        </View>
+      )}
     </Card>
   );
 
@@ -242,6 +251,8 @@ const styles = StyleSheet.create({
   bar: { height: 14, borderRadius: R.pill, backgroundColor: C.surface2, overflow: 'hidden', borderWidth: 2, borderColor: C.ink },
   barFill: { height: '100%', backgroundColor: '#18C08A' },
   spendable: { color: C.muted, fontSize: 13, fontWeight: '700' },
+  lowCap: { flexDirection: 'row', alignItems: 'center', gap: S.sm, backgroundColor: '#FFF4D6', borderRadius: R.md, borderWidth: 2, borderColor: '#E9B949', padding: S.sm },
+  lowCapText: { flex: 1, color: C.ink, fontSize: 13, fontWeight: '800' },
   eraCap: { color: C.muted, fontSize: 12, fontWeight: '800', textAlign: 'right', marginTop: -4 },
   warn: { color: C.danger, fontSize: 13, fontWeight: '800' },
   choose: { color: C.neon, fontWeight: '900', textAlign: 'center' },

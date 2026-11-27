@@ -112,7 +112,8 @@
     "benchSlot": "Panchina {{n}}",
     "hot": "In fiamme: +{{n}} per la forma reale",
     "cold": "Freddo: −{{n}} per la forma reale",
-    "eraCap": "Tetto {{season}} · dollari dell'epoca"
+    "eraCap": "Tetto {{season}} · dollari dell'epoca",
+    "lowCap": "Poco spazio? Se nessuno dell'estrazione ci sta, puoi sempre firmare il più economico che ci sta."
   },
   "season": {
     "title": "Stagione regolare",
@@ -128,16 +129,19 @@
     "injury_many": "{{name}} fuori {{count}} partite — {{label}}",
     "injury_one": "{{name}} fuori {{count}} partita — {{label}}",
     "injury_other": "{{name}} fuori {{count}} partite — {{label}}",
-    "play": "Riprendi"
+    "play": "Riprendi",
+    "pauseSeason": "Metti in pausa la stagione",
+    "resumeSeason": "Riprendi la stagione"
   },
   "deadline": {
     "title": "Trade deadline",
     "desc": "Uno scambio. Scegli chi cedere, gira una volta e firma un sostituto sotto il tetto.",
     "chooseOut": "Scegli chi cedere",
     "spin": "Gira per un sostituto",
-    "skip": "Resta così",
+    "skip": "Riprendi la stagione",
     "done": "Scambio fatto",
-    "budget": "Budget di scambio: {{budget}} ({{room}} di spazio + i {{out}} di {{name}})"
+    "budget": "Budget di scambio: {{budget}} ({{room}} di spazio + i {{out}} di {{name}})",
+    "room": "Spazio rimasto: {{room}}. Scambia un giocatore e il suo stipendio si aggiunge."
   },
   "playoffs": {
     "title": "Playoff",
