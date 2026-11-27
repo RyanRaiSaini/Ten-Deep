@@ -50,7 +50,7 @@
     },
     "crisis": {
       "title": "Yönetim krizi",
-      "desc": "Bir takım kur ve yönetimden sağ çık. Sezonda yedi kez, kapalı 6 karttan 1'ini seç: talepler, para, avantajlar ve sürprizler. Yönetim Güveni 0'a düşerse kovulursun."
+      "desc": "Yönetime hesap ver. Sezon başlamadan kapalı 6 karttan 1'ini seçersin: bu senin hedefin ve onu tamamlamak zorundasın. Sezon ortasında bir sürpriz kart gelir. Yönetim Güveni 0'a düşerse kovulursun."
     },
     "career": {
       "title": "Kariyer",
@@ -244,7 +244,7 @@
   },
   "crisis": {
     "title": "Yönetim krizi",
-    "desc": "Bir takım kur ve yönetimden sağ çık. Sezonda yedi kez, kapalı 6 karttan 1'ini seç: talepler, para, avantajlar ve sürprizler. Yönetim Güveni 0'a düşerse kovulursun.",
+    "desc": "Yönetime hesap ver. Sezon başlamadan kapalı 6 karttan 1'ini seçersin: bu senin hedefin ve onu tamamlamak zorundasın. Sezon ortasında bir sürpriz kart gelir. Yönetim Güveni 0'a düşerse kovulursun.",
     "m0": "Hazırlık dönemi",
     "m1": "Aralık",
     "m2": "Şubat",
@@ -1169,7 +1169,7 @@
   "board": {
     "title": "Yönetim krizi",
     "pick": "Bir kart seç",
-    "pickHint": "Altı kapalı kart. Birine dokun: talepler, para, avantajlar ve sürprizler hepsi içinde.",
+    "pickHint": "Kapalı altı kart: bazıları yardım eder, bazıları zarar verir. Birine dokun.",
     "stopOf": "Durak {{n}} / {{total}}",
     "months": {
       "preseason": "Hazırlık dönemi",
@@ -1201,7 +1201,8 @@
       "deadline": "Takas son gününe kadar",
       "end": "Normal sezon sonuna kadar",
       "now": "Hemen şimdi",
-      "games": "Sonraki {{n}} maç boyunca"
+      "games": "Sonraki {{n}} maç boyunca",
+      "tipoff": "Sezon başlamadan"
     },
     "fail": "Başarısız olursan: −{{n}} Yönetim Güveni",
     "noFail": "Güven riske girmiyor",
@@ -1214,8 +1215,6 @@
     "secondLook": "İkinci bakış kullan (yeniden seç)",
     "pickIn": "Birini seç",
     "pickOut": "Kim yer açıyor?",
-    "heads": "Yazı! +{{amount}}",
-    "tails": "Tura. −{{amount}}",
     "options": {
       "offense": "Hücum gurusu: 20 maç +3, sonra +1 ({{fee}})",
       "defense": "Savunma beyni: sezon boyunca +2 ({{fee}})",
@@ -1528,11 +1527,6 @@
         "story": "Taraftarlar bomba bir hamle istiyor ve {{owner}} dinliyor.",
         "rule": "+{{amount}} tavan alanı, ama sonraki karta kadar bir üst seçenek imzala (yoksa −2)."
       },
-      "double-nothing": {
-        "title": "Ya hep ya hiç",
-        "story": "{{owner}} bütçe için yazı tura atıyor.",
-        "rule": "Yazı: +{{amount}}. Tura: −{{amount}}."
-      },
       "golden-ticket": {
         "title": "Altın bilet",
         "story": "{{gm}}'in kimsenin bilmediği bir serbest oyuncusu var.",
@@ -1632,12 +1626,25 @@
         "title": "Süper takım söylentisi",
         "story": "{{reporter}}: {{city}} az önce bir yıldız aldı.",
         "rule": "{{city}} sezon sonuna kadar +3 alır."
+      },
+      "team-chemistry": {
+        "title": "Takım kimyası",
+        "story": "{{coach}} takımı kaynaşma gezisine götürdü ve bu sahaya yansıyor.",
+        "rule": "10 maç boyunca +3 takım puanı."
       }
+    },
+    "objective": "Yönetimin hedefi",
+    "pickObjective": "Hedefini seç",
+    "pickHintObjective": "Kapalı altı kart, her biri yönetimden bir görev. Açtığın kart, tamamlaman gereken hedeftir.",
+    "rewardN": "Tamamlarsan: +{{n}} Yönetim Güveni",
+    "stopKind": {
+      "objective": "Hedef",
+      "event": "Sezon ortası kartı"
     }
   },
   "rebuild": {
-    "title": "Yeniden Yapılanma",
-    "desc": "Gerçek bir takımı gerçek maaş listesi ve bir yeniden yapılanma bütçesiyle devral. Koçu kov ya da tut, sonra pozisyon pozisyon ilerle: tut, ya da sat ve fiyatlı üç seçenekten biriyle ya da bir yedek seçeneğiyle imzala. Pozisyonlar arasında yönetim kartları çıkar.",
+    "title": "Devralma",
+    "desc": "Gerçek maaş bordrosu ve bir yeniden yapılanma bütçesiyle gerçek bir takımı satın al. Yönetim sana sezon başlamadan tamamlaman gereken tek bir hedef verir. Bir koç seç, sonra pozisyon pozisyon ilerle: oyuncuyu tut ya da sat ve fiyatlı üç seçenekten birini veya bir yedek seçeneğini imzala.",
     "pickTeam": "Devralacağın takımı seç",
     "spin": "Takım çevir: bugünün ligi",
     "spinHistory": "Takım çevir: herhangi bir dönem",
@@ -1675,15 +1682,16 @@
     "sell": "{{pay}} karşılığında sat",
     "sellTitle": "{{name}} yerine birini al",
     "budgetLeft": "Bütçe: {{budget}}",
-    "cardStop": "Yeniden yapılanma kartı {{n}} / {{total}}",
+    "cardStop": "Kart {{n}} / {{total}}",
     "tipoffTitle": "Yeniden yapılanma tamam",
     "tipoff": "Sezonu başlat",
     "srChange": "Kadro puanı {{from}} → {{to}}",
     "coachPicked": "Koç: {{name}}",
     "openDemands": "Yönetim bunları açılış sıçramasından itibaren kontrol edecek:",
     "hubA": "Kriz Sezonu",
-    "hubADesc": "Herhangi bir modda on kişilik kadro kur, sonra yedi yönetim durağından sağ çık.",
-    "hubB": "Yeniden Yapılanma",
-    "hubBDesc": "Gerçek bir takımı devral ve pozisyon pozisyon yeniden kur."
+    "hubADesc": "Herhangi bir modda on oyuncu seç, hedefini al ve bir sezon ortası kartını atlat.",
+    "hubB": "Devralma",
+    "hubBDesc": "Gerçek bir takımı satın al ve pozisyon pozisyon kendi tarzınla yeniden kur.",
+    "restart": "Yeniden başla"
   }
 }

@@ -50,7 +50,7 @@
     },
     "crisis": {
       "title": "Management-Krise",
-      "desc": "Stelle ein Team zusammen und überlebe den Vorstand. Siebenmal pro Saison ziehst du 1 von 6 verdeckten Karten: Forderungen, Geld, Vorteile und Überraschungen. Fällt das Vorstandsvertrauen auf 0, bist du gefeuert."
+      "desc": "Stell dich dem Vorstand. Vor dem Tip-off ziehst du 1 von 6 verdeckten Karten: das ist dein Ziel, und du musst es erfüllen. Zur Saisonmitte kommt eine Überraschungskarte. Fällt das Vorstandsvertrauen auf 0, bist du gefeuert."
     },
     "career": {
       "title": "Karriere",
@@ -244,7 +244,7 @@
   },
   "crisis": {
     "title": "Management-Krise",
-    "desc": "Stelle ein Team zusammen und überlebe den Vorstand. Siebenmal pro Saison ziehst du 1 von 6 verdeckten Karten: Forderungen, Geld, Vorteile und Überraschungen. Fällt das Vorstandsvertrauen auf 0, bist du gefeuert.",
+    "desc": "Stell dich dem Vorstand. Vor dem Tip-off ziehst du 1 von 6 verdeckten Karten: das ist dein Ziel, und du musst es erfüllen. Zur Saisonmitte kommt eine Überraschungskarte. Fällt das Vorstandsvertrauen auf 0, bist du gefeuert.",
     "m0": "Vorbereitung",
     "m1": "Dezember",
     "m2": "Februar",
@@ -1169,7 +1169,7 @@
   "board": {
     "title": "Management-Krise",
     "pick": "Karte wählen",
-    "pickHint": "Sechs verdeckte Karten. Tipp auf eine: Forderungen, Geld, Boni und Überraschungen stecken alle drin.",
+    "pickHint": "Sechs verdeckte Karten: manche helfen, manche schaden. Tippe auf eine.",
     "stopOf": "Halt {{n}} von {{total}}",
     "months": {
       "preseason": "Vorbereitung",
@@ -1201,7 +1201,8 @@
       "deadline": "Bis zur Trade Deadline",
       "end": "Bis zum Ende der Hauptrunde",
       "now": "Sofort",
-      "games": "In den nächsten {{n}} Spielen"
+      "games": "In den nächsten {{n}} Spielen",
+      "tipoff": "Bis zum Tip-off"
     },
     "fail": "Bei Scheitern: −{{n}} Vorstandsvertrauen",
     "noFail": "Kein Vertrauen auf dem Spiel",
@@ -1214,8 +1215,6 @@
     "secondLook": "Zweiter Blick nutzen (neu wählen)",
     "pickIn": "Wähle einen",
     "pickOut": "Wer macht Platz?",
-    "heads": "Kopf! +{{amount}}",
-    "tails": "Zahl. −{{amount}}",
     "options": {
       "offense": "Offensiv-Guru: +3 für 20 Spiele, dann +1 ({{fee}})",
       "defense": "Defensiv-Denker: +2 für die Saison ({{fee}})",
@@ -1528,11 +1527,6 @@
         "story": "Die Fans wollen einen Knaller, und {{owner}} hört zu.",
         "rule": "+{{amount}} Cap-Platz, aber verpflichte vor der nächsten Karte eine Top-Option (sonst −2)."
       },
-      "double-nothing": {
-        "title": "Alles oder nichts",
-        "story": "{{owner}} wirft eine Münze über das Budget.",
-        "rule": "Kopf: +{{amount}}. Zahl: −{{amount}}."
-      },
       "golden-ticket": {
         "title": "Goldenes Ticket",
         "story": "{{gm}} kennt einen Free Agent, von dem sonst keiner weiß.",
@@ -1632,12 +1626,25 @@
         "title": "Superteam-Gerücht",
         "story": "{{reporter}}: {{city}} hat gerade einen Star geholt.",
         "rule": "{{city}} bekommt +3 für den Rest der Saison."
+      },
+      "team-chemistry": {
+        "title": "Teamchemie",
+        "story": "{{coach}} war mit dem Team auf Teambuilding-Reise, und man sieht es.",
+        "rule": "+3 Team-Rating für 10 Spiele."
       }
+    },
+    "objective": "Ziel des Vorstands",
+    "pickObjective": "Wähle dein Ziel",
+    "pickHintObjective": "Sechs verdeckte Karten, jede ein Auftrag des Vorstands. Die Karte, die du aufdeckst, ist das Ziel, das du erfüllen musst.",
+    "rewardN": "Erfüllt: +{{n}} Vorstandsvertrauen",
+    "stopKind": {
+      "objective": "Das Ziel",
+      "event": "Karte zur Saisonmitte"
     }
   },
   "rebuild": {
-    "title": "Neuaufbau",
-    "desc": "Übernimm ein echtes Team mit echter Gehaltsliste und einem Umbau-Budget. Feuere den Coach oder behalte ihn, dann geht es Position für Position: behalten oder verkaufen und einen von drei Spielern mit Preis oder eine Bank-Option verpflichten. Zwischen den Positionen kommen Vorstandskarten.",
+    "title": "Übernahme",
+    "desc": "Kaufe ein echtes Team mit echter Gehaltsliste und einem Umbau-Budget. Der Vorstand gibt dir ein Ziel, das du bis zum Tip-off erfüllen musst. Wähle einen Coach, dann Position für Position: behalte den Spieler oder verkaufe ihn und verpflichte eine von drei Preisoptionen oder eine Bankoption.",
     "pickTeam": "Wähle ein Team zum Übernehmen",
     "spin": "Team drehen: Liga von heute",
     "spinHistory": "Team drehen: jede Ära",
@@ -1675,15 +1682,16 @@
     "sell": "Verkaufen für {{pay}}",
     "sellTitle": "{{name}} ersetzen",
     "budgetLeft": "Budget: {{budget}}",
-    "cardStop": "Umbau-Karte {{n}} von {{total}}",
+    "cardStop": "Karte {{n}} von {{total}}",
     "tipoffTitle": "Der Neuaufbau ist geschafft",
     "tipoff": "Saison eröffnen",
     "srChange": "Kader-Rating {{from}} → {{to}}",
     "coachPicked": "Coach: {{name}}",
     "openDemands": "Der Vorstand prüft ab dem Sprungball:",
     "hubA": "Krisen-Saison",
-    "hubADesc": "Draft zehn Spieler in jedem Modus und überstehe sieben Vorstandsstopps.",
-    "hubB": "Neuaufbau",
-    "hubBDesc": "Übernimm ein echtes Team und baue es neu auf, Position für Position."
+    "hubADesc": "Stelle zehn Spieler in einem beliebigen Modus auf, wähle dein Ziel und überstehe eine Karte zur Saisonmitte.",
+    "hubB": "Übernahme",
+    "hubBDesc": "Kaufe ein echtes Team und baue es auf deine Art um, Position für Position.",
+    "restart": "Neu starten"
   }
 }

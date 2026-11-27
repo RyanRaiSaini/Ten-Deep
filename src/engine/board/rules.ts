@@ -6,7 +6,7 @@ import { awardRace, leaders } from '../story/leaders';
 import { ALL_SLOTS, STARTER_SLOTS, positionsOf, type Player } from '../types';
 import { madeFinals, wonTitle } from '../../data/finals';
 import { cardOf } from './cards';
-import { MAX_CONFIDENCE, type BoardEvent, type BoardState, type Demand, type Signing } from './state';
+import { MAX_CONFIDENCE, OBJECTIVE_REWARD, type BoardEvent, type BoardState, type Demand, type Signing } from './state';
 import { bumpPlayer } from './util';
 
 /** Where a player's card comes from: a franchise and the season it ended (2026 = 2025-26). */
@@ -59,8 +59,10 @@ export function holds(d: Demand, b: BoardState, ctx: BoardCtx): boolean {
       return since(b, d).some((x) => x.tier === 'top');
     case 'prove-it':
       return since(b, d).some((x) => x.pay >= CAP * 0.2 - 1e-9);
-    case 'hometown-hero':
-      return count(mine, (p) => fromHere(p, (o) => o.franchise === d.franchise)) >= 2;
+    case 'hometown-hero': {
+      const teams = new Set(d.franchises ?? (d.franchise ? [d.franchise] : []));
+      return count(mine, (p) => fromHere(p, (o) => teams.has(o.franchise))) >= 2;
+    }
     case 'local-legend':
       return mine.some((p) => fromHere(p, (o) => o.franchise === d.franchise));
     case 'championship-dna':
@@ -150,7 +152,23 @@ export function progress(d: Demand, ctx: BoardCtx): { have: number; need: number
     const now = new Set(starters(s).map((p) => p.id));
     return { have: count(d.ids ?? [], (id) => !now.has(id)), need: 3 };
   }
-  return null;
+  // Roster counts: how many you have of what the objective asks for.
+  const mine = roster(s);
+  const from = (p: Player, f: (o: Origin) => boolean) => { const o = ctx.origin(p); return !!o && f(o); };
+  switch (d.id) {
+    case 'hometown-hero': {
+      const teams = new Set(d.franchises ?? (d.franchise ? [d.franchise] : []));
+      return { have: Math.min(2, count(mine, (p) => from(p, (o) => teams.has(o.franchise)))), need: 2 };
+    }
+    case 'championship-dna': return { have: Math.min(2, count(mine, (p) => from(p, (o) => wonTitle(o.franchise, o.year)))), need: 2 };
+    case 'all-star-pedigree': return { have: Math.min(3, count(mine, (p) => p.ovr >= 88)), need: 3 };
+    case 'youth-movement': return { have: Math.min(3, count(mine, (p) => (p.age ?? 99) <= 23)), need: 3 };
+    case 'defense-wins': return { have: Math.min(2, count(starters(s), (p) => DEFENSIVE.has(p.tag ?? '') || p.def >= 90)), need: 2 };
+    case 'space-floor': return { have: Math.min(3, count(starters(s), (p) => SHOOTING.has(p.tag ?? '') || p.three >= 90)), need: 3 };
+    case 'positionless': return { have: Math.min(3, count(starters(s), (p) => positionsOf(p).length >= 2)), need: 3 };
+    case 'international-flavor': return { have: Math.min(2, count(mine, (p) => { const n = ctx.nation?.(p); return !!n && n !== 'us'; })), need: 2 };
+    default: return null;
+  }
 }
 
 const gamesLike = (d: Demand) => ['win-now', 'streak-breaker', 'media-frenzy', 'owner-holds'].includes(d.id);
@@ -188,7 +206,7 @@ export function checkDemands(b: BoardState, ctx: BoardCtx, end = false): Checked
     }
     if (status === 'active') return d;
     const isDemand = cardOf(d.id)?.kind === 'demand' || d.id === 'fans-demand';
-    const delta = status === 'done' ? (isDemand ? 1 : 0) : -d.penalty;
+    const delta = status === 'done' ? (d.objective ? OBJECTIVE_REWARD : isDemand ? 1 : 0) : -d.penalty;
     confidence = Math.max(0, Math.min(MAX_CONFIDENCE, confidence + delta));
     events.push({ round: r, kind: status === 'done' ? 'done' : 'failed', id: d.id, delta });
     if (status === 'failed' && d.onFail === 'cut3' && d.ids?.[0]) s = bumpPlayer(s, d.ids[0], -3);

@@ -3,7 +3,8 @@ import type { SeasonState } from '../season';
 import { cardOf } from './cards';
 import { drawHand, prepareOffer, resolveCard, type Decision, type PlayCtx } from './play';
 import { checkDemands, stretch } from './rules';
-import { STOPS, type BoardEvent, type BoardState } from './state';
+import { DEADLINE_GAME, SEASON_GAMES } from '../season';
+import { type BoardEvent, type BoardState, type Demand } from './state';
 
 export interface Step { board: BoardState; season: SeasonState; events: BoardEvent[] }
 
@@ -61,8 +62,11 @@ export function resolve(b0: BoardState, d: Decision, ctx: PlayCtx, rebuild?: { n
   };
   const res = resolveCard(id, offer, d, b0, ctx);
   // New demands keep the names their card used, for the panel.
+  // The objective is due at tip-off in a Takeover; in a Crisis Season by the trade deadline, or the season's end
+  // for the ones about results and awards.
+  const due = (x: Demand) => (!x.objective ? x.due : rebuild ? 0 : cardOf(x.id)?.due === 'end' ? SEASON_GAMES : DEADLINE_GAME);
   const demands = res.board.demands.map((x) => (x.from === r && x.name === undefined && x.city === undefined && !b0.demands.includes(x)
-    ? { ...x, ...(offer.name ? { name: offer.name } : {}), ...(offer.city ? { city: offer.city } : {}) } : x));
+    ? { ...x, due: due(x), ...(offer.name ? { name: offer.name } : {}), ...(offer.city ? { city: offer.city } : {}) } : x));
   const b: BoardState = { ...res.board, demands, played: [...res.board.played, played], hand: null, picked: null, offer: null, peek: [], stop: rebuild ? b0.stop : b0.stop + 1 };
   if (rebuild) return { board: b, season: res.season, events: [] };
   // Some demands are met (or broken) the moment you make the move.
@@ -70,5 +74,3 @@ export function resolve(b0: BoardState, d: Decision, ctx: PlayCtx, rebuild?: { n
   return checked;
 }
 
-/** The rounds the season still pauses at for cards. */
-export const stopsAfter = (b: BoardState) => STOPS.slice(b.stop);

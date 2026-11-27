@@ -196,10 +196,16 @@ describe('season', () => {
     expect(() => benchSwitch(tight, 'B1', 'SF')).toThrow(/cap/i);
   });
 
-  it('tradeSwap rejects a player who is already on a roster', () => {
-    const s = advance(fresh(), 100);
-    const someoneElse = s.teams[5].slots.PG;
-    expect(() => tradeSwap(s, s.teams[0].slots.PG.id, someoneElse)).toThrow(/already/i);
+  it('tradeSwap takes a player off an AI roster as a straight swap', () => {
+    const s = { ...advance(fresh(), 40), fees: -500 };
+    const theirs = s.teams[5].slots.B5;
+    const mine = s.teams[0].slots.B5;
+    const t = tradeSwap(s, mine.id, theirs);
+    expect(t.teams[0].slots.B5.name).toBe(theirs.name);
+    const names = t.teams.flatMap((tm) => ALL_SLOTS.map((k) => tm.slots[k].name));
+    expect(names).toContain(mine.name);
+    expect(new Set(names).size).toBe(names.length);
+    expect(() => tradeSwap(s, mine.id, s.teams[0].slots.PG)).toThrow(/already/i);
   });
 
   it('tradeSwap replaces a user player in the same slot', () => {

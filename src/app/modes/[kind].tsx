@@ -9,11 +9,13 @@ import { MODES, type Mode } from '../../data';
 import { useGame } from '../../store/game';
 import { BackButton, Display, Header, Label, Screen } from '../../ui/components';
 import { CourtArt, Icon } from '../../ui/icons';
+import { CrisisArt, TakeoverArt } from '../../ui/HubArt';
 import { C, FONT, R, S } from '../../ui/theme';
 import { goBack } from '../../ui/nav';
 
 const BANNER_H = 170;
 const TILE_H = 132;
+const HUB_H = 230;
 
 const playersIn = (m: Mode) => m.pool.teams.reduce((n, x) => n + x.players.length, 0);
 const yearsOf = (m: Mode) => {
@@ -74,18 +76,20 @@ function FranchiseGrid({ list, start }: { list: Mode[]; start: (m: Mode) => void
   );
 }
 
-/** A big Management Crisis choice: a gradient banner with an icon, a letter and what it is. */
-function HubBanner({ letter, title, desc, colors, icon, onPress, testID }: {
-  letter: string; title: string; desc: string; colors: [string, string, string]; icon: 'siren' | 'briefcase'; onPress: () => void; testID: string;
+/** A big Management Crisis choice: its illustration, the name big, and what it is. */
+function HubBanner({ title, desc, art, onPress, testID }: {
+  title: string; desc: string; art: 'crisis' | 'takeover'; onPress: () => void; testID: string;
 }) {
   const { t } = useTranslation();
+  const [w, setW] = useState(360);
+  const Art = art === 'crisis' ? CrisisArt : TakeoverArt;
   return (
-    <Pressable onPress={onPress} testID={testID} accessibilityRole="button" accessibilityLabel={title} style={({ pressed }) => [styles.hub, pressed && styles.pressed]}>
-      <LinearGradient colors={colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
-      <Text style={styles.hubLetter}>{letter}</Text>
-      <View style={styles.hubIcon}><Icon name={icon} size={44} /></View>
+    <Pressable onPress={onPress} testID={testID} accessibilityRole="button" accessibilityLabel={title}
+      onLayout={(e: LayoutChangeEvent) => setW(e.nativeEvent.layout.width)} style={({ pressed }) => [styles.hub, pressed && styles.pressed]}>
+      <View style={StyleSheet.absoluteFill}><Art width={w} height={HUB_H} /></View>
+      <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.15)', 'rgba(6,8,20,0.78)']} locations={[0, 0.45, 1]} style={StyleSheet.absoluteFill} />
       <View style={{ gap: 4 }}>
-        <Display size={34} align="left">{title}</Display>
+        <Display size={36} align="left">{title}</Display>
         <Text style={styles.hubDesc}>{desc}</Text>
       </View>
       <View style={styles.play}><Text style={styles.playText}>{t('home.play').toUpperCase()}</Text></View>
@@ -130,10 +134,8 @@ function ModePickerScreen() {
             <Display size={40}>{t('crisis.title')}</Display>
             <Text style={[styles.crisisDesc, { textAlign: 'center' }]}>{t('crisis.desc')}</Text>
           </View>
-          <HubBanner letter="A" title={t('rebuild.hubA')} desc={t('rebuild.hubADesc')} colors={['#3A0D16', '#A3182C', '#FF5A36']} icon="siren"
-            onPress={() => router.push('/modes/crisis-season')} testID="crisis-season" />
-          <HubBanner letter="B" title={t('rebuild.hubB')} desc={t('rebuild.hubBDesc')} colors={['#0E1A2B', '#1B3A63', '#2F6BFF']} icon="briefcase"
-            onPress={() => router.push('/rebuild')} testID="crisis-rebuild" />
+          <HubBanner title={t('rebuild.hubA')} desc={t('rebuild.hubADesc')} art="crisis" onPress={() => router.push('/modes/crisis-season')} testID="crisis-season" />
+          <HubBanner title={t('rebuild.hubB')} desc={t('rebuild.hubBDesc')} art="takeover" onPress={() => router.push('/rebuild')} testID="crisis-rebuild" />
         </>
       )}
       {kind === 'crisis-season' && (
@@ -188,9 +190,7 @@ const styles = StyleSheet.create({
   tileName: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 26, ...shadowText },
   tileMeta: { color: 'rgba(255,255,255,0.85)', fontWeight: '800', fontSize: 11, ...shadowText },
   crisisBig: { flexDirection: 'column', paddingVertical: S.xl, gap: S.sm },
-  hub: { minHeight: 190, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 8, padding: S.xl, justifyContent: 'flex-end', gap: S.sm },
-  hubLetter: { position: 'absolute', right: 18, top: -6, fontFamily: FONT.display, fontSize: 110, color: 'rgba(255,255,255,0.16)' },
-  hubIcon: { width: 68, height: 68, borderRadius: 20, backgroundColor: 'rgba(255,255,255,0.18)', alignItems: 'center', justifyContent: 'center' },
+  hub: { height: HUB_H, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 8, padding: S.xl, paddingBottom: 26, justifyContent: 'flex-end', gap: S.sm },
   hubDesc: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, maxWidth: '70%', ...shadowText },
   crisisHead: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.lg, borderRadius: 24, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7 },
   crisisIcon: { width: 64, height: 64, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.16)', alignItems: 'center', justifyContent: 'center' },

@@ -51,7 +51,7 @@
     },
     "crisis": {
       "title": "Crise de gestão",
-      "desc": "Monte um time e sobreviva à diretoria. Sete vezes por temporada, escolha 1 de 6 cartas viradas: exigências, dinheiro, vantagens e surpresas. Se a Confiança da diretoria chegar a 0, você está demitido."
+      "desc": "Preste contas à diretoria. Antes do início, você escolhe 1 de 6 cartas viradas: esse é o seu objetivo, e você precisa cumpri-lo. Uma carta surpresa chega no meio da temporada. Se a Confiança da diretoria chegar a 0, você está demitido."
     },
     "career": {
       "title": "Carreira",
@@ -246,7 +246,7 @@
   },
   "crisis": {
     "title": "Crise de gestão",
-    "desc": "Monte um time e sobreviva à diretoria. Sete vezes por temporada, escolha 1 de 6 cartas viradas: exigências, dinheiro, vantagens e surpresas. Se a Confiança da diretoria chegar a 0, você está demitido.",
+    "desc": "Preste contas à diretoria. Antes do início, você escolhe 1 de 6 cartas viradas: esse é o seu objetivo, e você precisa cumpri-lo. Uma carta surpresa chega no meio da temporada. Se a Confiança da diretoria chegar a 0, você está demitido.",
     "m0": "Pré-temporada",
     "m1": "Dezembro",
     "m2": "Fevereiro",
@@ -1174,7 +1174,7 @@
   "board": {
     "title": "Gestão de Crise",
     "pick": "Escolha uma carta",
-    "pickHint": "Seis cartas viradas para baixo. Toque em uma: exigências, dinheiro, vantagens e surpresas, tudo está aí dentro.",
+    "pickHint": "Seis cartas viradas: umas ajudam, outras atrapalham. Toque em uma.",
     "stopOf": "Parada {{n}} de {{total}}",
     "months": {
       "preseason": "Pré-temporada",
@@ -1206,7 +1206,8 @@
       "deadline": "Até o prazo de trocas",
       "end": "Até o fim da temporada regular",
       "now": "Agora mesmo",
-      "games": "Nos próximos {{n}} jogos"
+      "games": "Nos próximos {{n}} jogos",
+      "tipoff": "Até o início da temporada"
     },
     "fail": "Se falhar: −{{n}} de Confiança da diretoria",
     "noFail": "Nenhuma confiança em jogo",
@@ -1219,8 +1220,6 @@
     "secondLook": "Usar Segunda olhada (escolher de novo)",
     "pickIn": "Escolha um",
     "pickOut": "Quem abre espaço?",
-    "heads": "Cara! +{{amount}}",
-    "tails": "Coroa. −{{amount}}",
     "options": {
       "offense": "Guru do ataque: +3 por 20 jogos, depois +1 ({{fee}})",
       "defense": "Mente defensiva: +2 na temporada ({{fee}})",
@@ -1533,11 +1532,6 @@
         "story": "A torcida quer um golpe de mestre, e {{owner}} está ouvindo.",
         "rule": "+{{amount}} de espaço no teto, mas contrate uma opção top antes da próxima carta (−2 se não fizer)."
       },
-      "double-nothing": {
-        "title": "Dobro ou nada",
-        "story": "{{owner}} joga uma moeda para decidir o orçamento.",
-        "rule": "Cara: +{{amount}}. Coroa: −{{amount}}."
-      },
       "golden-ticket": {
         "title": "Bilhete dourado",
         "story": "{{gm}} tem um agente livre que ninguém mais conhece.",
@@ -1637,12 +1631,25 @@
         "title": "Rumor de superequipe",
         "story": "{{reporter}}: {{city}} acabou de fechar com uma estrela.",
         "rule": "{{city}} ganha +3 no resto da temporada."
+      },
+      "team-chemistry": {
+        "title": "Química do time",
+        "story": "{{coach}} levou o time para uma viagem de integração, e dá para ver.",
+        "rule": "+3 de nota do time por 10 jogos."
       }
+    },
+    "objective": "O objetivo da diretoria",
+    "pickObjective": "Escolha seu objetivo",
+    "pickHintObjective": "Seis cartas viradas, cada uma uma missão da diretoria. A carta que você virar é o objetivo que precisa cumprir.",
+    "rewardN": "Cumpriu: +{{n}} de Confiança da diretoria",
+    "stopKind": {
+      "objective": "O objetivo",
+      "event": "Carta do meio da temporada"
     }
   },
   "rebuild": {
-    "title": "Reconstrução",
-    "desc": "Assuma um time real com a folha salarial real e um orçamento de reconstrução. Demita o técnico ou mantenha, depois vá posição por posição: mantenha, ou venda e contrate uma de três opções com preço ou uma opção do banco. Cartas da diretoria entram entre as posições.",
+    "title": "Aquisição",
+    "desc": "Compre um time real com sua folha salarial real e um orçamento de reconstrução. A diretoria dá um objetivo para cumprir até o início da temporada. Escolha um técnico e vá posição por posição: mantenha o jogador ou venda-o e contrate uma de três opções com preço ou uma opção de banco.",
     "pickTeam": "Escolha um time para assumir",
     "spin": "Gire um time: liga de hoje",
     "spinHistory": "Gire um time: qualquer era",
@@ -1680,15 +1687,16 @@
     "sell": "Vender por {{pay}}",
     "sellTitle": "Substituir {{name}}",
     "budgetLeft": "Orçamento: {{budget}}",
-    "cardStop": "Carta de reconstrução {{n}} de {{total}}",
+    "cardStop": "Carta {{n}} de {{total}}",
     "tipoffTitle": "A reconstrução acabou",
     "tipoff": "Abrir a temporada",
     "srChange": "Nota do elenco {{from}} → {{to}}",
     "coachPicked": "Técnico: {{name}}",
     "openDemands": "A diretoria vai cobrar isto desde a bola ao alto:",
     "hubA": "Temporada de crise",
-    "hubADesc": "Escolha dez em qualquer modo e sobreviva a sete paradas da diretoria.",
-    "hubB": "Reconstrução",
-    "hubBDesc": "Assuma um time real e reconstrua, posição por posição."
+    "hubADesc": "Monte dez em qualquer modo, escolha seu objetivo e sobreviva a uma carta do meio da temporada.",
+    "hubB": "Aquisição",
+    "hubBDesc": "Compre um time real e reconstrua do seu jeito, posição por posição.",
+    "restart": "Recomeçar"
   }
 }

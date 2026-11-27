@@ -11,7 +11,7 @@ import { feel } from '../../audio/feel';
 import { moneyScaleFor } from '../../data/modes';
 import { CAP } from '../../engine/cap';
 import { CAST, cardOf } from '../../engine/board/cards';
-import { STOPS, STOP_MONTHS } from '../../engine/board/state';
+import { OBJECTIVE_PENALTY, OBJECTIVE_REWARD, planOf, stopAt, type StopKind } from '../../engine/board/state';
 import { STARTER_SLOTS, playsPos, type SlotId } from '../../engine/types';
 import { useGame } from '../../store/game';
 import { Button, Label, Screen } from '../components';
@@ -71,7 +71,7 @@ function FaceDown({ n, peek, onPick, disabled }: { n: number; peek?: string; onP
  * `inline`: shown inside another screen (Rebuild's cards between positions): its own label, no redirects, and the
  * parent decides what happens once the card is resolved.
  */
-export function BoardStop({ inline }: { inline?: { label: string; onResolved: (fired: boolean) => void } } = {}) {
+export function BoardStop({ inline }: { inline?: { label: string; kind: StopKind; onResolved: (fired: boolean) => void } } = {}) {
   const { t } = useTranslation();
   const g = useGame();
   const board = g.crisis?.board;
@@ -103,7 +103,7 @@ export function BoardStop({ inline }: { inline?: { label: string; onResolved: (f
   const scale = moneyScaleFor(g.poolId);
   const user = season.teams[0];
   const rec = season.records[0];
-  const month = STOP_MONTHS[Math.min(board.stop, STOP_MONTHS.length - 1)];
+  const kind: StopKind = inline?.kind ?? stopAt(board)?.kind ?? 'event';
 
   const done = (fired: boolean) => {
     feel('thunk');
@@ -116,8 +116,8 @@ export function BoardStop({ inline }: { inline?: { label: string; onResolved: (f
       <View style={styles.top}>
         {inline ? <Label color={C.hardwood}>{inline.label}</Label> : (
           <>
-            <Label color={C.hardwood}>{t('board.title')} · {t(`board.months.${month}`)}</Label>
-            <Text style={styles.count}>{t('board.stopOf', { n: board.stop + 1, total: STOPS.length })}</Text>
+            <Label color={C.hardwood}>{t('board.title')} · {t(`board.stopKind.${kind}`)}</Label>
+            <Text style={styles.count}>{t('board.stopOf', { n: board.stop + 1, total: planOf(board).length })}</Text>
           </>
         )}
       </View>
@@ -130,8 +130,8 @@ export function BoardStop({ inline }: { inline?: { label: string; onResolved: (f
     return (
       <Shell inline={!!inline}>
         {header}
-        <Text style={styles.pickTitle}>{t('board.pick')}</Text>
-        <Text style={styles.hint}>{t('board.pickHint')}</Text>
+        <Text style={styles.pickTitle}>{t(kind === 'objective' ? 'board.pickObjective' : 'board.pick')}</Text>
+        <Text style={styles.hint}>{t(kind === 'objective' ? 'board.pickHintObjective' : 'board.pickHint')}</Text>
         {(board.peek?.length ?? 0) > 0 && <Text style={[styles.hint, { color: C.blue }]}>{t('board.peek')}</Text>}
         <View style={styles.grid} testID="board-hand">
           {(board.hand ?? []).map((id, i) => (
@@ -159,7 +159,8 @@ export function BoardStop({ inline }: { inline?: { label: string; onResolved: (f
   const rotateY = flip.interpolate({ inputRange: [0, 1], outputRange: ['180deg', '0deg'] });
   const cardScale = flip.interpolate({ inputRange: [0, 1], outputRange: [0.6, 1] });
   const shineX = shine.interpolate({ inputRange: [0, 1], outputRange: [-420, 420] });
-  const due = def.kind === 'demand' && def.due ? (def.due === 'games' ? t('board.due.games', { n: def.of }) : t(`board.due.${def.due}`)) : null;
+  // An objective is due at tip-off in a Takeover; in a Crisis Season by the deadline, or the season's end for results.
+  const due = def.kind !== 'demand' ? null : inline ? t('board.due.tipoff') : def.due === 'end' ? t('board.due.end') : t('board.due.deadline');
 
   return (
     <MoneyScale.Provider value={scale}>
@@ -178,14 +179,9 @@ export function BoardStop({ inline }: { inline?: { label: string; onResolved: (f
             <Text style={styles.ruleLabel}>{t('board.rule')}</Text>
             <Text style={styles.rule}>{t(`board.c.${picked}.rule`, vars)}</Text>
             {due && <Text style={styles.due}>{due}</Text>}
-            {def.kind === 'demand' && def.due !== 'now' && (
-              <Text style={[styles.due, { color: def.penalty ? C.danger : C.muted }]}>
-                {def.penalty ? t('board.fail', { n: def.penalty }) : t('board.noFail')} · {t('board.reward')}
-              </Text>
-            )}
-            {picked === 'double-nothing' && (
-              <Text style={[styles.coin, { color: offer.heads ? C.neon : C.danger }]} testID="board-coin">
-                {offer.heads ? t('board.heads', { amount: vars.amount }) : t('board.tails', { amount: vars.amount })}
+            {def.kind === 'demand' && (
+              <Text style={[styles.due, { color: C.danger }]}>
+                {t('board.fail', { n: OBJECTIVE_PENALTY })} · {t('board.rewardN', { n: OBJECTIVE_REWARD })}
               </Text>
             )}
           </View>
@@ -264,7 +260,6 @@ const styles = StyleSheet.create({
   ruleLabel: { fontWeight: '900', fontSize: 11, letterSpacing: 1.5, color: C.muted, textTransform: 'uppercase' },
   rule: { color: C.ink, fontWeight: '800', fontSize: 16, lineHeight: 22 },
   due: { color: C.muted, fontWeight: '800', fontSize: 13 },
-  coin: { fontWeight: '900', fontSize: 18, marginTop: 4 },
   missed: { flexDirection: 'row', flexWrap: 'wrap', gap: S.sm },
   miss: { width: '31%', minWidth: 96, padding: S.sm, borderRadius: R.sm, borderWidth: 2, backgroundColor: C.surface, gap: 2 },
   missKind: { fontWeight: '900', fontSize: 10, letterSpacing: 1, textTransform: 'uppercase' },

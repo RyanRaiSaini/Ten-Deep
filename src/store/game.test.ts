@@ -164,9 +164,10 @@ describe('game store', () => {
     expect(useDaily.getState().days[key].progress!.trivia!.i).toBe(1);
   });
 
-  it('management crisis: six face-down cards at each of 7 stops, Board Confidence, then a verdict', async () => {
+  it('management crisis: an objective before tip-off, one event card at midseason, then a verdict', async () => {
     const { advance } = await import('../engine/season');
     const { STOPS } = await import('../engine/board/state');
+    const { cardOf } = await import('../engine/board/cards');
     useGame.getState().newCrisis('current-2026');
     const pool = POOLS['current-2026'];
     useGame.setState({ draft: startDraft(pool, 'test-crisis') });
@@ -203,7 +204,10 @@ describe('game store', () => {
       } else useGame.getState().setSeason(advance(s, 82));
     }
     if (useGame.getState().phase !== 'result') {
-      expect(useGame.getState().crisis!.board!.played).toHaveLength(7);
+      const played = useGame.getState().crisis!.board!.played;
+      expect(played).toHaveLength(2);
+      expect(cardOf(played[0].id).kind).toBe('demand');
+      expect(['event', 'perk']).toContain(cardOf(played[1].id).kind);
       useGame.getState().beginPlayoffs();
       expect(useGame.getState().crisis!.board!.demands.every((d) => d.status !== 'active')).toBe(true);
       useGame.getState().simPlayoffs();

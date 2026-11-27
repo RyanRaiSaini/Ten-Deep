@@ -5,7 +5,7 @@ import { draftLeague } from '../aiDraft';
 import { createRng } from '../rng';
 import { advance, createSeason, type SeasonState } from '../season';
 import { ALL_SLOTS, type Roster } from '../types';
-import { CARDS, cardOf } from './cards';
+import { CARDS, CRISIS_OBJECTIVES, SEASON_EVENTS, TAKEOVER_OBJECTIVES, cardOf } from './cards';
 import { blocked, marketOptions, signOption } from './market';
 import { originIndex } from './origin';
 import { prepareOffer, resolveCard, type PlayCtx } from './play';
@@ -30,11 +30,12 @@ function assertLegal(teams: Roster[]) {
 }
 
 describe('deck', () => {
-  it('has the 72 cards of the design: 36 demands, 16 finance, 8 perks, 12 events', () => {
+  it('has 72 cards (no double or nothing), and stops only deal objectives or good-or-bad events', () => {
     expect(CARDS).toHaveLength(72);
     expect(new Set(CARDS.map((c) => c.id)).size).toBe(72);
-    const by = (k: string) => CARDS.filter((c) => c.kind === k).length;
-    expect([by('demand'), by('finance'), by('perk'), by('event')]).toEqual([36, 16, 8, 12]);
+    expect(CARDS.some((c) => c.id === 'double-nothing')).toBe(false);
+    for (const id of [...CRISIS_OBJECTIVES, ...TAKEOVER_OBJECTIVES]) expect(cardOf(id).kind, id).toBe('demand');
+    for (const id of SEASON_EVENTS) expect(['event', 'perk'], id).toContain(cardOf(id).kind);
   });
 
   it('every card resolves cleanly at preseason and mid-season, and rosters stay legal', () => {
