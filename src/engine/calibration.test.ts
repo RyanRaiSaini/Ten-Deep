@@ -87,7 +87,7 @@ describe('calibration (2026 pool, real rosters)', () => {
     const { MODE_BY_ID } = await import('../data/modes');
     const allTime = MODE_BY_ID['all-time'].pool;
     const r = runSeasons(bestRoster(allTime, 40), allTime, 20, 'cal-alltime');
-    expect(r.avg).toBeGreaterThanOrEqual(66);
+    expect(r.avg).toBeGreaterThanOrEqual(60); // the AI's legend contenders get the top-end bonus too
     expect(r.perfect).toBeLessThanOrEqual(3);
   }, 180_000);
 });
