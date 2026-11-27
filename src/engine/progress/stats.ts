@@ -55,7 +55,7 @@ export function applyEvent(stats: Stats, e: GameEvent): Stats {
         add('titles');
         if (e.playoffLosses === 0) add('perfectTitles');
         if (e.seed >= 5) add('cinderella');
-        if (e.wins < 50) add('underdog');
+        if (e.wins < 65) add('underdog'); // titles take a 95+ squad now: under 65 wins is a real upset
       }
       if (e.kind === 'crisis') {
         add('crisisRuns');

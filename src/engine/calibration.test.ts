@@ -6,7 +6,8 @@ import { squadRating } from './rotation';
 /**
  * Difficulty guardrails (owner's targets, against the real 2026-27 rosters), by Squad Rating:
  *   96 → about 77 wins and the only level where 82-0 happens · 93 → about 70 · 90 → about 62 · 88 → about 55
- *   85 → about 50. Titles are hard: below 90 almost never; you need a mid-60s-win team for a real chance.
+ *   85 → about 50. Titles take a 95+ squad: about half the time at 96, a third at 95, one in ten at 93, almost
+ *   never below 92.
  * Checked two ways: the same drafted squads moved to each level, and real star-heavy drafts as they come (a squad
  * of two stars and a cheap bench must play like its number). Every AI league is levelled to the same strength
  * (SIM.leagueSr), so the eras follow the same curve. If a change breaks these, retune src/engine/simConfig.ts.
@@ -20,7 +21,7 @@ describe('calibration (2026 pool, real rosters)', () => {
     const r = at(96);
     expect(r.avg).toBeGreaterThanOrEqual(73);
     expect(r.avg).toBeLessThanOrEqual(81);
-    expect(r.titleRate).toBeGreaterThan(0.4);
+    expect(r.titleRate).toBeGreaterThan(0.35);
   }, 120_000);
 
   it('Squad Rating 93: about 70 wins, never 82-0', () => {
@@ -28,6 +29,7 @@ describe('calibration (2026 pool, real rosters)', () => {
     expect(r.avg).toBeGreaterThanOrEqual(65);
     expect(r.avg).toBeLessThanOrEqual(74);
     expect(r.perfect).toBe(0);
+    expect(r.titleRate).toBeLessThanOrEqual(0.2);
   }, 120_000);
 
   it('Squad Rating 90: about 62 wins, titles rare', () => {
@@ -35,7 +37,7 @@ describe('calibration (2026 pool, real rosters)', () => {
     expect(r.avg).toBeGreaterThanOrEqual(57);
     expect(r.avg).toBeLessThanOrEqual(65);
     expect(r.perfect).toBe(0);
-    expect(r.titleRate).toBeLessThanOrEqual(0.15);
+    expect(r.titleRate).toBeLessThanOrEqual(0.05);
   }, 120_000);
 
   it('Squad Rating 85: about 50 wins, almost never a title', () => {

@@ -72,8 +72,10 @@ export function simGame(home: Roster, away: Roster, ctx: GameContext): GameResul
   const { rng } = ctx;
   const lh = lineupMinutes(home, ctx.outHome);
   const la = lineupMinutes(away, ctx.outAway);
-  const sh = teamStrength(lh, (home.mod ?? 0) + (home.seasonForm ?? 0));
-  const sa = teamStrength(la, (away.mod ?? 0) + (away.seasonForm ?? 0));
+  // In the playoffs the league's teams raise their level (SIM.playoffBoost): a title takes a truly elite squad.
+  const lift = (r: Roster) => (ctx.playoff && r.id.startsWith('ai-') ? SIM.playoffBoost : 0);
+  const sh = teamStrength(lh, (home.mod ?? 0) + (home.seasonForm ?? 0) + lift(home));
+  const sa = teamStrength(la, (away.mod ?? 0) + (away.seasonForm ?? 0) + lift(away));
   const pace = rng.normal(SIM.pace, SIM.paceSd);
   const k = SIM.k * (ctx.playoff ? SIM.playoffK : 1);
   const exp = (off: number, def: number) => pace * (SIM.basePpp + k * (off - def));
