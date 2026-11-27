@@ -1699,5 +1699,33 @@
     "hubB": "Rachat",
     "hubBDesc": "Rachetez une vraie équipe et reconstruisez-la à votre façon, poste par poste.",
     "restart": "Recommencer"
+  },
+  "dynasty": {
+    "title": "Dynastie",
+    "desc": "Choisis une franchise. Garde son vrai effectif, ou lance une draft fantasy : tourne ta position et les 30 équipes draftent la ligue d'aujourd'hui à partir de zéro. Puis bâtis une dynastie, saison après saison.",
+    "bannerDesc": "Choisis une franchise : son vrai effectif ou une draft fantasy à 30 équipes. Puis saison après saison, avec des joueurs qui progressent, atteignent leur pic et prennent leur retraite.",
+    "pickTeam": "Choisis ta franchise",
+    "howStart": "Comment veux-tu commencer avec les {{team}} ?",
+    "real": "Garder le vrai effectif",
+    "realDesc": "L'équipe de cette saison, telle quelle. Joue tout de suite.",
+    "draft": "Draft fantasy",
+    "draftDesc": "Tourne pour ta position de draft. Les 30 équipes draftent la ligue d'aujourd'hui à partir de zéro : 10 tours, ordre serpent.",
+    "otherTeam": "Choisir une autre équipe",
+    "spinTitle": "Tourne pour ta position de draft",
+    "spinDesc": "La position 1 choisit en premier. L'ordre s'inverse : le dernier à choisir dans un tour choisit en premier au suivant.",
+    "spin": "Tourner",
+    "spinning": "Ça tourne…",
+    "yourSlot": "Tu choisis en n°{{n}}",
+    "toDraft": "Vers la draft",
+    "round": "Tour {{r}} sur {{total}}",
+    "onClock": "C'est à toi · choix n°{{n}}",
+    "waiting": "Les autres équipes choisissent…",
+    "slotLine": "Position n°{{n}} · {{picks}} joueurs sur {{total}}",
+    "recent": "Derniers choix",
+    "yourTeam": "Ton équipe",
+    "all": "Tous",
+    "auto": "Drafter le reste automatiquement",
+    "doneTitle": "La draft est terminée",
+    "startSeason": "Lancer la saison 1"
   }
 }

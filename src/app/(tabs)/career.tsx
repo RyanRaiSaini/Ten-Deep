@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { CourtBackdrop } from '../../ui/SparkleBackdrop';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Text } from '../../ui/Text';
 import { seasonLabel } from '../../engine/career/offseason';
 import { useCareer } from '../../store/career';
@@ -34,6 +35,8 @@ function CareerScreen() {
 
   const next = (() => {
     if (!c.active || c.ended) return null;
+    // A Dynasty still in its fantasy draft (or waiting for its slot spin).
+    if (c.mode === 'dynasty' && c.history.length === 0 && (c.fantasy || !(g.career && g.season))) return { label: t('career.resume'), go: () => router.push('/dynasty') };
     if (c.step) return { label: t('career.toOffseason'), go: () => router.push('/offseason') };
     if (g.career && g.phase !== 'idle' && g.phase !== 'result') return { label: t('career.resume'), go: () => router.push(ROUTE[g.phase]) };
     // Another run replaced the live season: bring it back (that run is left behind, like any abandoned run).
@@ -73,6 +76,17 @@ function CareerScreen() {
           )}
           <Button label={c.ended ? t('career.newCareer') : t('career.start')} variant="dark" onPress={() => { c.start(); router.push('/draft'); }} testID="career-start" />
         </Card>
+      )}
+
+      {(!c.active || c.ended) && (
+        <Pressable onPress={() => router.push('/dynasty')} testID="dynasty-open" accessibilityRole="button" style={({ pressed }) => [styles.dynasty, pressed && { transform: [{ translateY: 3 }] }]}>
+          <LinearGradient colors={['#1A0F2E', '#3B1F6B', '#7A4DFF']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+          <View style={styles.dynastyIcon}><Icon name="crown" size={40} /></View>
+          <View style={{ flex: 1, gap: 4 }}>
+            <Display size={28} align="left">{t('dynasty.title')}</Display>
+            <Text style={styles.dynastyDesc}>{t('dynasty.bannerDesc')}</Text>
+          </View>
+        </Pressable>
       )}
 
       {c.active && !c.ended && (
@@ -135,6 +149,9 @@ export default function Career() {
 }
 
 const styles = StyleSheet.create({
+  dynasty: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.lg, borderRadius: 24, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7 },
+  dynastyIcon: { width: 64, height: 64, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.16)', alignItems: 'center', justifyContent: 'center' },
+  dynastyDesc: { color: '#E6DCFF', fontWeight: '700', fontSize: 13, lineHeight: 18 },
   big: { color: C.danger, fontSize: 26, ...F.display },
   body: { color: C.text, fontSize: 15, lineHeight: 22 },
   muted: { color: C.muted },

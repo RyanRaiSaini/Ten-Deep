@@ -1694,5 +1694,33 @@
     "hubB": "Takeover",
     "hubBDesc": "Buy a real team and rebuild it your way, position by position.",
     "restart": "Restart"
+  },
+  "dynasty": {
+    "title": "Dynasty",
+    "desc": "Pick a franchise. Keep its real roster, or hold a fantasy draft: spin your slot and all 30 teams draft today's league from scratch. Then build a dynasty, season after season.",
+    "bannerDesc": "Pick a franchise: its real roster or a 30-team fantasy draft. Then season after season, with players who grow, peak and retire.",
+    "pickTeam": "Pick your franchise",
+    "howStart": "How do you want to start the {{team}}?",
+    "real": "Keep the real roster",
+    "realDesc": "This season's team, as it is. Start playing right away.",
+    "draft": "Fantasy draft",
+    "draftDesc": "Spin for your draft slot. All 30 teams draft today's league from scratch: 10 rounds, snake order.",
+    "otherTeam": "Pick another team",
+    "spinTitle": "Spin your draft slot",
+    "spinDesc": "Slot 1 picks first. The order snakes: whoever picks last in a round picks first in the next.",
+    "spin": "Spin",
+    "spinning": "Spinning…",
+    "yourSlot": "You pick #{{n}}",
+    "toDraft": "To the draft",
+    "round": "Round {{r}} of {{total}}",
+    "onClock": "You're on the clock · pick #{{n}}",
+    "waiting": "The other teams are picking…",
+    "slotLine": "Slot #{{n}} · {{picks}} of {{total}} players",
+    "recent": "Latest picks",
+    "yourTeam": "Your team",
+    "all": "All",
+    "auto": "Auto-draft the rest for me",
+    "doneTitle": "The draft is done",
+    "startSeason": "Start season 1"
   }
 }

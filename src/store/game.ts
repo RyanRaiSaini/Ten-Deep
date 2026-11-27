@@ -103,7 +103,8 @@ export interface GameStore {
   newCrisis: (poolId: string, career?: boolean) => void;
   /** Career seasons 2+: start a Crisis season from the evolved league (no draft). */
   /** `mod`: season-long team rating nudge (career morale). */
-  startCareerSeason: (teams: Roster[], seed: string, mod?: number) => void;
+  /** `cards: false` (Dynasty): a plain season, no board cards. `division`: where your team plays. */
+  startCareerSeason: (teams: Roster[], seed: string, mod?: number, opts?: { cards?: boolean; division?: number }) => void;
   /** The season reached a card round: deal that card. */
   openCrisis: (season: SeasonState) => void;
   resolveCrisis: (d: Decision) => void;
@@ -303,15 +304,20 @@ export const useGame = create<GameStore>()(
         get().newRun(poolId);
         set({ career, ...(career ? { parked: null } : {}), crisis: { objective: null, drawn: [], resolved: 0, pending: null, verdict: null } });
       },
-      startCareerSeason: (teams, seed, mod = 0) => {
+      startCareerSeason: (teams, seed, mod = 0, opts = {}) => {
         // Morale's rating nudge is set on the team up front so the board's objective accounts for it.
         // A career plays today's league: a division picked for an older era's league doesn't apply.
-        const chosen = get().division;
+        const chosen = opts.division ?? get().division;
+        const cards = opts.cards ?? true;
         const divs = assignDivisions(teams.map((t) => t.franchise ?? franchiseByName(t.name)), chosen !== null && layoutOf(chosen) === 'modern' ? chosen : defaultDivision(seed));
         const season = {
-          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), stops: pauseRounds(newBoard('')),
+          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), ...(cards ? { stops: pauseRounds(newBoard('')) } : {}),
           ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
         };
+        if (!cards) {
+          set({ phase: 'season', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null, season, crisis: null });
+          return;
+        }
         set({
           phase: 'season', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null,
           season, crisis: { objective: boardObjective(season), drawn: [], resolved: 0, pending: null, verdict: null, board: newBoard(teams[0].franchise ?? 'sac') },

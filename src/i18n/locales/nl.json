@@ -1694,5 +1694,33 @@
     "hubB": "Overname",
     "hubBDesc": "Koop een echt team en bouw het op jouw manier om, positie voor positie.",
     "restart": "Opnieuw"
+  },
+  "dynasty": {
+    "title": "Dynastie",
+    "desc": "Kies een franchise. Hou de echte selectie, of speel een fantasydraft: draai je slot en alle 30 teams draften de competitie van vandaag helemaal opnieuw. Bouw daarna een dynastie, seizoen na seizoen.",
+    "bannerDesc": "Kies een franchise: de echte selectie of een fantasydraft met 30 teams. Daarna seizoen na seizoen, met spelers die groeien, pieken en stoppen.",
+    "pickTeam": "Kies je franchise",
+    "howStart": "Hoe wil je met de {{team}} beginnen?",
+    "real": "Hou de echte selectie",
+    "realDesc": "Het team van dit seizoen, zoals het is. Begin meteen met spelen.",
+    "draft": "Fantasydraft",
+    "draftDesc": "Draai voor je draftslot. Alle 30 teams draften de competitie van vandaag helemaal opnieuw: 10 rondes, slangvolgorde.",
+    "otherTeam": "Kies een ander team",
+    "spinTitle": "Draai je draftslot",
+    "spinDesc": "Slot 1 kiest eerst. De volgorde kronkelt: wie in een ronde als laatste kiest, kiest in de volgende als eerste.",
+    "spin": "Draaien",
+    "spinning": "Draait…",
+    "yourSlot": "Jij kiest als #{{n}}",
+    "toDraft": "Naar de draft",
+    "round": "Ronde {{r}} van {{total}}",
+    "onClock": "Jij bent aan de beurt · keuze #{{n}}",
+    "waiting": "De andere teams kiezen…",
+    "slotLine": "Slot #{{n}} · {{picks}} van {{total}} spelers",
+    "recent": "Laatste keuzes",
+    "yourTeam": "Jouw team",
+    "all": "Alles",
+    "auto": "De rest automatisch draften",
+    "doneTitle": "De draft is klaar",
+    "startSeason": "Start seizoen 1"
   }
 }

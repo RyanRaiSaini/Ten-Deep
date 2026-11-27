@@ -1694,5 +1694,33 @@
     "hubB": "Übernahme",
     "hubBDesc": "Kaufe ein echtes Team und baue es auf deine Art um, Position für Position.",
     "restart": "Neu starten"
+  },
+  "dynasty": {
+    "title": "Dynastie",
+    "desc": "Wähle ein Franchise. Behalte den echten Kader oder starte einen Fantasy-Draft: Dreh deinen Slot, und alle 30 Teams draften die heutige Liga von Grund auf neu. Dann baust du eine Dynastie auf, Saison für Saison.",
+    "bannerDesc": "Wähle ein Franchise: echter Kader oder Fantasy-Draft mit 30 Teams. Dann Saison für Saison, mit Spielern, die wachsen, ihren Höhepunkt erreichen und aufhören.",
+    "pickTeam": "Wähle dein Franchise",
+    "howStart": "Wie willst du mit den {{team}} starten?",
+    "real": "Echten Kader behalten",
+    "realDesc": "Das Team dieser Saison, so wie es ist. Sofort losspielen.",
+    "draft": "Fantasy-Draft",
+    "draftDesc": "Dreh deinen Draft-Slot. Alle 30 Teams draften die heutige Liga von Grund auf neu: 10 Runden, Snake-Reihenfolge.",
+    "otherTeam": "Anderes Team wählen",
+    "spinTitle": "Dreh deinen Draft-Slot",
+    "spinDesc": "Slot 1 pickt zuerst. Die Reihenfolge dreht sich: Wer in einer Runde zuletzt pickt, pickt in der nächsten als Erster.",
+    "spin": "Drehen",
+    "spinning": "Dreht…",
+    "yourSlot": "Du pickst an #{{n}}",
+    "toDraft": "Zum Draft",
+    "round": "Runde {{r}} von {{total}}",
+    "onClock": "Du bist dran · Pick #{{n}}",
+    "waiting": "Die anderen Teams picken…",
+    "slotLine": "Slot #{{n}} · {{picks}} von {{total}} Spielern",
+    "recent": "Letzte Picks",
+    "yourTeam": "Dein Team",
+    "all": "Alle",
+    "auto": "Den Rest automatisch draften",
+    "doneTitle": "Der Draft ist durch",
+    "startSeason": "Saison 1 starten"
   }
 }
