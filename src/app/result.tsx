@@ -199,7 +199,7 @@ function ResultScreen() {
           <Text style={styles.replayHint}>{t('replay.hint')}</Text>
         </View>
       )}
-      {!g.career && <Button label={t('result.playAgain')} onPress={() => { if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />}
+      {!g.career && <Button label={t('result.playAgain')} onPress={() => { if (g.crisis?.rebuild) { router.replace('/rebuild'); return; } if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />}
       <Button label={t('result.home')} variant="ghost" onPress={() => { g.quit(); goHome(); }} testID="go-home" />
     </Screen>
   );

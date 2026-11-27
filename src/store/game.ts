@@ -23,6 +23,8 @@ import { checkDemands } from '../engine/board/rules';
 import { type Decision as BoardDecision, vetoDemand } from '../engine/board/play';
 import { respin as boardRespinOf, signOption, type MarketOption } from '../engine/board/market';
 import { boardCtx } from './boardCtx';
+import { COACH_FEE, COACH_STEP, FIRST_SLOT_STEP, TIPOFF_STEP, applyCoach, rebuildHand, slotOfStep, stopAfterStep, takeOver, type CoachId, type RebuildState } from '../engine/board/rebuild';
+import { addFee } from '../engine/board/util';
 import { dailySeed } from '../engine/daily';
 import { useDaily } from './daily';
 import { useWeekly } from './weekly';
@@ -41,7 +43,7 @@ import { canRunItBack, finishOf, nextMark, type ReplayMark } from '../engine/rep
 /** First Daily Draft played on fair spins (dailies before it keep the original sequence). */
 export const FAIR_DAILY_FROM = '2026-11-25';
 
-export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'crisis' | 'playoffs' | 'result';
+export type Phase = 'idle' | 'draft' | 'season' | 'deadline' | 'crisis' | 'rebuild' | 'playoffs' | 'result';
 
 /** Management Crisis run state. */
 export interface CrisisRun {
@@ -55,6 +57,8 @@ export interface CrisisRun {
   board?: BoardState;
   /** What the last board move settled, for the toast on the next screen. */
   news?: BoardEvent[];
+  /** Rebuild mode: the team you took over and where you are in the rebuild (see engine/board/rebuild.ts). */
+  rebuild?: RebuildState;
 }
 
 export interface GameStore {
@@ -113,6 +117,17 @@ export interface GameStore {
   boardSign: (slot: SlotId, option: MarketOption) => boolean;
   boardRespin: () => boolean;
   boardVeto: (index: number) => void;
+  /** Rebuild mode: take over a real team-season (by id) from a mode's pool. */
+  newRebuild: (poolId: string, teamId: string) => void;
+  /** Rebuild: past the takeover screen. */
+  rebuildNext: () => void;
+  rebuildCoach: (coach: CoachId) => void;
+  rebuildKeep: () => void;
+  rebuildSell: () => void;
+  rebuildCancelSell: () => void;
+  rebuildSign: (option: MarketOption) => void;
+  /** Rebuild done: the coach's effect lands, the board checks the roster, and the season starts. */
+  tipOff: () => void;
   doSpin: () => void;
   doRespin: () => void;
   /** Spend a shop reroll on this spin (not in the Daily Draft or a friend's race, where everyone gets the same spins). */
@@ -134,6 +149,8 @@ export interface GameStore {
   beginPlayoffs: () => void;
   /** Board Confidence hit 0: the season and playoffs play out without you and the run ends fired. */
   fireGm: () => void;
+  /** Rebuild: on to the next position (dealing a card stop when one comes up). */
+  rebuildStep: () => void;
   playoffGame: () => void;
   simPlayoffs: () => void;
   finish: () => void;
@@ -331,8 +348,13 @@ export const useGame = create<GameStore>()(
       boardSecondLook: () =>
         set((s) => (s.crisis?.board && s.season ? { crisis: { ...s.crisis, board: secondLook(s.crisis.board, boardCtx(s.poolId, s.season)) } } : {})),
       resolveBoard: (d) => {
-        const { crisis, season, poolId } = get();
+        const { crisis, season, poolId, phase } = get();
         if (!crisis?.board?.picked || !season) return false;
+        if (phase === 'rebuild' && crisis.rebuild) {
+          const step = resolveStop(crisis.board, d, boardCtx(poolId, season), { n: crisis.rebuild.cards });
+          set({ season: step.season, crisis: { ...crisis, board: step.board, rebuild: { ...crisis.rebuild, cards: crisis.rebuild.cards + 1 } } });
+          return false;
+        }
         const step = resolveStop(crisis.board, d, boardCtx(poolId, season));
         set({ season: step.season, phase: 'season', crisis: { ...crisis, board: step.board, news: step.events } });
         if (step.board.firedAt === undefined) return false;
@@ -357,6 +379,70 @@ export const useGame = create<GameStore>()(
         return true;
       },
       boardVeto: (index) => set((s) => (s.crisis?.board ? { crisis: { ...s.crisis, board: vetoDemand(s.crisis.board, index) } } : {})),
+      newRebuild: (poolId, teamId) => {
+        const mode = MODE_BY_ID[poolId];
+        const team = pool(poolId).teams.find((t) => t.id === teamId);
+        if (!mode || !team) return;
+        const current = mode.kind === 'current';
+        const league = current
+          ? { layout: 'modern' as const, seasons: current2026.teams, fallback: current2026.teams, canonical: current2026.teams }
+          : { layout: mode.layout ?? 'modern', seasons: mode.pool.teams.filter((t) => t.season === team.season), fallback: pool('all-time').teams, canonical: current2026.teams };
+        const seed = `rebuild-${newSeed()}`;
+        const { season, division, payroll } = takeOver(team, league, seed);
+        const franchise = franchiseOf(team);
+        set({
+          phase: 'rebuild', poolId, replay: null, challenge: null, daily: null, weekly: null, career: false, draft: null, playoffs: null, deadline: null, stake: null,
+          division, season,
+          crisis: {
+            objective: null, drawn: [], resolved: 0, pending: null, verdict: null, board: newBoard(franchise),
+            rebuild: { teamId, name: `${team.city} ${team.name}`, season: team.season, colors: team.colors, franchise, step: 0, coach: null, payroll, sr0: Math.round(squadRating(season.teams[0])), selling: null, cards: 0 },
+          },
+        });
+      },
+      rebuildNext: () => set((s) => (s.crisis?.rebuild && s.crisis.rebuild.step === 0 ? { crisis: { ...s.crisis, rebuild: { ...s.crisis.rebuild, step: COACH_STEP } } } : {})),
+      rebuildCoach: (coach) => {
+        const { crisis, season } = get();
+        if (!crisis?.rebuild || !season || crisis.rebuild.step !== COACH_STEP) return;
+        set({ season: addFee(season, COACH_FEE[coach]), crisis: { ...crisis, rebuild: { ...crisis.rebuild, coach, step: FIRST_SLOT_STEP } } });
+      },
+      rebuildKeep: () => get().rebuildStep(),
+      rebuildSell: () => set((s) => {
+        const r = s.crisis?.rebuild;
+        const slot = r && slotOfStep(r.step);
+        return slot ? { crisis: { ...s.crisis!, rebuild: { ...r, selling: slot } } } : {};
+      }),
+      rebuildCancelSell: () => set((s) => (s.crisis?.rebuild ? { crisis: { ...s.crisis, rebuild: { ...s.crisis.rebuild, selling: null } } } : {})),
+      rebuildSign: (option) => {
+        const { crisis, season } = get();
+        const slot = crisis?.rebuild?.selling as SlotId | null | undefined;
+        if (!crisis?.board || !crisis.rebuild || !season || !slot) return;
+        const signed = signOption(season, crisis.board, slot, option);
+        set({ season: signed.season, crisis: { ...crisis, board: signed.board, rebuild: { ...crisis.rebuild, selling: null } } });
+        get().rebuildStep();
+      },
+      rebuildStep: () => {
+        const { crisis, season, poolId } = get();
+        const r = crisis?.rebuild;
+        if (!crisis?.board || !r || !season || !slotOfStep(r.step)) return;
+        const step = r.step + 1;
+        let board = crisis.board;
+        if (stopAfterStep(r.step)) {
+          const hand = rebuildHand(board, boardCtx(poolId, season), r.cards);
+          const scout = board.perks.includes('scout-tip');
+          board = { ...board, hand, picked: null, offer: null, peek: scout ? [0, 1] : [], perks: scout ? board.perks.filter((x) => x !== 'scout-tip') : board.perks };
+        }
+        set({ crisis: { ...crisis, board, rebuild: { ...r, step, selling: null } } });
+      },
+      tipOff: () => {
+        const { crisis, season, poolId } = get();
+        const r = crisis?.rebuild;
+        if (!crisis?.board || !r || !season || r.step < TIPOFF_STEP || crisis.board.hand) return;
+        const s = applyCoach(season, r.coach);
+        // What the board asked for during the rebuild is checked now; the preseason stop was the rebuild itself.
+        const step = checkDemands({ ...crisis.board, stop: 1 }, boardCtx(poolId, s));
+        set({ phase: 'season', season: step.season, crisis: { ...crisis, objective: boardObjective(step.season), board: step.board, news: step.events } });
+        if (step.board.firedAt !== undefined) get().fireGm();
+      },
       fireGm: () => {
         // Fired mid-season: an interim GM plays out the year, then straight to the verdict.
         get().beginPlayoffs();

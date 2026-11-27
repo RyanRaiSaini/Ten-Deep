@@ -1634,5 +1634,56 @@
         "rule": "The {{city}} get +3 for the rest of the season."
       }
     }
+  },
+  "rebuild": {
+    "title": "Rebuild",
+    "desc": "Take over a real team with its real payroll and a rebuild budget. Fire the coach or keep him, then go position by position: keep, or sell and sign one of three priced options or a bench option. Board cards come between positions.",
+    "pickTeam": "Pick a team to take over",
+    "spin": "Spin a team: today's league",
+    "spinHistory": "Spin a team: any era",
+    "spinning": "Spinning…",
+    "or": "or choose one",
+    "takeover": "You've taken over the {{team}}",
+    "seasonLabel": "{{season}} season",
+    "payroll": "Real payroll: {{pay}}",
+    "budget": "Rebuild budget: {{budget}}",
+    "budgetDesc": "Selling a player adds his contract to the budget. Signing one spends it.",
+    "start": "Start the rebuild",
+    "coachTitle": "The coach",
+    "coachDesc": "Keep the coach, or fire him and hire one of three.",
+    "coaches": {
+      "keep": {
+        "name": "Keep the coach",
+        "desc": "Free. No change."
+      },
+      "offense": {
+        "name": "Offense guru",
+        "desc": "+3 team rating for the first half of the season, +1 after."
+      },
+      "defense": {
+        "name": "Defensive mind",
+        "desc": "+2 team rating all season."
+      },
+      "development": {
+        "name": "Development coach",
+        "desc": "Every player 24 or younger gets +2."
+      }
+    },
+    "free": "Free",
+    "slotOf": "{{slot}} · position {{n}} of {{total}}",
+    "keep": "Keep him",
+    "sell": "Sell for {{pay}}",
+    "sellTitle": "Replace {{name}}",
+    "budgetLeft": "Budget: {{budget}}",
+    "cardStop": "Rebuild card {{n}} of {{total}}",
+    "tipoffTitle": "The rebuild is done",
+    "tipoff": "Tip off the season",
+    "srChange": "Squad Rating {{from}} → {{to}}",
+    "coachPicked": "Coach: {{name}}",
+    "openDemands": "The board will check these from tip-off on:",
+    "hubA": "Crisis Season",
+    "hubADesc": "Draft ten in any mode, then survive seven board stops.",
+    "hubB": "Rebuild",
+    "hubBDesc": "Take over a real team and rebuild it, position by position."
   }
 }

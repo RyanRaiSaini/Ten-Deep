@@ -45,14 +45,17 @@ export function secondLook(b: BoardState, ctx: PlayCtx): BoardState {
   return { ...b, perks, picked: id, offer: prepareOffer(id, b, ctx) };
 }
 
-/** Resolve the revealed card and move on to the next stop. */
-export function resolve(b0: BoardState, d: Decision, ctx: PlayCtx): Step {
+/**
+ * Resolve the revealed card and move on to the next stop. A rebuild card (between positions) doesn't use up a
+ * season stop, and its demands are only checked from tip-off on.
+ */
+export function resolve(b0: BoardState, d: Decision, ctx: PlayCtx, rebuild?: { n: number }): Step {
   if (!b0.picked || !b0.offer || !b0.hand) return { board: b0, season: ctx.season, events: [] };
   const id = b0.picked;
   const offer = b0.offer;
   const r = ctx.season.round;
   const played = {
-    stop: b0.stop, round: r, id, missed: b0.hand.filter((x) => x !== id),
+    stop: rebuild ? -1 - rebuild.n : b0.stop, round: r, id, missed: b0.hand.filter((x) => x !== id),
     ...(d.option ? { choice: d.option } : {}),
     ...(offer.name ? { name: offer.city ?? offer.name } : offer.city ? { name: offer.city } : {}),
   };
@@ -60,7 +63,8 @@ export function resolve(b0: BoardState, d: Decision, ctx: PlayCtx): Step {
   // New demands keep the names their card used, for the panel.
   const demands = res.board.demands.map((x) => (x.from === r && x.name === undefined && x.city === undefined && !b0.demands.includes(x)
     ? { ...x, ...(offer.name ? { name: offer.name } : {}), ...(offer.city ? { city: offer.city } : {}) } : x));
-  const b: BoardState = { ...res.board, demands, played: [...res.board.played, played], hand: null, picked: null, offer: null, peek: [], stop: b0.stop + 1 };
+  const b: BoardState = { ...res.board, demands, played: [...res.board.played, played], hand: null, picked: null, offer: null, peek: [], stop: rebuild ? b0.stop : b0.stop + 1 };
+  if (rebuild) return { board: b, season: res.season, events: [] };
   // Some demands are met (or broken) the moment you make the move.
   const checked = checkDemands(b, { ...ctx, season: res.season });
   return checked;

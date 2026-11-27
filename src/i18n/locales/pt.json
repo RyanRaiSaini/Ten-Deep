@@ -1639,5 +1639,56 @@
         "rule": "{{city}} ganha +3 no resto da temporada."
       }
     }
+  },
+  "rebuild": {
+    "title": "Reconstrução",
+    "desc": "Assuma um time real com a folha salarial real e um orçamento de reconstrução. Demita o técnico ou mantenha, depois vá posição por posição: mantenha, ou venda e contrate uma de três opções com preço ou uma opção do banco. Cartas da diretoria entram entre as posições.",
+    "pickTeam": "Escolha um time para assumir",
+    "spin": "Gire um time: liga de hoje",
+    "spinHistory": "Gire um time: qualquer era",
+    "spinning": "Girando…",
+    "or": "ou escolha um",
+    "takeover": "Você assumiu o {{team}}",
+    "seasonLabel": "Temporada {{season}}",
+    "payroll": "Folha salarial real: {{pay}}",
+    "budget": "Orçamento de reconstrução: {{budget}}",
+    "budgetDesc": "Vender um jogador soma o contrato dele ao orçamento. Contratar um gasta.",
+    "start": "Começar a reconstrução",
+    "coachTitle": "O técnico",
+    "coachDesc": "Mantenha o técnico, ou demita e contrate um de três.",
+    "coaches": {
+      "keep": {
+        "name": "Manter o técnico",
+        "desc": "Grátis. Sem mudança."
+      },
+      "offense": {
+        "name": "Guru do ataque",
+        "desc": "+3 de nota do elenco na primeira metade da temporada, depois +1."
+      },
+      "defense": {
+        "name": "Mente defensiva",
+        "desc": "+2 de nota do elenco a temporada toda."
+      },
+      "development": {
+        "name": "Técnico de desenvolvimento",
+        "desc": "Todo jogador de 24 anos ou menos ganha +2."
+      }
+    },
+    "free": "Grátis",
+    "slotOf": "{{slot}} · posição {{n}} de {{total}}",
+    "keep": "Manter",
+    "sell": "Vender por {{pay}}",
+    "sellTitle": "Substituir {{name}}",
+    "budgetLeft": "Orçamento: {{budget}}",
+    "cardStop": "Carta de reconstrução {{n}} de {{total}}",
+    "tipoffTitle": "A reconstrução acabou",
+    "tipoff": "Abrir a temporada",
+    "srChange": "Nota do elenco {{from}} → {{to}}",
+    "coachPicked": "Técnico: {{name}}",
+    "openDemands": "A diretoria vai cobrar isto desde a bola ao alto:",
+    "hubA": "Temporada de crise",
+    "hubADesc": "Escolha dez em qualquer modo e sobreviva a sete paradas da diretoria.",
+    "hubB": "Reconstrução",
+    "hubBDesc": "Assuma um time real e reconstrua, posição por posição."
   }
 }

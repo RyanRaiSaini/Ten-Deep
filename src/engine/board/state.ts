@@ -21,6 +21,8 @@ export interface Demand {
   /** Round it was settled. */
   at?: number;
   penalty: number;
+  /** Signings made before it was drawn (only later ones count toward it). */
+  sig?: number;
   /** What the card needs to remember: a target player, a franchise, the starters when it was drawn... */
   ids?: string[];
   pay?: number;

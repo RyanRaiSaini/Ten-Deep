@@ -172,7 +172,7 @@ const demand = (id: string, b: BoardState, s: SeasonState, extra: Partial<Demand
   const def = cardOf(id);
   return {
     id, from: s.round, due: dueRound(def?.due ?? 'next', s.round, b.stop, def?.of), status: 'active', penalty: def?.penalty ?? 2,
-    wins: s.records[0].w, ...extra,
+    wins: s.records[0].w, sig: b.signings.length, ...extra,
   };
 };
 const addMod = (s: SeasonState, amount: number, from: number, to: number): SeasonState => ({

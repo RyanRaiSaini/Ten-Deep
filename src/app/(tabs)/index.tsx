@@ -39,8 +39,8 @@ const MODES: { key: ModeKey; icon: IconName; accent: string; court: string; stre
   { key: 'daily', icon: 'calendar', accent: C.blue, court: '#1F4FD1', streak: '#5BD7FF', go: () => router.navigate('/daily') },
 ];
 
-const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/playoffs' | '/result'> = {
-  draft: '/draft', season: '/season', deadline: '/deadline', crisis: '/crisis', playoffs: '/playoffs', result: '/result',
+const ROUTE: Record<string, '/draft' | '/season' | '/deadline' | '/crisis' | '/rebuild' | '/playoffs' | '/result'> = {
+  draft: '/draft', season: '/season', deadline: '/deadline', crisis: '/crisis', rebuild: '/rebuild', playoffs: '/playoffs', result: '/result',
 };
 
 const shiftDay = (day: string, n: number) => {

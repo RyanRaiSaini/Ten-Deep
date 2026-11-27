@@ -1634,5 +1634,56 @@
         "rule": "{{city}} bekommt +3 für den Rest der Saison."
       }
     }
+  },
+  "rebuild": {
+    "title": "Neuaufbau",
+    "desc": "Übernimm ein echtes Team mit echter Gehaltsliste und einem Umbau-Budget. Feuere den Coach oder behalte ihn, dann geht es Position für Position: behalten oder verkaufen und einen von drei Spielern mit Preis oder eine Bank-Option verpflichten. Zwischen den Positionen kommen Vorstandskarten.",
+    "pickTeam": "Wähle ein Team zum Übernehmen",
+    "spin": "Team drehen: Liga von heute",
+    "spinHistory": "Team drehen: jede Ära",
+    "spinning": "Dreht…",
+    "or": "oder wähle eins",
+    "takeover": "Du hast die {{team}} übernommen",
+    "seasonLabel": "Saison {{season}}",
+    "payroll": "Echte Gehaltsliste: {{pay}}",
+    "budget": "Umbau-Budget: {{budget}}",
+    "budgetDesc": "Verkaufst du einen Spieler, kommt sein Vertrag ins Budget. Eine Verpflichtung kostet es.",
+    "start": "Neuaufbau starten",
+    "coachTitle": "Der Coach",
+    "coachDesc": "Behalte den Coach oder feuere ihn und stelle einen von dreien ein.",
+    "coaches": {
+      "keep": {
+        "name": "Coach behalten",
+        "desc": "Gratis. Keine Änderung."
+      },
+      "offense": {
+        "name": "Offensiv-Guru",
+        "desc": "+3 Kader-Rating in der ersten Saisonhälfte, danach +1."
+      },
+      "defense": {
+        "name": "Defensiv-Denker",
+        "desc": "+2 Kader-Rating die ganze Saison."
+      },
+      "development": {
+        "name": "Entwicklungs-Coach",
+        "desc": "Jeder Spieler bis 24 Jahre bekommt +2."
+      }
+    },
+    "free": "Gratis",
+    "slotOf": "{{slot}} · Position {{n}} von {{total}}",
+    "keep": "Behalten",
+    "sell": "Verkaufen für {{pay}}",
+    "sellTitle": "{{name}} ersetzen",
+    "budgetLeft": "Budget: {{budget}}",
+    "cardStop": "Umbau-Karte {{n}} von {{total}}",
+    "tipoffTitle": "Der Neuaufbau ist geschafft",
+    "tipoff": "Saison eröffnen",
+    "srChange": "Kader-Rating {{from}} → {{to}}",
+    "coachPicked": "Coach: {{name}}",
+    "openDemands": "Der Vorstand prüft ab dem Sprungball:",
+    "hubA": "Krisen-Saison",
+    "hubADesc": "Draft zehn Spieler in jedem Modus und überstehe sieben Vorstandsstopps.",
+    "hubB": "Neuaufbau",
+    "hubBDesc": "Übernimm ein echtes Team und baue es neu auf, Position für Position."
   }
 }

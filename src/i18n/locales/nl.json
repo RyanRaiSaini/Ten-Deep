@@ -1634,5 +1634,56 @@
         "rule": "{{city}} krijgt +3 voor de rest van het seizoen."
       }
     }
+  },
+  "rebuild": {
+    "title": "Wederopbouw",
+    "desc": "Neem een echt team over met zijn echte salarislijst en een wederopbouwbudget. Ontsla de coach of houd hem, en ga dan positie voor positie: houden, of verkopen en een van drie opties met een prijs of een bankoptie tekenen. Tussen de posities komen bestuurskaarten.",
+    "pickTeam": "Kies een team om over te nemen",
+    "spin": "Draai een team: de competitie van nu",
+    "spinHistory": "Draai een team: elk tijdperk",
+    "spinning": "Draait…",
+    "or": "of kies zelf",
+    "takeover": "Je hebt de {{team}} overgenomen",
+    "seasonLabel": "Seizoen {{season}}",
+    "payroll": "Echte salarislijst: {{pay}}",
+    "budget": "Wederopbouwbudget: {{budget}}",
+    "budgetDesc": "Verkoop je een speler, dan gaat zijn contract naar het budget. Tekenen kost budget.",
+    "start": "Start de wederopbouw",
+    "coachTitle": "De coach",
+    "coachDesc": "Houd de coach, of ontsla hem en huur er een van drie in.",
+    "coaches": {
+      "keep": {
+        "name": "Houd de coach",
+        "desc": "Gratis. Geen verandering."
+      },
+      "offense": {
+        "name": "Aanvalsgoeroe",
+        "desc": "+3 teamrating in de eerste helft van het seizoen, daarna +1."
+      },
+      "defense": {
+        "name": "Verdedigingsbrein",
+        "desc": "+2 teamrating het hele seizoen."
+      },
+      "development": {
+        "name": "Ontwikkelcoach",
+        "desc": "Elke speler van 24 jaar of jonger krijgt +2."
+      }
+    },
+    "free": "Gratis",
+    "slotOf": "{{slot}} · positie {{n}} van {{total}}",
+    "keep": "Houden",
+    "sell": "Verkoop voor {{pay}}",
+    "sellTitle": "Vervang {{name}}",
+    "budgetLeft": "Budget: {{budget}}",
+    "cardStop": "Wederopbouwkaart {{n}} van {{total}}",
+    "tipoffTitle": "De wederopbouw is klaar",
+    "tipoff": "Start het seizoen",
+    "srChange": "Selectiescore {{from}} → {{to}}",
+    "coachPicked": "Coach: {{name}}",
+    "openDemands": "Het bestuur controleert dit vanaf de tip-off:",
+    "hubA": "Crisisseizoen",
+    "hubADesc": "Draft er tien in elke modus en overleef zeven bestuurshaltes.",
+    "hubB": "Wederopbouw",
+    "hubBDesc": "Neem een echt team over en bouw het positie voor positie opnieuw op."
   }
 }

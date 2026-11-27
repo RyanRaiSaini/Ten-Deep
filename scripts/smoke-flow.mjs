@@ -207,7 +207,8 @@ export async function runFlow({ page, base, step, shot }) {
     await page.goto(base);
     await page.getByTestId('mode-crisis').click();
     await page.getByTestId('crisis-head').waitFor();
-    await shot('18b-crisis-picker');
+    await shot('18b-crisis-hub');
+    await page.getByTestId('crisis-season').click();
     await page.getByTestId('mode-current-2026').click();
     await draftTen(page);
     await page.getByTestId('division-atlantic').click();
@@ -223,6 +224,55 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('crisis-verdict').waitFor({ timeout: 10000 });
     await page.getByTestId('board-final').waitFor();
     await shot('20-crisis-verdict');
+  });
+
+  await step('rebuild: spin a team, coach, ten positions with card stops, tip off', async () => {
+    await page.goto(base);
+    await page.getByTestId('mode-crisis').click();
+    await page.getByTestId('crisis-rebuild').click();
+    await page.getByTestId('rebuild-spin').waitFor();
+    await shot('40-rebuild-picker');
+    await page.getByTestId('rebuild-spin').click();
+    await page.getByTestId('rebuild-start').waitFor({ timeout: 10000 });
+    await shot('41-rebuild-takeover');
+    await page.getByTestId('rebuild-start').click();
+    await page.getByTestId('rebuild-coach-defense').click();
+    let sold = false;
+    let cards = 0;
+    for (let guard = 0; guard < 40; guard++) {
+      await page.locator('[data-testid="board-hand"], [data-testid="board-reveal"], [data-testid="rebuild-keep"], [data-testid="rebuild-tipoff"]').first().waitFor({ timeout: 10000 });
+      if (await page.getByTestId('rebuild-tipoff').count()) break;
+      if (await page.getByTestId('board-hand').count()) {
+        await page.getByTestId('board-card-2').click();
+        await page.getByTestId('board-reveal').waitFor();
+        cards++;
+        const option = page.locator('[data-testid^="board-option-"]');
+        if (await option.count()) { await option.first().click(); continue; }
+        const offers = page.getByTestId('board-offer');
+        if (await offers.count()) await offers.first().click();
+        const confirm = page.getByTestId('board-confirm');
+        for (const slot of SLOTS) {
+          if (await confirm.isEnabled()) break;
+          await page.getByTestId(`slot-${slot}`).last().click();
+        }
+        await confirm.click();
+        continue;
+      }
+      if (!sold) {
+        sold = true;
+        await page.getByTestId('rebuild-sell').click();
+        await page.getByTestId('rebuild-sign-bench').waitFor();
+        await shot('42-rebuild-options');
+        await page.getByTestId('rebuild-sign-bench').click();
+        continue;
+      }
+      await page.getByTestId('rebuild-keep').click();
+    }
+    if (cards !== 3) throw new Error(`expected 3 rebuild card stops, saw ${cards}`);
+    await page.getByTestId('rebuild-sr').waitFor();
+    await shot('43-rebuild-tipoff');
+    await page.getByTestId('rebuild-tipoff').click();
+    await page.locator('[data-testid="board-panel"], [data-testid="crisis-verdict"]').first().waitFor({ timeout: 10000 });
   });
 
   await step('career: season 1, full offseason, season 2 begins', async () => {
