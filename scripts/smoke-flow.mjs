@@ -341,6 +341,33 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('24-career-hub');
   });
 
+  await step('dynasty: pick a franchise, spin a draft slot, fantasy draft, season 1', async () => {
+    await page.goto(base);
+    await page.getByTestId('tab-career').click();
+    // A career from the step before may still be going: Dynasty starts from a fresh career.
+    if (!(await page.getByTestId('dynasty-open').count())) {
+      await page.evaluate(() => localStorage.removeItem('tendeep-career'));
+      await page.reload();
+      await page.getByTestId('tab-career').click();
+    }
+    await page.getByTestId('dynasty-open').click();
+    await page.getByTestId('dynasty-team-sac').click();
+    await shot('44-dynasty-start');
+    await page.getByTestId('dynasty-draft').click();
+    await page.getByTestId('dynasty-spin').click();
+    await page.getByTestId('dynasty-to-draft').waitFor({ timeout: 10000 });
+    await shot('45-dynasty-slot');
+    await page.getByTestId('dynasty-to-draft').click();
+    await page.getByTestId('dynasty-player').first().waitFor();
+    await shot('46-dynasty-draft');
+    await page.getByTestId('dynasty-player').first().click();
+    await page.getByTestId('dynasty-auto').click();
+    await page.getByTestId('dynasty-start-season').waitFor();
+    await shot('47-dynasty-drafted');
+    await page.getByTestId('dynasty-start-season').click();
+    await page.getByTestId('record').waitFor({ timeout: 10000 });
+  });
+
   await step('player pick: open a pack, reveal 5, keep 1, see it in the collection', async () => {
     await page.goto(base);
     await page.getByTestId('picks-banner').click();

@@ -20,8 +20,28 @@ import type { Verdict } from '../engine/crisis/board';
 import type { CardId } from '../engine/crisis/deck';
 import { champion, seriesFor } from '../engine/playoffs';
 import { userStints } from '../engine/season';
-import { ALL_SLOTS, type Player, type Roster, type SlotId } from '../engine/types';
+import { ALL_SLOTS, type Player, type Roster, type RosterSlots, type SlotId } from '../engine/types';
 import { useGame } from './game';
+import { DIVISIONS, franchiseOf } from '../engine/conference';
+import { realLeague, realRotation } from '../engine/realLeague';
+import { available, draftDone, draftPool, draftedLeague, makePick, newFantasy, picksUntilUser, simDraft, type FantasyDraft } from '../engine/career/fantasy';
+
+/** Today's look for a franchise: "Sacramento Kings" and its colors. */
+const teamLook = (f: string) => {
+  const t = current2026.teams.find((x) => franchiseOf(x) === f);
+  return { name: t ? `${t.city} ${t.name}` : f.toUpperCase(), colors: (t?.colors ?? ['#333333', '#999999']) as [string, string] };
+};
+/** The division a franchise plays in today. */
+const divOfFranchise = (f: string) => Math.max(0, DIVISIONS.findIndex((d) => d.franchises.includes(f)));
+
+/** Dynasty with real rosters: your franchise's 2026-27 roster against everyone else's. */
+function realRosterLeague(franchise: string, seed: string): Roster[] {
+  const team = current2026.teams.find((t) => franchiseOf(t) === franchise)!;
+  const slots = realRotation(team.players, 'user') as Required<RosterSlots>;
+  const user: Roster = { id: 'user', name: `${team.city} ${team.name}`, colors: team.colors, franchise, slots };
+  const others = current2026.teams.map(franchiseOf).filter((f) => f !== franchise);
+  return [user, ...realLeague(others, ALL_SLOTS.map((k) => slots[k]), seed, current2026.teams, current2026.teams, current2026.teams)];
+}
 
 export type { PlayoffResult };
 
@@ -41,6 +61,11 @@ export type OffseasonStep = 'expiring' | 'draft' | 'freeAgency';
 
 export interface CareerStore {
   active: boolean;
+  /** 'dynasty': you picked a franchise (real roster or a fantasy draft) and seasons have no board cards. */
+  mode: 'career' | 'dynasty';
+  /** Dynasty: your franchise, and the fantasy draft while it's on. */
+  franchise: string | null;
+  fantasy: FantasyDraft | null;
   ended: boolean;
   seed: string;
   /** Current season number (1-based). */
@@ -61,6 +86,16 @@ export interface CareerStore {
   stats: CareerStats;
 
   start: () => void;
+  /** Dynasty: take a franchise with its real roster (the season starts), or set up a fantasy draft. */
+  startDynasty: (franchise: string, how: 'real' | 'draft') => void;
+  /** Dynasty fantasy draft: spin your slot (1–30), then the AI picks until your turn. Returns the slot. */
+  spinSlot: () => number;
+  /** Your pick, then the AI picks until your next turn. */
+  fantasyPick: (playerId: string) => void;
+  /** Let the AI pick for you for the rest of the draft. */
+  fantasyAuto: () => void;
+  /** Draft over: the drafted league plays season 1. */
+  finishFantasy: () => void;
   recordSeason: () => void;
   applyVerdict: (v: Verdict) => void;
   beginOffseason: () => void;
@@ -75,7 +110,7 @@ export interface CareerStore {
   quit: () => void;
 }
 
-const fresh = { active: false, ended: false, seed: '', season: 1, security: START_SECURITY, history: [], contracts: {}, freeAgents: [], teams: null, lastWins: [], lastPlayoff: [], offseason: null, step: null, morale: MORALE_START, stats: {} };
+const fresh = { mode: 'career' as const, franchise: null, fantasy: null, active: false, ended: false, seed: '', season: 1, security: START_SECURITY, history: [], contracts: {}, freeAgents: [], teams: null, lastWins: [], lastPlayoff: [], offseason: null, step: null, morale: MORALE_START, stats: {} };
 const stripMod = (t: Roster): Roster => ({ id: t.id, name: t.name, colors: t.colors, slots: t.slots, ...(t.franchise ? { franchise: t.franchise } : {}) });
 
 export const useCareer = create<CareerStore>()(
@@ -86,6 +121,44 @@ export const useCareer = create<CareerStore>()(
       start: () => {
         set({ ...fresh, active: true, seed: `career-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}` });
         useGame.getState().newCrisis('current-2026', true);
+      },
+
+      startDynasty: (franchise, how) => {
+        const seed = `dynasty-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
+        set({ ...fresh, mode: 'dynasty', franchise, active: true, seed });
+        // A new Dynasty replaces any career run still going (a quick run in progress is left alone).
+        if (useGame.getState().career) useGame.getState().quit();
+        useGame.setState({ parked: null });
+        if (how === 'real') {
+          const teams = realRosterLeague(franchise, seed);
+          useGame.getState().startCareerSeason(teams, `${seed}:s1`, 0, { cards: false, division: divOfFranchise(franchise) });
+        }
+      },
+      spinSlot: () => {
+        const c = get();
+        if (c.mode !== 'dynasty' || !c.franchise || c.fantasy) return c.fantasy?.userSlot ?? -1;
+        const slot = Math.floor(Math.random() * 30);
+        const fd = newFantasy(c.franchise, slot, current2026.teams.map(franchiseOf), c.seed);
+        set({ fantasy: simDraft(fd, draftPool(current2026.teams)) });
+        return slot;
+      },
+      fantasyPick: (playerId) => {
+        const fd = get().fantasy;
+        if (!fd || draftDone(fd) || picksUntilUser(fd) !== 0) return;
+        const pool = draftPool(current2026.teams);
+        if (!available(fd, pool).some((p) => p.id === playerId)) return;
+        set({ fantasy: simDraft(makePick(fd, playerId), pool) });
+      },
+      fantasyAuto: () => {
+        const fd = get().fantasy;
+        if (fd) set({ fantasy: simDraft(fd, draftPool(current2026.teams), true) });
+      },
+      finishFantasy: () => {
+        const c = get();
+        if (!c.fantasy || !draftDone(c.fantasy) || !c.franchise) return;
+        const teams = draftedLeague(c.fantasy, draftPool(current2026.teams), teamLook);
+        set({ fantasy: null });
+        useGame.getState().startCareerSeason(teams, `${c.seed}:s1`, 0, { cards: false, division: divOfFranchise(c.franchise) });
       },
 
       recordSeason: () => {
@@ -170,7 +243,8 @@ export const useCareer = create<CareerStore>()(
         const teams = finalizeOffseason(st);
         const season = c.season + 1;
         set({ season, teams, contracts: st.contracts, freeAgents: st.freeAgents, offseason: null, step: null });
-        useGame.getState().startCareerSeason(teams, `${c.seed}:s${season}`, moraleMod(c.morale ?? MORALE_START));
+        useGame.getState().startCareerSeason(teams, `${c.seed}:s${season}`, moraleMod(c.morale ?? MORALE_START),
+          c.mode === 'dynasty' ? { cards: false, ...(c.franchise ? { division: divOfFranchise(c.franchise) } : {}) } : {});
       },
 
       quit: () => {
@@ -180,6 +254,6 @@ export const useCareer = create<CareerStore>()(
         useGame.setState({ parked: null });
       },
     }),
-    { name: 'tendeep-career', version: 1, storage: createJSONStorage(() => AsyncStorage) },
+    { name: 'tendeep-career', version: 1, storage: createJSONStorage(() => AsyncStorage), merge: (saved, cur) => ({ ...cur, ...(saved as object), mode: (saved as { mode?: 'career' | 'dynasty' })?.mode ?? 'career' }) },
   ),
 );

@@ -1694,5 +1694,33 @@
     "hubB": "Devralma",
     "hubBDesc": "Gerçek bir takımı satın al ve pozisyon pozisyon kendi tarzınla yeniden kur.",
     "restart": "Yeniden başla"
+  },
+  "dynasty": {
+    "title": "Hanedan",
+    "desc": "Bir kulüp seç. Gerçek kadroyu koru ya da fantezi draftı yap: sıranı çevir, 30 takım da bugünün ligini sıfırdan draft etsin. Sonra sezon sezon bir hanedan kur.",
+    "bannerDesc": "Bir kulüp seç: gerçek kadro ya da 30 takımlı fantezi draftı. Sonra sezon sezon; gelişen, zirve yapan ve emekli olan oyuncularla.",
+    "pickTeam": "Kulübünü seç",
+    "howStart": "{{team}} ile nasıl başlamak istersin?",
+    "real": "Gerçek kadroyu koru",
+    "realDesc": "Bu sezonun takımı, olduğu gibi. Hemen oynamaya başla.",
+    "draft": "Fantezi draftı",
+    "draftDesc": "Draft sıran için çevir. 30 takım da bugünün ligini sıfırdan draft eder: 10 tur, yılan sırası.",
+    "otherTeam": "Başka takım seç",
+    "spinTitle": "Draft sıranı çevir",
+    "spinDesc": "1. sıra ilk seçer. Sıra yılan gibi döner: bir turda en son seçen, sonraki turda ilk seçer.",
+    "spin": "Çevir",
+    "spinning": "Dönüyor…",
+    "yourSlot": "{{n}}. sıradan seçiyorsun",
+    "toDraft": "Drafta git",
+    "round": "Tur {{r}} / {{total}}",
+    "onClock": "Sıra sende · seçim {{n}}",
+    "waiting": "Diğer takımlar seçiyor…",
+    "slotLine": "Sıra {{n}} · {{picks}} / {{total}} oyuncu",
+    "recent": "Son seçimler",
+    "yourTeam": "Takımın",
+    "all": "Hepsi",
+    "auto": "Kalanını otomatik draft et",
+    "doneTitle": "Draft bitti",
+    "startSeason": "1. sezonu başlat"
   }
 }

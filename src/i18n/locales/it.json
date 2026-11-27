@@ -1699,5 +1699,33 @@
     "hubB": "Acquisizione",
     "hubBDesc": "Compra una vera squadra e ricostruiscila a modo tuo, ruolo per ruolo.",
     "restart": "Ricomincia"
+  },
+  "dynasty": {
+    "title": "Dinastia",
+    "desc": "Scegli una franchigia. Tieni il roster reale o fai un draft fantasy: gira il tuo slot e tutte le 30 squadre draftano la lega di oggi da zero. Poi costruisci una dinastia, stagione dopo stagione.",
+    "bannerDesc": "Scegli una franchigia: il roster reale o un draft fantasy a 30 squadre. Poi stagione dopo stagione, con giocatori che crescono, toccano il picco e si ritirano.",
+    "pickTeam": "Scegli la tua franchigia",
+    "howStart": "Come vuoi iniziare con i {{team}}?",
+    "real": "Tieni il roster reale",
+    "realDesc": "La squadra di questa stagione, così com'è. Inizia a giocare subito.",
+    "draft": "Draft fantasy",
+    "draftDesc": "Gira per il tuo slot nel draft. Tutte le 30 squadre draftano la lega di oggi da zero: 10 round, ordine a serpentina.",
+    "otherTeam": "Scegli un'altra squadra",
+    "spinTitle": "Gira il tuo slot nel draft",
+    "spinDesc": "Lo slot 1 sceglie per primo. L'ordine si inverte: chi sceglie per ultimo in un round sceglie per primo nel successivo.",
+    "spin": "Gira",
+    "spinning": "Gira…",
+    "yourSlot": "Scegli alla n. {{n}}",
+    "toDraft": "Al draft",
+    "round": "Round {{r}} di {{total}}",
+    "onClock": "Tocca a te · scelta n. {{n}}",
+    "waiting": "Le altre squadre stanno scegliendo…",
+    "slotLine": "Slot n. {{n}} · {{picks}} giocatori su {{total}}",
+    "recent": "Ultime scelte",
+    "yourTeam": "La tua squadra",
+    "all": "Tutti",
+    "auto": "Draft automatico per il resto",
+    "doneTitle": "Il draft è finito",
+    "startSeason": "Inizia la stagione 1"
   }
 }

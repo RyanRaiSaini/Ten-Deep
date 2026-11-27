@@ -5,29 +5,29 @@
 import { HistoryGate } from '../ui/HistoryGate';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { feel } from '../audio/feel';
 import { MODES, current2026, type Mode } from '../data';
 import { moneyScaleFor } from '../data/modes';
 import { payOf } from '../engine/cap';
 import { blocked, budgetFor, marketOptions } from '../engine/board/market';
 import { BUILD_STOPS, COACHES, COACH_FEE, FIRST_SLOT_STEP, TIPOFF_STEP, slotOfStep } from '../engine/board/rebuild';
-import { realRotation } from '../engine/realLeague';
 import { squadRating } from '../engine/rotation';
 import { roomAfterFees } from '../engine/season';
-import { ALL_SLOTS, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
+import { ALL_SLOTS, type SlotId, type TeamSeason } from '../engine/types';
 import { boardCtx } from '../store/boardCtx';
 import { useGame } from '../store/game';
 import { BackButton, Button, Card, Display, Header, Label, Screen } from '../ui/components';
-import { CourtArt, Icon, type IconName } from '../ui/icons';
+import { Icon, type IconName } from '../ui/icons';
 import { MoneyScale } from '../ui/MoneyScale';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { SquadBadge } from '../ui/SquadBadge';
 import { Text } from '../ui/Text';
 import { BoardStop } from '../ui/board/BoardStop';
+import { TeamTile } from '../ui/TeamTile';
 import { ConfidenceMeter, ObjectiveBanner } from '../ui/board/BoardPanel';
 import { C, FONT, R, S, money } from '../ui/theme';
 import { goBack } from '../ui/nav';
@@ -35,36 +35,11 @@ import { goBack } from '../ui/nav';
 const TIER_COLOR = { low: C.teal, mid: C.blue, top: C.gold, bench: C.muted, perk: C.purple } as const;
 const COACH_ICON: Record<string, IconName> = { keep: 'handshake', offense: 'flame', defense: 'shield', development: 'sparkle' };
 
-/** A team's real rotation, Squad Rating and payroll, as you'd take it over. */
-function teamSummary(t: TeamSeason) {
-  const slots = realRotation(t.players, 'p') as Required<RosterSlots>;
-  const roster: Roster = { id: 'p', name: t.name, colors: t.colors, slots };
-  return { sr: Math.round(squadRating(roster)), pay: ALL_SLOTS.reduce((n, k) => n + (slots[k] ? payOf(slots[k]) : 0), 0) };
-}
-
 /** Every team-season you could spin from history: the era modes, each team once. */
 function historyTeams(): { mode: Mode; team: TeamSeason }[] {
   const seen = new Set<string>();
   return MODES.filter((m) => m.kind === 'era' && !m.hidden && m.id !== 'all-time').flatMap((m) =>
     m.pool.teams.filter((t) => !seen.has(t.id) && (seen.add(t.id), true)).map((team) => ({ mode: m, team })));
-}
-
-function TeamTile({ t, onPress }: { t: TeamSeason; onPress: () => void }) {
-  const [w, setW] = useState(170);
-  const sum = useMemo(() => teamSummary(t), [t]);
-  return (
-    <Pressable onPress={onPress} testID={`rebuild-team-${t.id}`} onLayout={(e: LayoutChangeEvent) => setW(e.nativeEvent.layout.width)}
-      style={({ pressed }) => [styles.tile, pressed && styles.pressed]} accessibilityRole="button" accessibilityLabel={`${t.city} ${t.name}`}>
-      <View style={StyleSheet.absoluteFill}><CourtArt width={w} height={112} color={t.colors[0]} color2={t.colors[1]} /></View>
-      <LinearGradient colors={[`${t.colors[0]}E6`, `${t.colors[0]}99`, 'rgba(8,10,30,0.6)']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
-      <View style={[styles.stripe, { backgroundColor: t.colors[1] }]} />
-      <View style={styles.tileBody}>
-        <Text style={styles.tileCity} numberOfLines={1}>{t.city}</Text>
-        <Text style={styles.tileName} numberOfLines={1} adjustsFontSizeToFit>{t.name}</Text>
-        <Text style={styles.tileMeta}>SR {sum.sr} · {money(sum.pay)}</Text>
-      </View>
-    </Pressable>
-  );
 }
 
 /** Choose (or spin for) the team you'll take over. */
@@ -110,7 +85,7 @@ function Picker() {
       <Label>{t('rebuild.or')}</Label>
       <View style={styles.grid}>
         {current2026.teams.map((x) => (
-          <View key={x.id} style={styles.cell}><TeamTile t={x} onPress={() => take('current-2026', x.id)} /></View>
+          <View key={x.id} style={styles.cell}><TeamTile t={x} onPress={() => take('current-2026', x.id)} testID={`rebuild-team-${x.id}`} /></View>
         ))}
       </View>
     </Screen>
@@ -293,12 +268,7 @@ const styles = StyleSheet.create({
   rolling: { textAlign: 'center', fontFamily: FONT.display, fontSize: 24, color: C.ink },
   grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -S.xs },
   cell: { width: '50%', padding: S.xs },
-  tile: { height: 112, borderRadius: 20, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, justifyContent: 'flex-end' },
   stripe: { position: 'absolute', left: 0, right: 0, top: 0, height: 8 },
-  tileBody: { padding: S.md, gap: 0 },
-  tileCity: { color: 'rgba(255,255,255,0.9)', fontWeight: '900', fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase', ...shadow },
-  tileName: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 24, ...shadow },
-  tileMeta: { color: 'rgba(255,255,255,0.9)', fontWeight: '800', fontSize: 11, ...shadow },
   bar: { flexDirection: 'row', alignItems: 'center', gap: S.md, borderWidth: 3 },
   barTeam: { fontWeight: '900', color: C.ink, fontSize: 15 },
   barBudget: { fontWeight: '800', color: C.neon, fontSize: 14 },
