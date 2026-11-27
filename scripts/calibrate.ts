@@ -67,7 +67,10 @@ export function goodDraft(pool: Pool, seed: string): Roster {
 export function atSquadRating(r: Roster, target: number): Roster {
   const d = Math.round(target - squadRating(r));
   const c = (x: number) => Math.max(40, Math.min(99, x + d));
-  return { ...r, slots: Object.fromEntries(ALL_SLOTS.map((k) => [k, { ...r.slots[k], ovr: c(r.slots[k].ovr), off: c(r.slots[k].off), def: c(r.slots[k].def) }])) as Roster['slots'] };
+  const moved: Roster = { ...r, slots: Object.fromEntries(ALL_SLOTS.map((k) => [k, { ...r.slots[k], ovr: c(r.slots[k].ovr), off: c(r.slots[k].off), def: c(r.slots[k].def) }])) as Roster['slots'] };
+  // Ratings stop at 99, so a squad pushed to 95+ falls short: make up the rest as a team rating (it counts the same).
+  const gap = Math.round((target - squadRating(moved)) * 10) / 10;
+  return gap ? { ...moved, mod: (moved.mod ?? 0) + gap } : moved;
 }
 
 export function runSeasons(user: Roster | ((i: number) => Roster), pool: Pool, n: number, tag: string) {
