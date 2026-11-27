@@ -50,7 +50,7 @@
     },
     "crisis": {
       "title": "Managementcrisis",
-      "desc": "Draft een team en overleef het bestuur. Zeven keer per seizoen kies je 1 van 6 omgedraaide kaarten: eisen, geld, voordelen en verrassingen. Zakt het Vertrouwen van het bestuur naar 0, dan ben je ontslagen."
+      "desc": "Leg verantwoording af aan het bestuur. Voor de tip-off kies je 1 van 6 omgedraaide kaarten: dat is je doel, en dat moet je halen. Halverwege het seizoen valt er een verrassingskaart. Zakt het Vertrouwen van het bestuur naar 0, dan ben je ontslagen."
     },
     "career": {
       "title": "Carrière",
@@ -244,7 +244,7 @@
   },
   "crisis": {
     "title": "Managementcrisis",
-    "desc": "Draft een team en overleef het bestuur. Zeven keer per seizoen kies je 1 van 6 omgedraaide kaarten: eisen, geld, voordelen en verrassingen. Zakt het Vertrouwen van het bestuur naar 0, dan ben je ontslagen.",
+    "desc": "Leg verantwoording af aan het bestuur. Voor de tip-off kies je 1 van 6 omgedraaide kaarten: dat is je doel, en dat moet je halen. Halverwege het seizoen valt er een verrassingskaart. Zakt het Vertrouwen van het bestuur naar 0, dan ben je ontslagen.",
     "m0": "Voorbereiding",
     "m1": "December",
     "m2": "Februari",
@@ -1169,7 +1169,7 @@
   "board": {
     "title": "Managementcrisis",
     "pick": "Kies een kaart",
-    "pickHint": "Zes kaarten met de rug naar boven. Tik er een aan: eisen, geld, voordelen en verrassingen zitten er allemaal tussen.",
+    "pickHint": "Zes omgedraaide kaarten: sommige helpen, sommige doen pijn. Tik er een aan.",
     "stopOf": "Halte {{n}} van {{total}}",
     "months": {
       "preseason": "Voorbereiding",
@@ -1201,7 +1201,8 @@
       "deadline": "Voor de transferdeadline",
       "end": "Voor het einde van de reguliere competitie",
       "now": "Meteen",
-      "games": "In de komende {{n}} wedstrijden"
+      "games": "In de komende {{n}} wedstrijden",
+      "tipoff": "Voor de tip-off"
     },
     "fail": "Bij mislukken: −{{n}} Vertrouwen van het bestuur",
     "noFail": "Geen vertrouwen op het spel",
@@ -1214,8 +1215,6 @@
     "secondLook": "Gebruik Tweede blik (kies opnieuw)",
     "pickIn": "Kies er een",
     "pickOut": "Wie maakt plaats?",
-    "heads": "Kop! +{{amount}}",
-    "tails": "Munt. −{{amount}}",
     "options": {
       "offense": "Aanvalsgoeroe: +3 voor 20 wedstrijden, daarna +1 ({{fee}})",
       "defense": "Verdedigingsbrein: +2 voor het seizoen ({{fee}})",
@@ -1528,11 +1527,6 @@
         "story": "De fans willen een knaller en {{owner}} luistert.",
         "rule": "+{{amount}} salarisruimte, maar teken een topoptie voor de volgende kaart (anders −2)."
       },
-      "double-nothing": {
-        "title": "Dubbel of niets",
-        "story": "{{owner}} gooit een munt op over het budget.",
-        "rule": "Kop: +{{amount}}. Munt: −{{amount}}."
-      },
       "golden-ticket": {
         "title": "Gouden ticket",
         "story": "{{gm}} kent een vrije speler waar niemand anders van weet.",
@@ -1632,12 +1626,25 @@
         "title": "Superteam-gerucht",
         "story": "{{reporter}}: {{city}} heeft zojuist een ster binnengehaald.",
         "rule": "{{city}} krijgt +3 voor de rest van het seizoen."
+      },
+      "team-chemistry": {
+        "title": "Teamchemie",
+        "story": "{{coach}} nam het team mee op teamuitje, en dat zie je.",
+        "rule": "+3 teamscore voor 10 wedstrijden."
       }
+    },
+    "objective": "Het doel van het bestuur",
+    "pickObjective": "Kies je doel",
+    "pickHintObjective": "Zes omgedraaide kaarten, elk een opdracht van het bestuur. De kaart die je omdraait is het doel dat je moet halen.",
+    "rewardN": "Gehaald: +{{n}} Vertrouwen van het bestuur",
+    "stopKind": {
+      "objective": "Het doel",
+      "event": "Kaart halverwege het seizoen"
     }
   },
   "rebuild": {
-    "title": "Wederopbouw",
-    "desc": "Neem een echt team over met zijn echte salarislijst en een wederopbouwbudget. Ontsla de coach of houd hem, en ga dan positie voor positie: houden, of verkopen en een van drie opties met een prijs of een bankoptie tekenen. Tussen de posities komen bestuurskaarten.",
+    "title": "Overname",
+    "desc": "Koop een echt team met zijn echte salarissom en een herbouwbudget. Het bestuur geeft je één doel dat je voor de tip-off moet halen. Kies een coach, dan positie voor positie: houd de speler, of verkoop hem en teken een van drie geprijsde opties of een bankoptie.",
     "pickTeam": "Kies een team om over te nemen",
     "spin": "Draai een team: de competitie van nu",
     "spinHistory": "Draai een team: elk tijdperk",
@@ -1675,15 +1682,16 @@
     "sell": "Verkoop voor {{pay}}",
     "sellTitle": "Vervang {{name}}",
     "budgetLeft": "Budget: {{budget}}",
-    "cardStop": "Wederopbouwkaart {{n}} van {{total}}",
+    "cardStop": "Kaart {{n}} van {{total}}",
     "tipoffTitle": "De wederopbouw is klaar",
     "tipoff": "Start het seizoen",
     "srChange": "Selectiescore {{from}} → {{to}}",
     "coachPicked": "Coach: {{name}}",
     "openDemands": "Het bestuur controleert dit vanaf de tip-off:",
     "hubA": "Crisisseizoen",
-    "hubADesc": "Draft er tien in elke modus en overleef zeven bestuurshaltes.",
-    "hubB": "Wederopbouw",
-    "hubBDesc": "Neem een echt team over en bouw het positie voor positie opnieuw op."
+    "hubADesc": "Draft tien spelers in elke modus, kies je doel en overleef één kaart halverwege het seizoen.",
+    "hubB": "Overname",
+    "hubBDesc": "Koop een echt team en bouw het op jouw manier om, positie voor positie.",
+    "restart": "Opnieuw"
   }
 }

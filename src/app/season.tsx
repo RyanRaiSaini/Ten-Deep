@@ -23,9 +23,9 @@ import { BoxScore, Expandable, NewsItem } from '../ui/story';
 import { Icon } from '../ui/icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { CRISIS_ICON } from '../ui/gameIcons';
-import { STOPS } from '../engine/board/state';
+import { planOf, stopAt } from '../engine/board/state';
 import { cardOf } from '../engine/board/cards';
-import { BoardPanel } from '../ui/board/BoardPanel';
+import { BoardPanel, ObjectiveBanner } from '../ui/board/BoardPanel';
 import { KIND_ICON } from '../ui/board/text';
 import { boardCtx } from '../store/boardCtx';
 import { moneyScaleFor } from '../data/modes';
@@ -45,9 +45,9 @@ function SeasonScreen() {
   const atDeadline = !!season && season.round === DEADLINE_GAME && !season.deadlineUsed;
   const crisis = g.crisis;
   const board = crisis?.board;
-  // Board runs stop at STOPS (the preseason one is dealt before the first game); older runs at the four card rounds.
+  // Board runs stop at their plan's rounds (the preseason one is dealt before the first game); older runs at the four card rounds.
   const atCard = !!season && !!crisis && (board
-    ? board.stop > 0 && board.stop < STOPS.length && season.round === STOPS[board.stop] && board.firedAt === undefined
+    ? season.round > 0 && stopAt(board)?.round === season.round && board.firedAt === undefined
     : crisis.resolved > 0 && season.round === CARD_ROUNDS[crisis.resolved]);
   const over = !!season && season.round >= SEASON_GAMES;
 
@@ -89,6 +89,8 @@ function SeasonScreen() {
   }, [over]);
 
   if (!season) return <Redirect href="/" />;
+  // Fired by the board (at a stop or the deadline): straight to the verdict.
+  if (g.phase === 'result' && board?.firedAt !== undefined) return <Redirect href="/result" />;
 
   const rec = season.records[0];
   const out = outSet(season.injuries, season.teams[0]);
@@ -137,9 +139,14 @@ function SeasonScreen() {
           <View style={styles.crisisRow}>
             <Text style={styles.crisisGoal}>{t(`crisis.obj_${crisis.objective.tier}`)}</Text>
             <View style={styles.crisisIcons}>
-              {STOPS.map((_, i) => (
-                <View key={i} style={[styles.crisisSlot, i >= board.stop && { opacity: 0.35 }]}>
-                  <Icon name={board.played[i] ? KIND_ICON[cardOf(board.played[i].id).kind] : 'lock'} size={18} />
+              {board.played.map((p, i) => (
+                <View key={i} style={styles.crisisSlot}>
+                  <Icon name={KIND_ICON[cardOf(p.id).kind]} size={18} />
+                </View>
+              ))}
+              {planOf(board).slice(board.stop).map((_, i) => (
+                <View key={`next-${i}`} style={[styles.crisisSlot, { opacity: 0.35 }]}>
+                  <Icon name="lock" size={18} />
                 </View>
               ))}
             </View>
@@ -159,6 +166,7 @@ function SeasonScreen() {
         )}
       </View>
 
+      {board && <ObjectiveBanner board={board} ctx={boardCtx(g.poolId, season)} scale={moneyScaleFor(g.poolId)} takeover={!!crisis?.rebuild} />}
       {!over && (
         <Button label={playing ? t('season.pauseSeason') : t('season.resumeSeason')} variant={playing ? 'secondary' : 'gold'}
           icon={playing ? <Text style={styles.pause}>❚❚</Text> : <Icon name="play" size={22} />}

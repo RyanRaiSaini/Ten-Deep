@@ -203,7 +203,7 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('13-daily-hub');
   });
 
-  await step('management crisis: 7 board stops, front office, deadline, playoffs, verdict', async () => {
+  await step('management crisis: objective before tip-off, one midseason card, front office, deadline, verdict', async () => {
     await page.goto(base);
     await page.getByTestId('mode-crisis').click();
     await page.getByTestId('crisis-head').waitFor();
@@ -214,7 +214,7 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('division-atlantic').click();
     await page.getByTestId('start-season').click();
     const { cards, fired } = await playCrisisSeason(page, shot);
-    if (!fired && cards !== 7) throw new Error(`expected 7 board stops, saw ${cards}`);
+    if (!fired && cards !== 2) throw new Error(`expected 2 board stops, saw ${cards}`);
     if (!fired) {
       await shot('19-crisis-season');
       await page.getByTestId('to-playoffs').click();
@@ -226,7 +226,7 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('20-crisis-verdict');
   });
 
-  await step('rebuild: spin a team, coach, ten positions with card stops, tip off', async () => {
+  await step('takeover: spin a team, restart, objective first, coach, ten positions, two event cards, tip off', async () => {
     await page.goto(base);
     await page.getByTestId('mode-crisis').click();
     await page.getByTestId('crisis-rebuild').click();
@@ -234,14 +234,24 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('40-rebuild-picker');
     await page.getByTestId('rebuild-spin').click();
     await page.getByTestId('rebuild-start').waitFor({ timeout: 10000 });
+    // Restart throws the team away and goes back to the picker.
+    await page.getByTestId('rebuild-restart').click();
+    await page.getByTestId('rebuild-spin').waitFor();
+    await page.getByTestId('rebuild-spin').click();
+    await page.getByTestId('rebuild-start').waitFor({ timeout: 10000 });
     await shot('41-rebuild-takeover');
     await page.getByTestId('rebuild-start').click();
-    await page.getByTestId('rebuild-coach-defense').click();
     let sold = false;
     let cards = 0;
     for (let guard = 0; guard < 40; guard++) {
-      await page.locator('[data-testid="board-hand"], [data-testid="board-reveal"], [data-testid="rebuild-keep"], [data-testid="rebuild-tipoff"]').first().waitFor({ timeout: 10000 });
+      await page.locator('[data-testid="board-hand"], [data-testid="board-reveal"], [data-testid="rebuild-coach-defense"], [data-testid="rebuild-keep"], [data-testid="rebuild-tipoff"]').first().waitFor({ timeout: 10000 });
       if (await page.getByTestId('rebuild-tipoff').count()) break;
+      if (await page.getByTestId('rebuild-coach-defense').count()) {
+        await page.getByTestId('objective').waitFor();
+        await shot('41b-takeover-objective');
+        await page.getByTestId('rebuild-coach-defense').click();
+        continue;
+      }
       if (await page.getByTestId('board-hand').count()) {
         await page.getByTestId('board-card-2').click();
         await page.getByTestId('board-reveal').waitFor();

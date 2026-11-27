@@ -50,7 +50,7 @@
     },
     "crisis": {
       "title": "Management Crisis",
-      "desc": "Draft a team, then survive the board. Seven times a season, pick 1 of 6 face-down cards: demands, money, perks and surprises. Let Board Confidence hit 0 and you're fired."
+      "desc": "Answer to the board. Before tip-off you pick 1 of 6 face-down cards: that's your objective, and you have to complete it. One surprise card lands at midseason. Let Board Confidence hit 0 and you're fired."
     },
     "career": {
       "title": "Career",
@@ -244,7 +244,7 @@
   },
   "crisis": {
     "title": "Management Crisis",
-    "desc": "Draft a team, then survive the board. Seven times a season, pick 1 of 6 face-down cards: demands, money, perks and surprises. Let Board Confidence hit 0 and you're fired.",
+    "desc": "Answer to the board. Before tip-off you pick 1 of 6 face-down cards: that's your objective, and you have to complete it. One surprise card lands at midseason. Let Board Confidence hit 0 and you're fired.",
     "m0": "Preseason",
     "m1": "December",
     "m2": "February",
@@ -1169,7 +1169,7 @@
   "board": {
     "title": "Management Crisis",
     "pick": "Pick a card",
-    "pickHint": "Six face-down cards. Tap one: demands, money, perks and surprises are all in there.",
+    "pickHint": "Six face-down cards: some help, some hurt. Tap one.",
     "stopOf": "Stop {{n}} of {{total}}",
     "months": {
       "preseason": "Preseason",
@@ -1201,7 +1201,8 @@
       "deadline": "By the trade deadline",
       "end": "By the end of the regular season",
       "now": "Right now",
-      "games": "Over the next {{n}} games"
+      "games": "Over the next {{n}} games",
+      "tipoff": "By tip-off"
     },
     "fail": "If you fail: −{{n}} Board Confidence",
     "noFail": "No confidence at stake",
@@ -1214,8 +1215,6 @@
     "secondLook": "Use Second look (pick again)",
     "pickIn": "Pick one",
     "pickOut": "Who makes room?",
-    "heads": "Heads! +{{amount}}",
-    "tails": "Tails. −{{amount}}",
     "options": {
       "offense": "Offense guru: +3 for 20 games, then +1 ({{fee}})",
       "defense": "Defensive mind: +2 for the season ({{fee}})",
@@ -1528,11 +1527,6 @@
         "story": "The fans want a splash, and {{owner}} is listening.",
         "rule": "+{{amount}} cap room, but sign a top option before the next card (−2 if you don't)."
       },
-      "double-nothing": {
-        "title": "Double or nothing",
-        "story": "{{owner}} flips a coin over the budget.",
-        "rule": "Heads: +{{amount}}. Tails: −{{amount}}."
-      },
       "golden-ticket": {
         "title": "Golden ticket",
         "story": "{{gm}} has a free agent nobody else knows about.",
@@ -1632,12 +1626,25 @@
         "title": "Superteam rumor",
         "story": "{{reporter}}: the {{city}} just landed a star.",
         "rule": "The {{city}} get +3 for the rest of the season."
+      },
+      "team-chemistry": {
+        "title": "Team chemistry",
+        "story": "{{coach}} took the team on a bonding trip, and it shows.",
+        "rule": "+3 team rating for 10 games."
       }
+    },
+    "objective": "The board's objective",
+    "pickObjective": "Pick your objective",
+    "pickHintObjective": "Six face-down cards, each one a mission from the board. The card you flip is the objective you must complete.",
+    "rewardN": "Complete it: +{{n}} Board Confidence",
+    "stopKind": {
+      "objective": "The objective",
+      "event": "Midseason card"
     }
   },
   "rebuild": {
-    "title": "Rebuild",
-    "desc": "Take over a real team with its real payroll and a rebuild budget. Fire the coach or keep him, then go position by position: keep, or sell and sign one of three priced options or a bench option. Board cards come between positions.",
+    "title": "Takeover",
+    "desc": "Buy a real team with its real payroll and a rebuild budget. The board gives you one objective to complete by tip-off. Pick a coach, then go position by position: keep the player, or sell him and sign one of three priced options or a bench option.",
     "pickTeam": "Pick a team to take over",
     "spin": "Spin a team: today's league",
     "spinHistory": "Spin a team: any era",
@@ -1675,15 +1682,16 @@
     "sell": "Sell for {{pay}}",
     "sellTitle": "Replace {{name}}",
     "budgetLeft": "Budget: {{budget}}",
-    "cardStop": "Rebuild card {{n}} of {{total}}",
+    "cardStop": "Card {{n}} of {{total}}",
     "tipoffTitle": "The rebuild is done",
     "tipoff": "Tip off the season",
     "srChange": "Squad Rating {{from}} → {{to}}",
     "coachPicked": "Coach: {{name}}",
     "openDemands": "The board will check these from tip-off on:",
     "hubA": "Crisis Season",
-    "hubADesc": "Draft ten in any mode, then survive seven board stops.",
-    "hubB": "Rebuild",
-    "hubBDesc": "Take over a real team and rebuild it, position by position."
+    "hubADesc": "Draft ten in any mode, pick your objective, and survive one midseason card.",
+    "hubB": "Takeover",
+    "hubBDesc": "Buy a real team and rebuild it your way, position by position.",
+    "restart": "Restart"
   }
 }

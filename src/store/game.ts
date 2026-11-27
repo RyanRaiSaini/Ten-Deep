@@ -17,7 +17,7 @@ import { applyCard, type Decision } from '../engine/crisis/apply';
 import { boardObjective, verdict, type Objective, type Verdict } from '../engine/crisis/board';
 import { CARD_ROUNDS, drawCard, type CardId } from '../engine/crisis/deck';
 import { prepareCard, type CrisisCard } from '../engine/crisis/offers';
-import { STOPS, newBoard, type BoardEvent, type BoardState } from '../engine/board/state';
+import { TAKEOVER_SEASON_PLAN, newBoard, pauseRounds, planOf, type BoardEvent, type BoardState } from '../engine/board/state';
 import { arrive, resolve as resolveStop, reveal, secondLook } from '../engine/board/stop';
 import { checkDemands } from '../engine/board/rules';
 import { type Decision as BoardDecision, vetoDemand } from '../engine/board/play';
@@ -292,8 +292,9 @@ export const useGame = create<GameStore>()(
         if (get().crisis) {
           // Your team takes the place of the franchise your division left out (any of its teams in an odd league).
           const home = DIVISIONS[division].franchises.find((f) => !franchises.includes(f)) ?? DIVISIONS[division].franchises[0];
-          const withStops = { ...season, stops: STOPS.slice(1) };
-          set({ season: withStops, crisis: { ...get().crisis!, objective: boardObjective(withStops), board: newBoard(home) } });
+          const board = newBoard(home);
+          const withStops = { ...season, stops: pauseRounds(board) };
+          set({ season: withStops, crisis: { ...get().crisis!, objective: boardObjective(withStops), board } });
           get().openCrisis(withStops);
         } else set({ phase: 'season', season });
       },
@@ -308,7 +309,7 @@ export const useGame = create<GameStore>()(
         const chosen = get().division;
         const divs = assignDivisions(teams.map((t) => t.franchise ?? franchiseByName(t.name)), chosen !== null && layoutOf(chosen) === 'modern' ? chosen : defaultDivision(seed));
         const season = {
-          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), stops: STOPS.slice(1),
+          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), stops: pauseRounds(newBoard('')),
           ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
         };
         set({
@@ -321,7 +322,7 @@ export const useGame = create<GameStore>()(
         const { crisis, poolId, draft } = get();
         if (crisis?.board) {
           const b = crisis.board;
-          if (b.stop >= STOPS.length || b.hand) return set({ season, ...(b.hand ? { phase: 'crisis' as const } : {}) });
+          if (b.stop >= planOf(b).length || b.hand) return set({ season, ...(b.hand ? { phase: 'crisis' as const } : {}) });
           const step = arrive(b, boardCtx(poolId, season));
           set({ season: step.season, phase: 'crisis', crisis: { ...crisis, board: step.board, news: step.events } });
           if (step.board.firedAt !== undefined) get().fireGm();
@@ -394,22 +395,29 @@ export const useGame = create<GameStore>()(
           phase: 'rebuild', poolId, replay: null, challenge: null, daily: null, weekly: null, career: false, draft: null, playoffs: null, deadline: null, stake: null,
           division, season,
           crisis: {
-            objective: null, drawn: [], resolved: 0, pending: null, verdict: null, board: newBoard(franchise),
+            objective: null, drawn: [], resolved: 0, pending: null, verdict: null, board: newBoard(franchise, TAKEOVER_SEASON_PLAN),
             rebuild: { teamId, name: `${team.city} ${team.name}`, season: team.season, colors: team.colors, franchise, step: 0, coach: null, payroll, sr0: Math.round(squadRating(season.teams[0])), selling: null, cards: 0 },
           },
         });
       },
-      rebuildNext: () => set((s) => (s.crisis?.rebuild && s.crisis.rebuild.step === 0 ? { crisis: { ...s.crisis, rebuild: { ...s.crisis.rebuild, step: COACH_STEP } } } : {})),
+      rebuildNext: () => {
+        // Past the takeover: the board's objective comes first, so the whole build can chase it.
+        const { crisis, season, poolId } = get();
+        const r = crisis?.rebuild;
+        if (!crisis?.board || !r || !season || r.step !== 0) return;
+        const hand = rebuildHand(crisis.board, boardCtx(poolId, season), 0);
+        set({ crisis: { ...crisis, board: { ...crisis.board, hand, picked: null, offer: null, peek: [] }, rebuild: { ...r, step: COACH_STEP } } });
+      },
       rebuildCoach: (coach) => {
         const { crisis, season } = get();
-        if (!crisis?.rebuild || !season || crisis.rebuild.step !== COACH_STEP) return;
+        if (!crisis?.rebuild || !season || crisis.rebuild.step !== COACH_STEP || crisis.board?.hand) return;
         set({ season: addFee(season, COACH_FEE[coach]), crisis: { ...crisis, rebuild: { ...crisis.rebuild, coach, step: FIRST_SLOT_STEP } } });
       },
       rebuildKeep: () => get().rebuildStep(),
       rebuildSell: () => set((s) => {
         const r = s.crisis?.rebuild;
         const slot = r && slotOfStep(r.step);
-        return slot ? { crisis: { ...s.crisis!, rebuild: { ...r, selling: slot } } } : {};
+        return slot && !s.crisis?.board?.hand ? { crisis: { ...s.crisis!, rebuild: { ...r, selling: slot } } } : {};
       }),
       rebuildCancelSell: () => set((s) => (s.crisis?.rebuild ? { crisis: { ...s.crisis, rebuild: { ...s.crisis.rebuild, selling: null } } } : {})),
       rebuildSign: (option) => {
@@ -423,7 +431,7 @@ export const useGame = create<GameStore>()(
       rebuildStep: () => {
         const { crisis, season, poolId } = get();
         const r = crisis?.rebuild;
-        if (!crisis?.board || !r || !season || !slotOfStep(r.step)) return;
+        if (!crisis?.board || !r || !season || !slotOfStep(r.step) || crisis.board.hand) return;
         const step = r.step + 1;
         let board = crisis.board;
         if (stopAfterStep(r.step)) {
@@ -439,7 +447,7 @@ export const useGame = create<GameStore>()(
         if (!crisis?.board || !r || !season || r.step < TIPOFF_STEP || crisis.board.hand) return;
         const s = applyCoach(season, r.coach);
         // What the board asked for during the rebuild is checked now; the preseason stop was the rebuild itself.
-        const step = checkDemands({ ...crisis.board, stop: 1 }, boardCtx(poolId, s));
+        const step = checkDemands(crisis.board, boardCtx(poolId, s));
         set({ phase: 'season', season: step.season, crisis: { ...crisis, objective: boardObjective(step.season), board: step.board, news: step.events } });
         if (step.board.firedAt !== undefined) get().fireGm();
       },
@@ -457,14 +465,29 @@ export const useGame = create<GameStore>()(
         try { set({ season: benchSwitch(season, bench, starter) }); return true; } catch { return false; }
       },
 
-      openDeadline: (season) => set({ season, phase: 'deadline', deadline: { outId: null, spin: null, spun: false } }),
+      openDeadline: (season) => {
+        // The trade deadline is when most objectives are due.
+        const { crisis, poolId } = get();
+        if (crisis?.board && crisis.board.firedAt === undefined) {
+          const step = checkDemands(crisis.board, boardCtx(poolId, season));
+          set({ crisis: { ...crisis, board: step.board, news: step.events } });
+          season = step.season;
+          if (step.board.firedAt !== undefined) { set({ season }); get().fireGm(); return; }
+        }
+        set({ season, phase: 'deadline', deadline: { outId: null, spin: null, spun: false } });
+      },
       chooseDeadlineOut: (outId) => set((s) => ({ deadline: { ...(s.deadline ?? { spin: null, spun: false }), outId } })),
       spinDeadline: () =>
         set((s) => {
+          // The spin lands on one of the league's teams, and you choose from its real roster right now (a swap).
           const season = s.season!;
-          const taken = new Set(season.teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k].name)));
-          const teams = pool(s.poolId).teams.filter((t) => t.players.some((p) => !taken.has(p.name)));
-          const landed = createRng(`${season.seed}:deadline`).pick(teams);
+          const i = 1 + Math.floor(createRng(`${season.seed}:deadline`).next() * (season.teams.length - 1));
+          const ai = season.teams[i];
+          const look = [...pool(s.poolId).teams, ...current2026.teams].find((t) => franchiseOf(t) === ai.franchise);
+          const landed: TeamSeason = {
+            id: `deadline-${ai.id}`, label: ai.name, city: look?.city ?? '', name: look?.name ?? ai.name, season: look?.season ?? '',
+            colors: ai.colors, ...(ai.franchise ? { franchise: ai.franchise } : {}), players: ALL_SLOTS.map((k) => ai.slots[k]),
+          };
           return { deadline: { ...s.deadline!, spin: landed, spun: true } };
         }),
       // Guards make repeated taps no-ops once the deal is done.

@@ -21,7 +21,8 @@ import { Icon } from '../ui/icons';
 import { MoneyScale } from '../ui/MoneyScale';
 import { PlayerCard } from '../ui/PlayerCard';
 import { Text } from '../ui/Text';
-import { BoardNews, ConfidenceMeter } from '../ui/board/BoardPanel';
+import { BoardNews, ConfidenceMeter, ObjectiveBanner } from '../ui/board/BoardPanel';
+import { boardCtx } from '../store/boardCtx';
 import { C, R, S, money } from '../ui/theme';
 import { goBack } from '../ui/nav';
 
@@ -52,6 +53,7 @@ function OfficeScreen() {
     <MoneyScale.Provider value={scale}>
       <Screen>
         <Header title={t('board.office')} left={<BackButton onPress={() => goBack()} />} />
+        <ObjectiveBanner board={board} ctx={boardCtx(g.poolId, season)} scale={scale} takeover={!!g.crisis?.rebuild} />
         <Card style={{ gap: S.sm }}>
           <View style={styles.info}>
             <Icon name="briefcase" size={34} />

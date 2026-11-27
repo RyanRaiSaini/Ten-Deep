@@ -51,7 +51,7 @@
     },
     "crisis": {
       "title": "Crisi di gestione",
-      "desc": "Crea una squadra e sopravvivi alla dirigenza. Sette volte a stagione scegli 1 carta su 6 coperte: richieste, soldi, vantaggi e sorprese. Se la Fiducia della dirigenza arriva a 0, sei licenziato."
+      "desc": "Rispondi alla dirigenza. Prima della palla a due scegli 1 carta su 6 coperte: è il tuo obiettivo, e devi raggiungerlo. A metà stagione arriva una carta a sorpresa. Se la Fiducia della dirigenza arriva a 0, sei licenziato."
     },
     "career": {
       "title": "Carriera",
@@ -246,7 +246,7 @@
   },
   "crisis": {
     "title": "Crisi di gestione",
-    "desc": "Crea una squadra e sopravvivi alla dirigenza. Sette volte a stagione scegli 1 carta su 6 coperte: richieste, soldi, vantaggi e sorprese. Se la Fiducia della dirigenza arriva a 0, sei licenziato.",
+    "desc": "Rispondi alla dirigenza. Prima della palla a due scegli 1 carta su 6 coperte: è il tuo obiettivo, e devi raggiungerlo. A metà stagione arriva una carta a sorpresa. Se la Fiducia della dirigenza arriva a 0, sei licenziato.",
     "m0": "Pre-stagione",
     "m1": "Dicembre",
     "m2": "Febbraio",
@@ -1174,7 +1174,7 @@
   "board": {
     "title": "Crisi di gestione",
     "pick": "Scegli una carta",
-    "pickHint": "Sei carte coperte. Tocca la tua: richieste, soldi, vantaggi e sorprese sono tutti lì dentro.",
+    "pickHint": "Sei carte coperte: alcune aiutano, altre fanno male. Toccane una.",
     "stopOf": "Tappa {{n}} di {{total}}",
     "months": {
       "preseason": "Pre-campionato",
@@ -1206,7 +1206,8 @@
       "deadline": "Entro la trade deadline",
       "end": "Entro la fine della regular season",
       "now": "Subito",
-      "games": "Nelle prossime {{n}} partite"
+      "games": "Nelle prossime {{n}} partite",
+      "tipoff": "Entro la palla a due"
     },
     "fail": "Se fallisci: −{{n}} di Fiducia della dirigenza",
     "noFail": "Nessuna fiducia in gioco",
@@ -1219,8 +1220,6 @@
     "secondLook": "Usa Seconda occhiata (scegli di nuovo)",
     "pickIn": "Scegline uno",
     "pickOut": "Chi fa spazio?",
-    "heads": "Testa! +{{amount}}",
-    "tails": "Croce. −{{amount}}",
     "options": {
       "offense": "Guru dell'attacco: +3 per 20 partite, poi +1 ({{fee}})",
       "defense": "Mente difensiva: +2 per la stagione ({{fee}})",
@@ -1533,11 +1532,6 @@
         "story": "I tifosi vogliono il colpo grosso e {{owner}} ascolta.",
         "rule": "+{{amount}} di spazio salariale, ma firma un'opzione top prima della prossima carta (−2 se non lo fai)."
       },
-      "double-nothing": {
-        "title": "Doppio o niente",
-        "story": "{{owner}} lancia una moneta sul budget.",
-        "rule": "Testa: +{{amount}}. Croce: −{{amount}}."
-      },
       "golden-ticket": {
         "title": "Biglietto d'oro",
         "story": "{{gm}} ha un free agent che nessun altro conosce.",
@@ -1637,12 +1631,25 @@
         "title": "Voci di superteam",
         "story": "{{reporter}}: {{city}} ha appena preso una stella.",
         "rule": "{{city}} ottiene +3 per il resto della stagione."
+      },
+      "team-chemistry": {
+        "title": "Chimica di squadra",
+        "story": "{{coach}} ha portato la squadra in ritiro, e si vede.",
+        "rule": "+3 alla valutazione di squadra per 10 partite."
       }
+    },
+    "objective": "L'obiettivo della dirigenza",
+    "pickObjective": "Scegli il tuo obiettivo",
+    "pickHintObjective": "Sei carte coperte, ognuna una missione della dirigenza. La carta che giri è l'obiettivo da raggiungere.",
+    "rewardN": "Raggiunto: +{{n}} di Fiducia della dirigenza",
+    "stopKind": {
+      "objective": "L'obiettivo",
+      "event": "Carta di metà stagione"
     }
   },
   "rebuild": {
-    "title": "Ricostruzione",
-    "desc": "Prendi in mano una squadra reale con il suo monte ingaggi reale e un budget di ricostruzione. Licenzia l'allenatore o tienilo, poi vai ruolo per ruolo: tieni, oppure vendi e firma una di tre opzioni con prezzo o un'opzione dalla panchina. Tra un ruolo e l'altro arrivano le carte della dirigenza.",
+    "title": "Acquisizione",
+    "desc": "Compra una vera squadra con il suo vero monte stipendi e un budget di ricostruzione. La dirigenza ti dà un obiettivo da raggiungere entro la palla a due. Scegli un allenatore, poi ruolo per ruolo: tieni il giocatore, oppure vendilo e ingaggia una delle tre opzioni a prezzo o un'opzione dalla panchina.",
     "pickTeam": "Scegli una squadra da rilevare",
     "spin": "Gira una squadra: lega di oggi",
     "spinHistory": "Gira una squadra: qualsiasi era",
@@ -1680,15 +1687,16 @@
     "sell": "Vendi per {{pay}}",
     "sellTitle": "Sostituisci {{name}}",
     "budgetLeft": "Budget: {{budget}}",
-    "cardStop": "Carta di ricostruzione {{n}} di {{total}}",
+    "cardStop": "Carta {{n}} di {{total}}",
     "tipoffTitle": "La ricostruzione è finita",
     "tipoff": "Via alla stagione",
     "srChange": "Valutazione squadra {{from}} → {{to}}",
     "coachPicked": "Allenatore: {{name}}",
     "openDemands": "La dirigenza controllerà questi punti dalla palla a due:",
     "hubA": "Stagione di crisi",
-    "hubADesc": "Scegli dieci in qualsiasi modalità e sopravvivi a sette tappe della dirigenza.",
-    "hubB": "Ricostruzione",
-    "hubBDesc": "Prendi una squadra reale e ricostruiscila, ruolo per ruolo."
+    "hubADesc": "Scegli dieci giocatori in qualsiasi modalità, prendi il tuo obiettivo e supera una carta di metà stagione.",
+    "hubB": "Acquisizione",
+    "hubBDesc": "Compra una vera squadra e ricostruiscila a modo tuo, ruolo per ruolo.",
+    "restart": "Ricomincia"
   }
 }

@@ -2,9 +2,21 @@
 import type { Player, Pos, SlotId } from '../types';
 import { DEADLINE_GAME, SEASON_GAMES } from '../season';
 
-/** Card stops: preseason, then about every 12 games (Nov, Dec, Jan, Feb before the deadline, Mar, Apr). */
-export const STOPS = [0, 12, 24, 36, 48, 60, 72];
-export const STOP_MONTHS = ['preseason', 'nov', 'dec', 'jan', 'feb', 'mar', 'apr'] as const;
+/**
+ * A run's card stops. An objective stop deals six board objectives (pick the one you must complete); an event stop
+ * deals six good-or-bad events. Crisis Season: the objective before tip-off, one event at midseason. A Takeover deals
+ * its objective and two events during the build (see rebuild.ts), then one event at midseason.
+ */
+export type StopKind = 'objective' | 'event';
+export interface Stop { round: number; kind: StopKind }
+export const MIDSEASON = 41;
+export const CRISIS_PLAN: Stop[] = [{ round: 0, kind: 'objective' }, { round: MIDSEASON, kind: 'event' }];
+export const TAKEOVER_SEASON_PLAN: Stop[] = [{ round: MIDSEASON, kind: 'event' }];
+/** Older saves had seven stops at these rounds. */
+export const STOPS = CRISIS_PLAN.map((x) => x.round);
+/** Board Confidence for the objective: failing it costs 5, completing it is +2. */
+export const OBJECTIVE_PENALTY = 5;
+export const OBJECTIVE_REWARD = 2;
 export const HAND = 6;
 export const START_CONFIDENCE = 10;
 export const MAX_CONFIDENCE = 10;
@@ -23,6 +35,10 @@ export interface Demand {
   penalty: number;
   /** Signings made before it was drawn (only later ones count toward it). */
   sig?: number;
+  /** The run's objective (the big one on screen); passing it is worth OBJECTIVE_REWARD. */
+  objective?: boolean;
+  /** Teams named by the card (any of them counts). */
+  franchises?: string[];
   /** What the card needs to remember: a target player, a franchise, the starters when it was drawn... */
   ids?: string[];
   pay?: number;
@@ -59,8 +75,8 @@ export interface Offer {
   outSlots?: SlotId[];
   options?: string[];
   target?: SlotId;
-  /** Coin flip, double or nothing. */
-  heads?: boolean;
+  /** Franchises a card names (any of them counts). */
+  teams?: string[];
   /** AI team singled out (superteam rumor). */
   team?: number;
   /** For text: a player's name, a city, an amount. */
@@ -89,8 +105,10 @@ export interface BoardEvent {
 export interface BoardState {
   v: 2;
   confidence: number;
-  /** Index into STOPS of the next stop to play. */
+  /** Index into the plan of the next stop to play. */
   stop: number;
+  /** This run's stops (Crisis Season when missing). */
+  plan?: Stop[];
   /** The six face-down cards at the current stop (null between stops). */
   hand: string[] | null;
   /** Revealed card awaiting your decision, and what it offers. */
@@ -117,10 +135,18 @@ export interface BoardState {
   lastL: number;
 }
 
-export const newBoard = (home: string): BoardState => ({
-  v: 2, confidence: START_CONFIDENCE, stop: 0, hand: null, picked: null, offer: null, played: [], demands: [], signings: [],
+export const newBoard = (home: string, plan: Stop[] = CRISIS_PLAN): BoardState => ({
+  v: 2, confidence: START_CONFIDENCE, stop: 0, plan, hand: null, picked: null, offer: null, played: [], demands: [], signings: [],
   respins: START_RESPINS, perks: [], events: [], home, lastW: 0, lastL: 0,
 });
+
+export const planOf = (b: BoardState): Stop[] => b.plan ?? CRISIS_PLAN;
+/** The stop being played (or next to play). */
+export const stopAt = (b: BoardState): Stop | undefined => planOf(b)[b.stop];
+/** The rounds the season pauses at for cards (the preseason one is dealt before the first game). */
+export const pauseRounds = (b: BoardState) => planOf(b).map((x) => x.round).filter((r) => r > 0);
+/** The run's objective, if one was drawn. */
+export const objectiveOf = (b: BoardState) => b.demands.find((d) => d.objective);
 
 export const drawnIds = (b: BoardState) => b.played.map((p) => p.id);
 export const activeDemands = (b: BoardState) => b.demands.filter((d) => d.status === 'active');
@@ -128,7 +154,7 @@ export const activeDemands = (b: BoardState) => b.demands.filter((d) => d.status
 /** The round a demand is checked by. */
 export function dueRound(due: 'next' | 'deadline' | 'end' | 'now' | 'games', round: number, stop: number, games = 0): number {
   switch (due) {
-    case 'next': return STOPS[stop + 1] ?? SEASON_GAMES;
+    case 'next': return round < DEADLINE_GAME ? DEADLINE_GAME : SEASON_GAMES;
     case 'deadline': return round < DEADLINE_GAME ? DEADLINE_GAME : SEASON_GAMES;
     case 'end': return SEASON_GAMES;
     case 'now': return round;

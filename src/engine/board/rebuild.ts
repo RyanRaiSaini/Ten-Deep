@@ -12,15 +12,12 @@ import { createRng } from '../rng';
 import { SEASON_GAMES, createSeason, type SeasonState } from '../season';
 import { realLeague, realRotation } from '../realLeague';
 import { ALL_SLOTS, type Roster, type RosterSlots, type TeamSeason } from '../types';
-import { CARDS } from './cards';
-import { available, type PlayCtx } from './play';
-import { HAND, STOPS, drawnIds, type BoardState } from './state';
+import { dealFrom, dealable, type PlayCtx } from './play';
+import { TAKEOVER_SEASON_PLAN, type BoardState } from './state';
 import { bumpPlayer } from './util';
 
 /** Rebuild money on top of the real payroll: a quarter of the cap. */
 export const REBUILD_BUDGET = CAP * 0.25;
-/** Card stops come after these slots (SG, C and the third bench spot), like the cards between positions in the videos. */
-export const STOP_AFTER = [1, 4, 7];
 /** Steps: 0 = the takeover, 1 = the coach, 2–11 = PG…B5, 12 = ready for tip-off. */
 export const COACH_STEP = 1;
 export const FIRST_SLOT_STEP = 2;
@@ -48,33 +45,18 @@ export interface RebuildState {
   cards: number;
 }
 
-/** Card kinds and ids that make sense before a ball is bounced. */
-const EVENTS_OK = new Set(['legend-comeback', 'contract-year']);
-/** Demands about the starting five can't be met once the starters are done (they'd be free or impossible). */
-const STARTER_DEMANDS = new Set(['break-core', 'positionless', 'defense-wins', 'space-floor', 'untouchable']);
+/**
+ * The build's three card stops: the objective first (before the coach, so the whole build can chase it), a
+ * good-or-bad event once the first three starters are set, and another when the bench is done.
+ */
+export type BuildStop = 'objective' | 'event';
+export const BUILD_STOPS: BuildStop[] = ['objective', 'event', 'event'];
+/** Event stops come after these slots: SF (three starters) and B5 (the whole roster). */
+export const STOP_AFTER = [2, 9];
 
-export function rebuildCardOk(id: string, kind: string, cards: number): boolean {
-  if (kind === 'event') return EVENTS_OK.has(id);
-  if (cards > 0 && STARTER_DEMANDS.has(id)) return false;
-  return true;
-}
-
-/** Six face-down cards for a rebuild stop (seeded by the season and the stop number). */
-export function rebuildHand(b: BoardState, ctx: PlayCtx, n: number): string[] {
-  const rng = createRng(`${ctx.season.seed}:rebuild:${n}`);
-  const used = new Set(drawnIds(b));
-  let left = CARDS.filter((c) => !used.has(c.id) && rebuildCardOk(c.id, c.kind, n) && available(c, b, ctx));
-  const hand: string[] = [];
-  const weight = { demand: 45, finance: 30, perk: 20, event: 5 } as const;
-  while (hand.length < HAND && left.length) {
-    const total = left.reduce((x, c) => x + weight[c.kind], 0);
-    let roll = rng.next() * total;
-    const c = left.find((x) => (roll -= weight[x.kind]) < 0) ?? left[left.length - 1];
-    hand.push(c.id);
-    left = left.filter((x) => x.id !== c.id);
-  }
-  return hand;
-}
+/** Six face-down cards for build stop `n` (0 = the objective). */
+export const rebuildHand = (b: BoardState, ctx: PlayCtx, n: number): string[] =>
+  dealFrom(dealable(BUILD_STOPS[n] ?? 'event', true), b, ctx, `rebuild:${n}`);
 
 /** The layout of the league you're rebuilding in. */
 export interface RebuildLeague {
@@ -111,7 +93,7 @@ export function takeOver(team: TeamSeason, league: RebuildLeague, seed: string):
   const payroll = Math.round((CAP - capRoom(slots)) * 10) / 10;
   // Your spending money is the rebuild budget, whatever the payroll: fees are set so the room left is exactly that.
   const fees = Math.round((capRoom(slots) - REBUILD_BUDGET) * 10) / 10;
-  return { season: { ...base, stops: STOPS.slice(1), fees }, division, payroll };
+  return { season: { ...base, stops: TAKEOVER_SEASON_PLAN.map((x) => x.round), fees }, division, payroll };
 }
 
 /** Tip-off: the coach's effect lands on the season. */

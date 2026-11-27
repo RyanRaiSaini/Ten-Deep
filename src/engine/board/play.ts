@@ -6,10 +6,10 @@ import { DEADLINE_GAME, SEASON_GAMES, seedOf, type SeasonState } from '../season
 import { confOfDiv } from '../conference';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type SlotId, playsPos } from '../types';
 import { reseat } from '../reseat';
-import { CARDS, cardOf, type CardDef, type Kind } from './cards';
+import { BUILD_EVENTS, CRISIS_OBJECTIVES, SEASON_EVENTS, TAKEOVER_OBJECTIVES, cardOf, type CardDef } from './cards';
 import { signOption } from './market';
 import type { BoardCtx } from './rules';
-import { HAND, STOPS, dueRound, drawnIds, type BoardState, type Demand, type Offer } from './state';
+import { HAND, OBJECTIVE_PENALTY, dueRound, drawnIds, stopAt, type BoardState, type Demand, type Offer, type StopKind } from './state';
 import { addFee, bumpPlayer } from './util';
 
 export interface PlayCtx extends BoardCtx {
@@ -24,7 +24,6 @@ export interface PlayCtx extends BoardCtx {
   teamName: (franchise: string) => string;
 }
 
-const KIND_WEIGHT: Record<Kind, number> = { demand: 45, finance: 25, event: 20, perk: 10 };
 const mine = (s: SeasonState) => ALL_SLOTS.map((k) => ({ k, p: s.teams[0].slots[k] }));
 
 export function available(def: CardDef, b: BoardState, ctx: PlayCtx): boolean {
@@ -46,23 +45,22 @@ export function available(def: CardDef, b: BoardState, ctx: PlayCtx): boolean {
   }
 }
 
-/** Six face-down cards for a stop: weighted by kind, never a card already played this season. */
-export function drawHand(b: BoardState, ctx: PlayCtx): string[] {
-  const rng = createRng(`${ctx.season.seed}:board:${b.stop}`);
+/** The ids a stop can deal: objectives for an objective stop, good-or-bad events otherwise. */
+export function dealable(kind: StopKind, takeover: boolean): string[] {
+  if (kind === 'objective') return takeover ? TAKEOVER_OBJECTIVES : CRISIS_OBJECTIVES;
+  return takeover ? BUILD_EVENTS : SEASON_EVENTS;
+}
+
+/** Six face-down cards from a list, never one already played this run. `key` seeds the shuffle. */
+export function dealFrom(ids: readonly string[], b: BoardState, ctx: PlayCtx, key: string): string[] {
   const used = new Set(drawnIds(b));
-  let left = CARDS.filter((c) => !used.has(c.id) && available(c, b, ctx));
-  const hand: string[] = [];
-  while (hand.length < HAND && left.length) {
-    const kinds = (Object.keys(KIND_WEIGHT) as Kind[]).filter((k) => left.some((c) => c.kind === k));
-    const total = kinds.reduce((n, k) => n + KIND_WEIGHT[k], 0);
-    let roll = rng.next() * total;
-    let kind = kinds[kinds.length - 1];
-    for (const k of kinds) { if (roll < KIND_WEIGHT[k]) { kind = k; break; } roll -= KIND_WEIGHT[k]; }
-    const c = rng.pick(left.filter((x) => x.kind === kind));
-    hand.push(c.id);
-    left = left.filter((x) => x.id !== c.id);
-  }
-  return hand;
+  const left = ids.map(cardOf).filter((c) => c && !used.has(c.id) && available(c, b, ctx));
+  return shuffle(left, createRng(`${ctx.season.seed}:${key}`)).slice(0, HAND).map((c) => c.id);
+}
+
+/** Six face-down cards for the season stop being played. */
+export function drawHand(b: BoardState, ctx: PlayCtx): string[] {
+  return dealFrom(dealable(stopAt(b)?.kind ?? 'event', false), b, ctx, `board:${b.stop}`);
 }
 
 /** Everyone not on your team and not on any roster: the mode's free agents. */
@@ -87,9 +85,9 @@ export function prepareOffer(id: string, b: BoardState, ctx: PlayCtx): Offer {
   const rivals = s.teams.map((t, i) => ({ t, i })).filter(({ i }) => i > 0 && (conf === null || confOfDiv(s.divs![i]) === conf));
   switch (id) {
     case 'hometown-hero': {
-      const ai = s.teams.map((t, i) => ({ t, i })).filter(({ t, i }) => i > 0 && t.franchise && t.franchise !== b.home);
-      const pick = rng.pick(ai);
-      return pick ? { name: pick.t.franchise, city: pick.t.name } : {};
+      // Three teams to choose from: two of your players must have played for any of them.
+      const ai = shuffle(s.teams.map((t, i) => ({ t, i })).filter(({ t, i }) => i > 0 && t.franchise && t.franchise !== b.home), rng).slice(0, 3);
+      return ai.length ? { teams: ai.map(({ t }) => t.franchise!), city: ai.map(({ t }) => t.name).join(' / ') } : {};
     }
     case 'local-legend':
       return { name: b.home, city: ctx.teamName(b.home) };
@@ -157,8 +155,6 @@ export function prepareOffer(id: string, b: BoardState, ctx: PlayCtx): Offer {
       const pick = [...rivals].sort((a, c) => squadRating(c.t) - squadRating(a.t))[rng.int(0, Math.min(2, rivals.length - 1))];
       return pick ? { team: pick.i, city: pick.t.name } : {};
     }
-    case 'double-nothing':
-      return { heads: rng.next() < 0.5, amount: CAP * (cardOf(id).cash ?? 0) };
     default: {
       const cash = cardOf(id)?.cash;
       return cash ? { amount: Math.abs(cash) * CAP } : {};
@@ -172,7 +168,10 @@ const demand = (id: string, b: BoardState, s: SeasonState, extra: Partial<Demand
   const def = cardOf(id);
   return {
     id, from: s.round, due: dueRound(def?.due ?? 'next', s.round, b.stop, def?.of), status: 'active', penalty: def?.penalty ?? 2,
-    wins: s.records[0].w, sig: b.signings.length, ...extra,
+    wins: s.records[0].w, sig: b.signings.length,
+    // A board demand is the run's objective: it costs more to fail.
+    ...(def?.kind === 'demand' ? { objective: true, penalty: OBJECTIVE_PENALTY } : {}),
+    ...extra,
   };
 };
 const addMod = (s: SeasonState, amount: number, from: number, to: number): SeasonState => ({
@@ -219,6 +218,7 @@ export function resolveCard(id: string, offer: Offer, d: Decision, b0: BoardStat
         return { season: s, board: b };
       }
       case 'hometown-hero':
+        return { season: s, board: { ...b, demands: [...b.demands, demand(id, b, s, { franchises: offer.teams ?? [] })] } };
       case 'local-legend':
         return { season: s, board: { ...b, demands: [...b.demands, demand(id, b, s, { franchise: offer.name })] } };
       case 'break-core':
@@ -238,10 +238,8 @@ export function resolveCard(id: string, offer: Offer, d: Decision, b0: BoardStat
 
   if (def.kind === 'finance') {
     switch (id) {
-      case 'double-nothing':
-        return { season: addFee(s, offer.heads ? -amount : amount), board: b };
       case 'fans-demand':
-        return { season: addFee(s, -amount), board: { ...b, demands: [...b.demands, demand('fans-demand', b, s, { due: STOPS[b.stop + 1] ?? SEASON_GAMES, penalty: 2 })] } };
+        return { season: addFee(s, -amount), board: { ...b, demands: [...b.demands, demand('fans-demand', b, s, { due: dueRound('next', s.round, b.stop), penalty: 2 })] } };
       case 'owner-holds':
         return {
           season: addFee(s, amount),
@@ -309,6 +307,8 @@ export function resolveCard(id: string, offer: Offer, d: Decision, b0: BoardStat
     }
     case 'hot-streak':
       return { season: addMod(s, 2, r, r + 10), board: b };
+    case 'team-chemistry':
+      return { season: addMod(s, 3, r, r + 10), board: b };
     case 'legend-comeback':
       if (chosen) perkSign(chosen, MIN_SALARY);
       return { season: s, board: b };

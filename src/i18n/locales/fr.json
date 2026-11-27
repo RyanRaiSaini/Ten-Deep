@@ -51,7 +51,7 @@
     },
     "crisis": {
       "title": "Crise de gestion",
-      "desc": "Draftez une équipe, puis survivez au conseil. Sept fois par saison, choisissez 1 carte parmi 6 face cachée : exigences, argent, bonus et surprises. Si la Confiance du conseil tombe à 0, vous êtes viré."
+      "desc": "Rendez des comptes au conseil. Avant le coup d'envoi, vous choisissez 1 carte parmi 6 face cachée : c'est votre objectif, et vous devez le remplir. Une carte surprise tombe à mi-saison. Si la Confiance du conseil tombe à 0, vous êtes viré."
     },
     "career": {
       "title": "Carrière",
@@ -246,7 +246,7 @@
   },
   "crisis": {
     "title": "Crise de gestion",
-    "desc": "Draftez une équipe, puis survivez au conseil. Sept fois par saison, choisissez 1 carte parmi 6 face cachée : exigences, argent, bonus et surprises. Si la Confiance du conseil tombe à 0, vous êtes viré.",
+    "desc": "Rendez des comptes au conseil. Avant le coup d'envoi, vous choisissez 1 carte parmi 6 face cachée : c'est votre objectif, et vous devez le remplir. Une carte surprise tombe à mi-saison. Si la Confiance du conseil tombe à 0, vous êtes viré.",
     "m0": "Pré-saison",
     "m1": "Décembre",
     "m2": "Février",
@@ -1174,7 +1174,7 @@
   "board": {
     "title": "Crise de gestion",
     "pick": "Choisis une carte",
-    "pickHint": "Six cartes face cachée. Touche-en une : exigences, argent, avantages et surprises sont là-dedans.",
+    "pickHint": "Six cartes face cachée : certaines aident, d'autres font mal. Touchez-en une.",
     "stopOf": "Étape {{n}} sur {{total}}",
     "months": {
       "preseason": "Pré-saison",
@@ -1206,7 +1206,8 @@
       "deadline": "Avant la date limite des transferts",
       "end": "Avant la fin de la saison régulière",
       "now": "Tout de suite",
-      "games": "Sur les {{n}} prochains matchs"
+      "games": "Sur les {{n}} prochains matchs",
+      "tipoff": "Avant le coup d'envoi"
     },
     "fail": "En cas d'échec : −{{n}} de confiance du conseil",
     "noFail": "Aucune confiance en jeu",
@@ -1219,8 +1220,6 @@
     "secondLook": "Utiliser Seconde chance (rechoisir)",
     "pickIn": "Choisis-en un",
     "pickOut": "Qui fait de la place ?",
-    "heads": "Pile ! +{{amount}}",
-    "tails": "Face. −{{amount}}",
     "options": {
       "offense": "Gourou de l'attaque : +3 pendant 20 matchs, puis +1 ({{fee}})",
       "defense": "Cerveau défensif : +2 pour la saison ({{fee}})",
@@ -1533,11 +1532,6 @@
         "story": "Les fans veulent un gros coup, et {{owner}} les écoute.",
         "rule": "+{{amount}} de marge salariale, mais signe une option haut de gamme avant la prochaine carte (−2 sinon)."
       },
-      "double-nothing": {
-        "title": "Quitte ou double",
-        "story": "{{owner}} joue le budget à pile ou face.",
-        "rule": "Pile : +{{amount}}. Face : −{{amount}}."
-      },
       "golden-ticket": {
         "title": "Ticket doré",
         "story": "{{gm}} connaît un agent libre que personne d'autre n'a repéré.",
@@ -1637,12 +1631,25 @@
         "title": "Rumeur de superéquipe",
         "story": "{{reporter}} : {{city}} vient de décrocher une star.",
         "rule": "{{city}} gagne +3 jusqu'à la fin de la saison."
+      },
+      "team-chemistry": {
+        "title": "Cohésion d'équipe",
+        "story": "{{coach}} a emmené l'équipe en séminaire, et ça se voit.",
+        "rule": "+3 de note d'équipe pendant 10 matchs."
       }
+    },
+    "objective": "L'objectif du conseil",
+    "pickObjective": "Choisissez votre objectif",
+    "pickHintObjective": "Six cartes face cachée, chacune une mission du conseil. La carte que vous retournez est l'objectif à remplir.",
+    "rewardN": "Réussi : +{{n}} de Confiance du conseil",
+    "stopKind": {
+      "objective": "L'objectif",
+      "event": "Carte de mi-saison"
     }
   },
   "rebuild": {
-    "title": "Reconstruction",
-    "desc": "Reprends une vraie équipe avec sa vraie masse salariale et un budget de reconstruction. Vire le coach ou garde-le, puis avance poste par poste : garde, ou vends et signe l'une des trois options chiffrées ou une option du banc. Des cartes du conseil s'intercalent entre les postes.",
+    "title": "Rachat",
+    "desc": "Rachetez une vraie équipe avec sa vraie masse salariale et un budget de reconstruction. Le conseil vous donne un objectif à remplir avant le coup d'envoi. Choisissez un coach, puis poste par poste : gardez le joueur, ou vendez-le et recrutez l'une des trois options chiffrées ou une option de banc.",
     "pickTeam": "Choisis une équipe à reprendre",
     "spin": "Tourne une équipe : ligue actuelle",
     "spinHistory": "Tourne une équipe : toutes les époques",
@@ -1680,15 +1687,16 @@
     "sell": "Vendre pour {{pay}}",
     "sellTitle": "Remplacer {{name}}",
     "budgetLeft": "Budget : {{budget}}",
-    "cardStop": "Carte de reconstruction {{n}} sur {{total}}",
+    "cardStop": "Carte {{n}} sur {{total}}",
     "tipoffTitle": "La reconstruction est terminée",
     "tipoff": "Lancer la saison",
     "srChange": "Note d'équipe {{from}} → {{to}}",
     "coachPicked": "Coach : {{name}}",
     "openDemands": "Le conseil vérifiera ces points dès le coup d'envoi :",
     "hubA": "Saison de crise",
-    "hubADesc": "Draft dix joueurs dans n'importe quel mode, puis survis à sept étapes du conseil.",
-    "hubB": "Reconstruction",
-    "hubBDesc": "Reprends une vraie équipe et reconstruis-la, poste par poste."
+    "hubADesc": "Draftez dix joueurs dans n'importe quel mode, choisissez votre objectif et survivez à une carte de mi-saison.",
+    "hubB": "Rachat",
+    "hubBDesc": "Rachetez une vraie équipe et reconstruisez-la à votre façon, poste par poste.",
+    "restart": "Recommencer"
   }
 }

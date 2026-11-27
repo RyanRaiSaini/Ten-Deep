@@ -18,7 +18,7 @@
   - **Current Day** (2026-27 rosters)
   - **Time Machine:** All-Time, Magic vs. Bird (1984–1991), Jordan (1991–2003), Kobe (2003–2010), LeBron (2010–2016), Steph (2016–2020) and Modern (2020–2026). Every team and every player of every season since 1957-58 is in: real contracts from 1984-85 on, and before that (no salary records exist) the usual price for the player's rating.
   - **All-Time Franchises:** all 30 franchises, back to 1957-58 (the Minneapolis Lakers, the Syracuse Nationals, the Cincinnati Royals...)
-  - **Management Crisis:** seven times a season you pick 1 of 6 face-down cards (72 in the deck: board demands, finance, perks, story events). Meet demands in the front office or lose Board Confidence; at 0 you're fired
+  - **Management Crisis:** Crisis Season (draft ten, pick your board objective from 6 face-down cards, one midseason surprise) or Takeover (buy a real team, objective first, rebuild it position by position). Fail the objective and Board Confidence drops; at 0 you're fired
   - **Career:** one franchise across seasons, with aging, contracts, a draft lottery, free agency, offseason trades, morale, franchise records and a Hall of Fame, until the board fires you
 - **Daily and weekly:** Daily Draft (the same spins for everyone), Trivia, Player Rank, Team Rank, 1v1 Derby and Team Duel, one shot each per day. The **Weekly Challenge** is one shared draft a week with a leaderboard and end-of-week prizes.
 - **Friends:** pass-and-play duels, friend codes, challenge links, and live Party rooms.

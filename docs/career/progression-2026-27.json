@@ -1,0 +1,11045 @@
+{
+ "model": {
+  "mean": {
+   "19": 2.6,
+   "20": 2.4,
+   "21": 2,
+   "22": 1.6,
+   "23": 1.1,
+   "24": 0.7,
+   "25": 0.4,
+   "26": 0.2,
+   "27": 0,
+   "28": -0.3,
+   "29": -0.6,
+   "30": -0.9,
+   "31": -1,
+   "32": -1.1,
+   "33": -1.3,
+   "34": -1.6,
+   "35": -2,
+   "36": -2.3,
+   "37": -2.6,
+   "38": -2.8,
+   "39": -3,
+   "40": -3.2
+  },
+  "sd": {
+   "19-22": 3.2,
+   "23-24": 2.7,
+   "25-29": 2.2,
+   "30-32": 2.4,
+   "33+": 2.8
+  }
+ },
+ "players": [
+  {
+   "name": "Giannis Antetokounmpo",
+   "team": "Miami Heat",
+   "pos": "PF/C",
+   "age": 31,
+   "ovr": 98,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 0.9,
+    "max": 1
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 93,
+    "typical": 97,
+    "best": 99
+   },
+   "peak": null
+  },
+  {
+   "name": "Luka Dončić",
+   "team": "Los Angeles Lakers",
+   "pos": "PG/SG",
+   "age": 27,
+   "ovr": 98,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 0.9,
+    "max": 1
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 95,
+    "typical": 98,
+    "best": 99
+   },
+   "peak": null
+  },
+  {
+   "name": "Shai Gilgeous-Alexander",
+   "team": "Oklahoma City Thunder",
+   "pos": "PG/SG",
+   "age": 28,
+   "ovr": 98,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 0.9,
+    "max": 1
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 94,
+    "typical": 98,
+    "best": 99
+   },
+   "peak": null
+  },
+  {
+   "name": "Victor Wembanyama",
+   "team": "San Antonio Spurs",
+   "pos": "C",
+   "age": 22,
+   "ovr": 98,
+   "rookie": false,
+   "dur": 70,
+   "improveChance": 58,
+   "progression": {
+    "low": 1,
+    "avg": 1,
+    "max": 1
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 95,
+    "typical": 99,
+    "best": 99
+   },
+   "peak": {
+    "low": 98,
+    "avg": 99,
+    "high": 99
+   }
+  },
+  {
+   "name": "Nikola Jokić",
+   "team": "Denver Nuggets",
+   "pos": "C",
+   "age": 31,
+   "ovr": 97,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 1.5,
+    "max": 2
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 92,
+    "typical": 96,
+    "best": 99
+   },
+   "peak": null
+  },
+  {
+   "name": "Anthony Edwards",
+   "team": "Minnesota Timberwolves",
+   "pos": "SG/SF",
+   "age": 25,
+   "ovr": 94,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 91,
+    "typical": 94,
+    "best": 97
+   },
+   "peak": {
+    "low": 94,
+    "avg": 95,
+    "high": 99
+   }
+  },
+  {
+   "name": "Jalen Brunson",
+   "team": "New York Knicks",
+   "pos": "PG",
+   "age": 30,
+   "ovr": 94,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 89,
+    "typical": 93,
+    "best": 96
+   },
+   "peak": null
+  },
+  {
+   "name": "Jayson Tatum",
+   "team": "Boston Celtics",
+   "pos": "SF/PF/SG",
+   "age": 28,
+   "ovr": 93,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 33,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 89,
+    "typical": 93,
+    "best": 95
+   },
+   "peak": null
+  },
+  {
+   "name": "Karl-Anthony Towns",
+   "team": "New York Knicks",
+   "pos": "C/PF",
+   "age": 30,
+   "ovr": 93,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 88,
+    "typical": 92,
+    "best": 95
+   },
+   "peak": null
+  },
+  {
+   "name": "Stephen Curry",
+   "team": "Golden State Warriors",
+   "pos": "PG/SG",
+   "age": 38,
+   "ovr": 93,
+   "rookie": false,
+   "dur": 65,
+   "improveChance": 10,
+   "progression": {
+    "low": 1,
+    "avg": 1.8,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.8,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 84,
+    "typical": 90,
+    "best": 94
+   },
+   "peak": null
+  },
+  {
+   "name": "Cade Cunningham",
+   "team": "Detroit Pistons",
+   "pos": "PG/SG",
+   "age": 25,
+   "ovr": 92,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 89,
+    "typical": 92,
+    "best": 95
+   },
+   "peak": {
+    "low": 92,
+    "avg": 93,
+    "high": 97
+   }
+  },
+  {
+   "name": "Donovan Mitchell",
+   "team": "Cleveland Cavaliers",
+   "pos": "SG/PG",
+   "age": 30,
+   "ovr": 92,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 88,
+    "typical": 91,
+    "best": 94
+   },
+   "peak": null
+  },
+  {
+   "name": "Kawhi Leonard",
+   "team": "Toronto Raptors",
+   "pos": "SF/PF",
+   "age": 35,
+   "ovr": 92,
+   "rookie": false,
+   "dur": 35,
+   "improveChance": 15,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.6,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 84,
+    "typical": 89,
+    "best": 93
+   },
+   "peak": null
+  },
+  {
+   "name": "Tyrese Maxey",
+   "team": "Philadelphia 76ers",
+   "pos": "PG",
+   "age": 25,
+   "ovr": 92,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 89,
+    "typical": 92,
+    "best": 95
+   },
+   "peak": {
+    "low": 92,
+    "avg": 93,
+    "high": 97
+   }
+  },
+  {
+   "name": "Cooper Flagg",
+   "team": "Dallas Mavericks",
+   "pos": "SF/PF/SG",
+   "age": 19,
+   "ovr": 91,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 89,
+    "typical": 93,
+    "best": 96
+   },
+   "peak": {
+    "low": 93,
+    "avg": 99,
+    "high": 99
+   }
+  },
+  {
+   "name": "Devin Booker",
+   "team": "Phoenix Suns",
+   "pos": "SG/PG",
+   "age": 29,
+   "ovr": 91,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 87,
+    "typical": 90,
+    "best": 93
+   },
+   "peak": null
+  },
+  {
+   "name": "Kevin Durant",
+   "team": "Houston Rockets",
+   "pos": "SF/PF/SG",
+   "age": 38,
+   "ovr": 91,
+   "rookie": false,
+   "dur": 65,
+   "improveChance": 10,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.8,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 82,
+    "typical": 88,
+    "best": 92
+   },
+   "peak": null
+  },
+  {
+   "name": "Alperen Şengün",
+   "team": "Houston Rockets",
+   "pos": "C",
+   "age": 24,
+   "ovr": 90,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 48,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 87,
+    "typical": 90,
+    "best": 93
+   },
+   "peak": {
+    "low": 90,
+    "avg": 92,
+    "high": 96
+   }
+  },
+  {
+   "name": "Jaylen Brown",
+   "team": "Philadelphia 76ers",
+   "pos": "SG/SF",
+   "age": 30,
+   "ovr": 90,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 86,
+    "typical": 89,
+    "best": 92
+   },
+   "peak": null
+  },
+  {
+   "name": "Anthony Davis",
+   "team": "Washington Wizards",
+   "pos": "PF/C",
+   "age": 33,
+   "ovr": 89,
+   "rookie": false,
+   "dur": 40,
+   "improveChance": 21,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.2,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 82,
+    "typical": 87,
+    "best": 91
+   },
+   "peak": null
+  },
+  {
+   "name": "Deni Avdija",
+   "team": "Portland Trail Blazers",
+   "pos": "SF/PF/SG",
+   "age": 25,
+   "ovr": 89,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 86,
+    "typical": 89,
+    "best": 92
+   },
+   "peak": {
+    "low": 89,
+    "avg": 90,
+    "high": 94
+   }
+  },
+  {
+   "name": "Evan Mobley",
+   "team": "Cleveland Cavaliers",
+   "pos": "PF/C",
+   "age": 25,
+   "ovr": 89,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 86,
+    "typical": 89,
+    "best": 92
+   },
+   "peak": {
+    "low": 89,
+    "avg": 90,
+    "high": 94
+   }
+  },
+  {
+   "name": "Franz Wagner",
+   "team": "Orlando Magic",
+   "pos": "SF/PF/SG",
+   "age": 25,
+   "ovr": 89,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 86,
+    "typical": 89,
+    "best": 92
+   },
+   "peak": {
+    "low": 89,
+    "avg": 90,
+    "high": 93
+   }
+  },
+  {
+   "name": "Jamal Murray",
+   "team": "Denver Nuggets",
+   "pos": "PG",
+   "age": 29,
+   "ovr": 89,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 85,
+    "typical": 88,
+    "best": 91
+   },
+   "peak": null
+  },
+  {
+   "name": "Scottie Barnes",
+   "team": "Toronto Raptors",
+   "pos": "SF/PF/PG/C",
+   "age": 25,
+   "ovr": 89,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 86,
+    "typical": 89,
+    "best": 92
+   },
+   "peak": {
+    "low": 89,
+    "avg": 90,
+    "high": 94
+   }
+  },
+  {
+   "name": "LeBron James",
+   "team": "Philadelphia 76ers",
+   "pos": "SF/PF/PG",
+   "age": 41,
+   "ovr": 88,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 8,
+   "progression": {
+    "low": 1,
+    "avg": 1.8,
+    "max": 4
+   },
+   "regression": {
+    "low": -2,
+    "avg": -5,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 84,
+    "best": 88
+   },
+   "peak": null
+  },
+  {
+   "name": "Amen Thompson",
+   "team": "Houston Rockets",
+   "pos": "SG/SF/PG",
+   "age": 23,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 54,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 84,
+    "typical": 88,
+    "best": 90
+   },
+   "peak": {
+    "low": 87,
+    "avg": 89,
+    "high": 94
+   }
+  },
+  {
+   "name": "Austin Reaves",
+   "team": "Los Angeles Lakers",
+   "pos": "SG/PG",
+   "age": 28,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 89
+   },
+   "peak": null
+  },
+  {
+   "name": "Bam Adebayo",
+   "team": "Miami Heat",
+   "pos": "C/PF",
+   "age": 29,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 86,
+    "best": 89
+   },
+   "peak": null
+  },
+  {
+   "name": "Jaden McDaniels",
+   "team": "Minnesota Timberwolves",
+   "pos": "SF/PF",
+   "age": 26,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 43,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 84,
+    "typical": 87,
+    "best": 90
+   },
+   "peak": {
+    "low": 87,
+    "avg": 87,
+    "high": 90
+   }
+  },
+  {
+   "name": "Jalen Johnson",
+   "team": "Atlanta Hawks",
+   "pos": "SF/PF",
+   "age": 24,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 70,
+   "improveChance": 47,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 90
+   },
+   "peak": {
+    "low": 87,
+    "avg": 89,
+    "high": 93
+   }
+  },
+  {
+   "name": "Joel Embiid",
+   "team": "Philadelphia 76ers",
+   "pos": "C",
+   "age": 32,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 25,
+   "improveChance": 20,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.9,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 85,
+    "best": 89
+   },
+   "peak": null
+  },
+  {
+   "name": "Kyrie Irving",
+   "team": "Dallas Mavericks",
+   "pos": "PG/SG",
+   "age": 34,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 19,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.3,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 85,
+    "best": 89
+   },
+   "peak": null
+  },
+  {
+   "name": "LaMelo Ball",
+   "team": "Minnesota Timberwolves",
+   "pos": "PG",
+   "age": 25,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 44,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 84,
+    "typical": 87,
+    "best": 90
+   },
+   "peak": {
+    "low": 87,
+    "avg": 88,
+    "high": 92
+   }
+  },
+  {
+   "name": "Pascal Siakam",
+   "team": "Indiana Pacers",
+   "pos": "PF/SF",
+   "age": 32,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 21,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.6,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 85,
+    "best": 89
+   },
+   "peak": null
+  },
+  {
+   "name": "Ty Jerome",
+   "team": "Memphis Grizzlies",
+   "pos": "PG/SG",
+   "age": 29,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 28,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 86,
+    "best": 89
+   },
+   "peak": null
+  },
+  {
+   "name": "Tyrese Haliburton",
+   "team": "Indiana Pacers",
+   "pos": "PG",
+   "age": 26,
+   "ovr": 87,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 84,
+    "typical": 87,
+    "best": 90
+   },
+   "peak": {
+    "low": 87,
+    "avg": 87,
+    "high": 90
+   }
+  },
+  {
+   "name": "Brandon Miller",
+   "team": "Charlotte Hornets",
+   "pos": "SF/SG/PF",
+   "age": 24,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 48,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 86,
+    "best": 89
+   },
+   "peak": {
+    "low": 86,
+    "avg": 88,
+    "high": 92
+   }
+  },
+  {
+   "name": "Cameron Boozer",
+   "team": "Memphis Grizzlies",
+   "pos": "PF",
+   "age": 19,
+   "ovr": 86,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 73,
+   "progression": {
+    "low": 1,
+    "avg": 3.2,
+    "max": 7
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 84,
+    "typical": 88,
+    "best": 91
+   },
+   "peak": {
+    "low": 90,
+    "avg": 97,
+    "high": 99
+   }
+  },
+  {
+   "name": "Darius Garland",
+   "team": "Los Angeles Clippers",
+   "pos": "PG",
+   "age": 26,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 41,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 86,
+    "best": 89
+   },
+   "peak": {
+    "low": 86,
+    "avg": 86,
+    "high": 89
+   }
+  },
+  {
+   "name": "Dylan Harper",
+   "team": "San Antonio Spurs",
+   "pos": "SG/PG",
+   "age": 20,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 68,
+   "progression": {
+    "low": 1,
+    "avg": 3,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 84,
+    "typical": 88,
+    "best": 91
+   },
+   "peak": {
+    "low": 87,
+    "avg": 93,
+    "high": 99
+   }
+  },
+  {
+   "name": "Dyson Daniels",
+   "team": "Atlanta Hawks",
+   "pos": "SG/PG/SF",
+   "age": 23,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 54,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 89
+   },
+   "peak": {
+    "low": 86,
+    "avg": 89,
+    "high": 93
+   }
+  },
+  {
+   "name": "Jalen Duren",
+   "team": "Detroit Pistons",
+   "pos": "C",
+   "age": 23,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 53,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 89
+   },
+   "peak": {
+    "low": 86,
+    "avg": 89,
+    "high": 93
+   }
+  },
+  {
+   "name": "James Harden",
+   "team": "Cleveland Cavaliers",
+   "pos": "PG",
+   "age": 37,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 70,
+   "improveChance": 11,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.7,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 78,
+    "typical": 83,
+    "best": 87
+   },
+   "peak": null
+  },
+  {
+   "name": "Jaren Jackson Jr.",
+   "team": "Utah Jazz",
+   "pos": "PF/C",
+   "age": 27,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 86,
+    "best": 89
+   },
+   "peak": null
+  },
+  {
+   "name": "Keyonte George",
+   "team": "Utah Jazz",
+   "pos": "PG",
+   "age": 23,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 54,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 89
+   },
+   "peak": {
+    "low": 86,
+    "avg": 89,
+    "high": 93
+   }
+  },
+  {
+   "name": "Kon Knueppel",
+   "team": "Charlotte Hornets",
+   "pos": "SG/SF",
+   "age": 21,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 63,
+   "progression": {
+    "low": 1,
+    "avg": 2.8,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 90
+   },
+   "peak": {
+    "low": 86,
+    "avg": 91,
+    "high": 97
+   }
+  },
+  {
+   "name": "Lauri Markkanen",
+   "team": "Utah Jazz",
+   "pos": "PF/SF/C",
+   "age": 29,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 82,
+    "typical": 85,
+    "best": 88
+   },
+   "peak": null
+  },
+  {
+   "name": "Nickeil Alexander-Walker",
+   "team": "Atlanta Hawks",
+   "pos": "SG/SF",
+   "age": 28,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 82,
+    "typical": 86,
+    "best": 88
+   },
+   "peak": null
+  },
+  {
+   "name": "Paolo Banchero",
+   "team": "Orlando Magic",
+   "pos": "PF/SF",
+   "age": 23,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 52,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 89
+   },
+   "peak": {
+    "low": 86,
+    "avg": 89,
+    "high": 93
+   }
+  },
+  {
+   "name": "Paul George",
+   "team": "Boston Celtics",
+   "pos": "SF/PF",
+   "age": 36,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 45,
+   "improveChance": 13,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.7,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 78,
+    "typical": 83,
+    "best": 87
+   },
+   "peak": null
+  },
+  {
+   "name": "Stephon Castle",
+   "team": "San Antonio Spurs",
+   "pos": "PG/SG",
+   "age": 21,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 63,
+   "progression": {
+    "low": 1,
+    "avg": 2.8,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 90
+   },
+   "peak": {
+    "low": 86,
+    "avg": 91,
+    "high": 97
+   }
+  },
+  {
+   "name": "Trae Young",
+   "team": "Washington Wizards",
+   "pos": "PG",
+   "age": 28,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 33,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 82,
+    "typical": 85,
+    "best": 88
+   },
+   "peak": null
+  },
+  {
+   "name": "Tyler Herro",
+   "team": "Milwaukee Bucks",
+   "pos": "SG/PG",
+   "age": 26,
+   "ovr": 86,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 86,
+    "best": 89
+   },
+   "peak": {
+    "low": 86,
+    "avg": 86,
+    "high": 89
+   }
+  },
+  {
+   "name": "Yaxel Lendeborg",
+   "team": "Golden State Warriors",
+   "pos": "PF/SF",
+   "age": 24,
+   "ovr": 86,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 55,
+   "progression": {
+    "low": 1,
+    "avg": 2.3,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 89
+   },
+   "peak": {
+    "low": 86,
+    "avg": 89,
+    "high": 93
+   }
+  },
+  {
+   "name": "Ausar Thompson",
+   "team": "Detroit Pistons",
+   "pos": "SF/SG/PF",
+   "age": 23,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 53,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 82,
+    "typical": 86,
+    "best": 88
+   },
+   "peak": {
+    "low": 85,
+    "avg": 88,
+    "high": 92
+   }
+  },
+  {
+   "name": "Brandon Ingram",
+   "team": "Los Angeles Clippers",
+   "pos": "SF",
+   "age": 29,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 28,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 84,
+    "best": 87
+   },
+   "peak": null
+  },
+  {
+   "name": "Chet Holmgren",
+   "team": "Oklahoma City Thunder",
+   "pos": "C/PF",
+   "age": 24,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 85,
+    "best": 88
+   },
+   "peak": {
+    "low": 85,
+    "avg": 87,
+    "high": 91
+   }
+  },
+  {
+   "name": "Damian Lillard",
+   "team": "Portland Trail Blazers",
+   "pos": "PG",
+   "age": 36,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 13,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.6,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 82,
+    "best": 86
+   },
+   "peak": null
+  },
+  {
+   "name": "Darius Acuff Jr.",
+   "team": "Sacramento Kings",
+   "pos": "PG",
+   "age": 19,
+   "ovr": 85,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 74,
+   "progression": {
+    "low": 1,
+    "avg": 3.2,
+    "max": 7
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 83,
+    "typical": 87,
+    "best": 90
+   },
+   "peak": {
+    "low": 89,
+    "avg": 96,
+    "high": 99
+   }
+  },
+  {
+   "name": "Derrick White",
+   "team": "Boston Celtics",
+   "pos": "PG/SG",
+   "age": 32,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 21,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.6,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 83,
+    "best": 87
+   },
+   "peak": null
+  },
+  {
+   "name": "Domantas Sabonis",
+   "team": "Sacramento Kings",
+   "pos": "C",
+   "age": 30,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 84,
+    "best": 87
+   },
+   "peak": null
+  },
+  {
+   "name": "Jimmy Butler",
+   "team": "Golden State Warriors",
+   "pos": "SF/PF/SG",
+   "age": 37,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 45,
+   "improveChance": 11,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.8,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 82,
+    "best": 86
+   },
+   "peak": null
+  },
+  {
+   "name": "Josh Giddey",
+   "team": "Chicago Bulls",
+   "pos": "PG/SG/SF",
+   "age": 24,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 48,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 82,
+    "typical": 85,
+    "best": 88
+   },
+   "peak": {
+    "low": 85,
+    "avg": 87,
+    "high": 91
+   }
+  },
+  {
+   "name": "Julius Randle",
+   "team": "Brooklyn Nets",
+   "pos": "PF",
+   "age": 31,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 84,
+    "best": 87
+   },
+   "peak": null
+  },
+  {
+   "name": "Zion Williamson",
+   "team": "New Orleans Pelicans",
+   "pos": "PF",
+   "age": 26,
+   "ovr": 85,
+   "rookie": false,
+   "dur": 35,
+   "improveChance": 41,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 85,
+    "best": 88
+   },
+   "peak": {
+    "low": 85,
+    "avg": 85,
+    "high": 88
+   }
+  },
+  {
+   "name": "AJ Dybantsa",
+   "team": "Washington Wizards",
+   "pos": "SF",
+   "age": 19,
+   "ovr": 84,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 76,
+   "progression": {
+    "low": 1,
+    "avg": 4.2,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 82,
+    "typical": 87,
+    "best": 91
+   },
+   "peak": {
+    "low": 89,
+    "avg": 96,
+    "high": 99
+   }
+  },
+  {
+   "name": "Ajay Mitchell",
+   "team": "Oklahoma City Thunder",
+   "pos": "PG",
+   "age": 24,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 85,
+    "best": 88
+   },
+   "peak": {
+    "low": 84,
+    "avg": 86,
+    "high": 91
+   }
+  },
+  {
+   "name": "Davion Mitchell",
+   "team": "Miami Heat",
+   "pos": "PG",
+   "age": 28,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 84,
+    "best": 86
+   },
+   "peak": null
+  },
+  {
+   "name": "Donovan Clingan",
+   "team": "Portland Trail Blazers",
+   "pos": "C",
+   "age": 22,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 7
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 85,
+    "best": 90
+   },
+   "peak": {
+    "low": 84,
+    "avg": 88,
+    "high": 94
+   }
+  },
+  {
+   "name": "Ja Morant",
+   "team": "Portland Trail Blazers",
+   "pos": "PG",
+   "age": 27,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 40,
+   "improveChance": 37,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 84,
+    "best": 87
+   },
+   "peak": null
+  },
+  {
+   "name": "Jalen Williams",
+   "team": "Oklahoma City Thunder",
+   "pos": "SF/SG/PG",
+   "age": 25,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 84,
+    "best": 87
+   },
+   "peak": {
+    "low": 84,
+    "avg": 85,
+    "high": 89
+   }
+  },
+  {
+   "name": "Jarrett Allen",
+   "team": "Cleveland Cavaliers",
+   "pos": "C",
+   "age": 28,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 84,
+    "best": 86
+   },
+   "peak": null
+  },
+  {
+   "name": "Michael Porter Jr.",
+   "team": "Brooklyn Nets",
+   "pos": "SF/PF",
+   "age": 28,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 33,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 83,
+    "best": 86
+   },
+   "peak": null
+  },
+  {
+   "name": "Naz Reid",
+   "team": "Charlotte Hornets",
+   "pos": "C/PF",
+   "age": 27,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 84,
+    "best": 87
+   },
+   "peak": null
+  },
+  {
+   "name": "OG Anunoby",
+   "team": "New York Knicks",
+   "pos": "SF/PF/SG",
+   "age": 29,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 83,
+    "best": 86
+   },
+   "peak": null
+  },
+  {
+   "name": "Rudy Gobert",
+   "team": "Minnesota Timberwolves",
+   "pos": "C",
+   "age": 34,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 20,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.1,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 82,
+    "best": 86
+   },
+   "peak": null
+  },
+  {
+   "name": "Trey Murphy III",
+   "team": "New Orleans Pelicans",
+   "pos": "SF",
+   "age": 26,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 43,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 84,
+    "best": 87
+   },
+   "peak": {
+    "low": 84,
+    "avg": 84,
+    "high": 87
+   }
+  },
+  {
+   "name": "Walker Kessler",
+   "team": "Los Angeles Lakers",
+   "pos": "C",
+   "age": 25,
+   "ovr": 84,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 84,
+    "best": 87
+   },
+   "peak": {
+    "low": 84,
+    "avg": 85,
+    "high": 89
+   }
+  },
+  {
+   "name": "Cedric Coward",
+   "team": "Memphis Grizzlies",
+   "pos": "SG/SF",
+   "age": 23,
+   "ovr": 83,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 55,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 84,
+    "best": 88
+   },
+   "peak": {
+    "low": 83,
+    "avg": 86,
+    "high": 92
+   }
+  },
+  {
+   "name": "Darryn Peterson",
+   "team": "Utah Jazz",
+   "pos": "SG/PG",
+   "age": 19,
+   "ovr": 83,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 76,
+   "progression": {
+    "low": 1,
+    "avg": 4.2,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 81,
+    "typical": 86,
+    "best": 90
+   },
+   "peak": {
+    "low": 88,
+    "avg": 95,
+    "high": 99
+   }
+  },
+  {
+   "name": "De'Aaron Fox",
+   "team": "San Antonio Spurs",
+   "pos": "PG",
+   "age": 28,
+   "ovr": 83,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 83,
+    "best": 85
+   },
+   "peak": null
+  },
+  {
+   "name": "Duncan Robinson",
+   "team": "Detroit Pistons",
+   "pos": "SF",
+   "age": 32,
+   "ovr": 83,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 21,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.6,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 85
+   },
+   "peak": null
+  },
+  {
+   "name": "Ivica Zubac",
+   "team": "Indiana Pacers",
+   "pos": "C",
+   "age": 29,
+   "ovr": 83,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 82,
+    "best": 85
+   },
+   "peak": null
+  },
+  {
+   "name": "Kyshawn George",
+   "team": "Washington Wizards",
+   "pos": "SF",
+   "age": 22,
+   "ovr": 83,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 60,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 84,
+    "best": 89
+   },
+   "peak": {
+    "low": 83,
+    "avg": 88,
+    "high": 94
+   }
+  },
+  {
+   "name": "RJ Barrett",
+   "team": "Toronto Raptors",
+   "pos": "SF/SG",
+   "age": 26,
+   "ovr": 83,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 83,
+    "best": 86
+   },
+   "peak": {
+    "low": 83,
+    "avg": 83,
+    "high": 86
+   }
+  },
+  {
+   "name": "VJ Edgecombe",
+   "team": "Philadelphia 76ers",
+   "pos": "SG",
+   "age": 21,
+   "ovr": 83,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.6,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 85,
+    "best": 89
+   },
+   "peak": {
+    "low": 83,
+    "avg": 89,
+    "high": 96
+   }
+  },
+  {
+   "name": "Zach LaVine",
+   "team": "Sacramento Kings",
+   "pos": "SG",
+   "age": 31,
+   "ovr": 83,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 78,
+    "typical": 82,
+    "best": 85
+   },
+   "peak": null
+  },
+  {
+   "name": "Aaron Gordon",
+   "team": "Denver Nuggets",
+   "pos": "PF/SF",
+   "age": 31,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.1,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 84
+   },
+   "peak": null
+  },
+  {
+   "name": "Ace Bailey",
+   "team": "Utah Jazz",
+   "pos": "SF",
+   "age": 20,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.8,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 84,
+    "best": 88
+   },
+   "peak": {
+    "low": 84,
+    "avg": 90,
+    "high": 97
+   }
+  },
+  {
+   "name": "Alex Sarr",
+   "team": "Washington Wizards",
+   "pos": "C",
+   "age": 21,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.6,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 84,
+    "best": 88
+   },
+   "peak": {
+    "low": 82,
+    "avg": 89,
+    "high": 95
+   }
+  },
+  {
+   "name": "Andrew Nembhard",
+   "team": "Indiana Pacers",
+   "pos": "PG/SG",
+   "age": 26,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 43,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 82,
+    "best": 85
+   },
+   "peak": {
+    "low": 82,
+    "avg": 82,
+    "high": 85
+   }
+  },
+  {
+   "name": "Andrew Wiggins",
+   "team": "Miami Heat",
+   "pos": "SF",
+   "age": 31,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 84
+   },
+   "peak": null
+  },
+  {
+   "name": "CJ McCollum",
+   "team": "Atlanta Hawks",
+   "pos": "SG/PG",
+   "age": 35,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 70,
+   "improveChance": 16,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.3,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 79,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Coby White",
+   "team": "Charlotte Hornets",
+   "pos": "PG/SG",
+   "age": 26,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 43,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 82,
+    "best": 85
+   },
+   "peak": {
+    "low": 82,
+    "avg": 82,
+    "high": 85
+   }
+  },
+  {
+   "name": "DeMar DeRozan",
+   "team": "Denver Nuggets",
+   "pos": "SF",
+   "age": 37,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 68,
+   "improveChance": 11,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.6,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 79,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Desmond Bane",
+   "team": "Orlando Magic",
+   "pos": "SG",
+   "age": 28,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 78,
+    "typical": 82,
+    "best": 84
+   },
+   "peak": null
+  },
+  {
+   "name": "Egor Demin",
+   "team": "Brooklyn Nets",
+   "pos": "PG",
+   "age": 20,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 80,
+    "typical": 84,
+    "best": 88
+   },
+   "peak": {
+    "low": 84,
+    "avg": 90,
+    "high": 97
+   }
+  },
+  {
+   "name": "Grayson Allen",
+   "team": "Charlotte Hornets",
+   "pos": "SG",
+   "age": 30,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 84
+   },
+   "peak": null
+  },
+  {
+   "name": "Immanuel Quickley",
+   "team": "Toronto Raptors",
+   "pos": "PG",
+   "age": 27,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 82,
+    "best": 85
+   },
+   "peak": null
+  },
+  {
+   "name": "Jabari Smith Jr.",
+   "team": "Houston Rockets",
+   "pos": "PF",
+   "age": 23,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 83,
+    "best": 86
+   },
+   "peak": {
+    "low": 82,
+    "avg": 85,
+    "high": 91
+   }
+  },
+  {
+   "name": "Jalen Green",
+   "team": "Phoenix Suns",
+   "pos": "SG",
+   "age": 24,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 83,
+    "best": 86
+   },
+   "peak": {
+    "low": 82,
+    "avg": 84,
+    "high": 89
+   }
+  },
+  {
+   "name": "Jrue Holiday",
+   "team": "Portland Trail Blazers",
+   "pos": "PG/SG",
+   "age": 36,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 13,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.6,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 79,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Norman Powell",
+   "team": "Chicago Bulls",
+   "pos": "SG/SF",
+   "age": 33,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 80,
+    "best": 84
+   },
+   "peak": null
+  },
+  {
+   "name": "Onyeka Okongwu",
+   "team": "Atlanta Hawks",
+   "pos": "C/PF",
+   "age": 25,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 82,
+    "best": 85
+   },
+   "peak": {
+    "low": 82,
+    "avg": 83,
+    "high": 87
+   }
+  },
+  {
+   "name": "Payton Pritchard",
+   "team": "Boston Celtics",
+   "pos": "PG",
+   "age": 28,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 78,
+    "typical": 82,
+    "best": 84
+   },
+   "peak": null
+  },
+  {
+   "name": "Shaedon Sharpe",
+   "team": "Portland Trail Blazers",
+   "pos": "SG",
+   "age": 23,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 83,
+    "best": 87
+   },
+   "peak": {
+    "low": 82,
+    "avg": 85,
+    "high": 90
+   }
+  },
+  {
+   "name": "Zach Edey",
+   "team": "Memphis Grizzlies",
+   "pos": "C",
+   "age": 24,
+   "ovr": 82,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 49,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 78,
+    "typical": 82,
+    "best": 86
+   },
+   "peak": {
+    "low": 82,
+    "avg": 84,
+    "high": 89
+   }
+  },
+  {
+   "name": "Anthony Black",
+   "team": "Orlando Magic",
+   "pos": "PG",
+   "age": 22,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 78,
+    "typical": 82,
+    "best": 87
+   },
+   "peak": {
+    "low": 81,
+    "avg": 86,
+    "high": 92
+   }
+  },
+  {
+   "name": "Caleb Wilson",
+   "team": "Chicago Bulls",
+   "pos": "PF/SF",
+   "age": 20,
+   "ovr": 81,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 75,
+   "progression": {
+    "low": 1,
+    "avg": 4.1,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 79,
+    "typical": 84,
+    "best": 88
+   },
+   "peak": {
+    "low": 84,
+    "avg": 92,
+    "high": 99
+   }
+  },
+  {
+   "name": "De'Andre Hunter",
+   "team": "Sacramento Kings",
+   "pos": "SF/PF",
+   "age": 28,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Fred VanVleet",
+   "team": "Houston Rockets",
+   "pos": "PG",
+   "age": 32,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 21,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.8,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 79,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Herbert Jones",
+   "team": "New Orleans Pelicans",
+   "pos": "SF/SG/PF",
+   "age": 28,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 33,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Isaiah Hartenstein",
+   "team": "Oklahoma City Thunder",
+   "pos": "C",
+   "age": 28,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Josh Hart",
+   "team": "New York Knicks",
+   "pos": "SG/SF/PF",
+   "age": 31,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Klay Thompson",
+   "team": "Miami Heat",
+   "pos": "SG",
+   "age": 36,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 68,
+   "improveChance": 14,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.5,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 78,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "Kristaps Porziņģis",
+   "team": "Golden State Warriors",
+   "pos": "C/PF",
+   "age": 31,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 40,
+   "improveChance": 24,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.2,
+    "max": -8
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Mikal Bridges",
+   "team": "New York Knicks",
+   "pos": "SF/SG/PF",
+   "age": 30,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Miles Bridges",
+   "team": "Phoenix Suns",
+   "pos": "PF/SF",
+   "age": 28,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Myles Turner",
+   "team": "Milwaukee Bucks",
+   "pos": "C",
+   "age": 30,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Toumani Camara",
+   "team": "Portland Trail Blazers",
+   "pos": "SF/PF",
+   "age": 26,
+   "ovr": 81,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 78,
+    "typical": 81,
+    "best": 84
+   },
+   "peak": {
+    "low": 81,
+    "avg": 81,
+    "high": 84
+   }
+  },
+  {
+   "name": "Aaron Wiggins",
+   "team": "Atlanta Hawks",
+   "pos": "SG/SF",
+   "age": 27,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": null
+  },
+  {
+   "name": "Ayo Dosunmu",
+   "team": "Minnesota Timberwolves",
+   "pos": "SG/PG",
+   "age": 26,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": {
+    "low": 80,
+    "avg": 80,
+    "high": 83
+   }
+  },
+  {
+   "name": "Bennedict Mathurin",
+   "team": "New Orleans Pelicans",
+   "pos": "SG/SF",
+   "age": 24,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 84
+   },
+   "peak": {
+    "low": 80,
+    "avg": 82,
+    "high": 87
+   }
+  },
+  {
+   "name": "Cameron Johnson",
+   "team": "Denver Nuggets",
+   "pos": "SF/PF",
+   "age": 30,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "Christian Braun",
+   "team": "Denver Nuggets",
+   "pos": "SG/SF",
+   "age": 25,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": {
+    "low": 80,
+    "avg": 81,
+    "high": 85
+   }
+  },
+  {
+   "name": "Dejounte Murray",
+   "team": "New Orleans Pelicans",
+   "pos": "PG",
+   "age": 30,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 45,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.1,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "Dereck Lively II",
+   "team": "Dallas Mavericks",
+   "pos": "C",
+   "age": 22,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 59,
+   "progression": {
+    "low": 1,
+    "avg": 3.4,
+    "max": 7
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 85
+   },
+   "peak": {
+    "low": 80,
+    "avg": 85,
+    "high": 91
+   }
+  },
+  {
+   "name": "Jakob Pöltl",
+   "team": "Toronto Raptors",
+   "pos": "C",
+   "age": 30,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "Jalen Suggs",
+   "team": "Orlando Magic",
+   "pos": "PG",
+   "age": 25,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 45,
+   "improveChance": 44,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": {
+    "low": 80,
+    "avg": 81,
+    "high": 85
+   }
+  },
+  {
+   "name": "Jonathan Kuminga",
+   "team": "Minnesota Timberwolves",
+   "pos": "PF/SF",
+   "age": 24,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 84
+   },
+   "peak": {
+    "low": 80,
+    "avg": 82,
+    "high": 87
+   }
+  },
+  {
+   "name": "Keegan Murray",
+   "team": "Sacramento Kings",
+   "pos": "PF/SF",
+   "age": 26,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": {
+    "low": 80,
+    "avg": 80,
+    "high": 83
+   }
+  },
+  {
+   "name": "Kel'el Ware",
+   "team": "Milwaukee Bucks",
+   "pos": "C",
+   "age": 22,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 86
+   },
+   "peak": {
+    "low": 80,
+    "avg": 85,
+    "high": 91
+   }
+  },
+  {
+   "name": "Matas Buzelis",
+   "team": "Chicago Bulls",
+   "pos": "SF/PF",
+   "age": 22,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 86
+   },
+   "peak": {
+    "low": 80,
+    "avg": 85,
+    "high": 91
+   }
+  },
+  {
+   "name": "Mitchell Robinson",
+   "team": "Boston Celtics",
+   "pos": "C",
+   "age": 28,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 35,
+   "improveChance": 32,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "P.J. Washington",
+   "team": "Dallas Mavericks",
+   "pos": "PF",
+   "age": 28,
+   "ovr": 80,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "Aaron Nesmith",
+   "team": "Indiana Pacers",
+   "pos": "SF",
+   "age": 26,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 41,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": {
+    "low": 79,
+    "avg": 79,
+    "high": 82
+   }
+  },
+  {
+   "name": "Bilal Coulibaly",
+   "team": "Washington Wizards",
+   "pos": "SF/SG",
+   "age": 22,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 85
+   },
+   "peak": {
+    "low": 79,
+    "avg": 84,
+    "high": 90
+   }
+  },
+  {
+   "name": "Brandin Podziemski",
+   "team": "Golden State Warriors",
+   "pos": "SG",
+   "age": 23,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 83
+   },
+   "peak": {
+    "low": 79,
+    "avg": 82,
+    "high": 88
+   }
+  },
+  {
+   "name": "Brook Lopez",
+   "team": "Los Angeles Clippers",
+   "pos": "C",
+   "age": 38,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 68,
+   "improveChance": 10,
+   "progression": {
+    "low": 1,
+    "avg": 1.8,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.7,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Cason Wallace",
+   "team": "Oklahoma City Thunder",
+   "pos": "PG/SG",
+   "age": 22,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 7
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 85
+   },
+   "peak": {
+    "low": 79,
+    "avg": 84,
+    "high": 90
+   }
+  },
+  {
+   "name": "Collin Murray-Boyles",
+   "team": "Toronto Raptors",
+   "pos": "PF",
+   "age": 21,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 64,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 81,
+    "best": 85
+   },
+   "peak": {
+    "low": 80,
+    "avg": 86,
+    "high": 93
+   }
+  },
+  {
+   "name": "DeAndre Ayton",
+   "team": "Washington Wizards",
+   "pos": "C",
+   "age": 28,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 79,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "Derik Queen",
+   "team": "New Orleans Pelicans",
+   "pos": "C/PF",
+   "age": 21,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 81,
+    "best": 85
+   },
+   "peak": {
+    "low": 79,
+    "avg": 86,
+    "high": 93
+   }
+  },
+  {
+   "name": "Devin Vassell",
+   "team": "San Antonio Spurs",
+   "pos": "SG",
+   "age": 26,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": {
+    "low": 79,
+    "avg": 79,
+    "high": 82
+   }
+  },
+  {
+   "name": "Draymond Green",
+   "team": "Golden State Warriors",
+   "pos": "PF/C",
+   "age": 36,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 68,
+   "improveChance": 13,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.5,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 76,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Jaime Jaquez Jr.",
+   "team": "Milwaukee Bucks",
+   "pos": "SF/SG",
+   "age": 25,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": {
+    "low": 79,
+    "avg": 80,
+    "high": 84
+   }
+  },
+  {
+   "name": "Jalen Smith",
+   "team": "Chicago Bulls",
+   "pos": "C/PF",
+   "age": 26,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": {
+    "low": 79,
+    "avg": 79,
+    "high": 82
+   }
+  },
+  {
+   "name": "Jared McCain",
+   "team": "Oklahoma City Thunder",
+   "pos": "PG/SG",
+   "age": 22,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 60,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 85
+   },
+   "peak": {
+    "low": 79,
+    "avg": 84,
+    "high": 90
+   }
+  },
+  {
+   "name": "Jaylen Wells",
+   "team": "Memphis Grizzlies",
+   "pos": "SF/SG",
+   "age": 23,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 84
+   },
+   "peak": {
+    "low": 79,
+    "avg": 82,
+    "high": 88
+   }
+  },
+  {
+   "name": "Jerami Grant",
+   "team": "Memphis Grizzlies",
+   "pos": "PF",
+   "age": 32,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.6,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "John Collins",
+   "team": "Detroit Pistons",
+   "pos": "PF",
+   "age": 29,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 30,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "Luguentz Dort",
+   "team": "Atlanta Hawks",
+   "pos": "SG/SF",
+   "age": 27,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "Mark Williams",
+   "team": "Phoenix Suns",
+   "pos": "C",
+   "age": 24,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 35,
+   "improveChance": 48,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 79,
+    "best": 83
+   },
+   "peak": {
+    "low": 79,
+    "avg": 81,
+    "high": 85
+   }
+  },
+  {
+   "name": "Nic Claxton",
+   "team": "Chicago Bulls",
+   "pos": "C",
+   "age": 27,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "Nikola Vučević",
+   "team": "Orlando Magic",
+   "pos": "C",
+   "age": 36,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 68,
+   "improveChance": 13,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.5,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 76,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Peyton Watson",
+   "team": "Cleveland Cavaliers",
+   "pos": "SF",
+   "age": 24,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 83
+   },
+   "peak": {
+    "low": 79,
+    "avg": 81,
+    "high": 86
+   }
+  },
+  {
+   "name": "Quentin Grimes",
+   "team": "Los Angeles Lakers",
+   "pos": "SG",
+   "age": 26,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": {
+    "low": 79,
+    "avg": 79,
+    "high": 82
+   }
+  },
+  {
+   "name": "Tari Eason",
+   "team": "Houston Rockets",
+   "pos": "PF/SF",
+   "age": 25,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": {
+    "low": 79,
+    "avg": 80,
+    "high": 84
+   }
+  },
+  {
+   "name": "Wendell Carter Jr.",
+   "team": "Orlando Magic",
+   "pos": "C",
+   "age": 27,
+   "ovr": 79,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 38,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 79,
+    "best": 82
+   },
+   "peak": null
+  },
+  {
+   "name": "Alex Caruso",
+   "team": "Oklahoma City Thunder",
+   "pos": "PG/SG",
+   "age": 32,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.6,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Anfernee Simons",
+   "team": "Philadelphia 76ers",
+   "pos": "SG/PG",
+   "age": 27,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "Brayden Burries",
+   "team": "Milwaukee Bucks",
+   "pos": "SG",
+   "age": 21,
+   "ovr": 78,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 71,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 85
+   },
+   "peak": {
+    "low": 80,
+    "avg": 87,
+    "high": 94
+   }
+  },
+  {
+   "name": "Cam Spencer",
+   "team": "Memphis Grizzlies",
+   "pos": "SG",
+   "age": 26,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": {
+    "low": 78,
+    "avg": 78,
+    "high": 81
+   }
+  },
+  {
+   "name": "Collin Sexton",
+   "team": "Los Angeles Lakers",
+   "pos": "PG/SG",
+   "age": 27,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "Corey Kispert",
+   "team": "Atlanta Hawks",
+   "pos": "SF/SG",
+   "age": 27,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "Daniel Gafford",
+   "team": "Dallas Mavericks",
+   "pos": "C",
+   "age": 28,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 78,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Dennis Schröder",
+   "team": "Charlotte Hornets",
+   "pos": "PG",
+   "age": 33,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 76,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Derrick Jones Jr.",
+   "team": "Los Angeles Clippers",
+   "pos": "SF",
+   "age": 29,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Dillon Brooks",
+   "team": "Phoenix Suns",
+   "pos": "SF",
+   "age": 30,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Jeremiah Fears",
+   "team": "New Orleans Pelicans",
+   "pos": "PG",
+   "age": 20,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 84
+   },
+   "peak": {
+    "low": 80,
+    "avg": 87,
+    "high": 94
+   }
+  },
+  {
+   "name": "Jordan Poole",
+   "team": "New Orleans Pelicans",
+   "pos": "SG",
+   "age": 27,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "Keldon Johnson",
+   "team": "San Antonio Spurs",
+   "pos": "SF",
+   "age": 26,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 43,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": {
+    "low": 78,
+    "avg": 78,
+    "high": 81
+   }
+  },
+  {
+   "name": "Keon Ellis",
+   "team": "Brooklyn Nets",
+   "pos": "SG",
+   "age": 26,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 43,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": {
+    "low": 78,
+    "avg": 78,
+    "high": 81
+   }
+  },
+  {
+   "name": "Kingston Flemings",
+   "team": "Atlanta Hawks",
+   "pos": "PG",
+   "age": 19,
+   "ovr": 78,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 76,
+   "progression": {
+    "low": 1,
+    "avg": 4.2,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 77,
+    "typical": 81,
+    "best": 85
+   },
+   "peak": {
+    "low": 84,
+    "avg": 91,
+    "high": 99
+   }
+  },
+  {
+   "name": "Malik Monk",
+   "team": "Sacramento Kings",
+   "pos": "SG",
+   "age": 28,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 78,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Mikel Brown Jr.",
+   "team": "Brooklyn Nets",
+   "pos": "PG",
+   "age": 20,
+   "ovr": 78,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 74,
+   "progression": {
+    "low": 1,
+    "avg": 4.1,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 81,
+    "best": 85
+   },
+   "peak": {
+    "low": 82,
+    "avg": 89,
+    "high": 97
+   }
+  },
+  {
+   "name": "Nolan Traoré",
+   "team": "Brooklyn Nets",
+   "pos": "PG",
+   "age": 20,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 76,
+    "typical": 80,
+    "best": 84
+   },
+   "peak": {
+    "low": 80,
+    "avg": 87,
+    "high": 94
+   }
+  },
+  {
+   "name": "Paul Reed",
+   "team": "Detroit Pistons",
+   "pos": "C",
+   "age": 27,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 38,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "Royce O'Neale",
+   "team": "Charlotte Hornets",
+   "pos": "SF/PF",
+   "age": 33,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 76,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Rui Hachimura",
+   "team": "Los Angeles Clippers",
+   "pos": "PF/SF",
+   "age": 28,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 78,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Saddiq Bey",
+   "team": "New Orleans Pelicans",
+   "pos": "SF/PF",
+   "age": 27,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 38,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": null
+  },
+  {
+   "name": "Sam Hauser",
+   "team": "Boston Celtics",
+   "pos": "SF",
+   "age": 28,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 78,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Tobias Harris",
+   "team": "San Antonio Spurs",
+   "pos": "PF",
+   "age": 34,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 19,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.1,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 76,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Zaccharie Risacher",
+   "team": "Dallas Mavericks",
+   "pos": "SF",
+   "age": 21,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 80,
+    "best": 84
+   },
+   "peak": {
+    "low": 78,
+    "avg": 85,
+    "high": 92
+   }
+  },
+  {
+   "name": "Ziaire Williams",
+   "team": "Los Angeles Lakers",
+   "pos": "SF",
+   "age": 25,
+   "ovr": 78,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 81
+   },
+   "peak": {
+    "low": 78,
+    "avg": 79,
+    "high": 83
+   }
+  },
+  {
+   "name": "Aday Mara",
+   "team": "Oklahoma City Thunder",
+   "pos": "C",
+   "age": 21,
+   "ovr": 77,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 79,
+    "best": 83
+   },
+   "peak": {
+    "low": 79,
+    "avg": 86,
+    "high": 93
+   }
+  },
+  {
+   "name": "Bennett Stirtz",
+   "team": "Oklahoma City Thunder",
+   "pos": "PG",
+   "age": 23,
+   "ovr": 77,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 63,
+   "progression": {
+    "low": 1,
+    "avg": 3.1,
+    "max": 7
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 78,
+    "best": 82
+   },
+   "peak": {
+    "low": 77,
+    "avg": 82,
+    "high": 87
+   }
+  },
+  {
+   "name": "Bobby Portis",
+   "team": "Miami Heat",
+   "pos": "PF/C",
+   "age": 31,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Daniss Jenkins",
+   "team": "Detroit Pistons",
+   "pos": "PG",
+   "age": 25,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": {
+    "low": 77,
+    "avg": 78,
+    "high": 82
+   }
+  },
+  {
+   "name": "Dean Wade",
+   "team": "Philadelphia 76ers",
+   "pos": "PF",
+   "age": 29,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 28,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Isaiah Stewart",
+   "team": "Memphis Grizzlies",
+   "pos": "C/PF",
+   "age": 25,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": {
+    "low": 77,
+    "avg": 78,
+    "high": 82
+   }
+  },
+  {
+   "name": "Jusuf Nurkić",
+   "team": "Utah Jazz",
+   "pos": "C",
+   "age": 32,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.7,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Keaton Wagler",
+   "team": "Los Angeles Clippers",
+   "pos": "SG/PG",
+   "age": 20,
+   "ovr": 77,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 74,
+   "progression": {
+    "low": 1,
+    "avg": 4.1,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 75,
+    "typical": 80,
+    "best": 84
+   },
+   "peak": {
+    "low": 81,
+    "avg": 89,
+    "high": 96
+   }
+  },
+  {
+   "name": "Kelly Oubre Jr.",
+   "team": "Indiana Pacers",
+   "pos": "SF",
+   "age": 30,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Landry Shamet",
+   "team": "New York Knicks",
+   "pos": "SG",
+   "age": 29,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 30,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Mario Hezonja",
+   "team": "Cleveland Cavaliers",
+   "pos": "SF/PF",
+   "age": 30,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Matisse Thybulle",
+   "team": "Los Angeles Lakers",
+   "pos": "SG",
+   "age": 29,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 28,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Naji Marshall",
+   "team": "Dallas Mavericks",
+   "pos": "SF",
+   "age": 28,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Sam Merrill",
+   "team": "Cleveland Cavaliers",
+   "pos": "SG",
+   "age": 30,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Sandro Mamukelashvili",
+   "team": "Los Angeles Lakers",
+   "pos": "PF/C",
+   "age": 27,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 38,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": null
+  },
+  {
+   "name": "Santi Aldama",
+   "team": "Dallas Mavericks",
+   "pos": "PF",
+   "age": 25,
+   "ovr": 77,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": {
+    "low": 77,
+    "avg": 78,
+    "high": 82
+   }
+  },
+  {
+   "name": "Andre Drummond",
+   "team": "New York Knicks",
+   "pos": "C",
+   "age": 33,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 74,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Collin Gillespie",
+   "team": "Phoenix Suns",
+   "pos": "PG",
+   "age": 27,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 38,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": null
+  },
+  {
+   "name": "Dominick Barlow",
+   "team": "Philadelphia 76ers",
+   "pos": "PF",
+   "age": 23,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": {
+    "low": 76,
+    "avg": 79,
+    "high": 85
+   }
+  },
+  {
+   "name": "Ja'Kobe Walter",
+   "team": "Toronto Raptors",
+   "pos": "SG",
+   "age": 22,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 7
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 82
+   },
+   "peak": {
+    "low": 76,
+    "avg": 81,
+    "high": 88
+   }
+  },
+  {
+   "name": "Jarace Walker",
+   "team": "Indiana Pacers",
+   "pos": "PF",
+   "age": 23,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": {
+    "low": 76,
+    "avg": 79,
+    "high": 85
+   }
+  },
+  {
+   "name": "Jaylon Tyson",
+   "team": "Cleveland Cavaliers",
+   "pos": "SF",
+   "age": 23,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 76,
+    "avg": 79,
+    "high": 85
+   }
+  },
+  {
+   "name": "Jonathan Isaac",
+   "team": "Orlando Magic",
+   "pos": "PF",
+   "age": 28,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 45,
+   "improveChance": 33,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Kevin Huerter",
+   "team": "Detroit Pistons",
+   "pos": "SG",
+   "age": 28,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Khris Middleton",
+   "team": "Washington Wizards",
+   "pos": "SF",
+   "age": 35,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 15,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.4,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Marcus Smart",
+   "team": "Houston Rockets",
+   "pos": "PG/SG",
+   "age": 32,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 21,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.8,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 74,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Max Christie",
+   "team": "Dallas Mavericks",
+   "pos": "SG",
+   "age": 23,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": {
+    "low": 76,
+    "avg": 79,
+    "high": 85
+   }
+  },
+  {
+   "name": "Max Strus",
+   "team": "Los Angeles Clippers",
+   "pos": "SF/SG",
+   "age": 30,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Meleek Thomas",
+   "team": "Cleveland Cavaliers",
+   "pos": "SG",
+   "age": 20,
+   "ovr": 76,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 75,
+   "progression": {
+    "low": 1,
+    "avg": 4.1,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 79,
+    "best": 83
+   },
+   "peak": {
+    "low": 79,
+    "avg": 87,
+    "high": 95
+   }
+  },
+  {
+   "name": "Miles McBride",
+   "team": "New York Knicks",
+   "pos": "PG",
+   "age": 26,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 76,
+    "best": 79
+   },
+   "peak": {
+    "low": 76,
+    "avg": 76,
+    "high": 79
+   }
+  },
+  {
+   "name": "Nikola Jović",
+   "team": "Miami Heat",
+   "pos": "PF/SF",
+   "age": 23,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 76,
+    "avg": 79,
+    "high": 85
+   }
+  },
+  {
+   "name": "Obi Toppin",
+   "team": "Indiana Pacers",
+   "pos": "PF",
+   "age": 28,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Reed Sheppard",
+   "team": "Houston Rockets",
+   "pos": "PG/SG",
+   "age": 22,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 82
+   },
+   "peak": {
+    "low": 76,
+    "avg": 81,
+    "high": 88
+   }
+  },
+  {
+   "name": "Ryan Rollins",
+   "team": "Milwaukee Bucks",
+   "pos": "PG",
+   "age": 24,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 80
+   },
+   "peak": {
+    "low": 76,
+    "avg": 78,
+    "high": 83
+   }
+  },
+  {
+   "name": "Scoot Henderson",
+   "team": "Portland Trail Blazers",
+   "pos": "PG",
+   "age": 22,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 59,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 82
+   },
+   "peak": {
+    "low": 76,
+    "avg": 81,
+    "high": 87
+   }
+  },
+  {
+   "name": "Tre Johnson",
+   "team": "Washington Wizards",
+   "pos": "SG",
+   "age": 20,
+   "ovr": 76,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.8,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 74,
+    "typical": 78,
+    "best": 82
+   },
+   "peak": {
+    "low": 78,
+    "avg": 85,
+    "high": 93
+   }
+  },
+  {
+   "name": "Al Horford",
+   "team": "Golden State Warriors",
+   "pos": "C/PF",
+   "age": 40,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 60,
+   "improveChance": 8,
+   "progression": {
+    "low": 1,
+    "avg": 1.7,
+    "max": 4
+   },
+   "regression": {
+    "low": -2,
+    "avg": -4.9,
+    "max": -11
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 71,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Allen Graves",
+   "team": "Toronto Raptors",
+   "pos": "PF",
+   "age": 21,
+   "ovr": 75,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 77,
+    "avg": 84,
+    "high": 92
+   }
+  },
+  {
+   "name": "Bogdan Bogdanović",
+   "team": "Houston Rockets",
+   "pos": "SG",
+   "age": 34,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 19,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.1,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Bradley Beal",
+   "team": "Los Angeles Clippers",
+   "pos": "SG",
+   "age": 33,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.1,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Brandon Williams",
+   "team": "Golden State Warriors",
+   "pos": "PG",
+   "age": 27,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 40,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Bub Carrington",
+   "team": "Washington Wizards",
+   "pos": "PG",
+   "age": 21,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 76,
+    "avg": 82,
+    "high": 90
+   }
+  },
+  {
+   "name": "Buddy Hield",
+   "team": "Chicago Bulls",
+   "pos": "SG",
+   "age": 33,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 23,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.9,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Carter Bryant",
+   "team": "San Antonio Spurs",
+   "pos": "SF",
+   "age": 20,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.8,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 77,
+    "avg": 84,
+    "high": 92
+   }
+  },
+  {
+   "name": "Drake Powell",
+   "team": "Brooklyn Nets",
+   "pos": "SG/SF",
+   "age": 21,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 76,
+    "avg": 82,
+    "high": 89
+   }
+  },
+  {
+   "name": "Goga Bitadze",
+   "team": "Orlando Magic",
+   "pos": "C",
+   "age": 27,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Gradey Dick",
+   "team": "Los Angeles Clippers",
+   "pos": "SG",
+   "age": 22,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 81
+   },
+   "peak": {
+    "low": 75,
+    "avg": 80,
+    "high": 87
+   }
+  },
+  {
+   "name": "Harrison Barnes",
+   "team": "San Antonio Spurs",
+   "pos": "PF/SF",
+   "age": 34,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 19,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Hugo González",
+   "team": "Boston Celtics",
+   "pos": "SF",
+   "age": 20,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 76,
+    "avg": 84,
+    "high": 92
+   }
+  },
+  {
+   "name": "Isaiah Collier",
+   "team": "Utah Jazz",
+   "pos": "PG",
+   "age": 22,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 81
+   },
+   "peak": {
+    "low": 75,
+    "avg": 80,
+    "high": 87
+   }
+  },
+  {
+   "name": "Joan Beringer",
+   "team": "Minnesota Timberwolves",
+   "pos": "C",
+   "age": 20,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.8,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 77,
+    "avg": 84,
+    "high": 92
+   }
+  },
+  {
+   "name": "Julian Champagnie",
+   "team": "San Antonio Spurs",
+   "pos": "SF",
+   "age": 25,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 75,
+    "avg": 76,
+    "high": 80
+   }
+  },
+  {
+   "name": "Kentavious Caldwell-Pope",
+   "team": "Philadelphia 76ers",
+   "pos": "SG",
+   "age": 33,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 23,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.9,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Kris Dunn",
+   "team": "Los Angeles Clippers",
+   "pos": "PG/SG",
+   "age": 32,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 21,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.6,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Kyle Kuzma",
+   "team": "Milwaukee Bucks",
+   "pos": "PF/SF",
+   "age": 31,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Luke Kennard",
+   "team": "Phoenix Suns",
+   "pos": "SG",
+   "age": 30,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Neemias Queta",
+   "team": "Boston Celtics",
+   "pos": "C",
+   "age": 27,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 40,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": null
+  },
+  {
+   "name": "Pelle Larsson",
+   "team": "Miami Heat",
+   "pos": "SG",
+   "age": 25,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 75,
+    "avg": 76,
+    "high": 80
+   }
+  },
+  {
+   "name": "Robert Williams III",
+   "team": "Portland Trail Blazers",
+   "pos": "C",
+   "age": 29,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 30,
+   "improveChance": 28,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Sidy Cissoko",
+   "team": "Portland Trail Blazers",
+   "pos": "SF",
+   "age": 22,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 81
+   },
+   "peak": {
+    "low": 75,
+    "avg": 80,
+    "high": 87
+   }
+  },
+  {
+   "name": "Simone Fontecchio",
+   "team": "Miami Heat",
+   "pos": "SF",
+   "age": 30,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Svi Mykhailiuk",
+   "team": "Utah Jazz",
+   "pos": "SG",
+   "age": 29,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "T.J. McConnell",
+   "team": "Indiana Pacers",
+   "pos": "PG",
+   "age": 34,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 19,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Terrence Shannon Jr.",
+   "team": "Minnesota Timberwolves",
+   "pos": "SG",
+   "age": 26,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 75,
+    "avg": 75,
+    "high": 78
+   }
+  },
+  {
+   "name": "Trey Lyles",
+   "team": "Minnesota Timberwolves",
+   "pos": "PF/C",
+   "age": 31,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Tyrese Proctor",
+   "team": "Cleveland Cavaliers",
+   "pos": "PG",
+   "age": 22,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 81
+   },
+   "peak": {
+    "low": 75,
+    "avg": 80,
+    "high": 87
+   }
+  },
+  {
+   "name": "Yves Missi",
+   "team": "New Orleans Pelicans",
+   "pos": "C",
+   "age": 22,
+   "ovr": 75,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 81
+   },
+   "peak": {
+    "low": 75,
+    "avg": 80,
+    "high": 87
+   }
+  },
+  {
+   "name": "AJ Green",
+   "team": "Milwaukee Bucks",
+   "pos": "SG",
+   "age": 27,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Brice Sensabaugh",
+   "team": "Utah Jazz",
+   "pos": "SF",
+   "age": 23,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 55,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 74,
+    "avg": 77,
+    "high": 83
+   }
+  },
+  {
+   "name": "Caris LeVert",
+   "team": "Milwaukee Bucks",
+   "pos": "SG",
+   "age": 32,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 21,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.6,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": null
+  },
+  {
+   "name": "De'Anthony Melton",
+   "team": "Golden State Warriors",
+   "pos": "SG/PG",
+   "age": 28,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 50,
+   "improveChance": 33,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": null
+  },
+  {
+   "name": "Dorian Finney-Smith",
+   "team": "Atlanta Hawks",
+   "pos": "PF/SF",
+   "age": 33,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.9,
+    "max": -9
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": null
+  },
+  {
+   "name": "Gary Trent Jr.",
+   "team": "Milwaukee Bucks",
+   "pos": "SG",
+   "age": 27,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Isaiah Joe",
+   "team": "Detroit Pistons",
+   "pos": "SG",
+   "age": 27,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": null
+  },
+  {
+   "name": "Jake LaRavia",
+   "team": "Los Angeles Lakers",
+   "pos": "SF",
+   "age": 24,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 74,
+    "avg": 76,
+    "high": 81
+   }
+  },
+  {
+   "name": "Jamal Shead",
+   "team": "Toronto Raptors",
+   "pos": "PG",
+   "age": 24,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 74,
+    "avg": 76,
+    "high": 81
+   }
+  },
+  {
+   "name": "Jaylin Williams",
+   "team": "Oklahoma City Thunder",
+   "pos": "PF/C",
+   "age": 24,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 74,
+    "avg": 76,
+    "high": 81
+   }
+  },
+  {
+   "name": "Jordan Clarkson",
+   "team": "New York Knicks",
+   "pos": "SG",
+   "age": 34,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 19,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": null
+  },
+  {
+   "name": "Kasparas Jakučionis",
+   "team": "Milwaukee Bucks",
+   "pos": "PG",
+   "age": 20,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 76,
+    "best": 80
+   },
+   "peak": {
+    "low": 76,
+    "avg": 83,
+    "high": 91
+   }
+  },
+  {
+   "name": "Koa Peat",
+   "team": "Phoenix Suns",
+   "pos": "PF",
+   "age": 19,
+   "ovr": 74,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 76,
+   "progression": {
+    "low": 1,
+    "avg": 4.2,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 73,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 80,
+    "avg": 88,
+    "high": 97
+   }
+  },
+  {
+   "name": "Luke Kornet",
+   "team": "San Antonio Spurs",
+   "pos": "C",
+   "age": 31,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": null
+  },
+  {
+   "name": "Morez Johnson Jr.",
+   "team": "Dallas Mavericks",
+   "pos": "PF/C",
+   "age": 20,
+   "ovr": 74,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 74,
+   "progression": {
+    "low": 1,
+    "avg": 4.1,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 78,
+    "avg": 86,
+    "high": 94
+   }
+  },
+  {
+   "name": "Moussa Diabaté",
+   "team": "Charlotte Hornets",
+   "pos": "C",
+   "age": 24,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 74,
+    "avg": 76,
+    "high": 81
+   }
+  },
+  {
+   "name": "Nate Ament",
+   "team": "Milwaukee Bucks",
+   "pos": "SF/PF",
+   "age": 19,
+   "ovr": 74,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 76,
+   "progression": {
+    "low": 1,
+    "avg": 4.2,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 72,
+    "typical": 77,
+    "best": 81
+   },
+   "peak": {
+    "low": 80,
+    "avg": 88,
+    "high": 97
+   }
+  },
+  {
+   "name": "Noah Clowney",
+   "team": "Brooklyn Nets",
+   "pos": "PF",
+   "age": 22,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 80
+   },
+   "peak": {
+    "low": 74,
+    "avg": 79,
+    "high": 86
+   }
+  },
+  {
+   "name": "Patrick Williams",
+   "team": "Chicago Bulls",
+   "pos": "PF",
+   "age": 25,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": {
+    "low": 74,
+    "avg": 75,
+    "high": 79
+   }
+  },
+  {
+   "name": "Ron Holland II",
+   "team": "Detroit Pistons",
+   "pos": "SF",
+   "age": 21,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 66,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 76,
+    "best": 80
+   },
+   "peak": {
+    "low": 74,
+    "avg": 81,
+    "high": 88
+   }
+  },
+  {
+   "name": "Ryan Dunn",
+   "team": "Phoenix Suns",
+   "pos": "SF",
+   "age": 23,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 78
+   },
+   "peak": {
+    "low": 74,
+    "avg": 77,
+    "high": 83
+   }
+  },
+  {
+   "name": "Steven Adams",
+   "team": "Houston Rockets",
+   "pos": "C",
+   "age": 33,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.1,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": null
+  },
+  {
+   "name": "Terance Mann",
+   "team": "Brooklyn Nets",
+   "pos": "SG/SF",
+   "age": 30,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": null
+  },
+  {
+   "name": "Tim Hardaway Jr.",
+   "team": "Miami Heat",
+   "pos": "SG",
+   "age": 34,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 20,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4,
+    "max": -10
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": null
+  },
+  {
+   "name": "Tre Jones",
+   "team": "Chicago Bulls",
+   "pos": "PG",
+   "age": 26,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": {
+    "low": 74,
+    "avg": 74,
+    "high": 77
+   }
+  },
+  {
+   "name": "Tristan da Silva",
+   "team": "Orlando Magic",
+   "pos": "SF",
+   "age": 25,
+   "ovr": 74,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": {
+    "low": 74,
+    "avg": 75,
+    "high": 79
+   }
+  },
+  {
+   "name": "Caleb Martin",
+   "team": "Dallas Mavericks",
+   "pos": "SF",
+   "age": 30,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Charles Bassey",
+   "team": "Golden State Warriors",
+   "pos": "C",
+   "age": 26,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": {
+    "low": 73,
+    "avg": 73,
+    "high": 76
+   }
+  },
+  {
+   "name": "Day'Ron Sharpe",
+   "team": "Brooklyn Nets",
+   "pos": "C",
+   "age": 25,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": {
+    "low": 73,
+    "avg": 74,
+    "high": 77
+   }
+  },
+  {
+   "name": "Isaiah Jackson",
+   "team": "Los Angeles Clippers",
+   "pos": "C",
+   "age": 24,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 49,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": {
+    "low": 73,
+    "avg": 75,
+    "high": 79
+   }
+  },
+  {
+   "name": "Jaxson Hayes",
+   "team": "Utah Jazz",
+   "pos": "C",
+   "age": 26,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": {
+    "low": 73,
+    "avg": 73,
+    "high": 76
+   }
+  },
+  {
+   "name": "Jock Landale",
+   "team": "Atlanta Hawks",
+   "pos": "C",
+   "age": 31,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Jose Alvarado",
+   "team": "New York Knicks",
+   "pos": "PG",
+   "age": 28,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 73,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Kyle Filipowski",
+   "team": "Utah Jazz",
+   "pos": "C/PF",
+   "age": 23,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": {
+    "low": 73,
+    "avg": 76,
+    "high": 82
+   }
+  },
+  {
+   "name": "Nique Clifford",
+   "team": "Oklahoma City Thunder",
+   "pos": "SG",
+   "age": 24,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 74,
+    "best": 77
+   },
+   "peak": {
+    "low": 73,
+    "avg": 75,
+    "high": 80
+   }
+  },
+  {
+   "name": "Scotty Pippen Jr.",
+   "team": "Memphis Grizzlies",
+   "pos": "PG",
+   "age": 26,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": {
+    "low": 73,
+    "avg": 73,
+    "high": 76
+   }
+  },
+  {
+   "name": "Tre Mann",
+   "team": "Washington Wizards",
+   "pos": "PG",
+   "age": 25,
+   "ovr": 73,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": {
+    "low": 73,
+    "avg": 74,
+    "high": 77
+   }
+  },
+  {
+   "name": "Adem Bona",
+   "team": "Philadelphia 76ers",
+   "pos": "C",
+   "age": 23,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 75,
+    "high": 81
+   }
+  },
+  {
+   "name": "Asa Newell",
+   "team": "Atlanta Hawks",
+   "pos": "PF/C",
+   "age": 20,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 74,
+    "best": 78
+   },
+   "peak": {
+    "low": 74,
+    "avg": 81,
+    "high": 89
+   }
+  },
+  {
+   "name": "Ben Sheppard",
+   "team": "Indiana Pacers",
+   "pos": "SG",
+   "age": 25,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 72,
+    "avg": 73,
+    "high": 77
+   }
+  },
+  {
+   "name": "Bones Hyland",
+   "team": "Minnesota Timberwolves",
+   "pos": "PG",
+   "age": 26,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 43,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 72,
+    "avg": 72,
+    "high": 75
+   }
+  },
+  {
+   "name": "Chris Cenac Jr.",
+   "team": "Boston Celtics",
+   "pos": "C",
+   "age": 19,
+   "ovr": 72,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 76,
+   "progression": {
+    "low": 1,
+    "avg": 4.2,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 71,
+    "typical": 75,
+    "best": 79
+   },
+   "peak": {
+    "low": 77,
+    "avg": 86,
+    "high": 95
+   }
+  },
+  {
+   "name": "Clint Capela",
+   "team": "Houston Rockets",
+   "pos": "C",
+   "age": 32,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.5,
+    "max": -8
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": null
+  },
+  {
+   "name": "Cody Williams",
+   "team": "Minnesota Timberwolves",
+   "pos": "SF",
+   "age": 21,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 66,
+   "progression": {
+    "low": 1,
+    "avg": 3.6,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 74,
+    "best": 78
+   },
+   "peak": {
+    "low": 73,
+    "avg": 79,
+    "high": 86
+   }
+  },
+  {
+   "name": "Gary Payton II",
+   "team": "Golden State Warriors",
+   "pos": "PG/SG",
+   "age": 33,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.8,
+    "max": -8
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": null
+  },
+  {
+   "name": "Grant Williams",
+   "team": "Charlotte Hornets",
+   "pos": "PF",
+   "age": 27,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 38,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Isaac Okoro",
+   "team": "Chicago Bulls",
+   "pos": "SF",
+   "age": 25,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 72,
+    "avg": 73,
+    "high": 77
+   }
+  },
+  {
+   "name": "Jarred Vanderbilt",
+   "team": "Los Angeles Lakers",
+   "pos": "PF",
+   "age": 27,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 45,
+   "improveChance": 37,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Jay Huff",
+   "team": "Indiana Pacers",
+   "pos": "C",
+   "age": 28,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 33,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 74
+   },
+   "peak": null
+  },
+  {
+   "name": "Jayden Quaintance",
+   "team": "San Antonio Spurs",
+   "pos": "C",
+   "age": 19,
+   "ovr": 72,
+   "rookie": true,
+   "dur": 50,
+   "improveChance": 74,
+   "progression": {
+    "low": 1,
+    "avg": 4.2,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 75,
+    "best": 79
+   },
+   "peak": {
+    "low": 77,
+    "avg": 86,
+    "high": 95
+   }
+  },
+  {
+   "name": "Jordan Goodwin",
+   "team": "Phoenix Suns",
+   "pos": "SG/PG",
+   "age": 27,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Jordan Walsh",
+   "team": "Boston Celtics",
+   "pos": "SF/SG",
+   "age": 22,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 73,
+    "best": 78
+   },
+   "peak": {
+    "low": 72,
+    "avg": 77,
+    "high": 83
+   }
+  },
+  {
+   "name": "Josh Green",
+   "team": "Utah Jazz",
+   "pos": "SG",
+   "age": 25,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 72,
+    "avg": 73,
+    "high": 76
+   }
+  },
+  {
+   "name": "Justin Champagnie",
+   "team": "Washington Wizards",
+   "pos": "SF/PF",
+   "age": 25,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 72,
+    "avg": 73,
+    "high": 77
+   }
+  },
+  {
+   "name": "Khaman Maluach",
+   "team": "Phoenix Suns",
+   "pos": "C",
+   "age": 19,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 71,
+   "progression": {
+    "low": 1,
+    "avg": 4,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 70,
+    "typical": 74,
+    "best": 79
+   },
+   "peak": {
+    "low": 75,
+    "avg": 84,
+    "high": 92
+   }
+  },
+  {
+   "name": "Kyle Anderson",
+   "team": "Toronto Raptors",
+   "pos": "PF",
+   "age": 33,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 23,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.8,
+    "max": -8
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": null
+  },
+  {
+   "name": "Marcus Sasser",
+   "team": "Dallas Mavericks",
+   "pos": "PG",
+   "age": 26,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 72,
+    "avg": 72,
+    "high": 75
+   }
+  },
+  {
+   "name": "Marvin Bagley III",
+   "team": "Denver Nuggets",
+   "pos": "C/PF",
+   "age": 27,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Mike Conley",
+   "team": "Boston Celtics",
+   "pos": "PG",
+   "age": 39,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 65,
+   "improveChance": 9,
+   "progression": {
+    "low": 1,
+    "avg": 1.8,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -4.5,
+    "max": -8
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 68,
+    "best": 72
+   },
+   "peak": null
+  },
+  {
+   "name": "Moritz Wagner",
+   "team": "Brooklyn Nets",
+   "pos": "C",
+   "age": 29,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 55,
+   "improveChance": 28,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 71,
+    "best": 74
+   },
+   "peak": null
+  },
+  {
+   "name": "Nick Richards",
+   "team": "Miami Heat",
+   "pos": "C",
+   "age": 28,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 74
+   },
+   "peak": null
+  },
+  {
+   "name": "Oso Ighodaro",
+   "team": "Phoenix Suns",
+   "pos": "PF/C",
+   "age": 24,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 74,
+    "high": 79
+   }
+  },
+  {
+   "name": "Precious Achiuwa",
+   "team": "Sacramento Kings",
+   "pos": "PF/C",
+   "age": 27,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": null
+  },
+  {
+   "name": "Ryan Kalkbrenner",
+   "team": "Charlotte Hornets",
+   "pos": "C",
+   "age": 24,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 74,
+    "high": 79
+   }
+  },
+  {
+   "name": "Taurean Prince",
+   "team": "Detroit Pistons",
+   "pos": "SF",
+   "age": 32,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 22,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.5,
+    "max": -8
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": null
+  },
+  {
+   "name": "Taylor Hendricks",
+   "team": "Memphis Grizzlies",
+   "pos": "PF",
+   "age": 23,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 73,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 75,
+    "high": 81
+   }
+  },
+  {
+   "name": "Tyus Jones",
+   "team": "Denver Nuggets",
+   "pos": "PG",
+   "age": 30,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 27,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.9,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 74
+   },
+   "peak": null
+  },
+  {
+   "name": "Vít Krejčí",
+   "team": "Portland Trail Blazers",
+   "pos": "SG/SF",
+   "age": 26,
+   "ovr": 72,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 69,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 72,
+    "avg": 72,
+    "high": 75
+   }
+  },
+  {
+   "name": "GG Jackson",
+   "team": "Memphis Grizzlies",
+   "pos": "PF",
+   "age": 22,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 77
+   },
+   "peak": {
+    "low": 71,
+    "avg": 76,
+    "high": 83
+   }
+  },
+  {
+   "name": "Gui Santos",
+   "team": "Golden State Warriors",
+   "pos": "SF/PF",
+   "age": 24,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 71,
+    "avg": 73,
+    "high": 78
+   }
+  },
+  {
+   "name": "Josh Okogie",
+   "team": "Utah Jazz",
+   "pos": "SG",
+   "age": 28,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 73
+   },
+   "peak": null
+  },
+  {
+   "name": "Julian Strawther",
+   "team": "Denver Nuggets",
+   "pos": "SG",
+   "age": 24,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 75
+   },
+   "peak": {
+    "low": 71,
+    "avg": 73,
+    "high": 78
+   }
+  },
+  {
+   "name": "Kenrich Williams",
+   "team": "Oklahoma City Thunder",
+   "pos": "PF",
+   "age": 31,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": null
+  },
+  {
+   "name": "Larry Nance Jr.",
+   "team": "Indiana Pacers",
+   "pos": "PF/C",
+   "age": 33,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 23,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.7,
+    "max": -7
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 69,
+    "best": 73
+   },
+   "peak": null
+  },
+  {
+   "name": "Quinten Post",
+   "team": "Memphis Grizzlies",
+   "pos": "C",
+   "age": 26,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 43,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 71,
+    "best": 74
+   },
+   "peak": {
+    "low": 71,
+    "avg": 71,
+    "high": 74
+   }
+  },
+  {
+   "name": "Trendon Watford",
+   "team": "New Orleans Pelicans",
+   "pos": "PF",
+   "age": 25,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 71,
+    "best": 74
+   },
+   "peak": {
+    "low": 71,
+    "avg": 72,
+    "high": 76
+   }
+  },
+  {
+   "name": "Zach Collins",
+   "team": "Chicago Bulls",
+   "pos": "C",
+   "age": 28,
+   "ovr": 71,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 73
+   },
+   "peak": null
+  },
+  {
+   "name": "Baylor Scheierman",
+   "team": "Boston Celtics",
+   "pos": "SG",
+   "age": 26,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 70,
+    "avg": 70,
+    "high": 73
+   }
+  },
+  {
+   "name": "Craig Porter Jr.",
+   "team": "Cleveland Cavaliers",
+   "pos": "PG",
+   "age": 26,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 70,
+    "avg": 70,
+    "high": 73
+   }
+  },
+  {
+   "name": "Danny Wolf",
+   "team": "Brooklyn Nets",
+   "pos": "C/PF",
+   "age": 22,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.7,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 76
+   },
+   "peak": {
+    "low": 70,
+    "avg": 75,
+    "high": 82
+   }
+  },
+  {
+   "name": "Dru Smith",
+   "team": "Miami Heat",
+   "pos": "PG",
+   "age": 28,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 72
+   },
+   "peak": null
+  },
+  {
+   "name": "Hannes Steinbach",
+   "team": "Charlotte Hornets",
+   "pos": "PF/C",
+   "age": 20,
+   "ovr": 70,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 74,
+   "progression": {
+    "low": 1,
+    "avg": 4.1,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 73,
+    "best": 77
+   },
+   "peak": {
+    "low": 73,
+    "avg": 82,
+    "high": 90
+   }
+  },
+  {
+   "name": "Jae'Sean Tate",
+   "team": "Houston Rockets",
+   "pos": "SF",
+   "age": 31,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 69,
+    "best": 72
+   },
+   "peak": null
+  },
+  {
+   "name": "Jamison Battle",
+   "team": "Toronto Raptors",
+   "pos": "SF",
+   "age": 25,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 70,
+    "avg": 71,
+    "high": 74
+   }
+  },
+  {
+   "name": "Jase Richardson",
+   "team": "Orlando Magic",
+   "pos": "PG",
+   "age": 20,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 79,
+    "high": 88
+   }
+  },
+  {
+   "name": "Javonte Green",
+   "team": "Detroit Pistons",
+   "pos": "SF",
+   "age": 33,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 23,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -3.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 68,
+    "best": 72
+   },
+   "peak": null
+  },
+  {
+   "name": "Jaylen Clark",
+   "team": "Minnesota Timberwolves",
+   "pos": "SG",
+   "age": 25,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 70,
+    "avg": 71,
+    "high": 74
+   }
+  },
+  {
+   "name": "Jevon Carter",
+   "team": "Orlando Magic",
+   "pos": "PG",
+   "age": 31,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 25,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 69,
+    "best": 72
+   },
+   "peak": null
+  },
+  {
+   "name": "Josh Minott",
+   "team": "Brooklyn Nets",
+   "pos": "PF/SF",
+   "age": 24,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 74
+   },
+   "peak": {
+    "low": 70,
+    "avg": 72,
+    "high": 77
+   }
+  },
+  {
+   "name": "Justin Edwards",
+   "team": "Philadelphia 76ers",
+   "pos": "SF",
+   "age": 22,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 60,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 76
+   },
+   "peak": {
+    "low": 70,
+    "avg": 75,
+    "high": 81
+   }
+  },
+  {
+   "name": "Kevon Looney",
+   "team": "Los Angeles Lakers",
+   "pos": "C",
+   "age": 30,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.8,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 69,
+    "best": 72
+   },
+   "peak": null
+  },
+  {
+   "name": "Kobe Sanders",
+   "team": "Los Angeles Clippers",
+   "pos": "SG",
+   "age": 24,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": {
+    "low": 70,
+    "avg": 72,
+    "high": 77
+   }
+  },
+  {
+   "name": "Kris Murray",
+   "team": "Memphis Grizzlies",
+   "pos": "PF",
+   "age": 26,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 70,
+    "avg": 70,
+    "high": 73
+   }
+  },
+  {
+   "name": "Liam McNeeley",
+   "team": "Charlotte Hornets",
+   "pos": "SF",
+   "age": 20,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.8,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 79,
+    "high": 88
+   }
+  },
+  {
+   "name": "Maxime Raynaud",
+   "team": "Sacramento Kings",
+   "pos": "C",
+   "age": 23,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 74
+   },
+   "peak": {
+    "low": 70,
+    "avg": 73,
+    "high": 79
+   }
+  },
+  {
+   "name": "Mouhamed Gueye",
+   "team": "Atlanta Hawks",
+   "pos": "PF/C",
+   "age": 23,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 74
+   },
+   "peak": {
+    "low": 70,
+    "avg": 73,
+    "high": 79
+   }
+  },
+  {
+   "name": "Noa Essengue",
+   "team": "Chicago Bulls",
+   "pos": "PF",
+   "age": 20,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 69,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 79,
+    "high": 88
+   }
+  },
+  {
+   "name": "Ousmane Dieng",
+   "team": "Milwaukee Bucks",
+   "pos": "PF/SF",
+   "age": 23,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 74
+   },
+   "peak": {
+    "low": 70,
+    "avg": 73,
+    "high": 79
+   }
+  },
+  {
+   "name": "Spencer Jones",
+   "team": "Denver Nuggets",
+   "pos": "SF/PF",
+   "age": 25,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 70,
+    "avg": 71,
+    "high": 75
+   }
+  },
+  {
+   "name": "Thomas Sorber",
+   "team": "Oklahoma City Thunder",
+   "pos": "C",
+   "age": 20,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 79,
+    "high": 88
+   }
+  },
+  {
+   "name": "Tyler Kolek",
+   "team": "New York Knicks",
+   "pos": "PG",
+   "age": 25,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 70,
+    "avg": 71,
+    "high": 75
+   }
+  },
+  {
+   "name": "Will Riley",
+   "team": "Washington Wizards",
+   "pos": "SF",
+   "age": 20,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 68,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": {
+    "low": 72,
+    "avg": 79,
+    "high": 88
+   }
+  },
+  {
+   "name": "Yang Hansen",
+   "team": "Portland Trail Blazers",
+   "pos": "C",
+   "age": 21,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": {
+    "low": 71,
+    "avg": 77,
+    "high": 85
+   }
+  },
+  {
+   "name": "Zeke Nnaji",
+   "team": "Denver Nuggets",
+   "pos": "PF/C",
+   "age": 25,
+   "ovr": 70,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -6
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 70,
+    "avg": 71,
+    "high": 75
+   }
+  },
+  {
+   "name": "Alpha Diallo",
+   "team": "Denver Nuggets",
+   "pos": "SF",
+   "age": 28,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 34,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 69,
+    "best": 71
+   },
+   "peak": null
+  },
+  {
+   "name": "Dailyn Swain",
+   "team": "Chicago Bulls",
+   "pos": "SF/SG",
+   "age": 21,
+   "ovr": 69,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 76
+   },
+   "peak": {
+    "low": 71,
+    "avg": 78,
+    "high": 87
+   }
+  },
+  {
+   "name": "DaRon Holmes II",
+   "team": "Denver Nuggets",
+   "pos": "PF",
+   "age": 24,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 69,
+    "avg": 71,
+    "high": 76
+   }
+  },
+  {
+   "name": "Ebuka Okorie",
+   "team": "Detroit Pistons",
+   "pos": "PG",
+   "age": 19,
+   "ovr": 69,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 76,
+   "progression": {
+    "low": 1,
+    "avg": 4.2,
+    "max": 9
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 72,
+    "best": 76
+   },
+   "peak": {
+    "low": 75,
+    "avg": 84,
+    "high": 93
+   }
+  },
+  {
+   "name": "Jaden Hardy",
+   "team": "Los Angeles Lakers",
+   "pos": "SG",
+   "age": 24,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 73
+   },
+   "peak": {
+    "low": 69,
+    "avg": 71,
+    "high": 76
+   }
+  },
+  {
+   "name": "Johnny Furphy",
+   "team": "Indiana Pacers",
+   "pos": "SF",
+   "age": 21,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 71,
+    "best": 75
+   },
+   "peak": {
+    "low": 70,
+    "avg": 76,
+    "high": 84
+   }
+  },
+  {
+   "name": "Jordan Miller",
+   "team": "Los Angeles Clippers",
+   "pos": "SF",
+   "age": 26,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 42,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 69,
+    "best": 72
+   },
+   "peak": {
+    "low": 69,
+    "avg": 69,
+    "high": 72
+   }
+  },
+  {
+   "name": "Karlo Matković",
+   "team": "New Orleans Pelicans",
+   "pos": "PF",
+   "age": 25,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 69,
+    "best": 72
+   },
+   "peak": {
+    "low": 69,
+    "avg": 70,
+    "high": 74
+   }
+  },
+  {
+   "name": "Keshad Johnson",
+   "team": "Miami Heat",
+   "pos": "PF",
+   "age": 25,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.2,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 69,
+    "best": 72
+   },
+   "peak": {
+    "low": 69,
+    "avg": 70,
+    "high": 74
+   }
+  },
+  {
+   "name": "Labaron Philon Jr.",
+   "team": "Philadelphia 76ers",
+   "pos": "PG",
+   "age": 21,
+   "ovr": 69,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 70,
+   "progression": {
+    "low": 1,
+    "avg": 3.9,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 67,
+    "typical": 71,
+    "best": 76
+   },
+   "peak": {
+    "low": 71,
+    "avg": 78,
+    "high": 86
+   }
+  },
+  {
+   "name": "Luka Garza",
+   "team": "Boston Celtics",
+   "pos": "C",
+   "age": 27,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 69,
+    "best": 72
+   },
+   "peak": null
+  },
+  {
+   "name": "Noah Penda",
+   "team": "Orlando Magic",
+   "pos": "SF/PF",
+   "age": 21,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 66,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 71,
+    "best": 75
+   },
+   "peak": {
+    "low": 70,
+    "avg": 76,
+    "high": 84
+   }
+  },
+  {
+   "name": "Rasheer Fleming",
+   "team": "Phoenix Suns",
+   "pos": "PF",
+   "age": 22,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.6,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 75
+   },
+   "peak": {
+    "low": 69,
+    "avg": 74,
+    "high": 81
+   }
+  },
+  {
+   "name": "Sion James",
+   "team": "Charlotte Hornets",
+   "pos": "SG",
+   "age": 23,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": {
+    "low": 69,
+    "avg": 72,
+    "high": 78
+   }
+  },
+  {
+   "name": "Thomas Bryant",
+   "team": "Cleveland Cavaliers",
+   "pos": "C",
+   "age": 29,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 29,
+   "progression": {
+    "low": 1,
+    "avg": 1.9,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 68,
+    "best": 71
+   },
+   "peak": null
+  },
+  {
+   "name": "Will Richard",
+   "team": "Golden State Warriors",
+   "pos": "SG",
+   "age": 23,
+   "ovr": 69,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.4,
+    "max": -5
+   },
+   "nextSeason": {
+    "worst": 66,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": {
+    "low": 69,
+    "avg": 72,
+    "high": 78
+   }
+  },
+  {
+   "name": "Alex Karaban",
+   "team": "Sacramento Kings",
+   "pos": "PF",
+   "age": 24,
+   "ovr": 68,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 57,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.2,
+    "max": -4
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 69,
+    "best": 73
+   },
+   "peak": {
+    "low": 68,
+    "avg": 71,
+    "high": 76
+   }
+  },
+  {
+   "name": "Jabari Walker",
+   "team": "Philadelphia 76ers",
+   "pos": "PF",
+   "age": 24,
+   "ovr": 68,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 51,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -4
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 69,
+    "best": 72
+   },
+   "peak": {
+    "low": 68,
+    "avg": 70,
+    "high": 75
+   }
+  },
+  {
+   "name": "Jordan McLaughlin",
+   "team": "San Antonio Spurs",
+   "pos": "PG",
+   "age": 30,
+   "ovr": 68,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 26,
+   "progression": {
+    "low": 1,
+    "avg": 2,
+    "max": 4
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.5,
+    "max": -4
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 67,
+    "best": 70
+   },
+   "peak": null
+  },
+  {
+   "name": "Pacôme Dadiet",
+   "team": "New York Knicks",
+   "pos": "SF",
+   "age": 21,
+   "ovr": 68,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.3,
+    "max": -4
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": {
+    "low": 69,
+    "avg": 75,
+    "high": 83
+   }
+  },
+  {
+   "name": "AJ Johnson",
+   "team": "New Orleans Pelicans",
+   "pos": "PG/SG",
+   "age": 22,
+   "ovr": 67,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 61,
+   "progression": {
+    "low": 1,
+    "avg": 3.5,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.1,
+    "max": -3
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 68,
+    "best": 73
+   },
+   "peak": {
+    "low": 67,
+    "avg": 72,
+    "high": 79
+   }
+  },
+  {
+   "name": "Branden Carlson",
+   "team": "Portland Trail Blazers",
+   "pos": "C",
+   "age": 27,
+   "ovr": 67,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 39,
+   "progression": {
+    "low": 1,
+    "avg": 2.1,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2,
+    "max": -3
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 67,
+    "best": 70
+   },
+   "peak": null
+  },
+  {
+   "name": "Isaiah Evans",
+   "team": "Minnesota Timberwolves",
+   "pos": "SG/SF",
+   "age": 20,
+   "ovr": 67,
+   "rookie": true,
+   "dur": 80,
+   "improveChance": 74,
+   "progression": {
+    "low": 1,
+    "avg": 4.1,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2,
+    "max": -3
+   },
+   "nextSeason": {
+    "worst": 65,
+    "typical": 70,
+    "best": 74
+   },
+   "peak": {
+    "low": 71,
+    "avg": 79,
+    "high": 88
+   }
+  },
+  {
+   "name": "Jonathan Mogbo",
+   "team": "Sacramento Kings",
+   "pos": "PF",
+   "age": 25,
+   "ovr": 67,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1.9,
+    "max": -3
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 67,
+    "best": 70
+   },
+   "peak": {
+    "low": 67,
+    "avg": 68,
+    "high": 72
+   }
+  },
+  {
+   "name": "Moussa Cissé",
+   "team": "Dallas Mavericks",
+   "pos": "C",
+   "age": 24,
+   "ovr": 67,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -2.1,
+    "max": -3
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 68,
+    "best": 71
+   },
+   "peak": {
+    "low": 67,
+    "avg": 69,
+    "high": 74
+   }
+  },
+  {
+   "name": "Alijah Martin",
+   "team": "Toronto Raptors",
+   "pos": "SG",
+   "age": 25,
+   "ovr": 66,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1.6,
+    "max": -2
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 66,
+    "best": 69
+   },
+   "peak": {
+    "low": 66,
+    "avg": 67,
+    "high": 71
+   }
+  },
+  {
+   "name": "Dylan Cardwell",
+   "team": "Sacramento Kings",
+   "pos": "C",
+   "age": 25,
+   "ovr": 66,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 45,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1.6,
+    "max": -2
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 66,
+    "best": 69
+   },
+   "peak": {
+    "low": 66,
+    "avg": 67,
+    "high": 71
+   }
+  },
+  {
+   "name": "Emanuel Sharp",
+   "team": "Sacramento Kings",
+   "pos": "SG",
+   "age": 23,
+   "ovr": 66,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 56,
+   "progression": {
+    "low": 1,
+    "avg": 2.9,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1.6,
+    "max": -2
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 67,
+    "best": 70
+   },
+   "peak": {
+    "low": 66,
+    "avg": 70,
+    "high": 75
+   }
+  },
+  {
+   "name": "Isaiah Crawford",
+   "team": "Houston Rockets",
+   "pos": "SF",
+   "age": 24,
+   "ovr": 66,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1.6,
+    "max": -2
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 67,
+    "best": 70
+   },
+   "peak": {
+    "low": 66,
+    "avg": 68,
+    "high": 73
+   }
+  },
+  {
+   "name": "Mohamed Diawara",
+   "team": "New York Knicks",
+   "pos": "SF",
+   "age": 21,
+   "ovr": 66,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 66,
+   "progression": {
+    "low": 1,
+    "avg": 3.7,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1.6,
+    "max": -2
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 68,
+    "best": 72
+   },
+   "peak": {
+    "low": 68,
+    "avg": 73,
+    "high": 81
+   }
+  },
+  {
+   "name": "Nae'Qwan Tomlin",
+   "team": "Cleveland Cavaliers",
+   "pos": "PF",
+   "age": 25,
+   "ovr": 66,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 46,
+   "progression": {
+    "low": 1,
+    "avg": 2.2,
+    "max": 5
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1.6,
+    "max": -2
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 66,
+    "best": 69
+   },
+   "peak": {
+    "low": 66,
+    "avg": 67,
+    "high": 71
+   }
+  },
+  {
+   "name": "Bronny James",
+   "team": "Los Angeles Lakers",
+   "pos": "PG",
+   "age": 21,
+   "ovr": 65,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 65,
+   "progression": {
+    "low": 1,
+    "avg": 3.6,
+    "max": 8
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1,
+    "max": -1
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 67,
+    "best": 71
+   },
+   "peak": {
+    "low": 67,
+    "avg": 72,
+    "high": 80
+   }
+  },
+  {
+   "name": "Nate Bittle",
+   "team": "Toronto Raptors",
+   "pos": "C",
+   "age": 24,
+   "ovr": 65,
+   "rookie": false,
+   "dur": 80,
+   "improveChance": 50,
+   "progression": {
+    "low": 1,
+    "avg": 2.7,
+    "max": 6
+   },
+   "regression": {
+    "low": -1,
+    "avg": -1,
+    "max": -1
+   },
+   "nextSeason": {
+    "worst": 64,
+    "typical": 65,
+    "best": 69
+   },
+   "peak": {
+    "low": 65,
+    "avg": 67,
+    "high": 72
+   }
+  }
+ ]
+}

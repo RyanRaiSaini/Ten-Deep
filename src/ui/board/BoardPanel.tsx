@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { cardOf } from '../../engine/board/cards';
 import { progress, type BoardCtx } from '../../engine/board/rules';
-import { MAX_CONFIDENCE, type BoardEvent, type BoardState } from '../../engine/board/state';
+import { MAX_CONFIDENCE, objectiveOf, type BoardEvent, type BoardState } from '../../engine/board/state';
 import { SEASON_GAMES } from '../../engine/season';
 import { Card, Label } from '../components';
 import { Icon } from '../icons';
 import { Text } from '../Text';
-import { C, R, S } from '../theme';
+import { C, FONT, R, S } from '../theme';
 import { cardTitle, cardVars } from './text';
 
 export function ConfidenceMeter({ value, dark }: { value: number; dark?: boolean }) {
@@ -49,14 +49,14 @@ export function BoardPanel({ board, ctx, scale, news, onOffice, onVeto }: {
   board: BoardState; ctx: BoardCtx; scale: number; news?: BoardEvent[]; onOffice: () => void; onVeto: (index: number) => void;
 }) {
   const { t } = useTranslation();
-  const open = board.demands.map((d, i) => ({ d, i })).filter(({ d }) => d.status === 'active');
+  // The objective has its own big banner; this lists what an event left running (a slump to lift, say).
+  const open = board.demands.map((d, i) => ({ d, i })).filter(({ d }) => d.status === 'active' && !d.objective);
   const canVeto = board.perks.includes('veto');
   return (
     <Card style={{ gap: S.sm }} testID="board-panel">
       <ConfidenceMeter value={board.confidence} />
       <BoardNews events={news ?? []} />
-      <Label>{t('board.demands')}</Label>
-      {open.length === 0 && <Text style={styles.muted}>{t('board.noDemands')}</Text>}
+      {open.length > 0 && <Label>{t('board.demands')}</Label>}
       {open.map(({ d, i }) => {
         const pr = progress(d, ctx);
         const offer = { name: d.name ?? '', city: d.city ?? '', ...(d.amount ? { amount: d.amount } : {}) };
@@ -95,7 +95,42 @@ export function BoardPanel({ board, ctx, scale, news, onOffice, onVeto }: {
   );
 }
 
+/**
+ * The run's objective, big: what the board told you to do, the deadline, how far along you are, and whether it's
+ * done. Shown on the season, Takeover and front office screens so it's never out of sight.
+ */
+export function ObjectiveBanner({ board, ctx, scale, takeover }: { board: BoardState; ctx: BoardCtx; scale: number; takeover?: boolean }) {
+  const { t } = useTranslation();
+  const d = objectiveOf(board);
+  if (!d) return null;
+  const pr = d.status === 'active' ? progress(d, ctx) : null;
+  const offer = { name: d.name ?? '', city: d.city ?? '', ...(d.amount ? { amount: d.amount } : {}) };
+  const tone = d.status === 'done' ? C.neon : d.status === 'failed' ? C.danger : C.hardwood;
+  const due = takeover && d.due === 0 ? t('board.due.tipoff') : d.due >= SEASON_GAMES ? t('board.dueEnd') : t('board.dueRound', { n: d.due });
+  return (
+    <View style={[styles.obj, { borderColor: tone }]} testID="objective">
+      <View style={styles.objHead}>
+        <Icon name="clipboard" size={30} />
+        <Text style={[styles.objKicker, { color: tone }]}>{t('board.objective')}</Text>
+        <Text style={[styles.objStatus, { backgroundColor: tone }]} testID="objective-status">
+          {d.status === 'active' ? (pr ? t('board.progress', pr) : t('board.status.active')) : t(`board.status.${d.status}`)}
+        </Text>
+      </View>
+      <Text style={styles.objTitle}>{cardTitle(t, d.id)}</Text>
+      <Text style={styles.objRule}>{t(`board.c.${d.id}.rule`, cardVars(d.id, offer, scale))}</Text>
+      {d.status === 'active' && <Text style={styles.objDue}>{due} · {t('board.fail', { n: d.penalty })}</Text>}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
+  obj: { gap: 6, padding: S.lg, borderRadius: R.lg, borderWidth: 4, borderBottomWidth: 8, backgroundColor: '#FFFDF7' },
+  objHead: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
+  objKicker: { flex: 1, fontWeight: '900', fontSize: 13, letterSpacing: 1.5, textTransform: 'uppercase' },
+  objStatus: { color: '#FFFFFF', fontWeight: '900', fontSize: 14, paddingHorizontal: 12, paddingVertical: 4, borderRadius: R.pill, overflow: 'hidden' },
+  objTitle: { fontFamily: FONT.display, fontSize: 30, color: C.ink, lineHeight: 34 },
+  objRule: { color: C.ink, fontWeight: '800', fontSize: 18, lineHeight: 24 },
+  objDue: { color: C.muted, fontWeight: '800', fontSize: 13 },
   meterRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   meterLabel: { fontWeight: '900', fontSize: 12, letterSpacing: 1, textTransform: 'uppercase', color: C.muted },
   pips: { flex: 1, flexDirection: 'row', gap: 3 },

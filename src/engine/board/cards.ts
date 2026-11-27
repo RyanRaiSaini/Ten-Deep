@@ -113,7 +113,6 @@ export const CARDS: CardDef[] = [
   F('roster-crunch', 'coach', -0.025),
   F('arena-repairs', 'reporter', -0.05),
   F('fans-demand', 'fans', 0.1, { tone: 'gamble' }),
-  F('double-nothing', 'owner', 0.075, { tone: 'gamble' }),
 
   // C. Perks (8)
   P('golden-ticket', 'gm'),
@@ -138,7 +137,31 @@ export const CARDS: CardDef[] = [
   E('holdout', 'reporter', 'bad'),
   E('rookie-wall', 'coach', 'bad'),
   E('superteam-rumor', 'reporter', 'bad'),
+  E('team-chemistry', 'coach', 'good'),
 ];
+
+/**
+ * What each kind of stop deals. Objectives are rules you must meet; events just happen to you (good or bad).
+ * Money cards and the meta perks (veto, scout's tip...) aren't dealt any more: too much to track.
+ */
+export const CRISIS_OBJECTIVES = [
+  'hometown-hero', 'championship-dna', 'all-star-pedigree', 'youth-movement', 'veteran-leadership', 'finals-experience',
+  'defense-wins', 'space-floor', 'positionless', 'rivalry-signing', 'breakout-star', 'statement-signing', 'prove-it',
+  'every-phase', 'local-legend', 'time-machine', 'international-flavor', 'no-superteams', 'budget-discipline',
+  'rebound-battle', 'scoring-title', 'dpoy', 'sixth-man', 'division-crown', 'home-court', 'upset-special', 'iron-man',
+];
+/** A Takeover's objective is checked at tip-off, so only what the build itself can meet. */
+export const TAKEOVER_OBJECTIVES = [
+  'hometown-hero', 'championship-dna', 'all-star-pedigree', 'youth-movement', 'veteran-leadership', 'finals-experience',
+  'defense-wins', 'space-floor', 'positionless', 'break-core', 'statement-signing', 'prove-it', 'every-phase',
+  'local-legend', 'time-machine', 'breakout-star', 'rivalry-signing', 'sell-high', 'international-flavor',
+];
+export const SEASON_EVENTS = [
+  'injury-bug', 'coach-fired', 'media-frenzy', 'locker-drama', 'hot-streak', 'legend-comeback', 'midseason-miracle',
+  'contract-year', 'holdout', 'rookie-wall', 'superteam-rumor', 'team-chemistry', 'golden-ticket', 'bench-option', 'player-coach',
+];
+/** During a Takeover build there's no coach to fire (you just chose one). */
+export const BUILD_EVENTS = SEASON_EVENTS.filter((id) => id !== 'coach-fired');
 
 export const CARD_BY_ID: Record<string, CardDef> = Object.fromEntries(CARDS.map((c) => [c.id, c]));
 export const cardOf = (id: string) => CARD_BY_ID[id];

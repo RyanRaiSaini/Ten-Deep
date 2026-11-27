@@ -11,7 +11,7 @@ import { feel } from '../audio/feel';
 import { POOLS } from '../data';
 import { roomAfterFees, tradeBudget, tradeSwap } from '../engine/season';
 import { payOf } from '../engine/cap';
-import { ALL_SLOTS } from '../engine/types';
+import { ALL_SLOTS, STARTER_SLOTS, playsPos } from '../engine/types';
 import { useGame } from '../store/game';
 import { Button, Card, Header, Label, Screen } from '../ui/components';
 import { PlayerCard } from '../ui/PlayerCard';
@@ -32,7 +32,6 @@ function DeadlineScreen() {
   if (!g.season || !g.deadline || !pool) return <Redirect href="/season" />;
   const { season, deadline } = g;
   const user = season.teams[0];
-  const taken = new Set(season.teams.flatMap((tm) => ALL_SLOTS.map((k) => tm.slots[k].name)));
 
   const done = (fn: () => void) => { fn(); router.replace('/season'); };
   // What you can take on: your cap room plus the outgoing player's salary (engine/season.ts tradeBudget).
@@ -46,8 +45,12 @@ function DeadlineScreen() {
       })}
     </Text>
   );
+  // Everyone on the team you landed on who can play the spot you're filling (a starter's position), best first.
+  const mine = new Set(ALL_SLOTS.map((k) => user.slots[k].name));
+  const roster = (deadline.spin?.players ?? []).filter((p) => !mine.has(p.name)).sort((a, b) => b.ovr - a.ovr);
+  const fitting = outSlot && STARTER_SLOTS.includes(outSlot) ? roster.filter((p) => playsPos(p, outSlot)) : roster;
   const candidates = deadline.spin && landed && deadline.outId
-    ? deadline.spin.players.filter((p) => !taken.has(p.name)).map((p) => {
+    ? (fitting.length ? fitting : roster).map((p) => {
         // Show the real reason a signing is blocked (position, superstar limit, or cap).
         let why: string | null = null;
         try { tradeSwap(season, deadline.outId!, p); } catch (e) {

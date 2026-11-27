@@ -5,6 +5,7 @@ import { lineupMinutes } from './rotation';
 import { addNews, leading, roundNews, type Headline } from './story/news';
 import { SIM } from './simConfig';
 import { confOfDiv, type Conf } from './conference';
+import { reseat } from './reseat';
 import { createRng, shuffle } from './rng';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Rng, type Roster, type RosterSlots, type SlotId, playsPos } from './types';
 
@@ -312,8 +313,9 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
   const user = state.teams[0];
   const slot = ALL_SLOTS.find((s) => user.slots[s].id === outId);
   if (!slot) throw new Error('Player not on your roster');
-  if (state.teams.some((t) => ALL_SLOTS.some((k) => t.slots[k].id === incoming.id || t.slots[k].name === incoming.name)))
-    throw new Error(`${incoming.name} is already on a roster`);
+  if (ALL_SLOTS.some((k) => user.slots[k].name === incoming.name)) throw new Error(`${incoming.name} is already on your team`);
+  // He can come from an AI team: then it's a straight swap, and your player takes his spot there.
+  const from = state.teams.findIndex((t, i) => i > 0 && ALL_SLOTS.some((k) => t.slots[k].name === incoming.name));
   if (STARTER_SLOTS.includes(slot) && !playsPos(incoming, slot))
     throw new Error(`${incoming.name} can't play ${slot}`);
   const without: RosterSlots = { ...user.slots };
@@ -322,6 +324,10 @@ export function tradeSwap(state: SeasonState, outId: string, incoming: Player): 
   if (payOf(incoming) > tradeBudget(user.slots, slot, state.fees) + 1e-9) throw new Error('Over the cap');
   const teams = [...state.teams];
   teams[0] = { ...user, slots: { ...user.slots, [slot]: incoming } };
+  if (from > 0) {
+    const k = ALL_SLOTS.find((x) => teams[from].slots[x].name === incoming.name)!;
+    teams[from] = { ...teams[from], slots: reseat({ ...teams[from].slots, [k]: user.slots[slot] }) };
+  }
   return { ...recordStint(state, user.slots[slot], incoming), teams, deadlineUsed: true };
 }
 

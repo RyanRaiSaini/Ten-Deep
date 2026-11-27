@@ -13,7 +13,7 @@ import { MODES, current2026, type Mode } from '../data';
 import { moneyScaleFor } from '../data/modes';
 import { payOf } from '../engine/cap';
 import { blocked, budgetFor, marketOptions } from '../engine/board/market';
-import { COACHES, COACH_FEE, FIRST_SLOT_STEP, STOP_AFTER, TIPOFF_STEP, slotOfStep } from '../engine/board/rebuild';
+import { BUILD_STOPS, COACHES, COACH_FEE, FIRST_SLOT_STEP, TIPOFF_STEP, slotOfStep } from '../engine/board/rebuild';
 import { realRotation } from '../engine/realLeague';
 import { squadRating } from '../engine/rotation';
 import { roomAfterFees } from '../engine/season';
@@ -28,8 +28,7 @@ import { RosterBoard } from '../ui/RosterBoard';
 import { SquadBadge } from '../ui/SquadBadge';
 import { Text } from '../ui/Text';
 import { BoardStop } from '../ui/board/BoardStop';
-import { ConfidenceMeter } from '../ui/board/BoardPanel';
-import { cardTitle } from '../ui/board/text';
+import { ConfidenceMeter, ObjectiveBanner } from '../ui/board/BoardPanel';
 import { C, FONT, R, S, money } from '../ui/theme';
 import { goBack } from '../ui/nav';
 
@@ -145,14 +144,30 @@ function Rebuilding() {
     </Card>
   );
 
-  // A card stop between positions.
+  const ctx = boardCtx(g.poolId, season);
+  // Start over: back to the team picker (the board, the build and the team are all thrown away).
+  const restart = (
+    <Pressable onPress={() => { feel('thunk'); g.quit(); }} style={styles.restart} testID="rebuild-restart" accessibilityRole="button">
+      <Icon name="reroll" size={18} />
+      <Text style={styles.restartText}>{t('rebuild.restart')}</Text>
+    </Pressable>
+  );
+  const header = <Header title={t('rebuild.title')} left={<BackButton onPress={() => router.replace('/')} />} right={restart} />;
+  const objective = <ObjectiveBanner board={board} ctx={ctx} scale={scale} takeover />;
+
+  // A card stop: the objective before the build, then an event after three starters and one after the bench.
   if (board.hand) {
-    const n = r.cards + 1;
+    const n = r.cards;
     return (
       <MoneyScale.Provider value={scale}>
         <Screen>
+          {header}
           {bar}
-          <BoardStop inline={{ label: t('rebuild.cardStop', { n, total: STOP_AFTER.length }), onResolved: (fired) => { if (fired) router.replace('/result'); } }} />
+          {n > 0 && objective}
+          <BoardStop inline={{
+            label: t('rebuild.cardStop', { n: n + 1, total: BUILD_STOPS.length }), kind: BUILD_STOPS[n] ?? 'event',
+            onResolved: (fired) => { if (fired) router.replace('/result'); },
+          }} />
         </Screen>
       </MoneyScale.Provider>
     );
@@ -161,7 +176,9 @@ function Rebuilding() {
   return (
     <MoneyScale.Provider value={scale}>
       <Screen tint={r.colors[0]}>
-        <Header title={t('rebuild.title')} left={<BackButton onPress={() => router.replace('/')} />} />
+        {header}
+        {r.step > 0 && bar}
+        {r.step > 0 && objective}
         {r.step === 0 && (
           <>
             <View style={[styles.takeover, { borderColor: C.ink }]}>
@@ -180,7 +197,6 @@ function Rebuilding() {
 
         {r.step === 1 && (
           <>
-            {bar}
             <Text style={styles.stepTitle}>{t('rebuild.coachTitle')}</Text>
             <Text style={styles.lead}>{t('rebuild.coachDesc')}</Text>
             {COACHES.map((c) => {
@@ -203,7 +219,6 @@ function Rebuilding() {
 
         {slot && !selling && (
           <>
-            {bar}
             <Text style={styles.stepTitle} testID="rebuild-slot">
               {t('rebuild.slotOf', { slot, n: r.step - FIRST_SLOT_STEP + 1, total: ALL_SLOTS.length })}
             </Text>
@@ -218,7 +233,6 @@ function Rebuilding() {
 
         {selling && (
           <>
-            {bar}
             <Text style={styles.stepTitle}>{t('rebuild.sellTitle', { name: user.slots[selling].name })}</Text>
             <Text style={styles.lead} testID="office-budget">
               {t('board.officeBudget', { budget: money(budgetFor(season, selling), scale), pay: money(payOf(user.slots[selling]), scale) })}
@@ -245,18 +259,9 @@ function Rebuilding() {
 
         {r.step >= TIPOFF_STEP && (
           <>
-            {bar}
             <Text style={styles.stepTitle}>{t('rebuild.tipoffTitle')}</Text>
             <Text style={styles.lead} testID="rebuild-sr">{t('rebuild.srChange', { from: r.sr0, to: sr })}</Text>
             {r.coach && <Text style={styles.lead}>{t('rebuild.coachPicked', { name: t(`rebuild.coaches.${r.coach}.name`) })}</Text>}
-            {board.demands.some((d) => d.status === 'active') && (
-              <Card style={{ gap: 4 }}>
-                <Label>{t('rebuild.openDemands')}</Label>
-                {board.demands.filter((d) => d.status === 'active').map((d) => (
-                  <Text key={`${d.id}-${d.sig}`} style={styles.demand}>· {cardTitle(t, d.id)}</Text>
-                ))}
-              </Card>
-            )}
             <RosterBoard roster={user.slots} color={r.colors[0]} />
             <Button label={t('rebuild.tipoff')} variant="gold" icon={<Icon name="play" size={22} />}
               onPress={() => { feel('fanfare'); g.tipOff(); router.replace(useGame.getState().phase === 'result' ? '/result' : '/season'); }} testID="rebuild-tipoff" />
@@ -312,5 +317,6 @@ const styles = StyleSheet.create({
   optionHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   tier: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1, textTransform: 'uppercase', paddingHorizontal: 10, paddingVertical: 3, borderRadius: R.pill, overflow: 'hidden' },
   why: { color: C.danger, fontWeight: '800', fontSize: 12 },
-  demand: { color: C.text, fontWeight: '700' },
+  restart: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: C.surface, borderWidth: 2, borderColor: C.ink, borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 6 },
+  restartText: { fontWeight: '900', fontSize: 12, color: C.ink },
 });

@@ -34,10 +34,20 @@ function rebuildAll(poolId: string, teamId: string) {
   expect(s.season!.teams.length % 2).toBe(0);
   expect(new Set(names()).size).toBe(names().length);
   s.rebuildNext();
+  // The objective comes first: no coach until it's picked.
+  expect(useGame.getState().crisis!.board!.hand).toHaveLength(6);
+  useGame.getState().rebuildCoach('defense');
+  expect(useGame.getState().crisis!.rebuild!.coach).toBe(null);
+  useGame.getState().revealBoardCard(1);
+  const first = useGame.getState().crisis!.board!.offer!;
+  useGame.getState().resolveBoard({ incomingId: first.players?.[0]?.id, outSlot: first.outSlots?.[0], option: first.options?.[0] });
+  const objective = useGame.getState().crisis!.board!.demands.find((d) => d.objective);
+  expect(objective, 'the first card is the objective').toBeTruthy();
+  expect(objective!.due).toBe(0);
   useGame.getState().rebuildCoach('defense');
   expect(roomAfterFees(useGame.getState().season!)).toBeCloseTo(REBUILD_BUDGET - COACH_FEE.defense, 1);
-  let stops = 0;
-  for (let guard = 0; guard < 40 && useGame.getState().crisis!.rebuild!.step < TIPOFF_STEP; guard++) {
+  let stops = 1;
+  for (let guard = 0; guard < 40 && (useGame.getState().crisis!.rebuild!.step < TIPOFF_STEP || useGame.getState().crisis!.board!.hand); guard++) {
     s = useGame.getState();
     const board = s.crisis!.board!;
     if (board.hand) {
@@ -66,19 +76,23 @@ function rebuildAll(poolId: string, teamId: string) {
 }
 
 describe('rebuild mode', () => {
-  it('takes over a Current Day team, rebuilds through 10 positions and 3 card stops, then plays the season', () => {
+  it('takes over a Current Day team: objective first, 10 positions, 2 event cards, then one card in the season', async () => {
     const team = POOLS['current-2026'].teams[5];
     rebuildAll('current-2026', team.id);
     const g = useGame.getState();
     if (g.phase === 'result') return; // the board fired you before tip-off
     expect(g.phase).toBe('season');
     expect(g.crisis!.objective).toBeTruthy();
-    expect(g.crisis!.board!.stop).toBe(1);
+    expect(g.crisis!.board!.stop).toBe(0);
     expect(g.crisis!.board!.played.filter((p) => p.stop < 0)).toHaveLength(3);
+    // The objective was settled at tip-off; only good-or-bad events were dealt after it.
+    expect(g.crisis!.board!.demands.find((d) => d.objective)!.status).not.toBe('active');
+    const { cardOf } = await import('../engine/board/cards');
+    expect(g.crisis!.board!.played.slice(1).every((p) => cardOf(p.id).kind !== 'demand' && cardOf(p.id).kind !== 'finance')).toBe(true);
     expect(g.season!.teams[0].franchise).toBe(team.id.split('-')[0]);
-    // Play on: the next card stop is game 12, then the season and the verdict.
+    // Play on: the one card stop in the season is at midseason.
     const s = advance({ ...g.season!, deadlineUsed: true }, 82);
-    expect(s.round).toBe(12);
+    expect(s.round).toBe(41);
     g.openCrisis(s);
     expect(useGame.getState().phase === 'crisis' || useGame.getState().phase === 'result').toBe(true);
   }, 60_000);
