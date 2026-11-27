@@ -41,11 +41,14 @@ async function call<T>(body: Record<string, unknown>): Promise<Result<T>> {
   }
 }
 
-export const createRoom = () => call<{ code: string }>({ op: 'create' });
+export const createRoom = (kind: 'draft' | 'takeover' = 'draft') => call<{ code: string }>({ op: 'create', kind });
 export const joinRoom = (code: string) => call<{ ok: true }>({ op: 'join', code });
 export const leaveRoom = (code: string) => call<{ ok: true }>({ op: 'leave', code });
 export const startRoom = (code: string) => call<{ ok: true }>({ op: 'start', code });
 export const submitPick = (code: string, r: number, pid: string, slot: SlotId) => call<{ ok: true; t: number }>({ op: 'pick', code, r, pid, slot });
+/** Party Takeover: lock in this position's choice, or a blind bid in a bidding war. */
+export const submitMove = (code: string, r: number, c: string) => call<{ ok: true; t: number }>({ op: 'tk-move', code, r, c });
+export const submitBid = (code: string, r: number, amount: number) => call<{ ok: true; t: number }>({ op: 'tk-bid', code, r, amount });
 
 export interface Room { meta: PartyMeta; members: PartyMember[] }
 

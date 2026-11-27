@@ -17,7 +17,8 @@
     "calibrate": "tsx scripts/calibrate.ts",
     "smoke": "expo export -p web && node scripts/smoke.mjs",
     "lint": "expo lint",
-    "audio": "tsx scripts/render-audio.mts"
+    "audio": "tsx scripts/render-audio.mts",
+    "party:takeover": "expo export -p web && tsx scripts/party-takeover-e2e.mts"
   },
   "dependencies": {
     "@expo-google-fonts/lilita-one": "^0.4.1",

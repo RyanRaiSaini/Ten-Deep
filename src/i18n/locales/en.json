@@ -1722,5 +1722,30 @@
     "auto": "Auto-draft the rest for me",
     "doneTitle": "The draft is done",
     "startSeason": "Start season 1"
+  },
+  "partyTk": {
+    "create": "Create a Takeover room",
+    "createHint": "Everyone takes over the same real team and rebuilds it at once: same options, 3-2-1 reveals, bidding wars.",
+    "lobby": "Everyone takes over",
+    "lobbyDesc": "Same roster, same budget. Rebuild it position by position; whoever builds best wins the season.",
+    "position": "{{slot}} · spot {{n}} of {{total}}",
+    "rebuilding": "You're all rebuilding",
+    "budget": "Budget {{budget}} · up to {{max}} for this spot",
+    "yourPlayer": "Your {{slot}}",
+    "keep": "Keep him",
+    "go": "Go for him · {{pay}}",
+    "locked": "Locked in. Waiting for {{n}}…",
+    "choices": "Everyone's call",
+    "kept": "Kept his player",
+    "bidIn": "Bid in. Waiting for the others…",
+    "war": "Bidding war for {{name}}!",
+    "warHint": "Bid blind: at least {{min}}, at most {{max}}. The top bid signs him at that price.",
+    "placeBid": "Place my bid",
+    "watchWar": "A bidding war is on…",
+    "lastSpot": "Last spot: {{slot}}",
+    "signed": "signed {{name}} for {{pay}}",
+    "outbid": "outbid at {{bid}}",
+    "payroll": "Payroll {{pay}}",
+    "err": "That didn't go through. Try again."
   }
 }

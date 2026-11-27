@@ -14,6 +14,8 @@ import {
 } from '../../engine/party';
 import { champion } from '../../engine/playoffs';
 import type { Pool, SlotId } from '../../engine/types';
+import { resolveTakeover, seasonRosters, tkTeam } from '../../engine/partyTakeover';
+import { TakeoverRoom } from '../../ui/party/TakeoverRoom';
 import { joinRoom, leaveRoom, startRoom, submitPick, useRoom, useRoomPool, useServerNow, type Room } from '../../net/party';
 import { useFriends } from '../../store/friends';
 import { Avatar } from '../../ui/Avatar';
@@ -42,10 +44,23 @@ export default function PartyRoom() {
   const pool = useRoomPool(room?.meta);
   const now = useServerNow(offset, 4);
   const tick = Math.floor(now / 500);
-  const resolved = useMemo(() => (room && pool ? resolve(room.meta, room.members, pool, now) : null),
+  const takeover = room?.meta.kind === 'takeover';
+  const tk = useMemo(() => (room && pool && takeover ? resolveTakeover(room.meta, room.members, pool, now) : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [room, pool, tick, takeover]);
+  const draftState = useMemo(() => (room && pool && !takeover ? resolve(room.meta, room.members, pool, now) : null),
     // Re-derive twice a second and whenever the room changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [room, pool, tick]);
+  // A Takeover room maps onto the same lobby and season screens; its rebuilt teams are the season's rosters.
+  const resolved: Resolved | null = useMemo(() => {
+    if (!tk) return draftState;
+    const phase = tk.phase === 'lobby' ? 'lobby' : tk.phase === 'season' ? 'season' : 'draft';
+    return {
+      phase, round: tk.r, roundStart: tk.end ?? tk.phaseStart, deadline: tk.deadline, spin: null,
+      rosters: phase === 'season' ? seasonRosters(tk) : tk.rosters, picked: tk.chosen, autos: [], taken: new Set<string>(), draftEnd: tk.end,
+    };
+  }, [tk, draftState]);
   const members = useMemo(() => (room ? seats(room.members) : []), [room]);
   const mySeat = members.findIndex((m) => m.pin === myPin);
 
@@ -69,14 +84,15 @@ export default function PartyRoom() {
       </Screen>
     );
   }
-  if (resolved.phase === 'lobby') return <Lobby room={room} members={members} myPin={myPin} code={code!} refresh={refresh} />;
+  if (resolved.phase === 'lobby') return <Lobby room={room} members={members} myPin={myPin} code={code!} refresh={refresh} pool={pool} />;
+  if (tk && resolved.phase === 'draft') return <TakeoverRoom meta={room.meta} members={members} mySeat={mySeat} pool={pool} state={tk} now={now} code={code!} refresh={refresh} />;
   if (resolved.phase === 'draft') return <Draft room={room} members={members} mySeat={mySeat} pool={pool} state={resolved} now={now} code={code!} refresh={refresh} />;
   return <SeasonView room={room} members={members} mySeat={mySeat} pool={pool} state={resolved} now={now} />;
 }
 
 // --- Lobby -----------------------------------------------------------------------------------------
 
-function Lobby({ room, members, myPin, code, refresh }: { room: Room; members: PartyMember[]; myPin: string; code: string; refresh: () => void }) {
+function Lobby({ room, members, myPin, code, refresh, pool }: { room: Room; members: PartyMember[]; myPin: string; code: string; refresh: () => void; pool: Pool }) {
   const { t } = useTranslation();
   const host = room.meta.host === myPin;
   const [err, setErr] = useState<string | null>(null);
@@ -95,6 +111,16 @@ function Lobby({ room, members, myPin, code, refresh }: { room: Room; members: P
         <Button label={shared ? t('friends.shared') : t('party.invite')} variant="dark" icon={<Icon name="share" size={20} />}
           onPress={async () => { const r = await shareText(t('party.shareText', { code, link: `${CONFIG.webUrl}/party/${code}` })); if (r !== 'failed') setShared(true); }} testID="room-share" />
       </LinearGradient>
+      {room.meta.kind === 'takeover' && (() => {
+        const team = tkTeam(room.meta, pool);
+        return team ? (
+          <LinearGradient colors={[team.colors[0], '#0B1020']} style={styles.codeCard} testID="tk-lobby-team">
+            <Text style={styles.codeLabel}>{t('partyTk.lobby')}</Text>
+            <Display size={30}>{`${team.city} ${team.name}`}</Display>
+            <Text style={[styles.codeLabel, { textTransform: 'none', letterSpacing: 0 }]}>{t('partyTk.lobbyDesc')}</Text>
+          </LinearGradient>
+        ) : null;
+      })()}
       <Text style={styles.section}>{t('party.players', { n: members.length })}</Text>
       <View style={{ gap: S.sm }}>
         {members.map((m, i) => (
