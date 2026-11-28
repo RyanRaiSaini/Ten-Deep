@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6, shadowRadius: 24, shadowOffset: { width: 0, height: 0 }, elevation: 12, backfaceVisibility: 'hidden',
   },
   rarity: { paddingHorizontal: S.md, paddingVertical: 4, borderRadius: R.pill },
-  rarityText: { color: C.ink, fontWeight: '900', fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase' },
+  rarityText: { color: C.text, fontWeight: '900', fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase' },
   icon: { fontSize: 72 },
   title: { fontSize: 28, textAlign: 'center', ...F.display },
   flavor: { color: C.muted, fontWeight: '800', textAlign: 'center', fontSize: 15 },

@@ -24,13 +24,13 @@ import { useLeague } from '../../store/league';
 import { LeagueCard } from '../../ui/LeagueCard';
 import { TierBadge, tierName } from '../../ui/TierBadge';
 import { Text } from '../../ui/Text';
-import { C, FONT, R, S } from '../../ui/theme';
+import { alpha, C, FONT, R, S } from '../../ui/theme';
 
 type ModeKey = 'weekly' | 'franchise' | 'crisis' | 'daily';
 /** Magic vs. Bird → Jordan → Kobe → LeBron → Steph → Modern, left to right across the Time Machine banner. */
 const ERA_COLORS = ['#552583', '#CE1141', '#FDB927', '#860038', '#1D428A', '#0E7C86'];
-/** Each mode is a court banner in its own colors (court tint, light streak). */
-const MODE_H = 128;
+/** Each mode is a court tile in its own colors (court tint, light streak), two to a row. */
+const MODE_H = 118;
 
 const MODES: { key: ModeKey; icon: IconName; accent: string; court: string; streak: string; go: () => void; badge?: string }[] = [
   { key: 'weekly', icon: 'trophy', accent: C.purple, court: '#5B21B6', streak: '#FFC53D', go: () => router.push('/weekly'), badge: 'NEW' },
@@ -81,10 +81,14 @@ export default function Home() {
   const weekday = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString(i18n.language, { weekday: 'short', timeZone: 'UTC' });
 
   const startCurrent = () => { useGame.getState().newRun('current-2026'); router.push('/draft'); };
+  // Two mode tiles to a row, sized from the measured hero width (the same column).
+  const tileW = Math.max(120, Math.floor((heroW - S.md) / 2));
 
   return (
     <Screen tint={C.hardwood} tabbed>
       <View style={styles.top}>
+        <BrandLogo inline scale={winW < 380 ? 0.72 : 0.85} testID="brand-logo" />
+        <View style={{ flex: 1 }} />
         <Chip label={t('home.streak')} testID="streak-chip">
           <Icon name="flame" size={26} /><Text style={styles.chipNum}>{streak}</Text>
           {freezes > 0 && <><Icon name="freeze" size={20} /><Text style={styles.freezeNum}>{freezes}</Text></>}
@@ -93,51 +97,44 @@ export default function Home() {
           <Die size={26} color="white" /><Text style={styles.chipNum}>{rerolls}</Text>
           {freeReady && <View style={styles.freeDot} />}
         </Chip>
+        <IconButton onPress={() => router.push('/settings')} label={t('settings.title')} testID="settings"><Icon name="gear" size={28} /></IconButton>
+      </View>
+
+      <View style={styles.top2}>
         <Chip onPress={() => router.push('/profile')} testID="avatar" label={t('profile.title')}>
           <Avatar id={profile.avatarId} size={30} />
           <Text style={styles.chipFlag}>{flag}</Text>
           <Text style={styles.chipName} numberOfLines={1}>{profile.name || t('home.player')}</Text>
         </Chip>
-        <IconButton onPress={() => router.push('/settings')} label={t('settings.title')} testID="settings"><Icon name="gear" size={28} /></IconButton>
-      </View>
-
-      <View style={styles.logoRow}>
-        <Pressable onPress={() => router.push('/missions')} style={styles.tile} testID="to-missions" accessibilityRole="button" accessibilityLabel={t('missions.title')}>
-          <Icon name="clipboard" size={40} />
-          <Text style={styles.tilePct}>{pct}%</Text>
-          <View style={styles.tileBar}><View style={[styles.tileFill, { width: `${pct}%` }]} /></View>
+        <Chip onPress={() => router.push('/missions')} testID="to-missions" label={t('missions.title')}>
+          <Icon name="clipboard" size={26} />
+          <View style={{ gap: 3 }}>
+            <Text style={styles.chipSmall}>{pct}%</Text>
+            <View style={styles.missionBar}><View style={[styles.missionFill, { width: `${pct}%` }]} /></View>
+          </View>
           {claimable > 0 && <View style={styles.dot}><Text style={styles.dotText}>{claimable}</Text></View>}
-        </Pressable>
-        <View style={styles.logo}>
-          <BrandLogo scale={winW < 380 ? 1 : 1.15} testID="brand-logo" />
-          <Text style={styles.tagline} numberOfLines={1} adjustsFontSizeToFit>{t('app.tagline')}</Text>
-        </View>
-        <Pressable onPress={() => router.push('/packs')} style={styles.tile} testID="picks-banner" accessibilityRole="button" accessibilityLabel={t('collect.waiting', { count: pendingPicks })}>
-          <Icon name="gift" size={40} />
-          <Text style={styles.tileLabel}>{t('home.picks')}</Text>
+        </Chip>
+        <Chip onPress={() => router.push('/packs')} testID="picks-banner" label={t('collect.waiting', { count: pendingPicks })}>
+          <Icon name="gift" size={26} />
+          <Text style={styles.chipSmall}>{t('home.picks')}</Text>
           {pendingPicks > 0 && <View style={styles.dot}><Text style={styles.dotText}>{pendingPicks}</Text></View>}
-        </Pressable>
+        </Chip>
       </View>
 
       <View style={styles.streakBoard} testID="streak-board">
         <LinearGradient colors={['#1C2A57', '#101734']} style={StyleSheet.absoluteFill} />
         <View style={styles.streakHead}>
-          <Icon name="flame" size={24} />
+          <Icon name="flame" size={22} />
           <Text style={styles.streakNum}>{streak}</Text>
-          <Text style={styles.streakLabel}>{t('home.streak')}</Text>
+          <Text style={styles.streakLabel} numberOfLines={1}>{t('home.streak')}</Text>
         </View>
         <View style={styles.week}>
-          {days.map((d, i) => {
+          {days.map((d) => {
             const isToday = d === today;
             const done = checked(d);
-            const chained = done && i > 0 && checked(days[i - 1]);
             return (
-              <View key={d} style={styles.day}>
-                {chained && <View style={styles.chain} />}
-                <Text style={[styles.dayName, isToday && { color: '#FFC53D' }, d > today && { opacity: 0.35 }]}>{weekday(d)}</Text>
-                <View style={[styles.dayCircle, done && styles.dayDone, isToday && styles.dayCircleToday, d > today && { opacity: 0.35 }]}>
-                  {done ? <Text style={styles.dayCheck}>✓</Text> : <Text style={styles.dayNum}>{Number(d.slice(8))}</Text>}
-                </View>
+              <View key={d} accessibilityLabel={weekday(d)} style={[styles.dayCircle, done && styles.dayDone, isToday && styles.dayCircleToday, d > today && { opacity: 0.35 }]}>
+                <Text style={[styles.dayNum, done && { color: C.ink }]}>{done ? '✓' : weekday(d).slice(0, 1)}</Text>
               </View>
             );
           })}
@@ -188,7 +185,7 @@ export default function Home() {
 
       <Pressable onPress={startCurrent} testID="mode-current" accessibilityRole="button" accessibilityLabel={t('mode.current.title')}
         style={({ pressed }) => [styles.hero, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 4 }]}
-        onLayout={(e: LayoutChangeEvent) => setHeroW(e.nativeEvent.layout.width)}>
+        onLayout={(e: LayoutChangeEvent) => { const w = e.nativeEvent.layout.width; if (w > 0) setHeroW(w); }}>
         <View style={StyleSheet.absoluteFill}><CourtArt width={heroW} height={190} color={C.hardwood} /></View>
         <LinearGradient colors={['rgba(255,116,23,0)', 'rgba(214,40,90,0.55)']} start={{ x: 0.2, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
         <View style={styles.heroBody}>
@@ -231,99 +228,86 @@ export default function Home() {
         </View>
         <View style={styles.heroPlay}><Text style={styles.heroPlayText}>{t('home.play').toUpperCase()}</Text></View>
       </Pressable>
-      {MODES.map((m) => (
-        <Pressable key={m.key} onPress={m.go} testID={`mode-${m.key}`} accessibilityRole="button" accessibilityLabel={t(`mode.${m.key}.title`)}
-          style={({ pressed }) => [styles.mode, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 4 }]}>
-          <View style={[StyleSheet.absoluteFill, { borderRadius: 20, overflow: 'hidden' }]}>
-            <CourtArt width={heroW} height={MODE_H} color={m.court} color2={m.streak} />
-            <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(8,10,30,0.45)']} start={{ x: 0.3, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
-          </View>
-          <View style={{ flex: 1, gap: 4 }}>
-            <Display size={26} align="left">{t(`mode.${m.key}.title`)}</Display>
-            <Text style={styles.modeDesc} numberOfLines={3}>{t(`mode.${m.key}.desc`)}</Text>
-            {m.key === 'daily' && <DailyTimer small testID="home-daily-timer" />}
-          </View>
-          <View style={styles.modeIcon}><Icon name={m.icon} size={44} /></View>
-          {m.badge && <View style={[styles.ribbon, { backgroundColor: m.accent }]}><Text style={styles.ribbonText}>{m.badge}</Text></View>}
-        </Pressable>
-      ))}
+      <View style={styles.modeGrid}>
+        {MODES.map((m) => (
+          <Pressable key={m.key} onPress={m.go} testID={`mode-${m.key}`} accessibilityRole="button" accessibilityLabel={t(`mode.${m.key}.title`)}
+            style={({ pressed }) => [styles.mode, { width: tileW }, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 2 }]}>
+            <View style={[StyleSheet.absoluteFill, { borderRadius: 16, overflow: 'hidden' }]}>
+              <CourtArt width={tileW} height={MODE_H} color={m.court} color2={m.streak} />
+              <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(8,10,30,0.55)']} start={{ x: 0.3, y: 0 }} end={{ x: 0.6, y: 1 }} style={StyleSheet.absoluteFill} />
+            </View>
+            <View style={styles.modeIcon}><Icon name={m.icon} size={26} /></View>
+            <View style={{ gap: 2, paddingRight: 34 }}>
+              <Display size={20} align="left">{t(`mode.${m.key}.title`)}</Display>
+              <Text style={styles.modeDesc} numberOfLines={2}>{t(`mode.${m.key}.desc`)}</Text>
+              {m.key === 'daily' && <DailyTimer small testID="home-daily-timer" />}
+            </View>
+            {m.badge && <View style={[styles.ribbon, { backgroundColor: m.accent }]}><Text style={styles.ribbonText}>{m.badge}</Text></View>}
+          </Pressable>
+        ))}
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  signin: { flexDirection: 'row', alignItems: 'center', gap: S.md, backgroundColor: '#FFFFFF', borderRadius: 20, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6, padding: S.md },
-  signinTitle: { color: C.ink, fontWeight: '900', fontSize: 15 },
-  signinSub: { color: C.muted, fontWeight: '700', fontSize: 12 },
+  signin: { flexDirection: 'row', alignItems: 'center', gap: S.md, backgroundColor: C.surface, borderRadius: 20, borderWidth: 2, borderColor: C.line, borderBottomWidth: 6, borderBottomColor: C.edge, padding: S.md },
+  signinTitle: { color: C.text, fontWeight: '800', fontSize: 15 },
+  signinSub: { color: C.muted, fontWeight: '600', fontSize: 13 },
   signinGo: { color: C.muted, fontSize: 24, fontWeight: '900' },
-  freeDot: { position: 'absolute', top: -3, right: -3, width: 14, height: 14, borderRadius: 7, backgroundColor: C.danger, borderWidth: 2, borderColor: '#FFFFFF' },
-  top: { flexDirection: 'row', alignItems: 'center', gap: S.sm, paddingTop: S.md, justifyContent: 'space-between' },
-  chipNum: { fontFamily: FONT.display, fontSize: 22, color: C.ink },
+  freeDot: { position: 'absolute', top: -3, right: -3, width: 14, height: 14, borderRadius: 7, backgroundColor: C.danger, borderWidth: 2, borderColor: C.bg },
+  top: { flexDirection: 'row', alignItems: 'center', gap: S.sm, paddingTop: S.sm },
+  top2: { flexDirection: 'row', alignItems: 'center', gap: S.sm, justifyContent: 'space-between' },
+  chipNum: { fontFamily: FONT.display, fontSize: 22, color: C.text },
+  chipSmall: { fontFamily: FONT.display, fontSize: 15, color: C.text },
   chipFlag: { fontSize: 20 },
   freezeNum: { fontFamily: FONT.display, fontSize: 16, color: C.blue },
-  saved: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: '#E6F4FF', borderWidth: 2.5, borderColor: C.blue, borderBottomWidth: 6 },
-  chipName: { fontWeight: '900', fontSize: 16, color: C.ink, maxWidth: 110 },
-  logoRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm, marginTop: S.sm },
-  tile: {
-    width: 76, height: 84, borderRadius: 18, backgroundColor: '#FFFFFF', borderWidth: 2, borderColor: C.line, borderBottomWidth: 5,
-    borderBottomColor: C.edge, alignItems: 'center', justifyContent: 'center', gap: 2,
-  },
-  tilePct: { fontFamily: FONT.display, fontSize: 17, color: C.ink },
-  tileLabel: { fontFamily: FONT.display, fontSize: 15, color: C.ink },
-  tileBar: { width: 50, height: 6, borderRadius: 3, backgroundColor: C.line, overflow: 'hidden' },
-  tileFill: { height: 6, backgroundColor: C.hardwood },
-  dot: { position: 'absolute', top: -8, right: -8, minWidth: 24, height: 24, borderRadius: 12, backgroundColor: C.danger, borderWidth: 2, borderColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5 },
-  dotText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12 },
-  logo: { flex: 1, alignItems: 'center' },
-  logoBall: { position: 'absolute', top: -22, right: 4, transform: [{ rotate: '-18deg' }] },
-  tagline: { fontWeight: '800', color: C.ink, fontSize: 12.5, marginTop: 2, textAlign: 'center' },
+  saved: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: alpha(C.blue, 0.16), borderWidth: 2, borderColor: C.blue, borderBottomWidth: 6 },
+  chipName: { fontWeight: '800', fontSize: 15, color: C.text, maxWidth: 96 },
+  missionBar: { width: 40, height: 5, borderRadius: 3, backgroundColor: C.line, overflow: 'hidden' },
+  missionFill: { height: 5, backgroundColor: C.hardwood },
+  dot: { position: 'absolute', top: -8, right: -8, minWidth: 22, height: 22, borderRadius: 11, backgroundColor: C.danger, borderWidth: 2, borderColor: C.bg, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5 },
+  dotText: { color: '#FFFFFF', fontWeight: '800', fontSize: 11 },
   streakBoard: {
-    marginTop: S.sm, borderRadius: 22, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6,
-    paddingHorizontal: S.md, paddingTop: S.sm, paddingBottom: S.md, gap: 6,
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: S.sm, borderRadius: 16, overflow: 'hidden',
+    borderWidth: 1, borderColor: C.line, paddingHorizontal: S.md, paddingVertical: 10,
   },
-  streakHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  streakNum: { fontFamily: FONT.display, fontSize: 22, color: '#FFC53D' },
-  streakLabel: { color: '#C9D2EE', fontWeight: '900', fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase' },
-  week: { flexDirection: 'row', justifyContent: 'space-between' },
-  day: { flex: 1, alignItems: 'center', gap: 4 },
-  chain: { position: 'absolute', bottom: 18, right: '50%', width: '100%', height: 6, borderRadius: 3, backgroundColor: '#FF7417', shadowColor: '#FF9A3D', shadowOpacity: 0.9, shadowRadius: 6 },
-  dayName: { fontWeight: '800', color: '#AEB6CC', fontSize: 12 },
-  dayCircle: { width: 38, height: 38, borderRadius: 19, borderWidth: 2.5, borderColor: '#3B4A7A', backgroundColor: '#1A2447', alignItems: 'center', justifyContent: 'center' },
-  dayDone: { backgroundColor: '#FF7417', borderColor: '#FFC53D', shadowColor: '#FF9A3D', shadowOpacity: 0.9, shadowRadius: 8 },
-  dayCircleToday: { width: 44, height: 44, borderRadius: 22, borderColor: '#FFC53D', borderWidth: 3.5 },
-  dayCheck: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 20, marginTop: -1 },
-  dayNum: { fontFamily: FONT.display, fontSize: 16, color: '#C9D2EE' },
+  streakHead: { flexDirection: 'row', alignItems: 'center', gap: 6, flexShrink: 1 },
+  streakNum: { fontFamily: FONT.display, fontSize: 22, color: C.accent },
+  streakLabel: { color: '#C9D2EE', fontWeight: '800', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase', flexShrink: 1 },
+  week: { flexDirection: 'row', gap: 4, flexShrink: 0 },
+  dayCircle: { width: 22, height: 22, borderRadius: 11, borderWidth: 2, borderColor: '#3B4A7A', backgroundColor: '#1A2447', alignItems: 'center', justifyContent: 'center' },
+  dayDone: { backgroundColor: C.hardwood, borderColor: C.hardwood },
+  dayCircleToday: { borderColor: C.accent, borderWidth: 2.5 },
+  dayNum: { fontFamily: FONT.display, fontSize: 11, color: '#C9D2EE' },
   hero: {
-    height: 190, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, marginTop: S.sm,
+    height: 190, borderRadius: 24, overflow: 'hidden', borderWidth: 2, borderColor: alpha('#FFFFFF', 0.14), borderBottomWidth: 6, borderBottomColor: C.edge, marginTop: S.sm,
     justifyContent: 'center',
   },
   heroBody: { paddingHorizontal: S.xl, gap: 2, paddingBottom: 40, maxWidth: '100%' },
-  heroKicker: { color: '#FFFFFF', fontWeight: '900', letterSpacing: 2, fontSize: 13 },
-  heroDesc: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, maxWidth: '58%', textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
+  heroKicker: { color: '#FFFFFF', fontWeight: '800', letterSpacing: 2, fontSize: 12 },
+  heroDesc: { color: '#FFFFFF', fontWeight: '700', fontSize: 14, maxWidth: '58%', textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
   heroPlay: {
-    position: 'absolute', right: 16, bottom: 16, backgroundColor: '#FFFFFF', borderRadius: R.pill, paddingHorizontal: 22, paddingVertical: 10,
-    borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6,
+    position: 'absolute', right: 16, bottom: 16, backgroundColor: C.accent, borderRadius: R.md, paddingHorizontal: 22, paddingVertical: 10,
+    borderBottomWidth: 5, borderBottomColor: C.accentEdge,
   },
-  heroPlayText: { fontFamily: FONT.display, fontSize: 22, color: C.ink },
-  duel: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 22, backgroundColor: '#FFFFFF', borderWidth: 2.5, borderColor: C.line, borderBottomWidth: 6, borderBottomColor: C.edge },
+  heroPlayText: { fontFamily: FONT.condensed, fontSize: 22, letterSpacing: 1, color: C.onAccent },
+  duel: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 22, backgroundColor: C.surface, borderWidth: 2, borderColor: C.line, borderBottomWidth: 6, borderBottomColor: C.edge },
   duelRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   faces: { flexDirection: 'row' },
-  face: { borderRadius: 18, borderWidth: 2.5, borderColor: '#FFFFFF' },
-  duelPill: { borderRadius: R.pill, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 4, paddingHorizontal: 14, paddingVertical: 5, backgroundColor: '#FFFFFF' },
-  duelPillText: { fontWeight: '900', color: C.ink, fontSize: 14 },
+  face: { borderRadius: 18, borderWidth: 2.5, borderColor: C.bg },
+  duelPill: { borderRadius: R.pill, borderWidth: 2, borderColor: C.line, borderBottomWidth: 4, borderBottomColor: C.edge, paddingHorizontal: 14, paddingVertical: 5, backgroundColor: C.surface2 },
+  duelPillText: { fontWeight: '800', color: C.text, fontSize: 14 },
+  modeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: S.md },
   mode: {
-    flexDirection: 'row', alignItems: 'center', gap: S.md, paddingHorizontal: S.lg, paddingVertical: S.md, minHeight: MODE_H,
-    borderRadius: 24, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, overflow: 'visible',
+    minHeight: MODE_H, padding: S.md, paddingTop: S.sm, borderRadius: 18, borderWidth: 2, borderColor: alpha('#FFFFFF', 0.14), borderBottomWidth: 5,
+    borderBottomColor: C.edge, justifyContent: 'flex-end', overflow: 'visible',
   },
-  modeIcon: {
-    width: 70, height: 70, borderRadius: 35, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center',
-    borderWidth: 3, borderColor: C.ink, borderBottomWidth: 5,
-  },
-  badge: { width: 62, height: 62, borderRadius: 16, borderWidth: 2.5, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' },
-  modeDesc: { color: '#FFFFFF', fontSize: 13, lineHeight: 17, fontWeight: '800', textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
-  result: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: '#FFF1D6', borderWidth: 2.5, borderColor: C.gold, borderBottomWidth: 6 },
-  resultTitle: { fontFamily: FONT.display, fontSize: 19, color: C.ink },
-  resultSub: { color: C.muted, fontWeight: '800', fontSize: 13 },
-  ribbon: { position: 'absolute', top: -12, right: 18, paddingHorizontal: 12, paddingVertical: 3, borderRadius: R.pill, borderWidth: 2, borderColor: '#FFFFFF' },
-  ribbonText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1.5 },
+  modeIcon: { position: 'absolute', top: 8, right: 8, width: 40, height: 40, borderRadius: 20, backgroundColor: alpha(C.bg, 0.55), alignItems: 'center', justifyContent: 'center' },
+  modeDesc: { color: '#FFFFFF', fontSize: 12, lineHeight: 15, fontWeight: '700', textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } },
+  result: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: alpha(C.gold, 0.16), borderWidth: 2, borderColor: C.gold, borderBottomWidth: 6 },
+  resultTitle: { fontFamily: FONT.display, fontSize: 19, color: C.text },
+  resultSub: { color: C.muted, fontWeight: '700', fontSize: 13 },
+  ribbon: { position: 'absolute', top: -12, right: 12, paddingHorizontal: 10, paddingVertical: 3, borderRadius: R.pill, borderWidth: 2, borderColor: C.bg },
+  ribbonText: { color: C.ink, fontWeight: '800', fontSize: 11, letterSpacing: 1.2 },
 });

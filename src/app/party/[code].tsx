@@ -323,7 +323,7 @@ function SeasonView({ room, members, mySeat, pool, state, now }: { room: Room; m
                 <View key={team} style={[styles.tRow, ours && { backgroundColor: alpha(PARTY_COLORS[team % 8][0], 0.14) }]}>
                   <Text style={styles.tRank}>{i + 1}</Text>
                   <View style={[styles.tDot, { backgroundColor: ours ? PARTY_COLORS[team % 8][0] : ps.season.teams[team].colors[0] }]} />
-                  <Text style={[styles.tName, ours && { fontWeight: '900', color: C.ink }]} numberOfLines={1}>{ours ? members[team].name : ps.season.teams[team].name}</Text>
+                  <Text style={[styles.tName, ours && { fontWeight: '900', color: C.text }]} numberOfLines={1}>{ours ? members[team].name : ps.season.teams[team].name}</Text>
                   <Text style={styles.tW}>{w}-{g - w}</Text>
                 </View>
               );
@@ -359,11 +359,11 @@ function SeasonView({ room, members, mySeat, pool, state, now }: { room: Room; m
 const styles = StyleSheet.create({
   center: { color: C.muted, fontWeight: '700', textAlign: 'center', paddingVertical: S.md },
   error: { color: C.danger, fontWeight: '800', textAlign: 'center' },
-  section: { fontFamily: FONT.display, fontSize: 22, color: C.ink },
+  section: { fontFamily: FONT.display, fontSize: 22, color: C.text },
   codeCard: { borderRadius: 24, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, padding: S.lg, alignItems: 'center', gap: S.sm },
   codeLabel: { color: '#E3FFF0', fontWeight: '900', letterSpacing: 2, textTransform: 'uppercase', fontSize: 12 },
-  member: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.sm, borderRadius: R.lg, backgroundColor: '#FFFFFF', borderWidth: 2.5, borderBottomWidth: 5 },
-  memberName: { flex: 1, fontWeight: '900', fontSize: 16, color: C.ink },
+  member: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.sm, borderRadius: R.lg, backgroundColor: C.surface, borderWidth: 2.5, borderBottomWidth: 5 },
+  memberName: { flex: 1, fontWeight: '900', fontSize: 16, color: C.text },
   hostTag: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#FFF1D6', borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 3 },
   hostText: { fontWeight: '900', color: '#9A6200', fontSize: 12 },
   clock: { minWidth: 48, height: 40, borderRadius: 20, backgroundColor: C.ink, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10 },
@@ -372,27 +372,27 @@ const styles = StyleSheet.create({
   barFill: { height: 10, borderRadius: 5 },
   seatRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center' },
   seat: { borderWidth: 3, borderRadius: 24, backgroundColor: C.surface2 },
-  check: { position: 'absolute', right: -6, bottom: -6, backgroundColor: '#FFFFFF', borderRadius: 12 },
+  check: { position: 'absolute', right: -6, bottom: -6, backgroundColor: C.surface, borderRadius: 12 },
   spin: { borderRadius: 22, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, paddingVertical: S.lg, alignItems: 'center', gap: 2 },
   spinLabel: { color: '#FFFFFF', fontWeight: '900', letterSpacing: 2, opacity: 0.9 },
   hint: { color: C.muted, fontSize: 12, fontWeight: '700', textAlign: 'center' },
-  locked: { fontWeight: '900', color: C.ink, fontSize: 16, textAlign: 'center' },
-  gameNo: { fontFamily: FONT.display, fontSize: 22, color: C.ink, textAlign: 'center' },
-  raceRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm, padding: S.sm, borderRadius: R.lg, backgroundColor: '#FFFFFF', borderWidth: 2, borderColor: C.line },
+  locked: { fontWeight: '900', color: C.text, fontSize: 16, textAlign: 'center' },
+  gameNo: { fontFamily: FONT.display, fontSize: 22, color: C.text, textAlign: 'center' },
+  raceRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm, padding: S.sm, borderRadius: R.lg, backgroundColor: C.surface, borderWidth: 2, borderColor: C.line },
   mine: { borderColor: C.ink, borderWidth: 2.5, backgroundColor: '#FFF7E8' },
   raceTrack: { height: 10, borderRadius: 5, backgroundColor: C.surface2, overflow: 'hidden' },
   raceFill: { height: 10, borderRadius: 5 },
-  raceW: { fontFamily: FONT.display, fontSize: 20, color: C.ink },
+  raceW: { fontFamily: FONT.display, fontSize: 20, color: C.text },
   raceRank: { color: C.muted, fontWeight: '800', fontSize: 12 },
-  podium: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: '#FFFFFF', borderWidth: 2.5, borderColor: C.line, borderBottomWidth: 5 },
+  podium: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: C.surface, borderWidth: 2.5, borderColor: C.line, borderBottomWidth: 5 },
   first: { borderColor: '#E09A00', backgroundColor: '#FFF4D6' },
-  table: { backgroundColor: '#FFFFFF', borderRadius: R.lg, borderWidth: 2, borderColor: C.line, padding: 6, gap: 2 },
+  table: { backgroundColor: C.surface, borderRadius: R.lg, borderWidth: 2, borderColor: C.line, padding: 6, gap: 2 },
   tRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 5, paddingHorizontal: 8, borderRadius: 10 },
   tRank: { width: 22, fontFamily: FONT.display, fontSize: 15, color: C.muted, textAlign: 'center' },
   tDot: { width: 12, height: 12, borderRadius: 6, borderWidth: 1.5, borderColor: C.ink },
   tName: { flex: 1, color: C.text, fontWeight: '700', fontSize: 14 },
-  tW: { fontFamily: FONT.display, fontSize: 15, color: C.ink },
-  place: { fontFamily: FONT.display, fontSize: 24, color: C.ink, width: 40 },
+  tW: { fontFamily: FONT.display, fontSize: 15, color: C.text },
+  place: { fontFamily: FONT.display, fontSize: 24, color: C.text, width: 40 },
 });
 
 /** A seat's rarest pull: finish chip + card name. */

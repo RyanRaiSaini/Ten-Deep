@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
   lit: { borderColor: '#0FA876', borderWidth: 4, borderStyle: 'solid', backgroundColor: '#D6FBEA', transform: [{ scale: 1.08 }] },
   ovr: { fontFamily: FONT.display, color: '#FFFFFF' },
   pos: { fontFamily: FONT.display, color: alpha(C.ink, 0.6), fontSize: 16 },
-  posTag: { position: 'absolute', top: -8, right: -10, backgroundColor: '#FFFFFF', borderRadius: 8, paddingHorizontal: 4, borderWidth: 2, borderColor: C.ink },
-  posTagText: { fontSize: 10, fontWeight: '900', color: C.ink },
-  namePill: { backgroundColor: '#FFFFFF', borderRadius: R.pill, paddingHorizontal: 8, paddingVertical: 2, borderWidth: 2, borderColor: C.ink, maxWidth: 86 },
-  name: { color: C.ink, fontSize: 11, fontWeight: '900' },
+  posTag: { position: 'absolute', top: -8, right: -10, backgroundColor: C.surface, borderRadius: 8, paddingHorizontal: 4, borderWidth: 2, borderColor: C.ink },
+  posTagText: { fontSize: 10, fontWeight: '900', color: C.text },
+  namePill: { backgroundColor: C.surface, borderRadius: R.pill, paddingHorizontal: 8, paddingVertical: 2, borderWidth: 2, borderColor: C.ink, maxWidth: 86 },
+  name: { color: C.text, fontSize: 11, fontWeight: '900' },
   bench: {
-    flexDirection: 'row', gap: 4, backgroundColor: '#FFFFFF', borderRadius: R.lg, padding: S.sm, paddingTop: S.md,
+    flexDirection: 'row', gap: 4, backgroundColor: C.surface, borderRadius: R.lg, padding: S.sm, paddingTop: S.md,
     borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge,
   },
 });

@@ -12,7 +12,7 @@ import { useGame } from '../store/game';
 import { feel } from '../audio/feel';
 import { Icon } from './icons';
 import { Text } from './Text';
-import { F, R, S } from './theme';
+import { C, F, R, S } from './theme';
 
 const NICK = new Map(current2026.teams.map((t) => [franchiseOf(t), t.name]));
 /** An era's team names (its cap season's): the Bullets, the SuperSonics, the Vancouver Grizzlies. */
@@ -69,7 +69,7 @@ export function DivisionPicker({ seed, fixed = false, startOpen = false, onPick,
                   <Pressable key={d.id} testID={`division-${d.id}`} accessibilityRole="button" accessibilityState={{ selected: di === div }}
                     onPress={() => { useGame.getState().setDivision(di); feel('tick'); onPick?.(); }}
                     style={({ pressed }) => [styles.tile, di === div && styles.tileOn, pressed && { transform: [{ translateY: 2 }] }]}>
-                    <Text style={[styles.tileName, di === div && { color: '#17121E' }]}>{t(`conf.${d.id}`)}</Text>
+                    <Text style={[styles.tileName, di === div && { color: C.text }]}>{t(`conf.${d.id}`)}</Text>
                     <Text style={[styles.tileTeams, di === div && { color: '#3A2A00' }]} numberOfLines={2}>
                       {d.franchises.map((f) => names.get(f)).join(' · ')}
                     </Text>

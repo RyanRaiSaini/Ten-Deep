@@ -177,10 +177,10 @@ const styles = StyleSheet.create({
   tagline: { color: '#FFFFFF', fontWeight: '800', fontSize: 14, maxWidth: '62%', ...shadowText },
   count: { color: 'rgba(255,255,255,0.8)', fontWeight: '800', fontSize: 12, marginTop: 2 },
   play: {
-    position: 'absolute', right: 16, bottom: 16, backgroundColor: '#FFFFFF', borderRadius: R.pill, paddingHorizontal: 20, paddingVertical: 8,
+    position: 'absolute', right: 16, bottom: 16, backgroundColor: C.surface, borderRadius: R.pill, paddingHorizontal: 20, paddingVertical: 8,
     borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6,
   },
-  playText: { fontFamily: FONT.display, fontSize: 20, color: C.ink },
+  playText: { fontFamily: FONT.display, fontSize: 20, color: C.text },
   grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -S.xs },
   cell: { width: '50%', padding: S.xs },
   tile: { height: TILE_H, borderRadius: 20, overflow: 'hidden', borderWidth: 3, borderBottomWidth: 7, justifyContent: 'flex-end' },

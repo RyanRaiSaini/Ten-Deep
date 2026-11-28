@@ -204,7 +204,7 @@ export default function Playoffs() {
 
 const styles = StyleSheet.create({
   stake: { gap: S.sm, alignItems: 'center', borderColor: C.hardwood, borderBottomColor: '#C2500A', backgroundColor: '#FFF1E3' },
-  stakeBody: { color: C.ink, fontWeight: '700', textAlign: 'center' },
+  stakeBody: { color: C.text, fontWeight: '700', textAlign: 'center' },
   snapBadge: { flexDirection: 'row', alignSelf: 'center', alignItems: 'center', gap: 6, backgroundColor: C.hardwood, borderRadius: 999, paddingHorizontal: 14, paddingVertical: 4 },
   snapText: { color: '#FFFFFF', fontWeight: '900', letterSpacing: 1 },
   big: { color: '#FFFFFF', fontSize: 20, textAlign: 'center', ...F.display },

@@ -6,8 +6,8 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "backgroundColor": "#FFF4E6",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0F17",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.tendeep",
@@ -44,7 +44,7 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#FFF4E6",
+          "backgroundColor": "#0B0F17",
           "image": "./assets/splash-icon.png",
           "imageWidth": 220,
           "resizeMode": "contain"

@@ -123,7 +123,7 @@ export default function Pick() {
 
 const styles = StyleSheet.create({
   prompt: { color: C.text, fontSize: 24, ...F.display },
-  side: { padding: S.lg, borderRadius: R.md + 4, borderWidth: 2.5, backgroundColor: '#FFFFFF', gap: 2, borderBottomWidth: 7 },
+  side: { padding: S.lg, borderRadius: R.md + 4, borderWidth: 2.5, backgroundColor: C.surface, gap: 2, borderBottomWidth: 7 },
   title: { color: C.text, fontSize: 18, fontWeight: '900' },
   sub: { color: C.muted, fontSize: 13 },
   value: { fontSize: 26, ...F.display },

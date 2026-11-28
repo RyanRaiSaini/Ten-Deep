@@ -112,9 +112,9 @@ export default function Office() {
 const styles = StyleSheet.create({
   info: { flexDirection: 'row', alignItems: 'center', gap: S.md },
   desc: { flex: 1, color: C.text, fontSize: 14, lineHeight: 20 },
-  room: { color: C.ink, fontWeight: '900', fontSize: 15 },
+  room: { color: C.text, fontWeight: '900', fontSize: 15 },
   note: { fontWeight: '800', fontSize: 13 },
-  budget: { color: C.ink, fontWeight: '800', fontSize: 14 },
+  budget: { color: C.text, fontWeight: '800', fontSize: 14 },
   option: { gap: S.sm, padding: S.sm, borderRadius: R.md, borderWidth: 2, backgroundColor: C.surface },
   optionHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   tier: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1, textTransform: 'uppercase', paddingHorizontal: 10, paddingVertical: 3, borderRadius: R.pill, overflow: 'hidden' },

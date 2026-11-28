@@ -120,14 +120,14 @@ function Side({ avatar, name, wins, color }: { avatar: string; name: string; win
 }
 
 const styles = StyleSheet.create({
-  board: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 24, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 7, padding: S.md },
+  board: { flexDirection: 'row', alignItems: 'center', backgroundColor: C.surface, borderRadius: 24, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 7, padding: S.md },
   side: { flex: 1, alignItems: 'center', gap: 2 },
   ring: { borderRadius: 40, borderWidth: 4, backgroundColor: C.surface2 },
-  name: { fontWeight: '900', color: C.ink, fontSize: 15, maxWidth: 130 },
+  name: { fontWeight: '900', color: C.text, fontSize: 15, maxWidth: 130 },
   wins: { fontFamily: FONT.display, fontSize: 52, lineHeight: 56 },
-  game: { flexDirection: 'row', alignItems: 'center', gap: S.sm, backgroundColor: '#FFFFFF', borderRadius: R.md, borderWidth: 2, paddingHorizontal: S.md, paddingVertical: 8 },
+  game: { flexDirection: 'row', alignItems: 'center', gap: S.sm, backgroundColor: C.surface, borderRadius: R.md, borderWidth: 2, paddingHorizontal: S.md, paddingVertical: 8 },
   gameNo: { fontWeight: '900', color: C.muted, width: 34 },
-  score: { flex: 1, textAlign: 'center', fontFamily: FONT.display, fontSize: 24, color: C.ink },
+  score: { flex: 1, textAlign: 'center', fontFamily: FONT.display, fontSize: 24, color: C.text },
   dash: { color: C.muted, fontWeight: '900' },
   dot: { width: 12, height: 12, borderRadius: 6 },
   record: { textAlign: 'center', color: C.muted, fontWeight: '800' },

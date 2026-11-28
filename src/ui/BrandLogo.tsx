@@ -27,7 +27,16 @@ export function FlyingBall({ size = 64 }: { size?: number }) {
  * The Ten Deep wordmark: stacked, tilted, white letters with an ink outline and an orange 3D extrusion,
  * a basketball flying in from the corner.
  */
-export function BrandLogo({ scale = 1, testID }: { scale?: number; testID?: string }) {
+export function BrandLogo({ scale = 1, testID, inline = false }: { scale?: number; testID?: string; inline?: boolean }) {
+  // One-line wordmark for a header row: the ball, then the letters, no tilt.
+  if (inline) {
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }} testID={testID} accessibilityRole="header" accessibilityLabel="Ten Deep">
+        <FlyingBall size={26 * scale} />
+        <Display size={26 * scale} extrude={C.hardwood}>TEN DEEP</Display>
+      </View>
+    );
+  }
   return (
     <View style={{ alignItems: 'center', alignSelf: 'center' }} testID={testID} accessibilityRole="header" accessibilityLabel="Ten Deep">
       <View style={{ transform: [{ rotate: '-6deg' }], alignItems: 'center' }}>

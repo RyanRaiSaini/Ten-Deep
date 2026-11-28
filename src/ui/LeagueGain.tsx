@@ -46,12 +46,12 @@ export function LeagueGain({ gained, stake }: { gained: number; stake?: 'snap' |
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: '#FFFFFF',
+    flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, backgroundColor: C.surface,
     borderWidth: 2, borderColor: C.line, borderBottomWidth: 6, borderBottomColor: C.edge,
   },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   gain: { fontFamily: FONT.display, fontSize: 24, color: '#14A86B' },
-  rank: { fontFamily: FONT.display, fontSize: 18, color: C.ink },
+  rank: { fontFamily: FONT.display, fontSize: 18, color: C.text },
   track: { height: 14, borderRadius: R.pill, backgroundColor: C.surface2, borderWidth: 2, borderColor: C.ink, overflow: 'hidden' },
   fill: { height: '100%', backgroundColor: '#18C08A' },
   line: { position: 'absolute', right: 0, top: 0, bottom: 0, width: 4, backgroundColor: '#FFC53D' },

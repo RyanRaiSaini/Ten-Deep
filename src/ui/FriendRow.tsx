@@ -35,10 +35,10 @@ export function FriendRow({ f }: { f: Friend }) {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.sm + 2, borderRadius: R.lg, backgroundColor: '#FFFFFF',
+    flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.sm + 2, borderRadius: R.lg, backgroundColor: C.surface,
     borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge,
   },
-  name: { fontSize: 17, fontWeight: '900', color: C.ink },
+  name: { fontSize: 17, fontWeight: '900', color: C.text },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   meta: { fontSize: 13, color: C.muted, fontWeight: '700' },
   rec: { minWidth: 58, alignItems: 'center', borderWidth: 2.5, borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 4 },

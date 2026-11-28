@@ -1,9 +1,11 @@
 // Import only the weights the game uses, so the other font styles stay out of the app.
 import { startCampaignTracking } from '../net/campaign';
-import { Montserrat_500Medium } from '@expo-google-fonts/montserrat/500Medium';
-import { Montserrat_600SemiBold } from '@expo-google-fonts/montserrat/600SemiBold';
-import { Montserrat_700Bold } from '@expo-google-fonts/montserrat/700Bold';
-import { Montserrat_800ExtraBold } from '@expo-google-fonts/montserrat/800ExtraBold';
+import { Barlow_500Medium } from '@expo-google-fonts/barlow/500Medium';
+import { Barlow_600SemiBold } from '@expo-google-fonts/barlow/600SemiBold';
+import { Barlow_700Bold } from '@expo-google-fonts/barlow/700Bold';
+import { Barlow_800ExtraBold } from '@expo-google-fonts/barlow/800ExtraBold';
+import { BarlowCondensed_700Bold } from '@expo-google-fonts/barlow-condensed/700Bold';
+import { BarlowCondensed_800ExtraBold } from '@expo-google-fonts/barlow-condensed/800ExtraBold';
 import { LilitaOne_400Regular } from '@expo-google-fonts/lilita-one/400Regular';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -40,7 +42,9 @@ const useHydrated = () => useSyncExternalStore(onHydration, allHydrated, allHydr
 export default function RootLayout() {
   const language = useSettings((s) => s.language);
   const hydrated = useHydrated();
-  const [fontsLoaded, fontError] = useFonts({ LilitaOne_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold, Montserrat_800ExtraBold });
+  const [fontsLoaded, fontError] = useFonts({
+    LilitaOne_400Regular, Barlow_500Medium, Barlow_600SemiBold, Barlow_700Bold, Barlow_800ExtraBold, BarlowCondensed_700Bold, BarlowCondensed_800ExtraBold,
+  });
   // Fonts that fail to load fall back to system fonts rather than blocking the game.
   const ready = hydrated && (fontsLoaded || !!fontError);
   useNotificationSync(ready);
@@ -64,7 +68,7 @@ export default function RootLayout() {
   if (!ready) return <Loading />;
   return (
     <SafeAreaProvider>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: C.bg }, animation: 'fade' }} />
       <AchievementToast />
     </SafeAreaProvider>

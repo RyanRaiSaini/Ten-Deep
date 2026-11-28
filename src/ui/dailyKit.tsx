@@ -37,7 +37,7 @@ export function Choice({ label, index, state, onPress, testID }: { label: string
         state === 'dim' && { opacity: 0.55 }, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 2 },
       ]}
     >
-      <View style={[styles.letter, (state === 'right' || state === 'wrong') && { backgroundColor: '#FFFFFF' }]}>
+      <View style={[styles.letter, (state === 'right' || state === 'wrong') && { backgroundColor: C.surface }]}>
         <Text style={styles.letterText}>{LETTERS[index]}</Text>
       </View>
       <Text style={[styles.choiceText, { color: fg }]}>{label}</Text>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 6, borderBottomColor: C.edge,
   },
   letter: { width: 34, height: 34, borderRadius: 10, backgroundColor: C.surface2, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: C.ink },
-  letterText: { fontFamily: FONT.display, fontSize: 18, color: C.ink },
+  letterText: { fontFamily: FONT.display, fontSize: 18, color: C.text },
   choiceText: { flex: 1, fontSize: 17, fontWeight: '900' },
   card: {
     alignItems: 'center', gap: S.md, paddingVertical: S.xl, paddingHorizontal: S.lg, borderRadius: 26, overflow: 'hidden',

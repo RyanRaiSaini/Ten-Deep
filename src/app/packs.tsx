@@ -480,7 +480,7 @@ const styles = StyleSheet.create({
   powerOdds: { color: '#D9D2F0', fontWeight: '800', fontSize: 12, textAlign: 'center' },
   upgraded: { fontFamily: FONT.display, fontSize: 26, color: '#7FB2FF', textAlign: 'center' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 10 },
-  selected: { shadowColor: '#FFFFFF', shadowOpacity: 1, shadowRadius: 16, borderRadius: R.md },
+  selected: { shadowColor: C.accent, shadowOpacity: 1, shadowRadius: 18, borderRadius: R.md },
   empty: { color: C.text, fontSize: 18, textAlign: 'center', marginTop: S.xxl },
   streak: { color: C.gold, textAlign: 'center', fontWeight: '800' },
   oddsToggle: { color: '#D9D2F0', textAlign: 'center', fontWeight: '700' },

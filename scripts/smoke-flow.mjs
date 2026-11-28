@@ -83,7 +83,8 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('back').last().click(); // the season screen's own back button stays mounted underneath
     await page.getByTestId('skip-playoffs').waitFor();
     // Opening the bench switch paused the season: it waits for Resume.
-    if (!(await page.getByTestId('season-pause').innerText()).includes('Resume')) throw new Error('season did not pause for the bench switch');
+    // Button labels render in caps, so compare case-insensitively.
+    if (!(await page.getByTestId('season-pause').innerText()).toLowerCase().includes('resume')) throw new Error('season did not pause for the bench switch');
     await page.getByTestId('season-pause').click();
   });
 

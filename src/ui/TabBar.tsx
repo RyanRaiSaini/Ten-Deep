@@ -93,13 +93,13 @@ export function TabBar({ state, navigateToTab, insets }: BottomTabBarProps) {
 }
 
 const styles = StyleSheet.create({
-  bar: { backgroundColor: '#FFFFFF', borderTopWidth: 2, borderTopColor: C.line, paddingTop: 6 },
+  bar: { backgroundColor: C.bg, borderTopWidth: 1, borderTopColor: C.line, paddingTop: 6 },
   items: { flexDirection: 'row', alignItems: 'flex-end', width: '100%', maxWidth: 760, alignSelf: 'center' },
   raised: {
-    position: 'absolute', left: 0, top: -30, bottom: -6, backgroundColor: '#F7F2EA', borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 0,
+    position: 'absolute', left: 0, top: -30, bottom: -6, backgroundColor: C.surface, borderWidth: 2, borderColor: C.line, borderBottomWidth: 0,
     borderTopLeftRadius: 18, borderTopRightRadius: 18,
   },
   item: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 2, paddingVertical: 6, height: 64 },
   labels: { height: 26, alignItems: 'center', justifyContent: 'center' },
-  label: { fontSize: 11, color: C.muted, fontFamily: FONT.display, letterSpacing: 0.6, textTransform: 'uppercase' },
+  label: { fontSize: 11, color: C.muted, fontFamily: FONT.condensedBold, letterSpacing: 0.8, textTransform: 'uppercase' },
 });

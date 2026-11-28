@@ -129,7 +129,7 @@ function CloudSave() {
 
 const styles = StyleSheet.create({
   small: { color: C.muted, fontSize: 13, fontWeight: '700', textAlign: 'center' },
-  input: { borderWidth: 2, borderColor: C.line, borderRadius: R.md, padding: S.md, color: C.ink, backgroundColor: C.bg, fontFamily: 'Montserrat_600SemiBold' },
+  input: { borderWidth: 2, borderColor: C.line, borderRadius: R.md, padding: S.md, color: C.text, backgroundColor: C.bg, fontFamily: 'Montserrat_600SemiBold' },
   group: { paddingVertical: S.sm, gap: 2 },
   sub: { color: C.text, fontSize: 15, paddingTop: S.sm, paddingBottom: S.sm },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: S.sm, paddingBottom: S.sm },
