@@ -335,6 +335,12 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('trade-give').first().click();
     await page.getByTestId('trade-team').first().click();
     await page.getByTestId('trade-want').first().click();
+    await page.getByTestId('trade-meter').waitFor();
+    // Not a yes yet: ask their GM what it would take (a counter fills the deal in, or says nothing small works).
+    if (await page.getByTestId('trade-ask').isEnabled()) {
+      await page.getByTestId('trade-ask').click();
+      await page.getByTestId('trade-msg').waitFor();
+    }
     await page.getByTestId('trade-propose').click();
     await page.getByTestId('trade-msg').waitFor();
     await shot('35-trade');

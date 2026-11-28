@@ -175,9 +175,10 @@ function OffseasonScreen() {
       <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.navigate('/career')} />} />
       <Text style={styles.big}>{t('career.openSpots', { count: open })}</Text>
       <Button label={t('trade.title')} icon={<Icon name="swap" size={22} />} variant="secondary" onPress={() => router.push('/trade')} testID="to-trade" />
-      {chosen ? (
-        <RosterBoard roster={user.slots} highlight={chosen.slots} onSlot={(s) => chosen.slots.includes(s) && sign(chosen.player, s)} />
+      {chosen || open > 0 ? (
+        <RosterBoard roster={user.slots} highlight={chosen?.slots} onSlot={chosen ? (s) => chosen.slots.includes(s) && sign(chosen.player, s) : undefined} />
       ) : (
+        // Roster full: the board becomes the lineup editor.
         <>
           <Label>{t('career.lineup')}</Label>
           <Text style={[styles.muted, lineupBad && { color: C.danger }]} testID="lineup-hint">{lineupBad ? t('career.lineupBad') : t('career.lineupHint')}</Text>

@@ -39,6 +39,8 @@ export interface OffseasonState {
   picks: Record<number, string>;
   /** Your players traded away this offseason. */
   traded?: string[];
+  /** Trade offers you turned down this offseason (they don't come back). */
+  declined?: string[];
 }
 
 export const RESIGN_THRESHOLD = 75;
@@ -59,6 +61,7 @@ export function askingPrice(p: Pick<Player, 'ovr'>): number {
 }
 
 /** Released players hit the market at their current asking price. */
+export const released = (p: Player): Player => unsigned(p);
 const unsigned = (p: Player): Player => { const { salary: _s, contractType: _c, ...rest } = p; return { ...rest, released: true, salary: askingPrice(rest) }; };
 /** A new deal replaces the old one, including what kind it was (a re-signed rookie is no longer on the scale). */
 const signedAt = (p: Player, salary = askingPrice(p)): Player => ({ ...unsigned(p), salary });
