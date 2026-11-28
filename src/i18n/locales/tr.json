@@ -1131,7 +1131,7 @@
   "switch": {
     "button": "Yedek değişikliği (1)",
     "title": "Yedek değişikliği",
-    "desc": "Bir yedeği ilk beşe al. Her oyunda bir değişiklik hakkın var ve tavandan {{fee}} (tavanın %5'i) tutar.",
+    "desc": "Bir yedeği ilk beşe al. Her oyunda bir değişiklik hakkın var ve ücretsiz.",
     "room": "Değişiklikten sonra boş alan: {{room}}",
     "noRoom": "Yeterli alan yok: değişiklik {{fee}} tutar.",
     "pickBench": "Yedekten kim giriyor?",

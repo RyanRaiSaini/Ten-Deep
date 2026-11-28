@@ -1136,7 +1136,7 @@
   "switch": {
     "button": "Changement (1 restant)",
     "title": "Changement",
-    "desc": "Fais entrer un remplaçant dans ton cinq de départ. Un seul changement par partie, et il coûte {{fee}} sous le plafond (5 % du plafond).",
+    "desc": "Fais entrer un remplaçant dans ton cinq de départ. Un seul changement par partie, et il est gratuit.",
     "room": "Marge après le changement : {{room}}",
     "noRoom": "Pas assez de marge : le changement coûte {{fee}}.",
     "pickBench": "Quel remplaçant entre ?",

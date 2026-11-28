@@ -1136,7 +1136,7 @@
   "switch": {
     "button": "Troca do banco (1)",
     "title": "Troca do banco",
-    "desc": "Coloque um reserva no seu quinteto titular. Uma troca por partida, e custa {{fee}} de espaço no teto (5% do teto).",
+    "desc": "Coloque um reserva no seu quinteto titular. Uma troca por partida, e é grátis.",
     "room": "Espaço depois da troca: {{room}}",
     "noRoom": "Espaço insuficiente: a troca custa {{fee}}.",
     "pickBench": "Quem sai do banco?",

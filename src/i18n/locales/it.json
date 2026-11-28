@@ -1136,7 +1136,7 @@
   "switch": {
     "button": "Cambio panchina (1)",
     "title": "Cambio panchina",
-    "desc": "Porta un giocatore dalla panchina al quintetto. Un solo cambio per partita, e costa {{fee}} di spazio salariale (5% del tetto).",
+    "desc": "Porta un giocatore dalla panchina al quintetto. Un solo cambio per partita, ed è gratis.",
     "room": "Spazio dopo il cambio: {{room}}",
     "noRoom": "Spazio insufficiente: il cambio costa {{fee}}.",
     "pickBench": "Chi entra dalla panchina?",

@@ -1136,7 +1136,7 @@
   "switch": {
     "button": "Cambio de banca (1)",
     "title": "Cambio de banca",
-    "desc": "Sube a un suplente a tu quinteto titular. Un solo cambio por partida y cuesta {{fee}} de espacio salarial (5% del tope).",
+    "desc": "Sube a un suplente a tu quinteto titular. Un solo cambio por partida, y es gratis.",
     "room": "Espacio tras el cambio: {{room}}",
     "noRoom": "No hay espacio suficiente: el cambio cuesta {{fee}}.",
     "pickBench": "¿Quién sale del banquillo?",

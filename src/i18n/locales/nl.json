@@ -1131,7 +1131,7 @@
   "switch": {
     "button": "Bankwissel (1 over)",
     "title": "Bankwissel",
-    "desc": "Zet één bankspeler in je basisvijf. Eén wissel per run, en die kost {{fee}} aan salarisruimte (5% van het plafond).",
+    "desc": "Zet één bankspeler in je basisvijf. Eén wissel per run, en die is gratis.",
     "room": "Ruimte na de wissel: {{room}}",
     "noRoom": "Niet genoeg ruimte: de wissel kost {{fee}}.",
     "pickBench": "Wie komt van de bank?",
