@@ -97,12 +97,10 @@
     "respin": "Volver a girar ({{n}} restantes)",
     "capSpace": "Espacio salarial",
     "spendable": "{{amount}} disponibles tras mínimos",
-    "superstars": "Superestrellas {{n}}/2",
     "chooseSlot": "¿En qué posición juega?",
     "nothingFits": "Nadie de este equipo encaja en tu plantilla o tu tope salarial.",
     "signFallback": "Fichar a {{name}} por {{salary}}",
     "overCap": "Por encima del tope",
-    "superstarLimit": "Límite de superestrellas",
     "noSlot": "Sin puesto libre",
     "starters": "Quinteto titular",
     "bench": "Banquillo",
@@ -514,7 +512,7 @@
   },
   "welcome": {
     "t1": "Draftea a diez",
-    "b1": "Gira la ruleta, elige un jugador y mete a diez bajo un tope de 200 M$. Solo dos estrellas 95+. En las épocas de la Máquina del tiempo, el tope y cada salario están en dólares de esa época.",
+    "b1": "Gira la ruleta, elige un jugador y mete a diez bajo un tope de 200 M$. En las épocas de la Máquina del tiempo, el tope y cada salario están en dólares de esa época.",
     "t2": "Sobrevive 82 partidos",
     "b2": "Lesiones, fecha límite de traspasos y playoffs a siete partidos. 70 victorias es raro. 82-0 es un mito.",
     "t3": "Colecciona leyendas",
@@ -713,8 +711,7 @@
     "value": "Rechazado: no les compensa",
     "cap": "Rechazado: rompe el tope salarial",
     "position": "Rechazado: un titular debe encajar en la posición",
-    "missing": "Elige primero a los dos jugadores",
-    "stars": "Rechazado: máximo dos superestrellas 95+ por equipo"
+    "missing": "Elige primero a los dos jugadores"
   },
   "profile": {
     "title": "Perfil",

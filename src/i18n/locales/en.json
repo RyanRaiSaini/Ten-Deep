@@ -96,12 +96,10 @@
     "respin": "Respin ({{n}} left)",
     "capSpace": "Cap space",
     "spendable": "{{amount}} spendable after minimums",
-    "superstars": "Superstars {{n}}/2",
     "chooseSlot": "Where does he play?",
     "nothingFits": "Nobody on this team fits your roster or cap.",
     "signFallback": "Sign {{name}} for {{salary}}",
     "overCap": "Over the cap",
-    "superstarLimit": "Superstar limit",
     "noSlot": "No open slot",
     "starters": "Starting five",
     "bench": "Bench",
@@ -509,7 +507,7 @@
   },
   "welcome": {
     "t1": "Draft ten deep",
-    "b1": "Spin for a team, pick a player, and fit ten under a $200M cap. Only two 95+ stars allowed. In the Time Machine eras, the cap and every salary are in that era's dollars.",
+    "b1": "Spin for a team, pick a player, and fit ten under a $200M cap. In the Time Machine eras, the cap and every salary are in that era's dollars.",
     "t2": "Survive 82 games",
     "b2": "Injuries, a trade deadline and a seven-game playoff run. 70 wins is rare. 82-0 is a myth.",
     "t3": "Collect the legends",
@@ -708,8 +706,7 @@
     "value": "Rejected: not enough value for them",
     "cap": "Rejected: it breaks the cap",
     "position": "Rejected: a starter must fit the position",
-    "missing": "Pick both players first",
-    "stars": "Rejected: a team can only have two 95+ superstars"
+    "missing": "Pick both players first"
   },
   "profile": {
     "title": "Profile",

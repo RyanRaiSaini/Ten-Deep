@@ -228,7 +228,7 @@ export function signFreeAgent(st: OffseasonState, ti: number, player: Player, sl
   return { ...st, teams, freeAgents: st.freeAgents.filter((p) => p.id !== player.id), contracts: { ...st.contracts, [player.id]: years } };
 }
 
-/** What team `ti` can afford right now: candidates with legal slots (cap, superstar limit, position). */
+/** What team `ti` can afford right now: candidates with legal slots (cap, position). */
 export function affordableFor(st: OffseasonState, ti: number): { player: Player; slots: SlotId[] }[] {
   const pool = faPool(st);
   const draft = { ...startDraft(pool, 'fa'), roster: st.teams[ti].slots };

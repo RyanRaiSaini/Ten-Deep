@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
-import { MAX_SUPERSTARS, capRoom, superstarCount } from '../engine/cap';
+import { capRoom } from '../engine/cap';
 import { duelOptions, isDuelComplete } from '../engine/duel';
 import type { SlotId } from '../engine/types';
 import { DUEL_COLORS, DUEL_POOL, useDuel } from '../store/duel';
@@ -84,7 +84,7 @@ export default function Couch() {
 
   return (
     <Screen>
-      <Header title={t('duel.title')} left={<BackButton onPress={() => goBack()} />} right={<Text style={{ color: C.gold, fontWeight: '800' }}>★ {superstarCount(me.roster)}/{MAX_SUPERSTARS}</Text>} />
+      <Header title={t('duel.title')} left={<BackButton onPress={() => goBack()} />} />
       <View style={[styles.turn, { backgroundColor: color }]}>
         <Text style={styles.turnText} testID="duel-turn">{t('duel.turn', { name: names[s.turn] })}</Text>
         <Text style={styles.turnSub}>{t('draft.pick', { n: me.round + 1 })} · {money(capRoom(me.roster))}</Text>

@@ -3,7 +3,7 @@
  * replacement from three priced options (bottom, middle, top of the market) or a free bench option, as in Box to Box.
  * Your budget for a slot is your cap room plus the outgoing salary (the same rule as the trade deadline).
  */
-import { CAP, MIN_SALARY, payOf, superstarBlocked } from '../cap';
+import { CAP, MIN_SALARY, payOf } from '../cap';
 import { createRng, shuffle } from '../rng';
 import { tradeBudget, type SeasonState } from '../season';
 import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pool, type SlotId, playsPos, positionsOf } from '../types';
@@ -88,10 +88,8 @@ export const budgetFor = (s: SeasonState, slot: SlotId) => tradeBudget(s.teams[0
  */
 export function marketOptions(s: SeasonState, b: BoardState, slot: SlotId, pool: Pool, ctx?: Omit<BoardCtx, 'season'>): MarketOption[] {
   const rng = createRng(`${s.seed}:market:${b.signings.length}:${slot}:${b.spins ?? 0}`);
-  const user = s.teams[0];
-  const without = { ...user.slots, [slot]: undefined };
   const fits = candidates(s, pool).filter(({ p }) =>
-    (!STARTER_SLOTS.includes(slot) || playsPos(p, slot)) && !superstarBlocked(without, p));
+    !STARTER_SLOTS.includes(slot) || playsPos(p, slot));
   const discount = b.perks.includes('agent-friend') ? 0.75 : 1;
   const pick = (tier: Tier, list: typeof fits): MarketOption | null => {
     const best = [...list].sort((a, c) => c.p.ovr - a.p.ovr).slice(0, 20);

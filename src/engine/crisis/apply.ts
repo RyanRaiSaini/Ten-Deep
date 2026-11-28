@@ -1,5 +1,5 @@
 /** Apply a resolved Crisis Card to the season. Pure: returns a new SeasonState. */
-import { payOf, superstarBlocked } from '../cap';
+import { payOf } from '../cap';
 import { lineupMinutes } from '../rotation';
 import { SEASON_GAMES, outSet, recordStint, type SeasonState } from '../season';
 import { ALL_SLOTS, type Player, type SlotId } from '../types';
@@ -40,14 +40,7 @@ const addMod = (s: SeasonState, amount: number, from: number, to: number): Seaso
 export function applyCard(s: SeasonState, card: CrisisCard, d: Decision): SeasonState {
   const r = s.round;
   const chosen = card.offer?.find((p) => p.id === d.incomingId) ?? card.offer?.[0];
-  let out = d.outSlot && card.outSlots?.includes(d.outSlot) ? d.outSlot : card.outSlots?.[0];
-  // Never a third 95+: if this pairing would break the rule, send out a slot that keeps it legal.
-  const mineNow = s.teams[0].slots;
-  if (chosen && out && superstarBlocked({ ...mineNow, [out]: undefined }, chosen)) {
-    const ok = card.outSlots?.find((k) => !superstarBlocked({ ...mineNow, [k]: undefined }, chosen));
-    if (!ok) return s;
-    out = ok;
-  }
+  const out = d.outSlot && card.outSlots?.includes(d.outSlot) ? d.outSlot : card.outSlots?.[0];
 
   switch (card.id) {
     case 'hot-streak':
@@ -76,7 +69,7 @@ export function applyCard(s: SeasonState, card: CrisisCard, d: Decision): Season
       return d.option === 'b' && chosen && out ? swapIn(s, out, chosen) : addMod(s, -2, r, r + 15);
     case 'superteam-rumor': {
       if (d.option !== 'a' || !card.offer?.length) return s;
-      // The star replaces your highest-paid player (so the two-superstar rule holds), the filler your next.
+      // The star replaces your highest-paid player, the filler your next.
       const paid = ALL_SLOTS.map((k) => ({ k, sal: payOf(s.teams[0].slots[k]) })).sort((a, b) => b.sal - a.sal);
       let next = swapIn(s, paid[0].k, card.offer[0]);
       if (card.offer[1] && paid[1]) next = swapIn(next, paid[1].k, card.offer[1]);

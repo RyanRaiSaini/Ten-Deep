@@ -96,12 +96,10 @@
     "respin": "Opnieuw draaien ({{n}} over)",
     "capSpace": "Salarisruimte",
     "spendable": "{{amount}} besteedbaar na minimums",
-    "superstars": "Supersterren {{n}}/2",
     "chooseSlot": "Op welke positie speelt hij?",
     "nothingFits": "Niemand van dit team past in je selectie of salarisplafond.",
     "signFallback": "Contracteer {{name}} voor {{salary}}",
     "overCap": "Boven het plafond",
-    "superstarLimit": "Superster-limiet",
     "noSlot": "Geen vrije plek",
     "starters": "Basisvijf",
     "bench": "Bank",
@@ -509,7 +507,7 @@
   },
   "welcome": {
     "t1": "Draft tien diep",
-    "b1": "Draai aan het rad, kies een speler en krijg er tien onder een salarisplafond van $200M. Maximaal twee 95+-sterren. In de tijdperken van de Tijdmachine zijn het plafond en elk salaris in dollars van toen.",
+    "b1": "Draai aan het rad, kies een speler en krijg er tien onder een salarisplafond van $200M. In de tijdperken van de Tijdmachine zijn het plafond en elk salaris in dollars van toen.",
     "t2": "Overleef 82 wedstrijden",
     "b2": "Blessures, een transferdeadline en play-offs over zeven wedstrijden. 70 zeges is zeldzaam. 82-0 is een mythe.",
     "t3": "Verzamel de legendes",
@@ -708,8 +706,7 @@
     "value": "Afgewezen: niet genoeg waarde voor hen",
     "cap": "Afgewezen: past niet onder het plafond",
     "position": "Afgewezen: een basisspeler moet op de positie passen",
-    "missing": "Kies eerst beide spelers",
-    "stars": "Afgewezen: maximaal twee 95+-supersterren per team"
+    "missing": "Kies eerst beide spelers"
   },
   "profile": {
     "title": "Profiel",

@@ -97,12 +97,10 @@
     "respin": "Rigira ({{n}} rimasti)",
     "capSpace": "Spazio salariale",
     "spendable": "{{amount}} spendibili dopo i minimi",
-    "superstars": "Superstar {{n}}/2",
     "chooseSlot": "In che ruolo gioca?",
     "nothingFits": "Nessuno di questa squadra entra nella tua rosa o nel tetto.",
     "signFallback": "Firma {{name}} per {{salary}}",
     "overCap": "Oltre il tetto",
-    "superstarLimit": "Limite superstar",
     "noSlot": "Nessun ruolo libero",
     "starters": "Quintetto base",
     "bench": "Panchina",
@@ -514,7 +512,7 @@
   },
   "welcome": {
     "t1": "Drafta in dieci",
-    "b1": "Gira la ruota, scegli un giocatore e fai stare dieci sotto un tetto di 200 M$. Al massimo due stelle 95+. Nelle epoche della Macchina del tempo, il tetto e ogni stipendio sono in dollari dell'epoca.",
+    "b1": "Gira la ruota, scegli un giocatore e fai stare dieci sotto un tetto di 200 M$. Nelle epoche della Macchina del tempo, il tetto e ogni stipendio sono in dollari dell'epoca.",
     "t2": "Sopravvivi a 82 partite",
     "b2": "Infortuni, scadenza del mercato e playoff al meglio delle sette. 70 vittorie è raro. 82-0 è un mito.",
     "t3": "Colleziona le leggende",
@@ -713,8 +711,7 @@
     "value": "Rifiutato: non conviene a loro",
     "cap": "Rifiutato: sfora il tetto",
     "position": "Rifiutato: un titolare deve adattarsi al ruolo",
-    "missing": "Scegli prima entrambi i giocatori",
-    "stars": "Rifiutato: al massimo due superstar 95+ per squadra"
+    "missing": "Scegli prima entrambi i giocatori"
   },
   "profile": {
     "title": "Profilo",
