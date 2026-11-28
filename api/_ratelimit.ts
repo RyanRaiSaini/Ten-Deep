@@ -1,14 +1,15 @@
 /**
- * Rate limits for the API: a fixed window per client IP and bucket, kept in Upstash Redis when it's connected,
- * else Vercel's Runtime Cache, else memory (local runs and tests). Over the limit → 429 with Retry-After.
+ * Rate limits for the API: a fixed window per client IP and bucket. Over the limit → 429 with Retry-After.
  *
- * Counts are read-then-write (Runtime Cache has no atomic increment), so a burst can slip a few requests past the
- * limit; that's fine for its job, which is stopping brute-force guessing, spam and runaway storage bills, not
- * exact metering. If the store itself fails the request is let through: a broken limiter must not break the game.
+ * Counts live in Upstash Redis when it's connected (atomic INCR, shared by every function instance). Without it
+ * they live in this instance's memory: Fluid Compute runs many requests on one instance, so a burst from one
+ * address mostly lands on the same counter, which blunts brute-force guessing and spam without being exact
+ * metering. Vercel's Runtime Cache was tried first and dropped: it is eventually consistent, so a read right
+ * after a write misses and the count never climbs. If the store fails the request is let through: a broken
+ * limiter must not break the game.
  *
  * Files starting with "_" in api/ are not deployed as functions.
  */
-import { getCache } from '@vercel/functions';
 import { Redis } from '@upstash/redis';
 
 /** Requests allowed per window, per IP (or for everyone, when `global`). */
@@ -38,33 +39,49 @@ export const LIMITS = {
 export type Bucket = keyof typeof LIMITS;
 
 export interface Counter {
-  get(key: string): Promise<number | null>;
-  set(key: string, n: number, ttlSec: number): Promise<void>;
+  /** Count one hit against `key` and return the new total; the key expires `ttlSec` after its first hit. */
+  hit(key: string, ttlSec: number): Promise<number>;
+  /** The current total for `key`, without counting. */
+  peek(key: string): Promise<number>;
 }
 
 export function memoryCounter(): Counter {
   const m = new Map<string, { n: number; until: number }>();
+  const live = (k: string) => {
+    const e = m.get(k);
+    if (e && e.until > Date.now()) return e;
+    if (e) m.delete(k);
+    return null;
+  };
   return {
-    async get(k) { const e = m.get(k); return e && e.until > Date.now() ? e.n : null; },
-    async set(k, n, ttl) { m.set(k, { n, until: Date.now() + ttl * 1000 }); },
+    async hit(k, ttl) {
+      // Windows roll over every minute to an hour; sweep dead keys before the map can grow without bound.
+      if (m.size > 20_000) for (const [key, e] of m) if (e.until <= Date.now()) m.delete(key);
+      const e = live(k);
+      if (e) return ++e.n;
+      m.set(k, { n: 1, until: Date.now() + ttl * 1000 });
+      return 1;
+    },
+    async peek(k) { return live(k)?.n ?? 0; },
+  };
+}
+
+function redisCounter(url: string, token: string): Counter {
+  const r = new Redis({ url, token });
+  return {
+    async hit(k, ttl) {
+      const n = await r.incr(k);
+      if (n === 1) await r.expire(k, ttl);
+      return n;
+    },
+    async peek(k) { return Number((await r.get<number | string>(k)) ?? 0); },
   };
 }
 
 function defaultCounter(): Counter {
   const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL ?? '';
   const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN ?? '';
-  if (url && token) {
-    const r = new Redis({ url, token });
-    return { get: (k) => r.get<number>(k), set: async (k, n, ttl) => { await r.set(k, n, { ex: ttl }); } };
-  }
-  if (process.env.VERCEL) {
-    const cache = getCache({ namespace: 'ratelimit' });
-    return {
-      get: async (k) => ((await cache.get(k)) as number | null) ?? null,
-      set: (k, n, ttl) => cache.set(k, n, { ttl, name: 'rate-limit' }),
-    };
-  }
-  return memoryCounter();
+  return url && token ? redisCounter(url, token) : memoryCounter();
 }
 
 let counter: Counter | null = null;
@@ -99,7 +116,7 @@ async function check(req: Request, bucket: Bucket, headers: Record<string, strin
   const key = `rl:${bucket}:${who}:${window}`;
   try {
     const c = (counter ??= defaultCounter());
-    const n = ((await c.get(key)) ?? 0) + (count ? 1 : 0);
+    const n = count ? await c.hit(key, lim.windowSec) : await c.peek(key);
     if (n > lim.max || (!count && n >= lim.max)) {
       const retry = (window + 1) * lim.windowSec - now;
       return new Response(JSON.stringify({ error: 'rate-limited', retryAfter: retry }), {
@@ -107,9 +124,9 @@ async function check(req: Request, bucket: Bucket, headers: Record<string, strin
         headers: { 'content-type': 'application/json', 'cache-control': 'no-store', 'retry-after': String(retry), ...headers },
       });
     }
-    if (count) await c.set(key, n, lim.windowSec);
     return null;
-  } catch {
+  } catch (e) {
+    console.warn('rate limit store failed; letting the request through', e);
     return null;
   }
 }

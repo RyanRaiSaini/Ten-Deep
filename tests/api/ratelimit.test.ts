@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { memoryOutreachStore } from '../../api/_outreachstore';
 import { LIMITS, clientIp, memoryCounter, overLimit, rateLimit, useCounter, withLimit } from '../../api/_ratelimit';
 import { makeHandler } from '../../api/admin';
@@ -37,8 +37,24 @@ describe('rate limits', () => {
   });
 
   it('a broken store lets requests through instead of breaking the game', async () => {
-    useCounter({ get: async () => { throw new Error('down'); }, set: async () => { throw new Error('down'); } });
+    useCounter({ hit: async () => { throw new Error('down'); }, peek: async () => { throw new Error('down'); } });
     expect(await rateLimit(req(), 'pinWrite')).toBeNull();
+  });
+
+  it('the memory counter counts hits, answers peeks, and forgets a key once its window has passed', async () => {
+    vi.useFakeTimers();
+    try {
+      const c = memoryCounter();
+      expect(await c.hit('k', 60)).toBe(1);
+      expect(await c.hit('k', 60)).toBe(2);
+      expect(await c.peek('k')).toBe(2);
+      expect(await c.peek('other')).toBe(0);
+      vi.advanceTimersByTime(61_000);
+      expect(await c.peek('k')).toBe(0);
+      expect(await c.hit('k', 60)).toBe(1);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('reads the client IP from x-real-ip, else the first x-forwarded-for hop', () => {
