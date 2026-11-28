@@ -104,9 +104,10 @@ function Rebuilding() {
   const budget = roomAfterFees(season);
   const sr = Math.round(squadRating(user));
   const slot = slotOfStep(r.step) as SlotId | null;
-  const pool = boardCtx(g.poolId, season).pool;
+  const ctx = boardCtx(g.poolId, season);
+  const pool = ctx.pool;
   const selling = r.selling as SlotId | null;
-  const options = selling ? marketOptions(season, board, selling, pool) : [];
+  const options = selling ? marketOptions(season, board, selling, pool, ctx) : [];
 
   const bar = (
     <Card style={[styles.bar, { borderColor: r.colors[0] }]}>
@@ -119,7 +120,6 @@ function Rebuilding() {
     </Card>
   );
 
-  const ctx = boardCtx(g.poolId, season);
   // Start over: back to the team picker (the board, the build and the team are all thrown away).
   const restart = (
     <Pressable onPress={() => { feel('thunk'); g.quit(); }} style={styles.restart} testID="rebuild-restart" accessibilityRole="button">
@@ -215,14 +215,16 @@ function Rebuilding() {
             {options.map((o) => {
               const why = blocked(season, board, selling, o);
               return (
-                <View key={`${o.tier}-${o.player.id}`} style={[styles.option, { borderColor: TIER_COLOR[o.tier] }]}>
+                <View key={`${o.tier}-${o.player.id}`} style={[styles.option, { borderColor: o.callup ? C.neon : TIER_COLOR[o.tier] }]} testID={o.callup ? 'rebuild-callup' : undefined}>
                   <View style={styles.optionHead}>
-                    <Text style={[styles.tier, { backgroundColor: TIER_COLOR[o.tier] }]}>{t(`board.tiers.${o.tier}`)}</Text>
+                    <Text style={[styles.tier, { backgroundColor: o.callup ? C.neon : TIER_COLOR[o.tier] }, o.callup && { color: C.onAccent }]}>
+                      {o.callup ? t('board.callup') : t(`board.tiers.${o.tier}`)}
+                    </Text>
                     {why && <Text style={styles.why}>{why === 'budget' ? t('board.overBudget') : t('board.crunch')}</Text>}
                   </View>
                   <PlayerCard player={o.player} />
                   <Button label={t('board.officeSign', { pay: money(o.pay, scale) })} disabled={!!why} variant={o.tier === 'top' ? 'gold' : 'primary'}
-                    onPress={() => { feel('pickChime'); g.rebuildSign(o); }} testID={`rebuild-sign-${o.tier}`} />
+                    onPress={() => { feel('pickChime'); g.rebuildSign(o); }} testID={o.callup ? 'rebuild-sign-callup' : `rebuild-sign-${o.tier}`} />
                 </View>
               );
             })}

@@ -1644,7 +1644,8 @@
     "stopKind": {
       "objective": "Hedef",
       "event": "Sezon ortası kartı"
-    }
+    },
+    "callup": "Hedefini karşılar"
   },
   "rebuild": {
     "title": "Devralma",

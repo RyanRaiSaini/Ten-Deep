@@ -1644,7 +1644,8 @@
     "stopKind": {
       "objective": "Het doel",
       "event": "Kaart halverwege het seizoen"
-    }
+    },
+    "callup": "Vervult je doel"
   },
   "rebuild": {
     "title": "Overname",

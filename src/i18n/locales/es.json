@@ -1649,7 +1649,8 @@
     "stopKind": {
       "objective": "El objetivo",
       "event": "Carta de mitad de temporada"
-    }
+    },
+    "callup": "Cumple tu objetivo"
   },
   "rebuild": {
     "title": "Toma de control",

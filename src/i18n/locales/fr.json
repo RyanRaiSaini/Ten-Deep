@@ -1649,7 +1649,8 @@
     "stopKind": {
       "objective": "L'objectif",
       "event": "Carte de mi-saison"
-    }
+    },
+    "callup": "Remplit ton objectif"
   },
   "rebuild": {
     "title": "Rachat",

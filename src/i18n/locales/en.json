@@ -1644,7 +1644,8 @@
     "stopKind": {
       "objective": "The objective",
       "event": "Midseason card"
-    }
+    },
+    "callup": "Fills your objective"
   },
   "rebuild": {
     "title": "Takeover",

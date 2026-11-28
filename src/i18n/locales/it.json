@@ -1649,7 +1649,8 @@
     "stopKind": {
       "objective": "L'obiettivo",
       "event": "Carta di metà stagione"
-    }
+    },
+    "callup": "Soddisfa il tuo obiettivo"
   },
   "rebuild": {
     "title": "Acquisizione",
