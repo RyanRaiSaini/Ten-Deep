@@ -1,7 +1,8 @@
 /**
- * Multi-season career: one franchise across seasons. Each season is a Management Crisis season (run by the
- * game store); between seasons this store runs the offseason (engine/career/offseason.ts) and carries the
- * league, contracts and free-agent pool forward.
+ * Multi-season career: one franchise across seasons, on a 3, 5 or 10-year contract you can extend (you can't be
+ * fired). Each season is run by the game store; between seasons this store runs the offseason
+ * (engine/career/offseason.ts), opening with the year's one board card, and carries the league, contracts and
+ * free-agent pool forward.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
@@ -10,7 +11,7 @@ import { current2026 } from '../data/current2026';
 import { initialContracts, type Contracts } from '../engine/career/contracts';
 import {
   affordableFor, aiFreeAgency, ensureDepth, finalizeOffseason, minimumException, resolveExpiring, rookieDraft, seasonLabel,
-  signFreeAgent, startOffseason, type OffseasonState,
+  signFreeAgent, startOffseason, swapSpots, type OffseasonState,
 } from '../engine/career/offseason';
 import { START_SECURITY, securityAfter } from '../engine/career/security';
 import { addSeason, type CareerStats, type PlayoffResult } from '../engine/career/legacy';
@@ -21,7 +22,7 @@ import type { CardId } from '../engine/crisis/deck';
 import { champion, seriesFor } from '../engine/playoffs';
 import { userStints } from '../engine/season';
 import { ALL_SLOTS, type Player, type Roster, type RosterSlots, type SlotId } from '../engine/types';
-import { useGame } from './game';
+import { useGame, type CardCarry } from './game';
 import { DIVISIONS, franchiseOf } from '../engine/conference';
 import { realLeague, realRotation } from '../engine/realLeague';
 import { available, draftDone, draftPool, draftedLeague, makePick, newFantasy, picksUntilUser, simDraft, type FantasyDraft } from '../engine/career/fantasy';
@@ -57,7 +58,11 @@ export interface SeasonRecord {
   roster: Player[];
 }
 
-export type OffseasonStep = 'expiring' | 'draft' | 'freeAgency';
+export type OffseasonStep = 'card' | 'expiring' | 'draft' | 'freeAgency';
+
+/** Contract lengths you can sign for (and extend by). */
+export const TERMS = [3, 5, 10] as const;
+export type Term = (typeof TERMS)[number];
 
 export interface CareerStore {
   active: boolean;
@@ -82,12 +87,27 @@ export interface CareerStore {
   step: OffseasonStep | null;
   /** Locker-room morale 0–100; nudges team ratings each season. */
   morale: number;
+  /** Your contract: its length, and the last season it covers. When it's up you extend (3, 5 or 10 years) or retire. */
+  term: Term;
+  termEnd: number;
+  /** The career ended because you retired (not because you quit). */
+  retired: boolean;
+  /** What this offseason's card set up for next season. */
+  carry: CardCarry | null;
   /** Franchise records: every player's totals while with you. */
   stats: CareerStats;
 
-  start: () => void;
+  start: (term?: Term) => void;
   /** Dynasty: take a franchise with its real roster (the season starts), or set up a fantasy draft. */
-  startDynasty: (franchise: string, how: 'real' | 'draft') => void;
+  startDynasty: (franchise: string, how: 'real' | 'draft', term?: Term) => void;
+  /** Contract up: sign on for `years` more. */
+  extend: (years: Term) => void;
+  /** Contract up: walk away. The career is complete. */
+  retire: () => void;
+  /** The offseason card is settled: carry what it changed and open the offseason. */
+  cardDone: () => void;
+  /** Offseason lineup: swap any two spots; false if a starter would be out of position. */
+  swap: (a: SlotId, b: SlotId) => boolean;
   /** Dynasty fantasy draft: spin your slot (1–30), then the AI picks until your turn. Returns the slot. */
   spinSlot: () => number;
   /** Your pick, then the AI picks until your next turn. */
@@ -110,28 +130,41 @@ export interface CareerStore {
   quit: () => void;
 }
 
-const fresh = { mode: 'career' as const, franchise: null, fantasy: null, active: false, ended: false, seed: '', season: 1, security: START_SECURITY, history: [], contracts: {}, freeAgents: [], teams: null, lastWins: [], lastPlayoff: [], offseason: null, step: null, morale: MORALE_START, stats: {} };
+const fresh = { mode: 'career' as const, franchise: null, fantasy: null, active: false, ended: false, seed: '', season: 1, security: START_SECURITY, history: [], contracts: {}, freeAgents: [], teams: null, lastWins: [], lastPlayoff: [], offseason: null, step: null, morale: MORALE_START, stats: {}, term: 5 as Term, termEnd: 5, retired: false, carry: null };
 const stripMod = (t: Roster): Roster => ({ id: t.id, name: t.name, colors: t.colors, slots: t.slots, ...(t.franchise ? { franchise: t.franchise } : {}) });
 
 export const useCareer = create<CareerStore>()(
   persist(
-    (set, get) => ({
+    (set, get) => {
+      /** The offseason proper: development, contracts, the draft and free agency. */
+      const openOffseason = () => {
+        const c = get();
+        if (!c.teams) return;
+        const offseason = startOffseason({
+          teams: c.teams, contracts: c.contracts, freeAgents: c.freeAgents, season: c.season + 1, seed: c.seed,
+          wins: c.lastWins, playoff: new Set(c.lastPlayoff),
+        });
+        set({ offseason, step: 'expiring' });
+      };
+      return ({
       ...fresh,
 
-      start: () => {
-        set({ ...fresh, active: true, seed: `career-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}` });
-        useGame.getState().newCrisis('current-2026', true);
+      start: (term = 5) => {
+        set({ ...fresh, active: true, term, termEnd: term, seed: `career-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}` });
+        // Season one is a plain season: the board's one card a year comes as each offseason opens.
+        useGame.getState().newRun('current-2026');
+        useGame.setState({ career: true, parked: null, crisis: null });
       },
 
-      startDynasty: (franchise, how) => {
+      startDynasty: (franchise, how, term = 5) => {
         const seed = `dynasty-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
-        set({ ...fresh, mode: 'dynasty', franchise, active: true, seed });
+        set({ ...fresh, mode: 'dynasty', franchise, active: true, seed, term, termEnd: term });
         // A new Dynasty replaces any career run still going (a quick run in progress is left alone).
         if (useGame.getState().career) useGame.getState().quit();
         useGame.setState({ parked: null });
         if (how === 'real') {
           const teams = realRosterLeague(franchise, seed);
-          useGame.getState().startCareerSeason(teams, `${seed}:s1`, 0, { cards: false, division: divOfFranchise(franchise) });
+          useGame.getState().startCareerSeason(teams, `${seed}:s1`, 0, { division: divOfFranchise(franchise) });
         }
       },
       spinSlot: () => {
@@ -158,7 +191,7 @@ export const useCareer = create<CareerStore>()(
         if (!c.fantasy || !draftDone(c.fantasy) || !c.franchise) return;
         const teams = draftedLeague(c.fantasy, draftPool(current2026.teams), teamLook);
         set({ fantasy: null });
-        useGame.getState().startCareerSeason(teams, `${c.seed}:s1`, 0, { cards: false, division: divOfFranchise(c.franchise) });
+        useGame.getState().startCareerSeason(teams, `${c.seed}:s1`, 0, { division: divOfFranchise(c.franchise) });
       },
 
       recordSeason: () => {
@@ -196,19 +229,60 @@ export const useCareer = create<CareerStore>()(
         get().applyVerdict(verdict);
       },
 
-      applyVerdict: (v) => {
-        const r = securityAfter(get().security, v);
-        set({ security: r.security, ended: r.ended });
+      // The board's mood still moves with each verdict, but it can't end the job: only you can (retire, or quit).
+      applyVerdict: (v) => set({ security: securityAfter(get().security, v).security }),
+
+      extend: (years) => {
+        const c = get();
+        if (!contractUp(c)) return;
+        set({ term: years, termEnd: c.termEnd + years });
+      },
+      retire: () => {
+        if (!contractUp(get())) return;
+        set({ ended: true, retired: true });
+        if (useGame.getState().career) useGame.getState().quit();
       },
 
       beginOffseason: () => {
         const c = get();
-        if (!c.teams || c.ended) return;
-        const offseason = startOffseason({
-          teams: c.teams, contracts: c.contracts, freeAgents: c.freeAgents, season: c.season + 1, seed: c.seed,
-          wins: c.lastWins, playoff: new Set(c.lastPlayoff),
+        if (!c.teams || c.ended || c.step || contractUp(c)) return;
+        if (c.mode === 'career') {
+          // One board card a year, as the offseason opens: next season's goal.
+          useGame.getState().openOffseasonCard(c.teams, `${c.seed}:card:${c.season + 1}`, c.teams[0].franchise ?? 'sac');
+          set({ step: 'card', carry: null });
+          return;
+        }
+        openOffseason();
+      },
+
+      cardDone: () => {
+        const c = get();
+        const g = useGame.getState();
+        const b = g.crisis?.board;
+        if (c.step !== 'card' || !g.crisis?.offseason || !b || !g.season || b.hand || b.picked || !c.teams) return;
+        const s = g.season;
+        // Players the card brought in get a two-year deal; anyone it sent away to nowhere joins the free agents.
+        const before = c.teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k]));
+        const after = s.teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k]));
+        const onRoster = new Set(after.map((p) => p.name));
+        const contracts = { ...c.contracts };
+        for (const p of after) if (contracts[p.id] === undefined) contracts[p.id] = 2;
+        const gone = before.filter((p) => !onRoster.has(p.name)).map((p) => ({ ...p, released: true }));
+        set({
+          teams: s.teams.map(stripMod), contracts,
+          freeAgents: [...c.freeAgents.filter((p) => !onRoster.has(p.name)), ...gone],
+          carry: { board: b, fees: s.fees ?? 0, mods: s.mods ?? [], injuries: s.injuries },
         });
-        set({ offseason, step: 'expiring' });
+        useGame.setState({ phase: 'idle', crisis: null, season: null });
+        openOffseason();
+      },
+
+      swap: (a, b) => {
+        const st = get().offseason;
+        const next = st && swapSpots(st, 0, a, b);
+        if (!next) return false;
+        set({ offseason: next });
+        return true;
       },
 
       keep: (ids) => set((c) => (c.offseason ? { offseason: resolveExpiring(c.offseason, ids), step: 'draft' } : {})),
@@ -242,9 +316,9 @@ export const useCareer = create<CareerStore>()(
         const st = aiFreeAgency(c.offseason);
         const teams = finalizeOffseason(st);
         const season = c.season + 1;
-        set({ season, teams, contracts: st.contracts, freeAgents: st.freeAgents, offseason: null, step: null });
+        set({ season, teams, contracts: st.contracts, freeAgents: st.freeAgents, offseason: null, step: null, carry: null });
         useGame.getState().startCareerSeason(teams, `${c.seed}:s${season}`, moraleMod(c.morale ?? MORALE_START),
-          c.mode === 'dynasty' ? { cards: false, ...(c.franchise ? { division: divOfFranchise(c.franchise) } : {}) } : {});
+          c.mode === 'dynasty' ? (c.franchise ? { division: divOfFranchise(c.franchise) } : {}) : (c.carry ? { carry: c.carry } : {}));
       },
 
       quit: () => {
@@ -253,7 +327,19 @@ export const useCareer = create<CareerStore>()(
         if (useGame.getState().career) useGame.getState().quit();
         useGame.setState({ parked: null });
       },
-    }),
-    { name: 'tendeep-career', version: 1, storage: createJSONStorage(() => AsyncStorage), merge: (saved, cur) => ({ ...cur, ...(saved as object), mode: (saved as { mode?: 'career' | 'dynasty' })?.mode ?? 'career' }) },
+    });
+    },
+    {
+      name: 'tendeep-career', version: 1, storage: createJSONStorage(() => AsyncStorage),
+      // Careers saved before contracts: a five-year deal from season one (or through this season, if past it).
+      merge: (saved, cur) => {
+        const sv = (saved ?? {}) as Partial<CareerStore>;
+        return { ...cur, ...sv, mode: sv.mode ?? 'career', term: sv.term ?? 5, termEnd: sv.termEnd ?? Math.max(5, sv.season ?? 1), retired: sv.retired ?? false, carry: sv.carry ?? null };
+      },
+    },
   ),
 );
+
+/** The contract has run out (every season it covered is played): extend or retire before the offseason. */
+export const contractUp = (c: Pick<CareerStore, 'active' | 'ended' | 'history' | 'termEnd' | 'step'>) =>
+  c.active && !c.ended && !c.step && c.history.length >= c.termEnd;

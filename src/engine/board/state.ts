@@ -12,6 +12,8 @@ export interface Stop { round: number; kind: StopKind }
 export const MIDSEASON = 41;
 export const CRISIS_PLAN: Stop[] = [{ round: 0, kind: 'objective' }, { round: MIDSEASON, kind: 'event' }];
 export const TAKEOVER_SEASON_PLAN: Stop[] = [{ round: MIDSEASON, kind: 'event' }];
+/** A career's one card a year: next season's goal, picked as the offseason opens (no stops in the season itself). */
+export const OFFSEASON_PLAN: Stop[] = [{ round: 0, kind: 'objective' }];
 /** Older saves had seven stops at these rounds. */
 export const STOPS = CRISIS_PLAN.map((x) => x.round);
 /** Board Confidence for the objective: failing it costs 5, completing it is +2. */
@@ -130,6 +132,8 @@ export interface BoardState {
   /** The franchise your team plays for (the one your division left open), for "Local legend". */
   home: string;
   firedAt?: number;
+  /** A career GM's board: it reacts to everything, but confidence at 0 never fires you. */
+  safe?: boolean;
   /** Record at the last stop, for hot and cold stretches. */
   lastW: number;
   lastL: number;

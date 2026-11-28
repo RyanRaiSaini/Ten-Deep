@@ -1,5 +1,6 @@
 /**
- * The bench switch: once per run, move a bench player into the starting five, free (engine/season.ts benchSwitch).
+ * The bench switch: move a bench player into the starting five, free (engine/season.ts benchSwitch). One a run;
+ * three a season in a career.
  * Pick who comes off the bench, then the starter he replaces (only positions he can play).
  */
 import { HistoryGate } from '../ui/HistoryGate';
@@ -11,7 +12,7 @@ import { StyleSheet, View } from 'react-native';
 import { feel } from '../audio/feel';
 import { moneyScaleFor } from '../data/modes';
 import { squadRating } from '../engine/rotation';
-import { SWITCH_FEE, roomAfterFees } from '../engine/season';
+import { SWITCH_FEE, roomAfterFees, switchesLeft } from '../engine/season';
 import { BENCH_SLOTS, STARTER_SLOTS, type SlotId, playsPos } from '../engine/types';
 import { useGame } from '../store/game';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
@@ -41,7 +42,7 @@ function BenchSwitchScreen() {
   const targets = p ? STARTER_SLOTS.filter((s) => playsPos(p, s)) : [];
 
   const doSwitch = (starter: SlotId) => {
-    if (bench && g.doBenchSwitch(bench, starter)) { feel('pickChime'); goBack(); }
+    if (bench && g.doBenchSwitch(bench, starter)) { feel('pickChime'); setBench(null); goBack(); }
   };
 
   return (
@@ -51,7 +52,7 @@ function BenchSwitchScreen() {
         <Card style={styles.info}>
           <Icon name="swap" size={34} />
           <View style={{ flex: 1, gap: 2 }}>
-            <Text style={styles.desc}>{t('switch.desc', { fee })}</Text>
+            <Text style={styles.desc}>{t('switch.desc', { fee, n: switchesLeft(season) })}</Text>
             {!free && (
               <Text style={[styles.room, !canPay && { color: C.danger }]} testID="switch-room">
                 {canPay ? t('switch.room', { room: money(Math.max(0, room - SWITCH_FEE), scale) }) : t('switch.noRoom', { fee })}
@@ -60,7 +61,7 @@ function BenchSwitchScreen() {
           </View>
           <SquadBadge value={squadRating(user)} size="sm" />
         </Card>
-        {season.switchUsed ? (
+        {switchesLeft(season) <= 0 ? (
           <Text style={styles.desc}>{t('switch.used')}</Text>
         ) : !p ? (
           <>

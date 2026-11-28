@@ -288,21 +288,37 @@ export async function runFlow({ page, base, step, shot }) {
     await page.locator('[data-testid="board-panel"], [data-testid="crisis-verdict"]').first().waitFor({ timeout: 10000 });
   });
 
-  await step('career: season 1, full offseason, season 2 begins', async () => {
+  await step('career: plain season 1, one board card opens the offseason, lineup swap, season 2 with 3 switches', async () => {
     await page.goto(base);
     await page.getByTestId('tab-career').click();
+    await page.getByText('5 years').first().click(); // the contract length picker (3, 5 or 10)
     await page.getByTestId('career-start').click();
     await draftTen(page);
     await page.getByTestId('division-atlantic').click();
     await page.getByTestId('start-season').click();
+    const sw = await page.getByTestId('bench-switch').innerText();
+    if (!/3/.test(sw)) throw new Error(`career season should offer 3 bench switches, saw "${sw}"`);
     const career = await playCrisisSeason(page);
-    if (!career.fired) {
-      await page.getByTestId('to-playoffs').click();
-      await page.getByTestId('playoff-sim').click();
-      await page.getByTestId('see-result').click();
-    }
+    if (career.fired) throw new Error('a career GM got fired');
+    if (career.cards !== 0) throw new Error(`career season 1 dealt ${career.cards} in-season cards`);
+    await page.getByTestId('to-playoffs').click();
+    await page.getByTestId('playoff-sim').click();
+    await page.getByTestId('see-result').click();
     await page.getByTestId('career-continue').click();
-    if (await page.getByTestId('career-over').count()) return; // fired in year one is a legit ending
+    // The year's one board card, as the offseason opens.
+    await page.getByTestId('board-hand').waitFor({ timeout: 10000 });
+    await shot('20b-offseason-card');
+    await page.getByTestId('board-card-1').click();
+    await page.getByTestId('board-reveal').waitFor();
+    const option = page.locator('[data-testid^="board-option-"]');
+    if (await option.count()) await option.first().click();
+    else {
+      const offers = page.getByTestId('board-offer');
+      if (await offers.count()) await offers.first().click();
+      const confirm = page.getByTestId('board-confirm');
+      for (const slot of SLOTS) { if (await confirm.isEnabled()) break; await page.getByTestId(`slot-${slot}`).last().click(); }
+      await confirm.click();
+    }
     await page.getByTestId('off-contracts').waitFor();
     await shot('21-offseason-contracts');
     await page.getByTestId('off-contracts').click();
@@ -335,12 +351,21 @@ export async function runFlow({ page, base, step, shot }) {
       } else if (await page.getByTestId('fa-min').count()) await page.getByTestId('fa-min').click();
       await page.waitForTimeout(150);
     }
+    // Lineup: any two spots swap (two bench spots always can).
+    const who = async (slot) => ((await page.getByTestId(`slot-${slot}`).last().getAttribute('aria-label')) ?? '').replace(/^\S+\s/, '');
+    const b1 = await who('B1');
+    await page.getByTestId('slot-B1').last().click();
+    await page.getByTestId('slot-B2').last().click();
+    if ((await who('B2')) !== b1) throw new Error(`lineup swap did not move B1 (${b1}) to B2 (${await who('B2')})`);
     await shot('23-offseason-fa');
     await page.getByTestId('off-start').click();
-    await page.getByTestId('board-hand').waitFor({ timeout: 10000 });
+    // Straight into season 2: no card stop, the board's goal from the offseason card on the panel.
+    await page.getByTestId('board-panel').waitFor({ timeout: 10000 });
+    if (await page.getByTestId('board-hand').count()) throw new Error('career season 2 opened on a card stop');
     await page.goto(`${base}/career`);
     await page.getByText('Season 2').waitFor({ timeout: 5000 });
     await page.getByText('2026-27').first().waitFor();
+    await page.getByTestId('career-contract').waitFor();
     await shot('24-career-hub');
   });
 

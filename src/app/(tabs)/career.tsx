@@ -7,9 +7,9 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text } from '../../ui/Text';
 import { seasonLabel } from '../../engine/career/offseason';
-import { useCareer } from '../../store/career';
+import { TERMS, contractUp, useCareer, type Term } from '../../store/career';
 import { useGame } from '../../store/game';
-import { Button, Card, Display, Label, Screen, TabTitle } from '../../ui/components';
+import { Button, Card, Display, Label, Screen, Segmented, TabTitle } from '../../ui/components';
 import { C, F, FONT, R, S } from '../../ui/theme';
 import { franchiseLeaders, hallOfFame } from '../../engine/career/legacy';
 import { MORALE_START, moraleMod } from '../../engine/career/morale';
@@ -26,15 +26,18 @@ function CareerScreen() {
   const { t } = useTranslation();
   const c = useCareer();
   const [ending, setEnding] = useState(false);
+  const [term, setTerm] = useState<Term>(5);
   const g = useGame();
   const morale = c.morale ?? MORALE_START;
   const leaders = franchiseLeaders(c.stats ?? {}, 5);
   const hof = hallOfFame(c.stats ?? {});
   const titles = c.history.filter((h) => h.result === 'champion').length;
-  const secColor = c.security >= 60 ? C.neon : c.security >= 30 ? C.gold : C.danger;
+  const up = contractUp(c);
+  // Year of the current deal: the deal covers seasons termEnd - term + 1 … termEnd.
+  const year = Math.min(c.term, Math.max(1, c.season - (c.termEnd - c.term)));
 
   const next = (() => {
-    if (!c.active || c.ended) return null;
+    if (!c.active || c.ended || up) return null;
     // A Dynasty still in its fantasy draft (or waiting for its slot spin).
     if (c.mode === 'dynasty' && c.history.length === 0 && (c.fantasy || !(g.career && g.season))) return { label: t('career.resume'), go: () => router.push('/dynasty') };
     if (c.step) return { label: t('career.toOffseason'), go: () => router.push('/offseason') };
@@ -53,8 +56,8 @@ function CareerScreen() {
         <Card style={{ gap: S.md }}>
           {c.ended ? (
             <>
-              <Text style={styles.big} testID="career-over">{t('career.over')}</Text>
-              <Text style={styles.body}>{t('career.overDesc', { n: c.history.length, titles })}</Text>
+              <Text style={[styles.big, c.retired && { color: C.accent }]} testID="career-over">{c.retired ? t('career.retiredTitle') : t('career.over')}</Text>
+              <Text style={styles.body}>{c.retired ? t('career.retiredDesc', { n: c.history.length, titles }) : t('career.overDesc', { n: c.history.length, titles })}</Text>
             </>
           ) : (
             <>
@@ -74,7 +77,9 @@ function CareerScreen() {
               ))}
             </>
           )}
-          <Button label={c.ended ? t('career.newCareer') : t('career.start')} variant="dark" onPress={() => { c.start(); router.push('/draft'); }} testID="career-start" />
+          <Label>{t('career.term')}</Label>
+          <Segmented options={TERMS} value={term} onChange={setTerm} format={(n) => t('career.termYears', { n })} />
+          <Button label={c.ended ? t('career.newCareer') : t('career.start')} variant="dark" onPress={() => { c.start(term); router.push('/draft'); }} testID="career-start" />
         </Card>
       )}
 
@@ -95,15 +100,27 @@ function CareerScreen() {
             <Text style={styles.season}>{t('career.season', { n: c.season })}</Text>
             <Text style={styles.label}>{seasonLabel(c.season)}</Text>
           </View>
-          <Label>{t('career.security')}</Label>
-          <View style={styles.bar}><View style={[styles.fill, { width: `${c.security}%`, backgroundColor: secColor }]} /></View>
-          <Text style={[styles.secNum, { color: secColor }]} testID="career-security">{c.security}/100</Text>
+          <Label>{t('career.contract', { y: year, n: c.term })}</Label>
+          <View style={styles.bar}><View style={[styles.fill, { width: `${(year / c.term) * 100}%`, backgroundColor: C.accent }]} /></View>
+          <Text style={[styles.secNum, { color: C.accent }]} testID="career-contract">{t('career.yearsLeft', { n: Math.max(0, c.termEnd - c.history.length) })}</Text>
           <Label>{t('career.morale')}</Label>
           <View style={styles.bar}><View style={[styles.fill, { width: `${morale}%`, backgroundColor: C.neon }]} /></View>
           <Text style={[styles.secNum, { color: C.neon }]} testID="career-morale">
             {morale}/100 · {moraleMod(morale) > 0 ? `+${moraleMod(morale)}` : moraleMod(morale)} {t('career.moraleEffect')}
           </Text>
           {next && <Button label={next.label} variant="gold" onPress={next.go} testID="career-next" />}
+          {up && (
+            <View style={styles.contractUp} testID="contract-up">
+              <Text style={styles.upTitle}>{t('career.contractUp')}</Text>
+              <Text style={styles.body}>{t('career.contractUpDesc')}</Text>
+              <View style={styles.extendRow}>
+                {TERMS.map((n) => (
+                  <Button key={n} label={t('career.extend', { n })} variant="gold" style={{ flex: 1 }} onPress={() => c.extend(n)} testID={`extend-${n}`} />
+                ))}
+              </View>
+              <Button label={t('career.retire')} variant="ghost" onPress={() => c.retire()} testID="career-retire" />
+            </View>
+          )}
           <Button label={ending ? t('career.endSure') : t('career.end')} variant="ghost" testID="career-end"
             onPress={() => { if (!ending) return setEnding(true); c.quit(); setEnding(false); }} />
         </Card>
@@ -153,6 +170,9 @@ const styles = StyleSheet.create({
   dynastyIcon: { width: 64, height: 64, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.16)', alignItems: 'center', justifyContent: 'center' },
   dynastyDesc: { color: '#E6DCFF', fontWeight: '700', fontSize: 13, lineHeight: 18 },
   big: { color: C.danger, fontSize: 26, ...F.display },
+  contractUp: { gap: S.sm, padding: S.md, borderRadius: R.lg, borderWidth: 2, borderColor: C.accent, backgroundColor: C.surface2 },
+  upTitle: { color: C.accent, fontSize: 22, ...F.display },
+  extendRow: { flexDirection: 'row', gap: S.sm },
   body: { color: C.text, fontSize: 15, lineHeight: 22 },
   muted: { color: C.muted },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },

@@ -103,20 +103,52 @@ function nextSeries(ps: PlayoffState, a: Series, b: Series): Series {
   return rank.get(wa)! <= rank.get(wb)! ? mk(wa, wb, sa, sb) : mk(wb, wa, sb, sa);
 }
 
+/** Sweeps are rare: only a team that won 79+ games in the regular season can win a series 4-0... */
+export const SWEEP_WINS = 79;
+/** ...and a team that won 81 or 82 always does. */
+export const ALWAYS_SWEEP_WINS = 81;
+
+/** The team that has to win the series' next game to keep it realistic (see SWEEP_WINS), or null if either may. */
+export function forcedWinner(s: Series, wins: (team: number) => number): number | null {
+  const lock = [s.hi, s.lo].find((t) => wins(t) >= ALWAYS_SWEEP_WINS);
+  if (lock !== undefined) return lock;
+  const upThree = s.winsHi === 3 && s.winsLo === 0 ? s.hi : s.winsLo === 3 && s.winsHi === 0 ? s.lo : null;
+  if (upThree !== null && wins(upThree) < SWEEP_WINS) return upThree === s.hi ? s.lo : s.hi;
+  return null;
+}
+
+const copyTotals = (t: SeasonState['totals']) => Object.fromEntries(Object.entries(t).map(([k, v]) => [k, { ...v }]));
+
 /** Play the next game of every unfinished series in the current round; opens the next round when it's done. */
 export function playNextGame(ps: PlayoffState): PlayoffState {
   if (champion(ps) !== null) return ps;
-  const injuries = { ...ps.injuries };
+  let injuries = { ...ps.injuries };
   const sittingOut = injuredIds(injuries);
   // Playoff stats are kept apart from the regular season; copy inner objects so earlier states stay intact.
-  const totals = Object.fromEntries(Object.entries(ps.totals ?? {}).map(([k, v]) => [k, { ...v }]));
+  let totals = copyTotals(ps.totals ?? {});
   const rng = createRng(`${ps.season.seed}:playoffs:${ps.day}`);
+  const wins = (team: number) => ps.season.records[team]?.w ?? 0;
   const current = ps.rounds[ps.rounds.length - 1].map((s) => {
     if (seriesOver(s)) return s;
     const g = s.games.length;
     const homeIsHi = HI_HOME[g];
     const [home, away] = homeIsHi ? [s.hi, s.lo] : [s.lo, s.hi];
-    const result = playGame(ps.season.teams, injuries, totals, home, away, rng, () => {}, true);
+    // When the series has to go a certain way (no sweep under 79 wins, always a sweep at 81+), the game is played
+    // again until it does: a real game with a real box score, never a flipped one. After a few misses the side that
+    // has to win gets a growing lift so it always gets there.
+    const want = forcedWinner(s, wins);
+    let result: GameResult;
+    let tries = 0;
+    for (;;) {
+      const inj = { ...injuries };
+      const tot = copyTotals(totals);
+      const lift = want === null || tries < 8 ? 0 : (tries - 7) * 3;
+      const teams = lift ? ps.season.teams.map((t, i) => (i === want ? { ...t, mod: (t.mod ?? 0) + lift } : t)) : ps.season.teams;
+      result = playGame(teams, inj, tot, home, away, rng, () => {}, true);
+      tries++;
+      const winner = result.homeScore > result.awayScore ? home : away;
+      if (want === null || winner === want || tries >= 40) { injuries = inj; totals = tot; break; }
+    }
     const homeWon = result.homeScore > result.awayScore;
     const hiWon = homeWon === homeIsHi;
     return {

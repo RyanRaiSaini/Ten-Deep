@@ -6,7 +6,7 @@ vi.mock('@react-native-async-storage/async-storage', () => {
 });
 
 const { useGame } = await import('./game');
-const { useCareer } = await import('./career');
+const { useCareer, contractUp } = await import('./career');
 const { POOLS } = await import('../data');
 const { isComplete, options, startDraft } = await import('../engine/draft');
 const { advance } = await import('../engine/season');
@@ -63,9 +63,22 @@ describe('career store', () => {
     expect(Object.values(c1.stats).every((x) => x.seasons === 1 && x.gp > 0)).toBe(true);
     expect(c1.morale).not.toBe(60);
 
-    if (c1.ended) return; // fired out of a job in year one is possible
+    expect(c1.ended).toBe(false); // nobody gets fired any more
+    // Season one was a plain season (no in-season cards); the year's one card opens the offseason.
+    expect(c1.history[0].cards).toEqual([]);
     c1.beginOffseason();
+    expect(useCareer.getState().step).toBe('card');
+    const card = useGame.getState();
+    expect(card.phase).toBe('crisis');
+    expect(card.crisis!.offseason).toBe(true);
+    expect(card.crisis!.board!.hand).toHaveLength(6);
+    card.revealBoardCard(2);
+    const o = useGame.getState().crisis!.board!.offer!;
+    expect(useGame.getState().resolveBoard({ incomingId: o.players?.[0]?.id, outSlot: o.outSlots?.[0], option: o.options?.[0] })).toBe(false);
+    useCareer.getState().cardDone();
     expect(useCareer.getState().step).toBe('expiring');
+    const carried = useCareer.getState().carry!;
+    expect(carried.board.demands.some((d) => d.objective)).toBe(true);
     const off = useCareer.getState().offseason!;
     useCareer.getState().keep(off.expiring.slice(0, 1));
     expect(useCareer.getState().step).toBe('draft');
@@ -91,7 +104,12 @@ describe('career store', () => {
 
     const g = useGame.getState();
     expect(useCareer.getState().season).toBe(2);
-    expect(g.phase).toBe('crisis');
+    // Straight into the season: no card stops in it, the offseason card's goal carried in, three bench switches.
+    expect(g.phase).toBe('season');
+    expect(g.season!.stops ?? []).toEqual([]);
+    expect(g.season!.switchLimit).toBe(3);
+    expect(g.crisis!.board!.demands.some((d) => d.objective)).toBe(true);
+    expect(g.crisis!.board!.safe).toBe(true);
     expect(g.season!.teams).toHaveLength(30);
     const names = g.season!.teams.flatMap((t) => ALL_SLOTS.map((k) => t.slots[k].name));
     expect(new Set(names).size).toBe(names.length);
@@ -101,9 +119,27 @@ describe('career store', () => {
     if (aged) expect(aged.age).toBe((before.get(aged.name) ?? 0) + 1);
   }, 120_000);
 
-  it('security falls with bad verdicts and the career ends at 0', () => {
+  it("you never lose the job: a bad verdict only moves the board's mood", () => {
     useCareer.setState({ active: true, security: 20, ended: false, history: [] });
     useCareer.getState().applyVerdict('fired');
+    expect(useCareer.getState().ended).toBe(false);
+    expect(useCareer.getState().security).toBe(0);
+  });
+
+  it('a 3-year deal: when it is up you extend by 3, 5 or 10 years, or retire', () => {
+    useCareer.getState().quit();
+    useCareer.setState({ active: true, ended: false, term: 3, termEnd: 3, season: 3, step: null, history: [{}, {}, {}] as never });
+    expect(contractUp(useCareer.getState())).toBe(true);
+    useCareer.getState().beginOffseason(); // blocked until the contract is settled
+    expect(useCareer.getState().step).toBe(null);
+    useCareer.getState().extend(5);
+    expect(useCareer.getState().termEnd).toBe(8);
+    expect(useCareer.getState().term).toBe(5);
+    expect(contractUp(useCareer.getState())).toBe(false);
+    useCareer.setState({ history: Array(8).fill({}) as never, season: 8 });
+    expect(contractUp(useCareer.getState())).toBe(true);
+    useCareer.getState().retire();
     expect(useCareer.getState().ended).toBe(true);
+    expect(useCareer.getState().retired).toBe(true);
   });
 });

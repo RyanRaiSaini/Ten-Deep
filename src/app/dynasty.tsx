@@ -16,9 +16,9 @@ import { ROUNDS, available, draftDone, draftPool, picksUntilUser, roundOf, slotF
 import { realRotation } from '../engine/realLeague';
 import { squadRating } from '../engine/rotation';
 import { POSITIONS, playsPos, type Pos, type Roster, type RosterSlots } from '../engine/types';
-import { useCareer } from '../store/career';
+import { TERMS, useCareer, type Term } from '../store/career';
 import { useGame } from '../store/game';
-import { BackButton, Button, Card, Display, Header, Label, Screen } from '../ui/components';
+import { BackButton, Button, Card, Display, Header, Label, Screen, Segmented } from '../ui/components';
 import { Icon } from '../ui/icons';
 import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
@@ -35,13 +35,14 @@ function Pick() {
   const { t } = useTranslation();
   const startDynasty = useCareer((s) => s.startDynasty);
   const [chosen, setChosen] = useState<string | null>(null);
+  const [term, setTerm] = useState<Term>(5);
   const team = chosen ? teamOf(chosen) : null;
   const sum = useMemo(() => (team ? teamSummary(team) : null), [team]);
 
   const go = (how: 'real' | 'draft') => {
     if (!chosen) return;
     feel('thunk');
-    startDynasty(chosen, how);
+    startDynasty(chosen, how, term);
     if (how === 'real') router.replace('/season');
   };
 
@@ -59,6 +60,8 @@ function Pick() {
 
       {team && sum ? (
         <>
+          <Label>{t('career.term')}</Label>
+          <Segmented options={TERMS} value={term} onChange={setTerm} format={(n) => t('career.termYears', { n })} />
           <Label>{t('dynasty.howStart', { team: `${team.city} ${team.name}` })}</Label>
           <Pressable onPress={() => go('real')} testID="dynasty-real" style={({ pressed }) => [styles.choice, pressed && styles.pressed]}>
             <Icon name="clipboard" size={40} />

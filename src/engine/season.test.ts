@@ -4,7 +4,7 @@ import { draftLeague } from './aiDraft';
 import { rollInjury } from './injuries';
 import { champion, playNextGame, simPlayoffsToEnd, startPlayoffs } from './playoffs';
 import { createRng } from './rng';
-import { DEADLINE_GAME, LOG_BOX_GAMES, SEASON_GAMES, advance, createSeason, modAt, standings, benchSwitch, roomAfterFees, SWITCH_FEE, tradeBudget, tradeSwap } from './season';
+import { DEADLINE_GAME, LOG_BOX_GAMES, SEASON_GAMES, advance, createSeason, modAt, standings, benchSwitch, roomAfterFees, SWITCH_FEE, CAREER_SWITCHES, switchesLeft, tradeBudget, tradeSwap, type SeasonState } from './season';
 import type { Player } from './types';
 import { makePool } from './__fixtures__/pool';
 
@@ -190,10 +190,28 @@ describe('season', () => {
     // Free: the cap room and the deadline budget are untouched.
     expect(roomAfterFees(after)).toBe(roomAfterFees(st));
     expect(tradeBudget(after.teams[0].slots, 'SF', after.fees)).toBe(30); // his $10M room + his $20M
-    expect(() => benchSwitch(after, 'B2', 'PG')).toThrow(/already/);
+    expect(() => benchSwitch(after, 'B2', 'PG')).toThrow(/no bench switches left/i);
     // Even with no cap room left, the switch still goes through.
     const broke = { ...st, fees: 50 };
     expect(benchSwitch(broke, 'B1', 'SF').teams[0].slots.SF.ovr).toBe(90);
+  });
+
+  it('a career season allows three bench switches, then no more', () => {
+    const s = { ...advance(fresh(), 10), switchLimit: CAREER_SWITCHES };
+    const slots = { ...s.teams[0].slots };
+    for (const k of ['B1', 'B2', 'B3', 'B4'] as const) slots[k] = { ...slots[k], pos: 'SF', pos2: undefined };
+    let st: SeasonState = { ...s, teams: [{ ...s.teams[0], slots }, ...s.teams.slice(1)] };
+    expect(switchesLeft(st)).toBe(3);
+    st = benchSwitch(st, 'B1', 'SF');
+    st = benchSwitch(st, 'B2', 'SF');
+    expect(switchesLeft(st)).toBe(1);
+    expect(st.switchUsed).toBe(false);
+    st = benchSwitch(st, 'B3', 'SF');
+    expect(switchesLeft(st)).toBe(0);
+    expect(st.switchUsed).toBe(true);
+    expect(() => benchSwitch(st, 'B4', 'SF')).toThrow(/no bench switches left/i);
+    // An older save that used its one switch has none left.
+    expect(switchesLeft({ ...fresh(), switchUsed: true })).toBe(0);
   });
 
   it('tradeSwap takes a player off an AI roster as a straight swap', () => {

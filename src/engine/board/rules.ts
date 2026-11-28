@@ -222,7 +222,7 @@ export function checkDemands(b: BoardState, ctx: BoardCtx, end = false): Checked
     return { ...d, status, at: r };
   });
   let board: BoardState = { ...b, demands, confidence };
-  if (confidence <= 0 && b.firedAt === undefined) {
+  if (confidence <= 0 && b.firedAt === undefined && !b.safe) {
     board = { ...board, firedAt: r };
     events.push({ round: r, kind: 'fired', delta: 0 });
   }
@@ -242,7 +242,7 @@ export function stretch(b: BoardState, s: SeasonState): { board: BoardState; eve
   const confidence = Math.max(0, Math.min(MAX_CONFIDENCE, b.confidence + delta));
   const event: BoardEvent = { round: s.round, kind: delta > 0 ? 'hot' : 'cold', delta };
   return {
-    board: { ...base, confidence, events: [...b.events, event], ...(confidence <= 0 && b.firedAt === undefined ? { firedAt: s.round } : {}) },
+    board: { ...base, confidence, events: [...b.events, event], ...(confidence <= 0 && b.firedAt === undefined && !b.safe ? { firedAt: s.round } : {}) },
     event,
   };
 }
