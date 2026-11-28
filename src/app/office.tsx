@@ -39,7 +39,8 @@ function OfficeScreen() {
   const user = season.teams[0];
   const scale = moneyScaleFor(g.poolId);
   const pool = POOLS[g.poolId] ?? current2026;
-  const options = slot ? marketOptions(season, board, slot, pool) : [];
+  const ctx = boardCtx(g.poolId, season);
+  const options = slot ? marketOptions(season, board, slot, pool, ctx) : [];
 
   const sign = (i: number) => {
     if (!slot) return;
@@ -53,7 +54,7 @@ function OfficeScreen() {
     <MoneyScale.Provider value={scale}>
       <Screen>
         <Header title={t('board.office')} left={<BackButton onPress={() => goBack()} />} />
-        <ObjectiveBanner board={board} ctx={boardCtx(g.poolId, season)} scale={scale} takeover={!!g.crisis?.rebuild} />
+        <ObjectiveBanner board={board} ctx={ctx} scale={scale} takeover={!!g.crisis?.rebuild} />
         <Card style={{ gap: S.sm }}>
           <View style={styles.info}>
             <Icon name="briefcase" size={34} />
@@ -82,14 +83,16 @@ function OfficeScreen() {
             {options.map((o, i) => {
               const why = blocked(season, board, slot, o);
               return (
-                <View key={`${o.tier}-${o.player.id}`} style={[styles.option, { borderColor: TIER_COLOR[o.tier] }]} testID={`office-option-${o.tier}`}>
+                <View key={`${o.tier}-${o.player.id}`} style={[styles.option, { borderColor: o.callup ? C.neon : TIER_COLOR[o.tier] }]} testID={o.callup ? 'office-option-callup' : `office-option-${o.tier}`}>
                   <View style={styles.optionHead}>
-                    <Text style={[styles.tier, { backgroundColor: TIER_COLOR[o.tier] }]}>{t(`board.tiers.${o.tier}`)}</Text>
+                    <Text style={[styles.tier, { backgroundColor: o.callup ? C.neon : TIER_COLOR[o.tier] }, o.callup && { color: C.onAccent }]}>
+                      {o.callup ? t('board.callup') : t(`board.tiers.${o.tier}`)}
+                    </Text>
                     {why && <Text style={styles.why}>{why === 'budget' ? t('board.overBudget') : t('board.crunch')}</Text>}
                   </View>
                   <PlayerCard player={o.player} />
                   <Button label={t('board.officeSign', { pay: money(o.pay, scale) })} disabled={!!why} variant={o.tier === 'top' ? 'gold' : 'primary'}
-                    onPress={() => sign(i)} testID={`office-sign-${o.tier}`} />
+                    onPress={() => sign(i)} testID={o.callup ? 'office-sign-callup' : `office-sign-${o.tier}`} />
                 </View>
               );
             })}

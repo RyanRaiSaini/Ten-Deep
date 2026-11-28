@@ -1639,7 +1639,8 @@
     "stopKind": {
       "objective": "목표",
       "event": "시즌 중반 카드"
-    }
+    },
+    "callup": "목표를 채웁니다"
   },
   "rebuild": {
     "title": "테이크오버",

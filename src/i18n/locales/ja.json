@@ -1639,7 +1639,8 @@
     "stopKind": {
       "objective": "目標",
       "event": "シーズン中盤のカード"
-    }
+    },
+    "callup": "目標を満たす"
   },
   "rebuild": {
     "title": "テイクオーバー",

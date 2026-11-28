@@ -25,8 +25,8 @@ const since = (b: BoardState, d: Demand): Signing[] => b.signings.slice(d.sig ??
 const real = (xs: Signing[]) => xs.filter((x) => x.tier !== 'perk');
 const count = <T>(xs: T[], f: (x: T) => boolean) => xs.filter(f).length;
 const winsSince = (s: SeasonState, d: Demand) => s.records[0].w - (d.wins ?? 0);
-const DEFENSIVE = new Set(['defender', 'rim', 'wing3d']);
-const SHOOTING = new Set(['shooter', 'stretch', 'wing3d']);
+export const DEFENSIVE = new Set(['defender', 'rim', 'wing3d']);
+export const SHOOTING = new Set(['shooter', 'stretch', 'wing3d']);
 
 /** Team rebounds per game, from each current player's average. */
 const teamRpg = (s: SeasonState, i: number) =>

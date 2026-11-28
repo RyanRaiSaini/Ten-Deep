@@ -1644,7 +1644,8 @@
     "stopKind": {
       "objective": "Das Ziel",
       "event": "Karte zur Saisonmitte"
-    }
+    },
+    "callup": "Erfüllt dein Ziel"
   },
   "rebuild": {
     "title": "Übernahme",

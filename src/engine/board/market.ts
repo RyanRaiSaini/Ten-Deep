@@ -6,9 +6,11 @@
 import { CAP, MIN_SALARY, payOf, superstarBlocked } from '../cap';
 import { createRng, shuffle } from '../rng';
 import { tradeBudget, type SeasonState } from '../season';
-import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pool, type SlotId, playsPos } from '../types';
+import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pool, type SlotId, playsPos, positionsOf } from '../types';
 import { swapIn } from '../crisis/apply';
-import type { BoardState, Signing, Tier } from './state';
+import { madeFinals, wonTitle } from '../../data/finals';
+import { DEFENSIVE, SHOOTING, holds, type BoardCtx } from './rules';
+import type { BoardState, Demand, Signing, Tier } from './state';
 
 export interface MarketOption {
   tier: Tier;
@@ -17,6 +19,42 @@ export interface MarketOption {
   pay: number;
   /** The AI team he plays for (it gets your player back in a swap); none for a free agent. */
   fromTeam?: number;
+  /** The objective call-up: a cheap player who fills the run's objective, offered while it's unmet. */
+  callup?: boolean;
+}
+
+/** Overalls an objective call-up can have: a role player, never a bargain star. */
+export const CALLUP_OVR: [number, number] = [63, 70];
+
+/**
+ * Would signing `p` into `slot` move the run's objective along? Only the objectives a minimum-salary role player
+ * can help with: a statement signing or a 95-rated star can't come cheap, and those stay on the player.
+ */
+export function fillsObjective(d: Demand, p: Player, slot: SlotId, s: SeasonState, b: BoardState, ctx: Omit<BoardCtx, 'season'>, fromTeam?: number): boolean {
+  const o = ctx.origin(p);
+  const starter = STARTER_SLOTS.includes(slot);
+  switch (d.id) {
+    case 'youth-movement': return (p.age ?? 99) <= 23;
+    case 'veteran-leadership': return (p.age ?? 0) >= 32;
+    case 'international-flavor': { const n = ctx.nation?.(p); return !!n && n !== 'us'; }
+    case 'hometown-hero': { const teams = new Set(d.franchises ?? (d.franchise ? [d.franchise] : [])); return !!o && teams.has(o.franchise); }
+    case 'local-legend': return !!o && o.franchise === d.franchise;
+    case 'championship-dna': return !!o && wonTitle(o.franchise, o.year);
+    case 'finals-experience': return !!o && madeFinals(o.franchise, o.year);
+    case 'time-machine': return !!o && o.year < 1990;
+    case 'rivalry-signing': return fromTeam !== undefined && (!s.divs || s.divs[fromTeam] === s.divs[0]);
+    case 'every-phase': {
+      // A signing from the phase (guard, wing, big) the objective still lacks.
+      const phase = (pos: string) => (pos === 'SF' ? 'wing' : pos === 'PG' || pos === 'SG' ? 'guard' : 'big');
+      const done = new Set(b.signings.slice(d.sig ?? 0).filter((x) => x.round >= d.from && x.tier !== 'perk').map((x) => phase(x.pos)));
+      return !done.has(phase(p.pos));
+    }
+    case 'break-core': return starter && (d.ids ?? []).includes(s.teams[0].slots[slot].id);
+    case 'defense-wins': return starter && (DEFENSIVE.has(p.tag ?? '') || p.def >= 90);
+    case 'space-floor': return starter && (SHOOTING.has(p.tag ?? '') || p.three >= 90);
+    case 'positionless': return starter && positionsOf(p).length >= 2;
+    default: return false;
+  }
 }
 
 export const LOW_MAX = CAP * 0.05;
@@ -42,8 +80,13 @@ function candidates(s: SeasonState, pool: Pool): { p: Player; team?: number }[] 
 
 export const budgetFor = (s: SeasonState, slot: SlotId) => tradeBudget(s.teams[0].slots, slot, s.fees ?? 0);
 
-/** Three priced options and a bench option for a slot, fixed by the season seed, your move count and respins. */
-export function marketOptions(s: SeasonState, b: BoardState, slot: SlotId, pool: Pool): MarketOption[] {
+/**
+ * Three priced options and a bench option for a slot, fixed by the season seed, your move count and respins. With
+ * `ctx`, while the run's objective is unmet and this spot could still help it, one more option: a role player who
+ * fills the objective, for the minimum or whatever budget is left (never more), so money alone never puts the
+ * objective out of reach.
+ */
+export function marketOptions(s: SeasonState, b: BoardState, slot: SlotId, pool: Pool, ctx?: Omit<BoardCtx, 'season'>): MarketOption[] {
   const rng = createRng(`${s.seed}:market:${b.signings.length}:${slot}:${b.spins ?? 0}`);
   const user = s.teams[0];
   const without = { ...user.slots, [slot]: undefined };
@@ -68,11 +111,23 @@ export function marketOptions(s: SeasonState, b: BoardState, slot: SlotId, pool:
     const { p, team } = rng.pick(cheap);
     out.push({ tier: 'bench', player: { ...p, salary: MIN_SALARY }, pay: MIN_SALARY, ...(team !== undefined ? { fromTeam: team } : {}) });
   }
+  const objective = ctx && b.demands.find((d) => d.objective && d.status === 'active');
+  if (objective && !holds(objective, b, { ...ctx, season: s })) {
+    const fills = ({ p, team }: { p: Player; team?: number }) => !out.some((o) => o.player.name === p.name) && fillsObjective(objective, p, slot, s, b, ctx, team);
+    const inRange = fits.filter((x) => x.p.ovr >= CALLUP_OVR[0] && x.p.ovr <= CALLUP_OVR[1] && fills(x));
+    const callups = inRange.length ? inRange : fits.filter((x) => x.p.ovr <= 76 && fills(x));
+    if (callups.length) {
+      const { p, team } = rng.pick(callups);
+      const pay = Math.max(0, Math.min(MIN_SALARY, Math.round(budgetFor(s, slot) * 10) / 10));
+      out.push({ tier: 'bench', callup: true, player: { ...p, salary: pay }, pay, ...(team !== undefined ? { fromTeam: team } : {}) });
+    }
+  }
   return out;
 }
 
-/** Why an option can't be signed right now, or null if it can. */
+/** Why an option can't be signed right now, or null if it can. The objective call-up is priced to fit, so it never is. */
 export function blocked(s: SeasonState, b: BoardState, slot: SlotId, o: MarketOption): 'budget' | 'crunch' | null {
+  if (o.callup) return null;
   if (b.crunch && o.tier !== 'bench') return 'crunch';
   return o.pay > budgetFor(s, slot) + 1e-9 ? 'budget' : null;
 }

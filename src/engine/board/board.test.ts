@@ -142,6 +142,34 @@ describe('board confidence', () => {
     expect(signOption(s, newBoard('sac'), 'B4', bench).season.teams[0].slots.B4.salary).toBe(1);
   });
 
+  it('while the objective is unmet, the market adds a cheap call-up who fills it, priced to fit the budget', () => {
+    const s = fresh('callup');
+    const ctx = ctxFor(s);
+    // Youth movement: three players 23 or under. Make it the run's objective.
+    const dealt = resolveCard('youth-movement', {}, {}, newBoard('sac'), ctx).board;
+    let b: BoardState = { ...dealt, demands: dealt.demands.map((d) => ({ ...d, objective: true })) };
+    let season = s;
+    // Without the context there's no call-up; with it there is one, as long as the objective is unmet.
+    expect(marketOptions(season, b, 'B5', pool).some((o) => o.callup)).toBe(false);
+    for (const slot of ['B5', 'B4', 'B3', 'B2', 'B1'] as const) {
+      if (holds(b.demands[0], b, { ...ctx, season })) break;
+      const opts = marketOptions(season, b, slot, pool, ctx);
+      const callup = opts.find((o) => o.callup);
+      expect(callup, slot).toBeTruthy();
+      expect(callup!.player.age!).toBeLessThanOrEqual(23);
+      expect(callup!.player.ovr).toBeLessThanOrEqual(76);
+      expect(callup!.pay).toBeLessThanOrEqual(1);
+      expect(blocked(season, { ...b, crunch: true }, slot, callup!)).toBe(null);
+      const signed = signOption(season, b, slot, callup!);
+      assertLegal(signed.season.teams);
+      season = signed.season;
+      b = signed.board;
+    }
+    expect(holds(b.demands[0], b, { ...ctx, season })).toBe(true);
+    // Met: the call-up goes away.
+    expect(marketOptions(season, b, 'B1', pool, ctx).some((o) => o.callup)).toBe(false);
+  });
+
   it('finance cards move cap room', () => {
     const s = fresh('cash');
     const plus = resolveCard('owner-all-in', prepareOffer('owner-all-in', newBoard('x'), ctxFor(s)), {}, newBoard('x'), ctxFor(s));
