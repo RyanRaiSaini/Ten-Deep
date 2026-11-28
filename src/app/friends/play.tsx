@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { feel } from '../../audio/feel';
@@ -17,11 +17,11 @@ import { Text } from '../../ui/Text';
 import { C, FONT, R, S } from '../../ui/theme';
 
 const ME: [string, string] = ['#FF7417', '#17121E'];
-const THEM: [string, string] = ['#3B6CF0', '#17121E'];
+const THEM: [string, string] = ['#6AA8FF', '#17121E'];
 
 /**
- * A series against a friend's team. The whole series is simulated (and counted) as soon as it starts, then
- * revealed game by game, so backing out of a losing series doesn't dodge the loss.
+ * Practice: a quick series against a friend's saved team, simulated here and revealed game by game. It doesn't
+ * count: only challenges (app/challenge.tsx) settle a result both of you see and go into your head-to-head record.
  */
 export default function FriendPlay() {
   const { pin, mode = 'clash', n = '3' } = useLocalSearchParams<{ pin: string; mode?: 'clash' | 'finals'; n?: string }>();
@@ -31,7 +31,6 @@ export default function FriendPlay() {
   const me = useProfile();
   const [round, setRound] = useState(0);
   const [shown, setShown] = useState(0);
-  const counted = useRef(-1);
   const [visit] = useState(() => Date.now().toString(36));
   const bestOf = (BEST_OF.includes(Number(n) as BestOf) ? Number(n) : 3) as BestOf;
 
@@ -50,13 +49,6 @@ export default function FriendPlay() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [round]);
 
-  // Count the result the moment the series exists.
-  useEffect(() => {
-    if (!series || !f || counted.current === round) return;
-    counted.current = round;
-    useFriends.getState().result(f.pin, mode, series.winner === 'a' ? 'w' : 'l', `${series.winsA}-${series.winsB}`);
-  }, [series, f, mode, round]);
-
   if (!f || !series) return <Screen><Header title={t('friends.title')} left={<BackButton onPress={goBack} />} /></Screen>;
   const games = series.games.slice(0, shown);
   const wa = games.filter((g) => g.scoreA > g.scoreB).length;
@@ -72,7 +64,8 @@ export default function FriendPlay() {
 
   return (
     <Screen tint={mode === 'finals' ? C.gold : C.purple} overlay={over && won ? <Confetti /> : undefined}>
-      <Header title={mode === 'finals' ? t('friends.finals') : `${t('friends.clash')} · ${t('friends.bestOf', { n: bestOf })}`} left={<BackButton onPress={goBack} />} />
+      <Header title={`${t('vs.practice')} · ${mode === 'finals' ? t('friends.finals') : t('friends.clash')}`} left={<BackButton onPress={goBack} />} />
+      <Text style={styles.record}>{mode === 'clash' ? `${t('friends.bestOf', { n: bestOf })} · ` : ''}{t('vs.practiceShort')}</Text>
       <View style={styles.board}>
         <Side avatar={me.avatarId} name={me.name || t('friends.you')} wins={wa} color={ME[0]} />
         <Icon name="vs" size={54} />
@@ -100,8 +93,8 @@ export default function FriendPlay() {
       ) : (
         <>
           <Display size={32} testID="fwinner">{won ? t('friends.youWin', { w: series.winsA, l: series.winsB }) : t('friends.winner', { name: f.snap.name, w: series.winsB, l: series.winsA })}</Display>
-          <Text style={styles.record}>{t('friends.h2h')}: {t('friends.record', f.record)}</Text>
-          <Button label={t('friends.rematch')} variant="gold" icon={<Icon name="swap" size={20} />} onPress={() => { setShown(0); setRound(round + 1); }} testID="frematch" />
+          <Button label={t('vs.challengeFriend', { name: f.snap.name })} icon={<Icon name="vs" size={22} />} onPress={() => router.push({ pathname: '/challenge', params: { to: f.pin, mode } })} testID="fchallenge" />
+          <Button label={t('vs.practiceAgain')} variant="secondary" icon={<Icon name="swap" size={20} />} onPress={() => { setShown(0); setRound(round + 1); }} testID="frematch" />
           <Button label={t('friends.back', { name: f.snap.name })} variant="ghost" onPress={() => router.back()} />
         </>
       )}
@@ -120,14 +113,14 @@ function Side({ avatar, name, wins, color }: { avatar: string; name: string; win
 }
 
 const styles = StyleSheet.create({
-  board: { flexDirection: 'row', alignItems: 'center', backgroundColor: C.surface, borderRadius: 24, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 7, padding: S.md },
+  board: { flexDirection: 'row', alignItems: 'center', backgroundColor: C.surface, borderRadius: R.lg, borderWidth: 2, borderColor: C.line, borderBottomWidth: 6, borderBottomColor: C.edge, padding: S.md },
   side: { flex: 1, alignItems: 'center', gap: 2 },
   ring: { borderRadius: 40, borderWidth: 4, backgroundColor: C.surface2 },
   name: { fontWeight: '900', color: C.text, fontSize: 15, maxWidth: 130 },
-  wins: { fontFamily: FONT.display, fontSize: 52, lineHeight: 56 },
+  wins: { fontFamily: FONT.condensed, fontSize: 56, lineHeight: 60 },
   game: { flexDirection: 'row', alignItems: 'center', gap: S.sm, backgroundColor: C.surface, borderRadius: R.md, borderWidth: 2, paddingHorizontal: S.md, paddingVertical: 8 },
   gameNo: { fontWeight: '900', color: C.muted, width: 34 },
-  score: { flex: 1, textAlign: 'center', fontFamily: FONT.display, fontSize: 24, color: C.text },
+  score: { flex: 1, textAlign: 'center', fontFamily: FONT.condensed, fontSize: 26, color: C.text },
   dash: { color: C.muted, fontWeight: '900' },
   dot: { width: 12, height: 12, borderRadius: 6 },
   record: { textAlign: 'center', color: C.muted, fontWeight: '800' },

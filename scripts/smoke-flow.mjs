@@ -460,6 +460,7 @@ export async function runFlow({ page, base, step, shot }) {
   await step('pass-and-play duel: 20 picks and a best-of-7', async () => {
     await page.goto(base);
     await page.getByTestId('tab-duels').click();
+    await page.getByTestId('to-couch').click();
     await page.getByTestId('p1').fill('Ryan');
     await page.getByTestId('p2').fill('Friend');
     await page.getByTestId('duel-start').click();
@@ -484,7 +485,7 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('17-duel-result');
   });
 
-  await step('friends: add by link, Card Clash best of 5, W/L/D tally', async () => {
+  await step('friends: add by link, a practice Card Clash best of 5 (it doesn\'t count), the challenge page', async () => {
     // A friend code made by encodeFriend (PIN K7Q2XM, "Jordan"): unknown cards are dropped, so it stays valid as data grows.
     const code = 'TD1WzEsIks3UTJYTSIsIkpvcmRhbiIsImFjZSIsWzg3LDksMjMsMzEyLDVdLCJ3a0hlUDFoWllVdTFDMEphZzF0VDZGTjE3MVA3SzFoYUJlXzFmVVVDbjFYdk5kVTE5WHdpYzFoODZVdDEiLCI3MVA3S3RUNkZOaGFCZV93a0hlUGZVVUNuWHZOZFU5WHdpY2g4NlV0eWh5X0YtZXBIYkMwSmFnenI3YXFzaVBqS1dsTkp2YXdGUE85NnBFaGhaWVV1c1BxVzBsNzVOTWZBb1AxVzZ2cFZGTm9QMzd0NUZITnk1MHo5WEtnUVdKVGZNbFFnMWZZSkFDOC1nMmRFekY2V1gyMzhLcDVIVUNseE9iOE1LY0tVdDFKWHBBTFhpLWZncDZNTVFVWFVqX0E4VXJSZ1paaTdLSnZRMDI5S3pleTlpTnExTmRWdFBDaVpURU03bVBwMFVQRDB2cFVQMktSLTBhTG1USnZXTU11YmNvTVFEZk42b3JxSDlCMGhSRWg2NUZKbzhKUEM0SldaaVhMS2dPdDN3TkkiLFsiY3VycmVudC0yMDI2Iiw1OCwyNCwiY2hhbXBpb24iLFsiVzZ2cFYiLCJGTm9QMyIsImUwUzZVIiwiNGNJZW8iLCJMWlIwZyIsIl9PaTFHIiwiWmpVVEoiLCJvZzg4UCIsImc1N1ZtIiwwXV1d';
     await page.goto(`${base}/f?c=${code}`);
@@ -497,8 +498,16 @@ export async function runFlow({ page, base, step, shot }) {
     await shot('41-clash');
     await page.goto(`${base}/duel`);
     await page.getByTestId('friend-K7Q2XM').waitFor();
+    // Practice never touches the head-to-head record: only challenges (settled once, for both sides) do.
     const rec = (await page.getByTestId('friend-K7Q2XM').textContent()) ?? '';
-    if (!/[01]-[01]/.test(rec)) throw new Error(`tally not shown: ${rec}`);
+    if (!/0-0/.test(rec)) throw new Error(`a practice game changed the tally: ${rec}`);
+    // The challenge page: the friend is there to pick, every format is listed, Finals waits for a finished draft.
+    await page.getByTestId('to-challenge').click();
+    await page.getByTestId('pick-K7Q2XM').click();
+    for (const m of ['draft', 'clash', 'finals']) await page.getByTestId(`format-${m}`).waitFor();
+    await page.getByTestId('format-clash').click();
+    if (await page.getByTestId('challenge-send').isDisabled()) throw new Error('a Card Clash challenge cannot be sent');
+    await shot('43-challenge');
   });
 
   await step('shop: free daily reroll and an ad break add rerolls', async () => {

@@ -1,7 +1,8 @@
-import { Redirect, router } from 'expo-router';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { Icon } from '../ui/icons';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
 import { capRoom } from '../engine/cap';
@@ -19,7 +20,30 @@ export default function Couch() {
   const { t } = useTranslation();
   const d = useDuel();
   const [chosen, setChosen] = useState<string | null>(null);
-  if (!d.state) return <Redirect href="/duel" />;
+  const [p1, setP1] = useState(d.names.a);
+  const [p2, setP2] = useState(d.names.b);
+
+  // --- Setup: two names, then the draft --------------------------------------------------------
+  if (!d.state) {
+    return (
+      <Screen tint={C.hardwood}>
+        <Header title={t('friends.couch')} left={<BackButton onPress={() => goBack()} />} />
+        <Text style={styles.lead}>{t('duel.passPlay')}</Text>
+        <View style={styles.versus}>
+          <View style={[styles.sideBox, { borderColor: DUEL_COLORS.a[0] }]}>
+            <Text style={[styles.sideLabel, { color: DUEL_COLORS.a[0] }]}>{t('duel.p1')}</Text>
+            <TextInput value={p1} onChangeText={setP1} style={styles.input} maxLength={16} testID="p1" placeholderTextColor={C.muted} />
+          </View>
+          <View style={styles.vsMid}><Icon name="vs" size={48} /></View>
+          <View style={[styles.sideBox, { borderColor: DUEL_COLORS.b[0] }]}>
+            <Text style={[styles.sideLabel, { color: DUEL_COLORS.b[0] }]}>{t('duel.p2')}</Text>
+            <TextInput value={p2} onChangeText={setP2} style={styles.input} maxLength={16} testID="p2" placeholderTextColor={C.muted} />
+          </View>
+        </View>
+        <Button label={t('duel.start')} icon={<Icon name="shield" size={22} />} onPress={() => d.start(p1, p2)} testID="duel-start" />
+      </Screen>
+    );
+  }
 
   const s = d.state;
   const names = d.names;
@@ -59,7 +83,7 @@ export default function Couch() {
               {t('duel.winsSeries', { name: winner, w: 4, l: Math.min(series!.winsA, series!.winsB) })}
             </Text>
             <Button label={t('duel.rematch')} onPress={() => d.start(names.a, names.b)} testID="duel-rematch" />
-            <Button label={t('duel.newDuel')} variant="ghost" onPress={() => { d.reset(); router.back(); }} />
+            <Button label={t('duel.newDuel')} variant="ghost" onPress={() => d.reset()} />
           </>
         )}
         <Label color={DUEL_COLORS.a[0]}>{names.a}</Label>
@@ -113,7 +137,7 @@ export default function Couch() {
         highlight={chosenOpt?.slots}
         onSlot={chosenOpt ? (slot) => chosenOpt.slots.includes(slot) && place(chosenOpt.player.id, slot) : undefined}
       />
-      <Button label={t('duel.newDuel')} variant="ghost" onPress={() => { d.reset(); router.back(); }} testID="duel-cancel" />
+      <Button label={t('duel.newDuel')} variant="ghost" onPress={() => { d.reset(); if (router.canGoBack()) router.back(); }} testID="duel-cancel" />
     </Screen>
   );
 }
@@ -136,6 +160,10 @@ const styles = StyleSheet.create({
   faceRing: { borderRadius: 50, borderWidth: 4, borderColor: '#FFC53D', backgroundColor: C.surface },
   vsBadge: { marginHorizontal: -6, zIndex: 2 },
   lead: { color: C.text, fontSize: 15, lineHeight: 22 },
+  versus: { flexDirection: 'row', alignItems: 'center', gap: S.xs },
+  sideBox: { flex: 1, gap: S.sm, padding: S.md, borderRadius: R.lg, backgroundColor: C.surface, borderWidth: 2, borderBottomWidth: 5, borderBottomColor: C.edge },
+  sideLabel: { ...F.label },
+  vsMid: { marginHorizontal: -10, zIndex: 2 },
   pinTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: S.md },
   pinCard: {
     gap: S.sm, padding: S.md, borderRadius: R.lg, backgroundColor: C.surface,
@@ -148,10 +176,10 @@ const styles = StyleSheet.create({
   addBtn: { minHeight: 44, paddingVertical: 8, paddingHorizontal: 14 },
   empty: { color: C.muted, fontWeight: '700', textAlign: 'center', paddingVertical: S.md },
   note: { color: C.muted, fontSize: 12, textAlign: 'center' },
-  input: { color: C.text, fontSize: 18, fontWeight: '800', borderWidth: 2, borderRadius: R.md, padding: S.md, backgroundColor: C.bg, fontFamily: 'Montserrat_700Bold' },
+  input: { color: C.text, fontSize: 18, borderWidth: 2, borderColor: C.line, borderRadius: R.md, paddingVertical: S.sm, paddingHorizontal: S.md, backgroundColor: C.bg, fontFamily: FONT.body },
   turn: { borderRadius: R.lg, padding: S.lg, alignItems: 'center', gap: 2 },
-  turnText: { color: C.text, fontSize: 22, ...F.display },
-  turnSub: { color: C.text, fontWeight: '800' },
+  turnText: { color: C.ink, fontSize: 22, ...F.display },
+  turnSub: { color: C.ink, fontWeight: '800' },
   spin: { color: C.text, fontSize: 24, textAlign: 'center', ...F.display },
   choose: { fontWeight: '800', textAlign: 'center' },
   board: { flexDirection: 'row', alignItems: 'center', paddingVertical: S.xl },

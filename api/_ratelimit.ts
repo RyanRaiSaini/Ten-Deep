@@ -24,6 +24,9 @@ export const LIMITS = {
   save: { max: 30, windowSec: 60 },
   pinRead: { max: 60, windowSec: 60 },
   pinWrite: { max: 10, windowSec: 60 },
+  /** Friend challenges: checking your mailbox (polled while the Duels tab is open), and sending or answering one. */
+  duelRead: { max: 60, windowSec: 60 },
+  duelWrite: { max: 20, windowSec: 60 },
   weeklyRead: { max: 30, windowSec: 60 },
   weeklyWrite: { max: 10, windowSec: 60 },
   /** Creating party rooms (each one is stored for 3 hours). */

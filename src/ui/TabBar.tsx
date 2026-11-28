@@ -9,6 +9,17 @@ import { useReducedMotion } from './fx';
 import { Icon, type IconName } from './icons';
 import { Text } from './Text';
 import { C, FONT } from './theme';
+import { allChallenges, incomingOpen, unseenResults, useChallenges } from '../store/challenges';
+import { useFriends } from '../store/friends';
+
+/** Duels tab badge: challenges waiting on you plus results you haven't watched yet. */
+function useDuelBadge(): number {
+  const byId = useChallenges((s) => s.byId);
+  const viewed = useChallenges((s) => s.viewed);
+  const pin = useFriends((s) => s.pin);
+  const cs = allChallenges(byId);
+  return incomingOpen(cs, pin).length + unseenResults(cs, viewed).length;
+}
 
 const native = Platform.OS !== 'web';
 
@@ -26,6 +37,8 @@ function TabItem({ name, focused, onPress }: { name: string; focused: boolean; o
   const { t } = useTranslation();
   const tab = TABS[name];
   const reduce = useReducedMotion();
+  const badge = useDuelBadge();
+  const count = name === 'duel' ? badge : 0;
   const [v] = useState(() => new Animated.Value(focused ? 1 : 0));
   useEffect(() => {
     if (reduce) { v.setValue(focused ? 1 : 0); return; }
@@ -37,12 +50,13 @@ function TabItem({ name, focused, onPress }: { name: string; focused: boolean; o
       testID={`tab-${tab.key}`}
       accessibilityRole="tab"
       accessibilityState={{ selected: focused }}
-      accessibilityLabel={t(`tabs.${tab.key}`)}
+      accessibilityLabel={count ? `${t(`tabs.${tab.key}`)}, ${count}` : t(`tabs.${tab.key}`)}
       onPress={onPress}
       style={styles.item}
     >
       <Animated.View style={{ transform: [{ translateY: v.interpolate({ inputRange: [0, 1], outputRange: [0, -22] }) }, { scale: v.interpolate({ inputRange: [0, 1], outputRange: [1, 1.42] }) }] }}>
         <Icon name={tab.icon} size={32} />
+        {count > 0 && <View style={styles.badge} testID={`tab-${tab.key}-badge`}><Text style={styles.badgeText}>{count > 9 ? '9+' : count}</Text></View>}
       </Animated.View>
       <View style={styles.labels}>
         <Animated.View style={{ opacity: v.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }), position: 'absolute' }}>
@@ -101,5 +115,7 @@ const styles = StyleSheet.create({
   },
   item: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 2, paddingVertical: 6, height: 64 },
   labels: { height: 26, alignItems: 'center', justifyContent: 'center' },
+  badge: { position: 'absolute', top: -4, right: -10, minWidth: 18, height: 18, borderRadius: 9, paddingHorizontal: 4, backgroundColor: C.danger, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: C.bg },
+  badgeText: { color: C.onColor, fontSize: 10, fontFamily: FONT.condensed },
   label: { fontSize: 11, color: C.muted, fontFamily: FONT.condensedBold, letterSpacing: 0.8, textTransform: 'uppercase' },
 });

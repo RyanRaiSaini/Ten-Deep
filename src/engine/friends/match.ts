@@ -5,7 +5,8 @@ import { bestOf, type SeriesResult } from '../series';
 import { ALL_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type RosterSlots, type SlotId } from '../types';
 import type { FriendSnapshot } from './code';
 
-export type FriendMode = 'clash' | 'finals' | 'race' | 'party';
+/** 'draft': a draft duel challenge (same spins, then your two teams play a best-of-7). */
+export type FriendMode = 'clash' | 'finals' | 'race' | 'party' | 'draft';
 export type Outcome = 'w' | 'l' | 'd';
 export const BEST_OF = [3, 5, 7] as const;
 export type BestOf = (typeof BEST_OF)[number];

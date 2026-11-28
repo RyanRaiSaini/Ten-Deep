@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Platform, StyleSheet, View } from 'react-native';
@@ -16,9 +16,13 @@ const SLIDES = [
   { n: 3, icon: 'cards', tint: '#B26BFF' },
 ] as const;
 
-/** First-launch welcome: three slides, then home. */
+/** Only an in-app path ("/duel", "/vs/abc"): never another site, never back here. */
+const safeNext = (next?: string) => (next && /^\/[A-Za-z0-9/_-]*$/.test(next) && !next.startsWith('//') && !next.startsWith('/welcome') ? next : '/');
+
+/** First-launch welcome: three slides, then home (or the page a link opened, e.g. the Duels tab). */
 export default function Welcome() {
   const { t } = useTranslation();
+  const { next } = useLocalSearchParams<{ next?: string }>();
   const [i, setI] = useState(0);
   const reduce = useReducedMotion();
   const [fade] = useState(() => new Animated.Value(1));
@@ -33,7 +37,7 @@ export default function Welcome() {
 
   const done = () => {
     useSettings.getState().set({ onboarded: true });
-    router.replace('/');
+    router.replace(safeNext(next) as '/');
   };
 
   return (
