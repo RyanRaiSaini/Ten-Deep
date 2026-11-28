@@ -1,7 +1,41 @@
 import { SIM, effective } from './simConfig';
 import {
-  ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pos, type Roster, type SlotId, playsPos,
+  ALL_SLOTS, BENCH_SLOTS, POSITIONS, STARTER_SLOTS, type Player, type Pos, type Roster, type SlotId, playsPos,
 } from './types';
+
+/** Each starting position with a backup on the bench adds this much Squad Rating (+1 for all five). */
+export const BALANCE_PER_POS = 0.2;
+/** Bench players at one position beyond STACK_FROM - 1 cost this much each (five point guards: -1.5). */
+export const STACK_PENALTY = 0.5;
+export const STACK_FROM = 3;
+
+export interface BenchBalance {
+  /** Starting positions at least one bench player can play. */
+  covered: Pos[];
+  /** The position with three or more bench players, if any (by each player's main position). */
+  stacked: Pos | null;
+  stackCount: number;
+  /** The net Squad Rating change, to one decimal. */
+  bonus: number;
+}
+
+/**
+ * Bench balance: a backup for every position makes the team a little better (injuries and rest cost less), while a
+ * bench stacked at one position (five point guards) hurts. Small on purpose: at most +1, and -1.3 at its worst.
+ */
+export function benchBalance(slots: Partial<Record<SlotId, Player>>): BenchBalance {
+  const bench = BENCH_SLOTS.map((s) => slots[s]).filter((p): p is Player => !!p);
+  const covered = POSITIONS.filter((pos) => bench.some((p) => playsPos(p, pos)));
+  const counts = POSITIONS.map((pos) => bench.filter((p) => p.pos === pos).length);
+  const stackCount = Math.max(0, ...counts);
+  const stacked = stackCount >= STACK_FROM ? POSITIONS[counts.indexOf(stackCount)] : null;
+  const bonus = BALANCE_PER_POS * covered.length - STACK_PENALTY * Math.max(0, stackCount - (STACK_FROM - 1));
+  return { covered, stacked, stackCount, bonus: Math.round(bonus * 10) / 10 };
+}
+
+/** The balance of the healthy bench in a lineup (an injured backup covers nothing). */
+export const lineupBalance = (lineup: LineupEntry[]): number =>
+  benchBalance(Object.fromEntries(lineup.filter((e) => BENCH_SLOTS.includes(e.slot)).map((e) => [e.slot, e.player]))).bonus;
 
 export interface LineupEntry {
   player: Player;
@@ -61,18 +95,19 @@ export function lineupMinutes(roster: Roster, out: Set<string>): LineupEntry[] {
  * Squad Rating: the players' overalls weighted by their role's share of the minutes (a starter out of position
  * counts OOP_PENALTY less). One number for how good the ten-man rotation is, healthy.
  */
-/** Includes the team's rating nudge (`mod`: an AI league's levelling, career morale), as the sim does. */
+/** Includes the team's rating nudge (`mod`: an AI league's levelling, career morale) and the bench balance, as the sim does. */
 export function squadRating(roster: Roster): number {
-  return (roster.mod ?? 0) + lineupMinutes(roster, new Set()).reduce((n, e) => n + (e.minutes / 240) * (e.player.ovr - (e.outOfPosition ? OOP_PENALTY : 0)), 0);
+  const lineup = lineupMinutes(roster, new Set());
+  return (roster.mod ?? 0) + lineupBalance(lineup) + lineup.reduce((n, e) => n + (e.minutes / 240) * (e.player.ovr - (e.outOfPosition ? OOP_PENALTY : 0)), 0);
 }
 
-/** Squad Rating so far, while drafting: the filled spots only, each weighted by its role's share. Null when empty. */
+/** Squad Rating so far, while drafting: the filled spots only, each weighted by its role's share, plus the bench balance so far. Null when empty. */
 export function partialSquadRating(slots: Partial<Record<SlotId, Player>>): number | null {
   let sum = 0;
   let w = 0;
   STARTER_SLOTS.forEach((s) => { const p = slots[s]; if (p) { sum += STARTER_SHARE * p.ovr; w += STARTER_SHARE; } });
   BENCH_SLOTS.forEach((s, i) => { const p = slots[s]; if (p) { sum += BENCH_SHARES[i] * p.ovr; w += BENCH_SHARES[i]; } });
-  return w ? sum / w : null;
+  return w ? sum / w + benchBalance(slots).bonus : null;
 }
 
 /** Squad Rating from ten overalls in slot order (PG, SG, SF, PF, C, then the bench 6th to 10th man). */
@@ -98,12 +133,14 @@ export function teamStrength(lineup: LineupEntry[], mod = 0): Strength {
     def += w * (effective(0.5 * e.player.def + 0.5 * e.player.ovr) - pen);
     rating += w * (e.player.ovr - pen);
   }
+  // A balanced bench adds a little; a stacked one costs a little (benchBalance).
+  const balance = lineupBalance(lineup);
   // Elite teams pull away (an 82-0 needs a 96), judged on the whole team's rating (its Squad Rating), so a squad
   // plays like its number whether it's built on two stars or on depth.
-  const sr = rating + mod;
+  const sr = rating + mod + balance;
   const elite = SIM.elite * Math.max(0, sr - SIM.eliteFrom) ** 2 + SIM.eliteTop * Math.max(0, sr - SIM.eliteTopFrom) ** 2;
-  off += mod + elite;
-  def += mod + elite;
+  off += mod + balance + elite;
+  def += mod + balance + elite;
   return { off, def, net: off + def };
 }
 

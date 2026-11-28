@@ -112,7 +112,10 @@
     "hot": "On fire: +{{n}} from real-life form",
     "cold": "Cold: −{{n}} from real-life form",
     "eraCap": "{{season}} cap · that era's dollars",
-    "lowCap": "Low on cap? If nobody on a spin fits, you can always sign the cheapest player who does."
+    "lowCap": "Low on cap? If nobody on a spin fits, you can always sign the cheapest player who does.",
+    "benchBalance": "Bench balance",
+    "benchCovered": "Backups at {{n}} of 5 positions",
+    "benchStacked": "Too many at {{pos}}"
   },
   "season": {
     "title": "Regular season",

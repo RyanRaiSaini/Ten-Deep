@@ -21,7 +21,8 @@ import { PlayerCard } from '../ui/PlayerCard';
 import { DivisionPicker } from '../ui/DivisionPicker';
 import { FirstRunIntro } from '../ui/FirstRunIntro';
 import { SquadBadge } from '../ui/SquadBadge';
-import { partialSquadRating } from '../engine/rotation';
+import { benchBalance, partialSquadRating } from '../engine/rotation';
+import { POSITIONS } from '../engine/types';
 import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner, teamGradient } from '../ui/Spinner';
 import { alpha, C, FONT, R, S, money } from '../ui/theme';
@@ -93,6 +94,9 @@ function DraftScreen() {
     </View>
   );
 
+  // Bench balance so far: which positions have a backup, and the Squad Rating it's worth.
+  const balance = benchBalance(d.roster);
+  const balanceColor = balance.bonus > 0 ? C.neon : balance.bonus < 0 ? C.danger : C.muted;
   // Scoreboard-style stat strip: Squad Rating on the left, cap room with its bar on the right.
   const capCard = (
     <Card style={{ gap: S.sm, paddingVertical: S.md }} testID="cap">
@@ -120,6 +124,22 @@ function DraftScreen() {
           ))}
         </View>
       </View>
+      <View style={styles.capRow} testID="bench-balance" accessibilityLabel={`${t('draft.benchBalance')}: ${t('draft.benchCovered', { n: balance.covered.length })}`}>
+        <Text style={styles.capLabel}>{t('draft.benchBalance')}</Text>
+        <View style={styles.balanceRow}>
+          {POSITIONS.map((pos) => {
+            const on = balance.covered.includes(pos);
+            const bad = balance.stacked === pos;
+            return (
+              <View key={pos} style={[styles.posChip, on && styles.posChipOn, bad && styles.posChipBad]}>
+                <Text style={[styles.posChipText, (on || bad) && { color: C.onAccent }]}>{pos}</Text>
+              </View>
+            );
+          })}
+          <Text style={[styles.balanceNum, { color: balanceColor }]} testID="bench-balance-bonus">{balance.bonus > 0 ? '+' : ''}{balance.bonus.toFixed(1)}</Text>
+        </View>
+      </View>
+      {balance.stacked && <Text style={styles.warn} testID="bench-stacked">{t('draft.benchStacked', { pos: balance.stacked })}</Text>}
       {!complete && spendable < LOW_CAP && (
         <View style={styles.lowCap} testID="low-cap">
           <Icon name="coin" size={22} />
@@ -251,6 +271,12 @@ const styles = StyleSheet.create({
   help: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: C.surface, borderWidth: 2, borderColor: C.line, borderBottomWidth: 4, borderBottomColor: C.edge },
   helpText: { fontFamily: FONT.display, fontSize: 20, color: C.text, marginTop: -1 },
   stars: { flexDirection: 'row', gap: 2 },
+  balanceRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  posChip: { minWidth: 26, height: 22, paddingHorizontal: 4, borderRadius: 6, backgroundColor: C.surface2, borderWidth: 1, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
+  posChipOn: { backgroundColor: C.neon, borderColor: C.neon },
+  posChipBad: { backgroundColor: C.danger, borderColor: C.danger },
+  posChipText: { fontSize: 11, fontWeight: '800', color: C.muted, letterSpacing: 0.3 },
+  balanceNum: { fontFamily: FONT.condensed, fontSize: 17, marginLeft: 4, minWidth: 34, textAlign: 'right' },
   statRow: { flexDirection: 'row', alignItems: 'stretch', gap: S.md },
   statCell: { flex: 1, gap: 6, justifyContent: 'space-between' },
   statDivider: { width: 1, backgroundColor: C.line },
