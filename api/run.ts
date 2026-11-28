@@ -5,33 +5,13 @@
  *   GET /api/run?...&img=1 → the 1200×630 PNG itself.
  * (vercel.json rewrites /run here.) Nothing is stored: everything comes from the URL, like api/pull.ts.
  */
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { pathToFileURL } from 'node:url';
-import type { ImageResponse as OgImageResponse } from '@vercel/og';
+import { ARENA, arena, h, loadFonts, loadOg, wordmark } from './_og';
 import { rateLimit } from './_ratelimit';
 import { parseChallenge } from '../src/engine/share';
 import { squadRatingOf } from '../src/engine/rotation';
 import { squadColor } from '../src/ui/squadColor';
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]!);
-type El = { type: string; props: { style?: Record<string, unknown>; children?: unknown } };
-const h = (style: Record<string, unknown>, ...children: unknown[]): El => ({ type: 'div', props: { style: { display: 'flex', ...style }, children: children.length === 1 ? children[0] : children } });
-
-/** @vercel/og is ESM-only; see api/pull.ts for why it's loaded this way. */
-const esmImport = new Function('u', 'return import(u)') as (u: string) => Promise<{ ImageResponse: typeof OgImageResponse }>;
-let og: Promise<{ ImageResponse: typeof OgImageResponse }> | null = null;
-const loadOg = () => (og ??= esmImport(pathToFileURL(join(process.cwd(), 'node_modules/@vercel/og/dist/index.node.js')).href));
-let fonts: { name: string; data: ArrayBuffer; weight: 400 | 800; style: 'normal' }[] | null = null;
-function loadFonts() {
-  if (fonts) return fonts;
-  const read = (p: string) => { const b = readFileSync(join(process.cwd(), p)); return b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength) as ArrayBuffer; };
-  fonts = [
-    { name: 'Display', data: read('node_modules/@expo-google-fonts/lilita-one/400Regular/LilitaOne_400Regular.ttf'), weight: 400, style: 'normal' },
-    { name: 'Body', data: read('node_modules/@expo-google-fonts/montserrat/800ExtraBold/Montserrat_800ExtraBold.ttf'), weight: 800, style: 'normal' },
-  ];
-  return fonts;
-}
 
 const RESULT: Record<string, string> = {
   champion: 'Champions', round0: 'Out in the first round', round1: 'Out in the second round', round2: 'Out in the conference finals',
@@ -56,36 +36,45 @@ export function runInfo(q: URLSearchParams): RunInfo | null {
   return { name: c.name, w: c.w, l: c.l, fair: c.fair, ratings: ten, result: RESULT[res] ?? null, mode, squad: ten.length ? Math.round(squadRatingOf(ten)) : null };
 }
 
-export const tileColor = (o: number) => (o >= 95 ? '#FFC53D' : o >= 88 ? '#2BC07A' : o >= 80 ? '#3B6CF0' : '#5A6378');
+/** Rating tile colors, as on the app's player rows: amber superstar, green great, blue good, slate role player. */
+export const tileColor = (o: number) => (o >= 95 ? ARENA.accent : o >= 88 ? '#0FA876' : o >= 80 ? '#2F6BFF' : o >= 72 ? '#3A4558' : '#5C6678');
 
 async function image(r: RunInfo) {
   const { ImageResponse } = await loadOg();
   const champ = r.result === RESULT.champion;
   const tile = (o: number, size: number) => h({
-    width: size, height: size, borderRadius: size * 0.22, backgroundColor: tileColor(o), alignItems: 'center', justifyContent: 'center',
-    border: '5px solid #0B1020', boxShadow: '0 6px 0 rgba(0,0,0,0.45)',
-  }, h({ fontFamily: 'Display', fontSize: size * 0.5, color: o >= 95 ? '#17121E' : '#FFFFFF' }, String(o)));
+    width: size, height: size, borderRadius: Math.round(size * 0.24), backgroundColor: tileColor(o), alignItems: 'center', justifyContent: 'center',
+    border: '2px solid rgba(255,255,255,0.22)', borderBottom: `6px solid ${ARENA.edge}`,
+  }, h({ fontFamily: 'Display', fontSize: Math.round(size * 0.5), color: o >= 95 ? ARENA.bg : '#FFFFFF' }, String(o)));
   const root = h(
-    { width: 1200, height: 630, flexDirection: 'column', padding: 56, justifyContent: 'space-between', backgroundImage: 'linear-gradient(135deg, #2A1F5C 0%, #1C2448 45%, #0B1020 100%)', color: '#FFFFFF', fontFamily: 'Body' },
+    { width: 1200, height: 630, position: 'relative', flexDirection: 'column', padding: '46px 56px', justifyContent: 'space-between', backgroundColor: ARENA.bg, color: ARENA.text, fontFamily: 'Body' },
+    ...arena(champ ? ARENA.accent : '#3B4CA8'),
     h({ justifyContent: 'space-between', alignItems: 'center' },
-      h({ fontFamily: 'Display', fontSize: 44, color: '#FF9A3D', letterSpacing: 3 }, 'TEN DEEP'),
-      h({ fontSize: 26, color: '#AEB6CC' }, r.mode ?? '')),
+      wordmark(40),
+      r.mode ? h({ fontFamily: 'Cond', fontSize: 30, color: ARENA.muted, letterSpacing: 2, textTransform: 'uppercase' }, r.mode) : h({})),
     h({ alignItems: 'center', justifyContent: 'space-between' },
-      h({ flexDirection: 'column', maxWidth: 520 },
-        h({ fontSize: 34, color: '#D9DEEA' }, `${r.name}'s draft`),
-        h({ fontFamily: 'Display', fontSize: 168, lineHeight: 1, color: champ ? '#FFC53D' : '#FFFFFF' }, `${r.w}-${r.l}`),
-        r.result ? h({ marginTop: 12, alignSelf: 'flex-start', padding: '8px 22px', borderRadius: 999, backgroundColor: champ ? '#FFC53D' : 'rgba(255,255,255,0.14)', fontSize: 28, color: champ ? '#17121E' : '#FFFFFF' }, r.result) : h({})),
+      h({ flexDirection: 'column', maxWidth: 560 },
+        h({ fontSize: 32, color: ARENA.soft }, `${r.name}'s draft`),
+        // The record as a scoreboard: wins in green (amber for a title), losses in red.
+        h({ alignItems: 'center', fontFamily: 'Cond', lineHeight: 1 },
+          h({ fontSize: 196, color: champ ? ARENA.accent : ARENA.win }, String(r.w)),
+          h({ fontSize: 120, color: '#6B7689', margin: '0 14px' }, '–'),
+          h({ fontSize: 196, color: ARENA.loss }, String(r.l))),
+        r.result
+          ? h({ marginTop: 10, alignSelf: 'flex-start', padding: '8px 22px', borderRadius: 14, fontFamily: 'Cond', fontSize: 32, letterSpacing: 1, textTransform: 'uppercase',
+            backgroundColor: champ ? ARENA.accent : ARENA.surface2, color: champ ? ARENA.bg : ARENA.text, border: champ ? 'none' : `2px solid ${ARENA.line}` }, r.result)
+          : h({})),
       r.ratings.length
-        ? h({ flexDirection: 'column', gap: 18, alignItems: 'flex-end' },
-          h({ alignItems: 'center', gap: 12, padding: '6px 20px', borderRadius: 999, backgroundColor: squadColor(r.squad ?? 0) },
-            h({ fontSize: 20, color: 'rgba(255,255,255,0.85)', letterSpacing: 2 }, 'SQUAD RATING'),
-            h({ fontFamily: 'Display', fontSize: 40, color: '#FFFFFF' }, String(r.squad ?? ''))),
+        ? h({ flexDirection: 'column', gap: 16, alignItems: 'flex-end' },
+          h({ alignItems: 'center', gap: 14, padding: '6px 20px', borderRadius: 14, backgroundColor: squadColor(r.squad ?? 0), borderBottom: '5px solid rgba(0,0,0,0.35)' },
+            h({ fontFamily: 'Cond', fontSize: 24, color: 'rgba(255,255,255,0.9)', letterSpacing: 2 }, 'SQUAD RATING'),
+            h({ fontFamily: 'Display', fontSize: 42, color: '#FFFFFF' }, String(r.squad ?? ''))),
           h({ gap: 14 }, ...r.ratings.slice(0, 5).map((o) => tile(o, 104))),
           h({ gap: 14 }, ...r.ratings.slice(5).map((o) => tile(o, 80))))
         : h({})),
     h({ alignItems: 'center', justifyContent: 'space-between' },
-      h({ fontFamily: 'Display', fontSize: 46 }, 'Can you beat it?'),
-      h({ fontSize: 26, color: '#AEB6CC' }, r.fair ? 'Same spins. Same league.' : 'Same spins.')),
+      h({ fontFamily: 'Cond', fontSize: 58, color: ARENA.accent, letterSpacing: 1 }, 'CAN YOU BEAT IT?'),
+      h({ fontSize: 26, color: ARENA.muted }, r.fair ? 'Same spins. Same league.' : 'Same spins.')),
   );
   return new ImageResponse(root as never, {
     width: 1200, height: 630, fonts: loadFonts(),
@@ -108,8 +97,8 @@ function page(url: URL, r: RunInfo) {
 <meta property="og:image" content="${esc(img)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:image" content="${esc(img)}">
 <meta http-equiv="refresh" content="0;url=${esc(to)}"></head>
-<body style="background:#0B1020;color:#fff;font-family:sans-serif;text-align:center;padding:40px">
-<img src="${esc(img)}" alt="${esc(title)}" style="max-width:100%;border-radius:16px"><p><a style="color:#FFC53D" href="${esc(to)}">Take the challenge in Ten Deep</a></p>
+<body style="background:${ARENA.bg};color:${ARENA.text};font-family:sans-serif;text-align:center;padding:40px">
+<img src="${esc(img)}" alt="${esc(title)}" style="max-width:100%;border-radius:16px"><p><a style="color:${ARENA.accent}" href="${esc(to)}">Take the challenge in Ten Deep</a></p>
 </body></html>`;
   return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=3600, s-maxage=86400' } });
 }
