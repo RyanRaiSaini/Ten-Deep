@@ -8,6 +8,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { ImageResponse as OgImageResponse } from '@vercel/og';
+import { rateLimit } from './_ratelimit';
 import { CARD_BY_ID } from '../src/data/cards';
 import { FINISHES, ONE_IN, type Finish } from '../src/engine/collect/finishes';
 import type { Card } from '../src/engine/collect/tiers';
@@ -115,9 +116,10 @@ function page(url: URL, card: Card, finish: Finish) {
   return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=3600, s-maxage=86400' } });
 }
 
-export function GET(req: Request) {
+export async function GET(req: Request) {
   const url = new URL(req.url);
   const parsed = parse(url);
   if (!parsed) return new Response('Not found', { status: 404 });
-  return url.searchParams.get('img') ? image(parsed.card, parsed.finish) : page(url, parsed.card, parsed.finish);
+  if (!url.searchParams.get('img')) return page(url, parsed.card, parsed.finish);
+  return (await rateLimit(req, 'image')) ?? image(parsed.card, parsed.finish);
 }

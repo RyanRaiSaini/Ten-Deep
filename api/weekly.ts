@@ -11,6 +11,7 @@ import { get, list, put } from '@vercel/blob';
 import {
   acceptedWeeks, cleanName, entryPath, entryPrefix, isPin, isWeek, parseEntry, sortBoard, validEntry, type WeeklyEntry,
 } from '../src/engine/weekly';
+import { withLimit } from './_ratelimit';
 
 export interface Store {
   /** Every entry stored under a prefix: its path and when it was written. */
@@ -95,8 +96,8 @@ const blobStore: Store = {
 };
 
 const handler = makeHandler(blobStore);
-export const GET = handler.GET;
-export const POST = handler.POST;
+export const GET = withLimit('weeklyRead', handler.GET);
+export const POST = withLimit('weeklyWrite', handler.POST);
 export function OPTIONS() {
   return new Response(null, { status: 204, headers: CORS });
 }

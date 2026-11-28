@@ -14,11 +14,16 @@ const out = process.argv[2] ?? 'smoke-shots';
 mkdirSync(out, { recursive: true });
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.ico': 'image/x-icon', '.json': 'application/json', '.ttf': 'font/ttf' };
 
+// The production security headers from vercel.json, so the run fails on anything the CSP blocks.
+// (upgrade-insecure-requests is dropped: it would turn this plain-http localhost into https.)
+const SECURITY = Object.fromEntries(JSON.parse(readFileSync('vercel.json', 'utf8')).headers[0].headers
+  .map((h) => [h.key, h.value.replace(/;\s*upgrade-insecure-requests/, '')]));
+
 const server = createServer((req, res) => {
   const path = decodeURIComponent(req.url.split('?')[0]);
   let file = join('dist', path);
   if (!existsSync(file) || path.endsWith('/')) file = join('dist', 'index.html');
-  res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' });
+  res.writeHead(200, { ...SECURITY, 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' });
   res.end(readFileSync(file));
 }).listen(0);
 const base = `http://localhost:${server.address().port}`;
@@ -28,6 +33,8 @@ const page = await browser.newPage({ viewport: { width: 420, height: 900 }, devi
 const errors = [];
 let current = 'boot'; // tag each error with the step it happened in
 page.on('pageerror', (e) => errors.push(`[${current}] ${e.message}`));
+page.on('console', (m) => { if (m.text().startsWith('CSP blocked')) errors.push(`[${current}] ${m.text()}`); });
+await page.addInitScript(() => document.addEventListener('securitypolicyviolation', (e) => console.log(`CSP blocked ${e.violatedDirective}: ${e.blockedURI}`)));
 page.on('console', (m) => m.type() === 'error' && errors.push(`[${current}] ${m.text()}`));
 const warnings = [];
 page.on('console', (m) => m.type() === 'warning' && warnings.push(m.text().slice(0, 160)));

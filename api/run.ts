@@ -9,6 +9,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { ImageResponse as OgImageResponse } from '@vercel/og';
+import { rateLimit } from './_ratelimit';
 import { parseChallenge } from '../src/engine/share';
 import { squadRatingOf } from '../src/engine/rotation';
 import { squadColor } from '../src/ui/squadColor';
@@ -113,9 +114,10 @@ function page(url: URL, r: RunInfo) {
   return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=3600, s-maxage=86400' } });
 }
 
-export function GET(req: Request) {
+export async function GET(req: Request) {
   const url = new URL(req.url);
   const r = runInfo(url.searchParams);
   if (!r) return Response.redirect(`${url.origin}/`, 302);
-  return url.searchParams.get('img') ? image(r) : page(url, r);
+  if (!url.searchParams.get('img')) return page(url, r);
+  return (await rateLimit(req, 'image')) ?? image(r);
 }
