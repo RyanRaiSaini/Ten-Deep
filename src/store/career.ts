@@ -16,7 +16,7 @@ import {
 import { START_SECURITY, securityAfter } from '../engine/career/security';
 import { addSeason, type CareerStats, type PlayoffResult } from '../engine/career/legacy';
 import { MORALE_START, moraleAfter, moraleMod } from '../engine/career/morale';
-import { executeTrade } from '../engine/career/trades';
+import { executePackage, type TradePackage } from '../engine/career/trades';
 import type { Verdict } from '../engine/crisis/board';
 import type { CardId } from '../engine/crisis/deck';
 import { champion, seriesFor } from '../engine/playoffs';
@@ -123,8 +123,10 @@ export interface CareerStore {
   draftRookie: (rookieId?: string, cut?: SlotId) => void;
   /** `salary`: a set amount (the minimum exception's minimum deal); otherwise his market rate. */
   sign: (player: Player, slot: SlotId, salary?: number) => void;
-  /** One of yours for one of theirs; returns whether their GM said yes. */
-  trade: (give: string, team: number, want: string) => boolean;
+  /** Up to three of yours for up to three of theirs; returns whether their GM said yes. */
+  trade: (pkg: TradePackage) => boolean;
+  /** Turn down a trade offer (it won't come back this offseason). */
+  declineOffer: (key: string) => void;
   autoSign: () => void;
   startNextSeason: () => void;
   quit: () => void;
@@ -292,15 +294,17 @@ export const useCareer = create<CareerStore>()(
 
       sign: (player, slot, salary) => set((c) => (c.offseason ? { offseason: signFreeAgent(c.offseason, 0, player, slot, salary) } : {})),
 
-      trade: (give, team, want) => {
+      trade: (pkg) => {
         const st = get().offseason;
         if (!st) return false;
-        const after = executeTrade(st, give, team, want);
+        const after = executePackage(st, pkg);
         if (after === st) return false;
         // Shipping out a teammate stings the locker room a little.
         set((c) => ({ offseason: after, morale: Math.max(0, (c.morale ?? MORALE_START) - 4) }));
         return true;
       },
+
+      declineOffer: (key) => set((c) => (c.offseason ? { offseason: { ...c.offseason, declined: [...(c.offseason.declined ?? []), key] } } : {})),
 
       autoSign: () => {
         const st = get().offseason;

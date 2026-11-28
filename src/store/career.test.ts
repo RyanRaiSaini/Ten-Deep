@@ -13,7 +13,6 @@ const { advance } = await import('../engine/season');
 const { ALL_SLOTS } = await import('../engine/types');
 const { openSlotCount } = await import('../engine/career/offseason');
 const { evaluateTrade } = await import('../engine/career/trades');
-type SlotId = import('../engine/types').SlotId;
 
 /** Play the current career season through: resolve every card with defaults, finish the season and playoffs. */
 function playSeason() {
@@ -93,8 +92,10 @@ describe('career store', () => {
     })();
     if (deal) {
       const m = useCareer.getState().morale;
-      expect(useCareer.getState().trade(deal.give, deal.ti, deal.want)).toBe(true);
-      expect(useCareer.getState().offseason!.teams[0].slots[deal.k as SlotId]!.id).toBe(deal.want);
+      expect(useCareer.getState().trade({ team: deal.ti, give: [deal.give], get: [deal.want] })).toBe(true);
+      const mineNow = Object.values(useCareer.getState().offseason!.teams[0].slots).map((p) => p!.id);
+      expect(mineNow).toContain(deal.want);
+      expect(mineNow).not.toContain(deal.give);
       expect(useCareer.getState().morale).toBe(Math.max(0, m - 4));
     }
     // sign until full (affordable best, else minimum exception)
