@@ -4,10 +4,7 @@
  *   GET /api/pull?c=<cardId>&f=<finish>&img=1 → the 1200×630 PNG itself
  * (vercel.json rewrites /pull/... here.) No player data is stored or read: everything comes from the URL.
  */
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { pathToFileURL } from 'node:url';
-import type { ImageResponse as OgImageResponse } from '@vercel/og';
+import { ARENA, arena, h, loadFonts, loadOg, wordmark } from './_og';
 import { rateLimit } from './_ratelimit';
 import { CARD_BY_ID } from '../src/data/cards';
 import { FINISHES, ONE_IN, type Finish } from '../src/engine/collect/finishes';
@@ -21,29 +18,6 @@ const TIER_NAME: Record<Card['tier'], string> = { common: 'Common', uncommon: 'U
 const esc = (s: string) => s.replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]!);
 const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
 const grad = (colors: readonly string[], deg = 135) => `linear-gradient(${deg}deg, ${colors.join(', ')})`;
-
-type El = { type: string; props: { style?: Record<string, unknown>; children?: unknown } };
-/** Satori takes React-element-shaped objects; this keeps the file plain .ts (no JSX). */
-const h = (style: Record<string, unknown>, ...children: unknown[]): El => ({ type: 'div', props: { style: { display: 'flex', ...style }, children: children.length === 1 ? children[0] : children } });
-
-/**
- * @vercel/og is ESM-only, but Vercel compiles this function to CommonJS, where a static import becomes require()
- * and crashes. A real import() (kept out of the compiler's reach) loads it; vercel.json ships its files.
- */
-const esmImport = new Function('u', 'return import(u)') as (u: string) => Promise<{ ImageResponse: typeof OgImageResponse }>;
-let og: Promise<{ ImageResponse: typeof OgImageResponse }> | null = null;
-const loadOg = () => (og ??= esmImport(pathToFileURL(join(process.cwd(), 'node_modules/@vercel/og/dist/index.node.js')).href));
-
-let fonts: { name: string; data: ArrayBuffer; weight: 400 | 800; style: 'normal' }[] | null = null;
-function loadFonts() {
-  if (fonts) return fonts;
-  const read = (p: string) => { const b = readFileSync(join(process.cwd(), p)); return b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength) as ArrayBuffer; };
-  fonts = [
-    { name: 'Display', data: read('node_modules/@expo-google-fonts/lilita-one/400Regular/LilitaOne_400Regular.ttf'), weight: 400, style: 'normal' },
-    { name: 'Body', data: read('node_modules/@expo-google-fonts/montserrat/800ExtraBold/Montserrat_800ExtraBold.ttf'), weight: 800, style: 'normal' },
-  ];
-  return fonts;
-}
 
 function parse(url: URL): { card: Card; finish: Finish } | null {
   const card = CARD_BY_ID[url.searchParams.get('c') ?? ''];
@@ -80,16 +54,18 @@ async function image(card: Card, finish: Finish) {
   const accent = fs.frame ? fs.chip[0] : TIER_STYLE[card.tier].accent;
   const title = finish === 'base' ? `${TIER_NAME[card.tier].toUpperCase()} PULL` : `${FINISH_NAME[finish].toUpperCase()} PULL!`;
   const odds = finish === 'base' ? `${TIER_NAME[card.tier]} card` : `1 in ${ONE_IN[finish].toLocaleString('en-US')}`;
+  // The card stands on the arena floor under the spotlights, glowing in its own color; the pull's story beside it.
   const root = h(
-    { width: 1200, height: 630, alignItems: 'center', justifyContent: 'space-around', padding: 60, backgroundImage: 'linear-gradient(180deg, #07051A 0%, #1A0F45 60%, #3A1E10 100%)', fontFamily: 'Body' },
+    { width: 1200, height: 630, position: 'relative', alignItems: 'center', justifyContent: 'space-around', padding: '40px 60px 76px', backgroundColor: ARENA.bg, color: ARENA.text, fontFamily: 'Body' },
+    ...arena(accent, true),
     cardEl(card, finish),
     h({ flexDirection: 'column', maxWidth: 620 },
-      h({ fontFamily: 'Display', fontSize: 84, lineHeight: 1, backgroundImage: grad(fs.frame ? fs.frame.slice(1, -1) : [accent, '#FFFFFF'], 90), backgroundClip: 'text', color: 'transparent' }, title),
-      h({ fontFamily: 'Display', fontSize: 58, color: '#FFFFFF', marginTop: 12 }, card.name),
-      h({ fontSize: 30, color: 'rgba(255,255,255,0.8)', marginTop: 4 }, `${card.team} · ${card.ovr} OVR`),
-      h({ marginTop: 26, alignSelf: 'flex-start', padding: '10px 26px', borderRadius: 999, backgroundImage: grad(finish === 'base' ? [accent, accent] : fs.chip, 90), border: '3px solid #FFFFFF' },
-        h({ fontFamily: 'Display', fontSize: 40, color: '#FFFFFF' }, odds)),
-      h({ marginTop: 40, fontFamily: 'Display', fontSize: 40, color: '#FFFFFF', letterSpacing: 4 }, 'TEN DEEP')),
+      h({ fontFamily: 'Cond', fontSize: 100, lineHeight: 1, letterSpacing: 1, backgroundImage: grad(fs.frame ? fs.frame.slice(1, -1) : [accent, '#FFFFFF'], 90), backgroundClip: 'text', color: 'transparent' }, title),
+      h({ fontFamily: 'Display', fontSize: 60, color: '#FFFFFF', marginTop: 10 }, card.name),
+      h({ fontSize: 30, color: ARENA.soft, marginTop: 4 }, `${card.team} · ${card.ovr} OVR`),
+      h({ marginTop: 24, alignSelf: 'flex-start', padding: '8px 24px', borderRadius: 14, backgroundImage: grad(finish === 'base' ? [accent, accent] : fs.chip, 90), border: '2px solid rgba(255,255,255,0.35)', borderBottom: `6px solid ${ARENA.edge}` },
+        h({ fontFamily: 'Cond', fontSize: 40, letterSpacing: 1, color: '#FFFFFF', textShadow: '0 2px 4px rgba(0,0,0,0.45)' }, odds.toUpperCase())),
+      h({ marginTop: 36 }, wordmark(38))),
   );
   return new ImageResponse(root as never, {
     width: 1200, height: 630, fonts: loadFonts(),
@@ -110,8 +86,8 @@ function page(url: URL, card: Card, finish: Finish) {
 <meta property="og:image" content="${esc(img)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:image" content="${esc(img)}">
 <meta http-equiv="refresh" content="0;url=${esc(to)}"></head>
-<body style="background:#07051A;color:#fff;font-family:sans-serif;text-align:center;padding:40px">
-<img src="${esc(img)}" alt="${esc(title)}" style="max-width:100%;border-radius:16px"><p><a style="color:#FFD86B" href="${esc(to)}">Open in Ten Deep</a></p>
+<body style="background:${ARENA.bg};color:${ARENA.text};font-family:sans-serif;text-align:center;padding:40px">
+<img src="${esc(img)}" alt="${esc(title)}" style="max-width:100%;border-radius:16px"><p><a style="color:${ARENA.accent}" href="${esc(to)}">Open in Ten Deep</a></p>
 </body></html>`;
   return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=3600, s-maxage=86400' } });
 }

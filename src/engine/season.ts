@@ -1,4 +1,4 @@
-import { CAP, capRoom, payOf, superstarBlocked } from './cap';
+import { capRoom, payOf, superstarBlocked } from './cap';
 import { simGame, type GameResult } from './game';
 import { rollInjury, type InjuryLabel } from './injuries';
 import { lineupMinutes } from './rotation';
