@@ -39,3 +39,12 @@ Docs: https://docs.expo.dev/eas/index.md
 - If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
 - Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
 - Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+
+## UI design
+
+Two design skills live in `.claude/skills/` (both MIT, licenses inside):
+
+- `apple-design` — Apple's Human Interface Guidelines as reference pages, with a review and improvement process. Use it for any UI review or redesign. This app is React Native, so read `references/cross-platform.md` for how each Apple rule maps to RN, and cite `file.md › Heading` for every finding.
+- `swiftui-pro` — written for native SwiftUI code. Its code rules don't apply here; use only `references/design.md` and `references/accessibility.md` as review criteria.
+
+Work in targeted reflections: screenshot the screen, list the differences from the reference or the guideline without coding, then fix one component at a time (navigation, type, cards, spacing) and never drop a feature while restyling.
