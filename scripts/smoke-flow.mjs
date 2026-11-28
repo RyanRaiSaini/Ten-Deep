@@ -75,10 +75,12 @@ export async function runFlow({ page, base, step, shot }) {
     await page.getByTestId('skip-playoffs').waitFor();
   });
 
-  await step('bench switch: one per run, 5% of the cap', async () => {
+  await step('bench switch: one per run, free', async () => {
     await page.getByTestId('bench-switch').click();
-    await page.getByTestId('switch-room').waitFor();
     await page.getByTestId('switch-bench-B1').waitFor();
+    // Free now: no cap-room line, and every bench player can be picked.
+    if (await page.getByTestId('switch-room').count()) throw new Error('the free switch still shows a cap-room line');
+    if (await page.getByTestId('switch-bench-B1').isDisabled()) throw new Error('bench players are disabled though the switch is free');
     await shot('05b-switch');
     await page.getByTestId('back').last().click(); // the season screen's own back button stays mounted underneath
     await page.getByTestId('skip-playoffs').waitFor();
