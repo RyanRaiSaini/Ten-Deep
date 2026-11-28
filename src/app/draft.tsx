@@ -24,7 +24,7 @@ import { SquadBadge } from '../ui/SquadBadge';
 import { partialSquadRating } from '../engine/rotation';
 import { RosterBoard } from '../ui/RosterBoard';
 import { Spinner, teamGradient } from '../ui/Spinner';
-import { C, FONT, R, S, money } from '../ui/theme';
+import { alpha, C, FONT, R, S, money } from '../ui/theme';
 import { useRunColors } from '../ui/runColors';
 import { Die } from '../ui/Dice';
 import { useShop } from '../store/shop';
@@ -93,20 +93,27 @@ function DraftScreen() {
     </View>
   );
 
+  // Scoreboard-style stat strip: Squad Rating on the left, cap room with its bar on the right.
   const capCard = (
-    <Card style={{ gap: S.sm }} testID="cap">
-      <View style={styles.capRow}>
-        <Text style={styles.capLabel}>{t('squad.rating')}</Text>
-        <SquadBadge value={partialSquadRating(d.roster)} size="sm" />
-      </View>
-      <View style={styles.capRow}>
-        <Text style={styles.capLabel}>{t('draft.capSpace')}</Text>
-        <Text style={styles.capNum}>{$(room)} <Text style={styles.capOf}>/ {$(CAP)}</Text></Text>
+    <Card style={{ gap: S.sm, paddingVertical: S.md }} testID="cap">
+      <View style={styles.statRow}>
+        <View style={styles.statCell}>
+          <Text style={styles.capLabel}>{t('squad.rating')}</Text>
+          <SquadBadge value={partialSquadRating(d.roster)} size="sm" />
+        </View>
+        <View style={styles.statDivider} />
+        <View style={[styles.statCell, { flex: 1.4 }]}>
+          <View style={styles.capRow}>
+            <Text style={styles.capLabel}>{t('draft.capSpace')}</Text>
+            <Text style={styles.capNum}>{$(room)} <Text style={styles.capOf}>/ {$(CAP)}</Text></Text>
+          </View>
+          <View style={styles.bar}><View style={[styles.barFill, { width: `${Math.max(0, (room / CAP) * 100)}%` }]} /></View>
+          <Text style={styles.spendable}>{t('draft.spendable', { amount: $(Math.max(0, spendable)) })}</Text>
+        </View>
       </View>
       {eraCap && <Text style={styles.eraCap} testID="era-cap">{t('draft.eraCap', { season: eraCap.season })}</Text>}
-      <View style={styles.bar}><View style={[styles.barFill, { width: `${Math.max(0, (room / CAP) * 100)}%` }]} /></View>
       <View style={styles.capRow}>
-        <Text style={styles.spendable}>{t('draft.spendable', { amount: $(Math.max(0, spendable)) })}</Text>
+        <Text style={styles.capLabel}>{t('draft.superstars', { n: superstarCount(d.roster) })}</Text>
         <View style={styles.stars} accessibilityLabel={t('draft.superstars', { n: superstarCount(d.roster) })}>
           {Array.from({ length: MAX_SUPERSTARS }, (_, i) => (
             <View key={i} style={{ opacity: i < superstarCount(d.roster) ? 1 : 0.25 }}><Icon name="star" size={20} /></View>
@@ -239,25 +246,28 @@ export default function Draft() {
 }
 
 const styles = StyleSheet.create({
-  round: { fontFamily: FONT.display, fontSize: 20, color: C.text, textAlign: 'right' },
+  round: { fontFamily: FONT.condensed, fontSize: 20, color: C.text, textAlign: 'right' },
   headRight: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
-  help: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: C.surface, borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 4 },
+  help: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: C.surface, borderWidth: 2, borderColor: C.line, borderBottomWidth: 4, borderBottomColor: C.edge },
   helpText: { fontFamily: FONT.display, fontSize: 20, color: C.text, marginTop: -1 },
   stars: { flexDirection: 'row', gap: 2 },
+  statRow: { flexDirection: 'row', alignItems: 'stretch', gap: S.md },
+  statCell: { flex: 1, gap: 6, justifyContent: 'space-between' },
+  statDivider: { width: 1, backgroundColor: C.line },
   capRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  capLabel: { fontWeight: '900', fontSize: 12, letterSpacing: 1.4, color: C.muted, textTransform: 'uppercase' },
-  capNum: { color: C.text, fontSize: 24, fontFamily: FONT.display },
-  capOf: { color: C.muted, fontSize: 16, fontFamily: FONT.display },
-  bar: { height: 14, borderRadius: R.pill, backgroundColor: C.surface2, overflow: 'hidden', borderWidth: 2, borderColor: C.ink },
-  barFill: { height: '100%', backgroundColor: '#18C08A' },
-  spendable: { color: C.muted, fontSize: 13, fontWeight: '700' },
-  lowCap: { flexDirection: 'row', alignItems: 'center', gap: S.sm, backgroundColor: '#FFF4D6', borderRadius: R.md, borderWidth: 2, borderColor: '#E9B949', padding: S.sm },
-  lowCapText: { flex: 1, color: C.text, fontSize: 13, fontWeight: '800' },
-  eraCap: { color: C.muted, fontSize: 12, fontWeight: '800', textAlign: 'right', marginTop: -4 },
+  capLabel: { fontWeight: '800', fontSize: 12, letterSpacing: 1.2, color: C.muted, textTransform: 'uppercase' },
+  capNum: { color: C.text, fontSize: 24, fontFamily: FONT.condensed },
+  capOf: { color: C.muted, fontSize: 16, fontFamily: FONT.condensed },
+  bar: { height: 8, borderRadius: R.pill, backgroundColor: C.line, overflow: 'hidden' },
+  barFill: { height: '100%', backgroundColor: C.neon },
+  spendable: { color: C.muted, fontSize: 13, fontWeight: '600' },
+  lowCap: { flexDirection: 'row', alignItems: 'center', gap: S.sm, backgroundColor: alpha(C.accent, 0.14), borderRadius: R.md, borderWidth: 1, borderColor: C.accentEdge, padding: S.sm },
+  lowCapText: { flex: 1, color: C.text, fontSize: 13, fontWeight: '700' },
+  eraCap: { color: C.muted, fontSize: 12, fontWeight: '700', textAlign: 'right', marginTop: -4 },
   warn: { color: C.danger, fontSize: 13, fontWeight: '800' },
-  choose: { color: C.neon, fontWeight: '900', textAlign: 'center' },
+  choose: { color: C.neon, fontWeight: '800', textAlign: 'center' },
   spinBtn: {
-    height: 120, borderRadius: R.lg, backgroundColor: C.hardwood, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 8,
+    height: 120, borderRadius: R.lg, backgroundColor: C.hardwood, borderWidth: 2, borderColor: alpha('#FFFFFF', 0.2), borderBottomWidth: 8, borderBottomColor: '#C24E06',
     alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: S.md,
   },
   spinBtnPressed: { transform: [{ translateY: 4 }], borderBottomWidth: 4 },
@@ -265,7 +275,7 @@ const styles = StyleSheet.create({
   colLeft: { flex: 1, gap: S.md, maxWidth: 520 },
   colRight: { flex: 1, gap: S.md },
   done: { fontFamily: FONT.display, fontSize: 28, color: C.text, textAlign: 'center' },
-  replay: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: R.md, backgroundColor: '#2F6BFF', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 6 },
+  replay: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: R.md, backgroundColor: '#2F6BFF', borderWidth: 2, borderColor: alpha('#FFFFFF', 0.2), borderBottomWidth: 6, borderBottomColor: '#1C46B8' },
   replayTitle: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 18 },
-  replaySub: { color: '#DCE6FF', fontWeight: '800', fontSize: 13 },
+  replaySub: { color: '#DCE6FF', fontWeight: '700', fontSize: 13 },
 });

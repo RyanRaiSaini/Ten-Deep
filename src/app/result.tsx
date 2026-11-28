@@ -18,11 +18,11 @@ import { useCareer } from '../store/career';
 import { useCollection } from '../store/collection';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
-import { Button, Card, Display, Screen } from '../ui/components';
+import { BackButton, Button, Card, Display, Header, Screen } from '../ui/components';
 import { Confetti, CountUp } from '../ui/fx';
 import { useRunColors } from '../ui/runColors';
 import { RosterBoard } from '../ui/RosterBoard';
-import { C, F, S } from '../ui/theme';
+import { alpha, C, F, FONT, R, S } from '../ui/theme';
 import { AWARDS, awardRace, teamLeaders } from '../engine/story/leaders';
 import { Icon } from '../ui/icons';
 import { CAST } from '../engine/board/cards';
@@ -75,9 +75,13 @@ function ResultScreen() {
     .map((p) => ({ p, tot: season.totals[p.id] }))
     .filter((x) => x.tot?.gp)
     .sort((a, b) => b.tot.pts / b.tot.gp - a.tot.pts / a.tot.gp)[0];
+  // The playoff path: each round won, the round that ended the run, and the rounds never reached.
+  const pathOf = (r: number): 'won' | 'lost' | 'none' => (won ? 'won' : mine ? (r < mine.round ? 'won' : r === mine.round ? 'lost' : 'none') : 'none');
+  const leave = () => { g.quit(); goHome(); };
 
   return (
     <Screen tint={won ? C.gold : colors[0]} overlay={won ? <Confetti colors={[C.gold, colors[0], colors[1], '#FFFFFF']} /> : null}>
+      <Header title={MODE_BY_ID[g.poolId]?.title ?? t('playoffs.title')} left={<BackButton onPress={leave} />} />
       {g.challenge && (
         <View style={[styles.challenge, { borderColor: rec.w > g.challenge.w ? '#14A86B' : C.danger }]} testID="challenge-result">
           <Icon name={rec.w > g.challenge.w ? 'crown' : 'vs'} size={40} />
@@ -98,11 +102,36 @@ function ResultScreen() {
           </View>
         </View>
       )}
-      <View style={styles.hero}>
-        <View style={[styles.trophyRing, { backgroundColor: won ? '#FFE9A8' : '#FFFFFF' }]}>
-          <Icon name={won ? 'trophy' : mine ? 'ball' : 'chart'} size={96} />
+      <Card style={styles.board} testID="scoreboard">
+        <View style={[styles.trophyRing, { backgroundColor: won ? '#FFE9A8' : C.surface2 }]}>
+          <Icon name={won ? 'trophy' : mine ? 'ball' : 'chart'} size={56} />
         </View>
-        <Display size={won ? 40 : 32} color={won ? '#FFC53D' : '#FFFFFF'}>{outcome}</Display>
+        <View style={{ flex: 1, gap: 8 }}>
+          <View style={styles.scoreRow} testID="result-record" accessibilityLabel={`${rec.w}-${rec.l}`}>
+            <CountUp to={rec.w} format={(n) => String(n)} style={[styles.scoreW, won && { color: C.gold }]} />
+            <Text style={styles.scoreDash}>–</Text>
+            <Text style={styles.scoreL}>{rec.l}</Text>
+          </View>
+          <View style={styles.pills}>
+            <View style={styles.pill}><Text style={styles.pillText}>{conf === null ? t('result.seed') : t(`conf.${CONFERENCES[conf]}`)} #{seed}</Text></View>
+            <SquadBadge value={squadRating(season.teams[0])} size="sm" />
+          </View>
+          {top && <Text style={styles.topScorer} numberOfLines={1}>{(top.tot.pts / top.tot.gp).toFixed(1)} · {top.p.name} · {t('result.topScorer')}</Text>}
+        </View>
+      </Card>
+      <View style={styles.hero}>
+        <Display size={won ? 40 : 30} color={won ? '#FFC53D' : '#FFFFFF'}>{outcome}</Display>
+        <View style={styles.path} testID="playoff-path">
+          {[0, 1, 2, 3].map((r) => {
+            const st = pathOf(r);
+            return (
+              <View key={r} style={[styles.pathCell, st === 'won' && styles.pathWon, st === 'lost' && styles.pathLost]}>
+                <Text style={styles.pathLabel} numberOfLines={2}>{t(`playoffs.round${r}`)}</Text>
+                <Text style={[styles.pathMark, st === 'won' && { color: C.neon }, st === 'lost' && { color: C.danger }]}>{st === 'won' ? '✓' : st === 'lost' ? '✗' : '–'}</Text>
+              </View>
+            );
+          })}
+        </View>
         {g.crisis?.verdict && g.crisis.objective && (
           <View style={styles.verdict} testID="crisis-verdict">
             <Icon name={VERDICT_ICON[g.crisis.verdict]} size={44} />
@@ -126,15 +155,6 @@ function ResultScreen() {
           </View>
         )}
       </View>
-      <Card style={styles.stats}>
-        <View style={{ flex: 1, alignItems: 'center', gap: 2 }}>
-          <CountUp to={rec.w} format={(n) => `${n}-${rec.l}`} style={[styles.value, won && { color: C.gold }]} testID="result-record" />
-          <Text style={styles.sub}>{t('result.record')}</Text>
-        </View>
-        <Stat label={conf === null ? t('result.seed') : t(`conf.${CONFERENCES[conf]}`)} value={`#${seed}`} />
-        {top && <Stat label={t('result.topScorer')} value={`${(top.tot.pts / top.tot.gp).toFixed(1)}`} sub={top.p.name} />}
-      </Card>
-      <View style={{ alignItems: 'center' }}><SquadBadge value={squadRating(season.teams[0])} /></View>
       <SeasonBreakdown season={season} />
       <RarityBadge wins={rec.w} />
       {!g.replay && <LeagueGain gained={g.leagueGain} stake={g.stake} />}
@@ -200,18 +220,8 @@ function ResultScreen() {
         </View>
       )}
       {!g.career && <Button label={t('result.playAgain')} onPress={() => { if (g.crisis?.rebuild) { router.replace('/rebuild'); return; } if (g.crisis) g.newCrisis(g.poolId); else g.newRun(g.poolId); router.replace('/draft'); }} testID="play-again" />}
-      <Button label={t('result.home')} variant="ghost" onPress={() => { g.quit(); goHome(); }} testID="go-home" />
+      <Button label={t('result.home')} variant="ghost" onPress={leave} testID="go-home" />
     </Screen>
-  );
-}
-
-function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', gap: 2 }}>
-      <Text style={styles.value}>{value}</Text>
-      {sub && <Text style={styles.sub} numberOfLines={1}>{sub}</Text>}
-      <Text style={styles.sub}>{label}</Text>
-    </View>
   );
 }
 
@@ -223,21 +233,32 @@ export default function Result() {
 }
 
 const styles = StyleSheet.create({
-  hero: { alignItems: 'center', paddingTop: S.xxl, gap: S.sm },
-  trophyRing: { width: 140, height: 140, borderRadius: 70, alignItems: 'center', justifyContent: 'center', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7 },
+  board: { flexDirection: 'row', alignItems: 'center', gap: S.md },
+  trophyRing: { width: 84, height: 84, borderRadius: 42, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge },
+  scoreRow: { flexDirection: 'row', alignItems: 'baseline', gap: 6 },
+  scoreW: { fontFamily: FONT.condensed, fontSize: 54, lineHeight: 56, color: C.neon },
+  scoreDash: { fontFamily: FONT.condensed, fontSize: 34, color: C.muted },
+  scoreL: { fontFamily: FONT.condensed, fontSize: 54, lineHeight: 56, color: C.danger },
+  pills: { flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
+  pill: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: R.sm, backgroundColor: C.surface2 },
+  pillText: { color: C.text, fontSize: 12, fontWeight: '700' },
+  topScorer: { color: C.muted, fontSize: 12, fontWeight: '600' },
+  hero: { alignItems: 'center', paddingTop: S.sm, gap: S.md },
+  path: { flexDirection: 'row', gap: 4, alignSelf: 'stretch' },
+  pathCell: { flex: 1, borderRadius: R.sm, backgroundColor: C.surface, borderWidth: 1, borderColor: C.line, paddingVertical: 6, paddingHorizontal: 4, alignItems: 'center', gap: 2 },
+  pathWon: { backgroundColor: alpha(C.neon, 0.14), borderColor: alpha(C.neon, 0.5) },
+  pathLost: { backgroundColor: alpha(C.danger, 0.14), borderColor: C.danger },
+  pathLabel: { color: C.muted, fontSize: 11, fontWeight: '700', textAlign: 'center', letterSpacing: 0.3 },
+  pathMark: { color: C.muted, fontFamily: FONT.condensed, fontSize: 16 },
   awardsHead: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
-  outcome: { color: C.text, fontSize: 30, textAlign: 'center', ...F.display },
   verdict: { alignItems: 'center', gap: 4, marginTop: S.sm },
   verdictBig: { color: C.hardwood, fontSize: 22, textAlign: 'center', ...F.display },
   verdictSub: { color: C.muted, fontSize: 13, textAlign: 'center' },
-  stats: { flexDirection: 'row' },
-  value: { color: C.text, fontSize: 26, ...F.display },
-  sub: { color: C.muted, fontSize: 12 },
-  challenge: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, borderWidth: 3, backgroundColor: C.surface, marginTop: S.md },
-  challengeTitle: { fontWeight: '900', fontSize: 17, color: C.text },
-  challengeSub: { color: C.muted, fontWeight: '800' },
-  replayHint: { color: C.muted, fontSize: 12, fontWeight: '700', textAlign: 'center' },
-  awardsTitle: { color: C.text, fontWeight: '900', fontSize: 15 },
+  challenge: { flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, borderRadius: 20, borderWidth: 2, backgroundColor: C.surface, marginTop: S.sm },
+  challengeTitle: { fontWeight: '800', fontSize: 17, color: C.text },
+  challengeSub: { color: C.muted, fontWeight: '700' },
+  replayHint: { color: C.muted, fontSize: 12, fontWeight: '600', textAlign: 'center' },
+  awardsTitle: { color: C.text, fontWeight: '800', fontSize: 15 },
   awardRow: { flexDirection: 'row', alignItems: 'center', gap: S.md },
   awardName: { color: C.muted, fontSize: 12, flex: 1 },
   awardWinner: { color: C.text, fontWeight: '800', flex: 1, textAlign: 'right' },
