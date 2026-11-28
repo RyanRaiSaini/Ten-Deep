@@ -24,6 +24,7 @@ import type { SlotId } from '../src/engine/types';
 
 const TTL = 3 * 3600;
 const PIN = /^[A-HJKMNP-Z2-9]{6}$/;
+const AVATAR_ID = /^[A-Za-z0-9_-]{1,40}$/;
 const SLOTS = ['PG', 'SG', 'SF', 'PF', 'C', 'B1', 'B2', 'B3', 'B4', 'B5'];
 
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL ?? '';
@@ -104,8 +105,9 @@ async function handle(b: Record<string, unknown>) {
   const key = String(b.key ?? '');
   if (!PIN.test(pin) || key.length < 16 || key.length > 128) return json({ error: 'bad-identity' }, 400);
   const keyHash = await sha256(key);
-  const name = String(b.name ?? 'Coach').slice(0, 18).trim() || 'Coach';
-  const avatar = String(b.avatar ?? 'captain').slice(0, 40);
+  // Shown to everyone in the room: no control characters, and an avatar is a plain id or the default.
+  const name = String(b.name ?? 'Coach').replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028-\u202e]/g, '').slice(0, 18).trim() || 'Coach';
+  const avatar = AVATAR_ID.test(String(b.avatar ?? '')) ? String(b.avatar) : 'captain';
   // Their rarest pull for the seat; anything that isn't a real card + finish is dropped.
   const flexed = parseFlex(b.flex);
   const flex = flexed ? `${flexed.id}:${flexed.finish}` : undefined;
@@ -159,7 +161,8 @@ async function handle(b: Record<string, unknown>) {
     case 'pick': {
       if (!me) return json({ error: 'not-in-room' }, 403);
       const r = Number(b.r);
-      const pid = String(b.pid ?? '');
+      if (!Number.isInteger(r) || r < 0 || r > 9) return json({ error: 'bad-round' }, 400);
+      const pid = String(b.pid ?? '').slice(0, 80);
       const slot = String(b.slot ?? '') as SlotId;
       if (!SLOTS.includes(slot)) return json({ error: 'bad-slot' }, 400);
       const mode = MODE_BY_ID[meta.poolId];

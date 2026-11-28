@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    # Expo pins its SDK's React Native and module versions; bump those with `npx expo install --fix`, not here.
+    ignore:
+      - dependency-name: expo
+      - dependency-name: expo-*
+      - dependency-name: react-native
+      - dependency-name: react-native-*
+      - dependency-name: react
+      - dependency-name: react-dom
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
