@@ -120,5 +120,5 @@ export default function Deadline() {
 
 const styles = StyleSheet.create({
   desc: { color: C.text, fontSize: 14, lineHeight: 20, textAlign: 'center' },
-  budget: { color: C.ink, fontSize: 14, fontWeight: '900', textAlign: 'center' },
+  budget: { color: C.text, fontSize: 14, fontWeight: '900', textAlign: 'center' },
 });

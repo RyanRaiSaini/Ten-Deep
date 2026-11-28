@@ -46,15 +46,15 @@ export function HotStrip() {
 const styles = StyleSheet.create({
   wrap: { gap: 6 },
   head: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  title: { fontFamily: FONT.display, fontSize: 20, color: C.ink },
+  title: { fontFamily: FONT.display, fontSize: 20, color: C.text },
   sub: { flex: 1, textAlign: 'right', color: C.muted, fontSize: 12, fontWeight: '700' },
   chip: {
     flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 6, paddingLeft: 6, paddingRight: 8, borderRadius: R.lg,
-    backgroundColor: '#FFFFFF', borderWidth: 2.5, borderBottomWidth: 5, maxWidth: 230,
+    backgroundColor: C.surface, borderWidth: 2.5, borderBottomWidth: 5, maxWidth: 230,
   },
   ovr: { width: 36, height: 36, borderRadius: 10, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: C.ink },
   ovrText: { fontFamily: FONT.display, fontSize: 17, color: '#FFFFFF' },
-  name: { fontWeight: '900', color: C.ink, fontSize: 14, maxWidth: 130 },
+  name: { fontWeight: '900', color: C.text, fontSize: 14, maxWidth: 130 },
   team: { color: C.muted, fontSize: 11, fontWeight: '700', maxWidth: 130 },
   delta: { backgroundColor: '#FF6A1A', borderRadius: R.pill, paddingHorizontal: 7, paddingVertical: 2, borderWidth: 1.5, borderColor: C.ink },
   deltaText: { color: '#FFFFFF', fontFamily: FONT.display, fontSize: 13 },

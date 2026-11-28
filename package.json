@@ -21,6 +21,8 @@
     "party:takeover": "expo export -p web && tsx scripts/party-takeover-e2e.mts"
   },
   "dependencies": {
+    "@expo-google-fonts/barlow": "^0.4.1",
+    "@expo-google-fonts/barlow-condensed": "^0.4.1",
     "@expo-google-fonts/lilita-one": "^0.4.1",
     "@expo-google-fonts/montserrat": "^0.4.2",
     "@react-native-async-storage/async-storage": "2.2.0",

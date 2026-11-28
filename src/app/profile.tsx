@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   hero: { alignItems: 'center', gap: S.sm, paddingVertical: S.md },
   nameRow: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   flagBig: { fontSize: 28 },
-  nameInput: { fontFamily: FONT.display, fontSize: 26, color: C.ink, minWidth: 160, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: '#FFFFFF', borderRadius: 14, borderWidth: 2, borderColor: C.line, borderBottomWidth: 4, borderBottomColor: C.edge },
+  nameInput: { fontFamily: FONT.display, fontSize: 26, color: C.text, minWidth: 160, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: C.surface, borderRadius: 14, borderWidth: 2, borderColor: C.line, borderBottomWidth: 4, borderBottomColor: C.edge },
   name: { color: C.text, fontSize: 20, ...F.display },
   stats: { flexDirection: 'row' },
   value: { color: C.text, fontSize: 22, ...F.display },

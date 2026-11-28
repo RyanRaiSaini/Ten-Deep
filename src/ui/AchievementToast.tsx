@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   wrap: { position: 'absolute', left: 0, right: 0, alignItems: 'center', paddingHorizontal: S.lg, zIndex: 50, pointerEvents: 'box-none' },
   toast: {
     width: '100%', maxWidth: 340, flexDirection: 'row', alignItems: 'center', gap: S.sm,
-    backgroundColor: '#FFFFFF', borderWidth: 2.5, borderRadius: R.pill, paddingVertical: 8, paddingHorizontal: 14,
+    backgroundColor: C.surface, borderWidth: 2.5, borderRadius: R.pill, paddingVertical: 8, paddingHorizontal: 14,
     shadowColor: '#000', shadowOpacity: 0.4, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 8,
   },
   icon: { fontSize: 34 },

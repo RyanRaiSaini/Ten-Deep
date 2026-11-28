@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
   grid: { gap: S.md },
   gridWide: { flexDirection: 'row', flexWrap: 'wrap' },
   card: {
-    gap: S.sm, padding: S.md, borderRadius: R.lg, backgroundColor: '#FFFFFF',
+    gap: S.sm, padding: S.md, borderRadius: R.lg, backgroundColor: C.surface,
     borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 6,
   },
   cardWide: { width: '48.8%' },
   cardTop: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   num: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center', borderWidth: 2.5, borderColor: C.ink },
   numText: { fontFamily: FONT.display, fontSize: 18, color: '#FFFFFF' },
-  cardTitle: { flex: 1, fontFamily: FONT.display, fontSize: 22, color: C.ink },
+  cardTitle: { flex: 1, fontFamily: FONT.display, fontSize: 22, color: C.text },
   cardBody: { color: C.text, fontSize: 15, lineHeight: 22 },
 });

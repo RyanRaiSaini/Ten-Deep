@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   choice: { padding: S.lg, borderRadius: R.md },
   choiceText: { color: C.text, fontSize: 16, fontWeight: '800' },
   verdict: { fontSize: 16, fontWeight: '800', textAlign: 'center' },
-  fact: { flexDirection: 'row', alignItems: 'center', gap: S.sm, padding: S.md, borderRadius: R.md, backgroundColor: '#FFFFFF', borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge },
+  fact: { flexDirection: 'row', alignItems: 'center', gap: S.sm, padding: S.md, borderRadius: R.md, backgroundColor: C.surface, borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge },
   factText: { flex: 1, color: C.text, fontSize: 14, lineHeight: 20, fontWeight: '700' },
   big: { color: C.text, fontSize: 30, ...F.display },
   muted: { color: C.muted },

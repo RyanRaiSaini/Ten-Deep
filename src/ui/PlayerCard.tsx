@@ -5,18 +5,21 @@ import type { Player, SlotId } from '../engine/types';
 import { Icon } from './icons';
 import { Text } from './Text';
 import { flagOf, nationOf } from '../data/nation';
-import { C, FONT, R, S } from './theme';
+import { alpha, C, FONT, R, S } from './theme';
 import { useMoney } from './MoneyScale';
 import { posLabel } from '../engine/types';
 
-/** Rating badge colors: gold superstar, green great, blue good, ink role player, gray deep bench. */
+/** Rating badge colors: amber superstar, green great, blue good, slate role player, gray deep bench. */
 export function ovrBadge(ovr: number): string {
-  if (ovr >= 95) return '#F0A500';
+  if (ovr >= 95) return C.accent;
   if (ovr >= 88) return '#0FA876';
   if (ovr >= 80) return '#2F6BFF';
-  if (ovr >= 72) return '#4A4356';
-  return '#9A92A3';
+  if (ovr >= 72) return '#3A4558';
+  return '#5C6678';
 }
+
+/** The number on the badge: ink on amber, white on everything else. */
+const ovrInk = (ovr: number) => (ovr >= 95 ? C.onAccent : '#FFFFFF');
 
 /**
  * A player in a list: team-colored stripe, rating badge, name, salary. When `slots` has several
@@ -52,7 +55,7 @@ export function PlayerCard({
       <View style={styles.row}>
         {accent && <View style={[styles.stripe, { backgroundColor: accent }]} />}
         <View style={[styles.ovr, { backgroundColor: ovrBadge(player.ovr) }]}>
-          <Text style={styles.ovrText}>{player.ovr}</Text>
+          <Text style={[styles.ovrText, { color: ovrInk(player.ovr) }]}>{player.ovr}</Text>
           {form !== 0 && (
             <View style={[styles.form, { backgroundColor: form > 0 ? '#FF6A1A' : '#3B8CF0' }]} testID={form > 0 ? 'form-hot' : 'form-cold'}
               accessibilityLabel={t(form > 0 ? 'draft.hot' : 'draft.cold', { n: Math.abs(form) })}>
@@ -90,27 +93,27 @@ const DEAL_COLOR = { supermax: '#7A4DFF', max: '#E5484D', rookie: '#18A06A', two
 
 const styles = StyleSheet.create({
   card: {
-    padding: S.md, paddingLeft: S.md + 4, backgroundColor: '#FFFFFF', borderRadius: R.md + 2, borderWidth: 2, borderColor: C.line,
+    padding: S.md, paddingLeft: S.md + 4, backgroundColor: C.surface, borderRadius: R.md + 2, borderWidth: 2, borderColor: C.line,
     borderBottomWidth: 5, borderBottomColor: C.edge, overflow: 'hidden', gap: S.sm,
   },
-  selected: { borderColor: C.ink, borderBottomColor: C.ink },
+  selected: { borderColor: C.accent, borderBottomColor: C.accentEdge },
   row: { flexDirection: 'row', alignItems: 'center', gap: S.md },
   stripe: { position: 'absolute', start: -S.md - 4, top: -S.md, bottom: -S.md, width: 7 },
-  ovr: { width: 50, height: 50, borderRadius: 14, alignItems: 'center', justifyContent: 'center', borderWidth: 2.5, borderColor: C.ink },
-  ovrText: { fontSize: 24, fontFamily: FONT.display, color: '#FFFFFF' },
+  ovr: { width: 50, height: 50, borderRadius: 14, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: alpha('#FFFFFF', 0.28) },
+  ovrText: { fontSize: 24, fontFamily: FONT.display },
   form: {
     position: 'absolute', bottom: -9, flexDirection: 'row', alignItems: 'center', gap: 1, paddingHorizontal: 4, paddingVertical: 1,
     borderRadius: 8, borderWidth: 1.5, borderColor: C.ink,
   },
   formText: { color: '#FFFFFF', fontSize: 11, fontFamily: FONT.display },
-  name: { color: C.ink, fontSize: 17, fontWeight: '900' },
-  meta: { color: C.muted, fontSize: 12, fontWeight: '700' },
+  name: { color: C.text, fontSize: 17, fontWeight: '700' },
+  meta: { color: C.muted, fontSize: 13, fontWeight: '600' },
   note: { color: C.danger, fontSize: 12, fontWeight: '800' },
-  salary: { backgroundColor: '#FFF1E3', borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 5, borderWidth: 2, borderColor: '#FFD2A8' },
-  salaryText: { color: '#C2500A', fontWeight: '900', fontSize: 13 },
-  deal: { borderRadius: R.pill, paddingHorizontal: 7, paddingVertical: 2 },
-  dealText: { color: '#FFFFFF', fontWeight: '900', fontSize: 9, letterSpacing: 0.4 },
+  salary: { backgroundColor: C.surface2, borderRadius: R.sm, paddingHorizontal: 9, paddingVertical: 4, borderWidth: 1, borderColor: C.line },
+  salaryText: { color: C.accent, fontFamily: FONT.condensed, fontSize: 17, letterSpacing: 0.3 },
+  deal: { borderRadius: R.sm, paddingHorizontal: 7, paddingVertical: 2 },
+  dealText: { color: '#FFFFFF', fontWeight: '800', fontSize: 11, letterSpacing: 0.6 },
   slots: { flexDirection: 'row', flexWrap: 'wrap', gap: S.sm },
-  slot: { backgroundColor: C.ink, borderRadius: R.pill, paddingHorizontal: 16, paddingVertical: 8, borderBottomWidth: 3, borderBottomColor: '#000' },
-  slotText: { color: '#FFFFFF', fontWeight: '900', fontSize: 14 },
+  slot: { backgroundColor: C.accent, borderRadius: R.sm, paddingHorizontal: 16, paddingVertical: 8, borderBottomWidth: 3, borderBottomColor: C.accentEdge },
+  slotText: { color: C.onAccent, fontFamily: FONT.condensed, fontSize: 16, letterSpacing: 0.5 },
 });

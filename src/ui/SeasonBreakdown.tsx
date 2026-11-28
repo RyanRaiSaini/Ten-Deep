@@ -35,7 +35,7 @@ export function SeasonBreakdown({ season }: { season: SeasonState }) {
 
 const styles = StyleSheet.create({
   card: { backgroundColor: C.surface, borderRadius: 20, borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, padding: S.lg, gap: S.md },
-  title: { color: C.ink, fontSize: 24, ...F.display },
+  title: { color: C.text, fontSize: 24, ...F.display },
   row: { flexDirection: 'row', alignItems: 'flex-start', gap: S.md },
   icon: { width: 34, height: 34, borderRadius: 10, backgroundColor: C.surface2, alignItems: 'center', justifyContent: 'center' },
   text: { flex: 1, color: C.text, fontWeight: '700', lineHeight: 20 },

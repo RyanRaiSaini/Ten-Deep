@@ -92,5 +92,5 @@ export default function BenchSwitch() {
 const styles = StyleSheet.create({
   info: { flexDirection: 'row', alignItems: 'center', gap: S.md },
   desc: { color: C.text, fontSize: 14, lineHeight: 20 },
-  room: { color: C.ink, fontWeight: '900', fontSize: 13 },
+  room: { color: C.text, fontWeight: '900', fontSize: 13 },
 });

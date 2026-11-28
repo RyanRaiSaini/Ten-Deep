@@ -60,7 +60,7 @@ export default function Collection() {
         <Button label={t('gauntlet.title')} icon={<Icon name="shield" size={22} />} variant="secondary" onPress={() => router.push('/gauntlet')} style={{ flex: 1 }} />
       </View>
       <View style={styles.chips}>
-        <Chip label={t('collect.all')} on={!filter} color={C.ink} onPress={() => setFilter(null)} />
+        <Chip label={t('collect.all')} on={!filter} color={C.text} onPress={() => setFilter(null)} />
         {TIERS.map((tier) => (
           <Chip key={tier} label={`${t(`collect.tier_${tier}`)} ${counts[tier]}`} on={filter === tier} color={TIER_STYLE[tier].frame[0]} onPress={() => setFilter(tier)} />
         ))}
@@ -133,7 +133,7 @@ function Chip({ label, on, color, onPress }: { label: string; on: boolean; color
 const styles = StyleSheet.create({
   sub: { color: C.gold, fontWeight: '800', textAlign: 'center' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  chip: { borderWidth: 2, borderRadius: R.pill, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: '#FFFFFF' },
+  chip: { borderWidth: 2, borderRadius: R.pill, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: C.surface },
   chipText: { fontWeight: '800', fontSize: 12 },
   empty: { color: C.muted, textAlign: 'center', marginTop: S.xl },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: GAP },

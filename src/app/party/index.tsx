@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
   tag: { color: '#FFFFFF', fontWeight: '800', fontSize: 15, textShadowColor: 'rgba(0,0,0,0.35)', textShadowRadius: 2, textShadowOffset: { width: 0, height: 1 } },
   feature: { flexDirection: 'row', alignItems: 'center', gap: S.md },
   featureTile: { width: 64, height: 64, borderRadius: 18, backgroundColor: '#E9F7EF', borderWidth: 2, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
-  featureTitle: { fontFamily: FONT.display, fontSize: 21, color: C.ink },
+  featureTitle: { fontFamily: FONT.display, fontSize: 21, color: C.text },
   featureBody: { color: C.muted, fontWeight: '700', fontSize: 14 },
   error: { color: C.danger, fontWeight: '800', textAlign: 'center' },
   joinRow: { flexDirection: 'row', gap: S.sm, alignItems: 'center', marginTop: S.sm },
   codeInput: {
-    flex: 1.2, fontFamily: FONT.display, fontSize: 26, letterSpacing: 5, textAlign: 'center', color: C.ink, borderWidth: 2.5,
-    borderColor: C.ink, borderRadius: R.pill, paddingVertical: 8, backgroundColor: '#FFFFFF',
+    flex: 1.2, fontFamily: FONT.display, fontSize: 26, letterSpacing: 5, textAlign: 'center', color: C.text, borderWidth: 2.5,
+    borderColor: C.ink, borderRadius: R.pill, paddingVertical: 8, backgroundColor: C.surface,
   },
 });

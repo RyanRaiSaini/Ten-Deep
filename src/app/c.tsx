@@ -96,7 +96,7 @@ export default function Challenge() {
 const styles = StyleSheet.create({
   wrap: { flex: 1, justifyContent: 'center', gap: S.lg, paddingVertical: S.xl },
   card: { alignItems: 'center', gap: S.sm },
-  record: { fontFamily: FONT.display, fontSize: 56, color: C.ink },
+  record: { fontFamily: FONT.display, fontSize: 56, color: C.text },
   mode: { fontWeight: '900', color: C.muted, letterSpacing: 1.5, textTransform: 'uppercase' },
   body: { color: C.muted, fontWeight: '700', textAlign: 'center' },
   note: { color: C.gold, fontWeight: '700', fontSize: 13, textAlign: 'center' },

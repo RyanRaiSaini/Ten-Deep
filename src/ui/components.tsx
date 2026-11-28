@@ -45,7 +45,7 @@ export function Screen({
       {backdrop ? <View style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]}>{backdrop}</View> : (
         <>
           {tint && <LinearGradient colors={[alpha(tint, 0.28), alpha(tint, 0.06), alpha(C.bg, 0)]} locations={[0, 0.5, 1]} style={styles.tint} />}
-          <Rays color={tint ?? C.ink} />
+          <Rays color={tint ?? C.text} />
         </>
       )}
       {scroll ? <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>{body}</ScrollView> : body}
@@ -106,13 +106,14 @@ export function Header({ title, left, right, light }: { title: string; left?: Re
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'gold' | 'dark' | 'blue' | 'green';
 const VARIANTS: Record<Variant, { bg: string; fg: string; edge: string; border?: string }> = {
-  primary: { bg: C.hardwood, fg: '#FFFFFF', edge: '#C2500A' },
-  gold: { bg: '#FFC53D', fg: C.ink, edge: '#D69500' },
-  dark: { bg: C.ink, fg: '#FFFFFF', edge: '#000000' },
-  blue: { bg: C.blue, fg: '#FFFFFF', edge: '#1C46B8' },
-  green: { bg: '#18C08A', fg: '#FFFFFF', edge: '#0B8A61' },
-  secondary: { bg: '#FFFFFF', fg: C.ink, edge: C.edge, border: C.line },
-  ghost: { bg: 'transparent', fg: C.ink, edge: 'transparent', border: C.line },
+  // Amber is the one main action on a screen; everything else is a quiet dark panel.
+  primary: { bg: C.accent, fg: C.onAccent, edge: C.accentEdge },
+  gold: { bg: C.accent, fg: C.onAccent, edge: C.accentEdge },
+  dark: { bg: C.surface2, fg: C.text, edge: C.edge, border: C.line },
+  blue: { bg: '#2F6BFF', fg: '#FFFFFF', edge: '#1C46B8' },
+  green: { bg: C.neon, fg: C.onAccent, edge: '#1E9E68' },
+  secondary: { bg: C.surface, fg: C.text, edge: C.edge, border: C.line },
+  ghost: { bg: 'transparent', fg: C.text, edge: 'transparent', border: C.line },
 };
 
 /** Chunky 3D button: a thick bottom edge that squashes when pressed. */
@@ -204,7 +205,7 @@ export function ToggleRow({ label, value, onChange }: { label: string; value: bo
   return (
     <View style={styles.row}>
       <Text style={styles.rowLabel}>{label}</Text>
-      <Switch value={value} onValueChange={onChange} trackColor={{ true: '#18C08A', false: C.line }} thumbColor="#FFFFFF" />
+      <Switch value={value} onValueChange={onChange} trackColor={{ true: C.neon, false: C.line }} thumbColor="#FFFFFF" />
     </View>
   );
 }
@@ -225,7 +226,7 @@ export function Segmented<T extends string | number>({
     <View style={styles.segmented}>
       {options.map((o) => (
         <Pressable key={String(o)} onPress={() => onChange(o)} style={[styles.segment, o === value && styles.segmentOn]} accessibilityRole="button" accessibilityState={{ selected: o === value }}>
-          <Text style={[styles.segmentText, o === value && { color: '#FFFFFF' }]}>{format(o)}</Text>
+          <Text style={[styles.segmentText, o === value && { color: C.bg }]}>{format(o)}</Text>
         </Pressable>
       ))}
     </View>
@@ -244,14 +245,14 @@ const styles = StyleSheet.create({
   tabTitle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: S.sm, paddingTop: S.lg, paddingBottom: S.sm },
   header: { flexDirection: 'row', alignItems: 'center', paddingVertical: S.md, gap: S.sm },
   headerSide: { width: 56 },
-  headerTitle: { flex: 1, textAlign: 'center', color: C.ink, fontSize: 21, lineHeight: 25, fontFamily: FONT.display, fontWeight: '900' },
+  headerTitle: { flex: 1, textAlign: 'center', color: C.text, fontSize: 22, lineHeight: 26, fontFamily: FONT.condensed, letterSpacing: 0.6, textTransform: 'uppercase' },
   button: {
-    flexDirection: 'row', gap: S.sm, paddingVertical: 14, paddingHorizontal: S.lg, borderRadius: R.pill, borderWidth: 2,
+    flexDirection: 'row', gap: S.sm, paddingVertical: 12, paddingHorizontal: S.lg, borderRadius: R.md, borderWidth: 2,
     alignItems: 'center', justifyContent: 'center', minHeight: 54,
   },
-  buttonText: { fontSize: 17, fontWeight: '900', letterSpacing: 0.2, textAlign: 'center', flexShrink: 1 },
+  buttonText: { fontSize: 20, fontFamily: FONT.condensed, letterSpacing: 0.8, textTransform: 'uppercase', textAlign: 'center', flexShrink: 1 },
   square: {
-    width: 50, height: 50, borderRadius: 16, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center',
+    width: 50, height: 50, borderRadius: 16, backgroundColor: C.surface, alignItems: 'center', justifyContent: 'center',
     borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge,
   },
   squarePressed: { transform: [{ translateY: 2 }], borderBottomWidth: 3 },
@@ -263,7 +264,7 @@ const styles = StyleSheet.create({
   labelRow: { flexDirection: 'row', alignItems: 'center', gap: S.md, marginTop: S.sm },
   labelLine: { flex: 1, height: 2, backgroundColor: C.line, borderRadius: 1 },
   chip: {
-    flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#FFFFFF', paddingHorizontal: 14, height: 50, borderRadius: 16,
+    flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: C.surface, paddingHorizontal: 14, height: 50, borderRadius: 16,
     borderWidth: 2, borderColor: C.line, borderBottomWidth: 5, borderBottomColor: C.edge,
   },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: S.md, gap: S.md },
@@ -271,6 +272,6 @@ const styles = StyleSheet.create({
   rowValue: { color: C.muted, fontSize: 15, fontWeight: '700' },
   segmented: { flexDirection: 'row', backgroundColor: C.surface2, borderRadius: R.pill, padding: 4, gap: 4, borderWidth: 2, borderColor: C.line },
   segment: { flex: 1, paddingVertical: 10, alignItems: 'center', borderRadius: R.pill },
-  segmentOn: { backgroundColor: C.ink },
-  segmentText: { color: C.ink, fontWeight: '900' },
+  segmentOn: { backgroundColor: C.text },
+  segmentText: { color: C.text, fontWeight: '800' },
 });

@@ -26,9 +26,9 @@ export function useWeekCountdown(): string {
 }
 
 const ZONE = {
-  promote: { color: '#14A86B', bg: '#E3F8EE' },
-  safe: { color: C.muted, bg: '#FFFFFF' },
-  relegate: { color: C.danger, bg: '#FDE6E8' },
+  promote: { color: C.neon, bg: alpha(C.neon, 0.16) },
+  safe: { color: C.muted, bg: C.surface },
+  relegate: { color: C.danger, bg: alpha(C.danger, 0.16) },
 } as const;
 
 /** League card: tier, countdown, your rank, and the zone you're in. */
@@ -42,7 +42,7 @@ export function LeagueCard() {
   return (
     <Pressable onPress={() => router.push('/ladder')} testID="league-card" accessibilityRole="button"
       style={({ pressed }) => [styles.card, { borderColor: z.color, borderBottomColor: z.color }, pressed && { transform: [{ translateY: 3 }], borderBottomWidth: 3 }]}>
-      <LinearGradient colors={[z.bg, '#FFFFFF']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[StyleSheet.absoluteFill, { borderRadius: 20 }]} />
+      <LinearGradient colors={[z.bg, C.surface]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[StyleSheet.absoluteFill, { borderRadius: 20 }]} />
       {me.zone !== 'safe' && (
         <View style={[styles.ribbon, { backgroundColor: z.color }]}><Text style={styles.ribbonText}>{t(`ladder.${me.zone}`)}</Text></View>
       )}
@@ -65,13 +65,13 @@ export function LeagueCard() {
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'row', alignItems: 'center', gap: S.md, padding: S.md, paddingTop: S.lg, borderRadius: 22, borderWidth: 2.5, borderBottomWidth: 6,
-    backgroundColor: '#FFFFFF', marginTop: S.sm,
+    backgroundColor: C.surface, marginTop: S.sm,
   },
-  ribbon: { position: 'absolute', top: -13, right: 18, paddingHorizontal: 12, paddingVertical: 3, borderRadius: R.pill, borderWidth: 2, borderColor: '#FFFFFF' },
-  ribbonText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1.5 },
+  ribbon: { position: 'absolute', top: -13, right: 18, paddingHorizontal: 12, paddingVertical: 3, borderRadius: R.pill, borderWidth: 2, borderColor: C.bg },
+  ribbonText: { color: C.ink, fontWeight: '800', fontSize: 12, letterSpacing: 1.5 },
   meta: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  tier: { fontWeight: '900', color: C.ink, fontSize: 15, marginRight: 6 },
+  tier: { fontWeight: '900', color: C.text, fontSize: 15, marginRight: 6 },
   time: { fontWeight: '800', color: C.muted, fontSize: 14 },
-  rank: { borderWidth: 2.5, borderRadius: R.pill, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: alpha('#FFFFFF', 0.9) },
+  rank: { borderWidth: 2.5, borderRadius: R.pill, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: alpha(C.bg, 0.6) },
   rankText: { fontFamily: FONT.display, fontSize: 22 },
 });

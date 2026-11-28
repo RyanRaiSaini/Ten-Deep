@@ -89,13 +89,13 @@ export default function AddFriend() {
 
 const styles = StyleSheet.create({
   hero: { alignItems: 'center', paddingTop: S.sm },
-  cardTitle: { fontFamily: FONT.display, fontSize: 20, color: C.ink, textAlign: 'center' },
-  pinInput: { fontFamily: FONT.display, fontSize: 34, letterSpacing: 6, textAlign: 'center', color: C.ink, borderWidth: 2.5, borderColor: C.ink, borderRadius: R.md, paddingVertical: 10, backgroundColor: C.bg },
-  lead: { color: C.ink, fontSize: 15, fontWeight: '700', textAlign: 'center' },
-  hint: { color: C.ink, fontSize: 16, fontWeight: '700', textAlign: 'center' },
+  cardTitle: { fontFamily: FONT.display, fontSize: 20, color: C.text, textAlign: 'center' },
+  pinInput: { fontFamily: FONT.display, fontSize: 34, letterSpacing: 6, textAlign: 'center', color: C.text, borderWidth: 2.5, borderColor: C.ink, borderRadius: R.md, paddingVertical: 10, backgroundColor: C.bg },
+  lead: { color: C.text, fontSize: 15, fontWeight: '700', textAlign: 'center' },
+  hint: { color: C.text, fontSize: 16, fontWeight: '700', textAlign: 'center' },
   input: {
     minHeight: 96, borderWidth: 2, borderColor: C.line, borderRadius: R.md, padding: S.md, backgroundColor: C.bg,
-    color: C.ink, fontSize: 15, fontFamily: 'Montserrat_600SemiBold', textAlignVertical: 'top',
+    color: C.text, fontSize: 15, fontFamily: 'Montserrat_600SemiBold', textAlignVertical: 'top',
   },
   error: { color: C.danger, fontWeight: '800', textAlign: 'center' },
   row: { flexDirection: 'row', gap: S.sm },

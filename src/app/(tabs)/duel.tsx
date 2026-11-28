@@ -116,7 +116,7 @@ export default function Duel() {
           <TextInput value={p1} onChangeText={setP1} style={styles.input} maxLength={16} testID="p1" />
         </View>
         <View style={[styles.side, { backgroundColor: DUEL_COLORS.b[0], paddingLeft: S.xl }]}>
-          <Text style={[styles.sideLabel, { color: C.ink }]}>{t('duel.p2')}</Text>
+          <Text style={[styles.sideLabel, { color: C.text }]}>{t('duel.p2')}</Text>
           <TextInput value={p2} onChangeText={setP2} style={styles.input} maxLength={16} testID="p2" />
         </View>
         <View style={styles.versusBadge} pointerEvents="none"><Icon name="vs" size={52} /></View>
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   midLine: { position: 'absolute', top: 0, bottom: 0, left: '50%', width: 3, marginLeft: -1.5, backgroundColor: 'rgba(255,255,255,0.35)' },
   centerCircle: { position: 'absolute', top: 18, width: 150, height: 150, borderRadius: 75, borderWidth: 3, borderColor: 'rgba(255,255,255,0.25)' },
   faceoff: { flexDirection: 'row', alignItems: 'center' },
-  fighterRing: { borderRadius: 50, borderWidth: 4, backgroundColor: '#FFFFFF', shadowOpacity: 0.8, shadowRadius: 14, shadowOffset: { width: 0, height: 0 } },
+  fighterRing: { borderRadius: 50, borderWidth: 4, backgroundColor: C.surface, shadowOpacity: 0.8, shadowRadius: 14, shadowOffset: { width: 0, height: 0 } },
   fighterName: { color: '#FFFFFF', fontWeight: '900', fontSize: 13, maxWidth: 110 },
   mystery: { width: 84, height: 84, borderRadius: 42, backgroundColor: '#25305A', alignItems: 'center', justifyContent: 'center' },
   mysteryText: { fontFamily: FONT.display, fontSize: 44, color: '#6B9BFF' },
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
   liveText: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1.5 },
 
   ticket: {
-    flexDirection: 'row', borderRadius: R.lg, backgroundColor: '#FFFFFF', overflow: 'hidden',
+    flexDirection: 'row', borderRadius: R.lg, backgroundColor: C.surface, overflow: 'hidden',
     borderWidth: 2.5, borderColor: C.ink, borderBottomWidth: 6,
   },
   stub: { width: 52, alignItems: 'center', justifyContent: 'center' },
@@ -263,10 +263,10 @@ const styles = StyleSheet.create({
   statusDot: { width: 9, height: 9, borderRadius: 5 },
   statusText: { fontSize: 12, fontWeight: '800', color: C.muted },
   pinLabel: { fontSize: 12, fontWeight: '900', letterSpacing: 1.5, color: C.muted, textTransform: 'uppercase' },
-  pin: { fontFamily: FONT.display, fontSize: 32, color: C.ink, letterSpacing: 2, flexShrink: 1 },
+  pin: { fontFamily: FONT.display, fontSize: 32, color: C.text, letterSpacing: 2, flexShrink: 1 },
 
   sectionHead: { flexDirection: 'row', alignItems: 'center', gap: S.sm, marginTop: S.md },
-  section: { flex: 1, fontFamily: FONT.display, fontSize: 24, color: C.ink },
+  section: { flex: 1, fontFamily: FONT.display, fontSize: 24, color: C.text },
   addBtn: { minHeight: 44, paddingVertical: 8, paddingHorizontal: 14 },
   emptyCard: { alignItems: 'center', gap: S.sm, padding: S.lg, borderRadius: R.lg, borderWidth: 2.5, borderStyle: 'dashed', borderColor: C.edge, backgroundColor: 'rgba(255,255,255,0.6)' },
   ghosts: { flexDirection: 'row', alignItems: 'center' },
@@ -279,6 +279,6 @@ const styles = StyleSheet.create({
   versus: { flexDirection: 'row', borderRadius: 22, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7 },
   side: { flex: 1, padding: S.md, paddingVertical: S.lg, gap: S.sm },
   sideLabel: { color: '#FFFFFF', fontWeight: '900', fontSize: 12, letterSpacing: 1, textTransform: 'uppercase' },
-  input: { color: C.text, fontSize: 17, fontWeight: '800', borderWidth: 2.5, borderColor: C.ink, borderRadius: R.md, paddingVertical: S.sm, paddingHorizontal: S.md, backgroundColor: '#FFFFFF', fontFamily: 'Montserrat_700Bold' },
+  input: { color: C.text, fontSize: 17, fontWeight: '800', borderWidth: 2.5, borderColor: C.ink, borderRadius: R.md, paddingVertical: S.sm, paddingHorizontal: S.md, backgroundColor: C.surface, fontFamily: 'Montserrat_700Bold' },
   versusBadge: { position: 'absolute', left: '50%', top: '50%', marginLeft: -26, marginTop: -26 },
 });
