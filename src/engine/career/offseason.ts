@@ -2,7 +2,7 @@
  * The offseason as a series of pure steps, so the UI can pause for the user's decisions:
  * startOffseason → resolveExpiring → rookieDraft → (user free agency via signFreeAgent) → aiFreeAgency → finalizeOffseason.
  */
-import { APRON, MIN_CONTRACT, capRoom, payOf, rookieScale, salaryFor } from '../cap';
+import { APRON, GAME_DOLLARS_PER_CAP, MIN_CONTRACT, capRoom, payOf, rookieScale, salaryFor } from '../cap';
 import { affordableSlots, startDraft } from '../draft';
 import { createRng } from '../rng';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Roster, type RosterSlots, type SlotId, type TeamSeason, playsPos } from '../types';
@@ -44,10 +44,24 @@ export interface OffseasonState {
 export const RESIGN_THRESHOLD = 75;
 /** Rookie-scale deals: the real rookie scale by draft slot (cheap for what they give you: why drafting well matters). */
 export const rookieSalary = (pick: number) => rookieScale(pick);
+
+/** The supermax (35% of the cap) and a 30% max deal, in game dollars. */
+export const SUPERMAX = Math.round(0.35 * GAME_DOLLARS_PER_CAP * 10) / 10;
+export const MAX_DEAL = Math.round(0.3 * GAME_DOLLARS_PER_CAP * 10) / 10;
+/**
+ * What a player asks for in a new deal (re-signing or free agency). Everyone wants the market rate for his rating,
+ * but stars want star money: the supermax at 97+, a max deal at 94+. So a roster of superstars can't fit under
+ * the cap (or even the apron) for long: three supermax players are 90% of the cap on their own.
+ */
+export function askingPrice(p: Pick<Player, 'ovr'>): number {
+  const market = salaryFor(p.ovr);
+  return p.ovr >= 97 ? Math.max(market, SUPERMAX) : p.ovr >= 94 ? Math.max(market, MAX_DEAL) : market;
+}
+
 /** Released players hit the market at their current asking price. */
-const unsigned = (p: Player): Player => { const { salary: _s, contractType: _c, ...rest } = p; return { ...rest, released: true }; };
+const unsigned = (p: Player): Player => { const { salary: _s, contractType: _c, ...rest } = p; return { ...rest, released: true, salary: askingPrice(rest) }; };
 /** A new deal replaces the old one, including what kind it was (a re-signed rookie is no longer on the scale). */
-const signedAt = (p: Player, salary = salaryFor(p.ovr)): Player => ({ ...unsigned(p), salary });
+const signedAt = (p: Player, salary = askingPrice(p)): Player => ({ ...unsigned(p), salary });
 
 export function seasonLabel(n: number): string {
   const y = 2025 + n;
@@ -117,7 +131,7 @@ export function payrollAfterResign(st: OffseasonState, keep: string[]): number {
     const p = slots[k];
     if (!p) continue;
     if (!st.expiring.includes(p.id)) total += payOf(p);
-    else if (keep.includes(p.id)) total += salaryFor(p.ovr);
+    else if (keep.includes(p.id)) total += askingPrice(p);
   }
   return total;
 }
@@ -243,7 +257,7 @@ export function affordableFor(st: OffseasonState, ti: number): { player: Player;
  */
 export function minimumException(st: OffseasonState, ti: number): { player: Player; slot: SlotId; salary: number } | null {
   const slot = openSlots(st.teams[ti])[0];
-  const player = [...st.freeAgents].sort((a, b) => salaryFor(a.ovr) - salaryFor(b.ovr) || a.ovr - b.ovr)[0];
+  const player = [...st.freeAgents].sort((a, b) => askingPrice(a) - askingPrice(b) || a.ovr - b.ovr)[0];
   return slot && player ? { player, slot, salary: MIN_CONTRACT } : null;
 }
 
@@ -259,6 +273,26 @@ export function aiFreeAgency(st: OffseasonState, includeUser = false): Offseason
     }
   }
   return s;
+}
+
+/**
+ * Your lineup in the offseason: swap any two spots (either may be empty), so any bench player can start and any
+ * starter can come off the bench. Null when it would put a starter out of position.
+ */
+export function swapSpots(st: OffseasonState, ti: number, a: SlotId, b: SlotId): OffseasonState | null {
+  const slots: RosterSlots = { ...st.teams[ti].slots };
+  const pa = slots[a];
+  const pb = slots[b];
+  if (a === b || (!pa && !pb)) return null;
+  if (pb) slots[a] = pb; else delete slots[a];
+  if (pa) slots[b] = pa; else delete slots[b];
+  for (const k of [a, b]) {
+    const p = slots[k];
+    if (p && STARTER_SLOTS.includes(k) && !playsPos(p, k)) return null;
+  }
+  const teams = [...st.teams];
+  teams[ti] = { ...teams[ti], slots };
+  return { ...st, teams };
 }
 
 export function openSlotCount(st: OffseasonState, ti: number): number {

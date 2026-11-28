@@ -14,7 +14,7 @@ import { RunRewards } from '../ui/RunRewards';
 import { SeasonBreakdown } from '../ui/SeasonBreakdown';
 import { seedOf } from '../engine/season';
 import { ALL_SLOTS } from '../engine/types';
-import { useCareer } from '../store/career';
+import { contractUp, useCareer } from '../store/career';
 import { useCollection } from '../store/collection';
 import { useGame } from '../store/game';
 import { goHome } from '../ui/nav';
@@ -192,9 +192,14 @@ function ResultScreen() {
       )}
       {g.career ? (
         <Button
-          label={career.ended ? t('career.over') : t('career.toOffseason')}
+          label={career.ended ? t('career.over') : contractUp(career) ? t('career.contractUp') : t('career.toOffseason')}
           variant="gold"
-          onPress={() => { if (!career.ended) career.beginOffseason(); router.replace(career.ended ? '/career' : '/offseason'); }}
+          onPress={() => {
+            // A contract that's up is settled on the career page (extend or retire) before the offseason.
+            if (career.ended || contractUp(career)) return router.replace('/career');
+            career.beginOffseason();
+            router.replace('/offseason');
+          }}
           testID="career-continue"
         />
       ) : null}

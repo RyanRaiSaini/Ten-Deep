@@ -49,8 +49,11 @@ export interface SeasonState {
   log: LogEvent[];
   totals: { [playerId: string]: PlayerTotals };
   deadlineUsed: boolean;
-  /** The one bench switch of the run has been made (see benchSwitch). */
+  /** Every bench switch this season is spent (see benchSwitch). */
   switchUsed?: boolean;
+  /** Bench switches made this season, and how many it allows (1 when missing; a career season allows 3). */
+  switches?: number;
+  switchLimit?: number;
   /** Fees paid this season ($M game dollars), taken from your cap room: the bench switch. */
   fees?: number;
   /** Extra pause points (e.g. Management Crisis cards), as round numbers. */
@@ -281,12 +284,20 @@ export const SWITCH_FEE = 0;
 /** Cap room left once this season's fees are paid. */
 export const roomAfterFees = (state: SeasonState) => Math.round((capRoom(state.teams[0].slots) - (state.fees ?? 0)) * 10) / 10;
 
+/** Bench switches a season: one in a single run, three a year in a career (store/game.ts sets `switchLimit`). */
+export const SWITCHES_PER_RUN = 1;
+export const CAREER_SWITCHES = 3;
+/** Switches made this season (older saves only know whether the one switch was used). */
+export const switchesUsed = (state: SeasonState) => state.switches ?? (state.switchUsed ? 1 : 0);
+export const switchesLeft = (state: SeasonState) => Math.max(0, (state.switchLimit ?? SWITCHES_PER_RUN) - switchesUsed(state));
+
 /**
- * Your one bench switch of the run: a bench player moves into the starting five (he has to play that position),
- * and the starter takes his bench spot. It costs SWITCH_FEE of cap room (free today), so it never touches the deadline budget.
+ * A bench switch: a bench player moves into the starting five (he has to play that position), and the starter
+ * takes his bench spot. One a run (three a season in a career). It costs SWITCH_FEE of cap room (free today), so
+ * it never touches the deadline budget.
  */
 export function benchSwitch(state: SeasonState, benchSlot: SlotId, starterSlot: SlotId): SeasonState {
-  if (state.switchUsed) throw new Error('Bench switch already used');
+  if (switchesLeft(state) <= 0) throw new Error('No bench switches left');
   if (!BENCH_SLOTS.includes(benchSlot) || !STARTER_SLOTS.includes(starterSlot)) throw new Error('Pick a bench player and a starter');
   const user = state.teams[0];
   const incoming = user.slots[benchSlot];
@@ -294,7 +305,9 @@ export function benchSwitch(state: SeasonState, benchSlot: SlotId, starterSlot: 
   if (SWITCH_FEE > 0 && roomAfterFees(state) < SWITCH_FEE - 1e-9) throw new Error('Over the cap');
   const teams = [...state.teams];
   teams[0] = { ...user, slots: { ...user.slots, [starterSlot]: incoming, [benchSlot]: user.slots[starterSlot] } };
-  return { ...state, teams, switchUsed: true, fees: Math.round(((state.fees ?? 0) + SWITCH_FEE) * 10) / 10 };
+  const switches = switchesUsed(state) + 1;
+  const switchUsed = switches >= (state.switchLimit ?? SWITCHES_PER_RUN);
+  return { ...state, teams, switches, switchUsed, fees: Math.round(((state.fees ?? 0) + SWITCH_FEE) * 10) / 10 };
 }
 
 /**

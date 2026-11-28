@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
-import { DEADLINE_GAME, SEASON_GAMES, advance, outSet, type SeasonState } from '../engine/season';
+import { DEADLINE_GAME, SEASON_GAMES, advance, outSet, switchesLeft, type SeasonState } from '../engine/season';
 import { seedLabel } from '../ui/seedLabel';
 import { SquadBadge } from '../ui/SquadBadge';
 import { squadRating } from '../engine/rotation';
@@ -180,8 +180,8 @@ function SeasonScreen() {
           <Button label={t('season.skipPlayoffs')} variant="secondary" onPress={() => skipTo('playoffs')} style={{ flex: 1 }} testID="skip-playoffs" />
         </View>
       )}
-      {!over && !season.switchUsed && (
-        <Button label={t('switch.button')} icon={<Icon name="swap" size={22} />} variant="blue" onPress={() => { setPlaying(false); if (live.current) useGame.getState().setSeason(live.current); router.push('/switch'); }} testID="bench-switch" />
+      {!over && switchesLeft(season) > 0 && (
+        <Button label={t('switch.button', { n: switchesLeft(season) })} icon={<Icon name="swap" size={22} />} variant="blue" onPress={() => { setPlaying(false); if (live.current) useGame.getState().setSeason(live.current); router.push('/switch'); }} testID="bench-switch" />
       )}
       {over && (
         <Button label={t('playoffs.title')} icon={<Icon name="trophy" size={22} />} variant="gold" onPress={() => { g.beginPlayoffs(); router.replace('/playoffs'); }} testID="to-playoffs" />

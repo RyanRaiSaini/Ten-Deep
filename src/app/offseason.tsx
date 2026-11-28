@@ -3,13 +3,13 @@ import { runNeedsHistory } from '../data/historyReady';
 import { useGame } from '../store/game';
 import { DivisionPicker } from '../ui/DivisionPicker';
 import { Redirect, router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../ui/Text';
 import { feel } from '../audio/feel';
-import { affordableFor, minimumException, openSlotCount, payrollAfterResign, RESIGN_THRESHOLD, seasonLabel } from '../engine/career/offseason';
-import { APRON, CAP, salaryFor } from '../engine/cap';
+import { affordableFor, askingPrice, minimumException, openSlotCount, payrollAfterResign, RESIGN_THRESHOLD, seasonLabel } from '../engine/career/offseason';
+import { APRON, CAP } from '../engine/cap';
 import { ALL_SLOTS, type Player, type SlotId } from '../engine/types';
 import { useCareer } from '../store/career';
 import { BackButton, Button, Card, Header, Label, Screen } from '../ui/components';
@@ -17,6 +17,7 @@ import { PlayerCard } from '../ui/PlayerCard';
 import { RosterBoard } from '../ui/RosterBoard';
 import { C, money, F, S } from '../ui/theme';
 import { LotteryReveal } from '../ui/Lottery';
+import { BoardStop } from '../ui/board/BoardStop';
 import { Icon } from '../ui/icons';
 
 /** The offseason, one step at a time: development and contracts → rookie draft → free agency → next season. */
@@ -28,8 +29,29 @@ function OffseasonScreen() {
   const [rookie, setRookie] = useState<string | null>(null);
   const [cut, setCut] = useState<SlotId | null>(null);
   const [chosen, setChosen] = useState<{ player: Player; slots: SlotId[] } | null>(null);
+  const [moving, setMoving] = useState<SlotId | null>(null);
+  const [lineupBad, setLineupBad] = useState(false);
+  const g = useGame();
+  const cardParked = c.step === 'card' && !g.crisis?.offseason && !!g.parked?.crisis?.offseason;
+  // Another run took over meanwhile: bring the career's card back.
+  useEffect(() => { if (cardParked) useGame.getState().resumeCareer(); }, [cardParked]);
 
-  if (!st || !c.step) return <Redirect href="/career" />;
+  if (!c.step) return <Redirect href="/career" />;
+
+  // --- Step 0: the year's one board card, as the offseason opens ----------------------------------
+  if (c.step === 'card') {
+    return (
+      <Screen key="step-0">
+        <Header title={`${t('career.title')} · ${seasonLabel(c.season + 1)}`} left={<BackButton onPress={() => router.navigate('/career')} />} />
+        <Text style={styles.muted}>{t('career.offCardHint')}</Text>
+        <BoardStop inline={{ label: t('career.offCard'), kind: 'objective', onResolved: () => { c.cardDone(); feel('pickChime'); } }} />
+        {g.crisis?.offseason && g.crisis.board && !g.crisis.board.hand && !g.crisis.board.picked && (
+          <Button label={t('career.toOffseason')} variant="gold" onPress={() => c.cardDone()} testID="off-card-done" />
+        )}
+      </Screen>
+    );
+  }
+  if (!st) return <Redirect href="/career" />;
   const user = st.teams[0];
   const mineIds = new Set(st.changes.map((x) => x.id));
   const retiredMine = st.retired.filter((p) => mineIds.has(p.id));
@@ -83,7 +105,7 @@ function OffseasonScreen() {
                 <PlayerCard
                   key={p.id}
                   // The new deal: today's market rate (his old contract, real or not, is up).
-                  player={{ ...p, salary: salaryFor(p.ovr), contractType: undefined, released: true }}
+                  player={{ ...p, salary: askingPrice(p), contractType: undefined, released: true }}
                   testID="expiring"
                   selected={on}
                   note={on ? t('career.resign') : fits ? t('career.release') : t('career.overApron')}
@@ -139,16 +161,29 @@ function OffseasonScreen() {
     setChosen(null);
     feel('pickChime');
   };
+  // Lineup: tap a player, then the spot he moves to (anyone can come off the bench; starters must play the spot).
+  const tapLineup = (slot: SlotId) => {
+    setLineupBad(false);
+    if (!moving) { if (user.slots[slot]) setMoving(slot); return; }
+    if (moving === slot) { setMoving(null); return; }
+    if (c.swap(moving, slot)) feel('pickChime');
+    else { setLineupBad(true); feel('buzzer'); }
+    setMoving(null);
+  };
   return (
     <Screen key="step-3">
       <Header title={t('career.freeAgency')} left={<BackButton onPress={() => router.navigate('/career')} />} />
       <Text style={styles.big}>{t('career.openSpots', { count: open })}</Text>
       <Button label={t('trade.title')} icon={<Icon name="swap" size={22} />} variant="secondary" onPress={() => router.push('/trade')} testID="to-trade" />
-      <RosterBoard
-        roster={user.slots}
-        highlight={chosen?.slots}
-        onSlot={chosen ? (s) => chosen.slots.includes(s) && sign(chosen.player, s) : undefined}
-      />
+      {chosen ? (
+        <RosterBoard roster={user.slots} highlight={chosen.slots} onSlot={(s) => chosen.slots.includes(s) && sign(chosen.player, s)} />
+      ) : (
+        <>
+          <Label>{t('career.lineup')}</Label>
+          <Text style={[styles.muted, lineupBad && { color: C.danger }]} testID="lineup-hint">{lineupBad ? t('career.lineupBad') : t('career.lineupHint')}</Text>
+          <RosterBoard roster={user.slots} highlight={moving ? [moving] : undefined} onSlot={tapLineup} />
+        </>
+      )}
       {open > 0 && (
         <View style={{ gap: S.sm }}>
           {options.map((o) => (
@@ -171,7 +206,7 @@ function OffseasonScreen() {
         <Button
           label={t('career.startSeason', { label: seasonLabel(st.season) })}
           variant="gold"
-          onPress={() => { c.startNextSeason(); feel('crowd'); router.replace('/crisis'); }}
+          onPress={() => { c.startNextSeason(); feel('crowd'); router.replace('/season'); }}
           testID="off-start"
         />
       )}

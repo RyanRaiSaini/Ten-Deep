@@ -10,14 +10,14 @@ import {
 } from '../engine/draft';
 import { champion, playNextGame, runOutcome, simPlayoffsToEnd, startPlayoffs, type PlayoffState } from '../engine/playoffs';
 import { createRng } from '../engine/rng';
-import { SEASON_GAMES, advance, benchSwitch, createSeason, tradeSwap, type SeasonState } from '../engine/season';
+import { CAREER_SWITCHES, SEASON_GAMES, advance, benchSwitch, createSeason, tradeSwap, type SeasonState, type TeamMod } from '../engine/season';
 import { ALL_SLOTS, type Player, type Roster, type RosterSlots, type SlotId, type TeamSeason } from '../engine/types';
 import { withSignedSalaries } from '../engine/career/simulate';
 import { applyCard, type Decision } from '../engine/crisis/apply';
 import { boardObjective, verdict, type Objective, type Verdict } from '../engine/crisis/board';
 import { CARD_ROUNDS, drawCard, type CardId } from '../engine/crisis/deck';
 import { prepareCard, type CrisisCard } from '../engine/crisis/offers';
-import { TAKEOVER_SEASON_PLAN, newBoard, pauseRounds, planOf, type BoardEvent, type BoardState } from '../engine/board/state';
+import { OFFSEASON_PLAN, TAKEOVER_SEASON_PLAN, newBoard, pauseRounds, planOf, type BoardEvent, type BoardState } from '../engine/board/state';
 import { arrive, resolve as resolveStop, reveal, secondLook } from '../engine/board/stop';
 import { checkDemands } from '../engine/board/rules';
 import { type Decision as BoardDecision, vetoDemand } from '../engine/board/play';
@@ -59,6 +59,16 @@ export interface CrisisRun {
   news?: BoardEvent[];
   /** Rebuild mode: the team you took over and where you are in the rebuild (see engine/board/rebuild.ts). */
   rebuild?: RebuildState;
+  /** A career's offseason card (dealt as the offseason opens, see openOffseasonCard). */
+  offseason?: boolean;
+}
+
+/** What a career's offseason card carries into the next season. */
+export interface CardCarry {
+  board: BoardState;
+  fees: number;
+  mods: TeamMod[];
+  injuries: { [playerId: string]: number };
 }
 
 export interface GameStore {
@@ -102,9 +112,11 @@ export interface GameStore {
   /** Management Crisis: a normal draft in any mode, then a season interrupted by crisis cards. */
   newCrisis: (poolId: string, career?: boolean) => void;
   /** Career seasons 2+: start a Crisis season from the evolved league (no draft). */
-  /** `mod`: season-long team rating nudge (career morale). */
-  /** `cards: false` (Dynasty): a plain season, no board cards. `division`: where your team plays. */
-  startCareerSeason: (teams: Roster[], seed: string, mod?: number, opts?: { cards?: boolean; division?: number }) => void;
+  /** `mod`: season-long team rating nudge (career morale). `division`: where your team plays. */
+  /** `carry`: what the offseason card set up (the board's goal, fees, swings, injuries); none in a Dynasty. */
+  startCareerSeason: (teams: Roster[], seed: string, mod?: number, opts?: { division?: number; carry?: CardCarry }) => void;
+  /** Career: deal the offseason's one card (pick 1 of 6) against the league as the season ended. */
+  openOffseasonCard: (teams: Roster[], seed: string, franchise: string) => void;
   /** The season reached a card round: deal that card. */
   openCrisis: (season: SeasonState) => void;
   resolveCrisis: (d: Decision) => void;
@@ -169,11 +181,16 @@ const franchiseByName = (name: string) =>
  */
 function boardVerdict(v: Verdict, b?: BoardState): Verdict {
   if (!b) return v;
+  // A career GM's job is safe: the worst the board can say is "survived".
+  if (b.safe) return v === 'fired' ? 'survived' : b.confidence <= 3 && v === 'extended' ? 'survived' : v;
   if (b.firedAt !== undefined || b.confidence <= 0) return 'fired';
   if (b.confidence <= 3 && v !== 'legend') return v === 'extended' ? 'survived' : 'fired';
   return v;
 }
 const newSeed = () => `${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
+/** A career league's divisions: the one you chose (today's layout), else the seed's. */
+const careerDivs = (teams: Roster[], seed: string, chosen: number | null) =>
+  assignDivisions(teams.map((t) => t.franchise ?? franchiseByName(t.name)), chosen !== null && layoutOf(chosen) === 'modern' ? chosen : defaultDivision(seed));
 
 export const useGame = create<GameStore>()(
   persist(
@@ -289,11 +306,13 @@ export const useGame = create<GameStore>()(
         const divs = assignDivisions([undefined, ...franchises], division);
         // Career mode locks every salary in at signing so payrolls carry over between seasons.
         const [u, ...rest] = get().career ? withSignedSalaries(teams) : teams;
-        const season = createSeason(u, rest, draft.seed, divs);
+        // A career season allows three bench switches; a single run, one.
+        const season = { ...createSeason(u, rest, draft.seed, divs), ...(get().career ? { switchLimit: CAREER_SWITCHES } : {}) };
         if (get().crisis) {
           // Your team takes the place of the franchise your division left out (any of its teams in an odd league).
           const home = DIVISIONS[division].franchises.find((f) => !franchises.includes(f)) ?? DIVISIONS[division].franchises[0];
-          const board = newBoard(home);
+          // A career GM can't be fired: the board still reacts, but confidence at 0 doesn't end the job.
+          const board = { ...newBoard(home), ...(get().career ? { safe: true } : {}) };
           const withStops = { ...season, stops: pauseRounds(board) };
           set({ season: withStops, crisis: { ...get().crisis!, objective: boardObjective(withStops), board } });
           get().openCrisis(withStops);
@@ -308,21 +327,32 @@ export const useGame = create<GameStore>()(
         // Morale's rating nudge is set on the team up front so the board's objective accounts for it.
         // A career plays today's league: a division picked for an older era's league doesn't apply.
         const chosen = opts.division ?? get().division;
-        const cards = opts.cards ?? true;
-        const divs = assignDivisions(teams.map((t) => t.franchise ?? franchiseByName(t.name)), chosen !== null && layoutOf(chosen) === 'modern' ? chosen : defaultDivision(seed));
-        const season = {
-          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs), ...(cards ? { stops: pauseRounds(newBoard('')) } : {}),
-          ...(mod ? { mods: [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] } : {}),
+        const divs = careerDivs(teams, seed, chosen);
+        const carry = opts.carry;
+        const mods = [...(mod ? [{ amount: mod, fromRound: 0, toRound: SEASON_GAMES }] : []), ...(carry?.mods ?? [])];
+        // No card stops in a career season: its one card was played as the offseason opened, and what that card set
+        // up (the board's goal, fees, rating swings, injuries) carries in here.
+        const season: SeasonState = {
+          ...createSeason(mod ? { ...teams[0], mod } : teams[0], teams.slice(1), seed, divs),
+          ...(mods.length ? { mods } : {}),
+          ...(carry?.fees ? { fees: carry.fees } : {}),
+          ...(carry?.injuries ? { injuries: { ...carry.injuries } } : {}),
+          switchLimit: CAREER_SWITCHES,
         };
-        if (!cards) {
-          set({ phase: 'season', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null, season, crisis: null });
-          return;
-        }
+        const crisis: CrisisRun | null = carry?.board
+          ? { objective: boardObjective(season), drawn: [], resolved: 0, pending: null, verdict: null, board: { ...carry.board, safe: true } }
+          : null;
+        set({ phase: 'season', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null, season, crisis });
+      },
+      openOffseasonCard: (teams, seed, franchise) => {
+        // The card is dealt against the league as the season ended; the career store carries what it changes on.
+        const season: SeasonState = { ...createSeason(teams[0], teams.slice(1), seed, careerDivs(teams, seed, get().division)), switchLimit: CAREER_SWITCHES };
+        const board: BoardState = { ...newBoard(franchise, OFFSEASON_PLAN), safe: true };
+        const step = arrive(board, boardCtx('current-2026', season));
         set({
-          phase: 'season', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null,
-          season, crisis: { objective: boardObjective(season), drawn: [], resolved: 0, pending: null, verdict: null, board: newBoard(teams[0].franchise ?? 'sac') },
+          phase: 'crisis', poolId: 'current-2026', replay: null, challenge: null, daily: null, weekly: null, career: true, draft: null, playoffs: null, deadline: null,
+          season: step.season, crisis: { objective: null, drawn: [], resolved: 0, pending: null, verdict: null, board: step.board, offseason: true },
         });
-        get().openCrisis(season);
       },
       openCrisis: (season) => {
         const { crisis, poolId, draft } = get();
@@ -360,6 +390,12 @@ export const useGame = create<GameStore>()(
         if (phase === 'rebuild' && crisis.rebuild) {
           const step = resolveStop(crisis.board, d, boardCtx(poolId, season), { n: crisis.rebuild.cards });
           set({ season: step.season, crisis: { ...crisis, board: step.board, rebuild: { ...crisis.rebuild, cards: crisis.rebuild.cards + 1 } } });
+          return false;
+        }
+        if (crisis.offseason) {
+          // The career's offseason card: settle it and stay put; the offseason screen takes it from here.
+          const step = resolveStop(crisis.board, d, boardCtx(poolId, season));
+          set({ season: step.season, crisis: { ...crisis, board: step.board, news: step.events } });
           return false;
         }
         const step = resolveStop(crisis.board, d, boardCtx(poolId, season));
