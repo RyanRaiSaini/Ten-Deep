@@ -22,13 +22,13 @@
       "maxDuration": 300
     },
     "api/pull.ts": {
-      "includeFiles": "node_modules/{@vercel/og/package.json,@vercel/og/dist/**,@expo-google-fonts/lilita-one/400Regular/LilitaOne_400Regular.ttf,@expo-google-fonts/barlow-condensed/800ExtraBold/BarlowCondensed_800ExtraBold.ttf,@expo-google-fonts/barlow/600SemiBold/Barlow_600SemiBold.ttf}"
+      "includeFiles": "node_modules/{@vercel/og/package.json,@vercel/og/dist/**,@expo-google-fonts/lilita-one/400Regular/*.ttf,@expo-google-fonts/barlow/600SemiBold/*.ttf,@expo-google-fonts/barlow-condensed/800ExtraBold/*.ttf}"
     },
     "api/account.ts": {
       "includeFiles": "node_modules/jose/{package.json,dist/webapi/**}"
     },
     "api/run.ts": {
-      "includeFiles": "node_modules/{@vercel/og/package.json,@vercel/og/dist/**,@expo-google-fonts/lilita-one/400Regular/LilitaOne_400Regular.ttf,@expo-google-fonts/barlow-condensed/800ExtraBold/BarlowCondensed_800ExtraBold.ttf,@expo-google-fonts/barlow/600SemiBold/Barlow_600SemiBold.ttf}"
+      "includeFiles": "node_modules/{@vercel/og/package.json,@vercel/og/dist/**,@expo-google-fonts/lilita-one/400Regular/*.ttf,@expo-google-fonts/barlow/600SemiBold/*.ttf,@expo-google-fonts/barlow-condensed/800ExtraBold/*.ttf}"
     }
   },
   "crons": [
