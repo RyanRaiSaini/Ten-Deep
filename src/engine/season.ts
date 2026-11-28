@@ -275,15 +275,15 @@ export function seedOf(state: SeasonState, team: number): { seed: number; conf: 
 }
 
 /** Trade deadline: swap one user player for `incoming` in the same slot, under the cap. Once per season. */
-/** The bench switch costs 5% of the cap: $10M of the $200M (an era's 5% in its own dollars). */
-export const SWITCH_FEE = CAP * 0.05;
+/** The bench switch is free (it used to cost 5% of the cap); kept as a constant so a price can come back in one place. */
+export const SWITCH_FEE = 0;
 
 /** Cap room left once this season's fees are paid. */
 export const roomAfterFees = (state: SeasonState) => Math.round((capRoom(state.teams[0].slots) - (state.fees ?? 0)) * 10) / 10;
 
 /**
  * Your one bench switch of the run: a bench player moves into the starting five (he has to play that position),
- * and the starter takes his bench spot. It costs SWITCH_FEE of cap room, which also shrinks the deadline budget.
+ * and the starter takes his bench spot. It costs SWITCH_FEE of cap room (free today), so it never touches the deadline budget.
  */
 export function benchSwitch(state: SeasonState, benchSlot: SlotId, starterSlot: SlotId): SeasonState {
   if (state.switchUsed) throw new Error('Bench switch already used');
@@ -291,7 +291,7 @@ export function benchSwitch(state: SeasonState, benchSlot: SlotId, starterSlot: 
   const user = state.teams[0];
   const incoming = user.slots[benchSlot];
   if (!playsPos(incoming, starterSlot)) throw new Error(`${incoming.name} can't play ${starterSlot}`);
-  if (roomAfterFees(state) < SWITCH_FEE - 1e-9) throw new Error('Over the cap');
+  if (SWITCH_FEE > 0 && roomAfterFees(state) < SWITCH_FEE - 1e-9) throw new Error('Over the cap');
   const teams = [...state.teams];
   teams[0] = { ...user, slots: { ...user.slots, [starterSlot]: incoming, [benchSlot]: user.slots[starterSlot] } };
   return { ...state, teams, switchUsed: true, fees: Math.round(((state.fees ?? 0) + SWITCH_FEE) * 10) / 10 };

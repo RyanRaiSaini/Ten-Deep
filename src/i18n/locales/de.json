@@ -1131,7 +1131,7 @@
   "switch": {
     "button": "Bankwechsel (1 übrig)",
     "title": "Bankwechsel",
-    "desc": "Hol einen Bankspieler in deine Starting Five. Ein Wechsel pro Run, er kostet {{fee}} Cap-Platz (5 % der Cap).",
+    "desc": "Hol einen Bankspieler in deine Starting Five. Ein Wechsel pro Run, und er ist kostenlos.",
     "room": "Cap-Platz nach dem Wechsel: {{room}}",
     "noRoom": "Nicht genug Cap-Platz: der Wechsel kostet {{fee}}.",
     "pickBench": "Wer kommt von der Bank?",

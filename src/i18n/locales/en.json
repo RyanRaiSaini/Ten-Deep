@@ -1131,7 +1131,7 @@
   "switch": {
     "button": "Bench switch (1 left)",
     "title": "Bench switch",
-    "desc": "Move one bench player into your starting five. You get one switch per run, and it costs {{fee}} of cap room (5% of the cap).",
+    "desc": "Move one bench player into your starting five. You get one switch per run, and it's free.",
     "room": "Cap room after the switch: {{room}}",
     "noRoom": "Not enough cap room: the switch costs {{fee}}.",
     "pickBench": "Who comes off the bench?",

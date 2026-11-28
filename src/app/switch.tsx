@@ -1,6 +1,6 @@
 /**
- * The bench switch: once per run, move a bench player into the starting five for 5% of the cap (engine/season.ts
- * benchSwitch). Pick who comes off the bench, then the starter he replaces (only positions he can play).
+ * The bench switch: once per run, move a bench player into the starting five, free (engine/season.ts benchSwitch).
+ * Pick who comes off the bench, then the starter he replaces (only positions he can play).
  */
 import { HistoryGate } from '../ui/HistoryGate';
 import { runNeedsHistory } from '../data/historyReady';
@@ -35,7 +35,8 @@ function BenchSwitchScreen() {
   const scale = moneyScaleFor(g.poolId);
   const fee = money(SWITCH_FEE, scale);
   const room = roomAfterFees(season);
-  const canPay = room >= SWITCH_FEE - 1e-9;
+  const free = SWITCH_FEE <= 0;
+  const canPay = free || room >= SWITCH_FEE - 1e-9;
   const p = bench ? user.slots[bench] : null;
   const targets = p ? STARTER_SLOTS.filter((s) => playsPos(p, s)) : [];
 
@@ -51,9 +52,11 @@ function BenchSwitchScreen() {
           <Icon name="swap" size={34} />
           <View style={{ flex: 1, gap: 2 }}>
             <Text style={styles.desc}>{t('switch.desc', { fee })}</Text>
-            <Text style={[styles.room, !canPay && { color: C.danger }]} testID="switch-room">
-              {canPay ? t('switch.room', { room: money(Math.max(0, room - SWITCH_FEE), scale) }) : t('switch.noRoom', { fee })}
-            </Text>
+            {!free && (
+              <Text style={[styles.room, !canPay && { color: C.danger }]} testID="switch-room">
+                {canPay ? t('switch.room', { room: money(Math.max(0, room - SWITCH_FEE), scale) }) : t('switch.noRoom', { fee })}
+              </Text>
+            )}
           </View>
           <SquadBadge value={squadRating(user)} size="sm" />
         </Card>

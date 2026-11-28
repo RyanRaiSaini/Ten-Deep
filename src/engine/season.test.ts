@@ -171,7 +171,7 @@ describe('season', () => {
     expect(tradeBudget(over, 'SF')).toBe(37.5);
   });
 
-  it('one bench switch per run: a bench player starts, for 5% of the cap, and the rating follows', async () => {
+  it('one bench switch per run: a bench player starts, for free, and the rating follows', async () => {
     const { squadRating } = await import('./rotation');
     const s = advance(fresh(), 100);
     const pay: Record<string, number> = { PG: 30, SG: 25, SF: 30, PF: 25, C: 25, B1: 20, B2: 15, B3: 10, B4: 5, B5: 5 };
@@ -180,20 +180,19 @@ describe('season', () => {
     slots.B1 = { ...slots.B1, pos: 'SF', pos2: undefined, ovr: 90, off: 90, def: 90 };
     slots.SF = { ...slots.SF, ovr: 70, off: 70, def: 70 };
     const st = { ...s, teams: [{ ...s.teams[0], slots }, ...s.teams.slice(1)] }; // $10M of room
-    expect(SWITCH_FEE).toBe(10);
+    expect(SWITCH_FEE).toBe(0);
     expect(() => benchSwitch(st, 'B1', 'PG')).toThrow(/can't play/);
     const after = benchSwitch(st, 'B1', 'SF');
     expect(after.teams[0].slots.SF.ovr).toBe(90);
     expect(after.teams[0].slots.B1.ovr).toBe(70);
     expect(squadRating(after.teams[0])).toBeGreaterThan(squadRating(st.teams[0]));
-    expect(after.fees).toBe(10);
-    expect(roomAfterFees(after)).toBe(0);
+    // Free: the cap room and the deadline budget are untouched.
+    expect(roomAfterFees(after)).toBe(roomAfterFees(st));
+    expect(tradeBudget(after.teams[0].slots, 'SF', after.fees)).toBe(30); // his $10M room + his $20M
     expect(() => benchSwitch(after, 'B2', 'PG')).toThrow(/already/);
-    // The fee comes out of the deadline budget too.
-    expect(tradeBudget(after.teams[0].slots, 'SF', after.fees)).toBe(20); // $0 room left + his $20M
-    // Not enough room: no switch.
-    const tight = { ...st, fees: 5 };
-    expect(() => benchSwitch(tight, 'B1', 'SF')).toThrow(/cap/i);
+    // Even with no cap room left, the switch still goes through.
+    const broke = { ...st, fees: 50 };
+    expect(benchSwitch(broke, 'B1', 'SF').teams[0].slots.SF.ovr).toBe(90);
   });
 
   it('tradeSwap takes a player off an AI roster as a straight swap', () => {
