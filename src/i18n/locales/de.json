@@ -1722,5 +1722,30 @@
     "auto": "Den Rest automatisch draften",
     "doneTitle": "Der Draft ist durch",
     "startSeason": "Saison 1 starten"
+  },
+  "partyTk": {
+    "create": "Übernahme-Raum erstellen",
+    "createHint": "Alle übernehmen dasselbe echte Team und bauen es gleichzeitig um: gleiche Optionen, 3-2-1-Reveals, Bieterkämpfe.",
+    "lobby": "Alle übernehmen",
+    "lobbyDesc": "Gleicher Kader, gleiches Budget. Baut ihn Position für Position um; wer am besten baut, gewinnt die Saison.",
+    "position": "{{slot}} · Position {{n}} von {{total}}",
+    "rebuilding": "Ihr baut alle um",
+    "budget": "Budget {{budget}} · bis zu {{max}} für diese Position",
+    "yourPlayer": "Dein {{slot}}",
+    "keep": "Behalten",
+    "go": "Zuschlagen · {{pay}}",
+    "locked": "Fix. Warte auf {{n}}…",
+    "choices": "Die Entscheidungen",
+    "kept": "Hat seinen Spieler behalten",
+    "bidIn": "Gebot abgegeben. Warten auf die anderen…",
+    "war": "Bieterkampf um {{name}}!",
+    "warHint": "Verdeckt bieten: mindestens {{min}}, höchstens {{max}}. Das höchste Gebot verpflichtet ihn zu diesem Preis.",
+    "placeBid": "Gebot abgeben",
+    "watchWar": "Ein Bieterkampf läuft…",
+    "lastSpot": "Letzte Position: {{slot}}",
+    "signed": "hat {{name}} für {{pay}} verpflichtet",
+    "outbid": "überboten mit {{bid}}",
+    "payroll": "Gehaltsliste {{pay}}",
+    "err": "Das hat nicht geklappt. Versuch's nochmal."
   }
 }

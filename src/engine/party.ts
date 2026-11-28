@@ -46,6 +46,10 @@ export interface PartyMeta {
   started?: number;
   /** The day's live form, frozen at room creation (name → rating nudge) so every device agrees. */
   form?: Record<string, number>;
+  /** 'takeover': everyone rebuilds the same real team (engine/partyTakeover.ts); a plain draft otherwise. */
+  kind?: 'draft' | 'takeover';
+  /** Takeover: the team-season everyone takes over. */
+  teamId?: string;
 }
 
 export interface PartyPick { r: number; pid: string; slot: SlotId; t: number }
@@ -58,6 +62,9 @@ export interface PartyMember {
   picks: PartyPick[];
   /** Their rarest pull, "cardId:finish" (gold or better), shown on their seat. */
   flex?: string;
+  /** Takeover: each position's choice and bid (engine/partyTakeover.ts). */
+  moves?: { r: number; c: 'keep' | 'low' | 'mid' | 'top' | 'bench'; t: number }[];
+  bids?: { r: number; amount: number; t: number }[];
 }
 
 /** Parse a seat's flex ("cardId:finish"); null unless the card exists and the finish is real and not base. */

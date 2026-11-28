@@ -1722,5 +1722,30 @@
     "auto": "De rest automatisch draften",
     "doneTitle": "De draft is klaar",
     "startSeason": "Start seizoen 1"
+  },
+  "partyTk": {
+    "create": "Maak een Overname-kamer",
+    "createHint": "Iedereen neemt hetzelfde echte team over en bouwt het tegelijk om: dezelfde opties, 3-2-1-onthullingen, biedoorlogen.",
+    "lobby": "Iedereen neemt over",
+    "lobbyDesc": "Dezelfde selectie, hetzelfde budget. Bouw hem positie voor positie om; wie het best bouwt, wint het seizoen.",
+    "position": "{{slot}} · positie {{n}} van {{total}}",
+    "rebuilding": "Jullie bouwen allemaal om",
+    "budget": "Budget {{budget}} · tot {{max}} voor deze plek",
+    "yourPlayer": "Jouw {{slot}}",
+    "keep": "Houden",
+    "go": "Ga ervoor · {{pay}}",
+    "locked": "Vergrendeld. Wachten op {{n}}…",
+    "choices": "Ieders keuze",
+    "kept": "Hield zijn speler",
+    "bidIn": "Bod geplaatst. Wachten op de anderen…",
+    "war": "Biedoorlog om {{name}}!",
+    "warHint": "Blind bieden: minstens {{min}}, hooguit {{max}}. Het hoogste bod tekent hem voor die prijs.",
+    "placeBid": "Plaats mijn bod",
+    "watchWar": "Er woedt een biedoorlog…",
+    "lastSpot": "Laatste plek: {{slot}}",
+    "signed": "tekende {{name}} voor {{pay}}",
+    "outbid": "overboden met {{bid}}",
+    "payroll": "Salarislijst {{pay}}",
+    "err": "Dat is niet gelukt. Probeer het opnieuw."
   }
 }

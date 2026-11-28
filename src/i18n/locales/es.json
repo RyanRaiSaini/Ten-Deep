@@ -1727,5 +1727,30 @@
     "auto": "Draftear el resto automáticamente",
     "doneTitle": "El draft ha terminado",
     "startSeason": "Empezar la temporada 1"
+  },
+  "partyTk": {
+    "create": "Crear una sala de Toma de control",
+    "createHint": "Todos toman el control del mismo equipo real y lo reconstruyen a la vez: mismas opciones, revelaciones 3-2-1, guerras de pujas.",
+    "lobby": "Todos toman el control",
+    "lobbyDesc": "Misma plantilla, mismo presupuesto. Reconstruidla posición por posición; quien mejor construya gana la temporada.",
+    "position": "{{slot}} · posición {{n}} de {{total}}",
+    "rebuilding": "Todos estáis reconstruyendo",
+    "budget": "Presupuesto {{budget}} · hasta {{max}} para esta posición",
+    "yourPlayer": "Tu {{slot}}",
+    "keep": "Conservarlo",
+    "go": "Ir a por él · {{pay}}",
+    "locked": "Confirmado. Esperando a {{n}}…",
+    "choices": "La decisión de cada uno",
+    "kept": "Conservó a su jugador",
+    "bidIn": "Puja enviada. Esperando a los demás…",
+    "war": "¡Guerra de pujas por {{name}}!",
+    "warHint": "Puja a ciegas: mínimo {{min}}, máximo {{max}}. La puja más alta lo ficha a ese precio.",
+    "placeBid": "Hacer mi puja",
+    "watchWar": "Hay una guerra de pujas en marcha…",
+    "lastSpot": "Última posición: {{slot}}",
+    "signed": "fichó a {{name}} por {{pay}}",
+    "outbid": "superado con {{bid}}",
+    "payroll": "Nómina {{pay}}",
+    "err": "No ha salido bien. Inténtalo de nuevo."
   }
 }

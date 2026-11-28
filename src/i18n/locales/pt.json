@@ -1727,5 +1727,30 @@
     "auto": "Draftar o resto automaticamente",
     "doneTitle": "O draft acabou",
     "startSeason": "Começar a temporada 1"
+  },
+  "partyTk": {
+    "create": "Criar uma sala de Aquisição",
+    "createHint": "Todo mundo assume o mesmo time real e o reconstrói ao mesmo tempo: mesmas opções, revelações 3-2-1, guerras de lances.",
+    "lobby": "Todo mundo assume",
+    "lobbyDesc": "Mesmo elenco, mesmo orçamento. Reconstruam posição por posição; quem montar melhor ganha a temporada.",
+    "position": "{{slot}} · posição {{n}} de {{total}}",
+    "rebuilding": "Vocês estão todos reconstruindo",
+    "budget": "Orçamento {{budget}} · até {{max}} para esta posição",
+    "yourPlayer": "Seu {{slot}}",
+    "keep": "Manter",
+    "go": "Ir atrás · {{pay}}",
+    "locked": "Confirmado. Esperando {{n}}…",
+    "choices": "A escolha de cada um",
+    "kept": "Manteve o jogador",
+    "bidIn": "Lance enviado. Esperando os outros…",
+    "war": "Guerra de lances por {{name}}!",
+    "warHint": "Dê um lance às cegas: no mínimo {{min}}, no máximo {{max}}. O maior lance contrata o jogador por esse preço.",
+    "placeBid": "Dar meu lance",
+    "watchWar": "Uma guerra de lances está rolando…",
+    "lastSpot": "Última posição: {{slot}}",
+    "signed": "contratou {{name}} por {{pay}}",
+    "outbid": "superado com {{bid}}",
+    "payroll": "Folha salarial {{pay}}",
+    "err": "Não deu certo. Tente de novo."
   }
 }

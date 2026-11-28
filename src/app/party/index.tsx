@@ -22,9 +22,9 @@ export default function PartyHub() {
   const [w, setW] = useState(360);
 
   const fail = (e: string) => { setError(t(`party.err.${e}`, { defaultValue: t('party.err.unavailable') })); feel('buzzer'); };
-  const create = async () => {
+  const create = async (kind: 'draft' | 'takeover' = 'draft') => {
     setBusy('create'); setError(null);
-    const r = await createRoom();
+    const r = await createRoom(kind);
     setBusy(null);
     if (!r.ok) return fail(r.error);
     feel('swish');
@@ -78,7 +78,9 @@ export default function PartyHub() {
         />
         <Button label={busy === 'join' ? '…' : t('party.join')} variant="green" onPress={join} disabled={code.length !== 5 || !!busy} testID="party-join" style={{ flex: 1 }} />
       </View>
-      <Button label={busy === 'create' ? '…' : t('party.create')} variant="dark" icon={<Icon name="plus" size={22} />} onPress={create} disabled={!!busy} testID="party-create" />
+      <Button label={busy === 'create' ? '…' : t('party.create')} variant="dark" icon={<Icon name="plus" size={22} />} onPress={() => create()} disabled={!!busy} testID="party-create" />
+      <Button label={busy === 'create' ? '…' : t('partyTk.create')} variant="blue" icon={<Icon name="briefcase" size={22} />} onPress={() => create('takeover')} disabled={!!busy} testID="party-create-takeover" />
+      <Text style={styles.tkHint}>{t('partyTk.createHint')}</Text>
     </Screen>
   );
 }
@@ -96,6 +98,7 @@ function Feature({ icon, title, body }: { icon: IconName; title: string; body: s
 }
 
 const styles = StyleSheet.create({
+  tkHint: { color: C.muted, fontWeight: '700', fontSize: 13, textAlign: 'center' },
   hero: { height: 250, borderRadius: 26, overflow: 'hidden', borderWidth: 3, borderColor: C.ink, borderBottomWidth: 7, alignItems: 'center', justifyContent: 'center', gap: 2, marginTop: S.sm },
   back: { position: 'absolute', top: 12, left: 12 },
   crowd: { flexDirection: 'row', alignItems: 'flex-end', marginBottom: 4 },

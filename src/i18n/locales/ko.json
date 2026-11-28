@@ -1717,5 +1717,30 @@
     "auto": "나머지 자동 지명",
     "doneTitle": "드래프트 종료",
     "startSeason": "시즌 1 시작"
+  },
+  "partyTk": {
+    "create": "테이크오버 방 만들기",
+    "createHint": "모두가 같은 실제 팀을 인수해 동시에 재건해요: 같은 옵션, 3-2-1 공개, 입찰 전쟁.",
+    "lobby": "모두 인수 중",
+    "lobbyDesc": "같은 로스터, 같은 예산. 포지션별로 재건하세요. 가장 잘 만든 사람이 시즌을 가져가요.",
+    "position": "{{slot}} · {{total}}개 포지션 중 {{n}}번째",
+    "rebuilding": "다 같이 재건 중",
+    "budget": "예산 {{budget}} · 이 자리 최대 {{max}}",
+    "yourPlayer": "내 {{slot}}",
+    "keep": "유지",
+    "go": "영입 도전 · {{pay}}",
+    "locked": "확정! {{n}}명 기다리는 중…",
+    "choices": "모두의 선택",
+    "kept": "선수를 유지했어요",
+    "bidIn": "입찰 완료. 다른 사람을 기다리는 중…",
+    "war": "{{name}} 입찰 전쟁!",
+    "warHint": "블라인드 입찰: 최소 {{min}}, 최대 {{max}}. 최고 입찰자가 그 금액으로 계약해요.",
+    "placeBid": "입찰하기",
+    "watchWar": "입찰 전쟁 진행 중…",
+    "lastSpot": "마지막 자리: {{slot}}",
+    "signed": "{{name}} 선수를 {{pay}}에 영입",
+    "outbid": "{{bid}}로 밀림",
+    "payroll": "총연봉 {{pay}}",
+    "err": "실패했어요. 다시 시도해 주세요."
   }
 }

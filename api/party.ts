@@ -21,6 +21,7 @@ import { affordableSlots, fallbackPick, options } from '../src/engine/draft';
 import { cleanDeltas, formPool } from '../src/engine/form';
 import { PARTY_MAX, newRoomCode, parseFlex, parseRoomCode, resolve, seatOf, seatState, type PartyMember, type PartyMeta } from '../src/engine/party';
 import type { SlotId } from '../src/engine/types';
+import { TK_TIERS, resolveTakeover, type TkChoice } from '../src/engine/partyTakeover';
 
 const TTL = 3 * 3600;
 const PIN = /^[A-HJKMNP-Z2-9]{6}$/;
@@ -58,7 +59,10 @@ async function load(code: string): Promise<{ meta: PartyMeta; members: StoredMem
   const members = pins.length ? (await redis.mget<StoredMember[]>(...pins.map((p) => K.m(code, p)))).filter(Boolean) : [];
   return { meta, members };
 }
-const strip = (m: StoredMember): PartyMember => ({ pin: m.pin, name: m.name, avatar: m.avatar, joined: m.joined, picks: m.picks, ...(m.flex ? { flex: m.flex } : {}) });
+const strip = (m: StoredMember): PartyMember => ({
+  pin: m.pin, name: m.name, avatar: m.avatar, joined: m.joined, picks: m.picks, ...(m.flex ? { flex: m.flex } : {}),
+  ...(m.moves ? { moves: m.moves } : {}), ...(m.bids ? { bids: m.bids } : {}),
+});
 const touch = (code: string, pins: string[]) => Promise.all([K.meta(code), K.set(code), ...pins.map((p) => K.m(code, p))].map((k) => redis.expire(k, TTL)));
 
 /** Today's form, frozen into the room so every device rates players the same way. */
@@ -117,7 +121,11 @@ async function handle(b: Record<string, unknown>) {
     let code = '';
     for (let i = 0; i < 6 && !code; i++) {
       const c = newRoomCode();
-      if (await redis.set(K.meta(c), { code: c, host: pin, seed: `party-${c}-${now.toString(36)}`, poolId: 'current-2026', created: now, form: await todaysForm() }, { nx: true, ex: TTL })) code = c;
+      // A Takeover room: everyone rebuilds the same real team, spun here so every device agrees.
+      const takeover = b.kind === 'takeover';
+      const teams = MODE_BY_ID['current-2026'].pool.teams;
+      const tk = takeover ? { kind: 'takeover' as const, teamId: teams[Math.floor(Math.random() * teams.length)].id } : {};
+      if (await redis.set(K.meta(c), { code: c, host: pin, seed: `party-${c}-${now.toString(36)}`, poolId: 'current-2026', created: now, form: takeover ? {} : await todaysForm(), ...tk }, { nx: true, ex: TTL })) code = c;
     }
     if (!code) return json({ error: 'busy' }, 503);
     await redis.set(K.m(code, pin), { pin, name, avatar, joined: now, picks: [], keyHash, ...(flex ? { flex } : {}) } satisfies StoredMember, { ex: TTL });
@@ -196,6 +204,31 @@ async function handle(b: Record<string, unknown>) {
           return json({ error: 'claimed', by: winner(after.members) ?? null }, 409);
         }
       }
+      return json({ ok: true, t: now });
+    }
+    case 'tk-move':
+    case 'tk-bid': {
+      // Party Takeover: lock in a position's choice, or a blind bid in a bidding war (engine/partyTakeover.ts).
+      if (!me) return json({ error: 'not-in-room' }, 403);
+      if (meta.kind !== 'takeover') return json({ error: 'bad-op' }, 400);
+      const r = Number(b.r);
+      const pool = MODE_BY_ID['current-2026'].pool;
+      const state = resolveTakeover(meta, members.map(strip), pool, now);
+      const seat = seatOf(members, pin);
+      if (state.r !== r) return json({ error: 'round-closed' }, 409);
+      if (b.op === 'tk-move') {
+        const c = String(b.c ?? '') as TkChoice;
+        if (c !== 'keep' && !TK_TIERS.includes(c as never)) return json({ error: 'bad-choice' }, 400);
+        if (state.phase !== 'choose') return json({ error: 'round-closed' }, 409);
+        if (state.chosen[seat]) return json({ error: 'already-picked' }, 409);
+        await redis.set(K.m(code, pin), { ...me, moves: [...(me.moves ?? []), { r, c, t: now }] } satisfies StoredMember, { ex: TTL });
+        return json({ ok: true, t: now });
+      }
+      const amount = Number(b.amount);
+      if (!Number.isFinite(amount) || amount < 0) return json({ error: 'bad-bid' }, 400);
+      if (state.phase !== 'bid' || !state.bidders.includes(seat)) return json({ error: 'round-closed' }, 409);
+      if (state.bidIn[seat]) return json({ error: 'already-picked' }, 409);
+      await redis.set(K.m(code, pin), { ...me, bids: [...(me.bids ?? []), { r, amount: Math.round(amount * 10) / 10, t: now }] } satisfies StoredMember, { ex: TTL });
       return json({ ok: true, t: now });
     }
     default:
