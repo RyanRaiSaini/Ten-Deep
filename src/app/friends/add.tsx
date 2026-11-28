@@ -5,6 +5,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import { feel } from '../../audio/feel';
 import { decodeFriend, parsePin } from '../../engine/friends/code';
 import { lookupPin } from '../../net/pins';
+import { sayHello } from '../../net/duels';
 import { useFriends } from '../../store/friends';
 import { BackButton, Button, Card, Header, Screen } from '../../ui/components';
 import { Icon } from '../../ui/icons';
@@ -30,6 +31,8 @@ export default function AddFriend() {
     setBusy(false);
     if (!r.ok) { setError(t(r.reason === 'offline' ? 'friends.offline' : 'friends.notFound')); feel('buzzer'); return; }
     const res = useFriends.getState().add(r.snap);
+    // Tell them, so they get you as a friend too.
+    void sayHello(r.snap.pin);
     feel('fanfare');
     router.replace({ pathname: '/friends/[pin]', params: { pin: r.snap.pin, fresh: res === 'self' ? 'updated' : res } });
   };
@@ -39,6 +42,7 @@ export default function AddFriend() {
     if (!snap) { setError(t('friends.invalid')); feel('buzzer'); return; }
     const r = useFriends.getState().add(snap);
     if (r === 'self') { setError(t('friends.self')); return; }
+    void sayHello(snap.pin);
     feel('fanfare');
     router.replace({ pathname: '/friends/[pin]', params: { pin: snap.pin, fresh: r } });
   };
@@ -55,7 +59,7 @@ export default function AddFriend() {
           value={pinText}
           onChangeText={(v) => { setPinText(v.toUpperCase()); setError(null); }}
           placeholder="K7Q-2XM"
-          placeholderTextColor={C.line}
+          placeholderTextColor={C.muted}
           autoCapitalize="characters"
           autoCorrect={false}
           maxLength={7}
@@ -90,12 +94,12 @@ export default function AddFriend() {
 const styles = StyleSheet.create({
   hero: { alignItems: 'center', paddingTop: S.sm },
   cardTitle: { fontFamily: FONT.display, fontSize: 20, color: C.text, textAlign: 'center' },
-  pinInput: { fontFamily: FONT.display, fontSize: 34, letterSpacing: 6, textAlign: 'center', color: C.text, borderWidth: 2.5, borderColor: C.ink, borderRadius: R.md, paddingVertical: 10, backgroundColor: C.bg },
+  pinInput: { fontFamily: FONT.condensed, fontSize: 36, letterSpacing: 6, textAlign: 'center', color: C.text, borderWidth: 2.5, borderColor: C.ink, borderRadius: R.md, paddingVertical: 10, backgroundColor: C.bg },
   lead: { color: C.text, fontSize: 15, fontWeight: '700', textAlign: 'center' },
   hint: { color: C.text, fontSize: 16, fontWeight: '700', textAlign: 'center' },
   input: {
     minHeight: 96, borderWidth: 2, borderColor: C.line, borderRadius: R.md, padding: S.md, backgroundColor: C.bg,
-    color: C.text, fontSize: 15, fontFamily: 'Montserrat_600SemiBold', textAlignVertical: 'top',
+    color: C.text, fontSize: 15, fontFamily: FONT.body, textAlignVertical: 'top',
   },
   error: { color: C.danger, fontWeight: '800', textAlign: 'center' },
   row: { flexDirection: 'row', gap: S.sm },
