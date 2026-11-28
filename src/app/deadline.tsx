@@ -51,11 +51,11 @@ function DeadlineScreen() {
   const fitting = outSlot && STARTER_SLOTS.includes(outSlot) ? roster.filter((p) => playsPos(p, outSlot)) : roster;
   const candidates = deadline.spin && landed && deadline.outId
     ? (fitting.length ? fitting : roster).map((p) => {
-        // Show the real reason a signing is blocked (position, superstar limit, or cap).
+        // Show the real reason a signing is blocked (position or cap).
         let why: string | null = null;
         try { tradeSwap(season, deadline.outId!, p); } catch (e) {
           const m = (e as Error).message;
-          why = /superstar/i.test(m) ? t('draft.superstarLimit') : /can't play/i.test(m) ? t('draft.noSlot') : t('draft.overCap');
+          why = /can't play/i.test(m) ? t('draft.noSlot') : t('draft.overCap');
         }
         return { p, ok: !why, why };
       })

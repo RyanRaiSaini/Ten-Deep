@@ -9,7 +9,7 @@ import { MoneyScale } from '../ui/MoneyScale';
 import { MODE_BY_ID, moneyScaleFor } from '../data/modes';
 import { feel } from '../audio/feel';
 import { POOLS } from '../data';
-import { CAP, MAX_SUPERSTARS, capRoom, payOf, superstarCount } from '../engine/cap';
+import { CAP, capRoom, payOf } from '../engine/cap';
 import { fallbackPick, isComplete, options, reserveNeeded } from '../engine/draft';
 import type { SlotId } from '../engine/types';
 import { useGame } from '../store/game';
@@ -116,14 +116,6 @@ function DraftScreen() {
         </View>
       </View>
       {eraCap && <Text style={styles.eraCap} testID="era-cap">{t('draft.eraCap', { season: eraCap.season })}</Text>}
-      <View style={styles.capRow}>
-        <Text style={styles.capLabel}>{t('draft.superstars', { n: superstarCount(d.roster) })}</Text>
-        <View style={styles.stars} accessibilityLabel={t('draft.superstars', { n: superstarCount(d.roster) })}>
-          {Array.from({ length: MAX_SUPERSTARS }, (_, i) => (
-            <View key={i} style={{ opacity: i < superstarCount(d.roster) ? 1 : 0.25 }}><Icon name="star" size={20} /></View>
-          ))}
-        </View>
-      </View>
       <View style={styles.capRow} testID="bench-balance" accessibilityLabel={`${t('draft.benchBalance')}: ${t('draft.benchCovered', { n: balance.covered.length })}`}>
         <Text style={styles.capLabel}>{t('draft.benchBalance')}</Text>
         <View style={styles.balanceRow}>
@@ -194,7 +186,7 @@ function DraftScreen() {
               selected={chosen === o.player.id}
               slots={o.slots}
               onSlot={(slot) => place(o.player.id, slot)}
-              note={!o.affordable ? (o.slots.length ? (o.player.ovr >= 95 && superstarCount(d.roster) >= MAX_SUPERSTARS ? t('draft.superstarLimit') : t('draft.overCap')) : t('draft.noSlot')) : undefined}
+              note={!o.affordable ? (o.slots.length ? t('draft.overCap') : t('draft.noSlot')) : undefined}
               onPress={() => (o.slots.length === 1 ? place(o.player.id, o.slots[0]) : setChosen(o.player.id))}
             />
           ))}
@@ -270,7 +262,6 @@ const styles = StyleSheet.create({
   headRight: { flexDirection: 'row', alignItems: 'center', gap: S.sm },
   help: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: C.surface, borderWidth: 2, borderColor: C.line, borderBottomWidth: 4, borderBottomColor: C.edge },
   helpText: { fontFamily: FONT.display, fontSize: 20, color: C.text, marginTop: -1 },
-  stars: { flexDirection: 'row', gap: 2 },
   balanceRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   posChip: { minWidth: 26, height: 22, paddingHorizontal: 4, borderRadius: 6, backgroundColor: C.surface2, borderWidth: 1, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
   posChipOn: { backgroundColor: C.neon, borderColor: C.neon },

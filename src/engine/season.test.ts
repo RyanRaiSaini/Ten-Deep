@@ -108,12 +108,13 @@ describe('season', () => {
     for (let i = 1; i < st.length; i++) expect(st[i - 1].w).toBeGreaterThanOrEqual(st[i].w);
   });
 
-  it('tradeSwap cannot add a third superstar', () => {
+  it('tradeSwap can add a third superstar: no star limit, only the cap', () => {
     const s = advance(fresh(), 100);
-    const star = (id: string) => ({ ...pool.teams[0].players[0], id, name: `Star ${id}`, ovr: 96, pos: 'SF' as const });
+    const star = (id: string) => ({ ...pool.teams[0].players[0], id, name: `Star ${id}`, ovr: 96, pos: 'SF' as const, salary: 1 });
     const user = { ...s.teams[0], slots: { ...s.teams[0].slots, PG: { ...star('a'), pos: 'PG' as const }, SG: { ...star('b'), pos: 'SG' as const } } };
     const withStars = { ...s, teams: [user, ...s.teams.slice(1)] };
-    expect(() => tradeSwap(withStars, user.slots.B5.id, star('c'))).toThrow(/superstar/i);
+    const after = tradeSwap(withStars, user.slots.B5.id, star('c'));
+    expect(after.teams[0].slots.B5.name).toBe('Star c');
   });
 
   it('keeps saved seasons small: box scores only for the most recent games', () => {

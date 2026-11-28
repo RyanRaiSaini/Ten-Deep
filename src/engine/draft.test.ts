@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { canAfford } from './cap';
 import {
-  MAX_SUPERSTARS, affordableSlots, eligibleSlots, fallbackPick, isComplete, options, pick, pickFallback, respin, spin, startDraft,
+  affordableSlots, eligibleSlots, fallbackPick, isComplete, options, pick, pickFallback, respin, spin, startDraft,
 } from './draft';
 import { makePool } from './__fixtures__/pool';
 import type { Player } from './types';
@@ -207,14 +207,17 @@ describe('players with three or four positions', async () => {
   });
 });
 
-describe('superstar limit', () => {
-  it('blocks a third player rated 95+ even when the cap would allow it', () => {
+describe('no superstar limit', () => {
+  it('a third and a fourth player rated 95+ are fine when the cap allows it', () => {
     let s = spin(startDraft(pool, 'stars'), pool);
-    const star = (id: string, pos: 'PG' | 'SG' | 'SF') => ({ ...pool.teams[0].players[0], id, name: `Star ${id}`, pos, pos2: undefined, ovr: 95 });
+    const star = (id: string, pos: 'PG' | 'SG' | 'SF' | 'PF') => ({ ...pool.teams[0].players[0], id, name: `Star ${id}`, pos, pos2: undefined, ovr: 97, salary: 5 });
     s = { ...s, roster: { PG: star('a', 'PG'), SG: star('b', 'SG') }, used: ['a', 'b'], round: 2 };
     s = { ...s, spin: { ...s.spin!, players: [star('c', 'SF')] } };
-    expect(MAX_SUPERSTARS).toBe(2);
-    expect(options(s, pool)[0].affordable).toBe(false);
-    expect(() => pick(s, 'c', 'SF', pool)).toThrow(/superstar/i);
+    expect(options(s, pool)[0].affordable).toBe(true);
+    s = pick(s, 'c', 'SF', pool);
+    s = { ...spin(s, pool) };
+    s = { ...s, spin: { ...s.spin!, players: [star('d', 'PF')] } };
+    s = pick(s, 'd', 'PF', pool);
+    expect(Object.values(s.roster).filter((p) => p!.ovr >= 95)).toHaveLength(4);
   });
 });

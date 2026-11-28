@@ -1,5 +1,5 @@
 /** Playing the board's cards: drawing six at a stop, revealing the one you tap, and resolving it. */
-import { CAP, MIN_SALARY, payOf, superstarBlocked } from '../cap';
+import { CAP, MIN_SALARY, payOf } from '../cap';
 import { createRng, shuffle } from '../rng';
 import { squadRating } from '../rotation';
 import { DEADLINE_GAME, SEASON_GAMES, seedOf, type SeasonState } from '../season';
@@ -79,7 +79,7 @@ export function prepareOffer(id: string, b: BoardState, ctx: PlayCtx): Offer {
   const starters = ms.filter((x) => STARTER_SLOTS.includes(x.k));
   const lowest = [...ms].sort((a, c) => a.p.ovr - c.p.ovr)[0];
   const fa = freeAgents(s, ctx.pool);
-  const legalFor = (slots: SlotId[]) => (p: Player) => slots.some((k) => !superstarBlocked({ ...s.teams[0].slots, [k]: undefined }, p) && (!STARTER_SLOTS.includes(k) || playsPos(p, k)));
+  const legalFor = (slots: SlotId[]) => (p: Player) => slots.some((k) => !STARTER_SLOTS.includes(k) || playsPos(p, k));
   const sample = (ps: Player[], n: number) => shuffle(ps, rng).slice(0, n);
   const conf = s.divs ? confOfDiv(s.divs[0]) : null;
   const rivals = s.teams.map((t, i) => ({ t, i })).filter(({ i }) => i > 0 && (conf === null || confOfDiv(s.divs![i]) === conf));
@@ -187,7 +187,7 @@ export function resolveCard(id: string, offer: Offer, d: Decision, b0: BoardStat
   const amount = offer.amount ?? 0;
   const chosen = offer.players?.find((p) => p.id === d.incomingId) ?? offer.players?.[0];
   const outOk = (k: SlotId | undefined, p: Player) =>
-    !!k && (offer.outSlots ?? []).includes(k) && (!STARTER_SLOTS.includes(k) || playsPos(p, k)) && !superstarBlocked({ ...s.teams[0].slots, [k]: undefined }, p);
+    !!k && (offer.outSlots ?? []).includes(k) && (!STARTER_SLOTS.includes(k) || playsPos(p, k));
   const outFor = (p: Player) => (outOk(d.outSlot, p) ? d.outSlot! : offer.outSlots?.find((k) => outOk(k, p)));
   const perkSign = (p: Player, pay: number) => {
     const k = outFor(p);
@@ -208,7 +208,7 @@ export function resolveCard(id: string, offer: Offer, d: Decision, b0: BoardStat
         for (const { k, p } of paid) {
           const taken = new Set(s.teams.flatMap((t) => ALL_SLOTS.map((x) => t.slots[x].name)));
           const opts = freeAgents(s, ctx.pool).filter((q) => !taken.has(q.name) && payOf(q) < payOf(p) && q.ovr >= p.ovr - 7 && q.ovr <= p.ovr
-            && (!STARTER_SLOTS.includes(k) || playsPos(q, k)) && !superstarBlocked({ ...s.teams[0].slots, [k]: undefined }, q));
+            && (!STARTER_SLOTS.includes(k) || playsPos(q, k)));
           if (!opts.length) continue;
           const q = rng.pick(opts);
           ({ season: s, board: b } = signOption(s, b, k, { tier: 'perk', player: q, pay: payOf(q) }, 'perk'));

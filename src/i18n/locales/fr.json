@@ -97,12 +97,10 @@
     "respin": "Relancer ({{n}} restants)",
     "capSpace": "Masse salariale",
     "spendable": "{{amount}} disponibles après minimums",
-    "superstars": "Superstars {{n}}/2",
     "chooseSlot": "À quel poste ?",
     "nothingFits": "Personne dans cette équipe ne rentre dans ton effectif ou ton budget.",
     "signFallback": "Signer {{name}} pour {{salary}}",
     "overCap": "Budget dépassé",
-    "superstarLimit": "Limite de superstars",
     "noSlot": "Aucun poste libre",
     "starters": "Cinq de départ",
     "bench": "Banc",
@@ -514,7 +512,7 @@
   },
   "welcome": {
     "t1": "Draft à dix",
-    "b1": "Tourne la roue, choisis un joueur et fais tenir dix joueurs sous un plafond de 200 M$. Deux stars 95+ maximum. Dans les époques de la Machine à remonter le temps, le plafond et chaque salaire sont en dollars de l'époque.",
+    "b1": "Tourne la roue, choisis un joueur et fais tenir dix joueurs sous un plafond de 200 M$. Dans les époques de la Machine à remonter le temps, le plafond et chaque salaire sont en dollars de l'époque.",
     "t2": "Survis à 82 matchs",
     "b2": "Blessures, date limite des transferts et playoffs en sept matchs. 70 victoires, c'est rare. 82-0, c'est un mythe.",
     "t3": "Collectionne les légendes",
@@ -713,8 +711,7 @@
     "value": "Refusé : pas assez de valeur pour eux",
     "cap": "Refusé : ça dépasse le plafond",
     "position": "Refusé : un titulaire doit correspondre au poste",
-    "missing": "Choisis d'abord les deux joueurs",
-    "stars": "Refusé : deux superstars 95+ maximum par équipe"
+    "missing": "Choisis d'abord les deux joueurs"
   },
   "profile": {
     "title": "Profil",

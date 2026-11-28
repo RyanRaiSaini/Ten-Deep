@@ -49,10 +49,10 @@ describe('trades', () => {
     expect(evaluateTrade(st, 'sf', 1, 'tsf')).toMatchObject({ ok: false });
   });
 
-  it('a trade can never give a team a third 95+ superstar', () => {
+  it('no star limit: a trade can give a team a third 95+ superstar', () => {
     const stars = [P('pg', 97, 26, 'PG'), P('sg', 97, 27, 'SG'), P('sf', 94, 25, 'SF'), P('pf', 77, 30, 'PF'), P('c', 76, 29, 'C')];
     const them = [P('tpg', 79, 27, 'PG'), P('tsg', 77, 25, 'SG'), P('tsf', 95, 32, 'SF'), P('tpf', 76, 28, 'PF'), P('tc', 75, 26, 'C')];
-    expect(evaluateTrade(state(stars, them), 'sf', 1, 'tsf')).toMatchObject({ ok: false, reason: 'stars' });
+    expect(evaluateTrade(state(stars, them), 'sf', 1, 'tsf')).not.toMatchObject({ reason: 'stars' });
   });
 
   it('executing swaps players and carries contracts, once', () => {

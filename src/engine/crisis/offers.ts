@@ -1,5 +1,5 @@
 /** Turn a drawn card into a concrete, seeded offer: which players are on the table and which of yours can go. */
-import { payOf, superstarBlocked } from '../cap';
+import { payOf } from '../cap';
 import { createRng, shuffle } from '../rng';
 import type { SeasonState } from '../season';
 import { ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type SlotId, playsPos } from '../types';
@@ -37,11 +37,7 @@ export function prepareCard(season: SeasonState, id: CardId, slot: number, pool:
   const bestSlot = [...mine].sort((a, b) => b.p.ovr - a.p.ovr)[0].k;
   const cheapest = (n: number) => pickN([...others].sort((a, b) => a.ovr - b.ovr).slice(0, 12), n);
   const base: CrisisCard = { id, slot, round: season.round };
-  /** Drop offers that would make a third 95+ whichever allowed slot goes out. */
-  const legal = (c: CrisisCard): CrisisCard => (!c.offer || !c.outSlots ? c : {
-    ...c, offer: c.offer.filter((p) => c.outSlots!.some((k) => !superstarBlocked({ ...user.slots, [k]: undefined }, p))),
-  });
-  return legal(offerFor());
+  return offerFor();
   function offerFor(): CrisisCard {
 
   switch (id) {

@@ -1,7 +1,14 @@
-import { canAfford, capRoom, payOf, superstarBlocked } from './cap';
+import { SUPERSTAR_OVR, canAfford, capRoom, payOf, superstarCount } from './cap';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type Rng, type Roster, type RosterSlots, type SlotId, playsPos,
 } from './types';
+
+/**
+ * AI teams spread the stars: at most two 95+ each, so a drafted league (Party rooms, All-Time) never has a
+ * superteam the computer built. Your own team has no such limit.
+ */
+const AI_MAX_STARS = 2;
+const aiStarBlocked = (slots: Parameters<typeof superstarCount>[0], p: Player) => p.ovr >= SUPERSTAR_OVR && superstarCount(slots) >= AI_MAX_STARS;
 
 type Style = 'stars' | 'balanced' | 'rebuild';
 
@@ -73,7 +80,7 @@ export function draftLeague(pool: Pool, exclude: Set<string>, count: number, rng
       const cheapest = available.filter((p) => !used.has(p.id)).map(payOf).sort((a, b) => a - b).slice(0, ALL_SLOTS.length);
       let best: { p: Player; slot: SlotId; v: number } | null = null;
       for (const p of available) {
-        if (used.has(p.id) || superstarBlocked(team.slots, p) || !aiCanAfford(team.slots, p, cheapest)) continue;
+        if (used.has(p.id) || aiStarBlocked(team.slots, p) || !aiCanAfford(team.slots, p, cheapest)) continue;
         const slot = openSlotFor(team.slots, p, startersOpen);
         if (!slot) continue;
         const v = value(team, p, rng);

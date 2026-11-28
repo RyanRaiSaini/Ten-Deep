@@ -96,12 +96,10 @@
     "respin": "Yeniden çevir ({{n}} kaldı)",
     "capSpace": "Maaş tavanı alanı",
     "spendable": "Asgari ücretler sonrası {{amount}} harcanabilir",
-    "superstars": "Süperstarlar {{n}}/2",
     "chooseSlot": "Hangi pozisyonda oynasın?",
     "nothingFits": "Bu takımdan kimse kadrona veya bütçene uymuyor.",
     "signFallback": "{{name}} ile {{salary}} karşılığında anlaş",
     "overCap": "Tavanın üstünde",
-    "superstarLimit": "Süperstar sınırı",
     "noSlot": "Boş pozisyon yok",
     "starters": "İlk beş",
     "bench": "Yedekler",
@@ -509,7 +507,7 @@
   },
   "welcome": {
     "t1": "On kişilik draft",
-    "b1": "Çarkı çevir, oyuncu seç ve on kişiyi 200 M$ tavanın altına sığdır. En fazla iki 95+ yıldız. Zaman Makinesi dönemlerinde tavan ve tüm maaşlar o dönemin dolarıyladır.",
+    "b1": "Çarkı çevir, oyuncu seç ve on kişiyi 200 M$ tavanın altına sığdır. Zaman Makinesi dönemlerinde tavan ve tüm maaşlar o dönemin dolarıyladır.",
     "t2": "82 maçı atlat",
     "b2": "Sakatlıklar, takas son tarihi ve yedi maçlık playofflar. 70 galibiyet nadirdir. 82-0 bir efsanedir.",
     "t3": "Efsaneleri topla",
@@ -708,8 +706,7 @@
     "value": "Reddedildi: onlar için yeterli değer yok",
     "cap": "Reddedildi: maaş tavanını aşıyor",
     "position": "Reddedildi: ilk beş oyuncusu pozisyona uymalı",
-    "missing": "Önce iki oyuncuyu da seç",
-    "stars": "Reddedildi: bir takımda en fazla iki 95+ süperstar olabilir"
+    "missing": "Önce iki oyuncuyu da seç"
   },
   "profile": {
     "title": "Profil",

@@ -1,10 +1,9 @@
-import { capRoom, payOf, superstarBlocked } from './cap';
+import { capRoom, payOf } from './cap';
 import { createRng } from './rng';
 import {
   ALL_SLOTS, BENCH_SLOTS, STARTER_SLOTS, type Player, type Pool, type RosterSlots, type SlotId, type TeamSeason, playsPos,
 } from './types';
 
-export { MAX_SUPERSTARS } from './cap';
 
 export const RESPINS_PER_DRAFT = 1;
 export const ROUNDS = 10;
@@ -159,7 +158,6 @@ export function jointReserve(rosters: RosterSlots[], used: Set<string>, pool: Po
 
 /** Slots where placing `p` still leaves room to fill the rest of the roster from what's left in the pool. */
 export function affordableSlots(state: DraftState, p: Player, pool: Pool): SlotId[] {
-  if (superstarBlocked(state.roster, p)) return [];
   const used = new Set([...state.used, p.id]);
   const rivals = state.rivals ?? [];
   const at = state.seat ?? 0;
@@ -207,7 +205,6 @@ export function pickFallback(state: DraftState, player: Player, slot: SlotId | u
 function place(state: DraftState, player: Player | null, slot: SlotId, pool: Pool, overCap = false): DraftState {
   if (!player) throw new Error('Player not in this spin');
   if (!eligibleSlots(state, player).includes(slot)) throw new Error(`Slot ${slot} not available for ${player.name}`);
-  if (superstarBlocked(state.roster, player)) throw new Error('Superstar limit reached (max 2 players rated 95+)');
   if (!overCap && !affordableSlots(state, player, pool).includes(slot)) throw new Error('Over the cap');
   return {
     ...state,
@@ -226,7 +223,7 @@ export function fallbackPick(state: DraftState, pool: Pool): Player {
   let ok = bySalary(pool).filter((p) => available(state, p, names) && affordableSlots(state, p, pool).length > 0);
   // Safety net: a roster already over the cap (a saved draft whose prices changed) can't afford anyone, so the
   // cheapest eligible player is signed anyway and the draft can always finish.
-  if (ok.length === 0) ok = bySalary(pool).filter((p) => available(state, p, names) && !superstarBlocked(state.roster, p) && eligibleSlots(state, p).length > 0);
+  if (ok.length === 0) ok = bySalary(pool).filter((p) => available(state, p, names) && eligibleSlots(state, p).length > 0);
   if (ok.length === 0) throw new Error('No fallback player available');
   const cheapest = payOf(ok[0]);
   return ok.filter((p) => payOf(p) === cheapest).sort((a, b) => b.ovr - a.ovr)[0];

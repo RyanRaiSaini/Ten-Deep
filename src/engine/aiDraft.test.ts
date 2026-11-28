@@ -47,7 +47,7 @@ describe('draftLeague', () => {
   });
 });
 
-describe('AI respects the superstar limit', () => {
+describe('AI teams spread the stars (league balance; your team has no limit)', () => {
   it('no AI team has more than two players rated 95+', async () => {
     const { current2026 } = await import('../data/current2026');
     for (let i = 0; i < 5; i++) {

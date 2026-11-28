@@ -97,12 +97,10 @@
     "respin": "Girar de novo ({{n}} restantes)",
     "capSpace": "Espaço no teto",
     "spendable": "{{amount}} disponíveis após mínimos",
-    "superstars": "Superestrelas {{n}}/2",
     "chooseSlot": "Em que posição ele joga?",
     "nothingFits": "Ninguém deste time cabe no seu elenco ou no teto.",
     "signFallback": "Contratar {{name}} por {{salary}}",
     "overCap": "Acima do teto",
-    "superstarLimit": "Limite de superestrelas",
     "noSlot": "Sem vaga livre",
     "starters": "Quinteto titular",
     "bench": "Banco",
@@ -514,7 +512,7 @@
   },
   "welcome": {
     "t1": "Monte seus dez",
-    "b1": "Gire a roleta, escolha um jogador e encaixe dez abaixo do teto de US$200 mi. Só duas estrelas 95+. Nas eras da Máquina do Tempo, o teto e cada salário estão em dólares daquela época.",
+    "b1": "Gire a roleta, escolha um jogador e encaixe dez abaixo do teto de US$200 mi. Nas eras da Máquina do Tempo, o teto e cada salário estão em dólares daquela época.",
     "t2": "Sobreviva a 82 jogos",
     "b2": "Lesões, prazo de trocas e playoffs em sete jogos. 70 vitórias é raro. 82-0 é um mito.",
     "t3": "Colecione lendas",
@@ -713,8 +711,7 @@
     "value": "Recusada: não vale para eles",
     "cap": "Recusada: estoura o teto",
     "position": "Recusada: um titular precisa servir na posição",
-    "missing": "Escolha os dois jogadores primeiro",
-    "stars": "Recusada: no máximo duas superestrelas 95+ por time"
+    "missing": "Escolha os dois jogadores primeiro"
   },
   "profile": {
     "title": "Perfil",

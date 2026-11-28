@@ -96,12 +96,10 @@
     "respin": "Neu drehen ({{n}} übrig)",
     "capSpace": "Gehaltsspielraum",
     "spendable": "{{amount}} verfügbar nach Mindestgehältern",
-    "superstars": "Superstars {{n}}/2",
     "chooseSlot": "Auf welcher Position spielt er?",
     "nothingFits": "Niemand aus diesem Team passt in deinen Kader oder dein Budget.",
     "signFallback": "{{name}} für {{salary}} verpflichten",
     "overCap": "Über dem Cap",
-    "superstarLimit": "Superstar-Limit",
     "noSlot": "Keine freie Position",
     "starters": "Starting Five",
     "bench": "Bank",
@@ -509,7 +507,7 @@
   },
   "welcome": {
     "t1": "Draft zehn tief",
-    "b1": "Dreh am Rad, wähl einen Spieler und bring zehn unter eine Gehaltsgrenze von 200 Mio. $. Höchstens zwei 95+-Stars. In den Zeitmaschine-Ären sind Cap und alle Gehälter in Dollar von damals.",
+    "b1": "Dreh am Rad, wähl einen Spieler und bring zehn unter eine Gehaltsgrenze von 200 Mio. $. In den Zeitmaschine-Ären sind Cap und alle Gehälter in Dollar von damals.",
     "t2": "Überstehe 82 Spiele",
     "b2": "Verletzungen, eine Trade-Deadline und Playoffs über sieben Spiele. 70 Siege sind selten. 82-0 ist ein Mythos.",
     "t3": "Sammle die Legenden",
@@ -708,8 +706,7 @@
     "value": "Abgelehnt: zu wenig Wert für sie",
     "cap": "Abgelehnt: sprengt die Gehaltsgrenze",
     "position": "Abgelehnt: ein Starter muss zur Position passen",
-    "missing": "Wähle zuerst beide Spieler",
-    "stars": "Abgelehnt: höchstens zwei 95+-Superstars pro Team"
+    "missing": "Wähle zuerst beide Spieler"
   },
   "profile": {
     "title": "Profil",
