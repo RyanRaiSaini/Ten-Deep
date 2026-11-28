@@ -113,7 +113,10 @@
     "hot": "Encendido: +{{n}} por su forma real",
     "cold": "Frío: −{{n}} por su forma real",
     "eraCap": "Tope {{season}} · dólares de la época",
-    "lowCap": "¿Poco margen? Si nadie del giro encaja, siempre puedes fichar al más barato que sí encaje."
+    "lowCap": "¿Poco margen? Si nadie del giro encaja, siempre puedes fichar al más barato que sí encaje.",
+    "benchBalance": "Equilibrio del banquillo",
+    "benchCovered": "Suplentes en {{n}} de 5 posiciones",
+    "benchStacked": "Demasiados en {{pos}}"
   },
   "season": {
     "title": "Temporada regular",
@@ -1040,7 +1043,7 @@
     "divT": "Elige tu división",
     "divB": "Elige conferencia y división antes del salto inicial. Juegas contra toda la liga igualmente; los playoffs se ordenan dentro de cada conferencia.",
     "squadT": "Valoración del equipo",
-    "squadB": "Tus diez jugadores en un solo número. Los titulares cuentan más, un 15 % cada uno; el banquillo cuenta 9, 6, 5, 3 y 2 % del sexto al décimo hombre. Cuanto más alta, más ganas: unas 66 victorias con 87 y unas 75 con 91. Solo un equipo de élite puede ir 82-0.",
+    "squadB": "Tus diez jugadores en un solo número. Los titulares cuentan más, un 15 % cada uno; el banquillo cuenta 9, 6, 5, 3 y 2 % del sexto al décimo hombre. Cuanto más alta, más ganas: unas 66 victorias con 87 y unas 75 con 91. Solo un equipo de élite puede ir 82-0. Un suplente en cada posición suma hasta +1; tres o más suplentes en la misma posición restan 0,5 cada uno.",
     "packsT": "Gana sobres",
     "packsB": "Cada temporada terminada da un sobre, uno mejor con 60+ victorias. Llega a la final de conferencia o más lejos para un segundo sobre que mejora cuanto más avanzas, hasta el Sobre definitivo (solo cartas 98+) con 82-0 y 16-0. Una mejora al día, y nunca más de una en el mismo sobre."
   },

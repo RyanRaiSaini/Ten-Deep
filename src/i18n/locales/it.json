@@ -113,7 +113,10 @@
     "hot": "In fiamme: +{{n}} per la forma reale",
     "cold": "Freddo: −{{n}} per la forma reale",
     "eraCap": "Tetto {{season}} · dollari dell'epoca",
-    "lowCap": "Poco spazio? Se nessuno dell'estrazione ci sta, puoi sempre firmare il più economico che ci sta."
+    "lowCap": "Poco spazio? Se nessuno dell'estrazione ci sta, puoi sempre firmare il più economico che ci sta.",
+    "benchBalance": "Equilibrio della panchina",
+    "benchCovered": "Riserve in {{n}} ruoli su 5",
+    "benchStacked": "Troppi in {{pos}}"
   },
   "season": {
     "title": "Stagione regolare",
@@ -1040,7 +1043,7 @@
     "divT": "Scegli la tua division",
     "divB": "Scegli conference e division prima della palla a due. Affronti comunque tutta la lega; i playoff sono ordinati dentro ogni conference.",
     "squadT": "Valutazione squadra",
-    "squadB": "I tuoi dieci giocatori in un solo numero. I titolari contano di più, il 15% ciascuno; la panchina conta 9, 6, 5, 3 e 2% dal sesto al decimo uomo. Più è alta, più vinci: circa 66 vittorie a 87, circa 75 a 91. Solo una squadra d'élite può fare 82-0.",
+    "squadB": "I tuoi dieci giocatori in un solo numero. I titolari contano di più, il 15% ciascuno; la panchina conta 9, 6, 5, 3 e 2% dal sesto al decimo uomo. Più è alta, più vinci: circa 66 vittorie a 87, circa 75 a 91. Solo una squadra d'élite può fare 82-0. Una riserva per ogni ruolo vale fino a +1; tre o più riserve nello stesso ruolo costano 0,5 ciascuna.",
     "packsT": "Guadagna pacchetti",
     "packsB": "Ogni stagione conclusa ti dà un pacchetto, uno migliore con 60+ vittorie. Raggiungi la finale di conference o oltre per un secondo pacchetto che migliora a ogni turno, fino al Pacchetto definitivo (solo carte 98+) per 82-0 e 16-0. Un potenziamento al giorno, e mai più di uno sullo stesso pacchetto."
   },

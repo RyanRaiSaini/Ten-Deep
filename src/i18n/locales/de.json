@@ -112,7 +112,10 @@
     "hot": "Heiß: +{{n}} durch echte Form",
     "cold": "Kalt: −{{n}} durch echte Form",
     "eraCap": "Cap {{season}} · Dollar von damals",
-    "lowCap": "Wenig Cap-Platz? Passt niemand vom Dreh, kannst du immer den günstigsten passenden Spieler holen."
+    "lowCap": "Wenig Cap-Platz? Passt niemand vom Dreh, kannst du immer den günstigsten passenden Spieler holen.",
+    "benchBalance": "Bank-Balance",
+    "benchCovered": "Ersatz auf {{n}} von 5 Positionen",
+    "benchStacked": "Zu viele auf {{pos}}"
   },
   "season": {
     "title": "Hauptrunde",
@@ -1035,7 +1038,7 @@
     "divT": "Wähle deine Division",
     "divB": "Wähle Conference und Division vor dem Tip-off. Du spielst so oder so gegen die ganze Liga; die Playoffs werden innerhalb jeder Conference gesetzt.",
     "squadT": "Kader-Rating",
-    "squadB": "Deine zehn Spieler in einer Zahl. Starter zählen am meisten, je 15 %; die Bank zählt 9, 6, 5, 3 und 2 % vom 6. bis zum 10. Mann. Je höher, desto mehr Siege: etwa 66 bei 87, etwa 75 bei 91. Nur ein Elite-Kader kann 82-0 schaffen.",
+    "squadB": "Deine zehn Spieler in einer Zahl. Starter zählen am meisten, je 15 %; die Bank zählt 9, 6, 5, 3 und 2 % vom 6. bis zum 10. Mann. Je höher, desto mehr Siege: etwa 66 bei 87, etwa 75 bei 91. Nur ein Elite-Kader kann 82-0 schaffen. Ein Ersatz für jede Position bringt bis zu +1; drei oder mehr Bankspieler auf einer Position kosten je 0,5.",
     "packsT": "Packs verdienen",
     "packsB": "Jede beendete Saison bringt ein Pack, ab 60 Siegen ein besseres. Erreiche die Conference Finals oder mehr für ein zweites Pack, das mit jeder Runde besser wird, bis zum Ultimate-Pack (nur 98+) für 82-0 und 16-0. Ein Power-up pro Tag, und nie mehr als eines auf demselben Pack."
   },

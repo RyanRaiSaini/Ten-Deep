@@ -112,7 +112,10 @@
     "hot": "On fire: +{{n}} door echte vorm",
     "cold": "Koud: −{{n}} door echte vorm",
     "eraCap": "Salarisplafond {{season}} · dollars van toen",
-    "lowCap": "Weinig ruimte? Past niemand van de draai, dan kun je altijd de goedkoopste speler die past tekenen."
+    "lowCap": "Weinig ruimte? Past niemand van de draai, dan kun je altijd de goedkoopste speler die past tekenen.",
+    "benchBalance": "Bankbalans",
+    "benchCovered": "Back-ups op {{n}} van 5 posities",
+    "benchStacked": "Te veel op {{pos}}"
   },
   "season": {
     "title": "Reguliere competitie",
@@ -1035,7 +1038,7 @@
     "divT": "Kies je divisie",
     "divB": "Kies je conference en divisie voor de tip-off. Je speelt hoe dan ook tegen de hele competitie; de play-offs worden per conference geplaatst.",
     "squadT": "Selectiescore",
-    "squadB": "Je tien spelers in één getal. Basisspelers tellen het zwaarst, 15% elk; de bank telt 9, 6, 5, 3 en 2% van je 6e tot je 10e man. Hoe hoger, hoe meer je wint: zo'n 66 zeges bij 87, zo'n 75 bij 91. Alleen een topselectie kan 82-0 gaan.",
+    "squadB": "Je tien spelers in één getal. Basisspelers tellen het zwaarst, 15% elk; de bank telt 9, 6, 5, 3 en 2% van je 6e tot je 10e man. Hoe hoger, hoe meer je wint: zo'n 66 zeges bij 87, zo'n 75 bij 91. Alleen een topselectie kan 82-0 gaan. Een back-up voor elke positie geeft tot +1; drie of meer bankspelers op één positie kosten elk 0,5.",
     "packsT": "Verdien packs",
     "packsB": "Elk afgerond seizoen levert een pack op, een betere bij 60+ zeges. Haal de conference-finale of verder voor een tweede pack dat beter wordt hoe verder je komt, tot het Ultieme pack (alleen 98+) voor 82-0 en 16-0. Eén power-up per dag, en nooit meer dan één op hetzelfde pack."
   },
