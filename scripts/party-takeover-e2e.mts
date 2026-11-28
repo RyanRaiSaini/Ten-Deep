@@ -81,7 +81,7 @@ async function play(page: typeof a, who: 'a' | 'b') {
       continue;
     }
     const header = await page.locator('body').innerText();
-    const first = /spot 1 of 10/.test(header);
+    const first = /spot 1 of 10/i.test(header); // titles render in caps
     if (first && who === 'a') await page.screenshot({ path: `${out}/${tag}-2-choose.png` });
     // Spot 1: both go for the bench option (always affordable) to start a bidding war. Later: A buys bargains, B keeps.
     const pickBench = page.getByTestId('tk-pick-bench');
